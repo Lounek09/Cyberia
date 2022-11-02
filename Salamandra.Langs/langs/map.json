@@ -1,0 +1,319 @@
+[
+  {
+    "Name": "alignment",
+    "MainObject": "A",
+    "Objects": [
+      {
+        "Name": "a",
+        "BddName": "Alignments",
+        "Keys": [
+          {
+            "BddName": "Id",
+            "PrimaryKey": true,
+            "Type": "Integer"
+          }
+        ],
+        "TypeStored": "Object",
+        "Fields": [
+          {
+            "Name": "n",
+            "BddName": "Name",
+            "Type": "String"
+          },
+          {
+            "Name": "c",
+            "BddName": "CanConquest",
+            "Type": "Boolean"
+          }
+        ]
+      },
+      {
+        "Name": "jo",
+        "BddName": "AlignmentsJoin",
+        "Keys": [
+          {
+            "BddName": "Id",
+            "Type": "Integer"
+          }
+        ],
+        "TypeStored": "Array",
+        "Fields": [
+          {
+            "Name": "Index",
+            "BddName": "TargetAlignmentId",
+            "Type": "Integer"
+          },
+          {
+            "Name": "Value",
+            "BddName": "CanJoin",
+            "Type": "Boolean"
+          }
+        ]
+      },
+      {
+        "Name": "at",
+        "BddName": "AlignmentsAttack",
+        "Keys": [
+          {
+            "BddName": "Id",
+            "Type": "Integer"
+          }
+        ],
+        "TypeStored": "Array",
+        "Fields": [
+          {
+            "Name": "Index",
+            "BddName": "TargetAlignmentId",
+            "Type": "Integer"
+          },
+          {
+            "Name": "Value",
+            "BddName": "CanAttack",
+            "Type": "Boolean"
+          }
+        ]
+      },
+      {
+        "Name": "o",
+        "BddName": "AlignmentOrders",
+        "Keys": [
+          {
+            "BddName": "Id",
+            "PrimaryKey": true,
+            "Type": "Integer"
+          }
+        ],
+        "TypeStored": "Object",
+        "Fields": [
+          {
+            "Name": "n",
+            "BddName": "Name",
+            "Type": "String"
+          },
+          {
+            "Name": "a",
+            "BddName": "AlignmentId",
+            "Type": "Integer"
+          }
+        ]
+      },
+      {
+        "Name": "g",
+        "BddName": "AlignmentsViewPvpGain",
+        "Keys": [
+          {
+            "BddName": "Id",
+            "Type": "Integer"
+          }
+        ],
+        "TypeStored": "Array",
+        "Fields": [
+          {
+            "Name": "Index",
+            "BddName": "TargetAlignmentId",
+            "Type": "Integer"
+          },
+          {
+            "Name": "Value",
+            "BddName": "ViewPvpGain",
+            "Type": "Boolean"
+          }
+        ]
+      },
+      {
+        "Name": "f",
+        "BddName": "AlignmentFeats",
+        "Keys": [
+          {
+            "BddName": "Id",
+            "PrimaryKey": true,
+            "Type": "Integer"
+          }
+        ],
+        "TypeStored": "Object",
+        "Fields": [
+          {
+            "Name": "n",
+            "BddName": "Name",
+            "Type": "String"
+          },
+          {
+            "Name": "g",
+            "BddName": "GfxId",
+            "Type": "Integer"
+          },
+          {
+            "Name": "e",
+            "BddName": "AlignmentFeatEffectId",
+            "Type": "Integer"
+          }
+        ]
+      },
+      {
+        "Name": "fe",
+        "BddName": "AlignmentFeatEffects",
+        "Keys": [
+          {
+            "BddName": "Id",
+            "PrimaryKey": true,
+            "Type": "Integer"
+          }
+        ],
+        "TypeStored": "Value",
+        "Fields": [
+          {
+            "BddName": "Description",
+            "Type": "String"
+          }
+        ]
+      },
+      {
+        "Name": "s",
+        "BddName": "AlignmentSpecializations",
+        "Keys": [
+          {
+            "BddName": "Id",
+            "PrimaryKey": true,
+            "Type": "Integer"
+          }
+        ],
+        "TypeStored": "Object",
+        "Fields": [
+          {
+            "Name": "n",
+            "BddName": "Name",
+            "Type": "String"
+          },
+          {
+            "Name": "d",
+            "BddName": "Description",
+            "Type": "String"
+          },
+          {
+            "Name": "o",
+            "BddName": "AlignmentOrderId",
+            "Type": "Integer"
+          },
+          {
+            "Name": "av",
+            "BddName": "AlignmentLEvelRequired",
+            "Type": "Integer"
+          },
+          {
+            "Name": "f",
+            "BddName": "AlignmentFeatParameters",
+            "Type": "String"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "audio"
+  },
+  {
+    "Name": "classes"
+  },
+  {
+    "Name": "crafts"
+  },
+  {
+    "Name": "dialog"
+  },
+  {
+    "Name": "dungeons"
+  },
+  {
+    "Name": "effetcs"
+  },
+  {
+    "Name": "emotes"
+  },
+  {
+    "Name": "fightchallenge"
+  },
+  {
+    "Name": "guilds"
+  },
+  {
+    "Name": "hints"
+  },
+  {
+    "Name": "houses"
+  },
+  {
+    "Name": "interactiveobjects"
+  },
+  {
+    "Name": "items"
+  },
+  {
+    "Name": "itemsets"
+  },
+  {
+    "Name": "itemstats"
+  },
+  {
+    "Name": "jobs"
+  },
+  {
+    "Name": "kb"
+  },
+  {
+    "Name": "lang"
+  },
+  {
+    "Name": "maps"
+  },
+  {
+    "Name": "monsters"
+  },
+  {
+    "Name": "Names"
+  },
+  {
+    "Name": "npc"
+  },
+  {
+    "Name": "pvp"
+  },
+  {
+    "Name": "quests"
+  },
+  {
+    "Name": "ranks"
+  },
+  {
+    "Name": "rides"
+  },
+  {
+    "Name": "scripts"
+  },
+  {
+    "Name": "servers"
+  },
+  {
+    "Name": "shortcuts"
+  },
+  {
+    "Name": "skills"
+  },
+  {
+    "Name": "speakingitems"
+  },
+  {
+    "Name": "spells"
+  },
+  {
+    "Name": "states"
+  },
+  {
+    "Name": "subtitles"
+  },
+  {
+    "Name": "timezones"
+  },
+  {
+    "Name": "titles"
+  }
+]
