@@ -7,7 +7,7 @@ using Salamandra.Bot.Commands.Admin;
 using Salamandra.Bot.Commands.Data;
 using Salamandra.Bot.Commands.Other;
 
-namespace Salamandra.Bot.Manager
+namespace Salamandra.Bot.Managers
 {
     public static class CommandManager
     {

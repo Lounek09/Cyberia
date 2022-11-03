@@ -11,13 +11,8 @@
         public string DirectoryPath { get; private set; }
         public string FileRoute { get; private set; }
 
-        private readonly Logger _logger;
-        private readonly HttpClient _httpClient;
-
-        internal Lang(Logger logger, HttpClient httpClient, string name, int version, LangType type, Language language, bool isNew, string filePath, string directoryPath, string fileRoute)
+        internal Lang(string name, int version, LangType type, Language language, bool isNew, string filePath, string directoryPath, string fileRoute)
         {
-            _logger = logger;
-            _httpClient = httpClient;
             Name = name;
             Version = version;
             Type = type;
@@ -36,7 +31,7 @@
         {
             try
             {
-                using (HttpResponseMessage response = await _httpClient.GetAsync(FileRoute).ConfigureAwait(false))
+                using (HttpResponseMessage response = await DofusLangs.Instance.HttpClient.GetAsync(FileRoute).ConfigureAwait(false))
                 {
                     response.EnsureSuccessStatusCode();
 
@@ -50,7 +45,7 @@
             }
             catch (HttpRequestException e)
             {
-                _logger.Error(e.Message);
+                DofusLangs.Instance.Logger.Error(e);
                 return false;
             }
         }

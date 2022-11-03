@@ -17,10 +17,11 @@
         public const string LANGS_PATH = "langs";
         public const string TEMP_PATH = "temp";
 
-        public const string CYTRUS_URL = "https://cytrus.cdn.ankama.com/cytrus.json";
-
-        //Other
-        public const string ZERO_WIDTH_SPACE = "\u200b";
+        static Constant()
+        {
+            if (Directory.Exists(TEMP_PATH))
+                Directory.CreateDirectory(TEMP_PATH);
+        }
     }
 }
 

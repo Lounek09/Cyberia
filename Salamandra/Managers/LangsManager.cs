@@ -1,11 +1,11 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 
-using Salamandra.Bot.Manager;
+using Salamandra.Bot.Managers;
 using Salamandra.Langs;
 using Salamandra.Langs.Enums;
 
-namespace Salamandra.Manager
+namespace Salamandra.Managers
 {
     public static class LangsManager
     {
@@ -18,13 +18,13 @@ namespace Salamandra.Manager
             foreach (Language language in Enum.GetValues<Language>())
             {
                 if (Salamandra.Config.EnableCheckLang)
-                    _timer.Add($"{LangType.Official}_{language}", new Timer(async _ => await Salamandra.Langs.CheckForNewerLangs(LangType.Official, language), null, 10000, 360000));
+                    _timer.Add($"{LangType.Official}_{language}", new Timer(async _ => await Salamandra.Langs.Launch(LangType.Official, language), null, 10000, 360000));
 
                 if (Salamandra.Config.EnableCheckBetaLang)
-                    _timer.Add($"{LangType.Beta}_{language}", new Timer(async _ => await Salamandra.Langs.CheckForNewerLangs(LangType.Beta, language), null, 130000, 360000));
+                    _timer.Add($"{LangType.Beta}_{language}", new Timer(async _ => await Salamandra.Langs.Launch(LangType.Beta, language), null, 130000, 360000));
 
                 if (Salamandra.Config.EnableCheckTemporisLang)
-                    _timer.Add($"{LangType.Temporis}_{language}", new Timer(async _ => await Salamandra.Langs.CheckForNewerLangs(LangType.Temporis, language), null, 250000, 360000));
+                    _timer.Add($"{LangType.Temporis}_{language}", new Timer(async _ => await Salamandra.Langs.Launch(LangType.Temporis, language), null, 250000, 360000));
             }
         }
 
@@ -52,7 +52,7 @@ namespace Salamandra.Manager
 
                 Salamandra.Logger.Info($"{(lang.IsNew ? "[NEW] " : "")}Lang {lang.Name} version {lang.Version} in {lang.Language} downloaded");
 
-                if (!Salamandra.Langs.Flare.ExtractLang(lang))
+                if (!Flare.ExtractLang(lang))
                 {
                     Salamandra.Logger.Error($"Extract of lang {lang.Name} version {lang.Version} in {lang.Language} failed");
                     return;

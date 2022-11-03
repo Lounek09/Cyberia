@@ -1,6 +1,6 @@
 ﻿using DSharpPlus.Entities;
 
-namespace Salamandra.Bot.Manager
+namespace Salamandra.Bot.Managers
 {
     public static class EmbedManager
     {
@@ -8,7 +8,7 @@ namespace Salamandra.Bot.Manager
         {
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
                                         .WithColor(new DiscordColor(DiscordBot.Instance.Config.EmbedColor))
-                                        .WithFooter($"{DiscordBot.Instance.Client.CurrentUser.Username}  •  {/*DiscordBot.Instance.Api.Datacenter.TimeZones.GetDate()*/"pas de date hihi"} - {DateTime.Now:HH:mm}", $"{DiscordBot.Instance.Config.CdnUrl}/images/mini_salamandra.png");
+                                        .WithFooter($"{DiscordBot.Instance.Client.CurrentUser.Username}  •  {/*DiscordBot.Instance.Api.Datacenter.TimeZones.GetDate()*/"pas de date hihi"} - {DateTime.Now:HH:mm}"/*, $"{DiscordBot.Instance.Config.CdnUrl}/images/mini_salamandra.png"*/);
 
             string iconUrl = $"{DiscordBot.Instance.Config.CdnUrl}/images/embed_categories";
             switch (category)
@@ -44,7 +44,7 @@ namespace Salamandra.Bot.Manager
                     return embed;
             }
 
-            return embed.WithAuthor(authorText, iconUrl: iconUrl);
+            return embed.WithAuthor(authorText/*, iconUrl: iconUrl*/);
         }
     }
 

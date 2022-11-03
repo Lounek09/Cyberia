@@ -1,8 +1,9 @@
-﻿using Salamandra.Bot;
+﻿global using Salamandra.Utils;
+using Salamandra.Api;
+using Salamandra.Bot;
+using Salamandra.Cytrus;
 using Salamandra.Langs;
-using Salamandra.Manager;
-using Salamandra.Script;
-using Salamandra.Utils;
+using Salamandra.Managers;
 
 namespace Salamandra
 {
@@ -10,18 +11,21 @@ namespace Salamandra
     {
         public static Logger Logger { get; private set; }
         public static Config Config { get; private set; }
+        public static AnkamaCytrus Cytrus { get; private set; }
         public static DofusLangs Langs { get; private set; }
+        public static DofusApi Api { get; private set; }
         public static DiscordBot Bot { get; private set; }
 
         static Salamandra()
         {
             Logger = new();
             Config = Config.Build();
+            Cytrus = AnkamaCytrus.Build(Logger);
+            Cytrus.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
             Langs = DofusLangs.Build(Logger);
-            Bot = DiscordBot.Build(Logger, Langs);
-
-            if (Directory.Exists(Constant.TEMP_PATH))
-                Directory.CreateDirectory(Constant.TEMP_PATH);
+            Langs.CheckLangFinished += LangsManager.OnCheckLangFinished;
+            Api = DofusApi.Build(Logger);
+            Bot = DiscordBot.Build(Logger, Cytrus, Langs, Api);
         }
 
         public static async Task Main()

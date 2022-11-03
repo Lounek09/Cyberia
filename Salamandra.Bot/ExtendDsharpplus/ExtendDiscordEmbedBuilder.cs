@@ -1,6 +1,6 @@
 ﻿using DSharpPlus.Entities;
 
-namespace Salamandra.Utils
+namespace Salamandra.Bot.DsharpPlus
 {
     public static class ExtendDiscordEmbedBuilder
     {
@@ -19,7 +19,7 @@ namespace Salamandra.Utils
                     content = "";
                 }
 
-                content += row + "\n";
+                content += $"{row}\n";
             }
 
             return embed.AddField(name, content[..^1], inline);

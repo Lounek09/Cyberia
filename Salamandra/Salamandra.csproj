@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Salamandra.Api\Salamandra.Api.csproj" />
     <ProjectReference Include="..\Salamandra.Bot\Salamandra.Bot.csproj" />
+    <ProjectReference Include="..\Salamandra.Cytrus\Salamandra.Cytrus.csproj" />
     <ProjectReference Include="..\Salamandra.Langs\Salamandra.Langs.csproj" />
     <ProjectReference Include="..\Salamandra.Utils\Salamandra.Utils.csproj" />
   </ItemGroup>

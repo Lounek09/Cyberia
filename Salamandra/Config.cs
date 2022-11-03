@@ -1,6 +1,4 @@
-﻿using Salamandra.Utils;
-
-namespace Salamandra
+﻿namespace Salamandra
 {
     public sealed class Config
     {
@@ -24,7 +22,7 @@ namespace Salamandra
                 Environment.Exit(0);
             }
 
-            return Json.Load<Config>(Constant.CONFIG_PATH);
+            return Json.LoadFromFile<Config>(Constant.CONFIG_PATH);
         }
     }
 }

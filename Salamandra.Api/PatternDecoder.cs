@@ -1,4 +1,4 @@
-﻿namespace Salamandra.Utils
+﻿namespace Salamandra.Api
 {
     public static class PatternDecoder
     {

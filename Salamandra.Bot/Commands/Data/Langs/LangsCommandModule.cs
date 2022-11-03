@@ -22,16 +22,16 @@ namespace Salamandra.Bot.Commands.Data
 
             if (languageStr is null)
             {
-                await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} dans toutes les langues");
+                await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} dans toutes les langues...");
                 foreach (Language language in Enum.GetValues<Language>())
-                    await DiscordBot.Instance.Langs.CheckForNewerLangs(type, language);
+                    await DiscordBot.Instance.Langs.Launch(type, language);
                 await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check des langs {Formatter.Bold(typeStr)} dans toutes les langues terminé"));
             }
             else
             {
                 Language language = Enum.Parse<Language>(languageStr);
-                await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)}");
-                await DiscordBot.Instance.Langs.CheckForNewerLangs(type, language);
+                await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)}...");
+                await DiscordBot.Instance.Langs.Launch(type, language);
                 await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)} terminé"));
             }
         }

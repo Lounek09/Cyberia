@@ -33,7 +33,7 @@ namespace Salamandra.Utils
             }
             catch (Exception)
             {
-                message = "Error when execute command " + command + (string.IsNullOrEmpty(args) ? "" : "with args " + args);
+                message = $"Error when execute command {command}{(string.IsNullOrEmpty(args) ? "" : " with args " + args)}";
                 return false;
             }
         }

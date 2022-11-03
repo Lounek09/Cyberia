@@ -58,6 +58,11 @@ namespace Salamandra.Utils
             Log(message, Level.CRIT);
         }
 
+        public void Crit(Exception exception)
+        {
+            Log($"{exception.Message}\n{exception.StackTrace}", Level.CRIT);
+        }
+
         public void Error(string message)
         {
             Log(message, Level.ERROR);

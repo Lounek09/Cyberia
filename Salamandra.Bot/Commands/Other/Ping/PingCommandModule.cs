@@ -1,5 +1,4 @@
 ﻿using DSharpPlus.SlashCommands;
-
 namespace Salamandra.Bot.Commands.Other
 {
     public sealed class PingCommandModule : ApplicationCommandModule

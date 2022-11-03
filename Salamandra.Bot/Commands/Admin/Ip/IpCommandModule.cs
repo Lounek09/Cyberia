@@ -1,5 +1,7 @@
 ﻿using DSharpPlus.SlashCommands;
 
+using Salamandra.Api;
+
 namespace Salamandra.Bot.Commands.Admin
 {
     public sealed class IpCommandModule : ApplicationCommandModule

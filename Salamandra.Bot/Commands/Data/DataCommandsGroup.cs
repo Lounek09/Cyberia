@@ -9,6 +9,7 @@
 
             foreach (ulong guildId in guildsId)
             {
+                DiscordBot.Instance.SlashCommands.RegisterCommands<CytrusCommandModule>(guildId);
                 DiscordBot.Instance.SlashCommands.RegisterCommands<LangsCommandModule>(guildId);
                 DiscordBot.Instance.SlashCommands.RegisterCommands<ReloadCommandModule>(guildId);
             }

@@ -7,21 +7,31 @@ namespace Salamandra.Utils
 {
     public static class Json
     {
-        public static T Load<T>(string filePath)
+        public static T Load<T>(string json)
+        {
+            try
+            {
+                return JsonSerializer.Deserialize<T>(json)!;
+            }
+            catch (Exception e) when (e is JsonException or NotSupportedException or InvalidOperationException)
+            {
+                Console.WriteLine($"Error when deserialize '{Path.GetFileName(json)}'\n{e.Message}");
+            }
+
+            return Activator.CreateInstance<T>();
+        }
+
+        public static T LoadFromFile<T>(string filePath)
         {
             try
             {
                 string json = File.ReadAllText(filePath);
 
-                return JsonSerializer.Deserialize<T>(json)!;
+                return Load<T>(json);
             }
             catch (Exception e) when (e is FileNotFoundException or DirectoryNotFoundException)
             {
                 Console.WriteLine($"File not found for deserialization '{Path.GetFileName(filePath)}'\n{e.Message}");
-            }
-            catch (Exception e) when (e is JsonException or NotSupportedException or InvalidOperationException)
-            {
-                Console.WriteLine($"Error when deserialize '{Path.GetFileName(filePath)}'\n{e.Message}");
             }
 
             return Activator.CreateInstance<T>();

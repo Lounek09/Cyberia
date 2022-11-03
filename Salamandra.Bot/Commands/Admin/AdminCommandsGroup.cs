@@ -9,7 +9,6 @@
 
             foreach (ulong guildId in guildsId)
             {
-                DiscordBot.Instance.SlashCommands.RegisterCommands<DiffCommandModule>(guildId);
                 DiscordBot.Instance.SlashCommands.RegisterCommands<IpCommandModule>(guildId);
                 DiscordBot.Instance.SlashCommands.RegisterCommands<KillCommandModule>(guildId);
                 DiscordBot.Instance.SlashCommands.RegisterCommands<LeaveCommandModule>(guildId);

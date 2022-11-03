@@ -1,24 +1,31 @@
-﻿using System.Text;
+﻿global using Salamandra.Langs.Enums;
+global using Salamandra.Utils;
+
+using System.Text;
 
 namespace Salamandra.Langs
 {
     public sealed class DofusLangs
     {
-        public Flare Flare { get; set; }
+        public LangsConfig Config { get; private set; }
 
-        private readonly Logger _logger;
-        private readonly LangsConfig _config;
-        private readonly HttpClient _httpClient;
+        internal Logger Logger { get; private set; }
+        internal HttpClient HttpClient { get; private set; }
+
+        internal static DofusLangs Instance {
+            get => _instance is null ? throw new NullReferenceException("Build the Langs before !") : _instance;
+            private set => _instance = value;
+        }
+        private static DofusLangs? _instance;
 
         internal DofusLangs(Logger logger, LangsConfig config)
         {
-            _logger = logger;
-            _config = config;
-            _httpClient = new()
+            Logger = logger;
+            Config = config;
+            HttpClient = new()
             {
                 BaseAddress = new Uri(Constant.BASE_ADRESS)
             };
-            Flare = new(logger);
         }
 
         public static DofusLangs Build(Logger logger)
@@ -26,7 +33,8 @@ namespace Salamandra.Langs
             if (!File.Exists(Constant.CONFIG_PATH))
                 Json.Save(new LangsConfig(), Constant.CONFIG_PATH);
 
-            return new(logger, Json.Load<LangsConfig>(Constant.CONFIG_PATH));
+            _instance = new(logger, Json.LoadFromFile<LangsConfig>(Constant.CONFIG_PATH));
+            return _instance;
         }
 
         public event EventHandler<CheckLangStartedEventArgs>? CheckLangStarted;
@@ -40,7 +48,7 @@ namespace Salamandra.Langs
         /// <param name="language">The language to check to</param>
         /// <returns>The newer langs</returns>
         /// <exception cref="FormatException"></exception>
-        public async Task CheckForNewerLangs(LangType type, Language language)
+        public async Task Launch(LangType type, Language language)
         {
             CheckLangStarted?.Invoke(this, new CheckLangStartedEventArgs(type, language));
 
@@ -49,24 +57,24 @@ namespace Salamandra.Langs
             string? versionsFile = null;
             try
             {
-                using (HttpResponseMessage response = await _httpClient.GetAsync($"{route}/versions_{language.ToString().ToLower()}.txt").ConfigureAwait(false))
+                using (HttpResponseMessage response = await HttpClient.GetAsync($"{route}/versions_{language.ToString().ToLower()}.txt").ConfigureAwait(false))
                 {
                     response.EnsureSuccessStatusCode();
 
                     DateTimeOffset? lastModifiedHeader = response.Content.Headers.LastModified;
-                    long lastModified = _config.GetLastModifiedByLangTypeAndLanguage(type, language);
+                    long lastModified = Config.GetLastModifiedByLangTypeAndLanguage(type, language);
 
                     if (lastModifiedHeader.HasValue && lastModifiedHeader.Value.Ticks > lastModified)
                     {
-                        _config.SetLastModifiedByLangTypeAndLanguage(type, language, lastModifiedHeader.Value.Ticks);
-                        _config.Save();
+                        Config.SetLastModifiedByLangTypeAndLanguage(type, language, lastModifiedHeader.Value.Ticks);
+                        Config.Save();
                         versionsFile = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     }
                 }
             }
             catch (HttpRequestException e)
             {
-                _logger.Error($"Unable to find the versions_{language.ToString().ToLower()}.txt file for {type} langs\n{e.Message}");
+                Logger.Error($"Unable to find the versions_{language.ToString().ToLower()}.txt file for {type} langs\n{e.Message}");
             }
 
             if (string.IsNullOrEmpty(versionsFile))
@@ -75,7 +83,7 @@ namespace Salamandra.Langs
             string[] versionsFileArgs = versionsFile[3..].Replace(',', '_').Split("|");
             if (versionsFileArgs.Length == 0)
             {
-                _logger.Error($"The format of versions_{language.ToString().ToLower()}.txt is incorrect :\n{versionsFile}");
+                Logger.Error($"The format of versions_{language.ToString().ToLower()}.txt is incorrect :\n{versionsFile}");
                 return;
             }
 
@@ -90,7 +98,7 @@ namespace Salamandra.Langs
                     !langArgs[1].Equals(language.ToString().ToLower()) ||
                     !int.TryParse(langArgs[2], out int version))
                 {
-                    _logger.Error($"The format of version_{language.ToString().ToLower()}.txt is incorrect :\n{versionsFile}");
+                    Logger.Error($"The format of version_{language.ToString().ToLower()}.txt is incorrect :\n{versionsFile}");
                     continue;
                 }
                 string name = langArgs[0];
@@ -100,14 +108,13 @@ namespace Salamandra.Langs
 
                 if (!File.Exists(filePath))
                 {
-                    Lang lang = new(_logger, _httpClient, name, version, type, language, !Directory.Exists(directoryPath), filePath, directoryPath, fileRoute);
+                    Lang lang = new(name, version, type, language, !Directory.Exists(directoryPath), filePath, directoryPath, fileRoute);
                     langs.Add(lang);
                     NewerLangDetected?.Invoke(this, new NewerLangDetectedEventArgs(type, language, lang));
                 }
             }
 
             CheckLangFinished?.Invoke(this, new CheckLangFinishedEventArgs(type, language, langs));
-            return;
         }
 
         /// <summary>
@@ -120,7 +127,7 @@ namespace Salamandra.Langs
         {
             if (!File.Exists($"{lang.DirectoryPath}/current.as"))
             {
-                _logger.Error($"No extracted lang in '{lang.DirectoryPath}'");
+                Logger.Error($"No extracted lang in '{lang.DirectoryPath}'");
                 return false;
             }
 

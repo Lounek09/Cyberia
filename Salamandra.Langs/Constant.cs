@@ -19,5 +19,24 @@
                     return "lang";
             }
         }
+
+        public static string GetFlareExecutablePath()
+        {
+            string path = $"{OUTPUT_PATH}/flare";
+
+            if (OperatingSystem.IsWindows())
+                return $"{path}/flare.exe";
+            else if (OperatingSystem.IsLinux())
+            {
+                if (Environment.Is64BitOperatingSystem)
+                    return $"{path}/flare64";
+
+                return $"{path}/flare32";
+            }
+
+            PlatformNotSupportedException exception = new("Flare is only available in Windows or Linux (it's false but fuck mac)");
+            DofusLangs.Instance.Logger.Crit(exception);
+            throw exception;
+        }
     }
 }

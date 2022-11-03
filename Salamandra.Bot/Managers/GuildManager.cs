@@ -1,7 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
 
-namespace Salamandra.Bot.Manager
+namespace Salamandra.Bot.Managers
 {
     public static class GuildManager
     {
