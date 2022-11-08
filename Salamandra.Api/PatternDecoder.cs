@@ -11,25 +11,25 @@
             if (value.Length == 11)
             {
                 string ipCrypt = value[..8];
-                string portCrypt = value.Substring(8, 3);
+                string portCrypt = value[8..];
 
                 string ip = "";
                 int d1, d2;
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < ipCrypt.Length; i++)
                 {
                     d1 = ipCrypt[i] - 48;
                     i++;
                     d2 = ipCrypt[i] - 48;
                     ip += (d1 & 15) << 4 | d2 & 15;
-                    if (i < 7)
+                    if (i < ipCrypt.Length - 1)
                         ip += ".";
                 }
 
                 double port = 0;
-                for (int i = 0; i < 3; i++)
-                    port += Math.Pow(64, 2 - i) * Array.FindIndex(HASH, e => e == portCrypt[i]);
+                for (int i = 0; i < portCrypt.Length; i++)
+                    port += Math.Pow(64, 2 - i) * Array.IndexOf(HASH, portCrypt[i]);
 
-                return ip + ":" + port;
+                return $"{ip}:{port}";
             }
             else
                 throw new ArgumentException("L'ip encodée doit faire 11 caractères");
@@ -60,7 +60,7 @@
                 {
                     int length = description.Split("{")[1].Split("}")[0].Length;
                     description = description.Replace("{" + description.Split("{")[1][..length] + "}", "");
-                    description = description.Replace("#" + (b + 1), "");
+                    description = description.Replace($"#{b + 1}", "");
                 }
                 else
                 {
@@ -70,7 +70,7 @@
             }
 
             for (int i = 0; i < parameters.Length; i++)
-                description = description.Replace("#" + (i + 1), parameters[i]);
+                description = description.Replace($"#{i + 1}", parameters[i]);
 
             return description;
         }
