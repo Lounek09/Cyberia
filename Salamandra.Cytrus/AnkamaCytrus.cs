@@ -1,8 +1,5 @@
-﻿global using Salamandra.Utils;
-global using Salamandra.Cytrus.Models;
-
-using System.Net.Http;
-using System.Runtime.Serialization;
+﻿global using Salamandra.Cytrus.Models;
+global using Salamandra.Utils;
 
 namespace Salamandra.Cytrus
 {

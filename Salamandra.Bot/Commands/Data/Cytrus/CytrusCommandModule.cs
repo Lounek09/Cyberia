@@ -4,7 +4,6 @@ using DSharpPlus.SlashCommands;
 
 using Salamandra.Bot.Managers;
 using Salamandra.Cytrus.Models;
-using Salamandra.Langs.Enums;
 
 namespace Salamandra.Bot.Commands.Data
 {
@@ -39,7 +38,7 @@ namespace Salamandra.Bot.Commands.Data
                     content.Add(Formatter.Underline($"{platform.Key.Capitalize()} :"));
 
                     foreach (KeyValuePair<string, string> release in platform.Value)
-                        content.Add($" - {release.Key.Capitalize()} : {Formatter.InlineCode(release.Value)}\n");
+                        content.Add($" - {release.Key.Capitalize()} : {Formatter.InlineCode(release.Value)}");
                 }
 
                 embed.AddField($"{game.Value.Name.Capitalize()} ({game.Value.GameId})", string.Join("\n", content));

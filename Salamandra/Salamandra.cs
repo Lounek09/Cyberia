@@ -32,8 +32,8 @@ namespace Salamandra
         {
             await Bot.Launch();
 
-            LangsManager.Listen();
             CytrusManager.Listen();
+            LangsManager.Listen();
 
             await Task.Delay(-1);
         }
