@@ -70,12 +70,13 @@ namespace Salamandra.Cytrus
             if (string.IsNullOrEmpty(diff))
                 return;
 
+            //TODO: Decode manifest and diff game file
             Logger.Info($"Cytrus update detected :\n{diff}");
             CytrusData = Json.Load<CytrusData>(cytrus);
             NewCytrusDetected?.Invoke(this, new NewCytrusDetectedEventArgs(CytrusData, diff));
 
             if (File.Exists(Constant.CYTRUS_PATH))
-                File.Move(Constant.CYTRUS_PATH, $"{Constant.OUTPUT_PATH}/cytrus_{DateTime.Now:MMddyyyyHHmm}.json");
+                File.Move(Constant.CYTRUS_PATH, $"{Constant.OUTPUT_PATH}/cytrus_{DateTime.Now:yyyyMMddHHmm}.json");
             File.WriteAllText(Constant.CYTRUS_PATH, cytrus);
 
             CheckCytrusFinished?.Invoke(this, new());
