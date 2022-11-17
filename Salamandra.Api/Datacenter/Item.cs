@@ -63,20 +63,12 @@
         [NotNull]
         public int Price { get; set; }
 
-        [NotNull]
-        public string Craft { get; set; }
-
-        [NotNull]
-        public string Stats { get; set; }
-
         public Item()
         {
             Name = string.Empty;
             Description = string.Empty;
             WeaponInfos = string.Empty;
             Criterion = string.Empty;
-            Craft = string.Empty;
-            Stats = string.Empty;
         }
     }
 }
