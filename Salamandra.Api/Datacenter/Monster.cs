@@ -21,6 +21,12 @@
         [NotNull]
         public bool Kickable { get; set; }
 
+        [NotNull]
+        public bool IsBoss { get; set; }
+
+        [NotNull]
+        public bool IsVisibleInBigStoreSearch { get; set; }
+
         public Monster()
         {
             Name = string.Empty;
