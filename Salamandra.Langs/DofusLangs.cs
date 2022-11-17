@@ -140,7 +140,7 @@ namespace Salamandra.Langs
             List<KeyValuePair<int, string>> diffRows = new();
             foreach (KeyValuePair<int, string> row in currentRows)
             {
-                if (!oldRows.RemoveByValue(row.Value))
+                if (!oldRows.RemoveByValue(row.Value, true))
                     diffRows.Add(new(row.Key, $"+ {row.Value}"));
             }
             foreach (KeyValuePair<int, string> row in oldRows)
