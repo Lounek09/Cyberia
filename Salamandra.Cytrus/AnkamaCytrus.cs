@@ -3,9 +3,10 @@ global using Salamandra.Utils;
 
 namespace Salamandra.Cytrus
 {
-    public class AnkamaCytrus
+    public sealed class AnkamaCytrus
     {
         public CytrusData CytrusData { get; set; }
+        public CytrusData OldCytrusData { get; set; }
 
         internal Logger Logger { get; private set; }
         internal HttpClient HttpClient { get; private set; }
@@ -20,6 +21,7 @@ namespace Salamandra.Cytrus
         {
             Logger = logger;
             CytrusData = File.Exists(Constant.CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(Constant.CYTRUS_PATH) : new();
+            OldCytrusData = File.Exists(Constant.OLD_CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(Constant.OLD_CYTRUS_PATH) : new();
             HttpClient = new()
             {
                 BaseAddress = new Uri(Constant.BASE_ADRESS)
@@ -65,18 +67,18 @@ namespace Salamandra.Cytrus
             if (File.Exists(Constant.CYTRUS_PATH))
                 lastCytrus = File.ReadAllText(Constant.CYTRUS_PATH);
 
-            string diff = Json.Diff(cytrus, lastCytrus);
+            OldCytrusData = CytrusData;
+            CytrusData = Json.Load<CytrusData>(cytrus);
 
+            string diff = Json.Diff(cytrus, lastCytrus);
             if (string.IsNullOrEmpty(diff))
                 return;
 
-            //TODO: Decode manifest and diff game file
             Logger.Info($"Cytrus update detected :\n{diff}");
-            CytrusData = Json.Load<CytrusData>(cytrus);
-            NewCytrusDetected?.Invoke(this, new NewCytrusDetectedEventArgs(CytrusData, diff));
+            NewCytrusDetected?.Invoke(this, new NewCytrusDetectedEventArgs(CytrusData, OldCytrusData, diff));
 
             if (File.Exists(Constant.CYTRUS_PATH))
-                File.Move(Constant.CYTRUS_PATH, $"{Constant.OUTPUT_PATH}/cytrus_{DateTime.Now:yyyyMMddHHmm}.json");
+                File.Move(Constant.CYTRUS_PATH, Constant.OLD_CYTRUS_PATH, true);
             File.WriteAllText(Constant.CYTRUS_PATH, cytrus);
 
             CheckCytrusFinished?.Invoke(this, new());
@@ -86,11 +88,13 @@ namespace Salamandra.Cytrus
     public sealed class NewCytrusDetectedEventArgs : EventArgs
     {
         public CytrusData CytrusData { get; set; }
+        public CytrusData OldCytrusData { get; set; }
         public string Diff { get; set; }
 
-        public NewCytrusDetectedEventArgs(CytrusData cytrusData, string diff)
+        public NewCytrusDetectedEventArgs(CytrusData cytrusData, CytrusData oldCytrusData, string diff)
         {
             CytrusData = cytrusData;
+            OldCytrusData = oldCytrusData;
             Diff = diff;
         }
     }

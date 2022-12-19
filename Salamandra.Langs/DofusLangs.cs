@@ -80,7 +80,7 @@ namespace Salamandra.Langs
             if (string.IsNullOrEmpty(versionsFile))
                 return;
 
-            string[] versionsFileArgs = versionsFile[3..].Replace(',', '_').Split("|");
+            string[] versionsFileArgs = versionsFile[3..].Replace(',', '_').Split("|", StringSplitOptions.RemoveEmptyEntries);
             if (versionsFileArgs.Length == 0)
             {
                 Logger.Error($"The format of versions_{language.ToString().ToLower()}.txt is incorrect :\n{versionsFile}");
@@ -90,9 +90,6 @@ namespace Salamandra.Langs
             List<Lang> langs = new();
             foreach (string versionsFileArg in versionsFileArgs)
             {
-                if (string.IsNullOrWhiteSpace(versionsFileArg))
-                    continue;
-
                 string[] langArgs = versionsFileArg.Split('_');
                 if (langArgs.Length != 3 ||
                     !langArgs[1].Equals(language.ToString().ToLower()) ||
@@ -117,6 +114,7 @@ namespace Salamandra.Langs
             CheckLangFinished?.Invoke(this, new CheckLangFinishedEventArgs(type, language, langs));
         }
 
+        //TODO: Optimize lang diff, see Manifest diff in Cytrus project
         /// <summary>
         /// Diff the last extracted lang, see <see cref="ExtractLang"/>, in the directory of <paramref name="lang"/>.
         /// </summary>
@@ -137,17 +135,17 @@ namespace Salamandra.Langs
             index = 0;
             Dictionary<int, string> oldRows = File.Exists($"{lang.DirectoryPath}/old.as") ? File.ReadAllLines($"{lang.DirectoryPath}/old.as").ToDictionary(x => index++) : new();
 
-            List<KeyValuePair<int, string>> diffRows = new();
+            List<KeyValuePair<int, string>> diff = new();
             foreach (KeyValuePair<int, string> row in currentRows)
             {
                 if (!oldRows.RemoveByValue(row.Value, true))
-                    diffRows.Add(new(row.Key, $"+ {row.Value}"));
+                    diff.Add(new(row.Key, $"+ {row.Value}"));
             }
             foreach (KeyValuePair<int, string> row in oldRows)
-                diffRows.Add(new(row.Key, $"- {row.Value}"));
+                diff.Add(new(row.Key, $"- {row.Value}"));
 
-            if (diffRows.Count > 0)
-                File.WriteAllLines($"{lang.DirectoryPath}/diff.as", diffRows.OrderBy(x => x.Key).Select(x => x.Value), Encoding.UTF8);
+            if (diff.Count > 0)
+                File.WriteAllLines($"{lang.DirectoryPath}/diff.as", diff.OrderBy(x => x.Key).Select(x => x.Value), Encoding.UTF8);
             else
                 File.Delete($"{lang.DirectoryPath}/diff.as");
 

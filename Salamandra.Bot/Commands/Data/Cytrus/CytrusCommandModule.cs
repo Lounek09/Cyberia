@@ -2,14 +2,21 @@
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
+using Google.FlatBuffers;
+
 using Salamandra.Bot.Managers;
 using Salamandra.Cytrus.Models;
+using Salamandra.Cytrus.Models.FlatBuffers;
+
+using System.Diagnostics;
 
 namespace Salamandra.Bot.Commands.Data
 {
     [SlashCommandGroup("cytrus", "Cytrus")]
     public sealed class CytrusCommandModule : ApplicationCommandModule
     {
+        private readonly HttpClient _httpClient = new();
+
         [SlashCommand("check", "Lance un check de cytrus")]
         public async Task CheckCytrusCommand(InteractionContext ctx)
         {
@@ -37,7 +44,7 @@ namespace Salamandra.Bot.Commands.Data
                 {
                     content.Add(Formatter.Underline($"{platform.Key.Capitalize()} :"));
 
-                    foreach (KeyValuePair<string, string> release in platform.Value)
+                    foreach (KeyValuePair<string, string> release in game.Value.GetReleasesFromPlatform(platform.Key))
                         content.Add($" - {release.Key.Capitalize()} : {Formatter.InlineCode(release.Value)}");
                 }
 
@@ -45,6 +52,71 @@ namespace Salamandra.Bot.Commands.Data
             }
 
             await ctx.CreateResponseAsync(embed);
+        }
+
+        [SlashCommand("diff", "Liste les différences entre les fichiers de deux versions d'un jeu sur Cytrus")]
+        public async Task DiffCytrusCommand(InteractionContext ctx,
+            [Option("game", "Nom du jeu")]
+            [ChoiceProvider(typeof(CytrusGameChoiceProvider))]
+            string game,
+            [Option("platform", "Platform")]
+            [Autocomplete(typeof(CytrusPlatformAutocompleteProvider))]
+            string platform,
+            [Option("release_old", "Release de l'ancien client\"")]
+            [Autocomplete(typeof(CytrusReleaseAutocompleteProvider))]
+            string oldRelease,
+            [Option("version_old", "Version de l'ancien client")]
+            string oldVersion,
+            [Option("release_new", "Release du nouveau client")]
+            [Autocomplete(typeof(CytrusReleaseAutocompleteProvider))]
+            string newRelease,
+            [Option("version_new", "Version du nouveau client")]
+            string newVersion)
+        {
+            await ctx.CreateResponseAsync("👷", true);
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
+            string url1 = CytrusData.GetGameManifestUrl(game, platform, oldRelease, oldVersion);
+            Manifest client1;
+            try
+            {
+                byte[] metafile = await _httpClient.GetByteArrayAsync(url1);
+                ByteBuffer buffer = new(metafile);
+                client1 = Manifest.GetRootAsManifest(buffer);
+            }
+            catch (HttpRequestException)
+            {
+                await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Ancien client introuvable"));
+                return;
+            }
+
+            string url2 = CytrusData.GetGameManifestUrl(game, platform, newRelease, newVersion);
+            Manifest client2;
+            try
+            {
+                byte[] metafile = await _httpClient.GetByteArrayAsync(url2);
+                ByteBuffer buffer = new(metafile);
+                client2 = Manifest.GetRootAsManifest(buffer);
+            }
+            catch (HttpRequestException)
+            {
+                await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent("Nouveau client introuvable"));
+                return;
+            }
+
+            client2.DiffFiles(client1, out string outputPath);
+            stopwatch.Stop();
+
+            using (FileStream fileStream = System.IO.File.OpenRead(outputPath))
+            {
+                await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder()
+                                        .AddFile(fileStream)
+                                        .WithContent($"""
+                                                      Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform.Capitalize())} effectué en {stopwatch.ElapsedMilliseconds}ms
+                                                      {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
+                                                      """));
+            }
         }
     }
 }

@@ -3,7 +3,7 @@
     [Table("ItemsStats")]
     public sealed class ItemStats
     {
-        [PrimaryKey, NotNull] 
+        [PrimaryKey, NotNull]
         public int Id { get; set; }
 
         [NotNull]

@@ -1,0 +1,33 @@
+namespace Salamandra.Cytrus.Models.FlatBuffers;
+
+table Chunk {
+  hash:[byte];
+  size:long;
+  offset:long;
+}
+
+table File {
+  name:string;
+  size:long;
+  hash:[byte];
+  chunks:[Chunk];
+  executable:bool;
+  symlink:string;
+}
+
+table Bundle {
+  hash:[byte];
+  chunks:[Chunk];
+}
+
+table Fragment {
+  name:string;
+  files:[File];
+  bundles:[Bundle];
+}
+
+table Manifest {
+  fragments:[Fragment];
+}
+
+root_type Manifest;

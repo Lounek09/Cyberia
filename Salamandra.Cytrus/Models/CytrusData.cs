@@ -2,7 +2,7 @@
 
 namespace Salamandra.Cytrus.Models
 {
-    public class Game
+    public sealed class Game
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -25,6 +25,21 @@ namespace Salamandra.Cytrus.Models
             Assets = new();
             Platforms = new();
         }
+
+        public Dictionary<string, string> GetReleasesFromPlatform(string platform)
+        {
+            return Platforms.Where(x => x.Key.Equals(platform)).FirstOrDefault().Value;
+        }
+
+        public string GetVersionFromPlatformAndRelease(string platform, string release)
+        {
+            return GetReleasesFromPlatform(platform).Where(x => x.Key.Equals(release)).FirstOrDefault().Value;
+        }
+
+        public string GetManifestUrl(string platform, string release)
+        {
+            return $"{Constant.BASE_ADRESS}/{Name}/releases/{release}/{platform}/{GetVersionFromPlatformAndRelease(platform, release)}.manifest";
+        }
     }
 
     public sealed class CytrusData
@@ -42,6 +57,11 @@ namespace Salamandra.Cytrus.Models
         {
             Name = string.Empty;
             Games = new();
+        }
+
+        public static string GetGameManifestUrl(string game, string platform, string release, string version)
+        {
+            return $"{Constant.BASE_ADRESS}/{game}/releases/{release}/{platform}/{version}.manifest";
         }
     }
 }
