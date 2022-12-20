@@ -2,13 +2,8 @@
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-using Google.FlatBuffers;
-
 using Salamandra.Bot.Managers;
 using Salamandra.Cytrus.Models;
-using Salamandra.Cytrus.Models.FlatBuffers;
-
-using System.Diagnostics;
 
 namespace Salamandra.Bot.Commands.Data
 {

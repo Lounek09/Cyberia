@@ -40,24 +40,24 @@ namespace Salamandra.Managers
                     if (!game.Value.TryGetProperty("platforms", out JsonElement platforms))
                         return;
 
-                    foreach (JsonProperty platform in platforms.EnumerateObject())
+                    if (!platforms.TryGetProperty("windows", out JsonElement platform))
+                        return;
+
+                    foreach (JsonProperty release in platform.EnumerateObject())
                     {
-                        foreach (JsonProperty release in platform.Value.EnumerateObject())
-                        {
-                            if (!release.Value.TryGetProperty("-", out JsonElement minus))
-                                return;
+                        if (!release.Value.TryGetProperty("-", out JsonElement minus))
+                            return;
 
-                            if (!release.Value.TryGetProperty("+", out JsonElement plus))
-                                return;
+                        if (!release.Value.TryGetProperty("+", out JsonElement plus))
+                            return;
 
-                            string? oldVersion = minus.GetString();
-                            string? newVersion = plus.GetString();
+                        string? oldVersion = minus.GetString();
+                        string? newVersion = plus.GetString();
 
-                            if (string.IsNullOrEmpty(oldVersion) || string.IsNullOrEmpty(newVersion))
-                                return;
+                        if (string.IsNullOrEmpty(oldVersion) || string.IsNullOrEmpty(newVersion))
+                            return;
 
-                            await channel.SendCytrusManifestDiffMessage(game.Name, platform.Name, release.Name, oldVersion, release.Name, newVersion);
-                        }
+                        await channel.SendCytrusManifestDiffMessage(game.Name, "windows", release.Name, oldVersion, release.Name, newVersion);
                     }
                 }
             }

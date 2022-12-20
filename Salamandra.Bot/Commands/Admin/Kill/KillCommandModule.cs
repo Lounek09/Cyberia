@@ -1,5 +1,4 @@
-﻿using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+﻿using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
 
 namespace Salamandra.Bot.Commands.Admin

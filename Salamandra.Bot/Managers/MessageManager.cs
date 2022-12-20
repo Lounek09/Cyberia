@@ -2,8 +2,10 @@
 using DSharpPlus.Entities;
 
 using Google.FlatBuffers;
-using Salamandra.Cytrus.Models.FlatBuffers;
+
 using Salamandra.Cytrus.Models;
+using Salamandra.Cytrus.Models.FlatBuffers;
+
 using System.Diagnostics;
 
 namespace Salamandra.Bot.Managers
@@ -110,7 +112,7 @@ namespace Salamandra.Bot.Managers
                 await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
                 return;
             }
-            
+
             string url2 = CytrusData.GetGameManifestUrl(game, platform, newRelease, newVersion);
             Manifest client2;
             try
