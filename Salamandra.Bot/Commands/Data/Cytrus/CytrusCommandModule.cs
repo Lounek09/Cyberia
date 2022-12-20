@@ -62,19 +62,19 @@ namespace Salamandra.Bot.Commands.Data
             [Option("platform", "Platform")]
             [Autocomplete(typeof(CytrusPlatformAutocompleteProvider))]
             string platform,
-            [Option("release_old", "Release de l'ancien client\"")]
+            [Option("old_release", "Release de l'ancien client\"")]
             [Autocomplete(typeof(CytrusReleaseAutocompleteProvider))]
             string oldRelease,
-            [Option("version_old", "Version de l'ancien client")]
+            [Option("old_version", "Version de l'ancien client")]
+            [Autocomplete(typeof(CytrusOldVersionAutocompleteProvider))]
             string oldVersion,
-            [Option("release_new", "Release du nouveau client")]
+            [Option("new_release", "Release du nouveau client")]
             [Autocomplete(typeof(CytrusReleaseAutocompleteProvider))]
             string newRelease,
-            [Option("version_new", "Version du nouveau client")]
+            [Option("new_version", "Version du nouveau client")]
+            [Autocomplete(typeof(CytrusNewVersionAutocompleteProvider))]
             string newVersion)
         {
-            await ctx.CreateResponseAsync("👷", true);
-
             Stopwatch stopwatch = Stopwatch.StartNew();
 
             string url1 = CytrusData.GetGameManifestUrl(game, platform, oldRelease, oldVersion);
@@ -87,7 +87,7 @@ namespace Salamandra.Bot.Commands.Data
             }
             catch (HttpRequestException)
             {
-                await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Ancien client introuvable"));
+                await ctx.CreateResponseAsync($"Ancien client introuvable");
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace Salamandra.Bot.Commands.Data
             }
             catch (HttpRequestException)
             {
-                await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent("Nouveau client introuvable"));
+                await ctx.CreateResponseAsync("Nouveau client introuvable");
                 return;
             }
 
@@ -110,12 +110,12 @@ namespace Salamandra.Bot.Commands.Data
 
             using (FileStream fileStream = System.IO.File.OpenRead(outputPath))
             {
-                await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder()
-                                        .AddFile(fileStream)
-                                        .WithContent($"""
-                                                      Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform.Capitalize())} effectué en {stopwatch.ElapsedMilliseconds}ms
-                                                      {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
-                                                      """));
+                await ctx.CreateResponseAsync(new DiscordInteractionResponseBuilder()
+                                              .AddFile(fileStream)
+                                              .WithContent($"""
+                                                            Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform.Capitalize())} effectué en {stopwatch.ElapsedMilliseconds}ms
+                                                            {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
+                                                            """));
             }
         }
     }

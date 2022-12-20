@@ -11,8 +11,6 @@ namespace Salamandra.Bot.Managers
 {
     public static class CommandManager
     {
-        public const int MIN_LENGTH_AUTOCOMPLETE = 2;
-
         public static void RegisterCommands()
         {
             AdminCommandsGroup.Register(650835844369743884);

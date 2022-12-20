@@ -14,7 +14,6 @@ namespace Salamandra.Langs
 
         internal static DofusLangs Instance {
             get => _instance is null ? throw new NullReferenceException("Build the Langs before !") : _instance;
-            private set => _instance = value;
         }
         private static DofusLangs? _instance;
 
@@ -33,7 +32,7 @@ namespace Salamandra.Langs
             if (!File.Exists(Constant.CONFIG_PATH))
                 Json.Save(new LangsConfig(), Constant.CONFIG_PATH);
 
-            _instance = new(logger, Json.LoadFromFile<LangsConfig>(Constant.CONFIG_PATH));
+            _instance ??= new(logger, Json.LoadFromFile<LangsConfig>(Constant.CONFIG_PATH));
             return _instance;
         }
 

@@ -5,14 +5,16 @@ namespace Salamandra.Bot.Commands
 {
     public abstract class AutocompleteProvider : IAutocompleteProvider
     {
-        protected static string? GetValueFromOption(AutocompleteContext ctx, string name)
+        public const int MIN_LENGTH_AUTOCOMPLETE = 2;
+
+        protected static T? GetValueFromOption<T>(AutocompleteContext ctx, string name)
         {
             DiscordInteractionDataOption? gameOption = ctx.Options.FirstOrDefault(x => x.Name.Equals(name));
 
-            if (gameOption is not null)
-                return gameOption.Value.ToString();
+            if (gameOption is not null && gameOption.Value is T value)
+                return value;
 
-            return null;
+            return default;
         }
 
         public abstract Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx);

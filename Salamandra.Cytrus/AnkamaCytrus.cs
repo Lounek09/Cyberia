@@ -13,7 +13,6 @@ namespace Salamandra.Cytrus
 
         internal static AnkamaCytrus Instance {
             get => _instance is null ? throw new NullReferenceException("Build Cytrus before !") : _instance;
-            private set => _instance = value;
         }
         private static AnkamaCytrus? _instance;
 
@@ -30,7 +29,7 @@ namespace Salamandra.Cytrus
 
         public static AnkamaCytrus Build(Logger logger)
         {
-            _instance = new(logger);
+            _instance ??= new(logger);
             return _instance;
         }
 

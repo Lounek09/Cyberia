@@ -12,7 +12,7 @@ namespace Salamandra.Bot.Commands.Data
             string? value = ctx.OptionValue.ToString();
             if (value is not null)
             {
-                string? game = GetValueFromOption(ctx, "game");
+                string? game = GetValueFromOption<string>(ctx, "game");
 
                 if (!string.IsNullOrEmpty(game))
                 {

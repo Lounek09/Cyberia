@@ -26,7 +26,6 @@ namespace Salamandra.Bot
 
         internal static DiscordBot Instance {
             get => _instance is null ? throw new NullReferenceException("Build the Bot before !") : _instance;
-            private set => _instance = value;
         }
         private static DiscordBot? _instance;
 
@@ -67,7 +66,7 @@ namespace Salamandra.Bot
 
         public static DiscordBot Build(Logger logger, AnkamaCytrus cytrus, DofusLangs langs, DofusApi api)
         {
-            _instance = new(logger, cytrus, langs, api);
+            _instance ??= new(logger, cytrus, langs, api);
             return _instance;
         }
 

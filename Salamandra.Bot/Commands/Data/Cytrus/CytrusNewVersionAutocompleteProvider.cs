@@ -3,7 +3,7 @@ using DSharpPlus.SlashCommands;
 
 namespace Salamandra.Bot.Commands.Data
 {
-    public sealed class CytrusReleaseAutocompleteProvider : AutocompleteProvider
+    public sealed class CytrusNewVersionAutocompleteProvider : AutocompleteProvider
     {
         public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
         {
@@ -14,11 +14,12 @@ namespace Salamandra.Bot.Commands.Data
             {
                 string? game = GetValueFromOption<string>(ctx, "game");
                 string? platform = GetValueFromOption<string>(ctx, "platform");
+                string? release = GetValueFromOption<string>(ctx, "new_release");
 
-                if (!string.IsNullOrEmpty(game) && !string.IsNullOrEmpty(platform))
+                if (!string.IsNullOrEmpty(game) && !string.IsNullOrEmpty(platform) && !string.IsNullOrEmpty(release))
                 {
-                    foreach (KeyValuePair<string, string> release in DiscordBot.Instance.Cytrus.CytrusData.Games[game].GetReleasesFromPlatform(platform))
-                        choices.Add(new(release.Key.Capitalize(), release.Key));
+                    string version = DiscordBot.Instance.Cytrus.CytrusData.Games[game].GetVersionFromPlatformAndRelease(platform, release);
+                    choices.Add(new(version, version));
                 }
             }
 
