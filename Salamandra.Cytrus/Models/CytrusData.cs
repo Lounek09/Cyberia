@@ -31,7 +31,7 @@ namespace Salamandra.Cytrus.Models
             return Platforms.Where(x => x.Key.Equals(platform)).FirstOrDefault().Value;
         }
 
-        public string GetVersionFromPlatformAndRelease(string platform, string release)
+        public string? GetVersionFromPlatformAndRelease(string platform, string release)
         {
             return GetReleasesFromPlatform(platform).Where(x => x.Key.Equals(release)).FirstOrDefault().Value;
         }

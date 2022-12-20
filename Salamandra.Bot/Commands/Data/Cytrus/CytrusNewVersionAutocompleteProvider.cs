@@ -18,8 +18,10 @@ namespace Salamandra.Bot.Commands.Data
 
                 if (!string.IsNullOrEmpty(game) && !string.IsNullOrEmpty(platform) && !string.IsNullOrEmpty(release))
                 {
-                    string version = DiscordBot.Instance.Cytrus.CytrusData.Games[game].GetVersionFromPlatformAndRelease(platform, release);
-                    choices.Add(new(version, version));
+                    string? version = DiscordBot.Instance.Cytrus.CytrusData.Games[game].GetVersionFromPlatformAndRelease(platform, release);
+
+                    if (!string.IsNullOrEmpty(version))
+                        choices.Add(new(version, version));
                 }
             }
 
