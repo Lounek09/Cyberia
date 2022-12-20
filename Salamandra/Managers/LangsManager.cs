@@ -73,7 +73,7 @@ namespace Salamandra.Managers
                     if (File.Exists($"{lang.DirectoryPath}/diff.as"))
                     {
                         fileStream = File.OpenRead($"{lang.DirectoryPath}/diff.as");
-                        message.WithFile("diff.as", fileStream);
+                        message.AddFile("diff.as", fileStream);
                     }
 
                     await MessageManager.SendMessage(thread, message, fileStream);

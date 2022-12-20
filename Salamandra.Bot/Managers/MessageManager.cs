@@ -36,7 +36,7 @@ namespace Salamandra.Bot.Managers
         public static async Task SendFile(DiscordChannel channel, string filePath)
         {
             using (FileStream fileStream = File.OpenRead(filePath))
-                await SendMessage(channel, new DiscordMessageBuilder().WithFile(Path.GetFileName(filePath), fileStream));
+                await SendMessage(channel, new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
         }
 
         public static async Task SendLogMessage(string content)
