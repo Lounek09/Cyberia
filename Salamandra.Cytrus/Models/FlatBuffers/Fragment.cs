@@ -93,7 +93,7 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
                     GameFile oldFile = oldFiles[oldKey];
 
                     if (!file.Value.GetHashArray().SequenceEqual(oldFile.GetHashArray()))
-                        diff.Add(new(file.Key, $"~ {file.Value.Name} ({oldFile.Size} -> {file.Value.Size})"));
+                        diff.Add(new(file.Key, $"~ {file.Value.Name} {(oldFile.Size == file.Value.Size ? "" : $"({oldFile.Size} -> {file.Value.Size})")}"));
 
                     processedKeys.Add(oldKey);
                 }
