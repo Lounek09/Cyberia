@@ -12,10 +12,11 @@ namespace Salamandra.Bot.Commands.Admin
         {
             await ctx.CreateResponseAsync("🔃", true);
 
-            DiscordActivity activity = new("redémarrage en cours", ActivityType.Playing);
-            await DiscordBot.Instance.Client.UpdateStatusAsync(activity);
+            await DiscordBot.Instance.Client.UpdateStatusAsync(new("redémarrage en cours", ActivityType.Playing));
 
-            ExecuteCmd.ExecuteCommand("sudo", "systemctl restart salamandra", out _);
+            await DiscordBot.Instance.Client.DisconnectAsync();
+
+            await DiscordBot.Instance.Client.ConnectAsync(new("Dofus Retro", ActivityType.Playing));
         }
     }
 }

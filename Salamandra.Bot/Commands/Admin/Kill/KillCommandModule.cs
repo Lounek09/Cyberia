@@ -15,7 +15,7 @@ namespace Salamandra.Bot.Commands.Admin
             DiscordActivity activity = new("se suicide", ActivityType.Playing);
             await DiscordBot.Instance.Client.UpdateStatusAsync(activity);
 
-            ExecuteCmd.ExecuteCommand("sudo", "systemctl stop salamandra", out _);
+            await DiscordBot.Instance.Client.DisconnectAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DSharpPlus.Entities;
+﻿using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
 
@@ -18,7 +19,7 @@ namespace Salamandra.Bot.Commands.Admin
                 await guild.LeaveAsync();
 
                 if (guild.Id != ctx.Guild.Id)
-                    await ctx.CreateResponseAsync("Bot kick du discord **" + guild.Name + "** (" + guild.Id + ") !");
+                    await ctx.CreateResponseAsync($"Bot kick du discord {Formatter.Bold(guild.Name)} ({guild.Id}) !");
             }
             catch
             {
