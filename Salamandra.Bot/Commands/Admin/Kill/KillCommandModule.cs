@@ -12,9 +12,6 @@ namespace Salamandra.Bot.Commands.Admin
         {
             await ctx.CreateResponseAsync("💀", true);
 
-            DiscordActivity activity = new("se suicide", ActivityType.Playing);
-            await DiscordBot.Instance.Client.UpdateStatusAsync(activity);
-
             await DiscordBot.Instance.Client.DisconnectAsync();
         }
     }

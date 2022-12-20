@@ -12,8 +12,6 @@ namespace Salamandra.Bot.Commands.Admin
         {
             await ctx.CreateResponseAsync("🔃", true);
 
-            await DiscordBot.Instance.Client.UpdateStatusAsync(new("redémarrage en cours", ActivityType.Playing));
-
             await DiscordBot.Instance.Client.DisconnectAsync();
 
             await DiscordBot.Instance.Client.ConnectAsync(new("Dofus Retro", ActivityType.Playing));
