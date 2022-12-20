@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\FlatBuffers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Google.FlatBuffers" Version="22.12.6" />
   </ItemGroup>
 

@@ -7,6 +7,7 @@
         public bool EnableCheckBetaLang { get; set; }
         public bool EnableCheckTemporisLang { get; set; }
         public bool EnableCheckCytrus { get; set; }
+        public bool EnableAutomaticCytrusManifestDiff { get; set; }
 
         public Config()
         {

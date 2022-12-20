@@ -7,5 +7,6 @@
   "LogChannelId": 0,
   "CommandErrorChannelId": 0,
   "LangChannelId": 0,
-  "CytrusChannelId": 0
+  "CytrusChannelId": 0,
+  "CytrusManifestDiffChannelId": 0
 }

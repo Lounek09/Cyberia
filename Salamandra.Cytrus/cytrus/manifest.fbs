@@ -6,7 +6,7 @@ table Chunk {
   offset:long;
 }
 
-table File {
+table GameFile {
   name:string;
   size:long;
   hash:[byte];
@@ -22,7 +22,7 @@ table Bundle {
 
 table Fragment {
   name:string;
-  files:[File];
+  files:[GameFile];
   bundles:[Bundle];
 }
 

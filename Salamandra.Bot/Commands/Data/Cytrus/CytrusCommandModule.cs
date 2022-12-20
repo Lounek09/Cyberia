@@ -15,8 +15,6 @@ namespace Salamandra.Bot.Commands.Data
     [SlashCommandGroup("cytrus", "Cytrus")]
     public sealed class CytrusCommandModule : ApplicationCommandModule
     {
-        private readonly HttpClient _httpClient = new();
-
         [SlashCommand("check", "Lance un check de cytrus")]
         public async Task CheckCytrusCommand(InteractionContext ctx)
         {
@@ -75,48 +73,9 @@ namespace Salamandra.Bot.Commands.Data
             [Autocomplete(typeof(CytrusNewVersionAutocompleteProvider))]
             string newVersion)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            await ctx.CreateResponseAsync("👷", true);
 
-            string url1 = CytrusData.GetGameManifestUrl(game, platform, oldRelease, oldVersion);
-            Manifest client1;
-            try
-            {
-                byte[] metafile = await _httpClient.GetByteArrayAsync(url1);
-                ByteBuffer buffer = new(metafile);
-                client1 = Manifest.GetRootAsManifest(buffer);
-            }
-            catch (HttpRequestException)
-            {
-                await ctx.CreateResponseAsync($"Ancien client introuvable");
-                return;
-            }
-
-            string url2 = CytrusData.GetGameManifestUrl(game, platform, newRelease, newVersion);
-            Manifest client2;
-            try
-            {
-                byte[] metafile = await _httpClient.GetByteArrayAsync(url2);
-                ByteBuffer buffer = new(metafile);
-                client2 = Manifest.GetRootAsManifest(buffer);
-            }
-            catch (HttpRequestException)
-            {
-                await ctx.CreateResponseAsync("Nouveau client introuvable");
-                return;
-            }
-
-            client2.DiffFiles(client1, out string outputPath);
-            stopwatch.Stop();
-
-            using (FileStream fileStream = System.IO.File.OpenRead(outputPath))
-            {
-                await ctx.CreateResponseAsync(new DiscordInteractionResponseBuilder()
-                                              .AddFile(fileStream)
-                                              .WithContent($"""
-                                                            Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform.Capitalize())} effectué en {stopwatch.ElapsedMilliseconds}ms
-                                                            {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
-                                                            """));
-            }
+            await ctx.Channel.SendCytrusManifestDiffMessage(game, platform, oldRelease, oldVersion, newRelease, newVersion);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Salamandra.Bot
         public ulong CommandErrorChannelId { get; set; }
         public ulong LangChannelId { get; set; }
         public ulong CytrusChannelId { get; set; }
+        public ulong CytrusManifestDiffChannelId { get; set; }
 
         public BotConfig()
         {
@@ -64,6 +65,18 @@ namespace Salamandra.Bot
             try
             {
                 return await DiscordBot.Instance.Client.GetChannelAsync(CytrusChannelId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<DiscordChannel?> GetCytrusManifestDiffChannel()
+        {
+            try
+            {
+                return await DiscordBot.Instance.Client.GetChannelAsync(CytrusManifestDiffChannelId);
             }
             catch
             {

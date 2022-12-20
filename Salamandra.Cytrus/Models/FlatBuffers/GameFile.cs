@@ -9,15 +9,15 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
     using global::System.Collections.Generic;
     using global::Google.FlatBuffers;
 
-    public struct File : IFlatbufferObject
+    public struct GameFile : IFlatbufferObject
     {
         private Table __p;
         public ByteBuffer ByteBuffer { get { return __p.bb; } }
         public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_22_12_06(); }
-        public static File GetRootAsFile(ByteBuffer _bb) { return GetRootAsFile(_bb, new File()); }
-        public static File GetRootAsFile(ByteBuffer _bb, File obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
+        public static GameFile GetRootAsFile(ByteBuffer _bb) { return GetRootAsFile(_bb, new GameFile()); }
+        public static GameFile GetRootAsFile(ByteBuffer _bb, GameFile obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
         public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
-        public File __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
+        public GameFile __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
         public string Name { get { int o = __p.__offset(4); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
 #if ENABLE_SPAN_T
@@ -46,7 +46,7 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
     #endif
         public byte[] GetSymlinkArray() { return __p.__vector_as_array<byte>(14); }
 
-        public static Offset<Salamandra.Cytrus.Models.FlatBuffers.File> CreateFile(FlatBufferBuilder builder,
+        public static Offset<Salamandra.Cytrus.Models.FlatBuffers.GameFile> CreateFile(FlatBufferBuilder builder,
             StringOffset nameOffset = default(StringOffset),
             long size = 0,
             VectorOffset hashOffset = default(VectorOffset),
@@ -54,13 +54,13 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
             bool executable = false,
             StringOffset symlinkOffset = default(StringOffset)) {
             builder.StartTable(6);
-            File.AddSize(builder, size);
-            File.AddSymlink(builder, symlinkOffset);
-            File.AddChunks(builder, chunksOffset);
-            File.AddHash(builder, hashOffset);
-            File.AddName(builder, nameOffset);
-            File.AddExecutable(builder, executable);
-            return File.EndFile(builder);
+            GameFile.AddSize(builder, size);
+            GameFile.AddSymlink(builder, symlinkOffset);
+            GameFile.AddChunks(builder, chunksOffset);
+            GameFile.AddHash(builder, hashOffset);
+            GameFile.AddName(builder, nameOffset);
+            GameFile.AddExecutable(builder, executable);
+            return GameFile.EndFile(builder);
         }
 
         public static void StartFile(FlatBufferBuilder builder) { builder.StartTable(6); }
@@ -80,9 +80,9 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
         public static void StartChunksVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(4, numElems, 4); }
         public static void AddExecutable(FlatBufferBuilder builder, bool executable) { builder.AddBool(4, executable, false); }
         public static void AddSymlink(FlatBufferBuilder builder, StringOffset symlinkOffset) { builder.AddOffset(5, symlinkOffset.Value, 0); }
-        public static Offset<Salamandra.Cytrus.Models.FlatBuffers.File> EndFile(FlatBufferBuilder builder) {
+        public static Offset<Salamandra.Cytrus.Models.FlatBuffers.GameFile> EndFile(FlatBufferBuilder builder) {
             int o = builder.EndTable();
-            return new Offset<Salamandra.Cytrus.Models.FlatBuffers.File>(o);
+            return new Offset<Salamandra.Cytrus.Models.FlatBuffers.GameFile>(o);
         }
     }
 }

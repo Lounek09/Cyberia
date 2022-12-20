@@ -76,7 +76,7 @@ namespace Salamandra.Managers
                         message.AddFile("diff.as", fileStream);
                     }
 
-                    await MessageManager.SendMessage(thread, message, fileStream);
+                    await thread.SendMessage(message, fileStream);
                     await rateLimite;
                 }
             }

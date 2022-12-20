@@ -26,7 +26,7 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
         public ArraySegment<byte>? GetNameBytes() { return __p.__vector_as_arraysegment(4); }
 #endif
         public byte[] GetNameArray() { return __p.__vector_as_array<byte>(4); }
-        public Salamandra.Cytrus.Models.FlatBuffers.File? Files(int j) { int o = __p.__offset(6); return o != 0 ? (Salamandra.Cytrus.Models.FlatBuffers.File?)(new Salamandra.Cytrus.Models.FlatBuffers.File()).__assign(__p.__indirect(__p.__vector(o) + j * 4), __p.bb) : null; }
+        public Salamandra.Cytrus.Models.FlatBuffers.GameFile? Files(int j) { int o = __p.__offset(6); return o != 0 ? (Salamandra.Cytrus.Models.FlatBuffers.GameFile?)(new Salamandra.Cytrus.Models.FlatBuffers.GameFile()).__assign(__p.__indirect(__p.__vector(o) + j * 4), __p.bb) : null; }
         public int FilesLength { get { int o = __p.__offset(6); return o != 0 ? __p.__vector_len(o) : 0; } }
         public Salamandra.Cytrus.Models.FlatBuffers.Bundle? Bundles(int j) { int o = __p.__offset(8); return o != 0 ? (Salamandra.Cytrus.Models.FlatBuffers.Bundle?)(new Salamandra.Cytrus.Models.FlatBuffers.Bundle()).__assign(__p.__indirect(__p.__vector(o) + j * 4), __p.bb) : null; }
         public int BundlesLength { get { int o = __p.__offset(8); return o != 0 ? __p.__vector_len(o) : 0; } }
@@ -45,10 +45,10 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
         public static void StartFragment(FlatBufferBuilder builder) { builder.StartTable(3); }
         public static void AddName(FlatBufferBuilder builder, StringOffset nameOffset) { builder.AddOffset(0, nameOffset.Value, 0); }
         public static void AddFiles(FlatBufferBuilder builder, VectorOffset filesOffset) { builder.AddOffset(1, filesOffset.Value, 0); }
-        public static VectorOffset CreateFilesVector(FlatBufferBuilder builder, Offset<Salamandra.Cytrus.Models.FlatBuffers.File>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
-        public static VectorOffset CreateFilesVectorBlock(FlatBufferBuilder builder, Offset<Salamandra.Cytrus.Models.FlatBuffers.File>[] data) { builder.StartVector(4, data.Length, 4); builder.Add(data); return builder.EndVector(); }
-        public static VectorOffset CreateFilesVectorBlock(FlatBufferBuilder builder, ArraySegment<Offset<Salamandra.Cytrus.Models.FlatBuffers.File>> data) { builder.StartVector(4, data.Count, 4); builder.Add(data); return builder.EndVector(); }
-        public static VectorOffset CreateFilesVectorBlock(FlatBufferBuilder builder, IntPtr dataPtr, int sizeInBytes) { builder.StartVector(1, sizeInBytes, 1); builder.Add<Offset<Salamandra.Cytrus.Models.FlatBuffers.File>>(dataPtr, sizeInBytes); return builder.EndVector(); }
+        public static VectorOffset CreateFilesVector(FlatBufferBuilder builder, Offset<Salamandra.Cytrus.Models.FlatBuffers.GameFile>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
+        public static VectorOffset CreateFilesVectorBlock(FlatBufferBuilder builder, Offset<Salamandra.Cytrus.Models.FlatBuffers.GameFile>[] data) { builder.StartVector(4, data.Length, 4); builder.Add(data); return builder.EndVector(); }
+        public static VectorOffset CreateFilesVectorBlock(FlatBufferBuilder builder, ArraySegment<Offset<Salamandra.Cytrus.Models.FlatBuffers.GameFile>> data) { builder.StartVector(4, data.Count, 4); builder.Add(data); return builder.EndVector(); }
+        public static VectorOffset CreateFilesVectorBlock(FlatBufferBuilder builder, IntPtr dataPtr, int sizeInBytes) { builder.StartVector(1, sizeInBytes, 1); builder.Add<Offset<Salamandra.Cytrus.Models.FlatBuffers.GameFile>>(dataPtr, sizeInBytes); return builder.EndVector(); }
         public static void StartFilesVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(4, numElems, 4); }
         public static void AddBundles(FlatBufferBuilder builder, VectorOffset bundlesOffset) { builder.AddOffset(2, bundlesOffset.Value, 0); }
         public static VectorOffset CreateBundlesVector(FlatBufferBuilder builder, Offset<Salamandra.Cytrus.Models.FlatBuffers.Bundle>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
@@ -61,9 +61,9 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
             return new Offset<Salamandra.Cytrus.Models.FlatBuffers.Fragment>(o);
         }
 
-        public Dictionary<int, File> GetFiles()
+        public Dictionary<int, GameFile> GetFiles()
         {
-            Dictionary<int, File> files = new();
+            Dictionary<int, GameFile> files = new();
 
             for (int i = 0; i < FilesLength; i++)
                 files.Add(i, Files(i).Value);
@@ -78,19 +78,19 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
                 new(-1,  $"// {Name.ToUpper()} \\\\")
             };
 
-            Dictionary<int, File> currentFiles = GetFiles();
-            Dictionary<int, File> oldFiles = model.GetFiles();
+            Dictionary<int, GameFile> currentFiles = GetFiles();
+            Dictionary<int, GameFile> oldFiles = model.GetFiles();
 
             Dictionary<string, int> oldFileKeys = new Dictionary<string, int>();
-            foreach (KeyValuePair<int, File> file in oldFiles)
+            foreach (KeyValuePair<int, GameFile> file in oldFiles)
                 oldFileKeys[file.Value.Name] = file.Key;
 
             HashSet<int> processedKeys = new HashSet<int>();
-            foreach (KeyValuePair<int, File> file in currentFiles)
+            foreach (KeyValuePair<int, GameFile> file in currentFiles)
             {
                 if (oldFileKeys.TryGetValue(file.Value.Name, out int oldKey))
                 {
-                    File oldFile = oldFiles[oldKey];
+                    GameFile oldFile = oldFiles[oldKey];
 
                     if (!file.Value.GetHashArray().SequenceEqual(oldFile.GetHashArray()))
                         diff.Add(new(file.Key, $"~ {file.Value.Name} ({oldFile.Size} -> {file.Value.Size})"));

@@ -1,11 +1,16 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 
+using Google.FlatBuffers;
+using Salamandra.Cytrus.Models.FlatBuffers;
+using Salamandra.Cytrus.Models;
+using System.Diagnostics;
+
 namespace Salamandra.Bot.Managers
 {
     public static class MessageManager
     {
-        public static async Task SendMessage(DiscordChannel channel, DiscordMessageBuilder message, params FileStream?[] fileStreams)
+        public static async Task SendMessage(this DiscordChannel channel, DiscordMessageBuilder message, params FileStream?[] fileStreams)
         {
             Permissions permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
 
@@ -33,10 +38,10 @@ namespace Salamandra.Bot.Managers
                 fileStream?.Dispose();
         }
 
-        public static async Task SendFile(DiscordChannel channel, string filePath)
+        public static async Task SendFile(this DiscordChannel channel, string filePath)
         {
-            using (FileStream fileStream = File.OpenRead(filePath))
-                await SendMessage(channel, new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
+            using (FileStream fileStream = System.IO.File.OpenRead(filePath))
+                await channel.SendMessage(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
         }
 
         public static async Task SendLogMessage(string content)
@@ -49,7 +54,7 @@ namespace Salamandra.Bot.Managers
                 return;
             }
 
-            await SendMessage(logChannel, new DiscordMessageBuilder().WithContent(content));
+            await logChannel.SendMessage(new DiscordMessageBuilder().WithContent(content));
         }
 
         public static async Task SendCommandErrorMessage(string content)
@@ -62,10 +67,10 @@ namespace Salamandra.Bot.Managers
                 return;
             }
 
-            await SendMessage(commandErrorChannel, new DiscordMessageBuilder().WithContent(content));
+            await commandErrorChannel.SendMessage(new DiscordMessageBuilder().WithContent(content));
         }
 
-        public static async Task DeleteMessage(DiscordMessage message)
+        public static async Task Delete(this DiscordMessage message)
         {
             DiscordChannel channel = message.Channel;
             Permissions permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
@@ -83,6 +88,53 @@ namespace Salamandra.Bot.Managers
             }
 
             await message.DeleteAsync();
+        }
+
+        public static async Task SendCytrusManifestDiffMessage(this DiscordChannel channel, string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
+        {
+            HttpClient httpClient = new();
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
+            string url1 = CytrusData.GetGameManifestUrl(game, platform, oldRelease, oldVersion);
+            Manifest client1;
+            try
+            {
+                byte[] metafile = await httpClient.GetByteArrayAsync(url1);
+                ByteBuffer buffer = new(metafile);
+                client1 = Manifest.GetRootAsManifest(buffer);
+            }
+            catch (HttpRequestException)
+            {
+                await channel.SendMessage(new DiscordMessageBuilder().WithContent($"Nouveau client introuvable"));
+                return;
+            }
+            
+            string url2 = CytrusData.GetGameManifestUrl(game, platform, newRelease, newVersion);
+            Manifest client2;
+            try
+            {
+                byte[] metafile = await httpClient.GetByteArrayAsync(url2);
+                ByteBuffer buffer = new(metafile);
+                client2 = Manifest.GetRootAsManifest(buffer);
+            }
+            catch (HttpRequestException)
+            {
+                await channel.SendMessage(new DiscordMessageBuilder().WithContent($"Nouveau client introuvable"));
+                return;
+            }
+
+            client2.DiffFiles(client1, out string outputPath);
+            stopwatch.Stop();
+
+            using (FileStream fileStream = File.OpenRead(outputPath))
+            {
+                await channel.SendMessage(new DiscordMessageBuilder()
+                                              .AddFile(fileStream)
+                                              .WithContent($"""
+                                                            Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform.Capitalize())} effectué en {stopwatch.ElapsedMilliseconds}ms
+                                                            {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
+                                                            """));
+            }
         }
     }
 }
