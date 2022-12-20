@@ -2,7 +2,6 @@
   "Token": "YOUR_TOKEN",
   "CdnUrl": "URL_OF_YOUR_CDN",
   "EmbedColor": "#FFFFFF",
-  "InviteUrl": "INVITATION_LINK_OF_YOUR_BOT",
   "DiscordInviteUrl": "https://discord.gg/XXXXXXXX",
   "LogChannelId": 0,
   "CommandErrorChannelId": 0,

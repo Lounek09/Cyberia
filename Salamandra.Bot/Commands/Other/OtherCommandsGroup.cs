@@ -5,7 +5,6 @@
         public static void Register()
         {
             DiscordBot.Instance.SlashCommands.RegisterCommands<DiscordCommandModule>();
-            DiscordBot.Instance.SlashCommands.RegisterCommands<InvitationCommandModule>();
             DiscordBot.Instance.SlashCommands.RegisterCommands<PingCommandModule>();
         }
     }

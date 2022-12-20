@@ -8,7 +8,6 @@ namespace Salamandra.Bot
         public string CdnUrl { get; set; }
         public string EmbedColor { get; set; }
         public string InviteUrl { get; set; }
-        public string DiscordInviteUrl { get; set; }
         public ulong LogChannelId { get; set; }
         public ulong CommandErrorChannelId { get; set; }
         public ulong LangChannelId { get; set; }
