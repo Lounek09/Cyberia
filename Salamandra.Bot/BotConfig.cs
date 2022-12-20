@@ -7,7 +7,7 @@ namespace Salamandra.Bot
         public string Token { get; set; }
         public string CdnUrl { get; set; }
         public string EmbedColor { get; set; }
-        public string InviteUrl { get; set; }
+        public string DiscordInviteUrl { get; set; }
         public ulong LogChannelId { get; set; }
         public ulong CommandErrorChannelId { get; set; }
         public ulong LangChannelId { get; set; }
@@ -19,7 +19,6 @@ namespace Salamandra.Bot
             Token = string.Empty;
             CdnUrl = string.Empty;
             EmbedColor = string.Empty;
-            InviteUrl = string.Empty;
             DiscordInviteUrl = string.Empty;
         }
 

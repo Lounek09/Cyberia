@@ -92,8 +92,10 @@ namespace Salamandra.Bot.Managers
 
         public static async Task SendCytrusManifestDiffMessage(this DiscordChannel channel, string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
         {
-            HttpClient httpClient = new();
             Stopwatch stopwatch = Stopwatch.StartNew();
+
+            HttpClient httpClient = new();
+            DiscordMessageBuilder message = new();
 
             string url1 = CytrusData.GetGameManifestUrl(game, platform, oldRelease, oldVersion);
             Manifest client1;
@@ -105,7 +107,7 @@ namespace Salamandra.Bot.Managers
             }
             catch (HttpRequestException)
             {
-                await channel.SendMessage(new DiscordMessageBuilder().WithContent($"Nouveau client introuvable"));
+                await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
                 return;
             }
             
@@ -119,22 +121,29 @@ namespace Salamandra.Bot.Managers
             }
             catch (HttpRequestException)
             {
-                await channel.SendMessage(new DiscordMessageBuilder().WithContent($"Nouveau client introuvable"));
+                await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
                 return;
             }
 
             client2.DiffFiles(client1, out string outputPath);
+
             stopwatch.Stop();
 
-            using (FileStream fileStream = File.OpenRead(outputPath))
+            string mainContent = $"""
+                                  Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform)} effectué en {stopwatch.ElapsedMilliseconds}ms
+                                  {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
+                                  """;
+
+            string diffContent = Formatter.BlockCode(File.ReadAllText(outputPath), "diff");
+
+            if (mainContent.Length + diffContent.Length < 2000)
+                await channel.SendMessage(message.WithContent($"{mainContent}\n{diffContent}"));
+            else
             {
-                await channel.SendMessage(new DiscordMessageBuilder()
-                                              .AddFile(fileStream)
-                                              .WithContent($"""
-                                                            Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform.Capitalize())} effectué en {stopwatch.ElapsedMilliseconds}ms
-                                                            {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
-                                                            """));
+                using (FileStream fileStream = File.OpenRead(outputPath))
+                    await channel.SendMessage(message.WithContent(mainContent), fileStream);
             }
+
         }
     }
 }
