@@ -113,20 +113,23 @@ namespace Salamandra.Langs
             CheckLangFinished?.Invoke(this, new CheckLangFinishedEventArgs(type, language, langs));
         }
 
-        //TODO: Optimize lang diff, see Manifest diff in Cytrus project
         /// <summary>
         /// Diff the last extracted lang, see <see cref="ExtractLang"/>, in the directory of <paramref name="lang"/>.
         /// </summary>
         /// <param name="lang">The lang to diff to</param>
         /// <returns>True if the lang is successfully diff</returns>
         /// <exception cref="FileNotFoundException"></exception>
-        public bool DiffLastExtractedLang(Lang lang)
+        public bool DiffLastExtractedLang(Lang lang, out string outputPath)
         {
+            outputPath = $"{lang.DirectoryPath}/diff.as";
+
             if (!File.Exists($"{lang.DirectoryPath}/current.as"))
             {
                 Logger.Error($"No extracted lang in '{lang.DirectoryPath}'");
                 return false;
             }
+
+            List<KeyValuePair<int, string>> diff = new();
 
             int index = 0;
             Dictionary<int, string> currentRows = File.ReadAllLines($"{lang.DirectoryPath}/current.as").ToDictionary(x => index++);
@@ -134,19 +137,19 @@ namespace Salamandra.Langs
             index = 0;
             Dictionary<int, string> oldRows = File.Exists($"{lang.DirectoryPath}/old.as") ? File.ReadAllLines($"{lang.DirectoryPath}/old.as").ToDictionary(x => index++) : new();
 
-            List<KeyValuePair<int, string>> diff = new();
             foreach (KeyValuePair<int, string> row in currentRows)
             {
                 if (!oldRows.RemoveByValue(row.Value, true))
                     diff.Add(new(row.Key, $"+ {row.Value}"));
             }
+
             foreach (KeyValuePair<int, string> row in oldRows)
                 diff.Add(new(row.Key, $"- {row.Value}"));
 
             if (diff.Count > 0)
-                File.WriteAllLines($"{lang.DirectoryPath}/diff.as", diff.OrderBy(x => x.Key).Select(x => x.Value), Encoding.UTF8);
+                File.WriteAllLines(outputPath, diff.OrderBy(x => x.Key).Select(x => x.Value), Encoding.UTF8);
             else
-                File.Delete($"{lang.DirectoryPath}/diff.as");
+                File.Delete(outputPath);
 
             return true;
         }

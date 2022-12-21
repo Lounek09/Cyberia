@@ -12,7 +12,7 @@ namespace Salamandra.Bot.Managers
 {
     public static class MessageManager
     {
-        public static async Task SendMessage(this DiscordChannel channel, DiscordMessageBuilder message, params FileStream?[] fileStreams)
+        public static async Task SendMessage(this DiscordChannel channel, DiscordMessageBuilder message)
         {
             Permissions permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
 
@@ -35,14 +35,11 @@ namespace Salamandra.Bot.Managers
             }
 
             await channel.SendMessageAsync(message);
-
-            foreach (Stream? fileStream in fileStreams)
-                fileStream?.Dispose();
         }
 
         public static async Task SendFile(this DiscordChannel channel, string filePath)
         {
-            using (FileStream fileStream = System.IO.File.OpenRead(filePath))
+            using (FileStream fileStream = File.OpenRead(filePath))
                 await channel.SendMessage(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
         }
 
@@ -143,7 +140,7 @@ namespace Salamandra.Bot.Managers
             else
             {
                 using (FileStream fileStream = File.OpenRead(outputPath))
-                    await channel.SendMessage(message.WithContent(mainContent), fileStream);
+                    await channel.SendMessage(message.WithContent(mainContent).AddFile(fileStream));
             }
 
         }

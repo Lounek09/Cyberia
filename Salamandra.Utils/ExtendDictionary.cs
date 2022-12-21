@@ -6,13 +6,21 @@
         {
             bool success = false;
 
-            foreach (KeyValuePair<TKey, TValue> item in source.Where(x => x.Value!.Equals(value)).ToList())
+            HashSet<TKey> keysToRemove = new();
+            foreach (KeyValuePair<TKey, TValue> item in source)
             {
-                success = source.Remove(item.Key);
+                if (item.Value is not null && item.Value.Equals(value))
+                {
+                    keysToRemove.Add(item.Key);
+                    success = true;
 
-                if (firstOnly)
-                    break;
+                    if (firstOnly)
+                        break;
+                }
             }
+
+            foreach (TKey key in keysToRemove)
+                source.Remove(key);
 
             return success;
         }

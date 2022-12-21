@@ -55,8 +55,9 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
 
         public void DiffFiles(Manifest old, out string outputPath)
         {
-            List<KeyValuePair<int, List<string>>> diff = new();
             outputPath = $"{Constant.OUTPUT_PATH}/file.diff";
+
+            List<KeyValuePair<int, List<string>>> diff = new();
 
             Dictionary<int, Fragment> currentFragments = GetFragments();
             Dictionary<int, Fragment> oldFragments = old.GetFragments();
@@ -114,7 +115,7 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
             else
                 output.Add("Aucune différence");
 
-            System.IO.File.WriteAllLines(outputPath, output, System.Text.Encoding.UTF8);
+            File.WriteAllLines(outputPath, output, System.Text.Encoding.UTF8);
         }
     }
 }

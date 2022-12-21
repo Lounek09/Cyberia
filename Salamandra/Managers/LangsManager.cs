@@ -58,7 +58,7 @@ namespace Salamandra.Managers
                     return;
                 }
 
-                if (!Salamandra.Langs.DiffLastExtractedLang(lang))
+                if (!Salamandra.Langs.DiffLastExtractedLang(lang, out string diffPath))
                 {
                     Salamandra.Logger.Error($"Diff of lang {lang.Name} version {lang.Version} in {lang.Language} failed");
                     return;
@@ -69,14 +69,17 @@ namespace Salamandra.Managers
                     DiscordMessageBuilder message = new DiscordMessageBuilder()
                         .WithContent($"{(lang.IsNew ? $"{Formatter.Bold("New")} lang" : "Lang")} {Formatter.Bold(lang.Name)} version {Formatter.Bold(lang.Version.ToString())}");
 
-                    FileStream? fileStream = null;
-                    if (File.Exists($"{lang.DirectoryPath}/diff.as"))
+                    try
                     {
-                        fileStream = File.OpenRead($"{lang.DirectoryPath}/diff.as");
-                        message.AddFile("diff.as", fileStream);
+                        //if the file doesn't exist it means that there is no difference
+                        using (FileStream fileStream = File.OpenRead(diffPath))
+                            await thread.SendMessage(message.AddFile(fileStream));
+                    }
+                    catch
+                    {
+                        await thread.SendMessage(message);
                     }
 
-                    await thread.SendMessage(message, fileStream);
                     await rateLimite;
                 }
             }

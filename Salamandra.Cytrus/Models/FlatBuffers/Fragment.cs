@@ -81,11 +81,11 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
             Dictionary<int, GameFile> currentFiles = GetFiles();
             Dictionary<int, GameFile> oldFiles = model.GetFiles();
 
-            Dictionary<string, int> oldFileKeys = new Dictionary<string, int>();
+            Dictionary<string, int> oldFileKeys = new();
             foreach (KeyValuePair<int, GameFile> file in oldFiles)
                 oldFileKeys[file.Value.Name] = file.Key;
 
-            HashSet<int> processedKeys = new HashSet<int>();
+            HashSet<int> processedKeys = new();
             foreach (KeyValuePair<int, GameFile> file in currentFiles)
             {
                 if (oldFileKeys.TryGetValue(file.Value.Name, out int oldKey))
