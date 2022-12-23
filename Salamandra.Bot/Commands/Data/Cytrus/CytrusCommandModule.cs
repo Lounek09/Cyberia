@@ -70,7 +70,7 @@ namespace Salamandra.Bot.Commands.Data
         {
             await ctx.CreateResponseAsync("👷", true);
 
-            await ctx.Channel.SendCytrusManifestDiffMessage(game, platform, oldRelease, oldVersion, newRelease, newVersion);
+            await ctx.Channel.SendCytrusManifestDiffMessage(game, platform.ToLower(), oldRelease.ToLower(), oldVersion, newRelease.ToLower(), newVersion);
         }
     }
 }
