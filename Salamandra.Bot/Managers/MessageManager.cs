@@ -140,9 +140,8 @@ namespace Salamandra.Bot.Managers
             else
             {
                 using (FileStream fileStream = File.OpenRead(outputPath))
-                    await channel.SendMessage(message.WithContent(mainContent).AddFile(fileStream));
+                    await channel.SendMessage(message.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", fileStream));
             }
-
         }
     }
 }

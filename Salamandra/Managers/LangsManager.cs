@@ -73,7 +73,7 @@ namespace Salamandra.Managers
                     {
                         //if the file doesn't exist it means that there is no difference
                         using (FileStream fileStream = File.OpenRead(diffPath))
-                            await thread.SendMessage(message.AddFile(fileStream));
+                            await thread.SendMessage(message.AddFile($"{lang.Name}.as", fileStream));
                     }
                     catch
                     {
