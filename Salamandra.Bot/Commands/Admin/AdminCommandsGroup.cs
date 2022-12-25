@@ -13,7 +13,6 @@
                 DiscordBot.Instance.SlashCommands.RegisterCommands<KillCommandModule>(guildId);
                 DiscordBot.Instance.SlashCommands.RegisterCommands<LeaveCommandModule>(guildId);
                 DiscordBot.Instance.SlashCommands.RegisterCommands<RestartCommandModule>(guildId);
-                DiscordBot.Instance.SlashCommands.RegisterCommands<StatsParserCommandModule>(guildId);
                 DiscordBot.Instance.SlashCommands.RegisterCommands<TestCommandModule>(guildId);
             }
         }
