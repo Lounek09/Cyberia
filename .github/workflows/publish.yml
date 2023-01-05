@@ -34,8 +34,8 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
-        source: ./Lapichon/
-        target: /home/${{ secrets.SSH_HOST }}/
+        source: ./Lapichon
+        target: /home/salamandra
 
     - name: Add execution right on Flare
       uses: appleboy/ssh-action@master
@@ -44,4 +44,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
-        script: chmod -R 755 /home/${{ secrets.SSH_HOST }}/Lapichon/langs/flare
+        script: chmod -R 755 /home/salamandra/Lapichon/langs/flare
