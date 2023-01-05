@@ -6,6 +6,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+  FOLDER: Lapichon
+
 jobs:
   build:
 
@@ -25,7 +28,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore
       
     - name: Publish
-      run: dotnet publish Salamandra.sln --configuration Release --output ./Lapichon
+      run: dotnet publish Salamandra.sln --configuration Release --output ./$FOLDER
     
     - name: Deploy
       uses: appleboy/scp-action@master
@@ -34,5 +37,14 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
-        source: ./Lapichon/
-        target: /home/salamandra/
+        source: ./$FOLDER
+        target: /home/${{ secrets.SSH_USER }}/
+
+    - name: Add execution right on Flare
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.USERNAME }}
+        port: ${{ secrets.SSH_PORT }}
+        key: ${{ secrets.SSH_KEY }}
+        script: chmod -R 755 /home/${{ secrets.SSH_HOST }}/$FOLDER/langs/flare
