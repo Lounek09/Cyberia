@@ -45,15 +45,24 @@ namespace Salamandra.Langs
         /// </summary>
         /// <param name="type">The lang type to check to</param>
         /// <param name="language">The language to check to</param>
+        /// <param name="force">Force the check to be made</param>
         /// <returns>The newer langs</returns>
         /// <exception cref="FormatException"></exception>
-        public async Task Launch(LangType type, Language language)
+        public async Task Launch(LangType type, Language language, bool force = false)
         {
             CheckLangStarted?.Invoke(this, new CheckLangStartedEventArgs(type, language));
 
             string route = Constant.GetRoute(type);
 
-            string? versionsFile = null;
+            string[] langsFileName = await GetLangsFileName(type, language, route, force);
+            List<Lang> langs = GetLangs(type, language, route, langsFileName);
+
+            CheckLangFinished?.Invoke(this, new CheckLangFinishedEventArgs(type, language, langs));
+        }
+
+        private async Task<string[]> GetLangsFileName(LangType type, Language language, string route, bool force = false)
+        {
+            string? versions = null;
             try
             {
                 using (HttpResponseMessage response = await HttpClient.GetAsync($"{route}/versions_{language.ToString().ToLower()}.txt").ConfigureAwait(false))
@@ -63,12 +72,15 @@ namespace Salamandra.Langs
                     DateTimeOffset? lastModifiedHeader = response.Content.Headers.LastModified;
                     long lastModified = Config.GetLastModifiedByLangTypeAndLanguage(type, language);
 
-                    if (lastModifiedHeader.HasValue && lastModifiedHeader.Value.Ticks > lastModified)
+                    bool isMoreRecent = lastModifiedHeader.HasValue && lastModifiedHeader.Value.Ticks > lastModified;
+                    if (isMoreRecent)
                     {
-                        Config.SetLastModifiedByLangTypeAndLanguage(type, language, lastModifiedHeader.Value.Ticks);
+                        Config.SetLastModifiedByLangTypeAndLanguage(type, language, lastModifiedHeader!.Value.Ticks);
                         Config.Save();
-                        versionsFile = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     }
+
+                    if (force || isMoreRecent)
+                        versions = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 }
             }
             catch (HttpRequestException e)
@@ -76,31 +88,35 @@ namespace Salamandra.Langs
                 Logger.Error($"Unable to find the versions_{language.ToString().ToLower()}.txt file for {type} langs\n{e.Message}");
             }
 
-            if (string.IsNullOrEmpty(versionsFile))
-                return;
+            if (versions is null)
+                return Array.Empty<string>();
 
-            string[] versionsFileArgs = versionsFile[3..].Replace(',', '_').Split("|", StringSplitOptions.RemoveEmptyEntries);
-            if (versionsFileArgs.Length == 0)
+            string[] langsFileName = versions[3..].Replace(',', '_').Split("|", StringSplitOptions.RemoveEmptyEntries);
+            if (langsFileName.Length == 0)
             {
-                Logger.Error($"The format of versions_{language.ToString().ToLower()}.txt is incorrect :\n{versionsFile}");
-                return;
+                Logger.Error($"The format of versions_{language.ToString().ToLower()}.txt file is incorrect");
             }
 
+            return langsFileName;
+        }
+
+        private List<Lang> GetLangs(LangType type, Language language, string route, IEnumerable<string> langsFileName)
+        {
             List<Lang> langs = new();
-            foreach (string versionsFileArg in versionsFileArgs)
+            foreach (string fileName in langsFileName)
             {
-                string[] langArgs = versionsFileArg.Split('_');
-                if (langArgs.Length != 3 ||
-                    !langArgs[1].Equals(language.ToString().ToLower()) ||
-                    !int.TryParse(langArgs[2], out int version))
+                string[] args = fileName.Split('_');
+                if (args.Length != 3 ||
+                    !args[1].Equals(language.ToString().ToLower()) ||
+                    !int.TryParse(args[2], out int version))
                 {
-                    Logger.Error($"The format of version_{language.ToString().ToLower()}.txt is incorrect :\n{versionsFile}");
+                    Logger.Error($"The format of versions_{language.ToString().ToLower()}.txt is incorrect");
                     continue;
                 }
-                string name = langArgs[0];
+                string name = args[0];
                 string directoryPath = $"{Constant.OUTPUT_PATH}/{type.ToString().ToLower()}/{language.ToString().ToLower()}/{name.ToLower()}";
-                string filePath = $"{directoryPath}/{versionsFileArg}.swf";
-                string fileRoute = $"/{route}/swf/{versionsFileArg}.swf";
+                string filePath = $"{directoryPath}/{fileName}.swf";
+                string fileRoute = $"/{route}/swf/{fileName}.swf";
 
                 if (!File.Exists(filePath))
                 {
@@ -110,7 +126,7 @@ namespace Salamandra.Langs
                 }
             }
 
-            CheckLangFinished?.Invoke(this, new CheckLangFinishedEventArgs(type, language, langs));
+            return langs;
         }
 
         /// <summary>

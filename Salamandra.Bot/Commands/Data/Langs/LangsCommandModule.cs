@@ -16,7 +16,9 @@ namespace Salamandra.Bot.Commands.Data
             string typeStr,
             [Option("langue", "Langue des langs à check, si vide lance pour toutes les langues")]
             [ChoiceProvider(typeof(LanguageChoiceProvider))]
-            string? languageStr = null)
+            string? languageStr = null,
+            [Option("force", "Force le check")]
+            bool force = false)
         {
             LangType type = Enum.Parse<LangType>(typeStr);
 
@@ -24,14 +26,14 @@ namespace Salamandra.Bot.Commands.Data
             {
                 await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} dans toutes les langues...");
                 foreach (Language language in Enum.GetValues<Language>())
-                    await DiscordBot.Instance.Langs.Launch(type, language);
+                    await DiscordBot.Instance.Langs.Launch(type, language, force);
                 await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check des langs {Formatter.Bold(typeStr)} dans toutes les langues terminé"));
             }
             else
             {
                 Language language = Enum.Parse<Language>(languageStr);
                 await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)}...");
-                await DiscordBot.Instance.Langs.Launch(type, language);
+                await DiscordBot.Instance.Langs.Launch(type, language, force);
                 await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)} terminé"));
             }
         }
