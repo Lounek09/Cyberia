@@ -37,17 +37,18 @@ namespace Salamandra.Cytrus
         public event EventHandler<NewCytrusDetectedEventArgs>? NewCytrusDetected;
         public event EventHandler? CheckCytrusFinished;
 
+
+        /// <summary>
+        /// Checks if cytrus has been updated.
+        /// </summary>
         public async Task Launch()
         {
             CheckCytrusStarted?.Invoke(this, new());
 
-            if (Directory.Exists(Constant.CYTRUS_PATH))
-                Directory.CreateDirectory(Constant.CYTRUS_PATH);
-
-            string cytrus = "";
+            string? cytrus = null;
             try
             {
-                using (HttpResponseMessage response = await HttpClient.GetAsync(Constant.CYTRUS_FILE_NAME))
+                using (HttpResponseMessage response = await HttpClient.GetAsync(Constant.CYTRUS_FILE_NAME).ConfigureAwait(false))
                 {
                     response.EnsureSuccessStatusCode();
                     cytrus = await response.Content.ReadAsStringAsync();
@@ -59,7 +60,7 @@ namespace Salamandra.Cytrus
                 return;
             }
 
-            if (string.IsNullOrEmpty(cytrus))
+            if (cytrus is null)
                 return;
 
             string lastCytrus = "{}";

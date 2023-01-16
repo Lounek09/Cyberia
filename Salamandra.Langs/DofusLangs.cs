@@ -46,8 +46,6 @@ namespace Salamandra.Langs
         /// <param name="type">The lang type to check to</param>
         /// <param name="language">The language to check to</param>
         /// <param name="force">Force the check to be made</param>
-        /// <returns>The newer langs</returns>
-        /// <exception cref="FormatException"></exception>
         public async Task Launch(LangType type, Language language, bool force = false)
         {
             CheckLangStarted?.Invoke(this, new CheckLangStartedEventArgs(type, language));

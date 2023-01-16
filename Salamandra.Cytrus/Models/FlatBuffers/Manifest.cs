@@ -43,7 +43,7 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
         public static void FinishManifestBuffer(FlatBufferBuilder builder, Offset<Salamandra.Cytrus.Models.FlatBuffers.Manifest> offset) { builder.Finish(offset.Value); }
         public static void FinishSizePrefixedManifestBuffer(FlatBufferBuilder builder, Offset<Salamandra.Cytrus.Models.FlatBuffers.Manifest> offset) { builder.FinishSizePrefixed(offset.Value); }
 
-        public Dictionary<int, Fragment> GetFragments()
+        private Dictionary<int, Fragment> GetFragments()
         {
             Dictionary<int, Fragment> fragments = new();
 
@@ -53,6 +53,11 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
             return fragments;
         }
 
+        /// <summary>
+        /// Generate a file that lists all differences between two manifests
+        /// </summary>
+        /// <param name="old">The old manifest to diff to</param>
+        /// <param name="outputPath">The path of the generated file</param>
         public void DiffFiles(Manifest old, out string outputPath)
         {
             outputPath = $"{Constant.OUTPUT_PATH}/file.diff";

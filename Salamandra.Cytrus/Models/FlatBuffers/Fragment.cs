@@ -61,7 +61,7 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
             return new Offset<Salamandra.Cytrus.Models.FlatBuffers.Fragment>(o);
         }
 
-        public Dictionary<int, GameFile> GetFiles()
+        private Dictionary<int, GameFile> GetFiles()
         {
             Dictionary<int, GameFile> files = new();
 
@@ -71,7 +71,7 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
             return files;
         }
 
-        public List<string> DiffFiles(Fragment model)
+        internal List<string> DiffFiles(Fragment model)
         {
             List<KeyValuePair<int, string>> diff = new()
             {
