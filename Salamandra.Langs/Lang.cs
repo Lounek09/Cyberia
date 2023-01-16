@@ -29,24 +29,38 @@
         /// <returns>True if the file is successfully downloaded</returns>
         public async Task<bool> Download()
         {
-            try
+            int retries = 5;
+            int waitTime = 1000;
+
+            while (true)
             {
-                using (HttpResponseMessage response = await DofusLangs.Instance.HttpClient.GetAsync(FileRoute).ConfigureAwait(false))
+                try
                 {
-                    response.EnsureSuccessStatusCode();
+                    using (HttpResponseMessage response = await DofusLangs.Instance.HttpClient.GetAsync(FileRoute).ConfigureAwait(false))
+                    {
+                        response.EnsureSuccessStatusCode();
 
-                    Directory.CreateDirectory(DirectoryPath);
+                        Directory.CreateDirectory(DirectoryPath);
 
-                    using (FileStream fileStream = new(FilePath, FileMode.Create))
-                        await response.Content.CopyToAsync(fileStream).ConfigureAwait(false);
+                        using (FileStream fileStream = new(FilePath, FileMode.Create))
+                            await response.Content.CopyToAsync(fileStream).ConfigureAwait(false);
 
-                    return true;
+                        return true;
+                    }
                 }
-            }
-            catch (HttpRequestException e)
-            {
-                DofusLangs.Instance.Logger.Error(e);
-                return false;
+                catch (HttpRequestException e)
+                {
+                    DofusLangs.Instance.Logger.Error(e);
+                    retries--;
+
+                    if (retries == 0)
+                        return false;
+                    else
+                    {
+                        await Task.Delay(waitTime);
+                        waitTime *= 2;
+                    }
+                }
             }
         }
     }
