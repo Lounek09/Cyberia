@@ -18,7 +18,7 @@
         {
             if (!File.Exists(Constant.CONFIG_PATH))
             {
-                Salamandra.Logger.Crit($"Fichier de config introuvable à l'emplacement : '{Constant.CONFIG_PATH}'");
+                Salamandra.Logger.Crit($"Configuration file not found at {Constant.CONFIG_PATH}");
                 Console.ReadKey();
                 Environment.Exit(0);
             }

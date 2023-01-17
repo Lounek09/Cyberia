@@ -28,7 +28,7 @@ namespace Salamandra.Utils
 
         private void Log(string message, Level level)
         {
-            string dateFormat = $"[{DateTime.Now:dd/MM/yyyy HH:mm:ss:ffff}]";
+            string dateFormat = $"[{DateTime.Now:yyyy/MM/dd HH:mm:ss:ffff}]";
             string nameFormat = $"[{_name.ToUpper()}]";
             string levelFormat = $"[{level,5}]";
 

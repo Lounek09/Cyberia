@@ -11,6 +11,21 @@ namespace Salamandra.Langs
             LastModifiedLangs = new();
         }
 
+        public static LangsConfig Build()
+        {
+            LangsConfig config;
+
+            if (File.Exists(Constant.CONFIG_PATH))
+                config = Json.LoadFromFile<LangsConfig>(Constant.CONFIG_PATH);
+            else
+            {
+                config = new LangsConfig();
+                Json.Save(config, Constant.CONFIG_PATH);
+            }
+
+            return config;
+        }
+
         internal void Save()
         {
             Json.Save(this, Constant.CONFIG_PATH);

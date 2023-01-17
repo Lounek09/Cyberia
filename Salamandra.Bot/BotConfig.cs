@@ -22,6 +22,18 @@ namespace Salamandra.Bot
             DiscordInviteUrl = string.Empty;
         }
 
+        public static BotConfig Build()
+        {
+            if (!File.Exists(Constant.CONFIG_PATH))
+            {
+                DiscordBot.Instance.Logger.Crit($"Configuration file not found at {Constant.CONFIG_PATH}");
+                Console.ReadLine();
+                Environment.Exit(0);
+            }
+
+            return Json.LoadFromFile<BotConfig>(Constant.CONFIG_PATH);
+        }
+
         public async Task<DiscordChannel?> GetLogChannel()
         {
             try

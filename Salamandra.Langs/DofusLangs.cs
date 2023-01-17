@@ -17,10 +17,10 @@ namespace Salamandra.Langs
         }
         private static DofusLangs? _instance;
 
-        internal DofusLangs(LangsConfig config)
+        internal DofusLangs()
         {
             Logger = new("langs");
-            Config = config;
+            Config = LangsConfig.Build();
             HttpClient = new()
             {
                 BaseAddress = new Uri(Constant.BASE_ADRESS)
@@ -29,10 +29,7 @@ namespace Salamandra.Langs
 
         public static DofusLangs Build()
         {
-            if (!File.Exists(Constant.CONFIG_PATH))
-                Json.Save(new LangsConfig(), Constant.CONFIG_PATH);
-
-            _instance ??= new(Json.LoadFromFile<LangsConfig>(Constant.CONFIG_PATH));
+            _instance ??= new();
             return _instance;
         }
 

@@ -32,14 +32,7 @@ namespace Salamandra.Bot
         internal DiscordBot(AnkamaCytrus cytrus, DofusLangs langs, DofusApi api)
         {
             Logger = new("bot");
-
-            if (!File.Exists(Constant.CONFIG_PATH))
-            {
-                Logger.Crit($"Fichier de config introuvable à l'emplacement : '{Constant.CONFIG_PATH}'");
-                Console.ReadLine();
-                Environment.Exit(0);
-            }
-            Config = Json.LoadFromFile<BotConfig>(Constant.CONFIG_PATH);
+            Config = BotConfig.Build();
 
             DiscordConfiguration discordConfig = new()
             {
@@ -49,7 +42,7 @@ namespace Salamandra.Bot
 #if DEBUG
                 MinimumLogLevel = LogLevel.Debug,
 #endif
-                LogTimestampFormat = "dd/MM/yyyy HH:mm:ss:ffff"
+                LogTimestampFormat = "yyyy/MM/dd HH:mm:ss:ffff"
             };
             Client = new DiscordClient(discordConfig);
             Client.GuildCreated += GuildManager.OnGuildCreated;
