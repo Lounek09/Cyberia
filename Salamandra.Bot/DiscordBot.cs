@@ -15,11 +15,11 @@ namespace Salamandra.Bot
 {
     public class DiscordBot
     {
+        public Logger Logger { get; private set; }
         public BotConfig Config { get; private set; }
         public DiscordClient Client { get; private set; }
         public SlashCommandsExtension SlashCommands { get; private set; }
 
-        internal Logger Logger { get; private set; }
         internal AnkamaCytrus Cytrus { get; private set; }
         internal DofusLangs Langs { get; private set; }
         internal DofusApi Api { get; private set; }
@@ -29,9 +29,9 @@ namespace Salamandra.Bot
         }
         private static DiscordBot? _instance;
 
-        internal DiscordBot(Logger logger, AnkamaCytrus cytrus, DofusLangs langs, DofusApi api)
+        internal DiscordBot(AnkamaCytrus cytrus, DofusLangs langs, DofusApi api)
         {
-            Logger = logger;
+            Logger = new("bot");
 
             if (!File.Exists(Constant.CONFIG_PATH))
             {
@@ -64,9 +64,9 @@ namespace Salamandra.Bot
             Api = api;
         }
 
-        public static DiscordBot Build(Logger logger, AnkamaCytrus cytrus, DofusLangs langs, DofusApi api)
+        public static DiscordBot Build(AnkamaCytrus cytrus, DofusLangs langs, DofusApi api)
         {
-            _instance ??= new(logger, cytrus, langs, api);
+            _instance ??= new(cytrus, langs, api);
             return _instance;
         }
 

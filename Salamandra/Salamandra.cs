@@ -18,14 +18,14 @@ namespace Salamandra
 
         static Salamandra()
         {
-            Logger = new();
+            Logger = new("main");
             Config = Config.Build();
-            Cytrus = AnkamaCytrus.Build(Logger);
+            Cytrus = AnkamaCytrus.Build();
             Cytrus.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
-            Langs = DofusLangs.Build(Logger);
+            Langs = DofusLangs.Build();
             Langs.CheckLangFinished += LangsManager.OnCheckLangFinished;
-            Api = DofusApi.Build(Logger);
-            Bot = DiscordBot.Build(Logger, Cytrus, Langs, Api);
+            Api = DofusApi.Build();
+            Bot = DiscordBot.Build(Cytrus, Langs, Api);
         }
 
         public static async Task Main()

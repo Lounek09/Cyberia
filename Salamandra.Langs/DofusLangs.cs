@@ -7,9 +7,9 @@ namespace Salamandra.Langs
 {
     public sealed class DofusLangs
     {
+        public Logger Logger { get; private set; }
         public LangsConfig Config { get; private set; }
 
-        internal Logger Logger { get; private set; }
         internal HttpClient HttpClient { get; private set; }
 
         internal static DofusLangs Instance {
@@ -17,9 +17,9 @@ namespace Salamandra.Langs
         }
         private static DofusLangs? _instance;
 
-        internal DofusLangs(Logger logger, LangsConfig config)
+        internal DofusLangs(LangsConfig config)
         {
-            Logger = logger;
+            Logger = new("langs");
             Config = config;
             HttpClient = new()
             {
@@ -27,12 +27,12 @@ namespace Salamandra.Langs
             };
         }
 
-        public static DofusLangs Build(Logger logger)
+        public static DofusLangs Build()
         {
             if (!File.Exists(Constant.CONFIG_PATH))
                 Json.Save(new LangsConfig(), Constant.CONFIG_PATH);
 
-            _instance ??= new(logger, Json.LoadFromFile<LangsConfig>(Constant.CONFIG_PATH));
+            _instance ??= new(Json.LoadFromFile<LangsConfig>(Constant.CONFIG_PATH));
             return _instance;
         }
 

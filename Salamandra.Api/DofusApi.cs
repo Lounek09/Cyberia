@@ -6,9 +6,8 @@ namespace Salamandra.Api
 {
     public sealed class DofusApi
     {
+        public Logger Logger { get; private set; }
         public SQLiteAsyncConnection Database { get; private set; }
-
-        internal Logger Logger { get; private set; }
 
         internal static DofusApi Instance {
             get => _instance is null ? throw new NullReferenceException("Build the Api before !") : _instance;
@@ -16,15 +15,15 @@ namespace Salamandra.Api
         }
         private static DofusApi? _instance;
 
-        internal DofusApi(Logger logger)
+        internal DofusApi()
         {
-            Logger = logger;
+            Logger = new("api");
             Database = new(Constant.DATABASE_PATH);
         }
 
-        public static DofusApi Build(Logger logger)
+        public static DofusApi Build()
         {
-            _instance = new(logger);
+            _instance = new();
             return _instance;
         }
     }

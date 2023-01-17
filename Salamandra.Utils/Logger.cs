@@ -15,21 +15,24 @@ namespace Salamandra.Utils
         private const string OUTPUT = "logs";
 
         private readonly object _lock;
+        private readonly string _name;
 
-        public Logger()
+        public Logger(string name)
         {
             if (!Directory.Exists(OUTPUT))
                 Directory.CreateDirectory(OUTPUT);
 
             _lock = new();
+            _name = name;
         }
 
         private void Log(string message, Level level)
         {
             string dateFormat = $"[{DateTime.Now:dd/MM/yyyy HH:mm:ss:ffff}]";
+            string nameFormat = $"[{_name.ToUpper()}]";
             string levelFormat = $"[{level,5}]";
 
-            string file = $"{OUTPUT}/log_{DateTime.Now:yyyy-MM-dd}.txt";
+            string file = $"{OUTPUT}/log_{_name.ToLower()}_{DateTime.Now:yyyy-MM}.txt";
             if (!File.Exists(file))
                 File.Create(file).Dispose();
 
@@ -54,7 +57,8 @@ namespace Salamandra.Utils
                     levelFormat = levelFormat.SetColor(Color.MediumPurple);
                     break;
             }
-            Console.WriteLine(dateFormat.SetColor(Color.Gray) + levelFormat + " " + message);
+
+            Console.WriteLine(ConsoleFormat.SetColor(dateFormat + nameFormat, Color.LightGray) + levelFormat + " " + message);
         }
 
         public void Crit(string message)

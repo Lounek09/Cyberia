@@ -5,10 +5,10 @@ namespace Salamandra.Cytrus
 {
     public sealed class AnkamaCytrus
     {
+        public Logger Logger { get; private set; }
         public CytrusData CytrusData { get; set; }
         public CytrusData OldCytrusData { get; set; }
 
-        internal Logger Logger { get; private set; }
         internal HttpClient HttpClient { get; private set; }
 
         internal static AnkamaCytrus Instance {
@@ -16,9 +16,9 @@ namespace Salamandra.Cytrus
         }
         private static AnkamaCytrus? _instance;
 
-        internal AnkamaCytrus(Logger logger)
+        internal AnkamaCytrus()
         {
-            Logger = logger;
+            Logger = new("cytrus");
             CytrusData = File.Exists(Constant.CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(Constant.CYTRUS_PATH) : new();
             OldCytrusData = File.Exists(Constant.OLD_CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(Constant.OLD_CYTRUS_PATH) : new();
             HttpClient = new()
@@ -27,9 +27,9 @@ namespace Salamandra.Cytrus
             };
         }
 
-        public static AnkamaCytrus Build(Logger logger)
+        public static AnkamaCytrus Build()
         {
-            _instance ??= new(logger);
+            _instance ??= new();
             return _instance;
         }
 
