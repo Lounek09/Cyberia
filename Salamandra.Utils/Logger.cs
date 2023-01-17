@@ -8,7 +8,8 @@ namespace Salamandra.Utils
         {
             CRIT,
             ERROR,
-            INFO
+            INFO,
+            DEBUG
         }
 
         private const string OUTPUT = "logs";
@@ -49,6 +50,9 @@ namespace Salamandra.Utils
                 case Level.INFO:
                     levelFormat = levelFormat.SetColor(Color.SteelBlue);
                     break;
+                case Level.DEBUG:
+                    levelFormat = levelFormat.SetColor(Color.MediumPurple);
+                    break;
             }
             Console.WriteLine(dateFormat.SetColor(Color.Gray) + levelFormat + " " + message);
         }
@@ -63,6 +67,11 @@ namespace Salamandra.Utils
             Log($"{exception.Message}\n{exception.StackTrace}", Level.CRIT);
         }
 
+        public void Crit(string message, Exception exception)
+        {
+            Log($"{message}\n{exception.Message}\n{exception.StackTrace}", Level.CRIT);
+        }
+
         public void Error(string message)
         {
             Log(message, Level.ERROR);
@@ -73,9 +82,21 @@ namespace Salamandra.Utils
             Log($"{exception.Message}\n{exception.StackTrace}", Level.ERROR);
         }
 
+        public void Error(string message, Exception exception)
+        {
+            Log($"{message}\n{exception.Message}\n{exception.StackTrace}", Level.ERROR);
+        }
+
         public void Info(string message)
         {
             Log(message, Level.INFO);
+        }
+
+        public void Debug(string message)
+        {
+#if DEBUG
+            Log(message, Level.DEBUG);
+#endif
         }
     }
 }
