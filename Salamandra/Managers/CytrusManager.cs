@@ -3,6 +3,7 @@ using DSharpPlus.Entities;
 
 using Salamandra.Bot.Managers;
 using Salamandra.Cytrus;
+using Salamandra.Langs;
 
 using System.Text.Json;
 
@@ -22,12 +23,21 @@ namespace Salamandra.Managers
 
         public static async void OnNewCytrusDetected(object? sender, NewCytrusDetectedEventArgs e)
         {
+            //Send cytrus diff to discord
             DiscordChannel? channel = await Salamandra.Bot.Config.GetCytrusChannel();
-            if (channel is not null)
+            if (channel is null)
+                Salamandra.Bot.Logger.Error($"Unknown cytrus channel (id:{Salamandra.Bot.Config.CytrusChannelId})");
+            else
                 await channel.SendMessage(new DiscordMessageBuilder().WithContent(Formatter.BlockCode(e.Diff, "json")));
 
+            //Send cytrus manifest diff of windows game to discord
+            if (!Salamandra.Config.EnableAutomaticCytrusManifestDiff)
+                return;
+
             channel = await Salamandra.Bot.Config.GetCytrusManifestDiffChannel();
-            if (Salamandra.Config.EnableAutomaticCytrusManifestDiff && channel is not null)
+            if (channel is null)
+                Salamandra.Bot.Logger.Error($"Unknown cytrus manifest channel (id:{Salamandra.Bot.Config.CytrusManifestDiffChannelId})");
+            else
             {
                 JsonDocument document = JsonDocument.Parse(e.Diff);
                 JsonElement root = document.RootElement;

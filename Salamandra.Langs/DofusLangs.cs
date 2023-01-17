@@ -71,14 +71,15 @@ namespace Salamandra.Langs
                     long lastModified = Config.GetLastModifiedByLangTypeAndLanguage(type, language);
 
                     bool isMoreRecent = lastModifiedHeader.HasValue && lastModifiedHeader.Value.Ticks > lastModified;
+                    if (force || isMoreRecent)
+                        versions = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
                     if (isMoreRecent)
                     {
+                        Logger.Info($"New {type} langs detected in {language} :\n{versions}");
                         Config.SetLastModifiedByLangTypeAndLanguage(type, language, lastModifiedHeader!.Value.Ticks);
                         Config.Save();
                     }
-
-                    if (force || isMoreRecent)
-                        versions = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 }
             }
             catch (HttpRequestException e)
@@ -139,7 +140,7 @@ namespace Salamandra.Langs
 
             if (!File.Exists($"{lang.DirectoryPath}/current.as"))
             {
-                Logger.Error($"No extracted lang in '{lang.DirectoryPath}'");
+                Logger.Error($"No extracted lang in {lang.DirectoryPath}");
                 return false;
             }
 

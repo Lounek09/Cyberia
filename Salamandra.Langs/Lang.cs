@@ -50,8 +50,8 @@
                 }
                 catch (HttpRequestException e)
                 {
-                    DofusLangs.Instance.Logger.Error(e);
                     retries--;
+                    DofusLangs.Instance.Logger.Error($"{retries} retry left for '{FilePath}'", e);
 
                     if (retries == 0)
                         return false;

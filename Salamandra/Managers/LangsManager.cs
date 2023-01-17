@@ -33,34 +33,36 @@ namespace Salamandra.Managers
             if (e.Langs.Count == 0)
                 return;
 
+            //Create a thread in discord
             DiscordChannel? channel = await Salamandra.Bot.Config.GetLangChannel();
             DiscordThreadChannel? thread = null;
             if (channel is null)
-                Salamandra.Logger.Error($"Unknown lang channel (id:{Salamandra.Bot.Config.LangChannelId})");
+                Salamandra.Bot.Logger.Error($"Unknown lang channel (id:{Salamandra.Bot.Config.LangChannelId})");
             else
                 thread = await channel.CreateThreadAsync($"{e.Type} {e.Language} {DateTime.Now:dd-MM-yyyy HH\\hmm}", AutoArchiveDuration.Hour, ChannelType.PublicThread);
 
+            //Download, extract and diff each new lang and send to discord in the previously created thread
             foreach (Lang lang in e.Langs)
             {
                 Task rateLimite = Task.Delay(1500);
 
                 if (!await lang.Download())
                 {
-                    Salamandra.Logger.Error($"Download of lang {lang.Name} version {lang.Version} in {lang.Language} failed");
+                    Salamandra.Langs.Logger.Error($"Download of lang {lang.Name} version {lang.Version} in {lang.Language} failed");
                     return;
                 }
 
-                Salamandra.Logger.Info($"{(lang.IsNew ? "[NEW] " : "")}Lang {lang.Name} version {lang.Version} in {lang.Language} downloaded");
+                Salamandra.Langs.Logger.Info($"{(lang.IsNew ? "[NEW] " : "")}Lang {lang.Name} version {lang.Version} in {lang.Language} downloaded");
 
                 if (!Flare.ExtractLang(lang))
                 {
-                    Salamandra.Logger.Error($"Extract of lang {lang.Name} version {lang.Version} in {lang.Language} failed");
+                    Salamandra.Langs.Logger.Error($"Extract of lang {lang.Name} version {lang.Version} in {lang.Language} failed");
                     return;
                 }
 
                 if (!Salamandra.Langs.DiffLastExtractedLang(lang, out string diffPath))
                 {
-                    Salamandra.Logger.Error($"Diff of lang {lang.Name} version {lang.Version} in {lang.Language} failed");
+                    Salamandra.Langs.Logger.Error($"Diff of lang {lang.Name} version {lang.Version} in {lang.Language} failed");
                     return;
                 }
 
