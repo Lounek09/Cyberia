@@ -16,6 +16,8 @@ namespace Salamandra.Cytrus
         }
         private static AnkamaCytrus? _instance;
 
+        private Timer? _timer;
+
         internal AnkamaCytrus()
         {
             Logger = new("cytrus");
@@ -37,6 +39,10 @@ namespace Salamandra.Cytrus
         public event EventHandler<NewCytrusDetectedEventArgs>? NewCytrusDetected;
         public event EventHandler? CheckCytrusFinished;
 
+        public void Listen(int dueTime, int interval)
+        {
+            _timer = new(async _ => await Launch(), null, dueTime, interval);
+        }
 
         /// <summary>
         /// Checks if cytrus has been updated.
@@ -54,7 +60,7 @@ namespace Salamandra.Cytrus
                     cytrus = await response.Content.ReadAsStringAsync();
                 }
             }
-            catch (HttpRequestException e)
+            catch (Exception e) when (e is HttpRequestException or TimeoutException)
             {
                 Logger.Error(e);
                 return;

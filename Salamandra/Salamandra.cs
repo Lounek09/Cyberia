@@ -3,6 +3,7 @@ using Salamandra.Api;
 using Salamandra.Bot;
 using Salamandra.Cytrus;
 using Salamandra.Langs;
+using Salamandra.Langs.Enums;
 using Salamandra.Managers;
 
 namespace Salamandra
@@ -32,8 +33,17 @@ namespace Salamandra
         {
             await Bot.Launch();
 
-            CytrusManager.Listen();
-            LangsManager.Listen();
+            if (Config.EnableCheckCytrus)
+                Cytrus.Listen(10000, 60000);
+
+            if (Config.EnableCheckLang)
+                Langs.ListenAll(LangType.Official, 20000, 360000);
+
+            if (Config.EnableCheckBetaLang)
+                Langs.ListenAll(LangType.Beta, 140000, 360000);
+
+            if (Config.EnableCheckTemporisLang)
+                Langs.ListenAll(LangType.Temporis, 260000, 360000);
 
             await Task.Delay(-1);
         }

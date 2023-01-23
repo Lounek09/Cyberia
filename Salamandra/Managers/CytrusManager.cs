@@ -3,7 +3,6 @@ using DSharpPlus.Entities;
 
 using Salamandra.Bot.Managers;
 using Salamandra.Cytrus;
-using Salamandra.Langs;
 
 using System.Text.Json;
 
@@ -11,16 +10,6 @@ namespace Salamandra.Managers
 {
     public static class CytrusManager
     {
-        private static Dictionary<string, Timer> _timer = new();
-
-        public static void Listen()
-        {
-            _timer = new();
-
-            if (Salamandra.Config.EnableCheckCytrus)
-                _timer.Add("Cytrus", new Timer(async _ => await Salamandra.Cytrus.Launch(), null, 10000, 60000));
-        }
-
         public static async void OnNewCytrusDetected(object? sender, NewCytrusDetectedEventArgs e)
         {
             //Send cytrus diff to discord

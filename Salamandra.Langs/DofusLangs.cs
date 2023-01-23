@@ -1,6 +1,7 @@
 ﻿global using Salamandra.Langs.Enums;
 global using Salamandra.Utils;
 
+using System.Collections.Concurrent;
 using System.Text;
 
 namespace Salamandra.Langs
@@ -17,6 +18,8 @@ namespace Salamandra.Langs
         }
         private static DofusLangs? _instance;
 
+        private readonly ConcurrentDictionary<string, Timer> _timers;
+
         internal DofusLangs()
         {
             Logger = new("langs");
@@ -25,6 +28,7 @@ namespace Salamandra.Langs
             {
                 BaseAddress = new Uri(Constant.BASE_ADRESS)
             };
+            _timers = new();
         }
 
         public static DofusLangs Build()
@@ -37,8 +41,25 @@ namespace Salamandra.Langs
         public event EventHandler<NewerLangDetectedEventArgs>? NewerLangDetected;
         public event EventHandler<CheckLangFinishedEventArgs>? CheckLangFinished;
 
+        public void Listen(LangType type, Language language, int dueTime, int interval)
+        {
+            Timer timer = new(async _ => await Launch(type, language), null, dueTime, interval);
+
+            _timers.AddOrUpdate($"{type}_{language}", timer, (key, oldValue) => oldValue = timer);
+        }
+
+        public void ListenAll(LangType type, int dueTime, int interval)
+        {
+            foreach (Language language in Enum.GetValues<Language>())
+            {
+                Timer timer = new(async _ => await Launch(type, language), null, dueTime, interval);
+
+                _timers.AddOrUpdate($"{type}_{language}", timer, (key, oldValue) => oldValue = timer);
+            }
+        }
+
         /// <summary>
-        /// Checks if the <see cref="LangType"/> langs in <see cref="Language"/> have been updated.
+        /// Checks if the <paramref name="type"/> langs in <paramref name="language"/> have been updated.
         /// </summary>
         /// <param name="type">The lang type to check to</param>
         /// <param name="language">The language to check to</param>
@@ -79,9 +100,9 @@ namespace Salamandra.Langs
                     }
                 }
             }
-            catch (HttpRequestException e)
+            catch (Exception e) when (e is HttpRequestException or TimeoutException)
             {
-                Logger.Error($"Unable to find the versions_{language.ToString().ToLower()}.txt file for {type} langs\n{e.Message}");
+                Logger.Error($"Unable to find the versions_{language.ToString().ToLower()}.txt file for {type} langs", e);
             }
 
             if (versions is null)
@@ -126,11 +147,10 @@ namespace Salamandra.Langs
         }
 
         /// <summary>
-        /// Diff the last extracted lang, see <see cref="ExtractLang"/>, in the directory of <paramref name="lang"/>.
+        /// Diff the last extracted lang, see <see cref="Flare.ExtractLang"/>, in the directory of <paramref name="lang"/>.
         /// </summary>
         /// <param name="lang">The lang to diff to</param>
         /// <returns>True if the lang is successfully diff</returns>
-        /// <exception cref="FileNotFoundException"></exception>
         public bool DiffLastExtractedLang(Lang lang, out string outputPath)
         {
             outputPath = $"{lang.DirectoryPath}/diff.as";

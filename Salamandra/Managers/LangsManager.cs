@@ -3,31 +3,11 @@ using DSharpPlus.Entities;
 
 using Salamandra.Bot.Managers;
 using Salamandra.Langs;
-using Salamandra.Langs.Enums;
 
 namespace Salamandra.Managers
 {
     public static class LangsManager
     {
-        private static Dictionary<string, Timer> _timer = new();
-
-        public static void Listen()
-        {
-            _timer = new();
-
-            foreach (Language language in Enum.GetValues<Language>())
-            {
-                if (Salamandra.Config.EnableCheckLang)
-                    _timer.Add($"{LangType.Official}_{language}", new Timer(async _ => await Salamandra.Langs.Launch(LangType.Official, language), null, 10000, 360000));
-
-                if (Salamandra.Config.EnableCheckBetaLang)
-                    _timer.Add($"{LangType.Beta}_{language}", new Timer(async _ => await Salamandra.Langs.Launch(LangType.Beta, language), null, 130000, 360000));
-
-                if (Salamandra.Config.EnableCheckTemporisLang)
-                    _timer.Add($"{LangType.Temporis}_{language}", new Timer(async _ => await Salamandra.Langs.Launch(LangType.Temporis, language), null, 250000, 360000));
-            }
-        }
-
         public static async void OnCheckLangFinished(object? sender, CheckLangFinishedEventArgs e)
         {
             if (e.Langs.Count == 0)
