@@ -75,7 +75,7 @@ namespace Salamandra.Cytrus.Models.FlatBuffers
         {
             List<KeyValuePair<int, string>> diff = new()
             {
-                new(-1,  $"// {Name.ToUpper()} \\\\")
+                new(-1,  $@"// {Name.ToUpper()} \\")
             };
 
             Dictionary<int, GameFile> currentFiles = GetFiles();
