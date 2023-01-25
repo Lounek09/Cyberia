@@ -279,260 +279,153 @@
 
 
         //States
-        public const string STATE_ALTRUISTIC = "<:state_altruistic:976523161644441632>";
-        public const string STATE_CORRUPTED = "<:state_corrupted:976523162235854878>";
-        public const string STATE_DRUNK = "<:state_drunk:976523162177142795>";
-        public const string STATE_GRAVITY = "<:state_gravity:976523162797867058>";
-        public const string STATE_RETIRED = "<:state_retired:976523162672050217>";
-        public const string STATE_ROOTED = "<:state_rooted:976523163267657748>";
-        public const string STATE_SOUL_SEEKER = "<:state_soul_seeker:976523163498319974>";
-        public const string STATE_TAMING = "<:state_taming:976523163812892692>";
-        public const string STATE_WEAKENED = "<:state_weakened:976523164010033212>";
+        public static readonly Dictionary<int, string> STATES = new()
+        {
+            { 0, "<:state_neutral:1067793405855408128>" },
+            { 1, "<:state_drunk:1067793252717170748>" },
+            { 2, "<:state_soul_seeker:1067808312122413086>" },
+            { 3, "<:state_carrying:1067793148723597352>" },
+            { 5, "<:state_disorient:1067793251035271199>" },
+            { 6, "<:state_rooted:1067808274424004648>" },
+            { 7, "<:state_gravity:1067793310372069466>" },
+            { 8, "<:state_carried:1067793146467078255>" },
+            { 9, "<:state_sylvan_m:1067808314085359756>" },
+            { 10, "<:state_taming:1067808315230408745>" },
+            { 11, "<:state_riding:1067808272955998290>" },
+            { 12, "<:state_unruly:1067808319105933393>" },
+            { 13, "<:state_ext_disob:1067793256093597796>" },
+            { 14, "<:state_snowcover:1067808310474055701>" },
+            { 15, "<:state_awaken:1067793141719121920>" },
+            { 16, "<:state_vulnerable:1067808320448106617>" },
+            { 17, "<:state_parted:1067793410901159956>" },
+            { 18, "<:state_frozen:1067793307163443210>" },
+            { 19, "<:state_cracked:1067793245863694336>" },
+            { 27, "<:state_leopardo:1067793313672986634>" },
+            { 28, "<:state_free:1067793305850630184>" },
+            { 29, "<:state_odd_g:1067793407935778896>" },
+            { 30, "<:state_even_g:1067793254873055372>" },
+            { 31, "<:state_first_ink:1067793302365155348>" },
+            { 32, "<:state_second_ink:1067808307571589190>" },
+            { 33, "<:state_third_ink:1067808316492877834>" },
+            { 34, "<:state_fourth_ink:1067793304428761139>" },
+            { 35, "<:state_kill:1067793311605207050>" },
+            { 36, "<:state_paralyze:1067793409147932672>" },
+            { 37, "<:state_curse:1067793247210049598>" },
+            { 38, "<:state_poison:1067808245328138240>" },
+            { 39, "<:state_blurry:1067793142943854632>" },
+            { 40, "<:state_corrupted:1067793243548426371>" },
+            { 41, "<:state_silent:1067808309446443019>" },
+            { 42, "<:state_weakened:1067808321710587945>" },
+            { 48, "<:state_confused:1067793150237745172>" },
+            { 49, "<:state_ghoulified:1067793308996345936>" },
+            { 50, "<:state_altruistic:1067793139609387109>" },
+            { 55, "<:state_retired:1067808270456213544>" },
+            { 60, "<:state_devoted:1067793248833257614>" },
+            { 61, "<:state_aggressive:1067793137961013288>" },
+            { 73, "<:state_boggedown:1067793144801939497>" }
+        };
 
         public static string State(int id)
         {
-            switch (id)
-            {
-                case 1:
-                    return STATE_DRUNK;
-                case 2:
-                    return STATE_SOUL_SEEKER;
-                case 6:
-                    return STATE_ROOTED;
-                case 7:
-                    return STATE_GRAVITY;
-                case 10:
-                    return STATE_TAMING;
-                case 40:
-                    return STATE_CORRUPTED;
-                case 42:
-                    return STATE_WEAKENED;
-                case 50:
-                    return STATE_ALTRUISTIC;
-                case 55:
-                    return STATE_RETIRED;
-                default:
-                    return EMPTY;
-            }
+            return STATES.TryGetValue(id, out string? emoji) ? emoji : EMPTY;
         }
 
 
         //Runes
-        public const string RUNE_FO = "<:rune_fo:971137161153884221>";
-        public const string RUNE_PA_FO = "<:rune_pa_fo:971137184532922378>";
-        public const string RUNE_RA_FO = "<:rune_ra_fo:971137186927898666>";
-        public const string RUNE_SA = "<:rune_sa:971137179432657017>";
-        public const string RUNE_PA_SA = "<:rune_pa_sa:971137185392767089>";
-        public const string RUNE_RA_SA = "<:rune_ra_sa:971137188081307688>";
-        public const string RUNE_INE = "<:rune_ine:971137162097606666>";
-        public const string RUNE_PA_INE = "<:rune_pa_ine:971137184843300915>";
-        public const string RUNE_RA_INE = "<:rune_ra_ine:971137187485720596>";
-        public const string RUNE_VI = "<:rune_vi:971137180191830116>";
-        public const string RUNE_PA_VI = "<:rune_pa_vi:971137171480248392>";
-        public const string RUNE_RA_VI = "<:rune_ra_vi:971137188060340254>";
-        public const string RUNE_AGE = "<:rune_age:971137127670747207>";
-        public const string RUNE_PA_AGE = "<:rune_pa_age:971137183798927430>";
-        public const string RUNE_RA_AGE = "<:rune_ra_age:971137186072240240>";
-        public const string RUNE_CHA = "<:rune_cha:971137156447883314>";
-        public const string RUNE_PA_CHA = "<:rune_pa_cha:971137183912190032>";
-        public const string RUNE_RA_CHA = "<:rune_ra_cha:971137186739134525>";
-        public const string RUNE_CRI = "<:rune_cri:971137156670189578>";
-        public const string RUNE_SO = "<:rune_so:971137125443588146>";
-        public const string RUNE_DO = "<:rune_do:971137156926042182>";
-        public const string RUNE_DO_PER = "<:rune_do_per:971137181127163905>";
-        public const string RUNE_PA_DO_PER = "<:rune_pa_do_per:971137189322838096>";
-        public const string RUNE_RA_DO_PER = "<:rune_ra_do_per:971137189780025374>";
-        public const string RUNE_DO_REN = "<:rune_do_ren:971137158121398292>";
-        public const string RUNE_SUMMO = "<:rune_summo:971137179642368001>";
-        public const string RUNE_POD = "<:rune_pod:971137173090885632>";
-        public const string RUNE_PA_POD = "<:rune_pa_pod:971137169680924692>";
-        public const string RUNE_RA_POD = "<:rune_ra_pod:971137178006618162>";
-        public const string RUNE_PI = "<:rune_pi:971137172210069504>";
-        public const string RUNE_PA_PI = "<:rune_pa_pi:971137185183072266>";
-        public const string RUNE_PI_PER = "<:rune_pi_per:971137186139365376>";
-        public const string RUNE_PA_PI_PER = "<:rune_pa_pi_per:971137185610891294>";
-        public const string RUNE_RA_PI_PER = "<:rune_ra_pi_per:971137187896766534>";
-        public const string RUNE_INI = "<:rune_ini:971137162470895636>";
-        public const string RUNE_PA_INI = "<:rune_pa_ini:971137167957032960>";
-        public const string RUNE_RA_INI = "<:rune_ra_ini:971137177071272006>";
-        public const string RUNE_PROSPE = "<:rune_prospe:971137173216714752>";
-        public const string RUNE_PA_PROSPE = "<:rune_pa_prospe:971137170217775104>";
-        public const string RUNE_FIRE_RE = "<:rune_fire_re:971137182263820318>";
-        public const string RUNE_AIR_RE = "<:rune_air_re:971137166602301590>";
-        public const string RUNE_WATER_RE = "<:rune_water_re:971137188450414723>";
-        public const string RUNE_EARTH_RE = "<:rune_earth_re:971137181890510958>";
-        public const string RUNE_NEUTRAL_RE = "<:rune_neutral_re:971137183316578385>";
-        public const string RUNE_FIRE_RE_PER = "<:rune_fire_re_per:971137182620323840>";
-        public const string RUNE_AIR_RE_PER = "<:rune_air_re_per:971137181638869042>";
-        public const string RUNE_EARTH_RE_PER = "<:rune_earth_re_per:971137182003761162>";
-        public const string RUNE_NEUTRAL_RE_PER = "<:rune_neutral_re_per:971137183576629368>";
-        public const string RUNE_WATER_RE_PER = "<:rune_water_re_per:971137188899201124>";
-        public const string RUNE_HUNTING = "<:rune_hunting:971137189087944795>";
-        public const string RUNE_PO = "<:rune_po:971129485992804412>";
-        public const string RUNE_GA_PA = "<:rune_ga_pa:971129483673341992>";
-        public const string RUNE_GA_PME = "<:rune_ga_pme:971129485036490762>";
+        public static readonly Dictionary<int, string> BA_RUNES = new()
+        {
+            { 1, "<:rune_fo:971137161153884221>" },
+            { 2, "<:rune_sa:971137179432657017>" },
+            { 3, "<:rune_ine:971137162097606666>" },
+            { 4, "<:rune_vi:971137180191830116>" },
+            { 5, "<:rune_age:971137127670747207>" },
+            { 6, "<:rune_cha:971137156447883314>" },
+            { 7, "<:rune_cri:971137156670189578>" },
+            { 8, "<:rune_so:971137125443588146>" },
+            { 9, "<:rune_do:971137156926042182>" },
+            { 10, "<:rune_do_per:971137181127163905>" },
+            { 11, "<:rune_do_ren:971137158121398292>" },
+            { 12, "<:rune_summo:971137179642368001>" },
+            { 13, "<:rune_pod:971137173090885632>" },
+            { 14, "<:rune_pi:971137172210069504>" },
+            { 15, "<:rune_pi_per:971137186139365376>" },
+            { 16, "<:rune_ini:971137162470895636>" },
+            { 17, "<:rune_prospe:971137173216714752>" },
+            { 18, "<:rune_fire_re:971137182263820318>" },
+            { 19, "<:rune_air_re:971137166602301590>" },
+            { 20, "<:rune_water_re:971137188450414723>" },
+            { 21, "<:rune_earth_re:971137181890510958>" },
+            { 22, "<:rune_neutral_re:971137183316578385>" },
+            { 23, "<:rune_fire_re_per:971137182620323840>" },
+            { 24, "<:rune_air_re_per:971137181638869042>" },
+            { 25, "<:rune_earth_re_per:971137182003761162>" },
+            { 26, "<:rune_neutral_re_per:971137183576629368>" },
+            { 27, "<:rune_water_re_per:971137188899201124>" },
+            { 28, "<:rune_hunting:971137189087944795>" },
+            { 29, "<:rune_po:971129485992804412>" },
+            { 30, "<:rune_ga_pa:971129483673341992>" },
+            { 31, "<:rune_ga_pme:971129485036490762>" }
+        };
 
         public static string BaRune(int id)
         {
-            switch (id)
-            {
-                case 1:
-                    return RUNE_FO;
-                case 2:
-                    return RUNE_SA;
-                case 3:
-                    return RUNE_INE;
-                case 4:
-                    return RUNE_VI;
-                case 5:
-                    return RUNE_AGE;
-                case 6:
-                    return RUNE_CHA;
-                case 7:
-                    return RUNE_GA_PA;
-                case 8:
-                    return RUNE_GA_PME;
-                case 9:
-                    return RUNE_CRI;
-                case 10:
-                    return RUNE_SO;
-                case 11:
-                    return RUNE_DO;
-                case 12:
-                    return RUNE_DO_PER;
-                case 13:
-                    return RUNE_DO_REN;
-                case 14:
-                    return RUNE_PO;
-                case 15:
-                    return RUNE_SUMMO;
-                case 16:
-                    return RUNE_POD;
-                case 17:
-                    return RUNE_PI;
-                case 18:
-                    return RUNE_PI_PER;
-                case 19:
-                    return RUNE_INI;
-                case 20:
-                    return RUNE_PROSPE;
-                case 21:
-                    return RUNE_FIRE_RE;
-                case 22:
-                    return RUNE_AIR_RE;
-                case 23:
-                    return RUNE_WATER_RE;
-                case 24:
-                    return RUNE_EARTH_RE;
-                case 25:
-                    return RUNE_NEUTRAL_RE;
-                case 26:
-                    return RUNE_FIRE_RE_PER;
-                case 27:
-                    return RUNE_AIR_RE_PER;
-                case 28:
-                    return RUNE_EARTH_RE_PER;
-                case 29:
-                    return RUNE_NEUTRAL_RE_PER;
-                case 30:
-                    return RUNE_WATER_RE_PER;
-                case 31:
-                    return RUNE_HUNTING;
-                default:
-                    return EMPTY;
-            }
+            return BA_RUNES.TryGetValue(id, out string? emoji) ? emoji : EMPTY;
         }
+
+        public static readonly Dictionary<int, string> PA_RUNES = new()
+        {
+            { 1, "<:rune_pa_fo:971137184532922378>" },
+            { 2, "<:rune_pa_sa:971137185392767089>" },
+            { 3, "<:rune_pa_ine:971137184843300915>" },
+            { 4, "<:rune_pa_vi:971137171480248392>" },
+            { 5, "<:rune_pa_age:971137183798927430>" },
+            { 6, "<:rune_pa_cha:971137183912190032>" },
+            { 12, "<:rune_pa_do_per:971137189322838096>" },
+            { 16, "<:rune_pa_pod:971137169680924692>" },
+            { 17, "<:rune_pa_pi:971137185183072266>" },
+            { 18, "<:rune_pa_pi_per:971137185610891294>" },
+            { 19, "<:rune_pa_ini:971137167957032960>" },
+            { 20, "<:rune_pa_prospe:971137170217775104>" }
+        };
 
         public static string PaRune(int id)
         {
-            switch (id)
-            {
-                case 1:
-                    return RUNE_PA_FO;
-                case 2:
-                    return RUNE_PA_SA;
-                case 3:
-                    return RUNE_PA_INE;
-                case 4:
-                    return RUNE_PA_VI;
-                case 5:
-                    return RUNE_PA_AGE;
-                case 6:
-                    return RUNE_PA_CHA;
-                case 12:
-                    return RUNE_PA_DO_PER;
-                case 16:
-                    return RUNE_PA_POD;
-                case 17:
-                    return RUNE_PA_PI;
-                case 18:
-                    return RUNE_PA_PI_PER;
-                case 19:
-                    return RUNE_PA_INI;
-                case 20:
-                    return RUNE_PA_PROSPE;
-                default:
-                    return EMPTY;
-            }
+            return PA_RUNES.TryGetValue(id, out string? emoji) ? emoji : EMPTY;
         }
+
+        public static readonly Dictionary<int, string> RA_RUNES = new()
+        {
+            { 1, "<:rune_ra_fo:971137186927898666>" },
+            { 2, "<:rune_ra_sa:971137188081307688>" },
+            { 3, "<:rune_ra_ine:971137187485720596>" },
+            { 4, "<:rune_ra_vi:971137188060340254>" },
+            { 5, "<:rune_ra_age:971137186072240240>" },
+            { 6, "<:rune_ra_cha:971137186739134525>" },
+            { 12, "<:rune_ra_do_per:971137189780025374>" },
+            { 16, "<:rune_ra_pod:971137178006618162>" },
+            { 18, "<:rune_ra_pi_per:971137187896766534>" },
+            { 19, "<:rune_ra_ini:971137177071272006>" }
+        };
 
         public static string RaRune(int id)
         {
-            switch (id)
-            {
-                case 1:
-                    return RUNE_RA_FO;
-                case 2:
-                    return RUNE_RA_SA;
-                case 3:
-                    return RUNE_RA_INE;
-                case 4:
-                    return RUNE_RA_VI;
-                case 5:
-                    return RUNE_RA_AGE;
-                case 6:
-                    return RUNE_RA_CHA;
-                case 12:
-                    return RUNE_RA_DO_PER;
-                case 16:
-                    return RUNE_RA_POD;
-                case 18:
-                    return RUNE_RA_PI_PER;
-                case 19:
-                    return RUNE_RA_INI;
-                default:
-                    return EMPTY;
-            }
+            return RA_RUNES.TryGetValue(id, out string? emoji) ? emoji : EMPTY;
         }
 
-
         //Areas
-        public const string AREA_CIRCLE = "<:area_circle:971129517085184020>";
-        public const string AREA_LINE = "<:area_line:971129517760475196>";
-        public const string AREA_RING = "<:area_ring:971129517919846511>";
-        public const string AREA_T = "<:area_t:971129518439944302>";
-        public const string AREA_CROSS = "<:area_cross:971129517517197322>";
-        public const string AREA_CHECKED_PATTERN = "<:area_checked_pattern:971129516728659978>";
+        public static readonly Dictionary<char, string> AREAS = new()
+        {
+            { 'C', "<:area_circle:971129517085184020>" },
+            { 'L', "<:area_line:971129517760475196>" },
+            { 'O', "<:area_ring:971129517919846511>" },
+            { 'T', "<:area_t:971129518439944302>" },
+            { 'X', "<:area_cross:971129517517197322>" },
+            { 'D', "<:area_checked_pattern:971129516728659978>" }
+        };
 
         public static string Area(char symbol)
         {
-            switch (symbol)
-            {
-                case 'C':
-                    return AREA_CIRCLE;
-                case 'L':
-                    return AREA_LINE;
-                case 'O':
-                    return AREA_RING;
-                case 'T':
-                    return AREA_T;
-                case 'X':
-                    return AREA_CROSS;
-                case 'D':
-                    return AREA_CHECKED_PATTERN;
-                default:
-                    return EMPTY;
-            }
+            return AREAS.TryGetValue(symbol, out string? emoji) ? emoji : EMPTY;
         }
 
 
