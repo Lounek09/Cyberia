@@ -100,7 +100,7 @@ namespace Salamandra.Langs
                     }
                 }
             }
-            catch (Exception e) when (e is HttpRequestException or TimeoutException)
+            catch (Exception e) when (e is HttpRequestException or TaskCanceledException)
             {
                 Logger.Error($"Unable to find the versions_{language.ToString().ToLower()}.txt file for {type} langs", e);
             }

@@ -60,7 +60,7 @@ namespace Salamandra.Cytrus
                     cytrus = await response.Content.ReadAsStringAsync();
                 }
             }
-            catch (Exception e) when (e is HttpRequestException or TimeoutException)
+            catch (Exception e) when (e is HttpRequestException or TaskCanceledException)
             {
                 Logger.Error(e);
                 return;
