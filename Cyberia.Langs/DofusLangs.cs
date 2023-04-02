@@ -9,10 +9,10 @@ namespace Cyberia.Langs
 {
     public sealed class DofusLangs
     {
-        public Logger Logger { get; private set; }
-        public LangsConfig Config { get; private set; }
+        public Logger Logger { get; init; }
+        public LangsConfig Config { get; init; }
 
-        internal HttpClient HttpClient { get; private set; }
+        internal HttpClient HttpClient { get; init; }
 
         internal static DofusLangs Instance {
             get => _instance is null ? throw new NullReferenceException("Build the Langs before !") : _instance;
@@ -60,7 +60,7 @@ namespace Cyberia.Langs
         }
 
         /// <summary>
-        /// Checks if the <paramref name="type"/> langs in <paramref name="language"/> have been updated.
+        /// Checks if the <paramref name="type"/> langs in <paramref name="language"/> has been updated.
         /// </summary>
         /// <param name="type">The lang type to check to</param>
         /// <param name="language">The language to check to</param>
@@ -190,8 +190,8 @@ namespace Cyberia.Langs
 
     public sealed class CheckLangStartedEventArgs : EventArgs
     {
-        public LangType Type { get; set; }
-        public Language Language { get; set; }
+        public LangType Type { get; init; }
+        public Language Language { get; init; }
 
         public CheckLangStartedEventArgs(LangType type, Language language)
         {
@@ -202,9 +202,9 @@ namespace Cyberia.Langs
 
     public sealed class NewerLangDetectedEventArgs : EventArgs
     {
-        public LangType Type { get; set; }
-        public Language Language { get; set; }
-        public Lang Lang { get; set; }
+        public LangType Type { get; init; }
+        public Language Language { get; init; }
+        public Lang Lang { get; init; }
 
         public NewerLangDetectedEventArgs(LangType type, Language language, Lang lang)
         {
@@ -216,9 +216,9 @@ namespace Cyberia.Langs
 
     public sealed class CheckLangFinishedEventArgs : EventArgs
     {
-        public LangType Type { get; set; }
-        public Language Language { get; set; }
-        public List<Lang> Langs { get; set; }
+        public LangType Type { get; init; }
+        public Language Language { get; init; }
+        public List<Lang> Langs { get; init; }
 
         public CheckLangFinishedEventArgs(LangType type, Language language, List<Lang> langs)
         {

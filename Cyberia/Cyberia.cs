@@ -47,7 +47,7 @@ namespace Cyberia
             if (Config.EnableCheckTemporisLang)
                 Langs.ListenAll(LangType.Temporis, 260000, 360000);
 
-            await DatabaseBuilder.Launch(LangType.Official, Language.FR);
+            //await DatabaseBuilder.Launch(LangType.Official, Language.FR);
 
             await Task.Delay(-1);
         }
