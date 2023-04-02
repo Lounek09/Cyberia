@@ -28,6 +28,9 @@ namespace Cyberia.Cytrus
 
         internal AnkamaCytrus()
         {
+            if (!Directory.Exists(OUTPUT_PATH))
+                Directory.CreateDirectory(OUTPUT_PATH);
+
             Logger = new("cytrus");
             CytrusData = File.Exists(CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(CYTRUS_PATH) : new();
             OldCytrusData = File.Exists(OLD_CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(OLD_CYTRUS_PATH) : new();
@@ -49,13 +52,13 @@ namespace Cyberia.Cytrus
 
         public void Listen(int dueTime, int interval)
         {
-            _timer = new(async _ => await Launch(), null, dueTime, interval);
+            _timer = new(async _ => await LaunchAsync(), null, dueTime, interval);
         }
 
         /// <summary>
         /// Checks if cytrus has been updated.
         /// </summary>
-        public async Task Launch()
+        public async Task LaunchAsync()
         {
             CheckCytrusStarted?.Invoke(this, new());
 

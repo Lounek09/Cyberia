@@ -14,7 +14,7 @@ namespace Cyberia.Salamandra.Commands.Data
         public async Task CheckCytrusCommand(InteractionContext ctx)
         {
             await ctx.CreateResponseAsync($"Lancement du check de Cytrus...");
-            await Bot.Instance.Cytrus.Launch();
+            await Bot.Instance.Cytrus.LaunchAsync();
             await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check de Cytrus terminé"));
         }
 
