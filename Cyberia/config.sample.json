@@ -1,0 +1,8 @@
+{
+  "TrelloUrl": "",
+  "EnableCheckLang": false,
+  "EnableCheckBetaLang": false,
+  "EnableCheckTemporisLang": false,
+  "EnableCheckCytrus": false,
+  "EnableAutomaticCytrusManifestDiff": false
+}

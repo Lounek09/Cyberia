@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>salamandra.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="salamandra.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cyberia.Api\Cyberia.Api.csproj" />
+    <ProjectReference Include="..\Cyberia.Chronicle\Cyberia.Chronicle.csproj" />
+    <ProjectReference Include="..\Cyberia.Salamandra\Cyberia.Salamandra.csproj" />
+    <ProjectReference Include="..\Cyberia.Cytrus\Cyberia.Cytrus.csproj" />
+    <ProjectReference Include="..\Cyberia.Langs\Cyberia.Langs.csproj" />
+    <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="config.sample.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

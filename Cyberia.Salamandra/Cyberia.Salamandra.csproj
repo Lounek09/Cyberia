@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DSharpPlus" Version="4.4.0" />
+    <PackageReference Include="DSharpPlus.SlashCommands" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cyberia.Api\Cyberia.Api.csproj" />
+    <ProjectReference Include="..\Cyberia.Cytrus\Cyberia.Cytrus.csproj" />
+    <ProjectReference Include="..\Cyberia.Langs\Cyberia.Langs.csproj" />
+    <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="bot\config.sample.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

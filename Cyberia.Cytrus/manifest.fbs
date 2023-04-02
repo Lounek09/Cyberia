@@ -1,0 +1,33 @@
+namespace Cyberia.Cytrus.Models.FlatBuffers;
+
+table Chunk {
+  hash:[byte];
+  size:long;
+  offset:long;
+}
+
+table GameFile {
+  name:string;
+  size:long;
+  hash:[byte];
+  chunks:[Chunk];
+  executable:bool;
+  symlink:string;
+}
+
+table Bundle {
+  hash:[byte];
+  chunks:[Chunk];
+}
+
+table Fragment {
+  name:string;
+  files:[GameFile];
+  bundles:[Bundle];
+}
+
+table Manifest {
+  fragments:[Fragment];
+}
+
+root_type Manifest;
