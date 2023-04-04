@@ -41,4 +41,4 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
-        script: chmod -R 755 /home/salamandra/Lapichon/langs/flare
+        script: chmod -R 755 /home/salamandra/Lapichon/flare
