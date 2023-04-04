@@ -71,7 +71,7 @@ namespace Cyberia.Cytrusaur.Models.FlatBuffers
             return files;
         }
 
-        internal List<string> DiffFiles(Fragment model)
+        internal List<string> Diff(Fragment model)
         {
             List<KeyValuePair<int, string>> diff = new()
             {

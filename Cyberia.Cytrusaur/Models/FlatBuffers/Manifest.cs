@@ -53,15 +53,8 @@ namespace Cyberia.Cytrusaur.Models.FlatBuffers
             return fragments;
         }
 
-        /// <summary>
-        /// Generate a file that lists all differences between two manifests
-        /// </summary>
-        /// <param name="old">The old manifest to diff to</param>
-        /// <param name="outputPath">The path of the generated file</param>
-        public void DiffFiles(Manifest old, out string outputPath)
+        public string Diff(Manifest old)
         {
-            outputPath = $"temp/file.diff";
-
             List<KeyValuePair<int, List<string>>> diff = new();
 
             Dictionary<int, Fragment> currentFragments = GetFragments();
@@ -78,7 +71,7 @@ namespace Cyberia.Cytrusaur.Models.FlatBuffers
 
                 if (oldFragmentKeys.TryGetValue(fragment.Value.Name, out int oldKey))
                 {
-                    fragmentDiff = fragment.Value.DiffFiles(oldFragments[oldKey]);
+                    fragmentDiff = fragment.Value.Diff(oldFragments[oldKey]);
                     processedKeys.Add(oldKey);
                 }
                 else
@@ -120,7 +113,7 @@ namespace Cyberia.Cytrusaur.Models.FlatBuffers
             else
                 output.Add("Aucune différence");
 
-            File.WriteAllLines(outputPath, output, System.Text.Encoding.UTF8);
+            return string.Join("\n", output);
         }
     }
 }

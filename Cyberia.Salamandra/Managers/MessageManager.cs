@@ -1,5 +1,6 @@
 ﻿using Cyberia.Cytrusaur.Models;
 using Cyberia.Cytrusaur.Models.FlatBuffers;
+using Cyberia.Langzilla;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -7,6 +8,8 @@ using DSharpPlus.Entities;
 using Google.FlatBuffers;
 
 using System.Diagnostics;
+using System.Text;
+using System.Threading;
 
 namespace Cyberia.Salamandra.Managers
 {
@@ -124,7 +127,7 @@ namespace Cyberia.Salamandra.Managers
                 return;
             }
 
-            client2.DiffFiles(client1, out string outputPath);
+            string diff = Formatter.BlockCode(client2.Diff(client1), "diff");
 
             stopwatch.Stop();
 
@@ -133,14 +136,12 @@ namespace Cyberia.Salamandra.Managers
                                   {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
                                   """;
 
-            string diffContent = Formatter.BlockCode(File.ReadAllText(outputPath), "diff");
-
-            if (mainContent.Length + diffContent.Length < 2000)
-                await channel.SendMessage(message.WithContent($"{mainContent}\n{diffContent}"));
+            if (mainContent.Length + diff.Length < 2000)
+                await channel.SendMessage(message.WithContent($"{mainContent}\n{diff}"));
             else
             {
-                using (FileStream fileStream = File.OpenRead(outputPath))
-                    await channel.SendMessage(message.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", fileStream));
+                using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
+                await channel.SendMessage(message.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
             }
         }
     }

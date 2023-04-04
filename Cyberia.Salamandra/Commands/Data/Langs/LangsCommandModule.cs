@@ -6,6 +6,8 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
 
+using System.Text;
+
 namespace Cyberia.Salamandra.Commands.Data
 {
     [SlashCommandGroup("langs", "Langs")]
@@ -112,7 +114,6 @@ namespace Cyberia.Salamandra.Commands.Data
             {
                 tasks.Add(Task.Run(async () =>
                 {
-                    Directory.CreateDirectory($"temp/{language}");
                     DiscordThreadChannel thread = await ctx.Channel.CreateThreadAsync($"Diff entre {type} et {typeModel} en {language}", AutoArchiveDuration.Hour, ChannelType.PublicThread);
 
                     LangsData data = Bot.Instance.DofusLangs.GetLangsData(type, language);
@@ -137,10 +138,8 @@ namespace Cyberia.Salamandra.Commands.Data
                         }
                         else
                         {
-                            File.WriteAllText($"temp/{language}/{lang.Name}.as", diff);
-
-                            using FileStream fileStream = File.OpenRead($"temp/{language}/{lang.Name}.as");
-                            await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", fileStream));
+                            using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
+                            await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", stream));
                         }
 
                         await rateLimit;
