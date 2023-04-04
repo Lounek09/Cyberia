@@ -18,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
                 if (!string.IsNullOrEmpty(game) && !string.IsNullOrEmpty(platform) && !string.IsNullOrEmpty(release))
                 {
-                    string? version = Bot.Instance.Cytrus.OldCytrusData.Games[game].GetVersionFromPlatformAndRelease(platform, release);
+                    string? version = Bot.Instance.AnkamaCytrus.OldCytrusData.Games[game].GetVersionFromPlatformAndRelease(platform, release);
 
                     if (!string.IsNullOrEmpty(version))
                         choices.Add(new(version, version));

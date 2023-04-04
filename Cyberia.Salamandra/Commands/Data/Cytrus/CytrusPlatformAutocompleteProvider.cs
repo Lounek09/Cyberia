@@ -16,7 +16,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
                 if (!string.IsNullOrEmpty(game))
                 {
-                    foreach (KeyValuePair<string, Dictionary<string, string>> platform in Bot.Instance.Cytrus.CytrusData.Games[game].Platforms)
+                    foreach (KeyValuePair<string, Dictionary<string, string>> platform in Bot.Instance.AnkamaCytrus.CytrusData.Games[game].Platforms)
                         choices.Add(new(platform.Key.Capitalize(), platform.Key));
                 }
             }

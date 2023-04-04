@@ -11,7 +11,7 @@ namespace Cyberia.Salamandra.Commands.Data
         {
             HashSet<DiscordApplicationCommandOptionChoice> choices = new();
 
-            foreach (KeyValuePair<string, Game> game in Bot.Instance.Cytrus.CytrusData.Games)
+            foreach (KeyValuePair<string, Game> game in Bot.Instance.AnkamaCytrus.CytrusData.Games)
                 choices.Add(new(game.Key.Capitalize(), game.Key));
 
             return Task.FromResult(choices.AsEnumerable());

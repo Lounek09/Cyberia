@@ -20,8 +20,8 @@ namespace Cyberia.Salamandra
         public DiscordClient Client { get; init; }
         public SlashCommandsExtension SlashCommands { get; init; }
 
-        internal AnkamaCytrus Cytrus { get; init; }
-        internal DofusLangs Langs { get; init; }
+        internal AnkamaCytrus AnkamaCytrus { get; init; }
+        internal DofusLangs DofusLangs { get; init; }
         internal DofusApi Api { get; init; }
 
         internal static Bot Instance {
@@ -52,11 +52,11 @@ namespace Cyberia.Salamandra
             SlashCommands.SlashCommandErrored += CommandManager.OnSlashCommandErrored;
             SlashCommands.SlashCommandExecuted += CommandManager.OnSlashCommandExecuted;
 
-            Cytrus = cytrus;
-            Cytrus.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
+            AnkamaCytrus = cytrus;
+            AnkamaCytrus.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
 
-            Langs = langs;
-            Langs.CheckLangFinished += LangsManager.OnCheckLangFinished;
+            DofusLangs = langs;
+            DofusLangs.CheckLangFinished += LangsManager.OnCheckLangFinished;
 
             Api = api;
         }

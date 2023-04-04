@@ -17,7 +17,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
                 if (!string.IsNullOrEmpty(game) && !string.IsNullOrEmpty(platform))
                 {
-                    foreach (KeyValuePair<string, string> release in Bot.Instance.Cytrus.CytrusData.Games[game].GetReleasesFromPlatform(platform))
+                    foreach (KeyValuePair<string, string> release in Bot.Instance.AnkamaCytrus.CytrusData.Games[game].GetReleasesFromPlatform(platform))
                         choices.Add(new(release.Key.Capitalize(), release.Key));
                 }
             }

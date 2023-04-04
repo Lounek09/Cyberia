@@ -23,7 +23,7 @@ namespace Cyberia.Salamandra.Commands.Data
                     LangType type = Enum.Parse<LangType>(typeStr);
                     Language language = Enum.Parse<Language>(languageStr);
 
-                    foreach (Lang lang in Bot.Instance.Langs.GetLangsData(type, language).GetLangsByName(value).Take(25))
+                    foreach (Lang lang in Bot.Instance.DofusLangs.GetLangsData(type, language).GetLangsByName(value).Take(25))
                         choices.Add(new(lang.Name, lang.Name));
                 }
             }

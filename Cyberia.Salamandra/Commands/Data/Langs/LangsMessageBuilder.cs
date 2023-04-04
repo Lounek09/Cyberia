@@ -25,7 +25,7 @@ namespace Cyberia.Salamandra.Commands.Data
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Langs")
                                         .WithTitle($"Langs {_type} en {_language}");
 
-            LangsData data = Bot.Instance.Langs.GetLangsData(_type, _language);
+            LangsData data = Bot.Instance.DofusLangs.GetLangsData(_type, _language);
             if (data.Langs.Count > 0)
             {
                 HashSet<string> content = new()
