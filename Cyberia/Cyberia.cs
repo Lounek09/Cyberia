@@ -2,9 +2,8 @@
 using Cyberia.Api;
 using Cyberia.Chronicle;
 using Cyberia.Cytrus;
-using Cyberia.Langs;
-using Cyberia.Langs.Enums;
-using Cyberia.Managers;
+using Cyberia.Langzilla;
+using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra;
 using Cyberia.Scripts;
 
@@ -15,7 +14,7 @@ namespace Cyberia
         public static Logger Logger { get; private set; }
         public static Config Config { get; private set; }
         public static AnkamaCytrus Cytrus { get; private set; }
-        public static DofusLangs Langs { get; private set; }
+        public static DofusLangs DofusLangs { get; private set; }
         public static DofusApi Api { get; private set; }
         public static Bot Salamandra { get; private set; }
 
@@ -24,11 +23,11 @@ namespace Cyberia
             Logger = new("main");
             Config = Config.Build();
             Cytrus = AnkamaCytrus.Build();
-            Cytrus.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
-            Langs = DofusLangs.Build();
-            Langs.CheckLangFinished += LangsManager.OnCheckLangFinished;
+            DofusLangs = DofusLangs.Build();
             Api = DofusApi.Build();
-            Salamandra = Bot.Build(Cytrus, Langs, Api);
+            Salamandra = Bot.Build(Cytrus, DofusLangs, Api);
+
+            Directory.CreateDirectory("temp");
         }
 
         public static async Task Main()
@@ -39,13 +38,13 @@ namespace Cyberia
                 Cytrus.Listen(10000, 60000);
 
             if (Config.EnableCheckLang)
-                Langs.ListenAll(LangType.Official, 20000, 360000);
+                DofusLangs.ListenForAllLanguage(LangType.Official, 20000, 360000);
 
             if (Config.EnableCheckBetaLang)
-                Langs.ListenAll(LangType.Beta, 140000, 360000);
+                DofusLangs.ListenForAllLanguage(LangType.Beta, 140000, 360000);
 
             if (Config.EnableCheckTemporisLang)
-                Langs.ListenAll(LangType.Temporis, 260000, 360000);
+                DofusLangs.ListenForAllLanguage(LangType.Temporis, 260000, 360000);
 
             //await DatabaseBuilder.Launch(LangType.Official, Language.FR);
 

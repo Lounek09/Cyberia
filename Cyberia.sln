@@ -18,13 +18,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Api", "Cyberia.Api\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Salamandra", "Cyberia.Salamandra\Cyberia.Salamandra.csproj", "{CD004824-B6D6-4058-9B69-2117270920E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Cytrus", "Cyberia.Cytrus\Cyberia.Cytrus.csproj", "{02579824-672C-4F45-9C1A-1E913889A2AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Cytrusaur", "Cyberia.Cytrusaur\Cyberia.Cytrusaur.csproj", "{02579824-672C-4F45-9C1A-1E913889A2AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Langs", "Cyberia.Langs\Cyberia.Langs.csproj", "{BC6D1BD7-9C6A-472B-B6DF-A95188D6C2F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Langzilla", "Cyberia.Langzilla\Cyberia.Langzilla.csproj", "{BC6D1BD7-9C6A-472B-B6DF-A95188D6C2F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Utils", "Cyberia.Utils\Cyberia.Utils.csproj", "{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyberia.Chronicle", "Cyberia.Chronicle\Cyberia.Chronicle.csproj", "{17783EB0-2931-4985-9146-2F59F2122419}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Chronicle", "Cyberia.Chronicle\Cyberia.Chronicle.csproj", "{17783EB0-2931-4985-9146-2F59F2122419}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

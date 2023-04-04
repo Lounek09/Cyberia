@@ -1,4 +1,4 @@
-﻿using Cyberia.Langs.Enums;
+﻿using Cyberia.Langzilla.Enums;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;

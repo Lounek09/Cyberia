@@ -2,7 +2,7 @@
 using Cyberia.Api;
 using Cyberia.Chronicle;
 using Cyberia.Cytrus;
-using Cyberia.Langs;
+using Cyberia.Langzilla;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -53,7 +53,11 @@ namespace Cyberia.Salamandra
             SlashCommands.SlashCommandExecuted += CommandManager.OnSlashCommandExecuted;
 
             Cytrus = cytrus;
+            Cytrus.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
+
             Langs = langs;
+            Langs.CheckLangFinished += LangsManager.OnCheckLangFinished;
+
             Api = api;
         }
 

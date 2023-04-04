@@ -1,4 +1,4 @@
-﻿using Cyberia.Langs.Enums;
+﻿using Cyberia.Langzilla.Enums;
 
 using System.Text.RegularExpressions;
 
@@ -15,7 +15,7 @@ namespace Cyberia.Scripts
         {
             Dictionary<string, Dictionary<string, LangObject>> map = Json.LoadFromFile<Dictionary<string, Dictionary<string, LangObject>>>(LANGSMAP_PATH);
 
-            string langPath = $"{Constant.LANGS_PATH}/{type.ToString().ToLower()}/{language.ToString().ToLower()}";
+            string langPath = $"lang/{type.ToString().ToLower()}/{language.ToString().ToLower()}";
             if (!Directory.Exists(langPath))
             {
                 Cyberia.Logger.Error($"Unknown '{langPath}' directory when building the database");

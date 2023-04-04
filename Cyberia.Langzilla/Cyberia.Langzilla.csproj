@@ -12,16 +12,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="langs\flare\flare.exe">
+    <None Update="flare\flare.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="langs\flare\flare32">
+    <None Update="flare\flare32">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="langs\flare\flare64">
+    <None Update="flare\flare64">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="langs\flare\LICENSE.TXT">
+    <None Update="flare\LICENSE.TXT">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

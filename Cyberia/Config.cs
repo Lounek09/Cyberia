@@ -2,12 +2,13 @@
 {
     public sealed class Config
     {
-        public string TrelloUrl { get; set; }
-        public bool EnableCheckLang { get; set; }
-        public bool EnableCheckBetaLang { get; set; }
-        public bool EnableCheckTemporisLang { get; set; }
-        public bool EnableCheckCytrus { get; set; }
-        public bool EnableAutomaticCytrusManifestDiff { get; set; }
+        private const string PATH = "config.json";
+
+        public string TrelloUrl { get; init; }
+        public bool EnableCheckLang { get; init; }
+        public bool EnableCheckBetaLang { get; init; }
+        public bool EnableCheckTemporisLang { get; init; }
+        public bool EnableCheckCytrus { get; init; }
 
         public Config()
         {
@@ -16,14 +17,14 @@
 
         public static Config Build()
         {
-            if (!File.Exists(Constant.CONFIG_PATH))
+            if (!File.Exists(PATH))
             {
-                Cyberia.Logger.Crit($"Configuration file not found at {Constant.CONFIG_PATH}");
+                Cyberia.Logger.Crit($"Configuration file not found at {Directory.GetCurrentDirectory()}/{PATH}");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
 
-            return Json.LoadFromFile<Config>(Constant.CONFIG_PATH);
+            return Json.LoadFromFile<Config>(PATH);
         }
     }
 }

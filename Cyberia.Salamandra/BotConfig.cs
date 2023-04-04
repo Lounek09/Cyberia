@@ -4,15 +4,17 @@ namespace Cyberia.Salamandra
 {
     public sealed class BotConfig
     {
-        public string Token { get; set; }
-        public string CdnUrl { get; set; }
-        public string EmbedColor { get; set; }
-        public string DiscordInviteUrl { get; set; }
-        public ulong LogChannelId { get; set; }
-        public ulong CommandErrorChannelId { get; set; }
-        public ulong LangChannelId { get; set; }
-        public ulong CytrusChannelId { get; set; }
-        public ulong CytrusManifestDiffChannelId { get; set; }
+        private const string PATH = $"bot.config.json";
+
+        public string Token { get; init; }
+        public string CdnUrl { get; init; }
+        public string EmbedColor { get; init; }
+        public string DiscordInviteUrl { get; init; }
+        public ulong LogChannelId { get; init; }
+        public ulong CommandErrorChannelId { get; init; }
+        public ulong LangChannelId { get; init; }
+        public ulong CytrusChannelId { get; init; }
+        public ulong CytrusManifestDiffChannelId { get; init; }
 
         public BotConfig()
         {
@@ -24,14 +26,14 @@ namespace Cyberia.Salamandra
 
         public static BotConfig Build()
         {
-            if (!File.Exists(Constant.CONFIG_PATH))
+            if (!File.Exists(PATH))
             {
-                Bot.Instance.Logger.Crit($"Configuration file not found at {Constant.CONFIG_PATH}");
+                Bot.Instance.Logger.Crit($"Configuration file not found at {PATH}");
                 Console.ReadLine();
                 Environment.Exit(0);
             }
 
-            return Json.LoadFromFile<BotConfig>(Constant.CONFIG_PATH);
+            return Json.LoadFromFile<BotConfig>(PATH);
         }
 
         public async Task<DiscordChannel?> GetLogChannel()

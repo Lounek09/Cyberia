@@ -1,4 +1,4 @@
-﻿namespace Cyberia.Langs.Enums
+﻿namespace Cyberia.Langzilla.Enums
 {
     public enum LangType
     {

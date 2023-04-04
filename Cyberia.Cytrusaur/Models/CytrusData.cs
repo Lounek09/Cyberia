@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Cyberia.Cytrus.Models
+namespace Cyberia.Cytrusaur.Models
 {
     public sealed class Game
     {

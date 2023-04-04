@@ -4,6 +4,7 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+using DSharpPlus.SlashCommands.Attributes;
 
 namespace Cyberia.Salamandra.Commands.Data
 {
@@ -11,6 +12,7 @@ namespace Cyberia.Salamandra.Commands.Data
     public sealed class CytrusCommandModule : ApplicationCommandModule
     {
         [SlashCommand("check", "Lance un check de cytrus")]
+        [SlashRequireOwner]
         public async Task CheckCytrusCommand(InteractionContext ctx)
         {
             await ctx.CreateResponseAsync($"Lancement du check de Cytrus...");
