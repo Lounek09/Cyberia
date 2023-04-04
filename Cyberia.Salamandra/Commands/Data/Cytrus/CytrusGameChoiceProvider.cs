@@ -1,4 +1,4 @@
-﻿using Cyberia.Cytrus.Models;
+﻿using Cyberia.Cytrusaur.Models;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
