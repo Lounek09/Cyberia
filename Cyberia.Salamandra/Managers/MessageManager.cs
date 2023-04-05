@@ -1,6 +1,5 @@
 ﻿using Cyberia.Cytrusaur.Models;
 using Cyberia.Cytrusaur.Models.FlatBuffers;
-using Cyberia.Langzilla;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -9,7 +8,6 @@ using Google.FlatBuffers;
 
 using System.Diagnostics;
 using System.Text;
-using System.Threading;
 
 namespace Cyberia.Salamandra.Managers
 {
@@ -127,7 +125,7 @@ namespace Cyberia.Salamandra.Managers
                 return;
             }
 
-            string diff = Formatter.BlockCode(client2.Diff(client1), "diff");
+            string diff = client2.Diff(client1);
 
             stopwatch.Stop();
 
@@ -137,7 +135,7 @@ namespace Cyberia.Salamandra.Managers
                                   """;
 
             if (mainContent.Length + diff.Length < 2000)
-                await channel.SendMessage(message.WithContent($"{mainContent}\n{diff}"));
+                await channel.SendMessage(message.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
             else
             {
                 using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
