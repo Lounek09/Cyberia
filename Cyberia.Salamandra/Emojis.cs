@@ -420,7 +420,7 @@
             { 'O', "<:area_ring:971129517919846511>" },
             { 'T', "<:area_t:971129518439944302>" },
             { 'X', "<:area_cross:971129517517197322>" },
-            { 'D', "<:area_checked_pattern:971129516728659978>" }
+            { 'D', "<:area_checked_pattern:1093504719663665163>" }
         };
 
         public static string Area(char symbol)
