@@ -439,12 +439,31 @@
         }
 
 
+        //Quests
+        public const string QUEST = "<:quest:1095984758921625712>";
+        public const string REPEATABLE_QUEST = "<:repeatable_quest:1095984761178165320>";
+        public const string ACCOUNT_QUEST = "<:account_quest:1095984762482597888>";
+        public const string ACCOUNT_REPEATABLE_QUEST = "<:account_repeatable_quest:1095984763812188201>";
+
+        public static string Quest(bool isRepeatable, bool isAccount)
+        {
+            if (isRepeatable && isAccount)
+                return ACCOUNT_REPEATABLE_QUEST;
+
+            if (isAccount)
+                return ACCOUNT_QUEST;
+
+            if (isRepeatable)
+                return REPEATABLE_QUEST;
+
+            return QUEST;
+        }
+
+
         //Others
         public const string EMPTY = "<:empty:971146087572316230>";
         public const string HOUSE = "<:house:971448610610884718>";
         public const string DUNGEON = "<:dungeon:971144890928996352>";
-        public const string QUEST = "<:quest:971144890622828615>";
-        public const string QUEST_REPEATABLE = "<:quest_repeatable:971144890983538698>";
         public const string KAMAS = "<:kamas:971144891163885618>";
         public const string XP = "<:xp:971144890870300732>";
     }
