@@ -169,7 +169,7 @@ namespace Cyberia.Langzilla
 
             if (string.IsNullOrEmpty(diff))
             {
-                File.Delete(diff);
+                File.Delete(GetDiffFilePath());
                 return;
             }
 

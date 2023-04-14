@@ -6,7 +6,7 @@ namespace Cyberia.Langzilla
     {
         public LangType Type { get; init; }
         public Language Language { get; init; }
-        public long LastModified { get; private set; }
+        public long LastModified { get; set; }
         public List<Lang> Langs { get; init; }
 
         public LangsData()
