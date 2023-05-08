@@ -24,7 +24,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Calculateur de % de fuite")
                                         .WithDescription($"""
                                                             Avec {Formatter.Bold(agility.ToString())}agi tu auras {Formatter.Bold(escapePercent.ToString())}% de chance de fuir contre {Formatter.Bold(foeAgility.ToString())}agi
-                                                            Pour fuire a 100% il te faudra au minimum {Formatter.Bold(agilityToEscapeForSure.ToString())}agi !
+                                                            Pour fuir à 100% il te faudra au minimum {Formatter.Bold(agilityToEscapeForSure.ToString())}agi !
                                                             """);
 
             await ctx.CreateResponseAsync(embed);
