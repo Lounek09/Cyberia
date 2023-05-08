@@ -124,28 +124,25 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             if (e.Id.Equals("itemset"))
             {
-                ItemSet? itemSet = _item.GetItemSet();
-                if (itemSet is not null)
+                if (_itemSet is not null)
                 {
-                    await new ItemSetMessageBuilder(itemSet).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-            else if (e.Id.Equals("incarnation"))
-            {
-                Incarnation? incarnation = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationByItemId(_item.Id);
-                if (incarnation is not null)
-                {
-                    await new IncarnationMessageBuilder(incarnation).UpdateInteractionResponse(e.Interaction);
+                    await new ItemSetMessageBuilder(_itemSet).UpdateInteractionResponse(e.Interaction);
                     return true;
                 }
             }
             else if (e.Id.Equals("craft"))
             {
-                Craft? craft = _item.GetCraft();
-                if (craft is not null)
+                if (_craft is not null)
                 {
-                    await new CraftMessageBuilder(craft, 1).UpdateInteractionResponse(e.Interaction);
+                    await new CraftMessageBuilder(_craft, 1).UpdateInteractionResponse(e.Interaction);
+                    return true;
+                }
+            }
+            else if (e.Id.Equals("incarnation"))
+            {
+                if (_incarnation is not null)
+                {
+                    await new IncarnationMessageBuilder(_incarnation).UpdateInteractionResponse(e.Interaction);
                     return true;
                 }
             }
