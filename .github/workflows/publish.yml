@@ -22,7 +22,7 @@ jobs:
       run: dotnet build -c Release
       
     - name: Publish
-      run: dotnet publish Cyberia.sln -c Release -o ./Lapichon
+      run: dotnet publish Cyberia.sln -c Release -o ./Salamandra
     
     - name: Deploy
       uses: appleboy/scp-action@master
@@ -31,7 +31,7 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
-        source: ./Lapichon
+        source: ./Salamandra
         target: /home/salamandra
 
     - name: Add execution right on Flare
@@ -41,4 +41,4 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
-        script: chmod -R 755 /home/salamandra/Lapichon/flare
+        script: chmod -R 755 /home/salamandra/Salamandra/flare
