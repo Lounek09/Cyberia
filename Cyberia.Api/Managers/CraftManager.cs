@@ -4,10 +4,10 @@ namespace Cyberia.Api.Managers
 {
     public static class CraftManager
     {
-        public static List<string> GetCraftToString(this Craft craft, bool recursive, bool highlightItemWithCraft)
+        public static List<string> GetCraftToString(this Craft craft, int qte, bool recursive, bool highlightItemWithCraft)
         {
             List<string> result = new();
-            Dictionary<int, int> ingredients = recursive ? craft.GetRecursiveIngredients(1) : craft.Ingredients;
+            Dictionary<int, int> ingredients = recursive ? craft.GetRecursiveIngredients(qte) : craft.GetIngredients(qte);
 
             foreach (KeyValuePair<int, int> ingredient in ingredients)
             {

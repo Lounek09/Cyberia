@@ -65,7 +65,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (_craft is not null)
             {
-                string recipe = string.Join(" + ", _craft.GetCraftToString(false, false));
+                string recipe = string.Join(" + ", _craft.GetCraftToString(1, false, false));
                 if (!string.IsNullOrEmpty(recipe))
                     embed.AddField("Craft :", recipe);
             }

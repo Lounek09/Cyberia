@@ -27,7 +27,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         protected override async Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Jobs, "Calculateur de crafts")
-                .WithDescription(string.Join('\n', _craft.GetCraftToString(_recursive, true)));
+                .WithDescription(string.Join('\n', _craft.GetCraftToString(_qte, _recursive, true)));
 
             if (_item is not null)
             {
