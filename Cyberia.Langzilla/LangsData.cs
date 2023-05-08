@@ -25,7 +25,7 @@ namespace Cyberia.Langzilla
 
         public string GetDirectoryPath()
         {
-            return Langzilla.DofusLangs.GetDirectoryPath(Type, Language);
+            return DofusLangs.GetDirectoryPath(Type, Language);
         }
 
         public string GetDataFilePath()

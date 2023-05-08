@@ -1,4 +1,6 @@
-﻿using DSharpPlus.SlashCommands;
+﻿using Cyberia.Api.DatacenterNS;
+
+using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
 
 namespace Cyberia.Salamandra.Commands.Admin
@@ -9,7 +11,7 @@ namespace Cyberia.Salamandra.Commands.Admin
         [SlashRequireOwner]
         public async Task Command(InteractionContext ctx)
         {
-            await ctx.CreateResponseAsync(".l.");
+            await Task.Delay(1000);
         }
     }
 }

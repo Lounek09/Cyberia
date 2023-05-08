@@ -1,4 +1,5 @@
-﻿using Cyberia.Langzilla;
+﻿using Cyberia.Api.Parser;
+using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 
 using DSharpPlus;
@@ -55,7 +56,7 @@ namespace Cyberia.Salamandra.Commands.Data
             LangType type = typeStr is null ? LangType.Official : Enum.Parse<LangType>(typeStr);
             Language language = languageStr is null ? Language.FR : Enum.Parse<Language>(languageStr);
 
-            await new LangsMessageBuilder(type, language, ctx.User).SendInteractionResponse(ctx.Interaction);
+            await new LangsMessageBuilder(type, language).SendInteractionResponse(ctx.Interaction);
         }
 
         [SlashCommand("get", "Retourne le lang demandé décompilé")]
@@ -148,6 +149,24 @@ namespace Cyberia.Salamandra.Commands.Data
             }
 
             await Task.WhenAll(tasks);
+        }
+
+        [SlashCommand("parse", "Lance le parsing des langs en json")]
+        [SlashRequireOwner]
+        [SlashRequirePermissions(Permissions.SendMessages)]
+        public async Task ParseLangsCommand(InteractionContext ctx,
+            [Option("nom", "Nom du lang a parse (all pour tous les lancer)")]
+            [Autocomplete(typeof(LangNameToParseAutocompleteProvider))]
+            string langName)
+        {
+            await ctx.CreateResponseAsync($"Lancement du parsing de {Formatter.InlineCode(langName)}");
+
+            LangParser.Launch(langName, out string message);
+
+            await new DiscordMessageBuilder()
+                .WithContent(message)
+                .WithReply((await ctx.GetOriginalResponseAsync()).Id)
+                .SendAsync(ctx.Channel);
         }
     }
 }

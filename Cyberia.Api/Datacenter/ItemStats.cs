@@ -1,17 +1,45 @@
-﻿namespace Cyberia.Api.Datacenter
-{
-    [Table("ItemsStats")]
-    public sealed class ItemStats : ITable
-    {
-        [PrimaryKey, NotNull]
-        public int ItemId { get; set; }
+﻿using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Factories.JsonConverter;
 
-        [NotNull]
-        public string Stats { get; set; }
+using System.Text.Json.Serialization;
+
+namespace Cyberia.Api.DatacenterNS
+{
+    public sealed class ItemStats
+    {
+        [JsonPropertyName("id")]
+        public int Id { get; init; }
+
+        [JsonPropertyName("v")]
+        [JsonConverter(typeof(ItemEffectsJsonConverter))]
+        public List<IEffect> Effects { get; init; }
 
         public ItemStats()
         {
-            Stats = string.Empty;
+            Effects = new();
+        }
+    }
+
+    public sealed class ItemStatsData
+    {
+        private const string FILE_NAME = "itemstats.json";
+
+        [JsonPropertyName("ISTA")]
+        public List<ItemStats> ItemsStats { get; init; }
+
+        public ItemStatsData()
+        {
+            ItemsStats = new();
+        }
+
+        internal static ItemStatsData Build()
+        {
+            return Json.LoadFromFile<ItemStatsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+        }
+
+        public ItemStats? GetItemStatById(int id)
+        {
+            return ItemsStats.Find(x => x.Id == id);
         }
     }
 }

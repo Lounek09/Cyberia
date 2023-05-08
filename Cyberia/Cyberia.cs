@@ -5,7 +5,6 @@ using Cyberia.Cytrusaur;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra;
-using Cyberia.Scripts;
 
 namespace Cyberia
 {
@@ -24,7 +23,7 @@ namespace Cyberia
             Config = Config.Build();
             AnkamaCytrus = AnkamaCytrus.Build();
             DofusLangs = DofusLangs.Build();
-            Api = DofusApi.Build();
+            Api = DofusApi.Build(Config.CdnUrl, Config.Temporis, DofusLangs, FormatType.MarkDown);
             Salamandra = Bot.Build(AnkamaCytrus, DofusLangs, Api);
 
             Directory.CreateDirectory("temp");
@@ -45,8 +44,6 @@ namespace Cyberia
 
             if (Config.EnableCheckTemporisLang)
                 DofusLangs.ListenForAllLanguage(LangType.Temporis, 260000, 360000);
-
-            //await DatabaseBuilder.Launch(LangType.Official, Language.FR);
 
             await Task.Delay(-1);
         }

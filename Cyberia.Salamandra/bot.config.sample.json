@@ -1,6 +1,5 @@
 {
   "Token": "YOUR_TOKEN",
-  "CdnUrl": "URL_OF_YOUR_CDN",
   "EmbedColor": "#FFFFFF",
   "DiscordInviteUrl": "https://discord.gg/XXXXXXXX",
   "LogChannelId": 0,

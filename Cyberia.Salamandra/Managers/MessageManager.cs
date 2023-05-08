@@ -3,6 +3,7 @@ using Cyberia.Cytrusaur.Models.FlatBuffers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 
 using Google.FlatBuffers;
 
@@ -13,6 +14,28 @@ namespace Cyberia.Salamandra.Managers
 {
     public static class MessageManager
     {
+        private static readonly Dictionary<string, string> _hiddenCommands = new()
+        {
+            { "tppttp", "onTotProut.mp3" },
+            { "fppffp", "onFranckyPassion.mp3" },
+            { "wizz", "onWizz.mp3" },
+            { "hncabot", "onBelge.mp3" },
+            { "foot2rue", "onFoot2Rue.mp4" },
+            { "monkeychan", "onMonkeyChan.mp4" }
+        };
+
+        public static async Task OnMessageCreated(DiscordClient _, MessageCreateEventArgs e)
+        {
+            foreach (KeyValuePair<string, string> hiddenCommand in _hiddenCommands)
+            {
+                if (e.Message.Content.EndsWith(hiddenCommand.Key))
+                {
+                    await DeleteMessage(e.Message);
+                    await SendFile(e.Channel, $"{Bot.OUTPUT_PATH}/{hiddenCommand.Value}");
+                }
+            }
+        }
+
         public static async Task SendMessage(this DiscordChannel channel, DiscordMessageBuilder message)
         {
             Permissions permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
@@ -70,7 +93,7 @@ namespace Cyberia.Salamandra.Managers
             await commandErrorChannel.SendMessage(new DiscordMessageBuilder().WithContent(content));
         }
 
-        public static async Task Delete(this DiscordMessage message)
+        public static async Task DeleteMessage(this DiscordMessage message)
         {
             DiscordChannel channel = message.Channel;
             Permissions permissions = channel.Guild.CurrentMember.PermissionsIn(channel);

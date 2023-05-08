@@ -8,13 +8,13 @@ using DSharpPlus.EventArgs;
 
 namespace Cyberia.Salamandra.Commands.Data
 {
-    public class LangsMessageBuilder : CustomMessageBuilder
+    public sealed class LangsMessageBuilder : CustomMessageBuilder
     {
         private LangType _type;
         private Language _language;
 
-        public LangsMessageBuilder(LangType type, Language language, DiscordUser user) :
-            base(user)
+        public LangsMessageBuilder(LangType type, Language language) :
+            base()
         {
             _type = type;
             _language = language;

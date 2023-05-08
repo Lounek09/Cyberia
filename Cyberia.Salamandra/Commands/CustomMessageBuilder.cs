@@ -6,12 +6,11 @@ namespace Cyberia.Salamandra.Commands
 {
     public abstract class CustomMessageBuilder
     {
-        protected readonly DiscordUser _user;
         protected DiscordMessage? _messageSent;
 
-        public CustomMessageBuilder(DiscordUser user)
+        public CustomMessageBuilder()
         {
-            _user = user;
+
         }
 
         protected abstract Task<DiscordEmbedBuilder> EmbedBuilder();

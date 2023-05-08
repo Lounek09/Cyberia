@@ -1,0 +1,32 @@
+﻿using Cyberia.Api.DatacenterNS;
+using Cyberia.Api.Managers;
+
+namespace Cyberia.Api.Factories.Effects
+{
+    public sealed class CompatibleWithItemTypeEffect : BasicEffect
+    {
+        public int ItemTypeId { get; init; }
+
+        public CompatibleWithItemTypeEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : base(effectId, parameters, duration, probability, area)
+        {
+            ItemTypeId = parameters.Param3;
+        }
+
+        public static new CompatibleWithItemTypeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        {
+            return new(effectId, parameters, duration, probability, area);
+        }
+
+        public ItemType? GetItemType()
+        {
+            return DofusApi.Instance.Datacenter.ItemsData.GetItemTypeById(ItemTypeId);
+        }
+
+        public override string GetDescription()
+        {
+            string itemTypeName = DofusApi.Instance.Datacenter.ItemsData.GetItemTypeNameById(ItemTypeId);
+
+            return GetDescriptionFromParameters(null, null, itemTypeName);
+        }
+    }
+}

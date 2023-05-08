@@ -63,7 +63,7 @@ namespace Cyberia.Utils
 
         public static string SanitizeMarkDown(this string value)
         {
-            Regex regex = new(@"([`\*_~<>\[\]\(\)""@\!\&#:\|])", RegexOptions.ECMAScript);
+            Regex regex = new(@"([`\*_~<>\[\]\(\)""@\!\&#:\|-])");
 
             return regex.Replace(value, m => $"\\{m.Groups[1].Value}");
         }

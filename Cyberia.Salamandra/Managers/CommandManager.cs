@@ -1,5 +1,6 @@
 ﻿using Cyberia.Salamandra.Commands.Admin;
 using Cyberia.Salamandra.Commands.Data;
+using Cyberia.Salamandra.Commands.Dofus;
 using Cyberia.Salamandra.Commands.Other;
 
 using DSharpPlus;
@@ -15,6 +16,7 @@ namespace Cyberia.Salamandra.Managers
         {
             AdminCommandsGroup.Register(650835844369743884);
             DataCommandsGroup.Register(650835844369743884);
+            DofusCommandsGroup.Register();
             OtherCommandsGroup.Register();
         }
 
@@ -32,7 +34,7 @@ namespace Cyberia.Salamandra.Managers
             }
             else
             {
-                string errorMessage = Formatter.BlockCode((e.Exception.Message + (e.Exception.StackTrace is null ? "" : "\n" + e.Exception.StackTrace)).WithMaxLength(2000));
+                string errorMessage = Formatter.BlockCode((e.Exception.Message + (e.Exception.StackTrace is null ? "" : "\n" + e.Exception.StackTrace)).WithMaxLength(2000 - e.Exception.Message.Length - 6));
 #if DEBUG
                 //await e.Context.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent(errorMessage));
                 await e.Context.CreateResponseAsync(errorMessage);

@@ -7,17 +7,17 @@ namespace Cyberia.Salamandra.Managers
         public static DiscordEmbedBuilder BuildDofusEmbed(DofusEmbedCategory category, string authorText)
         {
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
-                                        .WithColor(new DiscordColor(Bot.Instance.Config.EmbedColor))
-                                        .WithFooter($"{Bot.Instance.Client.CurrentUser.Username}  •  {/*DiscordBot.Instance.Api.Datacenter.TimeZones.GetDate()*/"pas de date hihi"} - {DateTime.Now:HH:mm}"/*, $"{DiscordBot.Instance.Config.CdnUrl}/images/mini_salamandra.png"*/);
+                .WithColor(new DiscordColor(Bot.Instance.Config.EmbedColor))
+                .WithFooter($"{Bot.Instance.Client.CurrentUser.Username}  •  {Bot.Instance.Api.Datacenter.TimeZonesData.GetDate()} - {DateTime.Now:HH:mm}", $"{Bot.Instance.Api.CdnUrl}/images/mini_salamandra.png");
 
-            string iconUrl = $"{Bot.Instance.Config.CdnUrl}/images/embed_categories";
+            string iconUrl = $"{Bot.Instance.Api.CdnUrl}/images/embed_categories";
             switch (category)
             {
                 case DofusEmbedCategory.Bestiary:
                     iconUrl = $"{iconUrl}/category_bestiary.png";
                     break;
-                case DofusEmbedCategory.Classes:
-                    iconUrl = $"{iconUrl}/category_classes.png";
+                case DofusEmbedCategory.Breeds:
+                    iconUrl = $"{iconUrl}/category_breeds.png";
                     break;
                 case DofusEmbedCategory.Houses:
                     iconUrl = $"{iconUrl}/category_houses.png";
@@ -44,14 +44,14 @@ namespace Cyberia.Salamandra.Managers
                     return embed;
             }
 
-            return embed.WithAuthor(authorText/*, iconUrl: iconUrl*/);
+            return embed.WithAuthor(authorText, iconUrl: iconUrl);
         }
     }
 
     public enum DofusEmbedCategory
     {
         Bestiary,
-        Classes,
+        Breeds,
         Houses,
         Inventory,
         Jobs,

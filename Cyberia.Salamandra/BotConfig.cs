@@ -7,7 +7,6 @@ namespace Cyberia.Salamandra
         private const string PATH = $"bot.config.json";
 
         public string Token { get; init; }
-        public string CdnUrl { get; init; }
         public string EmbedColor { get; init; }
         public string DiscordInviteUrl { get; init; }
         public ulong LogChannelId { get; init; }
@@ -19,7 +18,6 @@ namespace Cyberia.Salamandra
         public BotConfig()
         {
             Token = string.Empty;
-            CdnUrl = string.Empty;
             EmbedColor = string.Empty;
             DiscordInviteUrl = string.Empty;
         }

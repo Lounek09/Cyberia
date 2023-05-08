@@ -13,19 +13,17 @@ namespace Cyberia.Salamandra.Commands
         private readonly DofusEmbedCategory _category;
         private readonly string _authorText;
         private readonly string _title;
-        private readonly DiscordUser _user;
         private int _currentPage;
         private DiscordMessage? _messageSent;
 
         protected readonly List<string> _content;
 
-        public PaginationMessageBuilder(DofusEmbedCategory category, string authorText, string title, DiscordUser user)
+        public PaginationMessageBuilder(DofusEmbedCategory category, string authorText, string title)
         {
             _category = category;
             _authorText = authorText;
             _title = title;
             _content = new();
-            _user = user;
             _currentPage = 1;
         }
 
@@ -127,18 +125,6 @@ namespace Cyberia.Salamandra.Commands
         {
             if (e.User.IsBot || _messageSent is null || _messageSent.Id != e.Message.Id)
                 return;
-
-            if (_user.Id != e.User.Id)
-            {
-                DiscordInteractionResponseBuilder response = new()
-                {
-                    Content = "Vous n'avez pas le droit de faire ça !",
-                    IsEphemeral = true
-                };
-
-                await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
-                return;
-            }
 
             DelInteraction();
 

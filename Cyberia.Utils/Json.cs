@@ -7,6 +7,12 @@ namespace Cyberia.Utils
 {
     public static class Json
     {
+        private static readonly JsonSerializerOptions _options = new()
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            WriteIndented = true
+        };
+
         public static T Load<T>(string json)
         {
             try
@@ -39,18 +45,19 @@ namespace Cyberia.Utils
 
         public static void Save(object obj, string filePath)
         {
-            JsonSerializerOptions options = new()
-            {
-                WriteIndented = true
-            };
-
-            string json = JsonSerializer.Serialize(obj, options);
+            string json = JsonSerializer.Serialize(obj, _options);
 
             using (FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.Write))
             {
                 using (StreamWriter streamWriter = new(fileStream, Encoding.UTF8))
                     streamWriter.Write(json);
             }
+        }
+
+        public static string Indent(string json)
+        {
+            JsonDocument document = JsonDocument.Parse(json);
+            return JsonSerializer.Serialize(document, _options);
         }
 
         public static JsonNode Diff(this JsonNode current, JsonNode model)
@@ -130,12 +137,7 @@ namespace Cyberia.Utils
 
             JsonNode resultNode = currentNode.Diff(modelNode);
 
-            JsonSerializerOptions options = new()
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
-            string result = resultNode.ToJsonString(options);
+            string result = resultNode.ToJsonString(_options);
 
             if (result.Equals("{}"))
                 return "";

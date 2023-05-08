@@ -11,7 +11,9 @@ namespace Cyberia.Salamandra.Commands.Data
         public async Task Command(InteractionContext ctx)
         {
             await ctx.DeferAsync();
-            //TODO: reload api
+
+            Bot.Instance.Api.Reload();
+
             await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Api reload !"));
         }
     }

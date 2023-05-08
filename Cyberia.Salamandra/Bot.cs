@@ -13,8 +13,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Cyberia.Salamandra
 {
-    public class Bot
+    public sealed class Bot
     {
+        public const string OUTPUT_PATH = "bot";
+
         public Logger Logger { get; init; }
         public BotConfig Config { get; init; }
         public DiscordClient Client { get; init; }
@@ -24,6 +26,7 @@ namespace Cyberia.Salamandra
         internal DofusLangs DofusLangs { get; init; }
         internal DofusApi Api { get; init; }
 
+
         internal static Bot Instance {
             get => _instance is null ? throw new NullReferenceException("Build the Bot before !") : _instance;
         }
@@ -31,6 +34,8 @@ namespace Cyberia.Salamandra
 
         internal Bot(AnkamaCytrus cytrus, DofusLangs langs, DofusApi api)
         {
+            Directory.CreateDirectory(OUTPUT_PATH);
+
             Logger = new("bot");
             Config = BotConfig.Build();
 

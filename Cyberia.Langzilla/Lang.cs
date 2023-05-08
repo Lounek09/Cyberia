@@ -30,7 +30,7 @@ namespace Cyberia.Langzilla
 
         public string GetDirectoryPath()
         {
-            return $"{DofusLangs.GetDirectoryPath(Type, Language)}/{Name.ToLower()}";
+            return $"{DofusLangs.GetDirectoryPath(Type, Language)}/{Name}";
         }
 
         public string GetFileName()

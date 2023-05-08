@@ -4,7 +4,8 @@
     {
         private const string PATH = "config.json";
 
-        public string TrelloUrl { get; init; }
+        public string CdnUrl { get; init; }
+        public bool Temporis { get; init; }
         public bool EnableCheckLang { get; init; }
         public bool EnableCheckBetaLang { get; init; }
         public bool EnableCheckTemporisLang { get; init; }
@@ -12,7 +13,7 @@
 
         public Config()
         {
-            TrelloUrl = string.Empty;
+            CdnUrl = string.Empty;
         }
 
         public static Config Build()
