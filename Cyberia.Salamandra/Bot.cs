@@ -52,6 +52,7 @@ namespace Cyberia.Salamandra
             Client = new DiscordClient(discordConfig);
             Client.GuildCreated += GuildManager.OnGuildCreated;
             Client.GuildDeleted += GuildManager.OnGuildDeleted;
+            Client.MessageCreated += MessageManager.OnMessageCreated;
 
             SlashCommands = Client.UseSlashCommands();
             SlashCommands.SlashCommandErrored += CommandManager.OnSlashCommandErrored;
