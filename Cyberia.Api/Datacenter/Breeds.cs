@@ -79,12 +79,12 @@ namespace Cyberia.Api.DatacenterNS
 
         public string GetIconImgPath()
         {
-            return $"{DofusApi.Instance.CdnUrl}/images/classes/icons/{Id}.png";
+            return $"{DofusApi.Instance.CdnUrl}/images/breeds/icons/{Id}.png";
         }
 
         public string GetPreferenceWeaponsImgPath()
         {
-            return $"{DofusApi.Instance.CdnUrl}/images/classes/preference_weapons/weapons_{Id}.png";
+            return $"{DofusApi.Instance.CdnUrl}/images/breeds/preference_weapons/weapons_{Id}.png";
         }
 
         public List<Spell> GetSpells()
