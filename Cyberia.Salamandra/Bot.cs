@@ -1,7 +1,7 @@
 ﻿global using Cyberia.Utils;
 using Cyberia.Api;
 using Cyberia.Chronicle;
-using Cyberia.Cytrusaur;
+using Cyberia.Cytrusaurus;
 using Cyberia.Langzilla;
 using Cyberia.Salamandra.Managers;
 

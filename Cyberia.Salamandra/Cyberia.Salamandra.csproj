@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -14,7 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Cyberia.Api\Cyberia.Api.csproj" />
     <ProjectReference Include="..\Cyberia.Chronicle\Cyberia.Chronicle.csproj" />
-    <ProjectReference Include="..\Cyberia.Cytrusaur\Cyberia.Cytrusaur.csproj" />
+    <ProjectReference Include="..\Cyberia.Cytrusaurus\Cyberia.Cytrusaurus.csproj" />
     <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-namespace Cyberia.Cytrus.Models.FlatBuffers;
+namespace Cyberia.Cytrusaurus.Models.FlatBuffers;
 
 table Chunk {
   hash:[byte];

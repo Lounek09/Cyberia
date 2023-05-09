@@ -1,8 +1,8 @@
 ﻿global using Cyberia.Utils;
 using Cyberia.Chronicle;
-using Cyberia.Cytrusaur.Models;
+using Cyberia.Cytrusaurus.Models;
 
-namespace Cyberia.Cytrusaur
+namespace Cyberia.Cytrusaurus
 {
     public sealed class AnkamaCytrus
     {

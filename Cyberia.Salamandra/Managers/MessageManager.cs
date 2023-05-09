@@ -1,5 +1,5 @@
-﻿using Cyberia.Cytrusaur.Models;
-using Cyberia.Cytrusaur.Models.FlatBuffers;
+﻿using Cyberia.Cytrusaurus.Models;
+using Cyberia.Cytrusaurus.Models.FlatBuffers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
