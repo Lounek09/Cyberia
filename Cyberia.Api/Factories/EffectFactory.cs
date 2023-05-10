@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace Cyberia.Api.Factories
 {
-    public sealed record EffectParameters(int Param1, int Param2, int Param3, string Param4);
+    public sealed record EffectParameters(int Param1, int Param2, int Param3, string Param4, string NewParam);
 
     public static class EffectFactory
     {
@@ -24,6 +24,7 @@ namespace Cyberia.Api.Factories
             { 221, GiveItemEffect.Create },
             { 229, GiveRideEffect.Create },
             { 233, RemoveItemAroundEffect.Create },
+            { 239, TransformIntoMonsterEffect.Create },
             { 281, ModifySpellEffect.Create },
             { 282, ModifySpellEffect.Create },
             { 283, ModifySpellEffect.Create },
@@ -100,8 +101,9 @@ namespace Cyberia.Api.Factories
                 int param1 = effect[1].ValueKind is JsonValueKind.Null ? 0 : effect[1].GetInt32();
                 int param2 = effect[2].ValueKind is JsonValueKind.Null ? 0 : effect[2].GetInt32();
                 int param3 = effect[3].ValueKind is JsonValueKind.Null ? 0 : effect[3].GetInt32();
-                string param4 = effect.GetArrayLength() > 6 && effect[6].ValueKind is not JsonValueKind.Null ? effect[6].GetString() ?? "" : "" ;
-                EffectParameters parameters = new(param1, param2, param3, param4);
+                string param4 = effect.GetArrayLength() > 7 && effect[7].ValueKind is not JsonValueKind.Null ? effect[7].GetString() ?? "" : "" ;
+                string newParam = effect.GetArrayLength() > 6 && effect[6].ValueKind is not JsonValueKind.Null ? effect[6].GetString() ?? "" : "";
+                EffectParameters parameters = new(param1, param2, param3, param4, newParam);
                 int duration = effect[4].ValueKind == JsonValueKind.Null ? 0 : effect[4].GetInt32();
                 int probability = effect[5].ValueKind == JsonValueKind.Null ? 0 : effect[5].GetInt32();
 
@@ -120,7 +122,7 @@ namespace Cyberia.Api.Factories
                 int param2 = args.Length > 2 && !string.IsNullOrEmpty(args[2]) ? args[1].StartsWith('-') ? int.Parse(args[2]) : int.Parse(args[2], NumberStyles.HexNumber) : 0;
                 int param3 = args.Length > 3 && !string.IsNullOrEmpty(args[3]) ? args[1].StartsWith('-') ? int.Parse(args[3]) : int.Parse(args[3], NumberStyles.HexNumber) : 0;
                 string param4 = args.Length > 4 ? args[4] : "";
-                EffectParameters parameters = new(param1, param2, param3, param4);
+                EffectParameters parameters = new(param1, param2, param3, param4, "");
 
                 yield return GetEffect(id, parameters, 0, 0, EffectAreaManager.BaseArea);
             }

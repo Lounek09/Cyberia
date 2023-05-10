@@ -57,12 +57,14 @@ namespace Cyberia.Api.Parser
             if (langName.Equals("all"))
             {
                 foreach (string langNameToParse in LangsToParse)
+                {
                     if (!TryParse(langNameToParse))
                     {
                         message = $"An error occured while parsing {langNameToParse} lang";
                         DofusApi.Instance.Logger.Error(message);
                         return false;
                     }
+                }
 
                 message = $"Successful parsing of all langs";
                 DofusApi.Instance.Logger.Info(message);
