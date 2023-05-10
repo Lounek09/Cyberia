@@ -181,7 +181,10 @@ namespace Cyberia.Api.DatacenterNS
         public SpellIcon Icon { get; init; }
 
         [JsonPropertyName("p")]
-        public bool P { get; init; }
+        public bool Passive { get; init; }
+
+        [JsonPropertyName("g")]
+        public bool GlobalInterval { get; init; }
 
         [JsonPropertyName("b")]
         public int BreedId { get; init; }
@@ -190,7 +193,7 @@ namespace Cyberia.Api.DatacenterNS
         public int T { get; init; }
 
         [JsonPropertyName("o")]
-        public int O { get; init; }
+        public int Origin { get; init; }
 
         [JsonPropertyName("c")]
         public int CategoryId { get; init; }

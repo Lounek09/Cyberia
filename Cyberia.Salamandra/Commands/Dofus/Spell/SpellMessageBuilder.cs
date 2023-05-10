@@ -14,8 +14,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private readonly Spell _spell;
         private readonly Breed? _breed;
         private readonly Incarnation? _incarnation;
-        private SpellLevel? _currentSpellLevel;
         private int _level;
+        private SpellLevel? _currentSpellLevel;
 
         public SpellMessageBuilder(Spell spell) :
             base()
@@ -23,8 +23,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
             _spell = spell;
             _breed = spell.GetBreed();
             _incarnation = spell.GetIncarnation();
-            _currentSpellLevel = spell.SpellLevel1;
             _level = spell.GetMaxLevelNumber();
+            _currentSpellLevel = spell.GetSpellLevel(_level);
         }
 
         protected override async Task<DiscordEmbedBuilder> EmbedBuilder()
@@ -86,6 +86,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                                          Nb. de lancers par tour : {Formatter.Bold(_currentSpellLevel.LaunchCountByTurn == 0 ? "-" : _currentSpellLevel.LaunchCountByTurn.ToString())}
                                          Nb. de lancers par tour par joueur : {Formatter.Bold(_currentSpellLevel.LaunchCountByPlayerByTurn == 0 ? "-" : _currentSpellLevel.LaunchCountByPlayerByTurn.ToString())}
                                          Nb. de tours entre deux lancers : {Formatter.Bold(_currentSpellLevel.DelayBetweenLaunch == 0 ? "-" : _currentSpellLevel.DelayBetweenLaunch == 63 ? "inf." : _currentSpellLevel.DelayBetweenLaunch.ToString())}
+                                         {(_spell.GlobalInterval ? "Intervalle de relance global" : "")}
                                          """;
                 embed.AddField("Autres caractéristiques : ", caracteristics, true);
 
