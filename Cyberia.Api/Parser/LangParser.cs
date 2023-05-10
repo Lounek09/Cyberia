@@ -167,8 +167,20 @@ namespace Cyberia.Api.Parser
                 else if (regex.Groups[3].Success)
                     json += $"{{\"id\":\"{regex.Groups[3].Value}\",";
 
-                string value = lineSplit[1].Replace("\n", "").Replace("\r", "").Replace("' + '\"' + '", "\\\"");
-                value = Regex.Replace(value, @"(?<!\\)'", "\"").Replace(@"\'", "'");
+
+                string value = lineSplit[1]
+                    .Replace("\n", "")
+                    .Replace("\r", "")
+                    .Replace("' + '\"' + '", "\\\"");
+                value = Regex.Replace(value, @"(?<!\\)'", "\"")
+                    .Replace(@"\'", "'");
+                value = value.Replace("\u0011", "?")
+                    .Replace("\v", "?")
+                    .Replace("\u000e", "?")
+                    .Replace("\u0017", "?")
+                    .Replace("\u0016", "?")
+                    .Replace("\u000f", "?")
+                    .Replace("\u0010", "?"); //Temporary patch for new zone
 
                 if (value.StartsWith('{') && currentLineHasId)
                     json += $"{(currentLineHasId ? "" : "{")}{value[1..^1]},";
