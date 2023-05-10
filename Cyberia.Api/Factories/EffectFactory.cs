@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace Cyberia.Api.Factories
 {
-    public sealed record EffectParameters(int Param1, int Param2, int Param3, string Param4, string NewParam);
+    public sealed record EffectParameters(int Param1, int Param2, int Param3, string Param4, string Criteria);
 
     public static class EffectFactory
     {
@@ -80,7 +80,9 @@ namespace Cyberia.Api.Factories
             { 2101, GiveTTGCardFromPackEffect.Create },
             { 2102, AddTTGCardToBinderEffect.Create },
             { 2128, AddStateEffect.Create },
-            { 2129, RemoveStateEffect.Create }
+            { 2129, RemoveStateEffect.Create },
+            { 2137, AddStateEffect.Create },
+            { 2138, ModifySpellEffect.Create }
         };
 
         public static IEffect GetEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area)
@@ -102,8 +104,8 @@ namespace Cyberia.Api.Factories
                 int param2 = effect[2].ValueKind is JsonValueKind.Null ? 0 : effect[2].GetInt32();
                 int param3 = effect[3].ValueKind is JsonValueKind.Null ? 0 : effect[3].GetInt32();
                 string param4 = effect.GetArrayLength() > 7 && effect[7].ValueKind is not JsonValueKind.Null ? effect[7].GetString() ?? "" : "" ;
-                string newParam = effect.GetArrayLength() > 6 && effect[6].ValueKind is not JsonValueKind.Null ? effect[6].GetString() ?? "" : "";
-                EffectParameters parameters = new(param1, param2, param3, param4, newParam);
+                string criteria = effect.GetArrayLength() > 6 && effect[6].ValueKind is not JsonValueKind.Null ? effect[6].GetString() ?? "" : "";
+                EffectParameters parameters = new(param1, param2, param3, param4, criteria);
                 int duration = effect[4].ValueKind == JsonValueKind.Null ? 0 : effect[4].GetInt32();
                 int probability = effect[5].ValueKind == JsonValueKind.Null ? 0 : effect[5].GetInt32();
 
