@@ -133,7 +133,7 @@ namespace Cyberia.Langzilla
                 case LangType.Beta:
                     return "betaenv/lang";
                 case LangType.Temporis:
-                    return "temporis/lang";
+                    return "ephemeris2releasebucket/lang";
                 default:
                     return "lang";
             }
