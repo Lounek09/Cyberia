@@ -1,0 +1,251 @@
+{
+  "RU": [
+    {
+      "id": 1,
+      "n": "Fo",
+      "w": 1,
+      "p": 1,
+      "pa": true,
+      "ra": true
+    },
+    {
+      "id": 2,
+      "n": "Sa",
+      "w": 3,
+      "p": 1,
+      "pa": true,
+      "ra": true
+    },
+    {
+      "id": 3,
+      "n": "Ine",
+      "w": 1,
+      "p": 1,
+      "pa": true,
+      "ra": true
+    },
+    {
+      "id": 4,
+      "n": "Vi",
+      "w": 0.25,
+      "p": 3,
+      "pa": true,
+      "ra": true
+    },
+    {
+      "id": 5,
+      "n": "Age",
+      "w": 1,
+      "p": 1,
+      "pa": true,
+      "ra": true
+    },
+    {
+      "id": 6,
+      "n": "Cha",
+      "w": 1,
+      "p": 1,
+      "pa": true,
+      "ra": true
+    },
+    {
+      "id": 7,
+      "n": "Ga Pa",
+      "w": 100,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 8,
+      "n": "Ga Pme",
+      "w": 90,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 9,
+      "n": "Cri",
+      "w": 30,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 10,
+      "n": "So",
+      "w": 20,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 11,
+      "n": "Do",
+      "w": 20,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 12,
+      "n": "Do Per",
+      "w": 2,
+      "p": 1,
+      "pa": true,
+      "ra": true
+    },
+    {
+      "id": 13,
+      "n": "Do Ren",
+      "w": 30,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 14,
+      "n": "Po",
+      "w": 51,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 15,
+      "n": "Invo",
+      "w": 30,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 16,
+      "n": "Pod",
+      "w": 0.25,
+      "p": 10,
+      "pa": true,
+      "ra": true
+    },
+    {
+      "id": 17,
+      "n": "Pi",
+      "w": 15,
+      "p": 1,
+      "pa": true,
+      "ra": false
+    },
+    {
+      "id": 18,
+      "n": "Pi Per",
+      "w": 2,
+      "p": 1,
+      "pa": true,
+      "ra": true
+    },
+    {
+      "id": 19,
+      "n": "Ini",
+      "w": 0.1,
+      "p": 10,
+      "pa": true,
+      "ra": true
+    },
+    {
+      "id": 20,
+      "n": "Prospe",
+      "w": 3,
+      "p": 1,
+      "pa": true,
+      "ra": false
+    },
+    {
+      "id": 21,
+      "n": "Ré Feu",
+      "w": 5,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 22,
+      "n": "Ré Air",
+      "w": 5,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 23,
+      "n": "Ré Eau",
+      "w": 5,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 24,
+      "n": "Ré Terre",
+      "w": 5,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 25,
+      "n": "Ré Neutre",
+      "w": 5,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 26,
+      "n": "Ré Per Feu",
+      "w": 4,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 27,
+      "n": "Ré Per Air",
+      "w": 4,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 28,
+      "n": "Ré Per Terre",
+      "w": 4,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 29,
+      "n": "Ré Per Neutre",
+      "w": 4,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 30,
+      "n": "Ré Per Eau",
+      "w": 4,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    },
+    {
+      "id": 31,
+      "n": "Chasse",
+      "w": 5,
+      "p": 1,
+      "pa": false,
+      "ra": false
+    }
+  ]
+}

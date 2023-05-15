@@ -1,0 +1,134 @@
+{
+  "CSt": [
+    {
+      "id": 1,
+      "v": "Chance"
+    },
+    {
+      "id": 2,
+      "v": "Agilité"
+    },
+    {
+      "id": 3,
+      "v": "Intelligence"
+    },
+    {
+      "id": 4,
+      "v": "Force"
+    },
+    {
+      "id": 5,
+      "v": "Neutre"
+    },
+    {
+      "id": 6,
+      "v": "Multi-élément"
+    },
+    {
+      "id": 7,
+      "v": "Utilitaire"
+    },
+    {
+      "id": 8,
+      "v": "Invocation"
+    },
+    {
+      "id": 9,
+      "v": "Soin"
+    },
+    {
+      "id": 15,
+      "v": "?"
+    }
+  ],
+  "CSo": [
+    {
+      "id": 1,
+      "v": "Drop"
+    },
+    {
+      "id": 2,
+      "v": "Craft"
+    },
+    {
+      "id": 3,
+      "v": "Inconnu"
+    }
+  ],
+  "CSt": [
+    {
+      "id": 1,
+      "v": "Classe"
+    },
+    {
+      "id": 2,
+      "v": "Elémentaire"
+    },
+    {
+      "id": 3,
+      "v": "Invocation"
+    },
+    {
+      "id": 4,
+      "v": "Maîtrise"
+    },
+    {
+      "id": 5,
+      "v": "Spécial"
+    },
+    {
+      "id": 6,
+      "v": "Percepteur"
+    },
+    {
+      "id": 7,
+      "v": "Fée d'artifice"
+    },
+    {
+      "id": 9,
+      "v": "?"
+    },
+    {
+      "id": 10,
+      "v": "Classe - Temporis"
+    },
+    {
+      "id": 11,
+      "v": "Commun - Temporis"
+    },
+    {
+      "id": 12,
+      "v": "Rare - Temporis"
+    },
+    {
+      "id": 13,
+      "v": "Epic - Temporis"
+    },
+    {
+      "id": 14,
+      "v": "Legendaire - Temporis"
+    },
+  ],
+  "CSLc": [
+    {
+      "id": 0,
+      "v": "Classe"
+    },
+    {
+      "id": 1,
+      "v": "Elémentaire"
+    },
+    {
+      "id": 2,
+      "v": "Invocation"
+    },
+    {
+      "id": 3,
+      "v": "Maîtrise"
+    },
+    {
+      "id": 4,
+      "v": "Spécial"
+    }
+  ]
+}
