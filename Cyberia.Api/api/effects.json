@@ -259,7 +259,7 @@
     },
     {
       "id": 105,
-      "d": "Dommages réduits de  #1{~1~2 à }#2",
+      "d": "Dommages réduits de #1{~1~2 à }#2",
       "c": 6,
       "o": "+",
       "j": true
@@ -844,7 +844,7 @@
     },
     {
       "id": 208,
-      "d": "Lance l'animation de sort #3",
+      "d": "Lance l'animation du niveau de sort sort #3",
       "c": 0,
       "o": ""
     },
@@ -952,7 +952,7 @@
     },
     {
       "id": 228,
-      "d": "Lance l'animation de sort #3",
+      "d": "Lance l'animation du niveau de sort #3",
       "c": 0,
       "o": ""
     },
@@ -1319,7 +1319,7 @@
     },
 	{
       "id": 300,
-      "d": "Effet 300 inconnu (#1, #2, #3, #4)",
+      "d": "Lance le niveau de sort #3",
       "c": 29,
       "o": "/"
     },
@@ -1452,7 +1452,7 @@
     },
     {
       "id": 605,
-      "d": "+#1{~1~2 à }#2 points d' XP",
+      "d": "+#1{~1~2 à }#2 points d'XP",
       "c": 0,
       "o": "+",
       "j": true
@@ -2475,8 +2475,8 @@
       "d": "Dommages : #1{~1~2 à }#2 (meilleur élément)",
       "c": 0,
       "o": "",
-	  "t": true,
-	  "j": true
+	    "t": true,
+	    "j": true
     },
     {
       "id": 2127,
@@ -2525,23 +2525,23 @@
       "d": "Vole #1{~1~2 à }#2 PDV (meilleur élément)",
       "c": 0,
       "o": "",
-	  "t": true,
-	  "j": true
+	    "t": true,
+	    "j": true
     },
     {
       "id": 2135,
       "d": "#1{~1~2 à -}#2 vol dans toutes les caractéristiques",
       "c": 13,
       "o": "",
-	  "j": true
+	    "j": true
     },
     {
       "id": 2136,
       "d": "Dommages : #1{~1~2 à }#2% de la vie de l'attaquant (neutre)",
       "c": 0,
       "o": "",
-	  "t": true,
-	  "j": true
+	    "t": true,
+	    "j": true
     },
     {
       "id": 2137,
