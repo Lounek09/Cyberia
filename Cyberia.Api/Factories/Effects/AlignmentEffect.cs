@@ -7,15 +7,15 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int AlignmentId { get; init; }
 
-        public AlignmentEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : 
-            base(effectId, parameters, duration, probability, area)
+        public AlignmentEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+            base(effectId, parameters, duration, probability, criteria, area)
         {
             AlignmentId = parameters.Param3;
         }
 
-        public static new AlignmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new AlignmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public Alignment? GetAlignment()

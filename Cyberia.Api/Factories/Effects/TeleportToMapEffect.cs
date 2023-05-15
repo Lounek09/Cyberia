@@ -8,16 +8,16 @@ namespace Cyberia.Api.Factories.Effects
         public int MapId { get; init; }
         public int Cell { get; init; }
 
-        public TeleportToMapEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : 
-            base(effectId, parameters, duration, probability, area)
+        public TeleportToMapEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+            base(effectId, parameters, duration, probability, criteria, area)
         {
             MapId = parameters.Param2;
             Cell = parameters.Param3;
         }
 
-        public static new TeleportToMapEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new TeleportToMapEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public Map? GetMap()

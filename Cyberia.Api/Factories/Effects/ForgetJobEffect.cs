@@ -7,15 +7,15 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int JobId { get; init; }
 
-        public ForgetJobEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : 
-            base(effectId, parameters, duration, probability, area)
+        public ForgetJobEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+            base(effectId, parameters, duration, probability, criteria, area)
         {
             JobId = parameters.Param3;
         }
 
-        public static new ForgetJobEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new ForgetJobEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public Job? GetJob()

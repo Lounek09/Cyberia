@@ -5,11 +5,11 @@ using System.Text.Json;
 
 namespace Cyberia.Api.Factories
 {
-    public sealed record EffectParameters(int Param1, int Param2, int Param3, string Param4, string Criteria);
+    public sealed record EffectParameters(int Param1, int Param2, int Param3, string Param4);
 
     public static class EffectFactory
     {
-        private static readonly Dictionary<int, Func<int, EffectParameters, int, int, Area, IEffect>> _factory = new()
+        private static readonly Dictionary<int, Func<int, EffectParameters, int, int, string, Area, IEffect>> _factory = new()
         {
             { -1, PaddockItemEffectivenessEffect.Create },
             { 10, LearnEmoteEffect.Create },
@@ -85,12 +85,12 @@ namespace Cyberia.Api.Factories
             { 2138, ModifySpellEffect.Create }
         };
 
-        public static IEffect GetEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static IEffect GetEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            if (_factory.TryGetValue(effectId, out Func<int, EffectParameters, int, int, Area, IEffect>? builder))
-                return builder(effectId, parameters, duration, probability, area);
+            if (_factory.TryGetValue(effectId, out Func<int, EffectParameters, int, int, string, Area, IEffect>? builder))
+                return builder(effectId, parameters, duration, probability, criteria, area);
 
-            return BasicEffect.Create(effectId, parameters, duration, probability, area);
+            return BasicEffect.Create(effectId, parameters, duration, probability, criteria, area);
         }
 
         public static IEnumerable<IEffect> GetEffectsParseFromSpell(JsonElement[] effects, List<Area> areas)
@@ -104,12 +104,12 @@ namespace Cyberia.Api.Factories
                 int param2 = effect[2].ValueKind is JsonValueKind.Null ? 0 : effect[2].GetInt32();
                 int param3 = effect[3].ValueKind is JsonValueKind.Null ? 0 : effect[3].GetInt32();
                 string param4 = effect.GetArrayLength() > 7 && effect[7].ValueKind is not JsonValueKind.Null ? effect[7].GetString() ?? "" : "" ;
-                string criteria = effect.GetArrayLength() > 6 && effect[6].ValueKind is not JsonValueKind.Null ? effect[6].GetString() ?? "" : "";
-                EffectParameters parameters = new(param1, param2, param3, param4, criteria);
+                EffectParameters parameters = new(param1, param2, param3, param4);
                 int duration = effect[4].ValueKind == JsonValueKind.Null ? 0 : effect[4].GetInt32();
                 int probability = effect[5].ValueKind == JsonValueKind.Null ? 0 : effect[5].GetInt32();
+                string criteria = effect[6].GetString() ?? "";
 
-                yield return GetEffect(id, parameters, duration, probability, areas[i]);
+                yield return GetEffect(id, parameters, duration, probability, criteria, areas[i]);
             }
         }
 
@@ -124,9 +124,9 @@ namespace Cyberia.Api.Factories
                 int param2 = args.Length > 2 && !string.IsNullOrEmpty(args[2]) ? args[1].StartsWith('-') ? int.Parse(args[2]) : int.Parse(args[2], NumberStyles.HexNumber) : 0;
                 int param3 = args.Length > 3 && !string.IsNullOrEmpty(args[3]) ? args[1].StartsWith('-') ? int.Parse(args[3]) : int.Parse(args[3], NumberStyles.HexNumber) : 0;
                 string param4 = args.Length > 4 ? args[4] : "";
-                EffectParameters parameters = new(param1, param2, param3, param4, "");
+                EffectParameters parameters = new(param1, param2, param3, param4);
 
-                yield return GetEffect(id, parameters, 0, 0, EffectAreaManager.BaseArea);
+                yield return GetEffect(id, parameters, 0, 0, "", EffectAreaManager.BaseArea);
             }
         }
     }

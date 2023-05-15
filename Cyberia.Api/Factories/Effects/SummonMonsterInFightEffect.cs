@@ -8,16 +8,16 @@ namespace Cyberia.Api.Factories.Effects
         public int MonsterId { get; init; }
         public int Grade { get; init; }
 
-        public SummonMonsterInFightEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : 
-            base(effectId, parameters, duration, probability, area)
+        public SummonMonsterInFightEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+            base(effectId, parameters, duration, probability, criteria, area)
         {
             MonsterId = parameters.Param1;
             Grade = parameters.Param2;
         }
 
-        public static new SummonMonsterInFightEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new SummonMonsterInFightEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public Monster? GetMonster()

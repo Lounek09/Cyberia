@@ -7,15 +7,15 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int TitleId { get; init; }
 
-        public ShowTitleEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : 
-            base(effectId, parameters, duration, probability, area)
+        public ShowTitleEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+            base(effectId, parameters, duration, probability, criteria, area)
         {
             TitleId = parameters.Param3;
         }
 
-        public static new ShowTitleEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new ShowTitleEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public Title? GetTitle()

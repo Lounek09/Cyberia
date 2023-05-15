@@ -7,15 +7,15 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int EmoteId { get; init; }
 
-        public LearnEmoteEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) :
-            base(effectId, parameters, duration, probability, area)
+        public LearnEmoteEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
+            base(effectId, parameters, duration, probability, criteria, area)
         {
             EmoteId = parameters.Param3;
         }
 
-        public static new LearnEmoteEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new LearnEmoteEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public Emote? GetEmote()

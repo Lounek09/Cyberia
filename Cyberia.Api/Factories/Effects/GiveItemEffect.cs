@@ -9,17 +9,17 @@ namespace Cyberia.Api.Factories.Effects
         public int Qte { get; init; }
         public string Target { get; init; }
 
-        public GiveItemEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : 
-            base(effectId, parameters, duration, probability, area)
+        public GiveItemEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+            base(effectId, parameters, duration, probability, criteria, area)
         {
             ItemId = parameters.Param3;
             Qte = parameters.Param2;
             Target = parameters.Param1 == 0 ? "cible, check cible" : parameters.Param1 == 1 ? "lanceur, check lanceur" : parameters.Param1 == 2 ? "lanceur, check cible" : parameters.Param1.ToString();
         }
 
-        public static new GiveItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new GiveItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public Item? GetItem()

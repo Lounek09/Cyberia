@@ -7,14 +7,14 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int TTGFamilyId { get; init; }
 
-        public GiveTTGCardFromPackEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : base(effectId, parameters, duration, probability, area)
+        public GiveTTGCardFromPackEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : base(effectId, parameters, duration, probability, criteria, area)
         {
             TTGFamilyId = parameters.Param3;
         }
 
-        public static new GiveTTGCardFromPackEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new GiveTTGCardFromPackEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public TTGFamily? GetTTGFamily()

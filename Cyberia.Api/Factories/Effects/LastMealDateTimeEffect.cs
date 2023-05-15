@@ -10,7 +10,7 @@ namespace Cyberia.Api.Factories.Effects
         public int Hour { get; init; }
         public int Minute { get; init; }
 
-        public LastMealDateTimeEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : base(effectId, parameters, duration, probability, area)
+        public LastMealDateTimeEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : base(effectId, parameters, duration, probability, criteria, area)
         {
             Year = parameters.Param1;
             Month = (int)Math.Floor(parameters.Param2 / 100D) + 1;
@@ -19,9 +19,9 @@ namespace Cyberia.Api.Factories.Effects
             Minute = parameters.Param3 - Hour * 100;
         }
 
-        public static new LastMealDateTimeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new LastMealDateTimeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public override string GetDescription()

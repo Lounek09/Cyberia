@@ -20,7 +20,7 @@ namespace Cyberia.Salamandra.Commands.Admin
                 {
                     foreach (IEffect effects in spell.SpellLevel1.Effects)
                     {
-                        if (!string.IsNullOrEmpty(effects.Parameters.Criteria))
+                        if (!string.IsNullOrEmpty(effects.Criteria))
                         {
                             await ctx.Channel.SendMessageAsync(spell.Name);
                             break;
@@ -32,7 +32,7 @@ namespace Cyberia.Salamandra.Commands.Admin
                 {
                     foreach (IEffect effects in spell.SpellLevel2.Effects)
                     {
-                        if (!string.IsNullOrEmpty(effects.Parameters.Criteria))
+                        if (!string.IsNullOrEmpty(effects.Criteria))
                         {
                             await ctx.Channel.SendMessageAsync(spell.Name);
                             break;
@@ -44,7 +44,7 @@ namespace Cyberia.Salamandra.Commands.Admin
                 {
                     foreach (IEffect effects in spell.SpellLevel3.Effects)
                     {
-                        if (!string.IsNullOrEmpty(effects.Parameters.Criteria))
+                        if (!string.IsNullOrEmpty(effects.Criteria))
                         {
                             await ctx.Channel.SendMessageAsync(spell.Name);
                             break;
@@ -56,7 +56,7 @@ namespace Cyberia.Salamandra.Commands.Admin
                 {
                     foreach (IEffect effects in spell.SpellLevel4.Effects)
                     {
-                        if (!string.IsNullOrEmpty(effects.Parameters.Criteria))
+                        if (!string.IsNullOrEmpty(effects.Criteria))
                         {
                             await ctx.Channel.SendMessageAsync(spell.Name);
                             break;
@@ -68,7 +68,7 @@ namespace Cyberia.Salamandra.Commands.Admin
                 {
                     foreach (IEffect effects in spell.SpellLevel5.Effects)
                     {
-                        if (!string.IsNullOrEmpty(effects.Parameters.Criteria))
+                        if (!string.IsNullOrEmpty(effects.Criteria))
                         {
                             await ctx.Channel.SendMessageAsync(spell.Name);
                             break;
@@ -80,7 +80,7 @@ namespace Cyberia.Salamandra.Commands.Admin
                 {
                     foreach (IEffect effects in spell.SpellLevel6.Effects)
                     {
-                        if (!string.IsNullOrEmpty(effects.Parameters.Criteria))
+                        if (!string.IsNullOrEmpty(effects.Criteria))
                         {
                             await ctx.Channel.SendMessageAsync(spell.Name);
                             break;

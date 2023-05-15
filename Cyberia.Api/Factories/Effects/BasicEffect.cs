@@ -9,20 +9,22 @@ namespace Cyberia.Api.Factories.Effects
         public EffectParameters Parameters { get; init; }
         public int Duration { get; init; }
         public int Probability { get; init; }
+        public string Criteria { get; init; }
         public Area Area { get; init; }
 
-        public BasicEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public BasicEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
             EffectId = effectId;
             Parameters = parameters;
             Duration = duration;
             Probability = probability;
+            Criteria = criteria;
             Area = area;
         }
 
-        public static BasicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static BasicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public Effect? GetEffect()

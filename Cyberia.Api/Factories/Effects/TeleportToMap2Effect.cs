@@ -8,7 +8,7 @@ namespace Cyberia.Api.Factories.Effects
         public int MapId { get; init; }
         public int Cell { get; init; }
 
-        public TeleportToMap2Effect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : base(effectId, parameters, duration, probability, area)
+        public TeleportToMap2Effect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : base(effectId, parameters, duration, probability, criteria, area)
         {
             string binary1 = Convert.ToString(parameters.Param1, 2);
             string binary2 = Convert.ToString(parameters.Param2, 2);
@@ -18,9 +18,9 @@ namespace Cyberia.Api.Factories.Effects
             Cell = Convert.ToInt32(binary3[..^2], 2);
         }
 
-        public static new TeleportToMap2Effect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new TeleportToMap2Effect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public Map? GetMap()

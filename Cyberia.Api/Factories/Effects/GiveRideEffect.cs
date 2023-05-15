@@ -9,17 +9,17 @@ namespace Cyberia.Api.Factories.Effects
         public int RideAbilityId { get; init; }
         public bool Infertile { get; init; }
 
-        public GiveRideEffect(int effectId, EffectParameters parameters, int duration, int probability, Area area) : 
-            base(effectId, parameters, duration, probability, area)
+        public GiveRideEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+            base(effectId, parameters, duration, probability, criteria, area)
         {
             RideId = parameters.Param3;
             RideAbilityId = parameters.Param2;
             Infertile = parameters.Param1 == 1;
         }
 
-        public static new BasicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, Area area)
+        public static new BasicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
-            return new(effectId, parameters, duration, probability, area);
+            return new(effectId, parameters, duration, probability, criteria, area);
         }
 
         public Ride? GetRide()
