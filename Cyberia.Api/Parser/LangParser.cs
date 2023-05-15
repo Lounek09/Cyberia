@@ -1,7 +1,6 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 

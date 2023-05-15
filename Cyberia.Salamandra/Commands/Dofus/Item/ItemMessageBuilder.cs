@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.DatacenterNS;
 using Cyberia.Api.Factories;
 using Cyberia.Api.Managers;
-using Cyberia.Api.Factories.Effects;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
