@@ -39,7 +39,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             if (maps.Count == 1)
                 await new MapMessageBuilder(maps[0]).SendInteractionResponse(ctx.Interaction);
             else if (maps.Count > 1)
-               await new MapPaginationMessageBuilder($"Plusieurs maps trouvés en [{x}, {y}] :", maps).SendInteractionResponse(ctx.Interaction);
+                await new MapPaginationMessageBuilder($"Plusieurs maps trouvés en [{x}, {y}] :", maps).SendInteractionResponse(ctx.Interaction);
         }
 
 

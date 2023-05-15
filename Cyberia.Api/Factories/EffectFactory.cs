@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Managers;
+
 using System.Globalization;
 using System.Text.Json;
 
@@ -103,7 +104,7 @@ namespace Cyberia.Api.Factories
                 int param1 = effect[1].ValueKind is JsonValueKind.Null ? 0 : effect[1].GetInt32();
                 int param2 = effect[2].ValueKind is JsonValueKind.Null ? 0 : effect[2].GetInt32();
                 int param3 = effect[3].ValueKind is JsonValueKind.Null ? 0 : effect[3].GetInt32();
-                string param4 = effect.GetArrayLength() > 7 && effect[7].ValueKind is not JsonValueKind.Null ? effect[7].GetString() ?? "" : "" ;
+                string param4 = effect.GetArrayLength() > 7 && effect[7].ValueKind is not JsonValueKind.Null ? effect[7].GetString() ?? "" : "";
                 EffectParameters parameters = new(param1, param2, param3, param4);
                 int duration = effect[4].ValueKind == JsonValueKind.Null ? 0 : effect[4].GetInt32();
                 int probability = effect[5].ValueKind == JsonValueKind.Null ? 0 : effect[5].GetInt32();

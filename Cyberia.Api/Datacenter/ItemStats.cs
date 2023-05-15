@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Factories.JsonConverter;
+using Cyberia.Api.Parser.JsonConverter;
 
 using System.Text.Json.Serialization;
 

@@ -10,7 +10,7 @@ namespace Cyberia.Api.Factories.Effects
         public int Hour { get; init; }
         public int Minute { get; init; }
 
-        public ExchangeableFromDateTimeEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public ExchangeableFromDateTimeEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             Year = parameters.Param1;

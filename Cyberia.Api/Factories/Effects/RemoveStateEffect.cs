@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int StateId { get; init; }
 
-        public RemoveStateEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public RemoveStateEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             StateId = parameters.Param3;

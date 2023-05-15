@@ -8,7 +8,7 @@ namespace Cyberia.Api.Factories.Effects
         public int SpellId { get; init; }
         public int Level { get; init; }
 
-        public GlyphSpellEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public GlyphSpellEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             SpellId = parameters.Param1;

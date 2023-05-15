@@ -8,7 +8,7 @@ namespace Cyberia.Api.Factories.Effects
         public int ItemId { get; init; }
         public int Qte { get; init; }
 
-        public RemoveItemAroundEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public RemoveItemAroundEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             ItemId = parameters.Param3;

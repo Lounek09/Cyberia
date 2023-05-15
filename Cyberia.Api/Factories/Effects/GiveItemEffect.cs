@@ -9,7 +9,7 @@ namespace Cyberia.Api.Factories.Effects
         public int Qte { get; init; }
         public string Target { get; init; }
 
-        public GiveItemEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public GiveItemEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             ItemId = parameters.Param3;

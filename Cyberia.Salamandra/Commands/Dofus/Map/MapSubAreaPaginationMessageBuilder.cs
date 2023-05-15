@@ -12,7 +12,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private readonly List<MapSubArea> _mapSubAreas;
 
         public MapSubAreaPaginationMessageBuilder(List<MapSubArea> mapSubAreas) :
-            base(DofusEmbedCategory.Map, "Carte du monde",  "Plusieurs sous-zones trouvées :")
+            base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs sous-zones trouvées :")
         {
             _mapSubAreas = mapSubAreas;
             PopulateContent();

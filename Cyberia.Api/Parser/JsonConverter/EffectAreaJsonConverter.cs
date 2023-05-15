@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
-using System.Text.Json;
-using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Managers;
 
-namespace Cyberia.Api.Factories.JsonConverter
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace Cyberia.Api.Parser.JsonConverter
 {
     public sealed class EffectAreaJsonConverter : JsonConverter<Area>
     {

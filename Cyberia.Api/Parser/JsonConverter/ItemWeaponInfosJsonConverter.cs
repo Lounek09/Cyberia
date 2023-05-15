@@ -3,7 +3,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Factories.JsonConverter
+namespace Cyberia.Api.Parser.JsonConverter
 {
     public sealed class ItemWeaponInfosJsonConverter : JsonConverter<ItemWeaponInfos>
     {

@@ -8,7 +8,7 @@ namespace Cyberia.Api.Factories.Effects
         public int JobId { get; init; }
         public int XpAmount { get; init; }
 
-        public GiveJobXpEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public GiveJobXpEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             JobId = parameters.Param2;

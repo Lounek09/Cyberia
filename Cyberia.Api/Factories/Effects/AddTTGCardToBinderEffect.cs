@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int TTGCardId { get; init; }
 
-        public AddTTGCardToBinderEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public AddTTGCardToBinderEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             TTGCardId = parameters.Param3;

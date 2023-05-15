@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int MonsterId { get; init; }
 
-        public LaunchFightWithMonsterEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public LaunchFightWithMonsterEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             MonsterId = parameters.Param2;

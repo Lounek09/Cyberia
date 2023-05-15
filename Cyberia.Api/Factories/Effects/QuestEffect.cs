@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int QuestId { get; init; }
 
-        public QuestEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public QuestEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             QuestId = parameters.Param3;

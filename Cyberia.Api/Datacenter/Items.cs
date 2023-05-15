@@ -1,8 +1,7 @@
-﻿using Cyberia.Api.Factories.JsonConverter;
-using Cyberia.Api.Factories.Effects;
+﻿using Cyberia.Api.Managers;
+using Cyberia.Api.Parser.JsonConverter;
 
 using System.Text.Json.Serialization;
-using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.DatacenterNS
 {

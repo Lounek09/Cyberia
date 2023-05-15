@@ -16,8 +16,8 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public static new MultiFightMonsterQuestObjective? Create(QuestObjective questObjective)
         {
-            if (questObjective.Parameters.Count > 1 && 
-                int.TryParse(questObjective.Parameters[0], out int monsterId) && 
+            if (questObjective.Parameters.Count > 1 &&
+                int.TryParse(questObjective.Parameters[0], out int monsterId) &&
                 int.TryParse(questObjective.Parameters[1], out int quantity))
                 return new(questObjective, monsterId, quantity);
 

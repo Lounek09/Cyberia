@@ -1,10 +1,12 @@
 ﻿using Cyberia.Api.DatacenterNS;
+using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Managers;
+
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Factories.JsonConverter
+namespace Cyberia.Api.Parser.JsonConverter
 {
     public sealed class SpellLevelJsonConverter : JsonConverter<SpellLevel>
     {

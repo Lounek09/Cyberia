@@ -3,9 +3,8 @@ using Cyberia.Api.Factories.Effects;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Xml.Linq;
 
-namespace Cyberia.Api.Factories.JsonConverter
+namespace Cyberia.Api.Parser.JsonConverter
 {
     public sealed class ItemEffectsListJsonConverter : JsonConverter<List<List<IEffect>>>
     {

@@ -1,6 +1,4 @@
 ﻿using Cyberia.Api.DatacenterNS;
-using Cyberia.Api.Factories;
-using Cyberia.Api.Factories.QuestObjectives;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 

@@ -1,8 +1,7 @@
 ﻿using Cyberia.Api.Managers;
-using Cyberia.Api.Factories.JsonConverter;
+using Cyberia.Api.Parser.JsonConverter;
 
 using System.Text.Json.Serialization;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Cyberia.Api.DatacenterNS
 {
@@ -118,7 +117,7 @@ namespace Cyberia.Api.DatacenterNS
             {
                 Craft? subCraft = DofusApi.Instance.Datacenter.CraftsData.GetCraftById(ingredient.Key);
                 if (subCraft is not null)
-                    totalTime = GetRecursiveTimeForMultipleCraft(qte * ingredient.Value, totalTime, subCraft);                    
+                    totalTime = GetRecursiveTimeForMultipleCraft(qte * ingredient.Value, totalTime, subCraft);
             }
 
             return totalTime.Value + craft.GetTimeForMultipleCraft(qte);

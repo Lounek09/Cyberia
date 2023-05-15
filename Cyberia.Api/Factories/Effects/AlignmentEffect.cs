@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int AlignmentId { get; init; }
 
-        public AlignmentEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public AlignmentEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             AlignmentId = parameters.Param3;

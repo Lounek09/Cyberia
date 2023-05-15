@@ -28,7 +28,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         protected override Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Houses, "Agence immobilière")
-                .WithTitle($"{_house.Name}{(string.IsNullOrEmpty(_house.GetCoordinate()) ? "" : $" {_house.GetCoordinate()}")} ({_house.Id })")
+                .WithTitle($"{_house.Name}{(string.IsNullOrEmpty(_house.GetCoordinate()) ? "" : $" {_house.GetCoordinate()}")} ({_house.Id})")
                 .WithDescription(string.IsNullOrEmpty(_house.Description) ? "" : Formatter.Italic(_house.Description));
 
             if (_currentMap is not null)

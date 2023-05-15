@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int MonsterSuperRaceId { get; init; }
 
-        public MonsterSuperRaceEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public MonsterSuperRaceEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             MonsterSuperRaceId = parameters.Param1;

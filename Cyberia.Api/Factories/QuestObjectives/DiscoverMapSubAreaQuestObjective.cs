@@ -14,7 +14,7 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public static new DiscoverMapSubAreaQuestObjective? Create(QuestObjective questObjective)
         {
-            if (questObjective.Parameters.Count > 0 && 
+            if (questObjective.Parameters.Count > 0 &&
                 int.TryParse(questObjective.Parameters[0], out int mapSubAreaId))
                 return new(questObjective, mapSubAreaId);
 

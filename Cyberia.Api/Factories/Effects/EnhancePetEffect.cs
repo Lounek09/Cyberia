@@ -8,7 +8,7 @@ namespace Cyberia.Api.Factories.Effects
         public int StatsWeightBonus { get; init; }
         public int ItemId { get; init; }
 
-        public EnhancePetEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public EnhancePetEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             StatsWeightBonus = parameters.Param2;

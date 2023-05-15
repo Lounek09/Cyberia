@@ -1,7 +1,5 @@
 ﻿using Cyberia.Api.Managers;
 
-using System;
-
 namespace Cyberia.Api.Factories.Effects
 {
     public sealed class ReceivedOnDateTimeEffect : BasicEffect
@@ -12,7 +10,7 @@ namespace Cyberia.Api.Factories.Effects
         public int Hour { get; init; }
         public int Minute { get; init; }
 
-        public ReceivedOnDateTimeEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public ReceivedOnDateTimeEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             Year = parameters.Param1;

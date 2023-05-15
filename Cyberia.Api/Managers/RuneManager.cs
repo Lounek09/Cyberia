@@ -76,7 +76,7 @@ namespace Cyberia.Api.Managers
 
             return (multiplicator - MAX_MULTIPLICATOR) / (MIN_MULTIPLICATOR - MAX_MULTIPLICATOR) * 100;
         }
-        
+
         public static double[] GetTotalRunesByStatAmontExtractable(this Rune rune, double amountExtractable)
         {
             double[] runesAmont = { 0, 0, 0 };

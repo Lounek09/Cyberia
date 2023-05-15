@@ -18,9 +18,9 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public static new BringItemToNpcQuestObjective? Create(QuestObjective questObjective)
         {
-            if (questObjective.Parameters.Count > 2 && 
-                int.TryParse(questObjective.Parameters[0], out int npcId) && 
-                int.TryParse(questObjective.Parameters[1], out int itemId) && 
+            if (questObjective.Parameters.Count > 2 &&
+                int.TryParse(questObjective.Parameters[0], out int npcId) &&
+                int.TryParse(questObjective.Parameters[1], out int itemId) &&
                 int.TryParse(questObjective.Parameters[2], out int quantity))
                 return new(questObjective, npcId, itemId, quantity);
 

@@ -14,7 +14,7 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public static new GoToNpcQuestObjective? Create(QuestObjective questObjective)
         {
-            if (questObjective.Parameters.Count > 0 && 
+            if (questObjective.Parameters.Count > 0 &&
                 int.TryParse(questObjective.Parameters[0], out int npcId))
                 return new(questObjective, npcId);
 

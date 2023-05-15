@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.DatacenterNS;
 using Cyberia.Api.Managers;
+
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects
@@ -8,7 +9,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public List<int> MonstersId { get; init; }
 
-        public SummonMonsterFromSoulStoneEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public SummonMonsterFromSoulStoneEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             MonstersId = parameters.Param4.Split(":").Select(x => int.Parse(x, NumberStyles.HexNumber)).ToList();

@@ -18,9 +18,9 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public static new BringSoulToNpcQuestObjective? Create(QuestObjective questObjective)
         {
-            if (questObjective.Parameters.Count > 2 && 
-                int.TryParse(questObjective.Parameters[0], out int npcId) && 
-                int.TryParse(questObjective.Parameters[1], out int monsterId) && 
+            if (questObjective.Parameters.Count > 2 &&
+                int.TryParse(questObjective.Parameters[0], out int npcId) &&
+                int.TryParse(questObjective.Parameters[1], out int monsterId) &&
                 int.TryParse(questObjective.Parameters[2], out int quantity))
                 return new(questObjective, npcId, monsterId, quantity);
 

@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int ItemId { get; init; }
 
-        public LastMealPetEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public LastMealPetEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             ItemId = parameters.Param3;

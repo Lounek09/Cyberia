@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int RideAbilityId { get; init; }
 
-        public GiveRideAbilityEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public GiveRideAbilityEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             RideAbilityId = parameters.Param3;

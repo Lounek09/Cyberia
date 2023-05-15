@@ -6,7 +6,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public string Corpulence { get; init; }
 
-        public LivingItemCorpulenceEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) : 
+        public LivingItemCorpulenceEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             Corpulence = parameters.Param3 == 0 ? "Maigrichon" : parameters.Param3 == 1 ? "Rassasié" : "Obèse";

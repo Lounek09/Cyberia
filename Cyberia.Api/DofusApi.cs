@@ -1,7 +1,7 @@
 ﻿global using Cyberia.Utils;
+using Cyberia.Api.DatacenterNS;
 using Cyberia.Chronicle;
 using Cyberia.Langzilla;
-using Cyberia.Api.DatacenterNS;
 
 namespace Cyberia.Api
 {
