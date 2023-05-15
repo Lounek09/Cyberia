@@ -38,7 +38,7 @@ namespace Cyberia.Api.Factories.JsonConverter
                 LineOfSight = elements[8].GetBoolean(),
                 NeedFreeCell = elements[9].GetBoolean(),
                 CanBoostRange = elements[10].GetBoolean(),
-                CategoryId = elements[11].GetInt32(),
+                SpellLevelCategoryId = elements[11].GetInt32(),
                 LaunchCountByTurn = elements[12].GetInt32(),
                 LaunchCountByPlayerByTurn = elements[13].GetInt32(),
                 DelayBetweenLaunch = elements[14].GetInt32(),

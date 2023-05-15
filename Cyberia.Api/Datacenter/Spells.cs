@@ -1,8 +1,6 @@
-﻿using Cyberia.Api.Managers;
-using Cyberia.Api.Factories.JsonConverter;
+﻿using Cyberia.Api.Factories.JsonConverter;
 using Cyberia.Api.Factories.Effects;
 
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.DatacenterNS
@@ -56,7 +54,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public bool CanBoostRange { get; init; }
 
-        public int CategoryId { get; init; }
+        public int SpellLevelCategoryId { get; init; }
 
         public int LaunchCountByTurn { get; init; }
 
@@ -118,23 +116,9 @@ namespace Cyberia.Api.DatacenterNS
             return new();
         }
 
-        public string GetCategoryName()
+        public SpellLevelCategory? GetSpellLevelCategory()
         {
-            switch (CategoryId)
-            {
-                case 0:
-                    return "Classe";
-                case 1:
-                    return "Elémentaire";
-                case 2:
-                    return "Invocation";
-                case 3:
-                    return "Maîtrise";
-                case 4:
-                    return "Spécial";
-                default:
-                    return "";
-            }
+            return DofusApi.Instance.Datacenter.SpellsData.GetSpellLevelCategoryById(SpellLevelCategoryId);
         }
 
         public List<State> GetRequiredStates()
@@ -190,13 +174,13 @@ namespace Cyberia.Api.DatacenterNS
         public int BreedId { get; init; }
 
         [JsonPropertyName("t")]
-        public int T { get; init; }
+        public int SpellTypeId { get; init; }
 
         [JsonPropertyName("o")]
-        public int Origin { get; init; }
+        public int SpellOriginId { get; init; }
 
         [JsonPropertyName("c")]
-        public int CategoryId { get; init; }
+        public int SpellCategoryId { get; init; }
 
         [JsonPropertyName("l1")]
         [JsonConverter(typeof(SpellLevelJsonConverter))]
@@ -244,27 +228,19 @@ namespace Cyberia.Api.DatacenterNS
             return DofusApi.Instance.Datacenter.BreedsData.GetBreedById(BreedId) ?? DofusApi.Instance.Datacenter.BreedsData.Breeds.Find(x => x.BreedSpellId == Id);
         }
 
-        public string GetCategoryName()
+        public SpellOrigin? GetSpellOrigin()
         {
-            switch (CategoryId)
-            {
-                case 1:
-                    return "Classe";
-                case 2:
-                    return "Elémentaire";
-                case 3:
-                    return "Invocation";
-                case 4:
-                    return "Maîtrise";
-                case 5:
-                    return "Spécial";
-                case 6:
-                    return "Percepteur";
-                case 7:
-                    return "Fée d'artifice";
-                default:
-                    return "";
-            }
+            return DofusApi.Instance.Datacenter.SpellsData.GetSpellOriginById(SpellOriginId);
+        }
+
+        public SpellType? GetSpellType()
+        {
+            return DofusApi.Instance.Datacenter.SpellsData.GetSpellTypeById(SpellTypeId);
+        }
+
+        public SpellCategory? GetSpellCategory()
+        {
+            return DofusApi.Instance.Datacenter.SpellsData.GetSpellCategoryById(SpellCategoryId);
         }
 
         public SpellLevel? GetSpellLevel(int level = 1)
@@ -323,14 +299,34 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("S")]
         public List<Spell> Spells { get; init; }
 
+        public List<SpellType> SpellTypes { get; private set; }
+
+        public List<SpellOrigin> SpellOrigins { get; private set; }
+
+        public List<SpellCategory> SpellCategories { get; private set; }
+
+        public List<SpellLevelCategory> SpellLevelCategories { get; private set; }
+
         public SpellsData()
         {
             Spells = new();
+            SpellTypes = new();
+            SpellOrigins = new();
+            SpellCategories = new();
+            SpellLevelCategories = new();
         }
 
         internal static SpellsData Build()
         {
-            return Json.LoadFromFile<SpellsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            SpellsData data = Json.LoadFromFile<SpellsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            SpellsCustomData customData = Json.LoadFromFile<SpellsCustomData>($"{DofusApi.CUSTOM_PATH}/{FILE_NAME}");
+
+            data.SpellTypes = customData.SpellTypesCustom;
+            data.SpellOrigins = customData.SpellOriginsCustom;
+            data.SpellCategories = customData.SpellCategoriesCustom;
+            data.SpellLevelCategories = customData.SpellLevelCategoriesCustom;
+
+            return data;
         }
 
         public Spell? GetSpellById(int id)
@@ -354,6 +350,26 @@ namespace Cyberia.Api.DatacenterNS
             Spell? spell = GetSpellById(id);
 
             return spell is null ? $"Inconnu ({id})" : spell.Name;
+        }
+
+        public SpellType? GetSpellTypeById(int id)
+        {
+            return SpellTypes.Find(x => x.Id == id);
+        }
+
+        public SpellOrigin? GetSpellOriginById(int id)
+        {
+            return SpellOrigins.Find(x => x.Id == id);
+        }
+
+        public SpellCategory? GetSpellCategoryById(int id)
+        {
+            return SpellCategories.Find(x => x.Id == id);
+        }
+
+        public SpellLevelCategory? GetSpellLevelCategoryById(int id)
+        {
+            return SpellLevelCategories.Find(x => x.Id == id);
         }
     }
 }

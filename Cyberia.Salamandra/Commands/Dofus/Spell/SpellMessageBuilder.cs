@@ -12,6 +12,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
     public sealed class SpellMessageBuilder : CustomMessageBuilder
     {
         private readonly Spell _spell;
+        private readonly SpellCategory? _spellCategory;
         private readonly Breed? _breed;
         private readonly Incarnation? _incarnation;
         private int _level;
@@ -21,6 +22,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             base()
         {
             _spell = spell;
+            _spellCategory = spell.GetSpellCategory();
             _breed = spell.GetBreed();
             _incarnation = spell.GetIncarnation();
             _level = spell.GetMaxLevelNumber();
@@ -42,9 +44,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 string apCost = $"{Formatter.Bold(_currentSpellLevel.ActionPointCost.ToString())} PA";
                 embed.AddField(Constant.ZERO_WIDTH_SPACE, $"{range}\n{apCost}", true);
 
-                string category = _currentSpellLevel.GetCategoryName();
-                if (!string.IsNullOrEmpty(category))
-                    embed.AddField("Catégorie :", category, true);
+                if (_spellCategory is not null)
+                    embed.AddField("Catégorie :", _spellCategory.Name, true);
                 else
                     embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
 
