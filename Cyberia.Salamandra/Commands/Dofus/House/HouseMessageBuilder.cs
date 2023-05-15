@@ -28,11 +28,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
         protected override Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Houses, "Agence immobilière")
-                .WithTitle($"{_house.Name}{(string.IsNullOrEmpty(_house.GetCoordinate()) ? "" : $" {_house.GetCoordinate()}")} ({_house.Id})")
+                .WithTitle($"{_house.Name}{(string.IsNullOrEmpty(_house.GetCoordinate()) ? "" : $" {_house.GetCoordinate()}")} ({_house.Id })")
                 .WithDescription(string.IsNullOrEmpty(_house.Description) ? "" : Formatter.Italic(_house.Description));
 
             if (_currentMap is not null)
-                embed.ImageUrl = _currentMap.GetImgPath();
+                embed.ImageUrl = _currentMap.GetImagePath();
 
             embed.AddField("Pièce :", _house.RoomNumber == 0 ? "?" : _house.RoomNumber.ToString(), true);
             embed.AddField("Coffre :", _house.ChestNumber == 0 ? "?" : _house.ChestNumber.ToString(), true);

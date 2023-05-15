@@ -34,7 +34,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Spells, "Livre de sorts")
                 .WithTitle($"{_spell.Name} ({_spell.Id}) - Rang {_level}")
                 .WithDescription(string.IsNullOrEmpty(_spell.Description) ? "" : Formatter.Italic(_spell.Description))
-                .WithThumbnail(await _spell.GetImgPath());
+                .WithThumbnail(await _spell.GetImagePath());
 
             if (_currentSpellLevel is not null)
             {

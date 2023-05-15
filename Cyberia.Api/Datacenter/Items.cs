@@ -165,7 +165,7 @@ namespace Cyberia.Api.DatacenterNS
             Criterion = string.Empty;
         }
 
-        public async Task<string> GetImgPath()
+        public async Task<string> GetImagePath()
         {
             string url = $"{DofusApi.Instance.CdnUrl}/images/items/{ItemTypeId}/{GfxId}.png";
 

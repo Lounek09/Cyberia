@@ -77,12 +77,12 @@ namespace Cyberia.Api.DatacenterNS
             IntelligenceBoostCost = new();
         }
 
-        public string GetIconImgPath()
+        public string GetIconImagePath()
         {
             return $"{DofusApi.Instance.CdnUrl}/images/breeds/icons/{Id}.png";
         }
 
-        public string GetPreferenceWeaponsImgPath()
+        public string GetPreferenceWeaponsImagePath()
         {
             return $"{DofusApi.Instance.CdnUrl}/images/breeds/preference_weapons/weapons_{Id}.png";
         }

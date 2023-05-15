@@ -43,7 +43,7 @@ namespace Cyberia.Salamandra.DsharpPlus
                 else
                     emoji = Emojis.Effect(effect.EffectId);
 
-                effectsParse.Add($"{emoji} {effect.GetDescription()}{(effect.Area.Symbol == EffectAreaManager.BaseArea.Symbol ? "" : $" - {Emojis.Area(effect.Area.Symbol)} {effect.Area.GetDescription()}")}");
+                effectsParse.Add($"{emoji} {effect.GetDescription()}{(effect.Area.Symbol == EffectAreaManager.BaseArea.Symbol ? "" : $" - {Emojis.Area(effect.Area.Symbol)} {effect.Area.GetSize()}")}");
             }
 
             return embed.AddFields(name, effectsParse, inline);

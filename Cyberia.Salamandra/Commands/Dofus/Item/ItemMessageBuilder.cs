@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api.DatacenterNS;
 using Cyberia.Api.Factories;
 using Cyberia.Api.Managers;
+using Cyberia.Api.Factories.Effects;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
@@ -33,7 +34,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Items")
                 .WithTitle($"{_item.Name.SanitizeMarkDown()} ({_item.Id})")
                 .WithDescription(string.IsNullOrEmpty(_item.Description) ? "" : Formatter.Italic(_item.Description))
-                .WithThumbnail(await _item.GetImgPath())
+                .WithThumbnail(await _item.GetImagePath())
                 .AddField("Niveau :", _item.Level.ToString(), true)
                 .AddField("Type :", Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(_item.ItemTypeId), true);
 

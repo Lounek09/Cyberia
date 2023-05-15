@@ -1,32 +1,108 @@
 {
   "EA": [
     {
-      "s": "P",
-      "n": "Point"
-    },
-	{
-      "s": "C",
-      "n": "Cercle"
-    },
-	{
-      "s": "L",
-      "n": "Ligne"
-    },
-	{
-      "s": "O",
-      "n": "Anneau"
-    },
-	{
-      "s": "T",
-      "n": "En T"
-    },
-	{
-      "s": "X",
+      "s": 1,
       "n": "Croix"
     },
-	{
-      "s": "D",
+    {
+      "s": 2,
+      "n": "Ligne perpendiculaire"
+    },
+    {
+      "s": 3,
+      "n": "Cercle"
+    },
+    {
+      "s": 4,
+      "n": "Dot"
+    },
+    {
+      "s": 5,
+      "n": "Ligne"
+    },
+    {
+      "s": 6,
       "n": "Damier"
+    },
+    {
+      "s": 7,
+      "n": "Anneau"
+    },
+    {
+      "s": 8,
+      "n": "Carré"
+    },
+    {
+      "s": 9,
+      "n": "Carré (avec trou)"
+    },
+    {
+      "s": 10,
+      "n": "Cone"
+    },
+    {
+      "s": 11,
+      "n": "Croix diagonale"
+    },
+    {
+      "s": 12,
+      "n": "En T"
+    },
+    {
+      "s": 13,
+      "n": "En T"
+    },
+    {
+      "s": 14,
+      "n": "Inconnu"
+    },
+    {
+      "s": 15,
+      "n": "Croix (avec trou)"
+    },
+    {
+      "s": 16,
+      "n": "Ligne large"
+    },
+    {
+      "s": 17,
+      "n": "Pointe"
+    },
+    {
+      "s": 21,
+      "n": "Etoile"
+    },
+    {
+      "s": 23,
+      "n": "Fourche"
+    },
+    {
+      "s": 67,
+      "n": "Cercle"
+    },
+    {
+      "s": 68,
+      "n": "Damier"
+    },
+    {
+      "s": 76,
+      "n": "Ligne perpendiculaire"
+    },
+    {
+      "s": 79,
+      "n": "Anneau"
+    },
+    {
+      "s": 80,
+      "n": "Dot"
+    },
+    {
+      "s": 84,
+      "n": "Ligne"
+    },
+    {
+      "s": 88,
+      "n": "Croix"
     }
   ]
 }

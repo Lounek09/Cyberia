@@ -169,7 +169,7 @@ namespace Cyberia.Api.DatacenterNS
             TrelloUrl = string.Empty;
         }
 
-        public async Task<string> GetImgPath()
+        public async Task<string> GetImagePath()
         {
             string url = $"{DofusApi.Instance.CdnUrl}/images/artworks/{GfxId}.png";
 

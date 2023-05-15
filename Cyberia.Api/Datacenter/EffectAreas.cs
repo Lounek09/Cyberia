@@ -1,10 +1,13 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Parser.JsonConverter;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.DatacenterNS
 {
     public sealed class EffectArea
     {
         [JsonPropertyName("s")]
+        [JsonConverter(typeof(IntToCharJsonConverter))]
         public char Symbol { get; init; }
 
         [JsonPropertyName("n")]
@@ -13,6 +16,11 @@ namespace Cyberia.Api.DatacenterNS
         public EffectArea()
         {
             Name = string.Empty;
+        }
+
+        public string GetImagePath()
+        {
+            return $"{DofusApi.Instance.CdnUrl}/images/effectareas/{(int)Symbol}.png";
         }
     }
 

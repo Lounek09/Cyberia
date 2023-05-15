@@ -2,10 +2,10 @@
 
 namespace Cyberia.Api.Managers
 {
-    public struct Area
+    public readonly struct Area
     {
-        public char Symbol { get; private set; }
-        public int Size { get; private set; }
+        public char Symbol { get; init; }
+        public int Size { get; init; }
 
         public Area(char symbol, int size)
         {
@@ -18,13 +18,18 @@ namespace Cyberia.Api.Managers
             return DofusApi.Instance.Datacenter.EffectAreasData.GetEffectAreaBySymbol(Symbol);
         }
 
+        public string GetSize()
+        {
+            return Size >= 63 ? "inf." : Size.ToString();
+        }
+
         public string GetDescription()
         {
             if (Symbol == EffectAreaManager.BaseArea.Symbol)
                 return "";
 
             EffectArea? effectArea = GetEffectArea();
-            return $"{(Size >= 63 ? "inf." : Size)} ({(effectArea is null ? Symbol : effectArea.Name)})";
+            return $"{GetSize()} ({(effectArea is null ? Symbol : effectArea.Name)})";
         }
     }
 

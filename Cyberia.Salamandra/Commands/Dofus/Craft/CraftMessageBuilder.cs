@@ -32,7 +32,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             if (_item is not null)
             {
                 embed.WithTitle($"Craft : {_qte.ToStringThousandSeparator()}x {_item.Name.SanitizeMarkDown()} ({_craft.Id})")
-                    .WithThumbnail(await _item.GetImgPath());
+                    .WithThumbnail(await _item.GetImagePath());
             }
 
             int weight = _recursive ? _craft.GetRecursiveWeight() : _craft.GetWeight();

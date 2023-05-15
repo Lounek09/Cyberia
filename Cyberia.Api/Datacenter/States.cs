@@ -17,6 +17,11 @@ namespace Cyberia.Api.DatacenterNS
         {
             Name = string.Empty;
         }
+
+        public string GetImagePath()
+        {
+            return $"{DofusApi.Instance.CdnUrl}/images/states/{Id}.png";
+        }
     }
 
     public sealed class StatesData

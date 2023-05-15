@@ -413,19 +413,38 @@
         }
 
         //Areas
-        public static readonly Dictionary<char, string> AREAS = new()
+        public static readonly Dictionary<int, string> AREAS = new()
         {
-            { 'C', "<:area_circle:971129517085184020>" },
-            { 'L', "<:area_line:971129517760475196>" },
-            { 'O', "<:area_ring:971129517919846511>" },
-            { 'T', "<:area_t:971129518439944302>" },
-            { 'X', "<:area_cross:971129517517197322>" },
-            { 'D', "<:area_checked_pattern:1093504719663665163>" }
+            { 1, "<:area_cross:1107731330999013456>" },
+            { 2, "<:area_perpendicular_line:1107731337886056521>" },
+            { 3, "<:area_circle:1107731328058806344>" },
+            { 4, "<:area_dot:1107731332160823346>" },
+            { 5, "<:area_line:1107731335910543382>" },
+            { 6, "<:area_checked_patern:1107731327098290356>" },
+            { 7, "<:area_ring:1107731517473562745>" },
+            { 8, "<:area_square:1107731519428112495>" },
+            { 9, "<:area_void_square:1107731523978932245>" },
+            { 10, "<:area_cone:1107731329929449642>" },
+            { 11, "<:area_diagonal_cross:1107744151098892400>" },
+            { 12, "<:area_t:1107731520883535942>" },
+            { 13, "<:area_t:1107731520883535942>" },
+            { 15, "<:area_void_cross:1107731522905198613>" },
+            { 16, "<:area_large_line:1107731334966820924>" },
+            { 17, "<:area_point:1107731516320129135>" },
+            { 21, "<:area_star:1107731341417660456>" },
+            { 23, "<:area_fork:1107731333867909280>" },
+            { 67, "<:area_circle:1107731328058806344>" },
+            { 68, "<:area_checked_patern:1107731327098290356>" },
+            { 76, "<:area_perpendicular_line:1107731337886056521>" },
+            { 79, "<:area_ring:1107731517473562745>" },
+            { 80, "<:area_dot:1107731332160823346>" },
+            { 84, "<:area_line:1107731335910543382>" },
+            { 88, "<:area_cross:1107731330999013456>" },
         };
 
-        public static string Area(char symbol)
+        public static string Area(int id)
         {
-            return AREAS.TryGetValue(symbol, out string? emoji) ? emoji : EMPTY;
+            return AREAS.TryGetValue(id, out string? emoji) ? emoji : EMPTY;
         }
 
 

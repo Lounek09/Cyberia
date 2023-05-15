@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.DatacenterNS;
+﻿using Cyberia.Api;
+using Cyberia.Api.DatacenterNS;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Managers;
 using Cyberia.Salamandra.DsharpPlus;
@@ -33,7 +34,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             if (_item is not null)
             {
                 embed.WithDescription(string.IsNullOrEmpty(_item.Description) ? "" : Formatter.Italic(_item.Description))
-                    .WithThumbnail(await _item.GetImgPath())
+                    .WithThumbnail(await _item.GetImagePath())
                     .AddField("Niveau :", _item.Level.ToString(), true)
                     .AddField("Type :", Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(_item.ItemTypeId), true)
                     .AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);

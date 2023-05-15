@@ -29,7 +29,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Bestiary, "Bestiaire")
                 .WithTitle($"{_monster.Name} ({_monster.Id}) - Grade " + _grade)
-                .WithThumbnail(await _monster.GetImgPath());
+                .WithThumbnail(await _monster.GetImagePath());
 
             if (_monsterSuperRace is not null)
                 embed.AddField("Ecosystème :", _monsterSuperRace.Name, true);

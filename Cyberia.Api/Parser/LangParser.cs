@@ -1,7 +1,9 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace Cyberia.Api.Parser
 {
@@ -135,10 +137,8 @@ namespace Cyberia.Api.Parser
 
             string lastLineName = "";
             bool lastLineHasId = false;
-            for (int i = 0; i < lines.Length; i++)
+            foreach (string line in lines)
             {
-                string line = lines[i];
-
                 if (_ignoredLines.Any(x => line.EndsWith(x)))
                     continue;
 
@@ -167,20 +167,9 @@ namespace Cyberia.Api.Parser
                 else if (regex.Groups[3].Success)
                     json += $"{{\"id\":\"{regex.Groups[3].Value}\",";
 
-
-                string value = lineSplit[1]
-                    .Replace("\n", "")
-                    .Replace("\r", "")
-                    .Replace("' + '\"' + '", "\\\"");
-                value = Regex.Replace(value, @"(?<!\\)'", "\"")
-                    .Replace(@"\'", "'");
-                value = value.Replace("\u0011", "?")
-                    .Replace("\v", "?")
-                    .Replace("\u000e", "?")
-                    .Replace("\u0017", "?")
-                    .Replace("\u0016", "?")
-                    .Replace("\u000f", "?")
-                    .Replace("\u0010", "?"); //Temporary patch for new zone
+                string value = lineSplit[1].Replace("' + '\"' + '", "\\\"");
+                value = Regex.Replace(value, @"(?<!\\)'", "\"").Replace(@"\'", "'");
+                value = HttpUtility.JavaScriptStringEncode(value).Replace("\\\"", "\"").Replace(@"\\", @"\");
 
                 if (value.StartsWith('{') && currentLineHasId)
                     json += $"{(currentLineHasId ? "" : "{")}{value[1..^1]},";

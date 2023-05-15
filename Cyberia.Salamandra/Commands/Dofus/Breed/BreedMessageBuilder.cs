@@ -28,8 +28,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Breeds, "Classes")
                 .WithTitle($"{_breed.LongName} ({_breed.Id})")
                 .WithDescription(Formatter.Italic(_breed.Description))
-                .WithThumbnail(_breed.GetIconImgPath())
-                .WithImageUrl(_breed.GetPreferenceWeaponsImgPath())
+                .WithThumbnail(_breed.GetIconImagePath())
+                .WithImageUrl(_breed.GetPreferenceWeaponsImagePath())
                 .AddField("Caractérisques :", _breed.GetCaracteristics());
 
             if (_spells.Count > 0)

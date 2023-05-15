@@ -28,7 +28,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Map, "Carte du monde")
                 .WithTitle($"{_map.GetCoordinate()} ({_map.Id})")
                 .WithDescription(_map.GetMapAreaName())
-                .WithImageUrl(_map.GetImgPath());
+                .WithImageUrl(_map.GetImagePath());
 
             return Task.FromResult(embed);
         }

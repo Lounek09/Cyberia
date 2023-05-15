@@ -213,7 +213,7 @@ namespace Cyberia.Api.DatacenterNS
             Icon = new();
         }
 
-        public async Task<string> GetImgPath()
+        public async Task<string> GetImagePath()
         {
             string url = $"{DofusApi.Instance.CdnUrl}/images/spells/{Id}.png";
 
