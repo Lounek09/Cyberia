@@ -32,6 +32,8 @@ namespace Cyberia.Api.DatacenterNS
 
     public sealed class SpellCategory
     {
+        public const int TEMPORIS_BREED = 10;
+
         [JsonPropertyName("id")]
         public int Id { get; init; }
 

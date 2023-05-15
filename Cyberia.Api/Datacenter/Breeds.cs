@@ -94,7 +94,7 @@ namespace Cyberia.Api.DatacenterNS
             foreach (int spellId in SpellsId)
             {
                 Spell? spell = DofusApi.Instance.Datacenter.SpellsData.GetSpellById(spellId);
-                if (spell is not null && (!DofusApi.Instance.Temporis || spell.SpellLevel4 is null))
+                if (spell is not null && (!DofusApi.Instance.Temporis || spell.SpellCategoryId == SpellCategory.TEMPORIS_BREED))
                     spells.Add(spell);
             }
 
