@@ -53,7 +53,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                     caracteristics += _item.WeaponInfos.LineOnly ? "Lancer en ligne uniquement\n" : "";
                     caracteristics += _item.WeaponInfos.LineOfSight || _item.WeaponInfos.MaxRange == 1 ? "" : "Ne possède pas de ligne de vue\n";
                     caracteristics += _item.TwoHanded ? "Arme à deux mains" : "Arme à une main";
-                    caracteristics += itemType is null || itemType.Area.Symbol == EffectAreaManager.BaseArea.Symbol ? "" : $"\nZone : {Emojis.Area(itemType.Area.Symbol)}{itemType.Area.GetDescription()}";
+                    caracteristics += itemType is null || itemType.Area.Id == EffectAreaManager.BaseArea.Id ? "" : $"\nZone : {Emojis.Area(itemType.Area.Id)}{itemType.Area.GetDescription()}";
                     embed.AddField("Caractéristiques :", caracteristics);
                 }
             }

@@ -1,107 +1,107 @@
 {
   "EA": [
     {
-      "s": 1,
+      "id": 1,
       "n": "Croix"
     },
     {
-      "s": 2,
+      "id": 2,
       "n": "Ligne perpendiculaire"
     },
     {
-      "s": 3,
+      "id": 3,
       "n": "Cercle"
     },
     {
-      "s": 4,
+      "id": 4,
       "n": "Dot"
     },
     {
-      "s": 5,
+      "id": 5,
       "n": "Ligne"
     },
     {
-      "s": 6,
+      "id": 6,
       "n": "Damier"
     },
     {
-      "s": 7,
+      "id": 7,
       "n": "Anneau"
     },
     {
-      "s": 8,
+      "id": 8,
       "n": "Carré"
     },
     {
-      "s": 9,
+      "id": 9,
       "n": "Carré (avec trou)"
     },
     {
-      "s": 10,
+      "id": 10,
       "n": "Cone"
     },
     {
-      "s": 11,
+      "id": 11,
       "n": "Croix diagonale"
     },
     {
-      "s": 12,
+      "id": 12,
       "n": "En T"
     },
     {
-      "s": 13,
+      "id": 13,
       "n": "En T"
     },
     {
-      "s": 14,
+      "id": 14,
       "n": "Inconnu"
     },
     {
-      "s": 15,
+      "id": 15,
       "n": "Croix (avec trou)"
     },
     {
-      "s": 16,
+      "id": 16,
       "n": "Ligne large"
     },
     {
-      "s": 17,
+      "id": 17,
       "n": "Pointe"
     },
     {
-      "s": 21,
+      "id": 21,
       "n": "Etoile"
     },
     {
-      "s": 23,
+      "id": 23,
       "n": "Fourche"
     },
     {
-      "s": 67,
+      "id": 67,
       "n": "Cercle"
     },
     {
-      "s": 68,
+      "id": 68,
       "n": "Damier"
     },
     {
-      "s": 76,
+      "id": 76,
       "n": "Ligne"
     },
     {
-      "s": 79,
+      "id": 79,
       "n": "Anneau"
     },
     {
-      "s": 80,
+      "id": 80,
       "n": "Dot"
     },
     {
-      "s": 84,
+      "id": 84,
       "n": "Ligne perpendiculaire"
     },
     {
-      "s": 88,
+      "id": 88,
       "n": "Croix"
     }
   ]

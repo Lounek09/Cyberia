@@ -1,14 +1,11 @@
-﻿using Cyberia.Api.Parser.JsonConverter;
-
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.DatacenterNS
 {
     public sealed class EffectArea
     {
-        [JsonPropertyName("s")]
-        [JsonConverter(typeof(IntToCharJsonConverter))]
-        public char Symbol { get; init; }
+        [JsonPropertyName("id")]
+        public int Id { get; init; }
 
         [JsonPropertyName("n")]
         public string Name { get; init; }
@@ -20,7 +17,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public string GetImagePath()
         {
-            return $"{DofusApi.Instance.CdnUrl}/images/effectareas/{(int)Symbol}.png";
+            return $"{DofusApi.Instance.CdnUrl}/images/effectareas/{Id}.png";
         }
     }
 
@@ -41,9 +38,9 @@ namespace Cyberia.Api.DatacenterNS
             return Json.LoadFromFile<EffectAreasData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
         }
 
-        public EffectArea? GetEffectAreaBySymbol(char symbol)
+        public EffectArea? GetEffectAreaBySymbol(int id)
         {
-            return EffectAreas.Find(x => x.Symbol == symbol);
+            return EffectAreas.Find(x => x.Id == id);
         }
     }
 }
