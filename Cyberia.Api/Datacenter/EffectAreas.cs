@@ -38,7 +38,7 @@ namespace Cyberia.Api.DatacenterNS
             return Json.LoadFromFile<EffectAreasData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
         }
 
-        public EffectArea? GetEffectAreaBySymbol(int id)
+        public EffectArea? GetEffectAreaById(int id)
         {
             return EffectAreas.Find(x => x.Id == id);
         }

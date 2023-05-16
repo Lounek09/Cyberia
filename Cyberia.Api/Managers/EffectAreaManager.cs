@@ -15,7 +15,7 @@ namespace Cyberia.Api.Managers
 
         public EffectArea? GetEffectArea()
         {
-            return DofusApi.Instance.Datacenter.EffectAreasData.GetEffectAreaBySymbol(Id);
+            return DofusApi.Instance.Datacenter.EffectAreasData.GetEffectAreaById(Id);
         }
 
         public string GetSize()
