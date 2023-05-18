@@ -21,13 +21,13 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "pvp.json";
 
-        [JsonPropertyName("PPhp")]
+        [JsonPropertyName("PP.hp")]
         public List<int> HonnorPointThresholds { get; init; }
 
-        [JsonPropertyName("PPmaxdp")]
+        [JsonPropertyName("PP.maxdp")]
         public int MaxDishonourPoint { get; init; }
 
-        [JsonPropertyName("PPgrds")]
+        [JsonPropertyName("PP.grds")]
         public List<List<PvpGrade>> PvpGrades { get; init; }
 
         public PvpData()

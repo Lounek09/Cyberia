@@ -34,10 +34,10 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "dialog.json";
 
-        [JsonPropertyName("Dq")]
+        [JsonPropertyName("D.q")]
         public List<DialogQuestion> DialogQuestions { get; init; }
 
-        [JsonPropertyName("Da")]
+        [JsonPropertyName("D.a")]
         public List<DialogAnswer> DialogAnswers { get; init; }
 
         public DialogsData()

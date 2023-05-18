@@ -92,13 +92,13 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "ttg.json";
 
-        [JsonPropertyName("TTGc")]
+        [JsonPropertyName("TTG.c")]
         public List<TTGCard> TTGCards { get; set; }
 
-        [JsonPropertyName("TTGe")]
+        [JsonPropertyName("TTG.e")]
         public List<TTGEntity> TTGEntities { get; set; }
 
-        [JsonPropertyName("TTGf")]
+        [JsonPropertyName("TTG.f")]
         public List<TTGFamily> TTGFamilies { get; set; }
 
         public TTGData()

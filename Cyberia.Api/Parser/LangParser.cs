@@ -1,6 +1,9 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 
+using System.Diagnostics;
+using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -8,7 +11,9 @@ namespace Cyberia.Api.Parser
 {
     public static class LangParser
     {
-        public static readonly List<string> LangsToParse = new()
+        private const string KEY_VALUE_SEPARATOR = " = ";
+
+        private static readonly string[] _langsToParse = new string[]
         {
             "alignment",
             "audio",
@@ -44,56 +49,31 @@ namespace Cyberia.Api.Parser
             "titles",
             "ttg"
         };
-
-        private const string KEY_VALUE_SEPARATOR = " = ";
-
         private static readonly string[] _ignoredLines = new string[]
         {
             "new Object();",
             "new Array();"
         };
+        private static readonly Regex _keyRegex = new(@"(?'name'[A-Z]+(?:\.[a-z]+|))(?:\[(?'intId'-?\d+)\]|\.(?'stringId'[\w|]+)|)", RegexOptions.Compiled);
 
-        public static bool Launch(string langName, out string message)
+        public static bool Launch()
         {
-            if (langName.Equals("all"))
+            foreach (string langToParse in _langsToParse)
             {
-                foreach (string langNameToParse in LangsToParse)
+                if (!TryParse(langToParse))
                 {
-                    if (!TryParse(langNameToParse))
-                    {
-                        message = $"An error occured while parsing {langNameToParse} lang";
-                        DofusApi.Instance.Logger.Error(message);
-                        return false;
-                    }
+                    DofusApi.Instance.Logger.Error($"An error occured while parsing {langToParse} lang");
+                    return false;
                 }
-
-                message = $"Successful parsing of all langs";
-                DofusApi.Instance.Logger.Info(message);
-                return true;
             }
 
-            if (!LangsToParse.Contains(langName))
-            {
-                message = $"{langName} lang doesn't exist or should not be parsed";
-                DofusApi.Instance.Logger.Error(message);
-                return false;
-            }
-
-            if (!TryParse(langName))
-            {
-                message = $"An error occured while parsing {langName} lang";
-                DofusApi.Instance.Logger.Error(message);
-                return false;
-            }
-
-            message = $"Successful parsing of {langName} lang";
-            DofusApi.Instance.Logger.Info(message);
             return true;
         }
 
         private static bool TryParse(string langName)
         {
             LangsData langsData = DofusApi.Instance.DofusLangs.GetLangsData(DofusApi.Instance.Temporis ? LangType.Temporis : LangType.Official, Language.FR);
+            
             Lang? lang = langsData.GetLangByName(langName);
             if (lang is null)
             {
@@ -101,7 +81,8 @@ namespace Cyberia.Api.Parser
                 return false;
             }
 
-            if (!File.Exists(lang.GetCurrentDecompiledFilePath()))
+            string filePath = lang.GetCurrentDecompiledFilePath();
+            if (!File.Exists(filePath))
             {
                 DofusApi.Instance.Logger.Error($"The lang {langName} has never been decompiled");
                 return false;
@@ -109,16 +90,12 @@ namespace Cyberia.Api.Parser
 
             DofusApi.Instance.Logger.Debug($"Start parsing {langName} lang");
 
-            string[] lines = File.ReadAllLines(lang.GetCurrentDecompiledFilePath());
-            if (!TryParseLines(lines, out string json))
-            {
-                DofusApi.Instance.Logger.Error($"Error while parsing {langName} lang");
-                return false;
-            }
+            string[] lines = File.ReadAllLines(filePath);
+            string json = ParseLines(lines);
 
             try
             {
-                json = Json.Indent(json);
+                JsonDocument.Parse(json);
             }
             catch (Exception e)
             {
@@ -130,12 +107,12 @@ namespace Cyberia.Api.Parser
             return true;
         }
 
-        private static bool TryParseLines(string[] lines, out string json)
+        private static string ParseLines(string[] lines)
         {
-            json = "{";
-
+            StringBuilder json = new();
             string lastLineName = "";
             bool lastLineHasId = false;
+
             foreach (string line in lines)
             {
                 if (_ignoredLines.Any(x => line.EndsWith(x)))
@@ -143,41 +120,58 @@ namespace Cyberia.Api.Parser
 
                 string[] lineSplit = line.Split(KEY_VALUE_SEPARATOR, 2);
                 if (lineSplit.Length < 2)
-                    return false;
+                    continue;
 
-                string key = lineSplit[0];
-
-                Match regex = Regex.Match(key, @"(?'name'[A-Z]+(?:\.[a-z]+|))(?:\[(?'intId'-?\d+)\]|\.(?'stringId'[\w|]+)|)");
-                string currentLineName = regex.Groups[1].Value;
-                bool currentLineHasId = regex.Groups[2].Success || regex.Groups[3].Success;
+                Match key = _keyRegex.Match(lineSplit[0]);
+                string currentLineName = key.Groups["name"].Value;
+                bool currentLineHasId = key.Groups["intId"].Success || key.Groups["stringId"].Success;
 
                 if (!currentLineName.Equals(lastLineName))
                 {
                     if (!string.IsNullOrEmpty(lastLineName))
-                        json = $"{json[..^1]}{(lastLineHasId ? "]" : "")},";
+                    {
+                        json.Remove(json.Length - 1, 1);
+                        if (lastLineHasId) json.Append(']');
+                        json.Append(',');
+                    }
 
-                    json += $"\"{currentLineName.Replace(".", "")}\":{(currentLineHasId ? "[" : "")}";
+                    json.AppendFormat("\"{0}\":", currentLineName);
+                    if (currentLineHasId) json.Append('[');
+
                     lastLineName = currentLineName;
                     lastLineHasId = currentLineHasId;
                 }
 
-                if (regex.Groups[2].Success)
-                    json += $"{{\"id\":{regex.Groups[2].Value},";
-                else if (regex.Groups[3].Success)
-                    json += $"{{\"id\":\"{regex.Groups[3].Value}\",";
+                if (key.Groups["intId"].Success)
+                    json.AppendFormat("{{\"id\":{0},", key.Groups["intId"].Value);
+                else if (key.Groups["stringId"].Success)
+                    json.AppendFormat("{{\"id\":\"{0}\",", key.Groups["stringId"].Value);
 
-                string value = lineSplit[1].Replace("' + '\"' + '", "\\\"");
+
+                string value = lineSplit[1].Replace("' + '\"' + '", @"\""");
                 value = Regex.Replace(value, @"(?<!\\)'", "\"").Replace(@"\'", "'");
-                value = HttpUtility.JavaScriptStringEncode(value).Replace("\\\"", "\"").Replace(@"\\", @"\");
+                value = HttpUtility.JavaScriptStringEncode(value).Replace(@"\""", "\"").Replace(@"\\", @"\");
 
-                if (value.StartsWith('{') && currentLineHasId)
-                    json += $"{(currentLineHasId ? "" : "{")}{value[1..^1]},";
+                if (currentLineHasId)
+                {
+                    if (value.StartsWith('{'))
+                        json.Append(value[1..^1]);
+                    else
+                        json.AppendFormat("\"v\":{0}}}", value[..^1]);
+                }
                 else
-                    json += currentLineHasId ? $"\"v\":{value[..^1]}}}," : $"{value[..^1]},";
+                    json.Append(value[..^1]);
+
+                json.Append(',');
             }
 
-            json = $"{json[..^1]}{(lastLineHasId ? "]" : "")}}}";
-            return true;
+            if (json.Length > 0)
+            {
+                json.Remove(json.Length - 1, 1);
+                if (lastLineHasId) json.Append(']');
+            }
+
+            return "{" + json.ToString() + "}";
         }
     }
 }

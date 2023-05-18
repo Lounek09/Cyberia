@@ -1,5 +1,5 @@
 {
-  "CSt": [
+  "CS.t": [
     {
       "id": 1,
       "v": "Chance"
@@ -41,7 +41,7 @@
       "v": "?"
     }
   ],
-  "CSo": [
+  "CS.o": [
     {
       "id": 1,
       "v": "Drop"
@@ -55,7 +55,7 @@
       "v": "Inconnu"
     }
   ],
-  "CSc": [
+  "CS.c": [
     {
       "id": 1,
       "v": "Classe"
@@ -117,7 +117,7 @@
       "v": "Monstre - Temporis"
     }
   ],
-  "CSLc": [
+  "CSL.c": [
     {
       "id": 0,
       "v": "Classe"

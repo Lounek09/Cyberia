@@ -47,10 +47,10 @@ namespace Cyberia.Api.DatacenterNS
 
     internal sealed class QuestsCustomData
     {
-        [JsonPropertyName("CQq")]
+        [JsonPropertyName("CQ.q")]
         public List<QuestCustom> QuestsCustom { get; init; }
 
-        [JsonPropertyName("CQs")]
+        [JsonPropertyName("CQ.s")]
         public List<QuestStepCustom> QuestStepsCustom { get; init; }
 
         public QuestsCustomData()

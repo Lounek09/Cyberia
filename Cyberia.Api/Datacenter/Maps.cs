@@ -179,16 +179,16 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "maps.json";
 
-        [JsonPropertyName("MAm")]
+        [JsonPropertyName("MA.m")]
         public List<Map> Maps { get; init; }
 
-        [JsonPropertyName("MAsua")]
+        [JsonPropertyName("MA.sua")]
         public List<MapSuperArea> MapSuperAreas { get; init; }
 
-        [JsonPropertyName("MAa")]
+        [JsonPropertyName("MA.a")]
         public List<MapArea> MapAreas { get; init; }
 
-        [JsonPropertyName("MAsa")]
+        [JsonPropertyName("MA.sa")]
         public List<MapSubArea> MapSubAreas { get; init; }
 
         public MapsData()

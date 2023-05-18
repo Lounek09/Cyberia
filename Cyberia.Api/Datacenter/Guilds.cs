@@ -48,7 +48,7 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "guilds.json";
 
-        [JsonPropertyName("GUb")]
+        [JsonPropertyName("GU.b")]
         public Guild Guild { get; init; }
 
         public GuildsData()

@@ -55,10 +55,10 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "interactiveobjects.json";
 
-        [JsonPropertyName("IOg")]
+        [JsonPropertyName("IO.g")]
         public List<InteractiveObjectGfx> InteractiveObjectsGfx { get; init; }
 
-        [JsonPropertyName("IOd")]
+        [JsonPropertyName("IO.d")]
         public List<InteractiveObject> InteractiveObjects { get; init; }
 
         public InteractiveObjectsData()

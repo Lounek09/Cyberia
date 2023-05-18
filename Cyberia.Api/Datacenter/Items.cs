@@ -218,19 +218,19 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "items.json";
 
-        [JsonPropertyName("Ius")]
+        [JsonPropertyName("I.us")]
         public List<ItemUnicString> ItemUnicStrings { get; init; }
 
-        [JsonPropertyName("Ist")]
+        [JsonPropertyName("I.st")]
         public List<ItemSuperType> ItemSuperTypes { get; init; }
 
-        [JsonPropertyName("Iss")]
+        [JsonPropertyName("I.ss")]
         public List<ItemSuperTypeSlot> ItemSuperTypeSlots { get; init; }
 
-        [JsonPropertyName("It")]
+        [JsonPropertyName("I.t")]
         public List<ItemType> ItemTypes { get; init; }
 
-        [JsonPropertyName("Iu")]
+        [JsonPropertyName("I.u")]
         public List<Item> Items { get; init; }
 
         public ItemsData()

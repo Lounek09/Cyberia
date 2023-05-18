@@ -196,28 +196,28 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "alignment.json";
 
-        [JsonPropertyName("Aa")]
+        [JsonPropertyName("A.a")]
         public List<Alignment> Alignments { get; init; }
 
-        [JsonPropertyName("Ajo")]
+        [JsonPropertyName("A.jo")]
         public List<AlignmentJoin> AlignmentsJoin { get; init; }
 
-        [JsonPropertyName("Aat")]
+        [JsonPropertyName("A.at")]
         public List<AlignmentAttack> AlignmentsAttack { get; init; }
 
-        [JsonPropertyName("Ao")]
+        [JsonPropertyName("A.o")]
         public List<AlignmentOrder> AlignmentOrders { get; init; }
 
-        [JsonPropertyName("Ag")]
+        [JsonPropertyName("A.g")]
         public List<AlignmentViewPvpGain> AlignmentsViewPvpGain { get; init; }
 
-        [JsonPropertyName("Af")]
+        [JsonPropertyName("A.f")]
         public List<AlignmentFeat> AlignmentFeats { get; init; }
 
-        [JsonPropertyName("Afe")]
+        [JsonPropertyName("A.fe")]
         public List<AlignmentFeatEffect> AlignmentFeatEffects { get; init; }
 
-        [JsonPropertyName("As")]
+        [JsonPropertyName("A.s")]
         public List<AlignmentSpecialization> AlignmentSpecializations { get; init; }
 
         public AlignmentData()

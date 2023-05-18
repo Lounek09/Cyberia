@@ -222,16 +222,16 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "quests.json";
 
-        [JsonPropertyName("Qq")]
+        [JsonPropertyName("Q.q")]
         public List<Quest> Quests { get; init; }
 
-        [JsonPropertyName("Qs")]
+        [JsonPropertyName("Q.s")]
         public List<QuestStep> QuestSteps { get; init; }
 
-        [JsonPropertyName("Qo")]
+        [JsonPropertyName("Q.o")]
         public List<QuestObjective> QuestObjectives { get; init; }
 
-        [JsonPropertyName("Qt")]
+        [JsonPropertyName("Q.t")]
         public List<QuestObjectiveType> QuestObjectiveTypes { get; init; }
 
         public QuestsData()

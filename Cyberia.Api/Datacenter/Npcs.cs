@@ -52,10 +52,10 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "npc.json";
 
-        [JsonPropertyName("Na")]
+        [JsonPropertyName("N.a")]
         public List<NpcAction> NpcActions { get; init; }
 
-        [JsonPropertyName("Nd")]
+        [JsonPropertyName("N.d")]
         public List<Npcs> Npcs { get; init; }
 
         public NpcsData()

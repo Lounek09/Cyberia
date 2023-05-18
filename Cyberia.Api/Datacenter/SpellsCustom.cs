@@ -62,16 +62,16 @@ namespace Cyberia.Api.DatacenterNS
 
     internal sealed class SpellsCustomData
     {
-        [JsonPropertyName("CSt")]
+        [JsonPropertyName("CS.t")]
         public List<SpellType> SpellTypesCustom { get; init; }
 
-        [JsonPropertyName("CSo")]
+        [JsonPropertyName("CS.o")]
         public List<SpellOrigin> SpellOriginsCustom { get; init; }
 
-        [JsonPropertyName("CSc")]
+        [JsonPropertyName("CS.c")]
         public List<SpellCategory> SpellCategoriesCustom { get; init; }
 
-        [JsonPropertyName("CSLc")]
+        [JsonPropertyName("CSL.c")]
         public List<SpellLevelCategory> SpellLevelCategoriesCustom { get; init; }
 
         public SpellsCustomData()

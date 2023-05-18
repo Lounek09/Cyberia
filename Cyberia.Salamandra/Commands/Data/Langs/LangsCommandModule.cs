@@ -154,19 +154,14 @@ namespace Cyberia.Salamandra.Commands.Data
         [SlashCommand("parse", "Lance le parsing des langs en json")]
         [SlashRequireOwner]
         [SlashRequirePermissions(Permissions.SendMessages)]
-        public async Task ParseLangsCommand(InteractionContext ctx,
-            [Option("nom", "Nom du lang a parse (all pour tous les lancer)")]
-            [Autocomplete(typeof(LangNameToParseAutocompleteProvider))]
-            string langName)
+        public async Task ParseLangsCommand(InteractionContext ctx)
         {
-            await ctx.CreateResponseAsync($"Lancement du parsing de {Formatter.InlineCode(langName)}");
+            await ctx.DeferAsync();
 
-            LangParser.Launch(langName, out string message);
+            bool success = LangParser.Launch();
 
-            await new DiscordMessageBuilder()
-                .WithContent(message)
-                .WithReply((await ctx.GetOriginalResponseAsync()).Id)
-                .SendAsync(ctx.Channel);
+            string content = success ? "Les langs ont été parsées avec succès" : "Une erreur est survenue, veuillez consulter les logs";
+            await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(content));
         }
     }
 }

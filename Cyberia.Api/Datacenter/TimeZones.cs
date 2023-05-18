@@ -8,16 +8,16 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "timezones.json";
 
-        [JsonPropertyName("Tmspd")]
+        [JsonPropertyName("T.mspd")]
         public int MilisecondPerDay { get; set; }
 
-        [JsonPropertyName("Thpd")]
+        [JsonPropertyName("T.hpd")]
         public int HourPerDay { get; set; }
 
-        [JsonPropertyName("Tz")]
+        [JsonPropertyName("T.z")]
         public int YearLess { get; set; }
 
-        [JsonPropertyName("Tm")]
+        [JsonPropertyName("T.m")]
         [JsonConverter(typeof(DictionaryJsonConverter<int, string>))]
         public Dictionary<int, string> StartDayOfMonths { get; set; }
 

@@ -82,13 +82,13 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "houses.json";
 
-        [JsonPropertyName("Hh")]
+        [JsonPropertyName("H.h")]
         public List<House> Houses { get; init; }
 
-        [JsonPropertyName("Hm")]
+        [JsonPropertyName("H.m")]
         public List<HouseMap> HouseMaps { get; init; }
 
-        [JsonPropertyName("Hids")]
+        [JsonPropertyName("H.ids")]
         public List<int> HousesIndoorSkillsId { get; init; }
 
         public HousesData()

@@ -27,7 +27,7 @@ namespace Cyberia.Api.DatacenterNS
 
     internal sealed class HousesCustomData
     {
-        [JsonPropertyName("CHh")]
+        [JsonPropertyName("CH.h")]
         public List<HouseCustom> HousesCustom { get; init; }
 
         public HousesCustomData()

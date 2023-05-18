@@ -34,10 +34,10 @@ namespace Cyberia.Api.DatacenterNS
     {
         private const string FILE_NAME = "names.json";
 
-        [JsonPropertyName("NFn")]
+        [JsonPropertyName("NF.n")]
         public List<TaxCollectorLastName> TaxCollectorLastNames { get; init; }
-
-        [JsonPropertyName("NFf")]
+        
+        [JsonPropertyName("NF.f")]
         public List<TaxCollectorFirstName> TaxCollectorFirstNames { get; init; }
 
         public TaxCollectorNamesData()
