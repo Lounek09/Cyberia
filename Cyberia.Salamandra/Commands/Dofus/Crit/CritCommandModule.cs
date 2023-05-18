@@ -7,6 +7,7 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
+#pragma warning disable CA1822 // Mark members as static
     public sealed class CritCommandModule : ApplicationCommandModule
     {
         [SlashCommand("crit", "Permet de calculer votre taux de crit")]

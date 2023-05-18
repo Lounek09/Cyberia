@@ -1,7 +1,6 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 
-using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -146,7 +145,6 @@ namespace Cyberia.Api.Parser
                     json.AppendFormat("{{\"id\":{0},", key.Groups["intId"].Value);
                 else if (key.Groups["stringId"].Success)
                     json.AppendFormat("{{\"id\":\"{0}\",", key.Groups["stringId"].Value);
-
 
                 string value = lineSplit[1].Replace("' + '\"' + '", @"\""");
                 value = Regex.Replace(value, @"(?<!\\)'", "\"").Replace(@"\'", "'");

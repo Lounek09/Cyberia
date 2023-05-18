@@ -4,6 +4,7 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
+#pragma warning disable CA1822 // Mark members as static
     public sealed class BreedCommandModule : ApplicationCommandModule
     {
         [SlashCommand("classe", "Retourne les informations d'une classe à partir de son nom")]

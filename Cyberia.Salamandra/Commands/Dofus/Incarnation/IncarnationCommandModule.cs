@@ -4,6 +4,7 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
+#pragma warning disable CA1822 // Mark members as static
     public sealed class IncarnationCommandModule : ApplicationCommandModule
     {
         [SlashCommand("incarnation", "Retourne les informations d'une incarnation à partir de son nom")]

@@ -4,6 +4,7 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
+#pragma warning disable CA1822 // Mark members as static
     public sealed class SpellCommandModule : ApplicationCommandModule
     {
         [SlashCommand("sort", "Retourne les informations d'un sort à partir de son nom")]

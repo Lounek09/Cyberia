@@ -11,6 +11,7 @@ using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Data
 {
+#pragma warning disable CA1822 // Mark members as static
     [SlashCommandGroup("langs", "Langs")]
     public sealed class LangsCommandModule : ApplicationCommandModule
     {

@@ -8,6 +8,7 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
+#pragma warning disable CA1822 // Mark members as static
     public sealed class RuneCommandModule : ApplicationCommandModule
     {
         [SlashCommand("rune", "Permet de calculer le nombre de rune obtenable d'une stat sur un item")]

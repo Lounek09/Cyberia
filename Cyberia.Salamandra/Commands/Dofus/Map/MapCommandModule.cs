@@ -5,6 +5,7 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
+#pragma warning disable CA1822 // Mark members as static
     [SlashCommandGroup("map", "Retourne les informations de la map appelée")]
     public sealed class MapCommandModule : ApplicationCommandModule
     {
