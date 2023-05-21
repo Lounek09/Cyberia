@@ -10,13 +10,13 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
         {
             string? value = ctx.OptionValue.ToString();
+            if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
+                return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
 
             List<DiscordAutoCompleteChoice> choices = new();
-            if (value is not null && value.Length >= MIN_LENGTH_AUTOCOMPLETE)
-            {
-                foreach (MapSubArea mapSubArea in Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreasByName(value).Take(25))
-                    choices.Add(new($"{mapSubArea.Name.WithMaxLength(90)} ({mapSubArea.Id})", mapSubArea.Id.ToString()));
-            }
+
+            foreach (MapSubArea mapSubArea in Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreasByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+                choices.Add(new($"{mapSubArea.Name.WithMaxLength(90)} ({mapSubArea.Id})", mapSubArea.Id.ToString()));
 
             return Task.FromResult(choices.AsEnumerable());
         }

@@ -7,26 +7,31 @@ namespace Cyberia.Api.DatacenterNS
 {
     public sealed class SpellIcon
     {
+        public const int INDEX_REMASTERED = 0;
+        public const int INDEX_CONTRAST = 1;
+        public const int INDEX_CLASSIC_ANGELIC = 2;
+        public const int INDEX_CLASSIC_DIABOLIC = 3;
+
         [JsonPropertyName("up")]
-        public int UpId { get; init; }
+        public int UpGfxId { get; init; }
 
         [JsonPropertyName("pc")]
-        public List<int> PaleColor { get; init; }
+        public List<int> PrintColors { get; init; }
 
         [JsonPropertyName("b")]
-        public int BackId { get; init; }
+        public int BackgroundGfxId { get; init; }
 
         [JsonPropertyName("fc")]
-        public List<int> FlashyColor { get; init; }
+        public List<int> FrameColors { get; init; }
 
         [JsonPropertyName("bc")]
-        public List<int> BlackAndWhiteColor { get; init; }
+        public List<int> BackgroundColors { get; init; }
 
         public SpellIcon()
         {
-            PaleColor = new();
-            FlashyColor = new();
-            BlackAndWhiteColor = new();
+            PrintColors = new();
+            FrameColors = new();
+            BackgroundColors = new();
         }
     }
 

@@ -7,23 +7,27 @@ namespace Cyberia.Salamandra.Commands.Data
     {
         public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
         {
-            HashSet<DiscordAutoCompleteChoice> choices = new();
-
             string? value = ctx.OptionValue.ToString();
-            if (value is not null)
-            {
-                string? game = GetValueFromOption<string>(ctx, "game");
-                string? platform = GetValueFromOption<string>(ctx, "platform");
-                string? release = GetValueFromOption<string>(ctx, "old_release");
+            if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
+                return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
 
-                if (!string.IsNullOrEmpty(game) && !string.IsNullOrEmpty(platform) && !string.IsNullOrEmpty(release))
-                {
-                    string? version = Bot.Instance.AnkamaCytrus.OldCytrusData.Games[game].GetVersionFromPlatformAndRelease(platform, release);
+            string? game = GetValueFromOption<string>(ctx, "game");
+            if (string.IsNullOrEmpty(game))
+                return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
 
-                    if (!string.IsNullOrEmpty(version))
-                        choices.Add(new(version, version));
-                }
-            }
+            string? platform = GetValueFromOption<string>(ctx, "platform");
+            if (string.IsNullOrEmpty(platform))
+                return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+
+            string? release = GetValueFromOption<string>(ctx, "new_release");
+            if (string.IsNullOrEmpty(release))
+                return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+
+            List<DiscordAutoCompleteChoice> choices = new();
+
+            string? version = Bot.Instance.AnkamaCytrus.OldCytrusData.Games[game].GetVersionFromPlatformAndRelease(platform, release);
+            if (!string.IsNullOrEmpty(version))
+                choices.Add(new(version, version));
 
             return Task.FromResult(choices.AsEnumerable());
         }

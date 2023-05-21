@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api.DatacenterNS;
+using Cyberia.Api.Factories.Effects;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,14 +18,9 @@ namespace Cyberia.Salamandra.Commands.Admin
 
             foreach (Spell spell in Bot.Instance.Api.Datacenter.SpellsData.Spells)
             {
-                if (spell.SpellLevel1 is not null)
-                {
-                    if (spell.SpellLevel1.SpellLevelCategoryId > 4)
-                        await ctx.Channel.SendMessageAsync(spell.Name + ":" + spell.SpellLevel1.SpellLevelCategoryId);
-                }
+                if (spell.SpellLevel1.Effects.Find(x => x.EffectId == 111) is not null)
+                    await ctx.Channel.SendMessageAsync(spell.Name);
             }
-
-            await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent("done"));
         }
     }
 }

@@ -6,12 +6,13 @@ namespace Cyberia.Salamandra.Commands
     public abstract class AutocompleteProvider : IAutocompleteProvider
     {
         public const int MIN_LENGTH_AUTOCOMPLETE = 2;
+        public const int MAX_AUTOCOMPLETE_CHOICE = 25;
 
         protected static T? GetValueFromOption<T>(AutocompleteContext ctx, string name)
         {
-            DiscordInteractionDataOption? gameOption = ctx.Options.FirstOrDefault(x => x.Name.Equals(name));
+            DiscordInteractionDataOption? option = ctx.Options.FirstOrDefault(x => x.Name.Equals(name));
 
-            if (gameOption is not null && gameOption.Value is T value)
+            if (option is not null && option.Value is T value)
                 return value;
 
             return default;

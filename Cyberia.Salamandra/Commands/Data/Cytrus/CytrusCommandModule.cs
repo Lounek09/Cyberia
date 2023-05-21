@@ -58,7 +58,7 @@ namespace Cyberia.Salamandra.Commands.Data
             [Option("platform", "Platform")]
             [Autocomplete(typeof(CytrusPlatformAutocompleteProvider))]
             string platform,
-            [Option("old_release", "Release de l'ancien client\"")]
+            [Option("old_release", "Release de l'ancien client")]
             [Autocomplete(typeof(CytrusReleaseAutocompleteProvider))]
             string oldRelease,
             [Option("old_version", "Version de l'ancien client")]

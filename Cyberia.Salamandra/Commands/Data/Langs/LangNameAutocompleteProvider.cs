@@ -10,23 +10,25 @@ namespace Cyberia.Salamandra.Commands.Data
     {
         public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
         {
+            string? value = ctx.OptionValue.ToString();
+            if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
+                return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+
+            string? typeStr = GetValueFromOption<string>(ctx, "typeStr");
+            if (string.IsNullOrEmpty(typeStr))
+                return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+
+            string? languageStr = GetValueFromOption<string>(ctx, "languageStr");
+            if (string.IsNullOrEmpty(languageStr))
+                return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+
             HashSet<DiscordAutoCompleteChoice> choices = new();
 
-            string? value = ctx.OptionValue.ToString();
-            if (value is not null && value.Length >= MIN_LENGTH_AUTOCOMPLETE)
-            {
-                string? typeStr = GetValueFromOption<string>(ctx, "typeStr");
-                string? languageStr = GetValueFromOption<string>(ctx, "languageStr");
+            LangType type = Enum.Parse<LangType>(typeStr);
+            Language language = Enum.Parse<Language>(languageStr);
 
-                if (!string.IsNullOrEmpty(typeStr) && !string.IsNullOrEmpty(languageStr))
-                {
-                    LangType type = Enum.Parse<LangType>(typeStr);
-                    Language language = Enum.Parse<Language>(languageStr);
-
-                    foreach (Lang lang in Bot.Instance.DofusLangs.GetLangsData(type, language).GetLangsByName(value).Take(25))
-                        choices.Add(new(lang.Name, lang.Name));
-                }
-            }
+            foreach (Lang lang in Bot.Instance.DofusLangs.GetLangsData(type, language).GetLangsByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+                choices.Add(new(lang.Name, lang.Name));
 
             return Task.FromResult(choices.AsEnumerable());
         }
