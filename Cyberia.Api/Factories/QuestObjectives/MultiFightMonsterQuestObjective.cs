@@ -2,18 +2,9 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public sealed class MultiFightMonsterQuestObjective : BasicQuestObjective
+    public sealed record MultiFightMonsterQuestObjective(QuestObjective QuestObjective, int MonsterId, int Quantity) :
+        BasicQuestObjective(QuestObjective)
     {
-        public int MonsterId { get; init; }
-        public int Quantity { get; init; }
-
-        public MultiFightMonsterQuestObjective(QuestObjective questObjective, int monsterId, int quantity) :
-            base(questObjective)
-        {
-            MonsterId = monsterId;
-            Quantity = quantity;
-        }
-
         public static new MultiFightMonsterQuestObjective? Create(QuestObjective questObjective)
         {
             if (questObjective.Parameters.Count > 1 &&

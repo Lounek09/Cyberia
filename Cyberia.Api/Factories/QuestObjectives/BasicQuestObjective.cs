@@ -2,15 +2,8 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public class BasicQuestObjective : IQuestObjective
+    public record BasicQuestObjective(QuestObjective QuestObjective) : IQuestObjective
     {
-        public QuestObjective QuestObjective { get; init; }
-
-        public BasicQuestObjective(QuestObjective questObjective)
-        {
-            QuestObjective = questObjective;
-        }
-
         public static BasicQuestObjective Create(QuestObjective questObjective)
         {
             return new(questObjective);

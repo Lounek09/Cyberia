@@ -2,16 +2,9 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public sealed class DiscoverMapQuestObjective : BasicQuestObjective
+    public sealed record DiscoverMapQuestObjective(QuestObjective QuestObjective, string MapDescription) :
+        BasicQuestObjective(QuestObjective)
     {
-        public string MapDescription { get; init; }
-
-        public DiscoverMapQuestObjective(QuestObjective questObjective, string mapDescription) :
-            base(questObjective)
-        {
-            MapDescription = mapDescription;
-        }
-
         public static new DiscoverMapQuestObjective? Create(QuestObjective questObjective)
         {
             if (questObjective.Parameters.Count > 0)

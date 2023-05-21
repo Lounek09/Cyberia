@@ -2,16 +2,9 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public sealed class DuelSpecificPlayerQuestObjective : BasicQuestObjective
+    public sealed record DuelSpecificPlayerQuestObjective(QuestObjective QuestObjective, string SpecificPlayer) :
+        BasicQuestObjective(QuestObjective)
     {
-        public string SpecificPlayer { get; init; }
-
-        public DuelSpecificPlayerQuestObjective(QuestObjective questObjective, string specificPlayer) :
-            base(questObjective)
-        {
-            SpecificPlayer = specificPlayer;
-        }
-
         public static new DuelSpecificPlayerQuestObjective? Create(QuestObjective questObjective)
         {
             if (questObjective.Parameters.Count > 0)

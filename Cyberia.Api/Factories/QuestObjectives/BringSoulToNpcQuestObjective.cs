@@ -2,20 +2,9 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public sealed class BringSoulToNpcQuestObjective : BasicQuestObjective
+    public sealed record BringSoulToNpcQuestObjective(QuestObjective QuestObjective, int NpcId, int MonsterId, int Quantity) :
+        BasicQuestObjective(QuestObjective)
     {
-        public int NpcId { get; init; }
-        public int MonsterId { get; init; }
-        public int Quantity { get; init; }
-
-        public BringSoulToNpcQuestObjective(QuestObjective questObjective, int npcId, int monsterId, int quantity) :
-            base(questObjective)
-        {
-            NpcId = npcId;
-            MonsterId = monsterId;
-            Quantity = quantity;
-        }
-
         public static new BringSoulToNpcQuestObjective? Create(QuestObjective questObjective)
         {
             if (questObjective.Parameters.Count > 2 &&

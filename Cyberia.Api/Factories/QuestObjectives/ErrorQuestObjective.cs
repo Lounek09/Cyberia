@@ -2,14 +2,9 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public sealed class ErrorQuestObjective : BasicQuestObjective
+    public sealed record ErrorQuestObjective(QuestObjective QuestObjective) :
+        BasicQuestObjective(QuestObjective)
     {
-        public ErrorQuestObjective(QuestObjective questObjective) :
-            base(questObjective)
-        {
-
-        }
-
         public static new ErrorQuestObjective Create(QuestObjective questObjective)
         {
             return new(questObjective);
