@@ -13,7 +13,7 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
     {
         private Table __p;
         public ByteBuffer ByteBuffer { get { return __p.bb; } }
-        public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_23_3_3(); }
+        public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_23_5_9(); }
         public static Bundle GetRootAsBundle(ByteBuffer _bb) { return GetRootAsBundle(_bb, new Bundle()); }
         public static Bundle GetRootAsBundle(ByteBuffer _bb, Bundle obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
         public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
