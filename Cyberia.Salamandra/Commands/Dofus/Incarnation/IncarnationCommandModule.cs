@@ -9,7 +9,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
     {
         [SlashCommand("incarnation", "Retourne les informations d'une incarnation à partir de son nom")]
         public async Task Command(InteractionContext ctx,
-            [Option("nom", "Nom de l'incarnation")]
+            [Option("nom", "Nom de l'incarnation", true)]
             [Autocomplete(typeof(IncarnationAutocompleteProvider))]
             string sId)
         {

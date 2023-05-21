@@ -46,7 +46,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         [SlashCommand("sous-zone", "Retourne une liste de maps à partir de leur sous-zone")]
         public async Task MapSubAreaCommand(InteractionContext ctx,
-            [Option("nom", "Nom de la sous-zone")]
+            [Option("nom", "Nom de la sous-zone", true)]
             [Autocomplete(typeof(MapSubAreaAutocompleteProvider))]
             string sId)
         {
@@ -71,7 +71,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         [SlashCommand("zone", "Retourne une liste de maps à partir de leur zone")]
         public async Task MapAreaCommand(InteractionContext ctx,
-            [Option("nom", "Nom de la zone")]
+            [Option("nom", "Nom de la zone", true)]
             [Autocomplete(typeof(MapAreaAutocompleteProvider))]
             string sId)
         {

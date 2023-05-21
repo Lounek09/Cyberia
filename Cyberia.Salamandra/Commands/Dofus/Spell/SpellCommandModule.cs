@@ -9,7 +9,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
     {
         [SlashCommand("sort", "Retourne les informations d'un sort à partir de son nom")]
         public async Task Command(InteractionContext ctx,
-            [Option("nom", "Nom du sort")]
+            [Option("nom", "Nom du sort", true)]
             [Autocomplete(typeof(SpellAutocompleteProvider))]
             string sId)
         {

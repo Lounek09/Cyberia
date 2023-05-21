@@ -9,7 +9,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
     {
         [SlashCommand("monstre", "Retourne les informations d'un monstre à partir de son nom")]
         public async Task Command(InteractionContext ctx,
-            [Option("nom", "Nom du monstre")]
+            [Option("nom", "Nom du monstre", true)]
             [Autocomplete(typeof(MonsterAutocompleteProvider))]
             string sId)
         {

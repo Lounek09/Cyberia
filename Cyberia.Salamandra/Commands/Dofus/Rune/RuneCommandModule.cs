@@ -19,7 +19,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Option("montant", "Montant de la stat")]
             [Minimum(1), Maximum(9999)]
             long statAmount,
-            [Option("rune", "Nom de la rune")]
+            [Option("rune", "Nom de la rune", true)]
             [Autocomplete(typeof(RuneAutocompleteProvider))]
             string name)
         {

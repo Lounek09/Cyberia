@@ -12,7 +12,7 @@ namespace Cyberia.Salamandra.Commands.Data
     [SlashCommandGroup("cytrus", "Cytrus")]
     public sealed class CytrusCommandModule : ApplicationCommandModule
     {
-        [SlashCommand("check", "Lance un check de cytrus")]
+        [SlashCommand("check", "[RequireOwner] Lance un check de cytrus")]
         [SlashRequireOwner]
         public async Task CheckCytrusCommand(InteractionContext ctx)
         {
@@ -52,22 +52,22 @@ namespace Cyberia.Salamandra.Commands.Data
 
         [SlashCommand("diff", "Liste les différences entre les fichiers de deux versions d'un jeu sur Cytrus")]
         public async Task DiffCytrusCommand(InteractionContext ctx,
-            [Option("game", "Nom du jeu")]
+            [Option("game", "Nom du jeu", true)]
             [ChoiceProvider(typeof(CytrusGameChoiceProvider))]
             string game,
-            [Option("platform", "Platform")]
+            [Option("platform", "Platform", true)]
             [Autocomplete(typeof(CytrusPlatformAutocompleteProvider))]
             string platform,
-            [Option("old_release", "Release de l'ancien client")]
+            [Option("old_release", "Release de l'ancien client", true)]
             [Autocomplete(typeof(CytrusReleaseAutocompleteProvider))]
             string oldRelease,
-            [Option("old_version", "Version de l'ancien client")]
+            [Option("old_version", "Version de l'ancien client", true)]
             [Autocomplete(typeof(CytrusOldVersionAutocompleteProvider))]
             string oldVersion,
-            [Option("new_release", "Release du nouveau client")]
+            [Option("new_release", "Release du nouveau client", true)]
             [Autocomplete(typeof(CytrusReleaseAutocompleteProvider))]
             string newRelease,
-            [Option("new_version", "Version du nouveau client")]
+            [Option("new_version", "Version du nouveau client", true)]
             [Autocomplete(typeof(CytrusNewVersionAutocompleteProvider))]
             string newVersion)
         {

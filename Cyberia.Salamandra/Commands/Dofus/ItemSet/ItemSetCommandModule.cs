@@ -9,7 +9,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
     {
         [SlashCommand("panoplie", "Retourne les informations d'une panoplie à partir de son nom")]
         public async Task Command(InteractionContext ctx,
-            [Option("Nom", "Nom de la panoplie")]
+            [Option("Nom", "Nom de la panoplie", true)]
             [Autocomplete(typeof(ItemSetAutocompleteProvider))]
             string sId)
         {

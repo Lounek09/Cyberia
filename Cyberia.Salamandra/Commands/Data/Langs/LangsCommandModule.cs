@@ -15,7 +15,7 @@ namespace Cyberia.Salamandra.Commands.Data
     [SlashCommandGroup("langs", "Langs")]
     public sealed class LangsCommandModule : ApplicationCommandModule
     {
-        [SlashCommand("check", "Lance un check des langs, si aucun language n'est précisé lance pour toutes les langues")]
+        [SlashCommand("check", "[RequireOwner] Lance un check des langs, si aucun language n'est précisé lance pour toutes les langues")]
         [SlashRequireOwner]
         public async Task CheckLangsCommand(InteractionContext ctx,
             [Option("type", "Type des langs à check")]
@@ -68,7 +68,7 @@ namespace Cyberia.Salamandra.Commands.Data
             [Option("langue", "Language du lang voulu")]
             [ChoiceProvider(typeof(LanguageChoiceProvider))]
             string languageStr,
-            [Option("nom", "Nom du lang voulu")]
+            [Option("nom", "Nom du lang voulu", true)]
             [Autocomplete(typeof(LangNameAutocompleteProvider))]
             string name)
         {
@@ -86,7 +86,7 @@ namespace Cyberia.Salamandra.Commands.Data
             await ctx.CreateResponseAsync(new DiscordInteractionResponseBuilder().AddFile($"{Path.GetFileNameWithoutExtension(lang.GetFileName())}.txt", fileStream));
         }
 
-        [SlashCommand("diff", "Lance un diff des langs entre différents types")]
+        [SlashCommand("diff", "[RequireOwner] Lance un diff des langs entre différents types")]
         [SlashRequireOwner]
         public async Task DiffLangsCommand(InteractionContext ctx,
             [Option("type", "Type des langs à diff")]
@@ -152,9 +152,8 @@ namespace Cyberia.Salamandra.Commands.Data
             await Task.WhenAll(tasks);
         }
 
-        [SlashCommand("parse", "Lance le parsing des langs en json")]
+        [SlashCommand("parse", "[RequireOwner] Lance le parsing des langs en json")]
         [SlashRequireOwner]
-        [SlashRequirePermissions(Permissions.SendMessages)]
         public async Task ParseLangsCommand(InteractionContext ctx)
         {
             await ctx.DeferAsync();

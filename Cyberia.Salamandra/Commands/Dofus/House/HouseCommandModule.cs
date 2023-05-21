@@ -11,7 +11,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
     {
         [SlashCommand("nom", "Retourne les informations d'une maison à partir de son nom")]
         public async Task NameCommand(InteractionContext ctx,
-            [Option("nom", "Nom de la maison")]
+            [Option("nom", "Nom de la maison", true)]
             [Autocomplete(typeof(HouseAutocompleteProvider))]
             string sId)
         {

@@ -9,7 +9,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
     {
         [SlashCommand("quete", "Retourne les informations d'une quête à partir de son nom")]
         public async Task Command(InteractionContext ctx,
-            [Option("nom", "Nom de la quête")]
+            [Option("nom", "Nom de la quête", true)]
             [Autocomplete(typeof(QuestAutocompleteProvider))]
             string sId)
         {

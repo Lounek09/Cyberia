@@ -12,7 +12,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Option("quantite", "Quantité à craft")]
             [Minimum(1), Maximum(99999)]
             long qte,
-            [Option("nom", "Nom de l'item à craft")]
+            [Option("nom", "Nom de l'item à craft", true)]
             [Autocomplete(typeof(CraftAutocompleteProvider))]
             string sId)
         {

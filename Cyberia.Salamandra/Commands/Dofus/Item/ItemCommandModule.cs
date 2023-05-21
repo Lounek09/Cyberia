@@ -9,7 +9,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
     {
         [SlashCommand("item", "Retourne les informations d'un item à partir de son nom")]
         public async Task Command(InteractionContext ctx,
-            [Option("nom", "Nom de l'item")]
+            [Option("nom", "Nom de l'item", true)]
             [Autocomplete(typeof(ItemAutocompleteProvider))]
             string sId)
         {
