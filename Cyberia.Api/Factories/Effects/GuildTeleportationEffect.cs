@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class GuildTeleportationEffect : BasicEffect
+    public sealed record GuildTeleportationEffect : BasicEffect
     {
         public string Where { get; init; }
 

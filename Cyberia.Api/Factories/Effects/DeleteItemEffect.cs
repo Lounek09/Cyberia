@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class DeleteItemEffect : BasicEffect
+    public sealed record DeleteItemEffect : BasicEffect
     {
         public int ItemId { get; init; }
 

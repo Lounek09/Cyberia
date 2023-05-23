@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class TeleportToMap2Effect : BasicEffect
+    public sealed record TeleportToMap2Effect : BasicEffect
     {
         public int MapId { get; init; }
         public int Cell { get; init; }

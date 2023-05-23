@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class PaddockItemEffectivenessEffect : BasicEffect
+    public sealed record PaddockItemEffectivenessEffect : BasicEffect
     {
         public int Effectiveness { get; init; }
 

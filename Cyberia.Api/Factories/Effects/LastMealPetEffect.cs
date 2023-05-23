@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class LastMealPetEffect : BasicEffect
+    public sealed record LastMealPetEffect : BasicEffect
     {
         public int ItemId { get; init; }
 

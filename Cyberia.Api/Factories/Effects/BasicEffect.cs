@@ -3,25 +3,8 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public class BasicEffect : IEffect
+    public record BasicEffect(int EffectId, EffectParameters Parameters, int Duration, int Probability, string Criteria, Area Area) : IEffect
     {
-        public int EffectId { get; init; }
-        public EffectParameters Parameters { get; init; }
-        public int Duration { get; init; }
-        public int Probability { get; init; }
-        public string Criteria { get; init; }
-        public Area Area { get; init; }
-
-        public BasicEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
-        {
-            EffectId = effectId;
-            Parameters = parameters;
-            Duration = duration;
-            Probability = probability;
-            Criteria = criteria;
-            Area = area;
-        }
-
         public static BasicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
             return new(effectId, parameters, duration, probability, criteria, area);

@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class LearnEmoteEffect : BasicEffect
+    public sealed record LearnEmoteEffect : BasicEffect
     {
         public int EmoteId { get; init; }
 

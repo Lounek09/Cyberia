@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class ReceivedOnDateTimeEffect : BasicEffect
+    public sealed record ReceivedOnDateTimeEffect : BasicEffect
     {
         public int Year { get; init; }
         public int Month { get; init; }

@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class PetCorpulenceEffect : BasicEffect
+    public sealed record PetCorpulenceEffect : BasicEffect
     {
         public string Corpulence { get; init; }
 

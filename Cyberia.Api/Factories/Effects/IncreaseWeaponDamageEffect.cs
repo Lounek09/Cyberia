@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class IncreaseWeaponDamageEffect : BasicEffect
+    public sealed record IncreaseWeaponDamageEffect : BasicEffect
     {
         public int ItemTypeId { get; init; }
         public int Value { get; init; }

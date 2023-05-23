@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class TransformIntoMonsterEffect : BasicEffect
+    public sealed record TransformIntoMonsterEffect : BasicEffect
     {
         public int MonsterId { get; init; }
 

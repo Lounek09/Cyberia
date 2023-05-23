@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class SummonMonsterFromSoulStoneEffect : BasicEffect
+    public sealed record SummonMonsterFromSoulStoneEffect : BasicEffect
     {
         public List<int> MonstersId { get; init; }
 

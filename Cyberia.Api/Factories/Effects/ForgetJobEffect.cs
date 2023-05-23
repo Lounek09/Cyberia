@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class ForgetJobEffect : BasicEffect
+    public sealed record ForgetJobEffect : BasicEffect
     {
         public int JobId { get; init; }
 

@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class LivingItemCorpulenceEffect : BasicEffect
+    public sealed record LivingItemCorpulenceEffect : BasicEffect
     {
         public string Corpulence { get; init; }
 

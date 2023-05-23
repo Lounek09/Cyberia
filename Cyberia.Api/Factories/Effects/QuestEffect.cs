@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class QuestEffect : BasicEffect
+    public sealed record QuestEffect : BasicEffect
     {
         public int QuestId { get; init; }
 

@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class RemoveStateEffect : BasicEffect
+    public sealed record RemoveStateEffect : BasicEffect
     {
         public int StateId { get; init; }
 

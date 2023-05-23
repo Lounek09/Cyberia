@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class AddTTGCardToBinderEffect : BasicEffect
+    public sealed record AddTTGCardToBinderEffect : BasicEffect
     {
         public int TTGCardId { get; init; }
 

@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class GiveRideEffect : BasicEffect
+    public sealed record GiveRideEffect : BasicEffect
     {
         public int RideId { get; init; }
         public int RideAbilityId { get; init; }

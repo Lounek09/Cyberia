@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class LinkJobEffect : BasicEffect
+    public sealed record LinkJobEffect : BasicEffect
     {
         public int JobId { get; init; }
 

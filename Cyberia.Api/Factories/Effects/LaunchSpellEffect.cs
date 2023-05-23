@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class LaunchSpellEffect : BasicEffect
+    public sealed record LaunchSpellEffect : BasicEffect
     {
         public int SpellId { get; init; }
         public int Level { get; init; }

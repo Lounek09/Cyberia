@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class ItemLookEffect : BasicEffect
+    public sealed record ItemLookEffect : BasicEffect
     {
         public int ItemId { get; init; }
 

@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class EnhancePetEffect : BasicEffect
+    public sealed record EnhancePetEffect : BasicEffect
     {
         public int StatsWeightBonus { get; init; }
         public int ItemId { get; init; }

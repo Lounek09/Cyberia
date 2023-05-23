@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class GiveItemEffect : BasicEffect
+    public sealed record GiveItemEffect : BasicEffect
     {
         public int ItemId { get; init; }
         public int Qte { get; init; }

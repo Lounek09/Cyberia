@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class RemoveItemAroundEffect : BasicEffect
+    public sealed record RemoveItemAroundEffect : BasicEffect
     {
         public int ItemId { get; init; }
         public int Qte { get; init; }

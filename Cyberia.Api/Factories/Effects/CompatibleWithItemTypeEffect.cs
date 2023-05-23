@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class CompatibleWithItemTypeEffect : BasicEffect
+    public sealed record CompatibleWithItemTypeEffect : BasicEffect
     {
         public int ItemTypeId { get; init; }
 

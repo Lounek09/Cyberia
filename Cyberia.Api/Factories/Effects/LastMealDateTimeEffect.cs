@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class LastMealDateTimeEffect : BasicEffect
+    public sealed record LastMealDateTimeEffect : BasicEffect
     {
         public int Year { get; init; }
         public int Month { get; init; }

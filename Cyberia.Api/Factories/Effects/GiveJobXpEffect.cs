@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class GiveJobXpEffect : BasicEffect
+    public sealed record GiveJobXpEffect : BasicEffect
     {
         public int JobId { get; init; }
         public int XpAmount { get; init; }

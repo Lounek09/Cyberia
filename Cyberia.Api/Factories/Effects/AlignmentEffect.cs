@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class AlignmentEffect : BasicEffect
+    public sealed record AlignmentEffect : BasicEffect
     {
         public int AlignmentId { get; init; }
 

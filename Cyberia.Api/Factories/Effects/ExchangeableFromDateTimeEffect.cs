@@ -1,8 +1,9 @@
-﻿using Cyberia.Api.Managers;
+﻿using Cyberia.Api.DatacenterNS;
+using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed class ExchangeableFromDateTimeEffect : BasicEffect
+    public sealed record ExchangeableFromDateTimeEffect : BasicEffect
     {
         public int Year { get; init; }
         public int Month { get; init; }
