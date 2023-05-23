@@ -11,7 +11,7 @@ namespace Cyberia.Api.Factories.QuestObjectives
         {
             List<string> parameters = questObjective.Parameters;
 
-            Description = parameters.Count > 0 ? parameters[0] : 0;
+            Description = parameters.Count > 0 ? parameters[0] : "";
         }
 
         public static new FreeFormQuestObjective Create(QuestObjective questObjective)
