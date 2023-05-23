@@ -15,7 +15,7 @@ namespace Cyberia.Salamandra.Commands.Data
     [SlashCommandGroup("langs", "Langs")]
     public sealed class LangsCommandModule : ApplicationCommandModule
     {
-        [SlashCommand("check", "[RequireOwner] Lance un check des langs, si aucun language n'est précisé lance pour toutes les langues")]
+        [SlashCommand("check", "[Owner] Lance un check des langs, si aucun language n'est précisé lance pour toutes les langues")]
         [SlashRequireOwner]
         public async Task CheckLangsCommand(InteractionContext ctx,
             [Option("type", "Type des langs à check")]
@@ -86,7 +86,7 @@ namespace Cyberia.Salamandra.Commands.Data
             await ctx.CreateResponseAsync(new DiscordInteractionResponseBuilder().AddFile($"{Path.GetFileNameWithoutExtension(lang.GetFileName())}.txt", fileStream));
         }
 
-        [SlashCommand("diff", "[RequireOwner] Lance un diff des langs entre différents types")]
+        [SlashCommand("diff", "[Owner] Lance un diff des langs entre différents types")]
         [SlashRequireOwner]
         public async Task DiffLangsCommand(InteractionContext ctx,
             [Option("type", "Type des langs à diff")]
@@ -152,7 +152,7 @@ namespace Cyberia.Salamandra.Commands.Data
             await Task.WhenAll(tasks);
         }
 
-        [SlashCommand("parse", "[RequireOwner] Lance le parsing des langs en json")]
+        [SlashCommand("parse", "[Owner] Lance le parsing des langs en json")]
         [SlashRequireOwner]
         public async Task ParseLangsCommand(InteractionContext ctx)
         {

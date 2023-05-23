@@ -12,7 +12,7 @@ namespace Cyberia.Salamandra.Commands.Data
     [SlashCommandGroup("cytrus", "Cytrus")]
     public sealed class CytrusCommandModule : ApplicationCommandModule
     {
-        [SlashCommand("check", "[RequireOwner] Lance un check de cytrus")]
+        [SlashCommand("check", "[Owner] Lance un check de cytrus")]
         [SlashRequireOwner]
         public async Task CheckCytrusCommand(InteractionContext ctx)
         {
@@ -52,7 +52,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
         [SlashCommand("diff", "Liste les différences entre les fichiers de deux versions d'un jeu sur Cytrus")]
         public async Task DiffCytrusCommand(InteractionContext ctx,
-            [Option("game", "Nom du jeu", true)]
+            [Option("game", "Nom du jeu")]
             [ChoiceProvider(typeof(CytrusGameChoiceProvider))]
             string game,
             [Option("platform", "Platform", true)]

@@ -10,7 +10,7 @@ namespace Cyberia.Salamandra.Commands.Admin
 #pragma warning disable CA1822 // Mark members as static
     public sealed class TestCommandModule : ApplicationCommandModule
     {
-        [SlashCommand("test", "[RequireOwner] Commande pour tester des trucs")]
+        [SlashCommand("test", "[Owner] Commande pour tester des trucs")]
         [SlashRequireOwner]
         public async Task Command(InteractionContext ctx)
         {

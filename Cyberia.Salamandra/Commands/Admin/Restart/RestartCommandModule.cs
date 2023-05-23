@@ -7,7 +7,7 @@ namespace Cyberia.Salamandra.Commands.Admin
 #pragma warning disable CA1822 // Mark members as static
     public sealed class RestartCommandModule : ApplicationCommandModule
     {
-        [SlashCommand("restart", "[RequireOwner] Restart Salamandra")]
+        [SlashCommand("restart", "[Owner] Restart Salamandra")]
         [SlashRequireOwner]
         public async Task Command(InteractionContext ctx)
         {
