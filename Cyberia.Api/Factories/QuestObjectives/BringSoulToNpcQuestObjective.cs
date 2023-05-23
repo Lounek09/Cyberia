@@ -2,18 +2,25 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public sealed record BringSoulToNpcQuestObjective(QuestObjective QuestObjective, int NpcId, int MonsterId, int Quantity) :
-        BasicQuestObjective(QuestObjective)
+    public sealed record BringSoulToNpcQuestObjective : BasicQuestObjective
     {
-        public static new BringSoulToNpcQuestObjective? Create(QuestObjective questObjective)
-        {
-            if (questObjective.Parameters.Count > 2 &&
-                int.TryParse(questObjective.Parameters[0], out int npcId) &&
-                int.TryParse(questObjective.Parameters[1], out int monsterId) &&
-                int.TryParse(questObjective.Parameters[2], out int quantity))
-                return new(questObjective, npcId, monsterId, quantity);
+        public int NpcId { get; init; }
+        public int MonsterId { get; init; }
+        public int Quantity { get; init; }
 
-            return null;
+        public BringSoulToNpcQuestObjective(QuestObjective questObjective) :
+            base(questObjective)
+        {
+            List<string> parameters = questObjective.Parameters;
+
+            NpcId = parameters.Count > 0 && int.TryParse(parameters[0], out int npcId) ? npcId : 0;
+            MonsterId = parameters.Count > 1 && int.TryParse(parameters[1], out int monsterId) ? monsterId : 0;
+            Quantity = parameters.Count > 2 && int.TryParse(parameters[2], out int quantity) ? quantity : 0;
+        }
+
+        public static new BringSoulToNpcQuestObjective Create(QuestObjective questObjective)
+        {
+            return new(questObjective);
         }
 
         public Npcs? GetNpc()

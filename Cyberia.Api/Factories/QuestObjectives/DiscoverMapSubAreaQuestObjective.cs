@@ -2,16 +2,21 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public sealed record DiscoverMapSubAreaQuestObjective(QuestObjective QuestObjective, int MapSubAreaId) :
-        BasicQuestObjective(QuestObjective)
+    public record class DiscoverMapSubAreaQuestObjective : BasicQuestObjective
     {
-        public static new DiscoverMapSubAreaQuestObjective? Create(QuestObjective questObjective)
-        {
-            if (questObjective.Parameters.Count > 0 &&
-                int.TryParse(questObjective.Parameters[0], out int mapSubAreaId))
-                return new(questObjective, mapSubAreaId);
+        public int MapSubAreaId { get; init; }
 
-            return null;
+        public DiscoverMapSubAreaQuestObjective(QuestObjective questObjective) :
+            base(questObjective)
+        {
+            List<string> parameters = questObjective.Parameters;
+
+            MapSubAreaId = parameters.Count > 0 && int.TryParse(parameters[0], out int mapSubAreaId) ? mapSubAreaId : 0;
+        }
+
+        public static new DiscoverMapSubAreaQuestObjective Create(QuestObjective questObjective)
+        {
+            return new(questObjective);
         }
 
         public MapSubArea? GetMapSubArea()

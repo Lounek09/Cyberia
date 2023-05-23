@@ -2,15 +2,21 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public sealed record FreeFormQuestObjective(QuestObjective QuestObjective, string Description) :
-        BasicQuestObjective(QuestObjective)
+    public sealed record FreeFormQuestObjective : BasicQuestObjective
     {
-        public static new FreeFormQuestObjective? Create(QuestObjective questObjective)
-        {
-            if (questObjective.Parameters.Count > 0)
-                return new(questObjective, questObjective.Parameters[0]);
+        public string Description { get; init; }
 
-            return null;
+        public FreeFormQuestObjective(QuestObjective questObjective) :
+            base(questObjective)
+        {
+            List<string> parameters = questObjective.Parameters;
+
+            Description = parameters.Count > 0 ? parameters[0] : 0;
+        }
+
+        public static new FreeFormQuestObjective Create(QuestObjective questObjective)
+        {
+            return new(questObjective);
         }
 
         public override string GetDescription()

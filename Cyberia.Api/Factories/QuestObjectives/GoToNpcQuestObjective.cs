@@ -2,16 +2,21 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public sealed record GoToNpcQuestObjective(QuestObjective QuestObjective, int NpcId) :
-        BasicQuestObjective(QuestObjective)
+    public sealed record GoToNpcQuestObjective : BasicQuestObjective
     {
-        public static new GoToNpcQuestObjective? Create(QuestObjective questObjective)
-        {
-            if (questObjective.Parameters.Count > 0 &&
-                int.TryParse(questObjective.Parameters[0], out int npcId))
-                return new(questObjective, npcId);
+        public int NpcId { get; init; }
 
-            return null;
+        public GoToNpcQuestObjective(QuestObjective questObjective) :
+            base(questObjective)
+        {
+            List<string> parameters = questObjective.Parameters;
+
+            NpcId = parameters.Count > 0 && int.TryParse(parameters[0], out int npcId) ? npcId : 0;
+        }
+
+        public static new GoToNpcQuestObjective Create(QuestObjective questObjective)
+        {
+            return new(questObjective);
         }
 
         public Npcs? GetNpc()
