@@ -83,7 +83,7 @@ namespace Cyberia.Salamandra.Commands.Data
             }
 
             using FileStream fileStream = File.OpenRead(lang.GetCurrentDecompiledFilePath());
-            await ctx.CreateResponseAsync(new DiscordInteractionResponseBuilder().AddFile($"{Path.GetFileNameWithoutExtension(lang.GetFileName())}.txt", fileStream));
+            await ctx.CreateResponseAsync(new DiscordInteractionResponseBuilder().AddFile($"{Path.GetFileNameWithoutExtension(lang.GetFileName())}.as", fileStream));
         }
 
         [SlashCommand("diff", "[Owner] Lance un diff des langs entre différents types")]
