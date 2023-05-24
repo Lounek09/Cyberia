@@ -439,12 +439,12 @@
             { 79, "<:area_ring:1107731517473562745>" },
             { 80, "<:area_dot:1107731332160823346>" },
             { 84, "<:area_perpendicular_line:1107731337886056521>" },
-            { 88, "<:area_cross:1107731330999013456>" },
+            { 88, "<:area_cross:1107731330999013456>" }
         };
 
         public static string Area(int id)
         {
-            return AREAS.TryGetValue(id, out string? emoji) ? emoji : EMPTY;
+            return AREAS.TryGetValue(id, out string? emoji) ? emoji : UNKNOWN;
         }
 
 
@@ -485,5 +485,6 @@
         public const string DUNGEON = "<:dungeon:971144890928996352>";
         public const string KAMAS = "<:kamas:971144891163885618>";
         public const string XP = "<:xp:971144890870300732>";
+        public const string UNKNOWN = "<:unknown:1111058034941251695>";
     }
 }
