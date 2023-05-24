@@ -2566,6 +2566,18 @@
       "d": "Téléporte les cibles en symétrie",
       "c": 0,
       "o": ""
+    },
+    {
+      "id": 2142,
+      "d": "Change l'élément de frappe",
+      "c": 0,
+      "o": "/"
+    },
+    {
+      "id": 2143,
+      "d": "Téléporte : #1|#2|#3|#4",
+      "c": 0,
+      "o": ""
     }
   ],
   "EDMG": [
