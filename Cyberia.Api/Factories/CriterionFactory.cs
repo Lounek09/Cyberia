@@ -30,6 +30,8 @@ namespace Cyberia.Api.Factories
             { "Cv", BaseVitalityCriterion.GetValue },
             { "CW", WisdomCriterion.GetValue },
             { "Cw", BaseWisdomCriterion.GetValue },
+            { "Cz", AvailableSummonCriterion.GetValue },
+            { "Fz", MonsterPresentInFightCriterion.GetValue },
             { "MK", MapPlayerCriterion.GetValue },
             { "Pa", AlignmentLevelCriterion.GetValue },
             { "PB", MapSubAreaCriterion.GetValue },

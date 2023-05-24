@@ -8,7 +8,7 @@
     },
     {
       "id": 4,
-      "d": "Téléporte à une distance de #1 cases maximum.",
+      "d": "Téléporte à une distance de #1 cases maximum",
       "c": 0,
       "o": ""
     },
@@ -2575,7 +2575,7 @@
     },
     {
       "id": 2143,
-      "d": "Téléporte : #1|#2|#3|#4",
+      "d": "Téléporte #3 à une distance de #1 cases maximum",
       "c": 0,
       "o": ""
     }
