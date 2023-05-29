@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed record ExchangeableFromDateTimeEffect : BasicEffect
+    public sealed record ExchangeableUntilDateTimeEffect : BasicEffect
     {
         public int Year { get; init; }
         public int Month { get; init; }
@@ -11,7 +11,7 @@ namespace Cyberia.Api.Factories.Effects
         public int Hour { get; init; }
         public int Minute { get; init; }
 
-        public ExchangeableFromDateTimeEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
+        public ExchangeableUntilDateTimeEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area) :
             base(effectId, parameters, duration, probability, criteria, area)
         {
             Year = parameters.Param1;
@@ -21,7 +21,7 @@ namespace Cyberia.Api.Factories.Effects
             Minute = parameters.Param3 - Hour * 100;
         }
 
-        public static new ExchangeableFromDateTimeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
+        public static new ExchangeableUntilDateTimeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
             return new(effectId, parameters, duration, probability, criteria, area);
         }

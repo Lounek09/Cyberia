@@ -70,7 +70,7 @@ namespace Cyberia.Api.DatacenterNS
                 ItemStats? itemStats = item.GetItemStat();
                 if (itemStats is not null)
                 {
-                    List<IEffect> effects = itemStats.Effects.Where(x => x is not ExchangeableFromDateTimeEffect).ToList();
+                    List<IEffect> effects = itemStats.Effects.Where(x => x is not ExchangeableUntilDateTimeEffect).ToList();
                     effects.AddRange(EffectsFromLeveling);
 
                     return effects;

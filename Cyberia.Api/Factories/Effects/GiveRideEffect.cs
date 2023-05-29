@@ -17,7 +17,7 @@ namespace Cyberia.Api.Factories.Effects
             Infertile = parameters.Param1 == 1;
         }
 
-        public static new BasicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
+        public static new GiveRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
         {
             return new(effectId, parameters, duration, probability, criteria, area);
         }

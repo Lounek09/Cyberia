@@ -79,7 +79,7 @@ namespace Cyberia.Api.Factories
             { 970, LivingItemEffect.Create },
             { 971, LivingItemCorpulenceEffect.Create },
             { 973, CompatibleWithItemTypeEffect.Create },
-            { 983, ExchangeableFromDateTimeEffect.Create },
+            { 983, ExchangeableUntilDateTimeEffect.Create },
             { 999, TeleportToMap2Effect.Create },
             { 2101, GiveTTGCardFromPackEffect.Create },
             { 2102, AddTTGCardToBinderEffect.Create },
