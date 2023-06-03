@@ -12,9 +12,9 @@
                 switch (@operator)
                 {
                     case '≠':
-                        return $"{value} est présent dans le combat";
-                    case '=':
                         return $"{value} n'est pas présent dans le combat";
+                    case '=':
+                        return $"{value} est présent dans le combat";
                     default:
                         return value;
                 }
