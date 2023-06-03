@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.QuestCriteria
 {
-    public static class StateFightCriterion
+    public static class StateCriterion
     {
         public static string? GetValue(char @operator, string[] values)
         {
@@ -11,9 +11,9 @@
                 switch (@operator)
                 {
                     case '≠':
-                        return $"Ne pas être dans l'état {stateName}";
+                        return $"Ne pas être dans l'état {stateName.Bold()}";
                     case '=':
-                        return $"Etre dans l'état {stateName}";
+                        return $"Etre dans l'état {stateName.Bold()}";
                 }
             }
 

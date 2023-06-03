@@ -15,15 +15,19 @@ namespace Cyberia.Api.Factories
             { "BI", UnusableItemCriterion.GetValue },
             { "CA", AgilityCriterion.GetValue },
             { "Ca", BaseAgilityCriterion.GetValue },
+            { "CB", BastCharacteristicCriterion.GetValue },
             { "CC", ChanceCriterion.GetValue },
             { "Cc", BaseChanceCriterion.GetValue },
             { "CD", DisgracePointsCriterion.GetValue },
             { "CH", HonorPointsCriterion.GetValue },
             { "CI", IntelligenceCriterion.GetValue },
             { "Ci", BaseIntelligenceCriterion.GetValue },
+            { "Cl", PercentLifeCriterion.GetValue },
             { "CM", MovementPointsCriterion.GetValue },
+            { "Cm", ActualMovementPointsCriterion.GetValue },
             { "CO", HouseCriterion.GetValue },
             { "CP", ActionPointsCriterion.GetValue },
+            { "Cp", ActualActionPointsCriterion.GetValue },
             { "CS", StrengthCriterion.GetValue },
             { "Cs", BaseStrengthCriterion.GetValue },
             { "CV", VitalityCriterion.GetValue },
@@ -31,7 +35,9 @@ namespace Cyberia.Api.Factories
             { "CW", WisdomCriterion.GetValue },
             { "Cw", BaseWisdomCriterion.GetValue },
             { "Cz", AvailableSummonCriterion.GetValue },
-            { "FS", StateFightCriterion.GetValue },
+            { "FC", CardInHandCriterion.GetValue },
+            { "FS", StateCriterion.GetValue },
+            { "FT", TurnCriterion.GetValue },
             { "Fz", MonsterPresentInFightCriterion.GetValue },
             { "MK", MapPlayerCriterion.GetValue },
             { "Pa", AlignmentLevelCriterion.GetValue },
@@ -60,7 +66,8 @@ namespace Cyberia.Api.Factories
             { "Qo", QuestObjectiveCriterion.GetValue },
             { "Qs", QuestStepCriterion.GetValue },
             { "Sc", ServerContentCriterion.GetValue },
-            { "SI", ServerCriterion.GetValue }
+            { "SI", ServerCriterion.GetValue },
+            { "SM", MinuteCriterion.GetValue }
         };
 
         public static string GetCriterionParse(string value)
