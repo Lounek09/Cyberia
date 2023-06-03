@@ -31,7 +31,7 @@ namespace Cyberia.Api.Factories
             { "CW", WisdomCriterion.GetValue },
             { "Cw", BaseWisdomCriterion.GetValue },
             { "Cz", AvailableSummonCriterion.GetValue },
-            { "Fs", StateFightCriterion.GetValue },
+            { "FS", StateFightCriterion.GetValue },
             { "Fz", MonsterPresentInFightCriterion.GetValue },
             { "MK", MapPlayerCriterion.GetValue },
             { "Pa", AlignmentLevelCriterion.GetValue },
