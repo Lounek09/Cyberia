@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.DatacenterNS;
 
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
@@ -14,18 +15,27 @@ namespace Cyberia.Salamandra.Commands.Dofus
             long qte,
             [Option("nom", "Nom de l'item à craft", true)]
             [Autocomplete(typeof(CraftAutocompleteProvider))]
-            string sId)
+            string value)
         {
-            Craft? craft = null;
+            DiscordInteractionResponseBuilder? response = null;
 
-            if (int.TryParse(sId, out int id))
-                craft = Bot.Instance.Api.Datacenter.CraftsData.GetCraftById(id);
-
-            if (craft is null)
-                await ctx.CreateResponseAsync("Aucun craft trouvé");
+            if (int.TryParse(value, out int id))
+            {
+                Craft? craft = Bot.Instance.Api.Datacenter.CraftsData.GetCraftById(id);
+                if (craft is not null)
+                    response = await new CraftMessageBuilder(craft, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
             else
-                await new CraftMessageBuilder(craft, (int)qte).SendInteractionResponse(ctx.Interaction);
+            {
+                List<Craft> crafts = Bot.Instance.Api.Datacenter.CraftsData.GetCraftsByItemName(value);
+                if (crafts.Count == 1)
+                    response = await new CraftMessageBuilder(crafts[0], (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                else if (crafts.Count > 1)
+                    response = await new PaginatedCraftMessageBuilder(crafts, value, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
 
+            response ??= new DiscordInteractionResponseBuilder().WithContent("Craft introuvable");
+            await ctx.CreateResponseAsync(response);
         }
     }
 }

@@ -3,27 +3,62 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class BreedMessageBuilder : CustomMessageBuilder
+    public sealed class BreedMessageBuilder : ICustomMessageBuilder
     {
+        public const string PACKET_HEADER = "G";
+        public const int PACKET_VERSION = 1;
+
         private readonly Breed _breed;
         private readonly List<Spell> _spells;
-        private readonly Spell? _breedSpell;
+        private readonly Spell? _specialSpell;
         private readonly ItemSet? _itemSet;
 
-        public BreedMessageBuilder(Breed breed) :
-            base()
+        public BreedMessageBuilder(Breed breed)
         {
             _breed = breed;
             _spells = breed.GetSpells();
-            _breedSpell = breed.GetBreedSpell();
+            _specialSpell = breed.GetSpecialSpell();
             _itemSet = breed.GetItemSet();
         }
 
-        protected override Task<DiscordEmbedBuilder> EmbedBuilder()
+        public static BreedMessageBuilder? Create(int version, string[] parameters)
+        {
+            if (version == PACKET_VERSION &&
+                parameters.Length > 0 &&
+                int.TryParse(parameters[0], out int breedId))
+            {
+                Breed? breed = Bot.Instance.Api.Datacenter.BreedsData.GetBreedById(breedId);
+                if (breed is not null)
+                    return new(breed);
+            }
+
+            return null;
+        }
+
+        public static string GetPacket(int breedId)
+        {
+            return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, breedId);
+        }
+
+        public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
+        {
+            IDiscordMessageBuilder message = new T()
+                .AddEmbed(await EmbedBuilder());
+
+            if (_spells.Count > 0)
+                message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spells));
+
+            List<DiscordButtonComponent> buttons = ButtonsBuilder();
+            if (buttons.Count > 0)
+                message.AddComponents(buttons);
+
+            return (T)message;
+        }
+
+        private Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Breeds, "Classes")
                 .WithTitle($"{_breed.LongName} ({_breed.Id})")
@@ -33,13 +68,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 .AddField("Caractérisques :", _breed.GetCaracteristics());
 
             if (_spells.Count > 0)
-            {
-                HashSet<string> spellsName = new();
-                foreach (Spell spell in _spells)
-                    spellsName.Add($"Niv.{spell.GetNeededLevel()} {Formatter.Bold(spell.Name)}");
-
-                embed.AddField("Sorts :", string.Join('\n', spellsName));
-            }
+                embed.AddField("Sorts :", string.Join('\n', _spells.Select(x => $"- Niv.{x.GetNeededLevel()} {Formatter.Bold(x.Name)}")));
 
             if (Bot.Instance.Api.Temporis)
                 embed.AddField("Temporis :", $"{Formatter.Bold(_breed.TemporisPassiveName)} :\n{_breed.TemporisPassiveDescription}");
@@ -47,91 +76,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
             return Task.FromResult(embed);
         }
 
-        private DiscordSelectComponent SelectBuilder()
+        private List<DiscordButtonComponent> ButtonsBuilder()
         {
-            HashSet<DiscordSelectComponentOption> options = new();
+            List<DiscordButtonComponent> buttons = new();
 
-            foreach (Spell spell in _spells)
-                options.Add(new(spell.Name.WithMaxLength(100), spell.Id.ToString(), spell.Id.ToString()));
-
-            return new("select", "Sélectionne un sort pour l'afficher", options);
-        }
-
-        private HashSet<DiscordButtonComponent> ButtonsBuilder()
-        {
-            HashSet<DiscordButtonComponent> buttons = new();
-
-            if (_breedSpell is not null)
-                buttons.Add(new(ButtonStyle.Success, "breedspell", _breedSpell.Name));
+            if (_specialSpell is not null)
+                buttons.Add(SpellComponentsBuilder.SpellButtonBuilder(_specialSpell));
 
             if (_itemSet is not null)
-                buttons.Add(new(ButtonStyle.Success, "itemset", _itemSet.Name));
+                buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSet));
 
             return buttons;
-        }
-
-        protected override async Task<DiscordInteractionResponseBuilder> InteractionResponseBuilder()
-        {
-            DiscordInteractionResponseBuilder response = await base.InteractionResponseBuilder();
-
-            DiscordSelectComponent select = SelectBuilder();
-            if (select.Options.Count > 1)
-                response.AddComponents(select);
-
-            HashSet<DiscordButtonComponent> buttons = ButtonsBuilder();
-            if (buttons.Count > 0)
-                response.AddComponents(buttons);
-
-            return response;
-        }
-
-        protected override async Task<DiscordFollowupMessageBuilder> FollowupMessageBuilder()
-        {
-            DiscordFollowupMessageBuilder followupMessage = await base.FollowupMessageBuilder();
-
-            DiscordSelectComponent select = SelectBuilder();
-            if (select.Options.Count > 1)
-                followupMessage.AddComponents(select);
-
-            HashSet<DiscordButtonComponent> buttons = ButtonsBuilder();
-            if (buttons.Count > 0)
-                followupMessage.AddComponents(buttons);
-
-            return followupMessage;
-        }
-
-        protected override async Task<bool> InteractionTreatment(ComponentInteractionCreateEventArgs e)
-        {
-            if (e.Id.Equals("select"))
-            {
-                int id = Convert.ToInt32(e.Interaction.Data.Values.First());
-
-                Spell? spell = Bot.Instance.Api.Datacenter.SpellsData.GetSpellById(id);
-                if (spell is not null)
-                {
-                    await new SpellMessageBuilder(spell).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-            else if (e.Id.Equals("breedspell"))
-            {
-                if (_breedSpell is not null)
-                {
-                    await new SpellMessageBuilder(_breedSpell).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-            else if (e.Id.Equals("itemset"))
-            {
-                if (_itemSet is not null)
-                {
-                    await new ItemSetMessageBuilder(_itemSet).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
-            return false;
         }
     }
 }

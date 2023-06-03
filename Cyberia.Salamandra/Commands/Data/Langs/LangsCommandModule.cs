@@ -57,7 +57,7 @@ namespace Cyberia.Salamandra.Commands.Data
             LangType type = typeStr is null ? LangType.Official : Enum.Parse<LangType>(typeStr);
             Language language = languageStr is null ? Language.FR : Enum.Parse<Language>(languageStr);
 
-            await new LangsMessageBuilder(type, language).SendInteractionResponse(ctx.Interaction);
+            await ctx.CreateResponseAsync(await new LangsMessageBuilder(type, language).GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
 
         [SlashCommand("get", "Retourne le lang demandé décompilé")]

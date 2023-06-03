@@ -230,7 +230,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public Breed? GetBreed()
         {
-            return DofusApi.Instance.Datacenter.BreedsData.GetBreedById(BreedId) ?? DofusApi.Instance.Datacenter.BreedsData.Breeds.Find(x => x.BreedSpellId == Id);
+            return DofusApi.Instance.Datacenter.BreedsData.GetBreedById(BreedId) ?? DofusApi.Instance.Datacenter.BreedsData.Breeds.Find(x => x.SpecialSpellId == Id);
         }
 
         public SpellOrigin? GetSpellOrigin()

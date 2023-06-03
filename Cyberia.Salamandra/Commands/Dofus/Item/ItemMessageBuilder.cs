@@ -6,20 +6,23 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
+
+using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class ItemMessageBuilder : CustomMessageBuilder
+    public sealed class ItemMessageBuilder : ICustomMessageBuilder
     {
+        public const string PACKET_HEADER = "I";
+        public const int PACKET_VERSION = 1;
+
         private readonly Item _item;
         private readonly ItemSet? _itemSet;
         private readonly ItemStats? _itemStats;
         private readonly Craft? _craft;
         private readonly Incarnation? _incarnation;
 
-        public ItemMessageBuilder(Item item) :
-            base()
+        public ItemMessageBuilder(Item item)
         {
             _item = item;
             _itemSet = item.GetItemSet();
@@ -28,7 +31,38 @@ namespace Cyberia.Salamandra.Commands.Dofus
             _incarnation = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationByItemId(_item.Id);
         }
 
-        protected override async Task<DiscordEmbedBuilder> EmbedBuilder()
+        public static ItemMessageBuilder? Create(int version, string[] parameters)
+        {
+            if (version == PACKET_VERSION &&
+                parameters.Length > 0 &&
+                int.TryParse(parameters[0], out int itemId))
+            {
+                Item? item = Bot.Instance.Api.Datacenter.ItemsData.GetItemById(itemId);
+                if (item is not null)
+                    return new(item);
+            }
+
+            return null;
+        }
+
+        public static string GetPacket(int itemId)
+        {
+            return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, itemId);
+        }
+
+        public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
+        {
+            IDiscordMessageBuilder message = new T()
+                .AddEmbed(await EmbedBuilder());
+
+            List<DiscordButtonComponent> buttons = ButtonsBuilder();
+            if (buttons.Count > 0)
+                message.AddComponents(buttons);
+
+            return (T)message;
+        }
+
+        private async Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Items")
                 .WithTitle($"{_item.Name.SanitizeMarkDown()} ({_item.Id})")
@@ -49,17 +83,35 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (_item.WeaponInfos is not null)
             {
-                ItemType? itemType = _item.GetItemType();
+                StringBuilder caracteristicsBuilder = new();
+                caracteristicsBuilder.AppendFormat("PA : {0}\n", _item.WeaponInfos.ActionPointCost);
+                caracteristicsBuilder.AppendFormat("Portée : {0}{1}\n", _item.WeaponInfos.MinRange, (_item.WeaponInfos.MinRange == _item.WeaponInfos.MaxRange ? "" : $" à {_item.WeaponInfos.MaxRange}"));
 
-                string caracteristics = $"PA : {_item.WeaponInfos.ActionPointCost}\n";
-                caracteristics += $"Portée : {_item.WeaponInfos.MinRange}{(_item.WeaponInfos.MinRange == _item.WeaponInfos.MaxRange ? "" : $" à {_item.WeaponInfos.MaxRange}")}\n";
-                caracteristics += _item.WeaponInfos.CriticalBonus == 0 ? "" : $"Bonus coups critique : {_item.WeaponInfos.CriticalBonus}\n";
-                caracteristics += $"{(_item.WeaponInfos.CriticalHitRate == 0 ? "" : $"Critique : 1/{_item.WeaponInfos.CriticalHitRate}{(_item.WeaponInfos.CriticalFailureRate == 0 ? "\n" : "")}")}{(_item.WeaponInfos.CriticalHitRate != 0 && _item.WeaponInfos.CriticalFailureRate != 0 ? " - " : "")}{(_item.WeaponInfos.CriticalFailureRate == 0 ? "" : $"Échec : 1/{_item.WeaponInfos.CriticalFailureRate}\n")}";
-                caracteristics += _item.WeaponInfos.LineOnly ? "Lancer en ligne uniquement\n" : "";
-                caracteristics += _item.WeaponInfos.LineOfSight || _item.WeaponInfos.MaxRange == 1 ? "" : "Ne possède pas de ligne de vue\n";
-                caracteristics += _item.TwoHanded ? "Arme à deux mains" : "Arme à une main";
-                caracteristics += itemType is null || itemType.Area.Id == EffectAreaManager.BaseArea.Id ? "" : $"\nZone : {Emojis.Area(itemType.Area.Id)} {itemType.Area.GetDescription()}";
-                embed.AddField("Caractéristiques :", caracteristics);
+                if (_item.WeaponInfos.CriticalBonus != 0)
+                    caracteristicsBuilder.AppendFormat("Bonus coups critique : {0}\n", _item.WeaponInfos.CriticalBonus);
+
+                if (_item.WeaponInfos.CriticalHitRate != 0)
+                {
+                    caracteristicsBuilder.AppendFormat("Critique : 1/{0}", _item.WeaponInfos.CriticalHitRate);
+                    caracteristicsBuilder.Append(_item.WeaponInfos.CriticalFailureRate != 0 ? " - " : "\n");
+                }
+
+                if (_item.WeaponInfos.CriticalFailureRate != 0)
+                    caracteristicsBuilder.AppendFormat("Échec : 1/{0}\n", _item.WeaponInfos.CriticalFailureRate);
+
+                if (_item.WeaponInfos.LineOnly)
+                    caracteristicsBuilder.AppendLine("Lancer en ligne uniquement");
+
+                if (!_item.WeaponInfos.LineOfSight && _item.WeaponInfos.MaxRange != 1)
+                    caracteristicsBuilder.AppendLine("Ne possède pas de ligne de vue");
+
+                caracteristicsBuilder.Append(_item.TwoHanded ? "Arme à deux mains" : "Arme à une main");
+
+                ItemType? itemType = _item.GetItemType();
+                if (itemType is not null && itemType.Area.Id != EffectAreaManager.BaseArea.Id)
+                    caracteristicsBuilder.AppendFormat("\nZone : {0} {1}", Emojis.Area(itemType.Area.Id), itemType.Area.GetDescription());
+
+                embed.AddField("Caractéristiques :", caracteristicsBuilder.ToString());
             }
 
             if (_craft is not null)
@@ -69,85 +121,33 @@ namespace Cyberia.Salamandra.Commands.Dofus
                     embed.AddField("Craft :", recipe);
             }
 
-            string miscellaneous = $"{_item.Weight.ToStringThousandSeparator()} pod{(_item.Weight > 1 ? "s" : "")}";
-            miscellaneous += _item.Ceremonial ? ", objet d'apparat" : "";
-            miscellaneous += _item.IsReallyEnhanceable() ? ", forgemageable" : "";
-            miscellaneous += _item.Ethereal ? ", item éthéré" : "";
-            miscellaneous += _item.Usable ? ", est consommable" : "";
-            miscellaneous += _item.Targetable ? ", est ciblable" : "";
-            miscellaneous += _item.Cursed ? ", malédiction" : "";
-            embed.AddField("Divers :", miscellaneous);
+            StringBuilder miscellaneousBuilder = new();
+            miscellaneousBuilder.AppendFormat("{0} pod{1}", _item.Weight.ToStringThousandSeparator(), _item.Weight > 1 ? "s" : "");
+            miscellaneousBuilder.Append(_item.Ceremonial ? ", objet d'apparat" : "");
+            miscellaneousBuilder.Append(_item.IsReallyEnhanceable() ? ", forgemageable" : "");
+            miscellaneousBuilder.Append(_item.Ethereal ? ", item éthéré" : "");
+            miscellaneousBuilder.Append(_item.Usable ? ", est consommable" : "");
+            miscellaneousBuilder.Append(_item.Targetable ? ", est ciblable" : "");
+            miscellaneousBuilder.Append(_item.Cursed ? ", malédiction" : "");
+            embed.AddField("Divers :", miscellaneousBuilder.ToString());
 
             return embed;
         }
 
-        private HashSet<DiscordButtonComponent> ButtonsBuilder()
+        private List<DiscordButtonComponent> ButtonsBuilder()
         {
-            HashSet<DiscordButtonComponent> buttons = new();
+            List<DiscordButtonComponent> buttons = new();
 
             if (_itemSet is not null)
-                buttons.Add(new(ButtonStyle.Primary, "itemset", "Panoplie"));
+                buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSet));
 
             if (_craft is not null)
-                buttons.Add(new(ButtonStyle.Primary, "craft", "Craft"));
+                buttons.Add(CraftComponentsBuilder.CraftButtonBuilder(_craft));
 
             if (_incarnation is not null)
-                buttons.Add(new(ButtonStyle.Primary, "incarnation", "Incarnation"));
+                buttons.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnation));
 
             return buttons;
-        }
-
-        protected override async Task<DiscordInteractionResponseBuilder> InteractionResponseBuilder()
-        {
-            DiscordInteractionResponseBuilder response = await base.InteractionResponseBuilder();
-
-            HashSet<DiscordButtonComponent> buttons = ButtonsBuilder();
-            if (buttons.Count > 0)
-                response.AddComponents(buttons);
-
-            return response;
-        }
-
-        protected override async Task<DiscordFollowupMessageBuilder> FollowupMessageBuilder()
-        {
-            DiscordFollowupMessageBuilder followupMessage = await base.FollowupMessageBuilder();
-
-            HashSet<DiscordButtonComponent> buttons = ButtonsBuilder();
-            if (buttons.Count > 0)
-                followupMessage.AddComponents(buttons);
-
-            return followupMessage;
-        }
-
-        protected override async Task<bool> InteractionTreatment(ComponentInteractionCreateEventArgs e)
-        {
-            if (e.Id.Equals("itemset"))
-            {
-                if (_itemSet is not null)
-                {
-                    await new ItemSetMessageBuilder(_itemSet).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-            else if (e.Id.Equals("craft"))
-            {
-                if (_craft is not null)
-                {
-                    await new CraftMessageBuilder(_craft, 1).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-            else if (e.Id.Equals("incarnation"))
-            {
-                if (_incarnation is not null)
-                {
-                    await new IncarnationMessageBuilder(_incarnation).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
-            return false;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.DatacenterNS;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
@@ -20,7 +22,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             if (map is null)
                 await ctx.CreateResponseAsync("Map introuvable");
             else
-                await new MapMessageBuilder(map).SendInteractionResponse(ctx.Interaction);
+                await ctx.CreateResponseAsync(await new MapMessageBuilder(map).GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
 
 
@@ -28,19 +30,19 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public async Task CoordinateCommand(InteractionContext ctx,
             [Option("x", "Coordonnée x de la map")]
             [Minimum(-666), Maximum(666)]
-            long x,
+            long xCoord,
             [Option("y", "Coordonnée y de la map")]
             [Minimum(-666), Maximum(666)]
-            long y)
+            long yCoord)
         {
-            List<Map> maps = Bot.Instance.Api.Datacenter.MapsData.GetMapsByCoordinate((int)x, (int)y);
+            List<Map> maps = Bot.Instance.Api.Datacenter.MapsData.GetMapsByCoordinate((int)xCoord, (int)yCoord);
 
             if (maps.Count == 0)
-                await ctx.CreateResponseAsync($"Il n'y a aucune map en [{x}, {y}]");
-            if (maps.Count == 1)
-                await new MapMessageBuilder(maps[0]).SendInteractionResponse(ctx.Interaction);
-            else if (maps.Count > 1)
-                await new MapPaginationMessageBuilder($"Plusieurs maps trouvés en [{x}, {y}] :", maps).SendInteractionResponse(ctx.Interaction);
+                await ctx.CreateResponseAsync($"Il n'y a aucune map en [{xCoord}, {yCoord}]");
+            else if (maps.Count == 1)
+                await ctx.CreateResponseAsync(await new MapMessageBuilder(maps[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+            else
+                await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(maps, MapSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
 
 
@@ -48,11 +50,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public async Task MapSubAreaCommand(InteractionContext ctx,
             [Option("nom", "Nom de la sous-zone", true)]
             [Autocomplete(typeof(MapSubAreaAutocompleteProvider))]
-            string sId)
+            string value)
         {
             MapSubArea? mapSubArea = null;
 
-            if (int.TryParse(sId, out int id))
+            if (int.TryParse(value, out int id))
                 mapSubArea = Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreaById(id);
 
             if (mapSubArea is null)
@@ -64,7 +66,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 if (maps.Count == 0)
                     await ctx.CreateResponseAsync($"La sous-zone {Formatter.Bold(mapSubArea.Name)} ne contient aucune map");
                 else
-                    await new MapPaginationMessageBuilder($"Liste des maps de la sous-zone '{mapSubArea.Name}' :", maps).SendInteractionResponse(ctx.Interaction);
+                    await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(maps, MapSearchCategory.MapSubArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
 
@@ -73,11 +75,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public async Task MapAreaCommand(InteractionContext ctx,
             [Option("nom", "Nom de la zone", true)]
             [Autocomplete(typeof(MapAreaAutocompleteProvider))]
-            string sId)
+            string value)
         {
             MapArea? mapArea = null;
 
-            if (int.TryParse(sId, out int id))
+            if (int.TryParse(value, out int id))
                 mapArea = Bot.Instance.Api.Datacenter.MapsData.GetMapAreaById(id);
 
             if (mapArea is null)
@@ -89,7 +91,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 if (maps.Count == 0)
                     await ctx.CreateResponseAsync($"La zone {Formatter.Bold(mapArea.Name)} ne contient aucune map");
                 else
-                    await new MapPaginationMessageBuilder($"Liste des maps de la zone '{mapArea.Name}' :", maps).SendInteractionResponse(ctx.Interaction);
+                    await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(maps, MapSearchCategory.MapArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }

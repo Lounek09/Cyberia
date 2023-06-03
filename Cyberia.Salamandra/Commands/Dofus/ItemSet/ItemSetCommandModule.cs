@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.DatacenterNS;
 
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
@@ -11,17 +12,27 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public async Task Command(InteractionContext ctx,
             [Option("Nom", "Nom de la panoplie", true)]
             [Autocomplete(typeof(ItemSetAutocompleteProvider))]
-            string sId)
+            string value)
         {
-            ItemSet? itemSet = null;
+            DiscordInteractionResponseBuilder? response = null;
 
-            if (int.TryParse(sId, out int id))
-                itemSet = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetById(id);
-
-            if (itemSet is null)
-                await ctx.CreateResponseAsync("Panoplie introuvable");
+            if (int.TryParse(value, out int id))
+            {
+                ItemSet? itemSet = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetById(id);
+                if (itemSet is not null)
+                    response = await new ItemSetMessageBuilder(itemSet).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
             else
-                await new ItemSetMessageBuilder(itemSet).SendInteractionResponse(ctx.Interaction);
+            {
+                List<ItemSet> itemSets = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetsByName(value);
+                if (itemSets.Count == 1)
+                    response = await new ItemSetMessageBuilder(itemSets[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                else if (itemSets.Count > 1)
+                    response = await new PaginatedItemSetMessageBuilder(itemSets, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+
+            response ??= new DiscordInteractionResponseBuilder().WithContent("Panoplie introuvable");
+            await ctx.CreateResponseAsync(response);
         }
     }
 }

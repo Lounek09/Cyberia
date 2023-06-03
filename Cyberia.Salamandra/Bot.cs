@@ -39,7 +39,7 @@ namespace Cyberia.Salamandra
             Logger = new("bot");
             Config = BotConfig.Build();
 
-            DiscordConfiguration discordConfig = new()
+            Client = new(new DiscordConfiguration()
             {
                 Token = Config.Token,
                 TokenType = TokenType.Bot,
@@ -48,11 +48,11 @@ namespace Cyberia.Salamandra
                 MinimumLogLevel = LogLevel.Debug,
 #endif
                 LogTimestampFormat = "yyyy/MM/dd HH:mm:ss:ffff"
-            };
-            Client = new DiscordClient(discordConfig);
+            });
             Client.GuildCreated += GuildManager.OnGuildCreated;
             Client.GuildDeleted += GuildManager.OnGuildDeleted;
             Client.MessageCreated += MessageManager.OnMessageCreated;
+            Client.ComponentInteractionCreated += InteractionManager.OnComponentInteractionCreated;
 
             SlashCommands = Client.UseSlashCommands();
             SlashCommands.SlashCommandErrored += CommandManager.OnSlashCommandErrored;

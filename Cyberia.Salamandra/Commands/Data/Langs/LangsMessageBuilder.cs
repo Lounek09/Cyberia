@@ -1,120 +1,111 @@
-﻿using Cyberia.Langzilla;
+﻿using Cyberia.Api.DatacenterNS;
+using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
+using Cyberia.Salamandra.Commands.Dofus;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
+using System.Text;
+
 namespace Cyberia.Salamandra.Commands.Data
 {
-    public sealed class LangsMessageBuilder : CustomMessageBuilder
+    public sealed class LangsMessageBuilder : ICustomMessageBuilder
     {
-        private LangType _type;
-        private Language _language;
+        public const string PACKET_HEADER = "LANG";
+        public const int PACKET_VERSION = 1;
 
-        public LangsMessageBuilder(LangType type, Language language) :
-            base()
+        private readonly LangType _type;
+        private readonly Language _language;
+        private readonly LangsData _langsData;
+
+        public LangsMessageBuilder(LangType type, Language language)
         {
             _type = type;
             _language = language;
+            _langsData = Bot.Instance.DofusLangs.GetLangsData(_type, _language);
         }
 
-        protected override Task<DiscordEmbedBuilder> EmbedBuilder()
+        public static LangsMessageBuilder? Create(int version, string[] parameters)
+        {
+            if (version == PACKET_VERSION &&
+                parameters.Length > 1 &&
+                Enum.TryParse(parameters[0], out LangType langType) &&
+                Enum.TryParse(parameters[1], out Language language))
+            {
+                return new LangsMessageBuilder(langType, language);
+            }
+
+            return null;
+        }
+
+        public static string GetPacket(LangType langType, Language language)
+        {
+            return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, langType, language);
+        }
+
+        public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
+        {
+            IDiscordMessageBuilder message = new T()
+                .AddEmbed(await EmbedBuilder());
+
+            DiscordSelectComponent select = Select1Builder();
+            if (select.Options.Count > 0)
+                message.AddComponents(select);
+
+            DiscordSelectComponent select2 = Select2Builder();
+            if (select2.Options.Count > 0)
+                message.AddComponents(select2);
+
+            return (T)message;
+        }
+
+        private Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Langs")
-                                        .WithTitle($"Langs {_type} en {_language}");
+                .WithTitle($"Langs {_type} en {_language}");
 
-            LangsData data = Bot.Instance.DofusLangs.GetLangsData(_type, _language);
-            if (data.Langs.Count > 0)
+            
+            if (_langsData.Langs.Count > 0)
             {
-                HashSet<string> content = new()
-                {
-                    $"Dernière modification le : {data.GetLastModifiedDateTime(): dd/MM/yyyy HH:mm}+00:00",
-                    Formatter.MaskedUrl(Formatter.Bold(data.GetVersionFileName()), new Uri(data.GetVersionFileUrl())),
-                    ""
-                };
+                StringBuilder content = new();
 
-                foreach (Lang lang in data.Langs)
-                    content.Add($"- {Formatter.MaskedUrl(Formatter.Bold(lang.Name), new Uri(lang.GetFileUrl()))} {Formatter.InlineCode(lang.Version.ToString())}");
+                content.AppendFormat("Dernière modification le : {0}+00:00\n", _langsData.GetLastModifiedDateTime().ToString("dd/MM/yyyy HH:mm"));
+                content.AppendLine(Formatter.MaskedUrl(Formatter.Bold(_langsData.GetVersionFileName()), new Uri(_langsData.GetVersionFileUrl())));
 
-                embed.WithDescription(string.Join("\n", content));
+                foreach (Lang lang in _langsData.Langs)
+                    content.AppendLine($"- {Formatter.MaskedUrl(lang.Name, new Uri(lang.GetFileUrl()))} {Formatter.InlineCode(lang.Version.ToString())}");
+
+                embed.WithDescription(content.ToString());
             }
             else
-                embed.WithDescription("");
+                embed.WithDescription("void (°~°)");
 
             return Task.FromResult(embed);
         }
 
-        private DiscordSelectComponent SelectTypeBuilder()
+        private DiscordSelectComponent Select1Builder()
         {
             HashSet<DiscordSelectComponentOption> options = new();
 
             LangType[] types = Enum.GetValues<LangType>();
             for (int i = 0; i < types.Length && i < 25; i++)
-                options.Add(new(types[i].ToString(), $"{types[i]}|{_language}", isDefault: (int)_type == i));
+                options.Add(new(types[i].ToString(), GetPacket(types[i], _language), isDefault: (int)_type == i));
 
-            return new("selectType", "Sélectionne un type pour l'afficher", options);
+            return new(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne un type pour l'afficher", options);
         }
 
-        private DiscordSelectComponent SelectLanguageBuilder()
+        private DiscordSelectComponent Select2Builder()
         {
             HashSet<DiscordSelectComponentOption> options = new();
 
             Language[] languages = Enum.GetValues<Language>();
             for (int i = 0; i < languages.Length && i < 25; i++)
-                options.Add(new(languages[i].ToString(), $"{_type}|{languages[i]}", isDefault: (int)_language == i));
+                options.Add(new(languages[i].ToString(), GetPacket(_type, languages[i]), isDefault: (int)_language == i));
 
-            return new("selectLanguage", "Sélectionne une langue pour l'afficher", options);
-        }
-
-        protected override async Task<DiscordInteractionResponseBuilder> InteractionResponseBuilder()
-        {
-            DiscordInteractionResponseBuilder response = await base.InteractionResponseBuilder();
-
-            DiscordSelectComponent select = SelectTypeBuilder();
-            if (select.Options.Count > 1)
-                response.AddComponents(select);
-
-            DiscordSelectComponent select2 = SelectLanguageBuilder();
-            if (select2.Options.Count > 1)
-                response.AddComponents(select2);
-
-            return response;
-        }
-
-        protected override async Task<DiscordFollowupMessageBuilder> FollowupMessageBuilder()
-        {
-            DiscordFollowupMessageBuilder followupMessage = await base.FollowupMessageBuilder();
-
-            DiscordSelectComponent select = SelectTypeBuilder();
-            if (select.Options.Count > 1)
-                followupMessage.AddComponents(select);
-
-            DiscordSelectComponent select2 = SelectLanguageBuilder();
-            if (select2.Options.Count > 1)
-                followupMessage.AddComponents(select2);
-
-            return followupMessage;
-        }
-
-        protected override async Task<bool> InteractionTreatment(ComponentInteractionCreateEventArgs e)
-        {
-            switch (e.Id)
-            {
-                case "selectType":
-                case "selectLanguage":
-                    string[] args = e.Interaction.Data.Values.First().Split("|");
-
-                    _type = Enum.Parse<LangType>(args[0]);
-                    _language = Enum.Parse<Language>(args[1]);
-
-                    await UpdateInteractionResponse(e.Interaction);
-                    return true;
-                default:
-                    await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
-                    return false;
-            }
+            return new(InteractionManager.SelectComponentPacketBuilder(1), "Sélectionne une langue pour l'afficher", options);
         }
     }
 }

@@ -6,25 +6,61 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
+
+using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class IncarnationMessageBuilder : CustomMessageBuilder
+    public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     {
+        public const string PACKET_HEADER = "INCA";
+        public const int PACKET_VERSION = 1;
+
         private readonly Incarnation _incarnation;
         private readonly Item? _item;
         private readonly List<Spell> _spells;
 
-        public IncarnationMessageBuilder(Incarnation incarnation) :
-            base()
+        public IncarnationMessageBuilder(Incarnation incarnation)
         {
             _incarnation = incarnation;
             _item = incarnation.GetItem();
             _spells = incarnation.GetSpells();
         }
 
-        protected override async Task<DiscordEmbedBuilder> EmbedBuilder()
+        public static IncarnationMessageBuilder? Create(int version, string[] parameters)
+        {
+            if (version == PACKET_VERSION &&
+                parameters.Length > 0 &&
+                int.TryParse(parameters[0], out int incarnationId))
+            {
+                Incarnation? incarnartion = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationById(incarnationId);
+                if (incarnartion is not null)
+                    return new(incarnartion);
+            }
+
+            return null;
+        }
+
+        public static string GetPacket(int incarnationId)
+        {
+            return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, incarnationId);
+        }
+
+        public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
+        {
+            IDiscordMessageBuilder message = new T()
+                .AddEmbed(await EmbedBuilder());
+
+            if (_spells.Count > 0)
+                message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spells));
+
+            if (_item is not null)
+                message.AddComponents(ItemComponentsBuilder.ItemButtonBuilder(_item));
+
+            return (T)message;
+        }
+
+        private async Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Incarnations")
                 .WithTitle($"{_incarnation.Name} ({_incarnation.Id})")
@@ -44,17 +80,35 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
                 if (_item.WeaponInfos is not null)
                 {
-                    ItemType? itemType = _item.GetItemType();
+                    StringBuilder caracteristicsBuilder = new();
+                    caracteristicsBuilder.AppendFormat("PA : {0}\n", _item.WeaponInfos.ActionPointCost);
+                    caracteristicsBuilder.AppendFormat("Portée : {0}{1}\n", _item.WeaponInfos.MinRange, (_item.WeaponInfos.MinRange == _item.WeaponInfos.MaxRange ? "" : $" à {_item.WeaponInfos.MaxRange}"));
 
-                    string caracteristics = $"PA : {_item.WeaponInfos.ActionPointCost}\n";
-                    caracteristics += $"Portée : {_item.WeaponInfos.MinRange}{(_item.WeaponInfos.MinRange == _item.WeaponInfos.MaxRange ? "" : $" à {_item.WeaponInfos.MaxRange}")}\n";
-                    caracteristics += _item.WeaponInfos.CriticalBonus == 0 ? "" : $"Bonus coups critique : {_item.WeaponInfos.CriticalBonus}\n";
-                    caracteristics += $"{(_item.WeaponInfos.CriticalHitRate == 0 ? "" : $"Critique : 1/{_item.WeaponInfos.CriticalHitRate}{(_item.WeaponInfos.CriticalFailureRate == 0 ? "\n" : "")}")}{(_item.WeaponInfos.CriticalHitRate != 0 && _item.WeaponInfos.CriticalFailureRate != 0 ? " - " : "")}{(_item.WeaponInfos.CriticalFailureRate == 0 ? "" : $"Échec : 1/{_item.WeaponInfos.CriticalFailureRate}\n")}";
-                    caracteristics += _item.WeaponInfos.LineOnly ? "Lancer en ligne uniquement\n" : "";
-                    caracteristics += _item.WeaponInfos.LineOfSight || _item.WeaponInfos.MaxRange == 1 ? "" : "Ne possède pas de ligne de vue\n";
-                    caracteristics += _item.TwoHanded ? "Arme à deux mains" : "Arme à une main";
-                    caracteristics += itemType is null || itemType.Area.Id == EffectAreaManager.BaseArea.Id ? "" : $"\nZone : {Emojis.Area(itemType.Area.Id)} {itemType.Area.GetDescription()}";
-                    embed.AddField("Caractéristiques :", caracteristics);
+                    if (_item.WeaponInfos.CriticalBonus != 0)
+                        caracteristicsBuilder.AppendFormat("Bonus coups critique : {0}\n", _item.WeaponInfos.CriticalBonus);
+
+                    if (_item.WeaponInfos.CriticalHitRate != 0)
+                    {
+                        caracteristicsBuilder.AppendFormat("Critique : 1/{0}", _item.WeaponInfos.CriticalHitRate);
+                        caracteristicsBuilder.Append(_item.WeaponInfos.CriticalFailureRate != 0 ? " - " : "\n");
+                    }
+
+                    if (_item.WeaponInfos.CriticalFailureRate != 0)
+                        caracteristicsBuilder.AppendFormat("Échec : 1/{0}\n", _item.WeaponInfos.CriticalFailureRate);
+
+                    if (_item.WeaponInfos.LineOnly)
+                        caracteristicsBuilder.AppendLine("Lancer en ligne uniquement");
+
+                    if (!_item.WeaponInfos.LineOfSight && _item.WeaponInfos.MaxRange != 1)
+                        caracteristicsBuilder.AppendLine("Ne possède pas de ligne de vue");
+
+                    caracteristicsBuilder.Append(_item.TwoHanded ? "Arme à deux mains" : "Arme à une main");
+
+                    ItemType? itemType = _item.GetItemType();
+                    if (itemType is not null && itemType.Area.Id != EffectAreaManager.BaseArea.Id)
+                        caracteristicsBuilder.AppendFormat("\nZone : {0} {1}", Emojis.Area(itemType.Area.Id), itemType.Area.GetDescription());
+
+                    embed.AddField("Caractéristiques :", caracteristicsBuilder.ToString());
                 }
             }
             else
@@ -64,92 +118,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
 
             if (_spells.Count > 0)
-            {
-                HashSet<string> spellsName = new();
-                foreach (Spell spell in _spells)
-                    spellsName.Add($"- {Formatter.Bold(spell.Name)} ({spell.Id})");
-
-                embed.AddField("Sorts :", string.Join('\n', spellsName));
-            }
+                embed.AddField("Sorts :", string.Join('\n', _spells.Select(x => $"- {Formatter.Bold(x.Name)}")));
 
             return embed;
-        }
-
-        private DiscordSelectComponent SelectBuilder()
-        {
-            HashSet<DiscordSelectComponentOption> options = new();
-
-            foreach (Spell spell in _spells)
-                options.Add(new(spell.Name.WithMaxLength(100), spell.Id.ToString(), spell.Id.ToString()));
-
-            return new("select", "Sélectionne un sort pour l'afficher", options);
-        }
-
-        private HashSet<DiscordButtonComponent> ButtonsBuilder()
-        {
-            HashSet<DiscordButtonComponent> buttons = new();
-
-            if (_item is not null)
-                buttons.Add(new(ButtonStyle.Primary, "item", "Item"));
-
-            return buttons;
-        }
-
-        protected override async Task<DiscordInteractionResponseBuilder> InteractionResponseBuilder()
-        {
-            DiscordInteractionResponseBuilder response = await base.InteractionResponseBuilder();
-
-            DiscordSelectComponent select = SelectBuilder();
-            if (select.Options.Count > 1)
-                response.AddComponents(select);
-
-            HashSet<DiscordButtonComponent> buttons = ButtonsBuilder();
-            if (buttons.Count > 0)
-                response.AddComponents(buttons);
-
-            return response;
-        }
-
-        protected override async Task<DiscordFollowupMessageBuilder> FollowupMessageBuilder()
-        {
-            DiscordFollowupMessageBuilder followupMessage = await base.FollowupMessageBuilder();
-
-            DiscordSelectComponent select = SelectBuilder();
-            if (select.Options.Count > 1)
-                followupMessage.AddComponents(select);
-
-            HashSet<DiscordButtonComponent> buttons = ButtonsBuilder();
-            if (buttons.Count > 0)
-                followupMessage.AddComponents(buttons);
-
-            return followupMessage;
-        }
-
-        protected override async Task<bool> InteractionTreatment(ComponentInteractionCreateEventArgs e)
-        {
-            if (e.Id.Equals("select"))
-            {
-                int id = Convert.ToInt32(e.Interaction.Data.Values.First());
-
-                Spell? spell = Bot.Instance.Api.Datacenter.SpellsData.GetSpellById(id);
-                if (spell is not null)
-                {
-                    await new SpellMessageBuilder(spell).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-            else if (e.Id.Equals("item"))
-            {
-                Item? item = _incarnation.GetItem();
-                if (item is not null)
-                {
-                    await new ItemMessageBuilder(item).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
-            return false;
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Cyberia.Api.DatacenterNS;
 
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+
+using Newtonsoft.Json.Linq;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
@@ -11,17 +14,27 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public async Task Command(InteractionContext ctx,
             [Option("nom", "Nom du monstre", true)]
             [Autocomplete(typeof(MonsterAutocompleteProvider))]
-            string sId)
+            string value)
         {
-            Monster? monster = null;
+            DiscordInteractionResponseBuilder? response = null;
 
-            if (int.TryParse(sId, out int id))
-                monster = Bot.Instance.Api.Datacenter.MonstersData.GetMonsterById(id);
-
-            if (monster is null)
-                await ctx.CreateResponseAsync("Monstre introuvable");
+            if (int.TryParse(value, out int id))
+            {
+                Monster? monster = Bot.Instance.Api.Datacenter.MonstersData.GetMonsterById(id);
+                if (monster is not null)
+                    response = await new MonsterMessageBuilder(monster).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
             else
-                await new MonsterMessageBuilder(monster).SendInteractionResponse(ctx.Interaction);
+            {
+                List<Monster> monsters = Bot.Instance.Api.Datacenter.MonstersData.GetMonstersByName(value);
+                if (monsters.Count == 1)
+                    response = await new MonsterMessageBuilder(monsters[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                else if (monsters.Count > 1)
+                    response = await new PaginatedMonsterMessageBuilder(monsters, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+
+            response ??= new DiscordInteractionResponseBuilder().WithContent("Monstre introuvable");
+            await ctx.CreateResponseAsync(response);
 
         }
     }

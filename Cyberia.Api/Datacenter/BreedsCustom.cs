@@ -8,7 +8,7 @@ namespace Cyberia.Api.DatacenterNS
         public int Id { get; init; }
 
         [JsonPropertyName("bs")]
-        public int BreedSpellId { get; init; }
+        public int SpecialSpellId { get; init; }
 
         [JsonPropertyName("is")]
         public int ItemSetId { get; init; }

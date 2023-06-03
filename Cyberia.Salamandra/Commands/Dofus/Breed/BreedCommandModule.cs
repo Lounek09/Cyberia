@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.DatacenterNS;
 
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
@@ -13,12 +14,12 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [ChoiceProvider(typeof(BreedChoiceProvider))]
             string breedName)
         {
-            List<Breed> breeds = Bot.Instance.Api.Datacenter.BreedsData.GetBreedsByName(breedName);
+            Breed? breed = Bot.Instance.Api.Datacenter.BreedsData.GetBreedByName(breedName);
 
-            if (breeds.Count > 0)
-                await new BreedMessageBuilder(breeds[0]).SendInteractionResponse(ctx.Interaction);
-            else
+            if (breed is null)
                 await ctx.CreateResponseAsync("Classe introuvable");
+            else
+                await ctx.CreateResponseAsync(await new BreedMessageBuilder(breed).GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
     }
 }

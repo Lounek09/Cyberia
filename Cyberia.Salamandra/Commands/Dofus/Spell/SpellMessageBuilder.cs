@@ -5,43 +5,80 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class SpellMessageBuilder : CustomMessageBuilder
+    public sealed class SpellMessageBuilder : ICustomMessageBuilder
     {
+        public const string PACKET_HEADER = "S";
+        public const int PACKET_VERSION = 1;
+
         private readonly Spell _spell;
+        private readonly int _selectedLevel;
+        private readonly SpellLevel? _spellLevel;
         private readonly SpellCategory? _spellCategory;
         private readonly Breed? _breed;
         private readonly Incarnation? _incarnation;
-        private int _level;
-        private SpellLevel? _currentSpellLevel;
 
-        public SpellMessageBuilder(Spell spell) :
-            base()
+        public SpellMessageBuilder(Spell spell, int selectedLevel)
         {
             _spell = spell;
+            _selectedLevel = selectedLevel;
+            _spellLevel = spell.GetSpellLevel(selectedLevel);
             _spellCategory = spell.GetSpellCategory();
             _breed = spell.GetBreed();
             _incarnation = spell.GetIncarnation();
-            _level = spell.GetMaxLevelNumber();
-            _currentSpellLevel = spell.GetSpellLevel(_level);
         }
 
-        protected override async Task<DiscordEmbedBuilder> EmbedBuilder()
+        public static SpellMessageBuilder? Create(int version, string[] parameters)
+        {
+            if (version == PACKET_VERSION &&
+                parameters.Length > 1 &&
+                int.TryParse(parameters[0], out int spellId) &&
+                int.TryParse(parameters[1], out int selectedLevel))
+            {
+                Spell? spell = Bot.Instance.Api.Datacenter.SpellsData.GetSpellById(spellId);
+                if (spell is not null)
+                    return new SpellMessageBuilder(spell, selectedLevel);
+            }
+
+            return null;
+        }
+
+        public static string GetPacket(int spellId, int selectedLevel)
+        {
+            return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, spellId, selectedLevel);
+        }
+
+        public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
+        {
+            IDiscordMessageBuilder message = new T()
+                .AddEmbed(await EmbedBuilder());
+
+            List<DiscordButtonComponent> buttons = Buttons1Builder();
+            if (buttons.Count > 0)
+                message.AddComponents(buttons);
+
+            buttons = Buttons2Builder();
+            if (buttons.Count > 0)
+                message.AddComponents(buttons);
+
+            return (T)message;
+        }
+
+        private async Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Spells, "Livre de sorts")
-                .WithTitle($"{_spell.Name} ({_spell.Id}) - Rang {_level}")
-                .WithDescription(string.IsNullOrEmpty(_spell.Description) ? "" : Formatter.Italic(_spell.Description))
+                .WithTitle($"{_spell.Name} ({_spell.Id}) - Rang {_selectedLevel}")
+                .WithDescription(string.IsNullOrEmpty(_spell.Description) ? "" : Formatter.Italic(_spell.Description.Trim()))
                 .WithThumbnail(await _spell.GetImagePath());
 
-            if (_currentSpellLevel is not null)
+            if (_spellLevel is not null)
             {
-                embed.AddField(Constant.ZERO_WIDTH_SPACE, $"Niveau requis : {Formatter.Bold(_currentSpellLevel.NeededLevel.ToString())}", true);
+                embed.AddField(Constant.ZERO_WIDTH_SPACE, $"Niveau requis : {Formatter.Bold(_spellLevel.NeededLevel.ToString())}", true);
 
-                string range = $"{Formatter.Bold(_currentSpellLevel.MinRange.ToString())}{(_currentSpellLevel.MinRange == _currentSpellLevel.MaxRange ? "" : $" à {Formatter.Bold(_currentSpellLevel.MaxRange.ToString())}")} PO";
-                string apCost = $"{Formatter.Bold(_currentSpellLevel.ActionPointCost.ToString())} PA";
+                string range = $"{Formatter.Bold(_spellLevel.MinRange.ToString())}{(_spellLevel.MinRange == _spellLevel.MaxRange ? "" : $" à {Formatter.Bold(_spellLevel.MaxRange.ToString())}")} PO";
+                string apCost = $"{Formatter.Bold(_spellLevel.ActionPointCost.ToString())} PA";
                 embed.AddField(Constant.ZERO_WIDTH_SPACE, $"{range}\n{apCost}", true);
 
                 if (_spellCategory is not null)
@@ -49,11 +86,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 else
                     embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
 
-                List<State> requiredStates = _currentSpellLevel.GetRequiredStates();
+                List<State> requiredStates = _spellLevel.GetRequiredStates();
                 if (requiredStates.Count > 0)
                     embed.AddField("Etats requis :", string.Join(", ", requiredStates.Select(x => x.Name)), true);
 
-                List<State> forbiddenStates = _currentSpellLevel.GetForbiddenStates();
+                List<State> forbiddenStates = _spellLevel.GetForbiddenStates();
                 if (forbiddenStates.Count > 0)
                     embed.AddField("Etats interdits :", string.Join(", ", forbiddenStates.Select(x => x.Name)), true);
 
@@ -61,10 +98,10 @@ namespace Cyberia.Salamandra.Commands.Dofus
                     embed.AddField("Effets :", "Fuck roulette");
                 else
                 {
-                    List<IEffect> effects = _currentSpellLevel.Effects;
-                    List<IEffect> trapEffects = _currentSpellLevel.GetTrapEffects();
-                    List<IEffect> glyphEffects = _currentSpellLevel.GetGlyphEffects();
-                    List<IEffect> criticalEffects = _currentSpellLevel.CriticalEffects;
+                    List<IEffect> effects = _spellLevel.Effects;
+                    List<IEffect> trapEffects = _spellLevel.GetTrapEffects();
+                    List<IEffect> glyphEffects = _spellLevel.GetGlyphEffects();
+                    List<IEffect> criticalEffects = _spellLevel.CriticalEffects;
 
                     if (effects.Count == 0 && trapEffects.Count == 0 && glyphEffects.Count == 0 && criticalEffects.Count == 0)
                         embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE);
@@ -82,116 +119,55 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 }
 
                 string caracteristics = $"""
-                                         Probabilité de coup critique : {Formatter.Bold(_currentSpellLevel.CriticalHitRate == 0 ? "-" : $"1/{_currentSpellLevel.CriticalHitRate}")}
-                                         Probabilité d'échec : {Formatter.Bold(_currentSpellLevel.CriticalFailureRate == 0 ? "-" : $"1/{_currentSpellLevel.CriticalFailureRate}")}
-                                         Nb. de lancers par tour : {Formatter.Bold(_currentSpellLevel.LaunchCountByTurn == 0 ? "-" : _currentSpellLevel.LaunchCountByTurn.ToString())}
-                                         Nb. de lancers par tour par joueur : {Formatter.Bold(_currentSpellLevel.LaunchCountByPlayerByTurn == 0 ? "-" : _currentSpellLevel.LaunchCountByPlayerByTurn.ToString())}
-                                         Nb. de tours entre deux lancers : {Formatter.Bold(_currentSpellLevel.DelayBetweenLaunch == 0 ? "-" : _currentSpellLevel.DelayBetweenLaunch == 63 ? "inf." : _currentSpellLevel.DelayBetweenLaunch.ToString())}
+                                         Probabilité de coup critique : {Formatter.Bold(_spellLevel.CriticalHitRate == 0 ? "-" : $"1/{_spellLevel.CriticalHitRate}")}
+                                         Probabilité d'échec : {Formatter.Bold(_spellLevel.CriticalFailureRate == 0 ? "-" : $"1/{_spellLevel.CriticalFailureRate}")}
+                                         Nb. de lancers par tour : {Formatter.Bold(_spellLevel.LaunchCountByTurn == 0 ? "-" : _spellLevel.LaunchCountByTurn.ToString())}
+                                         Nb. de lancers par tour par joueur : {Formatter.Bold(_spellLevel.LaunchCountByPlayerByTurn == 0 ? "-" : _spellLevel.LaunchCountByPlayerByTurn.ToString())}
+                                         Nb. de tours entre deux lancers : {Formatter.Bold(_spellLevel.DelayBetweenLaunch == 0 ? "-" : _spellLevel.DelayBetweenLaunch == 63 ? "inf." : _spellLevel.DelayBetweenLaunch.ToString())}
                                          {(_spell.GlobalInterval ? "Intervalle de relance global" : "")}
                                          """;
                 embed.AddField("Autres caractéristiques : ", caracteristics, true);
 
                 caracteristics = $"""
-                                   {Emojis.Bool(_currentSpellLevel.CanBoostRange)} Portée modifiable
-                                   {Emojis.Bool(_currentSpellLevel.LineOfSight)} Ligne de vue
-                                   {Emojis.Bool(_currentSpellLevel.LineOnly)} Lancer en ligne
-                                   {Emojis.Bool(_currentSpellLevel.NeedFreeCell)} Cellules libres
-                                   {Emojis.Bool(_currentSpellLevel.CricalFailureEndTheTurn)} EC fini le tour
-                                   """;
+                                  {Emojis.Bool(_spellLevel.CanBoostRange)} Portée modifiable
+                                  {Emojis.Bool(_spellLevel.LineOfSight)} Ligne de vue
+                                  {Emojis.Bool(_spellLevel.LineOnly)} Lancer en ligne
+                                  {Emojis.Bool(_spellLevel.NeedFreeCell)} Cellules libres
+                                  {Emojis.Bool(_spellLevel.CricalFailureEndTheTurn)} EC fini le tour
+                                  """;
                 embed.AddField(Constant.ZERO_WIDTH_SPACE, caracteristics, true);
             }
 
             return embed;
         }
 
-        private HashSet<DiscordButtonComponent> LevelButtons1Builder()
+        private List<DiscordButtonComponent> Buttons1Builder()
         {
-            HashSet<DiscordButtonComponent> components = new();
+            List<DiscordButtonComponent> components = new();
 
             for (int i = 1; i < 6; i++)
             {
                 if (_spell.GetSpellLevel(i) is not null)
-                    components.Add(new(ButtonStyle.Primary, i.ToString(), i.ToString(), _level == i));
+                    components.Add(new(ButtonStyle.Primary, GetPacket(_spell.Id, i), i.ToString(), _selectedLevel == i));
             }
 
             return components;
         }
 
-        private HashSet<DiscordButtonComponent> LevelButtons2Builder()
+        private List<DiscordButtonComponent> Buttons2Builder()
         {
-            HashSet<DiscordButtonComponent> components = new();
+            List<DiscordButtonComponent> components = new();
 
             if (_spell.GetSpellLevel(6) is not null)
-                components.Add(new(ButtonStyle.Primary, "6", "6", _level == 6));
+                components.Add(new(ButtonStyle.Primary, GetPacket(_spell.Id, 6), "6", _selectedLevel == 6));
 
             if (_breed is not null)
-                components.Add(new(ButtonStyle.Success, "breed", _breed.Name));
+                components.Add(BreedComponentsBuilder.BreedButtonBuilder(_breed));
 
             if (_incarnation is not null)
-                components.Add(new(ButtonStyle.Success, "incarnation", _incarnation.Name));
+                components.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnation));
 
             return components;
-        }
-
-        protected override async Task<DiscordInteractionResponseBuilder> InteractionResponseBuilder()
-        {
-            DiscordInteractionResponseBuilder response = await base.InteractionResponseBuilder();
-
-            HashSet<DiscordButtonComponent> levelButtons = LevelButtons1Builder();
-            if (levelButtons.Count > 0)
-                response.AddComponents(levelButtons);
-
-            levelButtons = LevelButtons2Builder();
-            if (levelButtons.Count > 0)
-                response.AddComponents(levelButtons);
-
-            return response;
-        }
-
-        protected override async Task<DiscordFollowupMessageBuilder> FollowupMessageBuilder()
-        {
-            DiscordFollowupMessageBuilder followupMessage = await base.FollowupMessageBuilder();
-
-            HashSet<DiscordButtonComponent> levelButtons = LevelButtons1Builder();
-            if (levelButtons.Count > 0)
-                followupMessage.AddComponents(levelButtons);
-
-            levelButtons = LevelButtons2Builder();
-            if (levelButtons.Count > 0)
-                followupMessage.AddComponents(levelButtons);
-
-            return followupMessage;
-        }
-
-        protected override async Task<bool> InteractionTreatment(ComponentInteractionCreateEventArgs e)
-        {
-            if (int.TryParse(e.Id, out int level))
-            {
-                _level = level;
-                _currentSpellLevel = _spell.GetSpellLevel(level);
-
-                await UpdateInteractionResponse(e.Interaction);
-                return true;
-            }
-            else if (e.Id.Equals("breed"))
-            {
-                if (_breed is not null)
-                {
-                    await new BreedMessageBuilder(_breed).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-            else if (e.Id.Equals("incarnation"))
-            {
-                if (_incarnation is not null)
-                {
-                    await new IncarnationMessageBuilder(_incarnation).UpdateInteractionResponse(e.Interaction);
-                    return true;
-                }
-            }
-
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
-            return false;
         }
     }
 }

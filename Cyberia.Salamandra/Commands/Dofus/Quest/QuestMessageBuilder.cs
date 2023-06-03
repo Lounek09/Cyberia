@@ -4,177 +4,137 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
+
+using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class QuestMessageBuilder : CustomMessageBuilder
+    public sealed class QuestMessageBuilder : ICustomMessageBuilder
     {
+        public const string PACKET_HEADER = "Q";
+        public const int PACKET_VERSION = 1;
+
         private readonly Quest _quest;
         private readonly List<QuestStep> _questSteps;
-        private QuestStep? _currentQuestStep;
-        private int _selectIndex;
+        private readonly int _selectedQuestStepIndex;
+        private readonly QuestStep? _questStep;
 
-        public QuestMessageBuilder(Quest quest) :
-            base()
+        public QuestMessageBuilder(Quest quest, int selectedQuestStepIndex = 0)
         {
             _quest = quest;
             _questSteps = quest.GetQuestSteps();
-            _currentQuestStep = _questSteps.Count > 0 ? _questSteps[0] : null;
-            _selectIndex = 0;
+            _selectedQuestStepIndex = selectedQuestStepIndex;
+            _questStep = _questSteps.Count > selectedQuestStepIndex ? _questSteps[selectedQuestStepIndex] : null;
         }
 
-        protected override Task<DiscordEmbedBuilder> EmbedBuilder()
+        public static QuestMessageBuilder? Create(int version, string[] parameters)
+        {
+            if (version == PACKET_VERSION &&
+                parameters.Length > 1 &&
+                int.TryParse(parameters[0], out int questId) &&
+                int.TryParse(parameters[1], out int selectedQuestStepIndex))
+            {
+                Quest? quest = Bot.Instance.Api.Datacenter.QuestsData.GetQuestById(questId);
+                if (quest is not null)
+                    return new QuestMessageBuilder(quest, selectedQuestStepIndex);
+            }
+
+            return null;
+        }
+
+        public static string GetPacket(int questId, int selectedQuestStepIndex = 0)
+        {
+            return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, questId, selectedQuestStepIndex);
+        }
+
+        public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
+        {
+            IDiscordMessageBuilder message = new T()
+                .AddEmbed(await EmbedBuilder());
+
+            DiscordSelectComponent select = Select1Builder();
+            if (select.Options.Count > 1)
+                message.AddComponents(select);
+
+            DiscordSelectComponent select2 = Select2Builder();
+            if (select2.Options.Count > 0)
+                message.AddComponents(select2);
+
+            return (T)message;
+        }
+
+        private Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Quests, "Livre de quêtes")
                 .WithTitle($"{_quest.Name} ({_quest.Id}) {Emojis.Quest(_quest.Repeatable, _quest.Account)}{(_quest.HasDungeon ? Emojis.DUNGEON : "")}");
 
-            if (_currentQuestStep is not null)
+            if (_questStep is not null)
             {
-                embed.WithDescription($"{Formatter.Bold(_currentQuestStep.Name)}\n" +
-                    (string.IsNullOrEmpty(_currentQuestStep.Description) ? "" : Formatter.Italic(_currentQuestStep.Description)));
+                embed.WithDescription($"{Formatter.Bold(_questStep.Name)}\n{(string.IsNullOrEmpty(_questStep.Description) ? "" : Formatter.Italic(_questStep.Description))}");
 
-                int optimalLevel = _currentQuestStep.OptimalLevel;
+                int optimalLevel = _questStep.OptimalLevel;
                 if (optimalLevel > 0)
                     embed.AddField("Niveau optimal :", optimalLevel.ToString());
 
-                DialogQuestion? dialogQuestion = _currentQuestStep.GetDialogQuestion();
+                DialogQuestion? dialogQuestion = _questStep.GetDialogQuestion();
                 if (dialogQuestion is not null)
                     embed.AddField("Dialogue :", dialogQuestion.Question);
 
-                if (_currentQuestStep.QuestObjectives.Count > 0)
-                    embed.AddQuestObjectiveFields("Objectifs :", _currentQuestStep.QuestObjectives);
+                if (_questStep.QuestObjectives.Count > 0)
+                    embed.AddQuestObjectiveFields("Objectifs :", _questStep.QuestObjectives);
 
-                if (_currentQuestStep.HasReward())
+                if (_questStep.HasReward())
                 {
-                    HashSet<string> rewardValue = new();
+                    StringBuilder rewards = new();
 
-                    if (_currentQuestStep.Rewards.Experience > 0)
-                        rewardValue.Add($"{_currentQuestStep.Rewards.Experience.ToStringThousandSeparator()} {Emojis.XP}");
+                    if (_questStep.Rewards.Experience > 0)
+                        rewards.AppendFormat("{0} {1}\n", _questStep.Rewards.Experience.ToStringThousandSeparator(), Emojis.XP);
 
-                    if (_currentQuestStep.Rewards.Kamas > 0)
-                        rewardValue.Add($"{_currentQuestStep.Rewards.Kamas.ToStringThousandSeparator()} {Emojis.KAMAS}");
+                    if (_questStep.Rewards.Kamas > 0)
+                        rewards.AppendFormat("{0} {1}\n", _questStep.Rewards.Kamas.ToStringThousandSeparator(), Emojis.KAMAS);
 
-                    List<KeyValuePair<Item, int>> itemsReward = _currentQuestStep.Rewards.GetItemsQuantities();
+                    List<KeyValuePair<Item, int>> itemsReward = _questStep.Rewards.GetItemsQuantities();
                     if (itemsReward.Count > 0)
-                    {
-                        HashSet<string> itemsRewardNames = new();
-                        foreach (KeyValuePair<Item, int> itemReward in itemsReward)
-                            itemsRewardNames.Add($"{Formatter.Bold(itemReward.Value.ToString())}x {itemReward.Key.Name}");
+                        rewards.AppendLine(string.Join(", ", itemsReward.Select(x => $"{Formatter.Bold(x.Value.ToString())}x {x.Key.Name}")));
 
-                        if (itemsRewardNames.Count > 0)
-                            rewardValue.Add(string.Join(", ", itemsRewardNames));
-                    }
-
-                    List<Emote> emotesReward = _currentQuestStep.Rewards.GetEmotes();
+                    List<Emote> emotesReward = _questStep.Rewards.GetEmotes();
                     if (emotesReward.Count > 0)
-                    {
-                        HashSet<string> emotesRewardNames = new();
-                        foreach (Emote emoteReward in emotesReward)
-                            emotesRewardNames.Add(emoteReward.Name);
+                        rewards.AppendFormat("Emotes : {0}\n", string.Join(", ", emotesReward.Select(x => x.Name)));
 
-                        if (emotesRewardNames.Count > 0)
-                            rewardValue.Add($"Emotes : {string.Join(", ", emotesRewardNames)}");
-                    }
-
-                    List<Job> jobsReward = _currentQuestStep.Rewards.GetJobs();
+                    List<Job> jobsReward = _questStep.Rewards.GetJobs();
                     if (jobsReward.Count > 0)
-                    {
-                        HashSet<string> jobsRewardNames = new();
-                        foreach (Job jobReward in jobsReward)
-                            jobsRewardNames.Add(jobReward.Name);
+                        rewards.AppendFormat("Métiers : {0}\n", string.Join(", ", jobsReward.Select(x => x.Name)));
 
-                        if (jobsRewardNames.Count > 0)
-                            rewardValue.Add($"Métiers : {string.Join(", ", jobsRewardNames)}");
-                    }
-
-                    List<Spell> spellsReward = _currentQuestStep.Rewards.GetSpells();
+                    List<Spell> spellsReward = _questStep.Rewards.GetSpells();
                     if (emotesReward.Count > 0)
-                    {
-                        HashSet<string> spellsRewardNames = new();
-                        foreach (Spell spellReward in spellsReward)
-                            spellsRewardNames.Add(spellReward.Name);
+                        rewards.AppendFormat("Sorts : {0}", string.Join(", ", spellsReward.Select(x => x.Name)));
 
-                        if (spellsRewardNames.Count > 0)
-                            rewardValue.Add($"Sorts : {string.Join(", ", spellsRewardNames)}");
-                    }
-
-                    if (rewardValue.Count > 0)
-                        embed.AddField("Récompenses :", string.Join('\n', rewardValue));
+                    if (rewards.Length > 0)
+                        embed.AddField("Récompenses :", rewards.ToString());
                 }
             }
 
             return Task.FromResult(embed);
         }
 
-        private DiscordSelectComponent SelectBuilder()
+        private DiscordSelectComponent Select1Builder()
         {
-            HashSet<DiscordSelectComponentOption> options = new();
+            List<DiscordSelectComponentOption> options = new();
 
             for (int i = 0; i < _questSteps.Count && i < 25; i++)
-                options.Add(new("Etape " + (i + 1), $"{_questSteps[i].Id}|{i}", _questSteps[i].Name.WithMaxLength(100), isDefault: i == _selectIndex));
+                options.Add(new($"Etape {i + 1}", GetPacket(_quest.Id, i), _questSteps[i].Name.WithMaxLength(100), isDefault: i == _selectedQuestStepIndex));
 
-            return new("select", "Sélectionne une étape pour l'afficher", options);
+            return new(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne une étape pour l'afficher", options);
         }
 
         private DiscordSelectComponent Select2Builder()
         {
-            HashSet<DiscordSelectComponentOption> options = new();
+            List<DiscordSelectComponentOption> options = new();
 
             for (int i = 25; i < _questSteps.Count; i++)
-                options.Add(new("Etape " + (i + 1), $"{_questSteps[i].Id}|{i}", _questSteps[i].Name.WithMaxLength(100), isDefault: i == _selectIndex));
+                options.Add(new($"Etape {i + 1}", GetPacket(_quest.Id, i), _questSteps[i].Name.WithMaxLength(100), isDefault: i == _selectedQuestStepIndex));
 
-            return new("select2", "Sélectionne une étape pour l'afficher", options);
-        }
-
-        protected override async Task<DiscordInteractionResponseBuilder> InteractionResponseBuilder()
-        {
-            DiscordInteractionResponseBuilder response = await base.InteractionResponseBuilder();
-
-            DiscordSelectComponent select = SelectBuilder();
-            if (select.Options.Count > 1)
-                response.AddComponents(select);
-
-            DiscordSelectComponent select2 = Select2Builder();
-            if (select2.Options.Count > 1)
-                response.AddComponents(select2);
-
-            return response;
-        }
-
-        protected override async Task<DiscordFollowupMessageBuilder> FollowupMessageBuilder()
-        {
-            DiscordFollowupMessageBuilder followupMessage = await base.FollowupMessageBuilder();
-
-            DiscordSelectComponent select = SelectBuilder();
-            if (select.Options.Count > 1)
-                followupMessage.AddComponents(select);
-
-            DiscordSelectComponent select2 = Select2Builder();
-            if (select2.Options.Count > 1)
-                followupMessage.AddComponents(select2);
-
-            return followupMessage;
-        }
-
-        protected override async Task<bool> InteractionTreatment(ComponentInteractionCreateEventArgs e)
-        {
-            switch (e.Id)
-            {
-                case "select":
-                case "select2":
-                    string[] args = e.Interaction.Data.Values.First().Split("|");
-
-                    int id = Convert.ToInt32(args[0]);
-                    _currentQuestStep = Bot.Instance.Api.Datacenter.QuestsData.GetQuestStepById(id);
-                    _selectIndex = Convert.ToInt32(args[1]);
-
-                    await UpdateInteractionResponse(e.Interaction);
-                    return true;
-                default:
-                    await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
-                    return false;
-            }
+            return new(InteractionManager.SelectComponentPacketBuilder(1), "Sélectionne une étape pour l'afficher", options);
         }
     }
 }

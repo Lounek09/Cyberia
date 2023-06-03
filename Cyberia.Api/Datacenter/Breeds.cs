@@ -55,7 +55,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("b15")]
         public List<List<int>> IntelligenceBoostCost { get; init; }
 
-        public int BreedSpellId { get; internal set; }
+        public int SpecialSpellId { get; internal set; }
 
         public int ItemSetId { get; internal set; }
 
@@ -143,9 +143,9 @@ namespace Cyberia.Api.DatacenterNS
             return value;
         }
 
-        public Spell? GetBreedSpell()
+        public Spell? GetSpecialSpell()
         {
-            return DofusApi.Instance.Datacenter.SpellsData.GetSpellById(BreedSpellId);
+            return DofusApi.Instance.Datacenter.SpellsData.GetSpellById(SpecialSpellId);
         }
 
         public ItemSet? GetItemSet()
@@ -176,7 +176,7 @@ namespace Cyberia.Api.DatacenterNS
                 Breed? breed = data.GetBreedById(breedCustom.Id);
                 if (breed is not null)
                 {
-                    breed.BreedSpellId = breedCustom.BreedSpellId;
+                    breed.SpecialSpellId = breedCustom.SpecialSpellId;
                     breed.ItemSetId = breedCustom.ItemSetId;
                 }
             }
