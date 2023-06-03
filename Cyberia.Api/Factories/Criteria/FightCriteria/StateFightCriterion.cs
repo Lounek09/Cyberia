@@ -11,9 +11,9 @@
                 switch (@operator)
                 {
                     case '≠':
-                        return $"Etre dans l'état {stateName}";
-                    case '=':
                         return $"Ne pas être dans l'état {stateName}";
+                    case '=':
+                        return $"Etre dans l'état {stateName}";
                 }
             }
 
