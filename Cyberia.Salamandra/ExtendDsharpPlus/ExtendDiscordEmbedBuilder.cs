@@ -1,7 +1,9 @@
-﻿using Cyberia.Api.Factories.Effects;
+﻿using Cyberia.Api.Factories;
+using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.QuestObjectives;
 using Cyberia.Api.Managers;
 
+using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.DsharpPlus
@@ -43,7 +45,11 @@ namespace Cyberia.Salamandra.DsharpPlus
                 else
                     emoji = Emojis.Effect(effect.EffectId);
 
-                effectsParse.Add($"{emoji} {effect.GetDescription()}{(effect.Area.Id == EffectAreaManager.BaseArea.Id ? "" : $" - {Emojis.Area(effect.Area.Id)} {effect.Area.GetDescription()}")}");
+                string effectParse = $"{emoji} {effect.GetDescription()}{(effect.Area.Id == EffectAreaManager.BaseArea.Id ? "" : $" - {Emojis.Area(effect.Area.Id)} {effect.Area.GetSize()}")}";
+                if (!string.IsNullOrEmpty(effect.Criteria))
+                    effectParse += " " + Formatter.InlineCode(Formatter.Strip(string.Join(' ', CriterionFactory.GetCriteriaParse(effect.Criteria))));
+
+                effectsParse.Add(effectParse);
             }
 
             return embed.AddFields(name, effectsParse, inline);
