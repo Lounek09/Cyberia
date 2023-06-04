@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace Cyberia.Api.Factories
 {
-    public sealed record EffectParameters(int Param1, int Param2, int Param3, string Param4);
+    public record struct EffectParameters(int Param1, int Param2, int Param3, string Param4);
 
     public static class EffectFactory
     {
