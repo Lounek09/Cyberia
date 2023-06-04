@@ -4,8 +4,8 @@ namespace Cyberia.Api.Factories.QuestObjectives
 {
     public interface IQuestObjective
     {
-        public QuestObjective QuestObjective { get; init; }
+        QuestObjective QuestObjectiveData { get; init; }
 
-        public string GetDescription();
+        string GetDescription();
     }
 }

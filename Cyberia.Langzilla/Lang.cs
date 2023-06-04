@@ -46,7 +46,6 @@ namespace Cyberia.Langzilla
 
         public string GetFilePath()
         {
-            
             return Path.Join(GetDirectoryPath(), GetFileName());
         }
 

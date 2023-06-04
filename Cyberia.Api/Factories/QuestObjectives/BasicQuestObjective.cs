@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives
 {
-    public record BasicQuestObjective(QuestObjective QuestObjective) : IQuestObjective
+    public record BasicQuestObjective(QuestObjective QuestObjectiveData) : IQuestObjective
     {
         public static BasicQuestObjective Create(QuestObjective questObjective)
         {
@@ -11,24 +11,24 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public virtual string GetDescription()
         {
-            return GetDescriptionFromParameters(QuestObjective.Parameters.ToArray());
+            return GetDescriptionFromParameters(QuestObjectiveData.Parameters.ToArray());
         }
 
         protected string GetDescriptionFromParameters(params string[] parameters)
         {
-            QuestObjectiveType? questObjectiveType = QuestObjective.GetQuestObjectiveType();
+            QuestObjectiveType? questObjectiveType = QuestObjectiveData.GetQuestObjectiveType();
 
             if (questObjectiveType is not null)
             {
                 for (int i = 0; i < parameters.Length; i++)
                     parameters[i] = parameters[i].Bold();
 
-                string coordinate = QuestObjective.GetCoordinate();
+                string coordinate = QuestObjectiveData.GetCoordinate();
 
                 return PatternDecoder.DecodeDescription(questObjectiveType.Description, parameters) + (string.IsNullOrEmpty(coordinate) ? "" : $" - {coordinate}");
             }
 
-            return $"Type d'objectif {QuestObjective.QuestObjectiveTypeId.ToString().Bold()} non référencé ({string.Join(", ", parameters)})";
+            return $"Type d'objectif {QuestObjectiveData.QuestObjectiveTypeId.ToString().Bold()} non référencé ({string.Join(", ", parameters)})";
         }
     }
 }
