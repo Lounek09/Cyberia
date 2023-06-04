@@ -72,7 +72,7 @@ namespace Cyberia.Salamandra.Commands.Data
             {
                 StringBuilder content = new();
 
-                content.AppendFormat("Dernière modification le : {0}+00:00\n", _langsData.GetLastModifiedDateTime().ToString("dd/MM/yyyy HH:mm"));
+                content.AppendFormat("Dernière modification le : {0}+00:00\n", _langsData.GetDateTimeSinceLastModified().ToString("dd/MM/yyyy HH:mm"));
                 content.AppendLine(Formatter.MaskedUrl(Formatter.Bold(_langsData.GetVersionFileName()), new Uri(_langsData.GetVersionFileUrl())));
 
                 foreach (Lang lang in _langsData.Langs)

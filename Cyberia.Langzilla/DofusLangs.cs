@@ -36,12 +36,14 @@ namespace Cyberia.Langzilla
         internal static List<LangsData> LoadData()
         {
             List<LangsData> data = new();
+
             foreach (LangType type in Enum.GetValues<LangType>())
             {
                 foreach (Language language in Enum.GetValues<Language>())
                 {
-                    if (File.Exists($"{GetDirectoryPath(type, language)}/data.json"))
-                        data.Add(Json.LoadFromFile<LangsData>($"{GetDirectoryPath(type, language)}/data.json"));
+                    string dataFilePath = $"{GetDirectoryPath(type, language)}/data.json";
+                    if (File.Exists(dataFilePath))
+                        data.Add(Json.LoadFromFile<LangsData>(dataFilePath));
                 }
             }
 
@@ -82,7 +84,7 @@ namespace Cyberia.Langzilla
             LangsData data = GetLangsData(type, language);
 
             List<Lang> updatedLangs = new();
-            foreach (string langFileName in await data.GetLangsInfosFormServerAsync(force))
+            foreach (string langFileName in await data.GetLangsInfosFromServerAsync(force))
             {
                 string[] args = langFileName.Split(',');
 
@@ -94,7 +96,6 @@ namespace Cyberia.Langzilla
                     lang.Diff();
 
                     updatedLangs.Add(lang);
-
                     LangUpdated?.Invoke(this, new(type, language, lang));
                 }
             }
@@ -123,7 +124,7 @@ namespace Cyberia.Langzilla
 
         internal static string GetDirectoryPath(LangType type, Language language)
         {
-            return $"{OUTPUT_PATH}/{type.ToString().ToLower()}/{language.ToString().ToLower()}";
+            return Path.Join(OUTPUT_PATH, type.ToString().ToLower(), language.ToString().ToLower());
         }
 
         internal static string GetRoute(LangType type)

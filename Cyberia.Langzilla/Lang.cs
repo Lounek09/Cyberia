@@ -23,14 +23,15 @@ namespace Cyberia.Langzilla
             Version = version;
             Type = type;
             Language = language;
-            IsNew = !Directory.Exists(GetDirectoryPath());
 
-            Directory.CreateDirectory(GetDirectoryPath());
+            string directoryPath = GetDirectoryPath();
+            IsNew = !Directory.Exists(directoryPath);
+            Directory.CreateDirectory(directoryPath);
         }
 
         public string GetDirectoryPath()
         {
-            return $"{DofusLangs.GetDirectoryPath(Type, Language)}/{Name}";
+            return Path.Join(DofusLangs.GetDirectoryPath(Type, Language), Name);
         }
 
         public string GetFileName()
@@ -45,62 +46,69 @@ namespace Cyberia.Langzilla
 
         public string GetFilePath()
         {
-            return $"{GetDirectoryPath()}/{GetFileName()}";
+            
+            return Path.Join(GetDirectoryPath(), GetFileName());
         }
 
         public string GetCurrentDecompiledFilePath()
         {
-            return $"{GetDirectoryPath()}/current.as";
+            return Path.Join(GetDirectoryPath(), "current.as");
         }
 
         public string GetOldDecompiledFilePath()
         {
-            return $"{GetDirectoryPath()}/old.as";
+            return Path.Join(GetDirectoryPath(), "old.as");
         }
 
         public string GetDiffFilePath()
         {
-            return $"{GetDirectoryPath()}/diff.as";
+            return Path.Join(GetDirectoryPath(), "diff.as");
         }
 
         public string GenerateDiff(Lang lang)
         {
-            if (!File.Exists(GetCurrentDecompiledFilePath()))
+            string currentDecompiledFilePath = GetCurrentDecompiledFilePath();
+            if (!File.Exists(currentDecompiledFilePath))
                 return "";
+            string[] currentLines = File.ReadAllLines(currentDecompiledFilePath);
 
-            List<KeyValuePair<int, string>> diff = new();
+            string modelDecompiledFilePath = lang == this ? GetOldDecompiledFilePath() : lang.GetCurrentDecompiledFilePath();
+            if (!File.Exists(modelDecompiledFilePath))
+                return string.Join('\n', currentLines.Select(x => $"+ {x}"));
+            string[] modelLines = File.ReadAllLines(modelDecompiledFilePath);
 
-            int currentIndex = 0;
-            Dictionary<int, string> currentRows = File.ReadAllLines(GetCurrentDecompiledFilePath())
-                .ToDictionary(x => currentIndex++);
+            List<(int, string)> diff = new();
 
-            int oldIndex = 0;
-            string oldDecompiledFilePath = lang == this ? GetOldDecompiledFilePath() : lang.GetCurrentDecompiledFilePath();
-            Dictionary<int, string> oldRows = File.Exists(oldDecompiledFilePath) ? File.ReadAllLines(oldDecompiledFilePath).ToDictionary(x => oldIndex++) : new();
+            int index = 0;
+            Dictionary<int, string> currentRows = currentLines.ToDictionary(x => index++);
+
+            index = 0;
+            Dictionary<int, string> modelRows = modelLines.ToDictionary(x => index++);
 
             foreach (KeyValuePair<int, string> row in currentRows)
             {
-                if (!oldRows.RemoveByValue(row.Value, true))
-                    diff.Add(new(row.Key, $"+ {row.Value}"));
+                if (!modelRows.RemoveByValue(row.Value, true))
+                    diff.Add((row.Key, $"+ {row.Value}"));
             }
 
-            foreach (KeyValuePair<int, string> row in oldRows)
-                diff.Add(new(row.Key, $"- {row.Value}"));
+            foreach (KeyValuePair<int, string> row in modelRows)
+                diff.Add((row.Key, $"- {row.Value}"));
 
-            return string.Join("\n", diff.OrderBy(x => x.Key).Select(x => x.Value));
+            return string.Join("\n", diff.OrderBy(x => x.Item1).Select(x => x.Item2));
         }
 
         internal async Task DownloadAsync()
         {
             Array.ForEach(Directory.GetFiles(GetDirectoryPath(), "*.swf"), File.Delete);
 
+            string fileUrl = GetFileUrl();
             int retries = 5;
             int waitTime = 1000;
             while (true)
             {
                 try
                 {
-                    using HttpResponseMessage response = await DofusLangs.Instance.HttpClient.GetAsync(GetFileUrl()).ConfigureAwait(false);
+                    using HttpResponseMessage response = await DofusLangs.Instance.HttpClient.GetAsync(fileUrl).ConfigureAwait(false);
                     response.EnsureSuccessStatusCode();
 
                     using FileStream fileStream = new(GetFilePath(), FileMode.Create);
@@ -112,18 +120,18 @@ namespace Cyberia.Langzilla
                 {
                     if (retries-- == 0)
                     {
-                        DofusLangs.Instance.Logger.Error($"Unable to find {GetFileUrl()}");
+                        DofusLangs.Instance.Logger.Error($"Unable to find {fileUrl}");
                         return;
                     }
 
-                    DofusLangs.Instance.Logger.Error($"{retries} retry left to download {GetFileUrl()}", e);
+                    DofusLangs.Instance.Logger.Error($"{retries} retry left to download {fileUrl}", e);
 
                     await Task.Delay(waitTime);
                     waitTime *= 2;
                 }
                 catch (TaskCanceledException e)
                 {
-                    DofusLangs.Instance.Logger.Error($"The request to get {GetFileUrl()} was cancelled", e);
+                    DofusLangs.Instance.Logger.Error($"The request to get {fileUrl} has been cancelled", e);
                     return;
                 }
             }
@@ -138,16 +146,14 @@ namespace Cyberia.Langzilla
             string currentDecompiledFilePath = GetCurrentDecompiledFilePath();
             string oldDecompiledFilePath = GetOldDecompiledFilePath();
 
-            if (!Flare.ExtractSwf(filePath, out string warningMessage))
+            if (!Flare.TryExtractSwf(filePath, out string warningMessage, out string flareFilePath))
             {
                 DofusLangs.Instance.Logger.Error($"Error when decompiled '{filePath}'\nWarning : {warningMessage}");
                 return;
             }
 
-            string flareOutputFilePath = $"{filePath.TrimEnd(".swf")}.flr";
-
             List<string> content = new();
-            foreach (string line in File.ReadAllLines(flareOutputFilePath, Encoding.UTF8).Skip(7).SkipLast(3))
+            foreach (string line in File.ReadAllLines(flareFilePath, Encoding.UTF8).Skip(7).SkipLast(3))
             {
                 string temp = line.Trim();
 
@@ -160,7 +166,7 @@ namespace Cyberia.Langzilla
             if (File.Exists(currentDecompiledFilePath))
                 File.Move(currentDecompiledFilePath, oldDecompiledFilePath, true);
             File.WriteAllLines(currentDecompiledFilePath, content, Encoding.UTF8);
-            File.Delete(flareOutputFilePath);
+            File.Delete(flareFilePath);
         }
 
         internal void Diff()

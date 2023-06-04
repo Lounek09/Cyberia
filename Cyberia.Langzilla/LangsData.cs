@@ -30,7 +30,7 @@ namespace Cyberia.Langzilla
 
         public string GetDataFilePath()
         {
-            return $"{GetDirectoryPath()}/data.json";
+            return Path.Join(GetDirectoryPath(), "data.json");
         }
 
         public string GetVersionFileName()
@@ -45,10 +45,10 @@ namespace Cyberia.Langzilla
 
         public string GetVersionFilePath()
         {
-            return $"{GetDirectoryPath()}/{GetVersionFileName()}";
+            return Path.Join(GetDirectoryPath(), GetVersionFileName());
         }
 
-        public DateTime GetLastModifiedDateTime()
+        public DateTime GetDateTimeSinceLastModified()
         {
             return DateTimeOffset.FromUnixTimeMilliseconds(LastModified).DateTime;
         }
@@ -63,11 +63,13 @@ namespace Cyberia.Langzilla
             return Langs.FindAll(x => x.Name.RemoveDiacritics().Contains(name.RemoveDiacritics()));
         }
 
-        internal async Task<string[]> GetLangsInfosFormServerAsync(bool force)
+        internal async Task<string[]> GetLangsInfosFromServerAsync(bool force)
         {
+            string versionFileUrl = GetVersionFileUrl();
+
             try
             {
-                using HttpResponseMessage response = await DofusLangs.Instance.HttpClient.GetAsync(GetVersionFileUrl()).ConfigureAwait(false);
+                using HttpResponseMessage response = await DofusLangs.Instance.HttpClient.GetAsync(versionFileUrl).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
 
                 long lastModifiedHeader = response.Content.Headers.LastModified!.Value.ToUnixTimeMilliseconds();
@@ -91,11 +93,11 @@ namespace Cyberia.Langzilla
             }
             catch (HttpRequestException e)
             {
-                DofusLangs.Instance.Logger.Error($"Unable to find {GetVersionFileUrl()}", e);
+                DofusLangs.Instance.Logger.Error($"Unable to find {versionFileUrl}", e);
             }
             catch (TaskCanceledException e)
             {
-                DofusLangs.Instance.Logger.Error($"The request to get {GetVersionFileUrl()} was cancelled", e);
+                DofusLangs.Instance.Logger.Error($"The request to get {versionFileUrl} has been cancelled", e);
             }
 
             return Array.Empty<string>();
