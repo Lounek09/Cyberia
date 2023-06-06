@@ -220,7 +220,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public async Task<string> GetImagePath()
         {
-            string url = $"{DofusApi.Instance.CdnUrl}/images/spells/{Id}.png";
+            string url = $"{DofusApi.Instance.CdnUrl}/images/spells/{Id}.jpg";
 
             if (await DofusApi.Instance.HttpClient.CheckIfPageExistsAsync(url))
                 return url;
