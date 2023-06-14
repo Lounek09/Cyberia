@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.QuestCriteria
 {
-    public static class MonsterPresentInFightCriterion
+    public static class MonsterSummonCriterion
     {
         public static string? GetValue(char @operator, string[] values)
         {
@@ -12,9 +12,9 @@
                 switch (@operator)
                 {
                     case '≠':
-                        return $"{value} n'est pas présent dans le combat";
+                        return $"{value} est invoqué dans l'équipe alliée";
                     case '=':
-                        return $"{value} est présent dans le combat";
+                        return $"{value} n'est pas invoqué dans l'équipe alliée";
                     default:
                         return value;
                 }

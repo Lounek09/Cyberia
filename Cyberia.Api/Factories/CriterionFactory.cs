@@ -38,7 +38,7 @@ namespace Cyberia.Api.Factories
             { "FC", CardInHandCriterion.GetValue },
             { "FS", StateCriterion.GetValue },
             { "FT", TurnCriterion.GetValue },
-            { "Fz", MonsterPresentInFightCriterion.GetValue },
+            { "Fz", MonsterSummonCriterion.GetValue },
             { "MK", MapPlayerCriterion.GetValue },
             { "Pa", AlignmentLevelCriterion.GetValue },
             { "PB", MapSubAreaCriterion.GetValue },
