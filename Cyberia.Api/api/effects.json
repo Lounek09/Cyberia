@@ -2578,6 +2578,12 @@
       "d": "Téléporte #3 à une distance de #1 cases maximum",
       "c": 0,
       "o": ""
+    },
+    {
+      "id": 2144,
+      "d": "Effet 2144 inconnu (#1, #2, #3, #4)",
+      "c": 0,
+      "o": ""
     }
   ],
   "EDMG": [
