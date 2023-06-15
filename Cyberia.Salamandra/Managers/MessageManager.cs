@@ -69,7 +69,7 @@ namespace Cyberia.Salamandra.Managers
 
         public static async Task SendLogMessage(string content)
         {
-            DiscordChannel? logChannel = await Bot.Instance.Config.GetLogChannel();
+            DiscordChannel? logChannel = await GetLogChannel();
 
             if (logChannel is null)
             {
@@ -82,7 +82,7 @@ namespace Cyberia.Salamandra.Managers
 
         public static async Task SendCommandErrorMessage(string content)
         {
-            DiscordChannel? commandErrorChannel = await Bot.Instance.Config.GetCommandErrorChannel();
+            DiscordChannel? commandErrorChannel = await GetCommandErrorChannel();
 
             if (commandErrorChannel is null)
             {
@@ -113,56 +113,27 @@ namespace Cyberia.Salamandra.Managers
             await message.DeleteAsync();
         }
 
-        public static async Task SendCytrusManifestDiffMessageAsync(this DiscordChannel channel, string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
+        private static async Task<DiscordChannel?> GetLogChannel()
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-
-            HttpClient httpClient = new();
-            DiscordMessageBuilder message = new();
-
-            string url1 = CytrusData.GetGameManifestUrl(game, platform, oldRelease, oldVersion);
-            Manifest client1;
             try
             {
-                byte[] metafile = await httpClient.GetByteArrayAsync(url1);
-                ByteBuffer buffer = new(metafile);
-                client1 = Manifest.GetRootAsManifest(buffer);
+                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.LogChannelId);
             }
-            catch (HttpRequestException)
+            catch
             {
-                await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
-                return;
+                return null;
             }
+        }
 
-            string url2 = CytrusData.GetGameManifestUrl(game, platform, newRelease, newVersion);
-            Manifest client2;
+        private static async Task<DiscordChannel?> GetCommandErrorChannel()
+        {
             try
             {
-                byte[] metafile = await httpClient.GetByteArrayAsync(url2);
-                ByteBuffer buffer = new(metafile);
-                client2 = Manifest.GetRootAsManifest(buffer);
+                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.CommandErrorChannelId);
             }
-            catch (HttpRequestException)
+            catch
             {
-                await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
-                return;
-            }
-
-            string diff = client2.Diff(client1);
-
-            stopwatch.Stop();
-
-            string mainContent = $"""
-                                  Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform)} effectué en {stopwatch.ElapsedMilliseconds}ms
-                                  {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
-                                  """;
-
-            if (mainContent.Length + diff.Length < 2000)
-                await channel.SendMessage(message.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
-            else
-            {
-                using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
-                await channel.SendMessage(message.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
+                return null;
             }
         }
     }

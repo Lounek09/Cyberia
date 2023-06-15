@@ -7,18 +7,6 @@ namespace Cyberia.Salamandra.Managers
 {
     public static class LangsManager
     {
-        public static async Task<DiscordForumChannel?> GetLangForumChannel()
-        {
-            try
-            {
-                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.LangForumChannelId) as DiscordForumChannel;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
         public static async void OnCheckLangFinished(object? _, CheckLangFinishedEventArgs e)
         {
             if (e.UpdatedLangs.Count == 0)
@@ -37,6 +25,18 @@ namespace Cyberia.Salamandra.Managers
                 await SendLangMessageAsync(thread, updatedLang);
 
                 await delay;
+            }
+        }
+
+        private static async Task<DiscordForumChannel?> GetLangForumChannel()
+        {
+            try
+            {
+                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.LangForumChannelId) as DiscordForumChannel;
+            }
+            catch
+            {
+                return null;
             }
         }
 

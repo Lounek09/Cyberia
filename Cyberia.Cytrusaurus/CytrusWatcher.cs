@@ -4,7 +4,7 @@ using Cyberia.Cytrusaurus.Models;
 
 namespace Cyberia.Cytrusaurus
 {
-    public sealed class AnkamaCytrus
+    public sealed class CytrusWatcher
     {
         internal const string OUTPUT_PATH = "cytrus";
         internal const string CYTRUS_FILE_NAME = "cytrus.json";
@@ -17,16 +17,15 @@ namespace Cyberia.Cytrusaurus
         public CytrusData OldCytrusData { get; internal set; }
 
         internal HttpClient HttpClient { get; init; }
-
-        internal static AnkamaCytrus Instance {
+        internal static CytrusWatcher Instance {
             get => _instance is null ? throw new NullReferenceException("Build Cytrus before !") : _instance;
         }
-        private static AnkamaCytrus? _instance;
+        private static CytrusWatcher? _instance;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>")]
         private Timer? _timer;
 
-        internal AnkamaCytrus()
+        internal CytrusWatcher()
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
@@ -39,25 +38,21 @@ namespace Cyberia.Cytrusaurus
             };
         }
 
-        public static AnkamaCytrus Build()
+        public static CytrusWatcher Create()
         {
             _instance ??= new();
             return _instance;
         }
 
-        public event EventHandler? CheckCytrusStarted;
         public event EventHandler<NewCytrusDetectedEventArgs>? NewCytrusDetected;
-        public event EventHandler? CheckCytrusFinished;
 
-        public void Listen(int dueTime, int interval)
+        public void Watch(int dueTime, int interval)
         {
             _timer = new(async _ => await LaunchAsync(), null, dueTime, interval);
         }
 
         public async Task LaunchAsync()
         {
-            CheckCytrusStarted?.Invoke(this, new());
-
             string? cytrus = null;
             try
             {
@@ -93,8 +88,6 @@ namespace Cyberia.Cytrusaurus
             if (File.Exists(CYTRUS_PATH))
                 File.Move(CYTRUS_PATH, OLD_CYTRUS_PATH, true);
             File.WriteAllText(CYTRUS_PATH, cytrus);
-
-            CheckCytrusFinished?.Invoke(this, new());
         }
     }
 

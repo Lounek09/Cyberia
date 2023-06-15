@@ -23,7 +23,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
             HashSet<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (KeyValuePair<string, string> release in Bot.Instance.AnkamaCytrus.CytrusData.Games[game].GetReleasesFromPlatform(platform))
+            foreach (KeyValuePair<string, string> release in Bot.Instance.CytrusWatcher.CytrusData.Games[game].GetReleasesFromPlatform(platform))
                 choices.Add(new(release.Key.Capitalize(), release.Key));
 
             return Task.FromResult(choices.AsEnumerable());

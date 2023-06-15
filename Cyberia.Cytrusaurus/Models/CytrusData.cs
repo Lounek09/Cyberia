@@ -38,7 +38,7 @@ namespace Cyberia.Cytrusaurus.Models
 
         public string GetManifestUrl(string platform, string release)
         {
-            return $"{AnkamaCytrus.BASE_URL}/{Name}/releases/{release}/{platform}/{GetVersionFromPlatformAndRelease(platform, release)}.manifest";
+            return $"{CytrusWatcher.BASE_URL}/{Name}/releases/{release}/{platform}/{GetVersionFromPlatformAndRelease(platform, release)}.manifest";
         }
     }
 
@@ -61,7 +61,7 @@ namespace Cyberia.Cytrusaurus.Models
 
         public static string GetGameManifestUrl(string game, string platform, string release, string version)
         {
-            return $"{AnkamaCytrus.BASE_URL}/{game}/releases/{release}/{platform}/{version}.manifest";
+            return $"{CytrusWatcher.BASE_URL}/{game}/releases/{release}/{platform}/{version}.manifest";
         }
     }
 }

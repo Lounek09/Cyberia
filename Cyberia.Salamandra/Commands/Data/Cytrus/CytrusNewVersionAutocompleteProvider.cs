@@ -25,7 +25,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            string? version = Bot.Instance.AnkamaCytrus.CytrusData.Games[game].GetVersionFromPlatformAndRelease(platform, release);
+            string? version = Bot.Instance.CytrusWatcher.CytrusData.Games[game].GetVersionFromPlatformAndRelease(platform, release);
             if (!string.IsNullOrEmpty(version))
                 choices.Add(new(version, version));
 

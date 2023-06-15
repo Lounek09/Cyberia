@@ -26,60 +26,12 @@ namespace Cyberia.Salamandra
         {
             if (!File.Exists(PATH))
             {
-                Bot.Instance.Logger.Crit($"Configuration file not found at {PATH}");
+                Console.WriteLine($"Configuration file not found at {PATH}");
                 Console.ReadLine();
                 Environment.Exit(0);
             }
 
             return Json.LoadFromFile<BotConfig>(PATH);
-        }
-
-        public async Task<DiscordChannel?> GetLogChannel()
-        {
-            try
-            {
-                return await Bot.Instance.Client.GetChannelAsync(LogChannelId);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public async Task<DiscordChannel?> GetCommandErrorChannel()
-        {
-            try
-            {
-                return await Bot.Instance.Client.GetChannelAsync(CommandErrorChannelId);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public async Task<DiscordChannel?> GetCytrusChannel()
-        {
-            try
-            {
-                return await Bot.Instance.Client.GetChannelAsync(CytrusChannelId);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public async Task<DiscordChannel?> GetCytrusManifestDiffChannel()
-        {
-            try
-            {
-                return await Bot.Instance.Client.GetChannelAsync(CytrusManifestDiffChannelId);
-            }
-            catch
-            {
-                return null;
-            }
         }
     }
 }

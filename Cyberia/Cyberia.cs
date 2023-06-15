@@ -12,7 +12,7 @@ namespace Cyberia
     {
         public static Logger Logger { get; private set; }
         public static Config Config { get; private set; }
-        public static AnkamaCytrus AnkamaCytrus { get; private set; }
+        public static CytrusWatcher CytrusWatcher { get; private set; }
         public static LangsWatcher LangsWatcher { get; private set; }
         public static DofusApi Api { get; private set; }
         public static Bot Salamandra { get; private set; }
@@ -21,10 +21,10 @@ namespace Cyberia
         {
             Logger = new("main");
             Config = Config.Load();
-            AnkamaCytrus = AnkamaCytrus.Build();
+            CytrusWatcher = CytrusWatcher.Create();
             LangsWatcher = LangsWatcher.Create();
             Api = DofusApi.Build(Config.CdnUrl, Config.Temporis, LangsWatcher, FormatType.MarkDown);
-            Salamandra = Bot.Build(AnkamaCytrus, LangsWatcher, Api);
+            Salamandra = Bot.Build(CytrusWatcher, LangsWatcher, Api);
 
             Directory.CreateDirectory("temp");
         }
@@ -34,7 +34,7 @@ namespace Cyberia
             await Salamandra.Launch();
 
             if (Config.EnableCheckCytrus)
-                AnkamaCytrus.Listen(10000, 60000);
+                CytrusWatcher.Watch(10000, 60000);
 
             if (Config.EnableCheckLang)
                 LangsWatcher.WatchAll(LangType.Official, 20000, 360000);
