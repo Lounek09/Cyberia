@@ -16,7 +16,7 @@ namespace Cyberia.Api
 
         public Datacenter Datacenter { get; internal set; }
 
-        internal DofusLangs DofusLangs { get; init; }
+        internal LangsWatcher LangsWatcher { get; init; }
         internal FormatType FormatType { get; init; }
         internal HttpClient HttpClient { get; init; }
 
@@ -26,7 +26,7 @@ namespace Cyberia.Api
         }
         private static DofusApi? _instance;
 
-        internal DofusApi(string cdnUrl, bool temporis, DofusLangs dofusLangs, FormatType formatType)
+        internal DofusApi(string cdnUrl, bool temporis, LangsWatcher langsWatcher, FormatType formatType)
         {
             Directory.CreateDirectory(OUTPUT_PATH);
             Directory.CreateDirectory(CUSTOM_PATH);
@@ -34,15 +34,15 @@ namespace Cyberia.Api
             Logger = new("api");
             CdnUrl = cdnUrl;
             Temporis = temporis;
-            DofusLangs = dofusLangs;
+            LangsWatcher = langsWatcher;
             FormatType = formatType;
             HttpClient = new();
             Datacenter = new();
         }
 
-        public static DofusApi Build(string cdnUrl, bool temporis, DofusLangs dofusLangs, FormatType formatType)
+        public static DofusApi Build(string cdnUrl, bool temporis, LangsWatcher langsWatcher, FormatType formatType)
         {
-            _instance ??= new(cdnUrl, temporis, dofusLangs, formatType);
+            _instance ??= new(cdnUrl, temporis, langsWatcher, formatType);
             return _instance;
         }
 

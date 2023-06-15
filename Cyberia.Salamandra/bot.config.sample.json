@@ -4,7 +4,7 @@
   "DiscordInviteUrl": "https://discord.gg/XXXXXXXX",
   "LogChannelId": 0,
   "CommandErrorChannelId": 0,
-  "LangChannelId": 0,
+  "LangForumChannelId": 0,
   "CytrusChannelId": 0,
   "CytrusManifestDiffChannelId": 0
 }

@@ -13,18 +13,18 @@ namespace Cyberia
         public static Logger Logger { get; private set; }
         public static Config Config { get; private set; }
         public static AnkamaCytrus AnkamaCytrus { get; private set; }
-        public static DofusLangs DofusLangs { get; private set; }
+        public static LangsWatcher LangsWatcher { get; private set; }
         public static DofusApi Api { get; private set; }
         public static Bot Salamandra { get; private set; }
 
         static Cyberia()
         {
             Logger = new("main");
-            Config = Config.Build();
+            Config = Config.Load();
             AnkamaCytrus = AnkamaCytrus.Build();
-            DofusLangs = DofusLangs.Build();
-            Api = DofusApi.Build(Config.CdnUrl, Config.Temporis, DofusLangs, FormatType.MarkDown);
-            Salamandra = Bot.Build(AnkamaCytrus, DofusLangs, Api);
+            LangsWatcher = LangsWatcher.Create();
+            Api = DofusApi.Build(Config.CdnUrl, Config.Temporis, LangsWatcher, FormatType.MarkDown);
+            Salamandra = Bot.Build(AnkamaCytrus, LangsWatcher, Api);
 
             Directory.CreateDirectory("temp");
         }
@@ -37,13 +37,13 @@ namespace Cyberia
                 AnkamaCytrus.Listen(10000, 60000);
 
             if (Config.EnableCheckLang)
-                DofusLangs.ListenForAllLanguage(LangType.Official, 20000, 360000);
+                LangsWatcher.WatchAll(LangType.Official, 20000, 360000);
 
             if (Config.EnableCheckBetaLang)
-                DofusLangs.ListenForAllLanguage(LangType.Beta, 140000, 360000);
+                LangsWatcher.WatchAll(LangType.Beta, 140000, 360000);
 
             if (Config.EnableCheckTemporisLang)
-                DofusLangs.ListenForAllLanguage(LangType.Temporis, 260000, 360000);
+                LangsWatcher.WatchAll(LangType.Temporis, 260000, 360000);
 
             await Task.Delay(-1);
         }

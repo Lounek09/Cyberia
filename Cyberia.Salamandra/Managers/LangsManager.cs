@@ -1,42 +1,82 @@
-﻿using Cyberia.Langzilla;
-
-using DSharpPlus;
+﻿using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla;
 using DSharpPlus.Entities;
+using DSharpPlus;
 
 namespace Cyberia.Salamandra.Managers
 {
     public static class LangsManager
     {
-        public static async void OnCheckLangFinished(object? sender, CheckLangFinishedEventArgs e)
+        public static async Task<DiscordForumChannel?> GetLangForumChannel()
+        {
+            try
+            {
+                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.LangForumChannelId) as DiscordForumChannel;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static async void OnCheckLangFinished(object? _, CheckLangFinishedEventArgs e)
         {
             if (e.UpdatedLangs.Count == 0)
                 return;
 
-            DiscordChannel? channel = await Bot.Instance.Config.GetLangChannel();
-            if (channel is null)
-            {
-                Bot.Instance.Logger.Error($"Unknown lang channel (id:{Bot.Instance.Config.LangChannelId})");
+            DiscordForumChannel? forum = await GetLangForumChannel();
+            if (forum is null)
                 return;
-            }
 
-            DiscordThreadChannel thread = await channel.CreateThreadAsync($"{e.Type} {e.Language} {DateTime.Now:dd-MM-yyyy HH\\hmm}", AutoArchiveDuration.Hour, ChannelType.PublicThread);
-            foreach (Lang lang in e.UpdatedLangs)
+            DiscordThreadChannel thread = await CreateThreadAsync(forum, e.Type, e.Language);
+
+            foreach (Lang updatedLang in e.UpdatedLangs)
             {
-                Task rateLimite = Task.Delay(1000);
+                Task delay = Task.Delay(1000);
 
-                DiscordMessageBuilder message = new DiscordMessageBuilder()
+                await SendLangMessageAsync(thread, updatedLang);
+
+                await delay;
+            }
+        }
+
+        private static async Task<DiscordThreadChannel> CreateThreadAsync(DiscordForumChannel forum, LangType type, Language language)
+        {
+            DateTime now = DateTime.Now;
+
+            ForumPostBuilder postBuilder = new ForumPostBuilder()
+                .WithName($"{type} {language} {now:dd-MM-yyyy HH\\hmm}")
+                .WithMessage(new DiscordMessageBuilder().WithContent($"Diff des langs {Formatter.Bold(type.ToString())} de {now:HH\\hmm} le {now:dd/MM/yyyy} en {Formatter.Bold(language.ToString())}"));
+
+            DiscordForumTag? typeTag = GetDiscordForumTagByName(forum, type.ToString());
+            if (typeTag is not null)
+                postBuilder.AddTag(typeTag);
+
+            DiscordForumTag? languageTag = GetDiscordForumTagByName(forum, language.ToString());
+            if (languageTag is not null)
+                postBuilder.AddTag(languageTag);
+
+            DiscordForumPostStarter post = await forum.CreateForumPostAsync(postBuilder);
+
+            return post.Channel;
+        }
+
+        private static DiscordForumTag? GetDiscordForumTagByName(DiscordForumChannel forum, string name)
+        {
+            return forum.AvailableTags.FirstOrDefault(x => x.Name.Equals(name));
+        }
+
+        private static async Task<DiscordMessage> SendLangMessageAsync(DiscordThreadChannel thread, Lang lang)
+        {
+            DiscordMessageBuilder message = new DiscordMessageBuilder()
                     .WithContent($"{(lang.IsNew ? $"{Formatter.Bold("New")} lang" : "Lang")} {Formatter.Bold(lang.Name)} version {Formatter.Bold(lang.Version.ToString())}");
 
-                if (File.Exists(lang.GetDiffFilePath()))
-                {
-                    using FileStream fileStream = File.OpenRead(lang.GetDiffFilePath());
-                    await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", fileStream));
-                }
-                else
-                    await thread.SendMessageAsync(message);
+            string diffFilePath = lang.GetDiffFilePath();
+            if (!File.Exists(diffFilePath))
+                return await thread.SendMessageAsync(message);
 
-                await rateLimite;
-            }
+            using FileStream fileStream = File.OpenRead(diffFilePath);
+            return await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", fileStream));
         }
     }
 }

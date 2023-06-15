@@ -1,12 +1,9 @@
-﻿using Cyberia.Api.DatacenterNS;
-using Cyberia.Langzilla;
+﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
-using Cyberia.Salamandra.Commands.Dofus;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
 
 using System.Text;
 
@@ -25,7 +22,7 @@ namespace Cyberia.Salamandra.Commands.Data
         {
             _type = type;
             _language = language;
-            _langsData = Bot.Instance.DofusLangs.GetLangsData(_type, _language);
+            _langsData = Bot.Instance.LangsWatcher.GetLangsByType(_type).GetLangsByLanguage(_language);
         }
 
         public static LangsMessageBuilder? Create(int version, string[] parameters)

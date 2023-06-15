@@ -11,7 +11,7 @@ namespace Cyberia.Salamandra
         public string DiscordInviteUrl { get; init; }
         public ulong LogChannelId { get; init; }
         public ulong CommandErrorChannelId { get; init; }
-        public ulong LangChannelId { get; init; }
+        public ulong LangForumChannelId { get; init; }
         public ulong CytrusChannelId { get; init; }
         public ulong CytrusManifestDiffChannelId { get; init; }
 
@@ -22,7 +22,7 @@ namespace Cyberia.Salamandra
             DiscordInviteUrl = string.Empty;
         }
 
-        public static BotConfig Build()
+        public static BotConfig Load()
         {
             if (!File.Exists(PATH))
             {
@@ -51,18 +51,6 @@ namespace Cyberia.Salamandra
             try
             {
                 return await Bot.Instance.Client.GetChannelAsync(CommandErrorChannelId);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public async Task<DiscordChannel?> GetLangChannel()
-        {
-            try
-            {
-                return await Bot.Instance.Client.GetChannelAsync(LangChannelId);
             }
             catch
             {

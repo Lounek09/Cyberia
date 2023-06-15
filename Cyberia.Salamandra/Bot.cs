@@ -23,7 +23,7 @@ namespace Cyberia.Salamandra
         public SlashCommandsExtension SlashCommands { get; init; }
 
         internal AnkamaCytrus AnkamaCytrus { get; init; }
-        internal DofusLangs DofusLangs { get; init; }
+        internal LangsWatcher LangsWatcher { get; init; }
         internal DofusApi Api { get; init; }
 
 
@@ -32,12 +32,12 @@ namespace Cyberia.Salamandra
         }
         private static Bot? _instance;
 
-        internal Bot(AnkamaCytrus cytrus, DofusLangs langs, DofusApi api)
+        internal Bot(AnkamaCytrus cytrus, LangsWatcher langs, DofusApi api)
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
             Logger = new("bot");
-            Config = BotConfig.Build();
+            Config = BotConfig.Load();
 
             Client = new(new DiscordConfiguration()
             {
@@ -61,13 +61,14 @@ namespace Cyberia.Salamandra
             AnkamaCytrus = cytrus;
             AnkamaCytrus.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
 
-            DofusLangs = langs;
-            DofusLangs.CheckLangFinished += LangsManager.OnCheckLangFinished;
+            LangsWatcher = langs;
+            LangsWatcher.CheckLangFinished += LangsManager.OnCheckLangFinished;
+            
 
             Api = api;
         }
 
-        public static Bot Build(AnkamaCytrus cytrus, DofusLangs langs, DofusApi api)
+        public static Bot Build(AnkamaCytrus cytrus, LangsWatcher langs, DofusApi api)
         {
             _instance ??= new(cytrus, langs, api);
             return _instance;

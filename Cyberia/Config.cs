@@ -16,7 +16,7 @@
             CdnUrl = string.Empty;
         }
 
-        public static Config Build()
+        public static Config Load()
         {
             if (!File.Exists(PATH))
             {

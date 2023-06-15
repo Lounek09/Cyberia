@@ -4,12 +4,14 @@ namespace Cyberia.Langzilla
 {
     public sealed class LangsData
     {
+        public const string DATA_FILE_NAME = "data.json";
+
         public LangType Type { get; init; }
         public Language Language { get; init; }
         public long LastModified { get; set; }
         public List<Lang> Langs { get; init; }
 
-        public LangsData()
+        public LangsData() //Used for deserialization
         {
             Langs = new();
         }
@@ -20,17 +22,16 @@ namespace Cyberia.Langzilla
             Language = language;
             Langs = new();
 
-            Directory.CreateDirectory(GetDirectoryPath());
+            Directory.CreateDirectory(LangsWatcher.GetOutputDirectoryPath(type, language));
         }
 
-        public string GetDirectoryPath()
+        public static LangsData Load(LangType type, Language language)
         {
-            return DofusLangs.GetDirectoryPath(Type, Language);
-        }
+            string dataFilePath = Path.Join(LangsWatcher.GetOutputDirectoryPath(type, language), DATA_FILE_NAME);
+            if (File.Exists(dataFilePath))
+                return Json.LoadFromFile<LangsData>(dataFilePath);
 
-        public string GetDataFilePath()
-        {
-            return Path.Join(GetDirectoryPath(), "data.json");
+            return new(type, language);
         }
 
         public string GetVersionFileName()
@@ -40,12 +41,12 @@ namespace Cyberia.Langzilla
 
         public string GetVersionFileUrl()
         {
-            return $"{DofusLangs.BASE_URL}/{DofusLangs.GetRoute(Type)}/{GetVersionFileName()}";
+            return $"{LangsWatcher.BASE_URL}/{LangsWatcher.GetRoute(Type)}/{GetVersionFileName()}";
         }
 
         public string GetVersionFilePath()
         {
-            return Path.Join(GetDirectoryPath(), GetVersionFileName());
+            return Path.Join(LangsWatcher.GetOutputDirectoryPath(Type, Language), GetVersionFileName());
         }
 
         public DateTime GetDateTimeSinceLastModified()
@@ -63,61 +64,84 @@ namespace Cyberia.Langzilla
             return Langs.FindAll(x => x.Name.RemoveDiacritics().Contains(name.RemoveDiacritics()));
         }
 
-        internal async Task<string[]> GetLangsInfosFromServerAsync(bool force)
+        internal async Task<List<Lang>> FetchLangsAsync(bool force)
+        {
+            string versionFile = await FetchVersionFileAsync(force);
+            if (string.IsNullOrEmpty(versionFile))
+                return new();
+
+            return await ProcessLangsAsync(versionFile);
+        }
+
+        private async Task<string> FetchVersionFileAsync(bool force)
         {
             string versionFileUrl = GetVersionFileUrl();
 
             try
             {
-                using HttpResponseMessage response = await DofusLangs.Instance.HttpClient.GetAsync(versionFileUrl).ConfigureAwait(false);
+                using HttpResponseMessage response = await LangsWatcher.Instance.HttpClient.GetAsync(versionFileUrl);
                 response.EnsureSuccessStatusCode();
 
                 long lastModifiedHeader = response.Content.Headers.LastModified!.Value.ToUnixTimeMilliseconds();
                 long lastModified = LastModified;
-
                 bool isMoreRecent = lastModifiedHeader > lastModified;
-                if (!force && !isMoreRecent)
-                    return Array.Empty<string>();
-
-                string versions = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 if (isMoreRecent)
-                {
-                    DofusLangs.Instance.Logger.Info($"New {Type} langs detected in {Language} :\n{versions}");
-
                     LastModified = lastModifiedHeader;
-                    File.WriteAllText(GetVersionFilePath(), versions);
-                }
 
-                return versions[3..].Split("|", StringSplitOptions.RemoveEmptyEntries);
+                if (isMoreRecent || force)
+                {
+                    string versionFile = await response.Content.ReadAsStringAsync();
+
+                    LangsWatcher.Instance.Logger.Info($"New {Type} langs detected in {Language} :\n{versionFile}");
+                    File.WriteAllText(GetVersionFilePath(), versionFile);
+
+                    return versionFile;
+                }
             }
             catch (HttpRequestException e)
             {
-                DofusLangs.Instance.Logger.Error($"Unable to find {versionFileUrl}", e);
+                LangsWatcher.Instance.Logger.Error($"Unable to find {versionFileUrl}", e);
             }
             catch (TaskCanceledException e)
             {
-                DofusLangs.Instance.Logger.Error($"The request to get {versionFileUrl} has been cancelled", e);
+                LangsWatcher.Instance.Logger.Error($"The request to get {versionFileUrl} has been cancelled", e);
             }
 
-            return Array.Empty<string>();
+            return string.Empty;
         }
 
-        internal void UpdateLangs(List<Lang> updatedLangs)
+        private async Task<List<Lang>> ProcessLangsAsync(string versionFileContent)
         {
-            foreach (Lang updatedLang in updatedLangs)
+            List<Lang> updatedLangs = new();
+
+            string[] langInfoArray = versionFileContent[3..].Split("|", StringSplitOptions.RemoveEmptyEntries);
+            foreach (string langInfo in langInfoArray)
             {
-                int index = Langs.FindIndex(x => x.Name.Equals(updatedLang.Name));
-                if (index == -1)
-                    Langs.Add(updatedLang);
-                else
-                    Langs[index] = updatedLang;
+                string[] langParameters = langInfo.Split(',');
+                
+                Lang lang = new(langParameters[0], int.Parse(langParameters[2]), Type, Language);
+                if (!File.Exists(lang.GetFilePath()))
+                {
+                    await lang.DownloadExtractAndDiffAsync();
+
+                    updatedLangs.Add(lang);
+
+                    int index = Langs.FindIndex(x => x.Name.Equals(lang.Name));
+                    if (index == -1)
+                        Langs.Add(lang);
+                    else
+                        Langs[index] = lang;
+                }
             }
+
+            Save();
+            return updatedLangs;
         }
 
-        internal void Save()
+        private void Save()
         {
-            Json.Save(this, GetDataFilePath());
+            Json.Save(this, Path.Join(LangsWatcher.GetOutputDirectoryPath(Type, Language), DATA_FILE_NAME));
         }
     }
 }

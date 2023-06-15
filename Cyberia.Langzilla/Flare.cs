@@ -27,7 +27,7 @@
             }
 
             PlatformNotSupportedException exception = new("Flare is only available in Windows or Linux (it's false but fuck mac)");
-            DofusLangs.Instance.Logger.Crit(exception);
+            LangsWatcher.Instance.Logger.Crit(exception);
             throw exception;
         }
     }

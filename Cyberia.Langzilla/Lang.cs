@@ -31,7 +31,7 @@ namespace Cyberia.Langzilla
 
         public string GetDirectoryPath()
         {
-            return Path.Join(DofusLangs.GetDirectoryPath(Type, Language), Name);
+            return Path.Join(LangsWatcher.GetOutputDirectoryPath(Type, Language), Name);
         }
 
         public string GetFileName()
@@ -41,7 +41,7 @@ namespace Cyberia.Langzilla
 
         public string GetFileUrl()
         {
-            return $"{DofusLangs.BASE_URL}/{DofusLangs.GetRoute(Type)}/swf/{GetFileName()}";
+            return $"{LangsWatcher.BASE_URL}/{LangsWatcher.GetRoute(Type)}/swf/{GetFileName()}";
         }
 
         public string GetFilePath()
@@ -76,7 +76,7 @@ namespace Cyberia.Langzilla
                 return string.Join('\n', currentLines.Select(x => $"+ {x}"));
             string[] modelLines = File.ReadAllLines(modelDecompiledFilePath);
 
-            List<(int, string)> diff = new();
+            List<(int Index, string Row)> diff = new();
 
             int index = 0;
             Dictionary<int, string> currentRows = currentLines.ToDictionary(x => index++);
@@ -93,10 +93,17 @@ namespace Cyberia.Langzilla
             foreach (KeyValuePair<int, string> row in modelRows)
                 diff.Add((row.Key, $"- {row.Value}"));
 
-            return string.Join("\n", diff.OrderBy(x => x.Item1).Select(x => x.Item2));
+            return string.Join("\n", diff.OrderBy(x => x.Index).Select(x => x.Row));
         }
 
-        internal async Task DownloadAsync()
+        public async Task DownloadExtractAndDiffAsync()
+        {
+            await DownloadAsync();
+            Extract();
+            Diff();
+        }
+
+        private async Task DownloadAsync()
         {
             Array.ForEach(Directory.GetFiles(GetDirectoryPath(), "*.swf"), File.Delete);
 
@@ -107,11 +114,11 @@ namespace Cyberia.Langzilla
             {
                 try
                 {
-                    using HttpResponseMessage response = await DofusLangs.Instance.HttpClient.GetAsync(fileUrl).ConfigureAwait(false);
+                    using HttpResponseMessage response = await LangsWatcher.Instance.HttpClient.GetAsync(fileUrl);
                     response.EnsureSuccessStatusCode();
 
                     using FileStream fileStream = new(GetFilePath(), FileMode.Create);
-                    await response.Content.CopyToAsync(fileStream).ConfigureAwait(false);
+                    await response.Content.CopyToAsync(fileStream);
 
                     return;
                 }
@@ -119,24 +126,24 @@ namespace Cyberia.Langzilla
                 {
                     if (retries-- == 0)
                     {
-                        DofusLangs.Instance.Logger.Error($"Unable to find {fileUrl}");
+                        LangsWatcher.Instance.Logger.Error($"Unable to find {fileUrl}");
                         return;
                     }
 
-                    DofusLangs.Instance.Logger.Error($"{retries} retry left to download {fileUrl}", e);
+                    LangsWatcher.Instance.Logger.Error($"{retries} retry left to download {fileUrl}", e);
 
                     await Task.Delay(waitTime);
                     waitTime *= 2;
                 }
                 catch (TaskCanceledException e)
                 {
-                    DofusLangs.Instance.Logger.Error($"The request to get {fileUrl} has been cancelled", e);
+                    LangsWatcher.Instance.Logger.Error($"The request to get {fileUrl} has been cancelled", e);
                     return;
                 }
             }
         }
 
-        internal void Extract()
+        private void Extract()
         {
             string filePath = GetFilePath();
             if (!File.Exists(filePath))
@@ -147,7 +154,7 @@ namespace Cyberia.Langzilla
 
             if (!Flare.TryExtractSwf(filePath, out string warningMessage, out string flareFilePath))
             {
-                DofusLangs.Instance.Logger.Error($"Error when decompiled '{filePath}'\nWarning : {warningMessage}");
+                LangsWatcher.Instance.Logger.Error($"Error when decompiled {filePath}\nWarning : {warningMessage}");
                 return;
             }
 
@@ -168,10 +175,9 @@ namespace Cyberia.Langzilla
             File.Delete(flareFilePath);
         }
 
-        internal void Diff()
+        private void Diff()
         {
             string diff = GenerateDiff(this);
-
             if (string.IsNullOrEmpty(diff))
             {
                 File.Delete(GetDiffFilePath());
