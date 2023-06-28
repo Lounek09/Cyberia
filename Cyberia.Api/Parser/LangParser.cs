@@ -1,5 +1,4 @@
 ﻿using Cyberia.Langzilla;
-using Cyberia.Langzilla.Enums;
 
 using System.Text;
 using System.Text.Json;
@@ -71,7 +70,7 @@ namespace Cyberia.Api.Parser
 
         private static bool TryParse(string langName)
         {
-            LangsData langsData = DofusApi.Instance.Temporis ? DofusApi.Instance.LangsWatcher.Official.French : DofusApi.Instance.LangsWatcher.Temporis.French;
+            LangsData langsData = DofusApi.Instance.Temporis ? DofusApi.Instance.LangsWatcher.Temporis.French : DofusApi.Instance.LangsWatcher.Official.French;
             
             Lang? lang = langsData.GetLangByName(langName);
             if (lang is null)
