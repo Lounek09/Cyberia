@@ -2,17 +2,8 @@
 
 namespace Cyberia.Api.Managers
 {
-    public readonly struct Area
+    public readonly record struct Area(int Id, int Size)
     {
-        public int Id { get; init; }
-        public int Size { get; init; }
-
-        public Area(int id, int size)
-        {
-            Id = id;
-            Size = size;
-        }
-
         public EffectArea? GetEffectArea()
         {
             return DofusApi.Instance.Datacenter.EffectAreasData.GetEffectAreaById(Id);
