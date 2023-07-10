@@ -45,7 +45,7 @@ namespace Cyberia.Salamandra.DsharpPlus
                 else
                     emoji = Emojis.Effect(effect.EffectId);
 
-                string effectParse = $"{emoji} {effect.GetDescription()}{(effect.Area.Id == EffectAreaManager.BaseArea.Id ? "" : $" - {Emojis.Area(effect.Area.Id)} {effect.Area.GetSize()}")}";
+                string effectParse = $"{emoji} {effect.GetDescription()}{(effect.Area.Size == EffectAreaManager.BaseArea.Size ? "" : $" - {Emojis.Area(effect.Area.Id)} {effect.Area.GetSize()}")}";
                 if (!string.IsNullOrEmpty(effect.Criteria))
                     effectParse += " " + Formatter.InlineCode(Formatter.Strip(string.Join(' ', CriterionFactory.GetCriteriaParse(effect.Criteria))));
 
