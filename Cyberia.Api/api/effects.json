@@ -1362,13 +1362,13 @@
     },
     {
       "id": 401,
-      "d": "Pose un glyphe de rang #2",
+      "d": "Pose un glyphe de début de tour de rang #2",
       "c": 0,
       "o": ""
     },
     {
       "id": 402,
-      "d": "Pose un glyphe de rang #2",
+      "d": "Pose un glyphe de fin de tour de rang #2",
       "c": 0,
       "o": ""
     },
