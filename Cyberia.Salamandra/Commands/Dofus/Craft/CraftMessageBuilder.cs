@@ -114,7 +114,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             };
 
             if (_item is not null)
-                buttons.Add(ItemComponentsBuilder.ItemButtonBuilder(_item));
+                buttons.Add(ItemComponentsBuilder.ItemButtonBuilder(_item, _qte));
 
             return buttons;
         }

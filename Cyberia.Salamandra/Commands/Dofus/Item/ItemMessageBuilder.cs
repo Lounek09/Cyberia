@@ -14,40 +14,43 @@ namespace Cyberia.Salamandra.Commands.Dofus
     public sealed class ItemMessageBuilder : ICustomMessageBuilder
     {
         public const string PACKET_HEADER = "I";
-        public const int PACKET_VERSION = 1;
+        public const int PACKET_VERSION = 2;
 
         private readonly Item _item;
         private readonly ItemSet? _itemSet;
         private readonly ItemStats? _itemStats;
         private readonly Craft? _craft;
+        private readonly int _craftQte;
         private readonly Incarnation? _incarnation;
 
-        public ItemMessageBuilder(Item item)
+        public ItemMessageBuilder(Item item, int craftQte = 1)
         {
             _item = item;
             _itemSet = item.GetItemSet();
             _itemStats = item.GetItemStat();
             _craft = item.GetCraft();
+            _craftQte = craftQte;
             _incarnation = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationByItemId(_item.Id);
         }
 
         public static ItemMessageBuilder? Create(int version, string[] parameters)
         {
             if (version == PACKET_VERSION &&
-                parameters.Length > 0 &&
-                int.TryParse(parameters[0], out int itemId))
+                parameters.Length > 1 &&
+                int.TryParse(parameters[0], out int itemId) &&
+                int.TryParse(parameters[1], out int craftQte))
             {
                 Item? item = Bot.Instance.Api.Datacenter.ItemsData.GetItemById(itemId);
                 if (item is not null)
-                    return new(item);
+                    return new(item, craftQte);
             }
 
             return null;
         }
 
-        public static string GetPacket(int itemId)
+        public static string GetPacket(int itemId, int craftQte = 1)
         {
-            return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, itemId);
+            return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, itemId, craftQte);
         }
 
         public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -142,7 +145,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSet));
 
             if (_craft is not null)
-                buttons.Add(CraftComponentsBuilder.CraftButtonBuilder(_craft));
+                buttons.Add(CraftComponentsBuilder.CraftButtonBuilder(_craft, _craftQte));
 
             if (_incarnation is not null)
                 buttons.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnation));
