@@ -53,7 +53,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         protected override DiscordSelectComponent SelectBuilder()
         {
-            return CraftComponentsBuilder.CraftsSelectBuilder(0, _data);
+            return CraftComponentsBuilder.CraftsSelectBuilder(0, _data, _qte);
         }
 
         protected override string PreviousPacketBuilder()

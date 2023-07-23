@@ -13,7 +13,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             return new(ButtonStyle.Success, CraftMessageBuilder.GetPacket(craft.Id, qte), "Craft", disable);
         }
 
-        public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, List<Craft> crafts, bool disable = false)
+        public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, List<Craft> crafts, int qte = 1, bool disable = false)
         {
             List<DiscordSelectComponentOption> options = new();
 
@@ -21,7 +21,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 Item? item = craft.GetItem();
                 if (item is not null)
-                    options.Add(new(item.Name.WithMaxLength(100), CraftMessageBuilder.GetPacket(craft.Id), craft.Id.ToString()));
+                    options.Add(new(item.Name.WithMaxLength(100), CraftMessageBuilder.GetPacket(craft.Id, qte), craft.Id.ToString()));
             }
 
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne un item pour calculer son craft", options, disable);
