@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Cyberia.Utils
 {
@@ -70,7 +71,7 @@ namespace Cyberia.Utils
 
         public static string RemoveDiacritics(this string value)
         {
-            string output = "";
+            StringBuilder output = new();
 
             for (int pos = 0; pos < value.Length; pos++)
             {
@@ -78,9 +79,7 @@ namespace Cyberia.Utils
 
                 // Quick test: if it's not in range then just keep current character
                 if (c < '\u0080')
-                {
-                    output += c;
-                }
+                    output.Append(c);
                 else
                 {
                     switch (c)
@@ -119,7 +118,7 @@ namespace Cyberia.Utils
                         case '\u1EB6': // Ặ  [LATIN CAPITAL LETTER A WITH BREVE AND DOT BELOW]
                         case '\u24B6': // Ⓐ  [CIRCLED LATIN CAPITAL LETTER A]
                         case '\uFF21': // Ａ  [FULLWIDTH LATIN CAPITAL LETTER A]
-                            output += 'A';
+                            output.Append('A');
                             break;
                         case '\u00E0': // à  [LATIN SMALL LETTER A WITH GRAVE]
                         case '\u00E1': // á  [LATIN SMALL LETTER A WITH ACUTE]
@@ -162,68 +161,68 @@ namespace Cyberia.Utils
                         case '\u2C65': // ⱥ  [LATIN SMALL LETTER A WITH STROKE]
                         case '\u2C6F': // Ɐ  [LATIN CAPITAL LETTER TURNED A]
                         case '\uFF41': // ａ  [FULLWIDTH LATIN SMALL LETTER A]
-                            output += 'a';
+                            output.Append('a');
                             break;
                         case '\uA732': // Ꜳ  [LATIN CAPITAL LETTER AA]
-                            output += 'A';
-                            output += 'A';
+                            output.Append('A');
+                            output.Append('A');
                             break;
                         case '\u00C6': // Æ  [LATIN CAPITAL LETTER AE]
                         case '\u01E2': // Ǣ  [LATIN CAPITAL LETTER AE WITH MACRON]
                         case '\u01FC': // Ǽ  [LATIN CAPITAL LETTER AE WITH ACUTE]
                         case '\u1D01': // ᴁ  [LATIN LETTER SMALL CAPITAL AE]
-                            output += 'A';
-                            output += 'E';
+                            output.Append('A');
+                            output.Append('E');
                             break;
                         case '\uA734': // Ꜵ  [LATIN CAPITAL LETTER AO]
-                            output += 'A';
-                            output += 'O';
+                            output.Append('A');
+                            output.Append('O');
                             break;
                         case '\uA736': // Ꜷ  [LATIN CAPITAL LETTER AU]
-                            output += 'A';
-                            output += 'U';
+                            output.Append('A');
+                            output.Append('U');
                             break;
                         case '\uA738': // Ꜹ  [LATIN CAPITAL LETTER AV]
                         case '\uA73A': // Ꜻ  [LATIN CAPITAL LETTER AV WITH HORIZONTAL BAR]
-                            output += 'A';
-                            output += 'V';
+                            output.Append('A');
+                            output.Append('V');
                             break;
                         case '\uA73C': // Ꜽ  [LATIN CAPITAL LETTER AY]
-                            output += 'A';
-                            output += 'Y';
+                            output.Append('A');
+                            output.Append('Y');
                             break;
                         case '\u249C': // ⒜  [PARENTHESIZED LATIN SMALL LETTER A]
-                            output += '(';
-                            output += 'a';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('a');
+                            output.Append(')');
                             break;
                         case '\uA733': // ꜳ  [LATIN SMALL LETTER AA]
-                            output += 'a';
-                            output += 'a';
+                            output.Append('a');
+                            output.Append('a');
                             break;
                         case '\u00E6': // æ  [LATIN SMALL LETTER AE]
                         case '\u01E3': // ǣ  [LATIN SMALL LETTER AE WITH MACRON]
                         case '\u01FD': // ǽ  [LATIN SMALL LETTER AE WITH ACUTE]
                         case '\u1D02': // ᴂ  [LATIN SMALL LETTER TURNED AE]
-                            output += 'a';
-                            output += 'e';
+                            output.Append('a');
+                            output.Append('e');
                             break;
                         case '\uA735': // ꜵ  [LATIN SMALL LETTER AO]
-                            output += 'a';
-                            output += 'o';
+                            output.Append('a');
+                            output.Append('o');
                             break;
                         case '\uA737': // ꜷ  [LATIN SMALL LETTER AU]
-                            output += 'a';
-                            output += 'u';
+                            output.Append('a');
+                            output.Append('u');
                             break;
                         case '\uA739': // ꜹ  [LATIN SMALL LETTER AV]
                         case '\uA73B': // ꜻ  [LATIN SMALL LETTER AV WITH HORIZONTAL BAR]
-                            output += 'a';
-                            output += 'v';
+                            output.Append('a');
+                            output.Append('v');
                             break;
                         case '\uA73D': // ꜽ  [LATIN SMALL LETTER AY]
-                            output += 'a';
-                            output += 'y';
+                            output.Append('a');
+                            output.Append('y');
                             break;
                         case '\u0181': // Ɓ  [LATIN CAPITAL LETTER B WITH HOOK]
                         case '\u0182': // Ƃ  [LATIN CAPITAL LETTER B WITH TOPBAR]
@@ -235,7 +234,7 @@ namespace Cyberia.Utils
                         case '\u1E06': // Ḇ  [LATIN CAPITAL LETTER B WITH LINE BELOW]
                         case '\u24B7': // Ⓑ  [CIRCLED LATIN CAPITAL LETTER B]
                         case '\uFF22': // Ｂ  [FULLWIDTH LATIN CAPITAL LETTER B]
-                            output += 'B';
+                            output.Append('B');
                             break;
                         case '\u0180': // ƀ  [LATIN SMALL LETTER B WITH STROKE]
                         case '\u0183': // ƃ  [LATIN SMALL LETTER B WITH TOPBAR]
@@ -247,12 +246,12 @@ namespace Cyberia.Utils
                         case '\u1E07': // ḇ  [LATIN SMALL LETTER B WITH LINE BELOW]
                         case '\u24D1': // ⓑ  [CIRCLED LATIN SMALL LETTER B]
                         case '\uFF42': // ｂ  [FULLWIDTH LATIN SMALL LETTER B]
-                            output += 'b';
+                            output.Append('b');
                             break;
                         case '\u249D': // ⒝  [PARENTHESIZED LATIN SMALL LETTER B]
-                            output += '(';
-                            output += 'b';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('b');
+                            output.Append(')');
                             break;
                         case '\u00C7': // Ç  [LATIN CAPITAL LETTER C WITH CEDILLA]
                         case '\u0106': // Ć  [LATIN CAPITAL LETTER C WITH ACUTE]
@@ -266,7 +265,7 @@ namespace Cyberia.Utils
                         case '\u1E08': // Ḉ  [LATIN CAPITAL LETTER C WITH CEDILLA AND ACUTE]
                         case '\u24B8': // Ⓒ  [CIRCLED LATIN CAPITAL LETTER C]
                         case '\uFF23': // Ｃ  [FULLWIDTH LATIN CAPITAL LETTER C]
-                            output += 'C';
+                            output.Append('C');
                             break;
                         case '\u00E7': // ç  [LATIN SMALL LETTER C WITH CEDILLA]
                         case '\u0107': // ć  [LATIN SMALL LETTER C WITH ACUTE]
@@ -282,12 +281,12 @@ namespace Cyberia.Utils
                         case '\uA73E': // Ꜿ  [LATIN CAPITAL LETTER REVERSED C WITH DOT]
                         case '\uA73F': // ꜿ  [LATIN SMALL LETTER REVERSED C WITH DOT]
                         case '\uFF43': // ｃ  [FULLWIDTH LATIN SMALL LETTER C]
-                            output += 'c';
+                            output.Append('c');
                             break;
                         case '\u249E': // ⒞  [PARENTHESIZED LATIN SMALL LETTER C]
-                            output += '(';
-                            output += 'c';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('c');
+                            output.Append(')');
                             break;
                         case '\u00D0': // Ð  [LATIN CAPITAL LETTER ETH]
                         case '\u010E': // Ď  [LATIN CAPITAL LETTER D WITH CARON]
@@ -305,7 +304,7 @@ namespace Cyberia.Utils
                         case '\u24B9': // Ⓓ  [CIRCLED LATIN CAPITAL LETTER D]
                         case '\uA779': // Ꝺ  [LATIN CAPITAL LETTER INSULAR D]
                         case '\uFF24': // Ｄ  [FULLWIDTH LATIN CAPITAL LETTER D]
-                            output += 'D';
+                            output.Append('D');
                             break;
                         case '\u00F0': // ð  [LATIN SMALL LETTER ETH]
                         case '\u010F': // ď  [LATIN SMALL LETTER D WITH CARON]
@@ -325,33 +324,33 @@ namespace Cyberia.Utils
                         case '\u24D3': // ⓓ  [CIRCLED LATIN SMALL LETTER D]
                         case '\uA77A': // ꝺ  [LATIN SMALL LETTER INSULAR D]
                         case '\uFF44': // ｄ  [FULLWIDTH LATIN SMALL LETTER D]
-                            output += 'd';
+                            output.Append('d');
                             break;
                         case '\u01C4': // Ǆ  [LATIN CAPITAL LETTER DZ WITH CARON]
                         case '\u01F1': // Ǳ  [LATIN CAPITAL LETTER DZ]
-                            output += 'D';
-                            output += 'Z';
+                            output.Append('D');
+                            output.Append('Z');
                             break;
                         case '\u01C5': // ǅ  [LATIN CAPITAL LETTER D WITH SMALL LETTER Z WITH CARON]
                         case '\u01F2': // ǲ  [LATIN CAPITAL LETTER D WITH SMALL LETTER Z]
-                            output += 'D';
-                            output += 'z';
+                            output.Append('D');
+                            output.Append('z');
                             break;
                         case '\u249F': // ⒟  [PARENTHESIZED LATIN SMALL LETTER D]
-                            output += '(';
-                            output += 'd';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('d');
+                            output.Append(')');
                             break;
                         case '\u0238': // ȸ  [LATIN SMALL LETTER DB DIGRAPH]
-                            output += 'd';
-                            output += 'b';
+                            output.Append('d');
+                            output.Append('b');
                             break;
                         case '\u01C6': // ǆ  [LATIN SMALL LETTER DZ WITH CARON]
                         case '\u01F3': // ǳ  [LATIN SMALL LETTER DZ]
                         case '\u02A3': // ʣ  [LATIN SMALL LETTER DZ DIGRAPH]
                         case '\u02A5': // ʥ  [LATIN SMALL LETTER DZ DIGRAPH WITH CURL]
-                            output += 'd';
-                            output += 'z';
+                            output.Append('d');
+                            output.Append('z');
                             break;
                         case '\u00C8': // È  [LATIN CAPITAL LETTER E WITH GRAVE]
                         case '\u00C9': // É  [LATIN CAPITAL LETTER E WITH ACUTE]
@@ -385,7 +384,7 @@ namespace Cyberia.Utils
                         case '\u24BA': // Ⓔ  [CIRCLED LATIN CAPITAL LETTER E]
                         case '\u2C7B': // ⱻ  [LATIN LETTER SMALL CAPITAL TURNED E]
                         case '\uFF25': // Ｅ  [FULLWIDTH LATIN CAPITAL LETTER E]
-                            output += 'E';
+                            output.Append('E');
                             break;
                         case '\u00E8': // è  [LATIN SMALL LETTER E WITH GRAVE]
                         case '\u00E9': // é  [LATIN SMALL LETTER E WITH ACUTE]
@@ -428,12 +427,12 @@ namespace Cyberia.Utils
                         case '\u24D4': // ⓔ  [CIRCLED LATIN SMALL LETTER E]
                         case '\u2C78': // ⱸ  [LATIN SMALL LETTER E WITH NOTCH]
                         case '\uFF45': // ｅ  [FULLWIDTH LATIN SMALL LETTER E]
-                            output += 'e';
+                            output.Append('e');
                             break;
                         case '\u24A0': // ⒠  [PARENTHESIZED LATIN SMALL LETTER E]
-                            output += '(';
-                            output += 'e';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('e');
+                            output.Append(')');
                             break;
                         case '\u0191': // Ƒ  [LATIN CAPITAL LETTER F WITH HOOK]
                         case '\u1E1E': // Ḟ  [LATIN CAPITAL LETTER F WITH DOT ABOVE]
@@ -442,7 +441,7 @@ namespace Cyberia.Utils
                         case '\uA77B': // Ꝼ  [LATIN CAPITAL LETTER INSULAR F]
                         case '\uA7FB': // ꟻ  [LATIN EPIGRAPHIC LETTER REVERSED F]
                         case '\uFF26': // Ｆ  [FULLWIDTH LATIN CAPITAL LETTER F]
-                            output += 'F';
+                            output.Append('F');
                             break;
                         case '\u0192': // ƒ  [LATIN SMALL LETTER F WITH HOOK]
                         case '\u1D6E': // ᵮ  [LATIN SMALL LETTER F WITH MIDDLE TILDE]
@@ -452,34 +451,34 @@ namespace Cyberia.Utils
                         case '\u24D5': // ⓕ  [CIRCLED LATIN SMALL LETTER F]
                         case '\uA77C': // ꝼ  [LATIN SMALL LETTER INSULAR F]
                         case '\uFF46': // ｆ  [FULLWIDTH LATIN SMALL LETTER F]
-                            output += 'f';
+                            output.Append('f');
                             break;
                         case '\u24A1': // ⒡  [PARENTHESIZED LATIN SMALL LETTER F]
-                            output += '(';
-                            output += 'f';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('f');
+                            output.Append(')');
                             break;
                         case '\uFB00': // ﬀ  [LATIN SMALL LIGATURE FF]
-                            output += 'f';
-                            output += 'f';
+                            output.Append('f');
+                            output.Append('f');
                             break;
                         case '\uFB03': // ﬃ  [LATIN SMALL LIGATURE FFI]
-                            output += 'f';
-                            output += 'f';
-                            output += 'i';
+                            output.Append('f');
+                            output.Append('f');
+                            output.Append('i');
                             break;
                         case '\uFB04': // ﬄ  [LATIN SMALL LIGATURE FFL]
-                            output += 'f';
-                            output += 'f';
-                            output += 'l';
+                            output.Append('f');
+                            output.Append('f');
+                            output.Append('l');
                             break;
                         case '\uFB01': // ﬁ  [LATIN SMALL LIGATURE FI]
-                            output += 'f';
-                            output += 'i';
+                            output.Append('f');
+                            output.Append('i');
                             break;
                         case '\uFB02': // ﬂ  [LATIN SMALL LIGATURE FL]
-                            output += 'f';
-                            output += 'l';
+                            output.Append('f');
+                            output.Append('l');
                             break;
                         case '\u011C': // Ĝ  [LATIN CAPITAL LETTER G WITH CIRCUMFLEX]
                         case '\u011E': // Ğ  [LATIN CAPITAL LETTER G WITH BREVE]
@@ -498,7 +497,7 @@ namespace Cyberia.Utils
                         case '\uA77D': // Ᵹ  [LATIN CAPITAL LETTER INSULAR G]
                         case '\uA77E': // Ꝿ  [LATIN CAPITAL LETTER TURNED INSULAR G]
                         case '\uFF27': // Ｇ  [FULLWIDTH LATIN CAPITAL LETTER G]
-                            output += 'G';
+                            output.Append('G');
                             break;
                         case '\u011D': // ĝ  [LATIN SMALL LETTER G WITH CIRCUMFLEX]
                         case '\u011F': // ğ  [LATIN SMALL LETTER G WITH BREVE]
@@ -514,12 +513,12 @@ namespace Cyberia.Utils
                         case '\u24D6': // ⓖ  [CIRCLED LATIN SMALL LETTER G]
                         case '\uA77F': // ꝿ  [LATIN SMALL LETTER TURNED INSULAR G]
                         case '\uFF47': // ｇ  [FULLWIDTH LATIN SMALL LETTER G]
-                            output += 'g';
+                            output.Append('g');
                             break;
                         case '\u24A2': // ⒢  [PARENTHESIZED LATIN SMALL LETTER G]
-                            output += '(';
-                            output += 'g';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('g');
+                            output.Append(')');
                             break;
                         case '\u0124': // Ĥ  [LATIN CAPITAL LETTER H WITH CIRCUMFLEX]
                         case '\u0126': // Ħ  [LATIN CAPITAL LETTER H WITH STROKE]
@@ -534,7 +533,7 @@ namespace Cyberia.Utils
                         case '\u2C67': // Ⱨ  [LATIN CAPITAL LETTER H WITH DESCENDER]
                         case '\u2C75': // Ⱶ  [LATIN CAPITAL LETTER HALF H]
                         case '\uFF28': // Ｈ  [FULLWIDTH LATIN CAPITAL LETTER H]
-                            output += 'H';
+                            output.Append('H');
                             break;
                         case '\u0125': // ĥ  [LATIN SMALL LETTER H WITH CIRCUMFLEX]
                         case '\u0127': // ħ  [LATIN SMALL LETTER H WITH STROKE]
@@ -553,20 +552,20 @@ namespace Cyberia.Utils
                         case '\u2C68': // ⱨ  [LATIN SMALL LETTER H WITH DESCENDER]
                         case '\u2C76': // ⱶ  [LATIN SMALL LETTER HALF H]
                         case '\uFF48': // ｈ  [FULLWIDTH LATIN SMALL LETTER H]
-                            output += 'h';
+                            output.Append('h');
                             break;
                         case '\u01F6': // Ƕ  http://en.wikipedia.org/wiki/Hwair  [LATIN CAPITAL LETTER HWAIR]
-                            output += 'H';
-                            output += 'V';
+                            output.Append('H');
+                            output.Append('V');
                             break;
                         case '\u24A3': // ⒣  [PARENTHESIZED LATIN SMALL LETTER H]
-                            output += '(';
-                            output += 'h';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('h');
+                            output.Append(')');
                             break;
                         case '\u0195': // ƕ  [LATIN SMALL LETTER HV]
-                            output += 'h';
-                            output += 'v';
+                            output.Append('h');
+                            output.Append('v');
                             break;
                         case '\u00CC': // Ì  [LATIN CAPITAL LETTER I WITH GRAVE]
                         case '\u00CD': // Í  [LATIN CAPITAL LETTER I WITH ACUTE]
@@ -591,7 +590,7 @@ namespace Cyberia.Utils
                         case '\u24BE': // Ⓘ  [CIRCLED LATIN CAPITAL LETTER I]
                         case '\uA7FE': // ꟾ  [LATIN EPIGRAPHIC LETTER I LONGA]
                         case '\uFF29': // Ｉ  [FULLWIDTH LATIN CAPITAL LETTER I]
-                            output += 'I';
+                            output.Append('I');
                             break;
                         case '\u00EC': // ì  [LATIN SMALL LETTER I WITH GRAVE]
                         case '\u00ED': // í  [LATIN SMALL LETTER I WITH ACUTE]
@@ -617,27 +616,27 @@ namespace Cyberia.Utils
                         case '\u2071': // ⁱ  [SUPERSCRIPT LATIN SMALL LETTER I]
                         case '\u24D8': // ⓘ  [CIRCLED LATIN SMALL LETTER I]
                         case '\uFF49': // ｉ  [FULLWIDTH LATIN SMALL LETTER I]
-                            output += 'i';
+                            output.Append('i');
                             break;
                         case '\u0132': // Ĳ  [LATIN CAPITAL LIGATURE IJ]
-                            output += 'I';
-                            output += 'J';
+                            output.Append('I');
+                            output.Append('J');
                             break;
                         case '\u24A4': // ⒤  [PARENTHESIZED LATIN SMALL LETTER I]
-                            output += '(';
-                            output += 'i';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('i');
+                            output.Append(')');
                             break;
                         case '\u0133': // ĳ  [LATIN SMALL LIGATURE IJ]
-                            output += 'i';
-                            output += 'j';
+                            output.Append('i');
+                            output.Append('j');
                             break;
                         case '\u0134': // Ĵ  [LATIN CAPITAL LETTER J WITH CIRCUMFLEX]
                         case '\u0248': // Ɉ  [LATIN CAPITAL LETTER J WITH STROKE]
                         case '\u1D0A': // ᴊ  [LATIN LETTER SMALL CAPITAL J]
                         case '\u24BF': // Ⓙ  [CIRCLED LATIN CAPITAL LETTER J]
                         case '\uFF2A': // Ｊ  [FULLWIDTH LATIN CAPITAL LETTER J]
-                            output += 'J';
+                            output.Append('J');
                             break;
                         case '\u0135': // ĵ  [LATIN SMALL LETTER J WITH CIRCUMFLEX]
                         case '\u01F0': // ǰ  [LATIN SMALL LETTER J WITH CARON]
@@ -649,12 +648,12 @@ namespace Cyberia.Utils
                         case '\u24D9': // ⓙ  [CIRCLED LATIN SMALL LETTER J]
                         case '\u2C7C': // ⱼ  [LATIN SUBSCRIPT SMALL LETTER J]
                         case '\uFF4A': // ｊ  [FULLWIDTH LATIN SMALL LETTER J]
-                            output += 'j';
+                            output.Append('j');
                             break;
                         case '\u24A5': // ⒥  [PARENTHESIZED LATIN SMALL LETTER J]
-                            output += '(';
-                            output += 'j';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('j');
+                            output.Append(')');
                             break;
                         case '\u0136': // Ķ  [LATIN CAPITAL LETTER K WITH CEDILLA]
                         case '\u0198': // Ƙ  [LATIN CAPITAL LETTER K WITH HOOK]
@@ -669,7 +668,7 @@ namespace Cyberia.Utils
                         case '\uA742': // Ꝃ  [LATIN CAPITAL LETTER K WITH DIAGONAL STROKE]
                         case '\uA744': // Ꝅ  [LATIN CAPITAL LETTER K WITH STROKE AND DIAGONAL STROKE]
                         case '\uFF2B': // Ｋ  [FULLWIDTH LATIN CAPITAL LETTER K]
-                            output += 'K';
+                            output.Append('K');
                             break;
                         case '\u0137': // ķ  [LATIN SMALL LETTER K WITH CEDILLA]
                         case '\u0199': // ƙ  [LATIN SMALL LETTER K WITH HOOK]
@@ -685,12 +684,12 @@ namespace Cyberia.Utils
                         case '\uA743': // ꝃ  [LATIN SMALL LETTER K WITH DIAGONAL STROKE]
                         case '\uA745': // ꝅ  [LATIN SMALL LETTER K WITH STROKE AND DIAGONAL STROKE]
                         case '\uFF4B': // ｋ  [FULLWIDTH LATIN SMALL LETTER K]
-                            output += 'k';
+                            output.Append('k');
                             break;
                         case '\u24A6': // ⒦  [PARENTHESIZED LATIN SMALL LETTER K]
-                            output += '(';
-                            output += 'k';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('k');
+                            output.Append(')');
                             break;
                         case '\u0139': // Ĺ  [LATIN CAPITAL LETTER L WITH ACUTE]
                         case '\u013B': // Ļ  [LATIN CAPITAL LETTER L WITH CEDILLA]
@@ -711,7 +710,7 @@ namespace Cyberia.Utils
                         case '\uA748': // Ꝉ  [LATIN CAPITAL LETTER L WITH HIGH STROKE]
                         case '\uA780': // Ꞁ  [LATIN CAPITAL LETTER TURNED L]
                         case '\uFF2C': // Ｌ  [FULLWIDTH LATIN CAPITAL LETTER L]
-                            output += 'L';
+                            output.Append('L');
                             break;
                         case '\u013A': // ĺ  [LATIN SMALL LETTER L WITH ACUTE]
                         case '\u013C': // ļ  [LATIN SMALL LETTER L WITH CEDILLA]
@@ -734,40 +733,40 @@ namespace Cyberia.Utils
                         case '\uA749': // ꝉ  [LATIN SMALL LETTER L WITH HIGH STROKE]
                         case '\uA781': // ꞁ  [LATIN SMALL LETTER TURNED L]
                         case '\uFF4C': // ｌ  [FULLWIDTH LATIN SMALL LETTER L]
-                            output += 'l';
+                            output.Append('l');
                             break;
                         case '\u01C7': // Ǉ  [LATIN CAPITAL LETTER LJ]
-                            output += 'L';
-                            output += 'J';
+                            output.Append('L');
+                            output.Append('J');
                             break;
                         case '\u1EFA': // Ỻ  [LATIN CAPITAL LETTER MIDDLE-WELSH LL]
-                            output += 'L';
-                            output += 'L';
+                            output.Append('L');
+                            output.Append('L');
                             break;
                         case '\u01C8': // ǈ  [LATIN CAPITAL LETTER L WITH SMALL LETTER J]
-                            output += 'L';
-                            output += 'j';
+                            output.Append('L');
+                            output.Append('j');
                             break;
                         case '\u24A7': // ⒧  [PARENTHESIZED LATIN SMALL LETTER L]
-                            output += '(';
-                            output += 'l';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('l');
+                            output.Append(')');
                             break;
                         case '\u01C9': // ǉ  [LATIN SMALL LETTER LJ]
-                            output += 'l';
-                            output += 'j';
+                            output.Append('l');
+                            output.Append('j');
                             break;
                         case '\u1EFB': // ỻ  [LATIN SMALL LETTER MIDDLE-WELSH LL]
-                            output += 'l';
-                            output += 'l';
+                            output.Append('l');
+                            output.Append('l');
                             break;
                         case '\u02AA': // ʪ  [LATIN SMALL LETTER LS DIGRAPH]
-                            output += 'l';
-                            output += 's';
+                            output.Append('l');
+                            output.Append('s');
                             break;
                         case '\u02AB': // ʫ  [LATIN SMALL LETTER LZ DIGRAPH]
-                            output += 'l';
-                            output += 'z';
+                            output.Append('l');
+                            output.Append('z');
                             break;
                         case '\u019C': // Ɯ  [LATIN CAPITAL LETTER TURNED M]
                         case '\u1D0D': // ᴍ  [LATIN LETTER SMALL CAPITAL M]
@@ -779,7 +778,7 @@ namespace Cyberia.Utils
                         case '\uA7FD': // ꟽ  [LATIN EPIGRAPHIC LETTER INVERTED M]
                         case '\uA7FF': // ꟿ  [LATIN EPIGRAPHIC LETTER ARCHAIC M]
                         case '\uFF2D': // Ｍ  [FULLWIDTH LATIN CAPITAL LETTER M]
-                            output += 'M';
+                            output.Append('M');
                             break;
                         case '\u026F': // ɯ  [LATIN SMALL LETTER TURNED M]
                         case '\u0270': // ɰ  [LATIN SMALL LETTER TURNED M WITH LONG LEG]
@@ -791,12 +790,12 @@ namespace Cyberia.Utils
                         case '\u1E43': // ṃ  [LATIN SMALL LETTER M WITH DOT BELOW]
                         case '\u24DC': // ⓜ  [CIRCLED LATIN SMALL LETTER M]
                         case '\uFF4D': // ｍ  [FULLWIDTH LATIN SMALL LETTER M]
-                            output += 'm';
+                            output.Append('m');
                             break;
                         case '\u24A8': // ⒨  [PARENTHESIZED LATIN SMALL LETTER M]
-                            output += '(';
-                            output += 'm';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('m');
+                            output.Append(')');
                             break;
                         case '\u00D1': // Ñ  [LATIN CAPITAL LETTER N WITH TILDE]
                         case '\u0143': // Ń  [LATIN CAPITAL LETTER N WITH ACUTE]
@@ -814,7 +813,7 @@ namespace Cyberia.Utils
                         case '\u1E4A': // Ṋ  [LATIN CAPITAL LETTER N WITH CIRCUMFLEX BELOW]
                         case '\u24C3': // Ⓝ  [CIRCLED LATIN CAPITAL LETTER N]
                         case '\uFF2E': // Ｎ  [FULLWIDTH LATIN CAPITAL LETTER N]
-                            output += 'N';
+                            output.Append('N');
                             break;
                         case '\u00F1': // ñ  [LATIN SMALL LETTER N WITH TILDE]
                         case '\u0144': // ń  [LATIN SMALL LETTER N WITH ACUTE]
@@ -836,24 +835,24 @@ namespace Cyberia.Utils
                         case '\u207F': // ⁿ  [SUPERSCRIPT LATIN SMALL LETTER N]
                         case '\u24DD': // ⓝ  [CIRCLED LATIN SMALL LETTER N]
                         case '\uFF4E': // ｎ  [FULLWIDTH LATIN SMALL LETTER N]
-                            output += 'n';
+                            output.Append('n');
                             break;
                         case '\u01CA': // Ǌ  [LATIN CAPITAL LETTER NJ]
-                            output += 'N';
-                            output += 'J';
+                            output.Append('N');
+                            output.Append('J');
                             break;
                         case '\u01CB': // ǋ  [LATIN CAPITAL LETTER N WITH SMALL LETTER J]
-                            output += 'N';
-                            output += 'j';
+                            output.Append('N');
+                            output.Append('j');
                             break;
                         case '\u24A9': // ⒩  [PARENTHESIZED LATIN SMALL LETTER N]
-                            output += '(';
-                            output += 'n';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('n');
+                            output.Append(')');
                             break;
                         case '\u01CC': // ǌ  [LATIN SMALL LETTER NJ]
-                            output += 'n';
-                            output += 'j';
+                            output.Append('n');
+                            output.Append('j');
                             break;
                         case '\u00D2': // Ò  [LATIN CAPITAL LETTER O WITH GRAVE]
                         case '\u00D3': // Ó  [LATIN CAPITAL LETTER O WITH ACUTE]
@@ -899,7 +898,7 @@ namespace Cyberia.Utils
                         case '\uA74A': // Ꝋ  [LATIN CAPITAL LETTER O WITH LONG STROKE OVERLAY]
                         case '\uA74C': // Ꝍ  [LATIN CAPITAL LETTER O WITH LOOP]
                         case '\uFF2F': // Ｏ  [FULLWIDTH LATIN CAPITAL LETTER O]
-                            output += 'O';
+                            output.Append('O');
                             break;
                         case '\u00F2': // ò  [LATIN SMALL LETTER O WITH GRAVE]
                         case '\u00F3': // ó  [LATIN SMALL LETTER O WITH ACUTE]
@@ -948,39 +947,39 @@ namespace Cyberia.Utils
                         case '\uA74B': // ꝋ  [LATIN SMALL LETTER O WITH LONG STROKE OVERLAY]
                         case '\uA74D': // ꝍ  [LATIN SMALL LETTER O WITH LOOP]
                         case '\uFF4F': // ｏ  [FULLWIDTH LATIN SMALL LETTER O]
-                            output += 'o';
+                            output.Append('o');
                             break;
                         case '\u0152': // Œ  [LATIN CAPITAL LIGATURE OE]
                         case '\u0276': // ɶ  [LATIN LETTER SMALL CAPITAL OE]
-                            output += 'O';
-                            output += 'E';
+                            output.Append('O');
+                            output.Append('E');
                             break;
                         case '\uA74E': // Ꝏ  [LATIN CAPITAL LETTER OO]
-                            output += 'O';
-                            output += 'O';
+                            output.Append('O');
+                            output.Append('O');
                             break;
                         case '\u0222': // Ȣ  http://en.wikipedia.org/wiki/OU  [LATIN CAPITAL LETTER OU]
                         case '\u1D15': // ᴕ  [LATIN LETTER SMALL CAPITAL OU]
-                            output += 'O';
-                            output += 'U';
+                            output.Append('O');
+                            output.Append('U');
                             break;
                         case '\u24AA': // ⒪  [PARENTHESIZED LATIN SMALL LETTER O]
-                            output += '(';
-                            output += 'o';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('o');
+                            output.Append(')');
                             break;
                         case '\u0153': // œ  [LATIN SMALL LIGATURE OE]
                         case '\u1D14': // ᴔ  [LATIN SMALL LETTER TURNED OE]
-                            output += 'o';
-                            output += 'e';
+                            output.Append('o');
+                            output.Append('e');
                             break;
                         case '\uA74F': // ꝏ  [LATIN SMALL LETTER OO]
-                            output += 'o';
-                            output += 'o';
+                            output.Append('o');
+                            output.Append('o');
                             break;
                         case '\u0223': // ȣ  http://en.wikipedia.org/wiki/OU  [LATIN SMALL LETTER OU]
-                            output += 'o';
-                            output += 'u';
+                            output.Append('o');
+                            output.Append('u');
                             break;
                         case '\u01A4': // Ƥ  [LATIN CAPITAL LETTER P WITH HOOK]
                         case '\u1D18': // ᴘ  [LATIN LETTER SMALL CAPITAL P]
@@ -992,7 +991,7 @@ namespace Cyberia.Utils
                         case '\uA752': // Ꝓ  [LATIN CAPITAL LETTER P WITH FLOURISH]
                         case '\uA754': // Ꝕ  [LATIN CAPITAL LETTER P WITH SQUIRREL TAIL]
                         case '\uFF30': // Ｐ  [FULLWIDTH LATIN CAPITAL LETTER P]
-                            output += 'P';
+                            output.Append('P');
                             break;
                         case '\u01A5': // ƥ  [LATIN SMALL LETTER P WITH HOOK]
                         case '\u1D71': // ᵱ  [LATIN SMALL LETTER P WITH MIDDLE TILDE]
@@ -1006,19 +1005,19 @@ namespace Cyberia.Utils
                         case '\uA755': // ꝕ  [LATIN SMALL LETTER P WITH SQUIRREL TAIL]
                         case '\uA7FC': // ꟼ  [LATIN EPIGRAPHIC LETTER REVERSED P]
                         case '\uFF50': // ｐ  [FULLWIDTH LATIN SMALL LETTER P]
-                            output += 'p';
+                            output.Append('p');
                             break;
                         case '\u24AB': // ⒫  [PARENTHESIZED LATIN SMALL LETTER P]
-                            output += '(';
-                            output += 'p';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('p');
+                            output.Append(')');
                             break;
                         case '\u024A': // Ɋ  [LATIN CAPITAL LETTER SMALL Q WITH HOOK TAIL]
                         case '\u24C6': // Ⓠ  [CIRCLED LATIN CAPITAL LETTER Q]
                         case '\uA756': // Ꝗ  [LATIN CAPITAL LETTER Q WITH STROKE THROUGH DESCENDER]
                         case '\uA758': // Ꝙ  [LATIN CAPITAL LETTER Q WITH DIAGONAL STROKE]
                         case '\uFF31': // Ｑ  [FULLWIDTH LATIN CAPITAL LETTER Q]
-                            output += 'Q';
+                            output.Append('Q');
                             break;
                         case '\u0138': // ĸ  http://en.wikipedia.org/wiki/Kra_(letter)  [LATIN SMALL LETTER KRA]
                         case '\u024B': // ɋ  [LATIN SMALL LETTER Q WITH HOOK TAIL]
@@ -1027,16 +1026,16 @@ namespace Cyberia.Utils
                         case '\uA757': // ꝗ  [LATIN SMALL LETTER Q WITH STROKE THROUGH DESCENDER]
                         case '\uA759': // ꝙ  [LATIN SMALL LETTER Q WITH DIAGONAL STROKE]
                         case '\uFF51': // ｑ  [FULLWIDTH LATIN SMALL LETTER Q]
-                            output += 'q';
+                            output.Append('q');
                             break;
                         case '\u24AC': // ⒬  [PARENTHESIZED LATIN SMALL LETTER Q]
-                            output += '(';
-                            output += 'q';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('q');
+                            output.Append(')');
                             break;
                         case '\u0239': // ȹ  [LATIN SMALL LETTER QP DIGRAPH]
-                            output += 'q';
-                            output += 'p';
+                            output.Append('q');
+                            output.Append('p');
                             break;
                         case '\u0154': // Ŕ  [LATIN CAPITAL LETTER R WITH ACUTE]
                         case '\u0156': // Ŗ  [LATIN CAPITAL LETTER R WITH CEDILLA]
@@ -1057,7 +1056,7 @@ namespace Cyberia.Utils
                         case '\uA75A': // Ꝛ  [LATIN CAPITAL LETTER R ROTUNDA]
                         case '\uA782': // Ꞃ  [LATIN CAPITAL LETTER INSULAR R]
                         case '\uFF32': // Ｒ  [FULLWIDTH LATIN CAPITAL LETTER R]
-                            output += 'R';
+                            output.Append('R');
                             break;
                         case '\u0155': // ŕ  [LATIN SMALL LETTER R WITH ACUTE]
                         case '\u0157': // ŗ  [LATIN SMALL LETTER R WITH CEDILLA]
@@ -1081,12 +1080,12 @@ namespace Cyberia.Utils
                         case '\uA75B': // ꝛ  [LATIN SMALL LETTER R ROTUNDA]
                         case '\uA783': // ꞃ  [LATIN SMALL LETTER INSULAR R]
                         case '\uFF52': // ｒ  [FULLWIDTH LATIN SMALL LETTER R]
-                            output += 'r';
+                            output.Append('r');
                             break;
                         case '\u24AD': // ⒭  [PARENTHESIZED LATIN SMALL LETTER R]
-                            output += '(';
-                            output += 'r';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('r');
+                            output.Append(')');
                             break;
                         case '\u015A': // Ś  [LATIN CAPITAL LETTER S WITH ACUTE]
                         case '\u015C': // Ŝ  [LATIN CAPITAL LETTER S WITH CIRCUMFLEX]
@@ -1102,7 +1101,7 @@ namespace Cyberia.Utils
                         case '\uA731': // ꜱ  [LATIN LETTER SMALL CAPITAL S]
                         case '\uA785': // ꞅ  [LATIN SMALL LETTER INSULAR S]
                         case '\uFF33': // Ｓ  [FULLWIDTH LATIN CAPITAL LETTER S]
-                            output += 'S';
+                            output.Append('S');
                             break;
                         case '\u015B': // ś  [LATIN SMALL LETTER S WITH ACUTE]
                         case '\u015D': // ŝ  [LATIN SMALL LETTER S WITH CIRCUMFLEX]
@@ -1124,24 +1123,24 @@ namespace Cyberia.Utils
                         case '\u24E2': // ⓢ  [CIRCLED LATIN SMALL LETTER S]
                         case '\uA784': // Ꞅ  [LATIN CAPITAL LETTER INSULAR S]
                         case '\uFF53': // ｓ  [FULLWIDTH LATIN SMALL LETTER S]
-                            output += 's';
+                            output.Append('s');
                             break;
                         case '\u1E9E': // ẞ  [LATIN CAPITAL LETTER SHARP S]
-                            output += 'S';
-                            output += 'S';
+                            output.Append('S');
+                            output.Append('S');
                             break;
                         case '\u24AE': // ⒮  [PARENTHESIZED LATIN SMALL LETTER S]
-                            output += '(';
-                            output += 's';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('s');
+                            output.Append(')');
                             break;
                         case '\u00DF': // ß  [LATIN SMALL LETTER SHARP S]
-                            output += 's';
-                            output += 's';
+                            output.Append('s');
+                            output.Append('s');
                             break;
                         case '\uFB06': // ﬆ  [LATIN SMALL LIGATURE ST]
-                            output += 's';
-                            output += 't';
+                            output.Append('s');
+                            output.Append('t');
                             break;
                         case '\u0162': // Ţ  [LATIN CAPITAL LETTER T WITH CEDILLA]
                         case '\u0164': // Ť  [LATIN CAPITAL LETTER T WITH CARON]
@@ -1158,7 +1157,7 @@ namespace Cyberia.Utils
                         case '\u24C9': // Ⓣ  [CIRCLED LATIN CAPITAL LETTER T]
                         case '\uA786': // Ꞇ  [LATIN CAPITAL LETTER INSULAR T]
                         case '\uFF34': // Ｔ  [FULLWIDTH LATIN CAPITAL LETTER T]
-                            output += 'T';
+                            output.Append('T');
                             break;
                         case '\u0163': // ţ  [LATIN SMALL LETTER T WITH CEDILLA]
                         case '\u0165': // ť  [LATIN SMALL LETTER T WITH CARON]
@@ -1178,39 +1177,39 @@ namespace Cyberia.Utils
                         case '\u24E3': // ⓣ  [CIRCLED LATIN SMALL LETTER T]
                         case '\u2C66': // ⱦ  [LATIN SMALL LETTER T WITH DIAGONAL STROKE]
                         case '\uFF54': // ｔ  [FULLWIDTH LATIN SMALL LETTER T]
-                            output += 't';
+                            output.Append('t');
                             break;
                         case '\u00DE': // Þ  [LATIN CAPITAL LETTER THORN]
                         case '\uA766': // Ꝧ  [LATIN CAPITAL LETTER THORN WITH STROKE THROUGH DESCENDER]
-                            output += 'T';
-                            output += 'H';
+                            output.Append('T');
+                            output.Append('H');
                             break;
                         case '\uA728': // Ꜩ  [LATIN CAPITAL LETTER TZ]
-                            output += 'T';
-                            output += 'Z';
+                            output.Append('T');
+                            output.Append('Z');
                             break;
                         case '\u24AF': // ⒯  [PARENTHESIZED LATIN SMALL LETTER T]
-                            output += '(';
-                            output += 't';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('t');
+                            output.Append(')');
                             break;
                         case '\u02A8': // ʨ  [LATIN SMALL LETTER TC DIGRAPH WITH CURL]
-                            output += 't';
-                            output += 'c';
+                            output.Append('t');
+                            output.Append('c');
                             break;
                         case '\u00FE': // þ  [LATIN SMALL LETTER THORN]
                         case '\u1D7A': // ᵺ  [LATIN SMALL LETTER TH WITH STRIKETHROUGH]
                         case '\uA767': // ꝧ  [LATIN SMALL LETTER THORN WITH STROKE THROUGH DESCENDER]
-                            output += 't';
-                            output += 'h';
+                            output.Append('t');
+                            output.Append('h');
                             break;
                         case '\u02A6': // ʦ  [LATIN SMALL LETTER TS DIGRAPH]
-                            output += 't';
-                            output += 's';
+                            output.Append('t');
+                            output.Append('s');
                             break;
                         case '\uA729': // ꜩ  [LATIN SMALL LETTER TZ]
-                            output += 't';
-                            output += 'z';
+                            output.Append('t');
+                            output.Append('z');
                             break;
                         case '\u00D9': // Ù  [LATIN CAPITAL LETTER U WITH GRAVE]
                         case '\u00DA': // Ú  [LATIN CAPITAL LETTER U WITH ACUTE]
@@ -1247,7 +1246,7 @@ namespace Cyberia.Utils
                         case '\u1EF0': // Ự  [LATIN CAPITAL LETTER U WITH HORN AND DOT BELOW]
                         case '\u24CA': // Ⓤ  [CIRCLED LATIN CAPITAL LETTER U]
                         case '\uFF35': // Ｕ  [FULLWIDTH LATIN CAPITAL LETTER U]
-                            output += 'U';
+                            output.Append('U');
                             break;
                         case '\u00F9': // ù  [LATIN SMALL LETTER U WITH GRAVE]
                         case '\u00FA': // ú  [LATIN SMALL LETTER U WITH ACUTE]
@@ -1284,16 +1283,16 @@ namespace Cyberia.Utils
                         case '\u1EF1': // ự  [LATIN SMALL LETTER U WITH HORN AND DOT BELOW]
                         case '\u24E4': // ⓤ  [CIRCLED LATIN SMALL LETTER U]
                         case '\uFF55': // ｕ  [FULLWIDTH LATIN SMALL LETTER U]
-                            output += 'u';
+                            output.Append('u');
                             break;
                         case '\u24B0': // ⒰  [PARENTHESIZED LATIN SMALL LETTER U]
-                            output += '(';
-                            output += 'u';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('u');
+                            output.Append(')');
                             break;
                         case '\u1D6B': // ᵫ  [LATIN SMALL LETTER UE]
-                            output += 'u';
-                            output += 'e';
+                            output.Append('u');
+                            output.Append('e');
                             break;
                         case '\u01B2': // Ʋ  [LATIN CAPITAL LETTER V WITH HOOK]
                         case '\u0245': // Ʌ  [LATIN CAPITAL LETTER TURNED V]
@@ -1305,7 +1304,7 @@ namespace Cyberia.Utils
                         case '\uA75E': // Ꝟ  [LATIN CAPITAL LETTER V WITH DIAGONAL STROKE]
                         case '\uA768': // Ꝩ  [LATIN CAPITAL LETTER VEND]
                         case '\uFF36': // Ｖ  [FULLWIDTH LATIN CAPITAL LETTER V]
-                            output += 'V';
+                            output.Append('V');
                             break;
                         case '\u028B': // ʋ  [LATIN SMALL LETTER V WITH HOOK]
                         case '\u028C': // ʌ  [LATIN SMALL LETTER TURNED V]
@@ -1318,20 +1317,20 @@ namespace Cyberia.Utils
                         case '\u2C74': // ⱴ  [LATIN SMALL LETTER V WITH CURL]
                         case '\uA75F': // ꝟ  [LATIN SMALL LETTER V WITH DIAGONAL STROKE]
                         case '\uFF56': // ｖ  [FULLWIDTH LATIN SMALL LETTER V]
-                            output += 'v';
+                            output.Append('v');
                             break;
                         case '\uA760': // Ꝡ  [LATIN CAPITAL LETTER VY]
-                            output += 'V';
-                            output += 'Y';
+                            output.Append('V');
+                            output.Append('Y');
                             break;
                         case '\u24B1': // ⒱  [PARENTHESIZED LATIN SMALL LETTER V]
-                            output += '(';
-                            output += 'v';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('v');
+                            output.Append(')');
                             break;
                         case '\uA761': // ꝡ  [LATIN SMALL LETTER VY]
-                            output += 'v';
-                            output += 'y';
+                            output.Append('v');
+                            output.Append('y');
                             break;
                         case '\u0174': // Ŵ  [LATIN CAPITAL LETTER W WITH CIRCUMFLEX]
                         case '\u01F7': // Ƿ  http://en.wikipedia.org/wiki/Wynn  [LATIN CAPITAL LETTER WYNN]
@@ -1344,7 +1343,7 @@ namespace Cyberia.Utils
                         case '\u24CC': // Ⓦ  [CIRCLED LATIN CAPITAL LETTER W]
                         case '\u2C72': // Ⱳ  [LATIN CAPITAL LETTER W WITH HOOK]
                         case '\uFF37': // Ｗ  [FULLWIDTH LATIN CAPITAL LETTER W]
-                            output += 'W';
+                            output.Append('W');
                             break;
                         case '\u0175': // ŵ  [LATIN SMALL LETTER W WITH CIRCUMFLEX]
                         case '\u01BF': // ƿ  http://en.wikipedia.org/wiki/Wynn  [LATIN LETTER WYNN]
@@ -1358,18 +1357,18 @@ namespace Cyberia.Utils
                         case '\u24E6': // ⓦ  [CIRCLED LATIN SMALL LETTER W]
                         case '\u2C73': // ⱳ  [LATIN SMALL LETTER W WITH HOOK]
                         case '\uFF57': // ｗ  [FULLWIDTH LATIN SMALL LETTER W]
-                            output += 'w';
+                            output.Append('w');
                             break;
                         case '\u24B2': // ⒲  [PARENTHESIZED LATIN SMALL LETTER W]
-                            output += '(';
-                            output += 'w';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('w');
+                            output.Append(')');
                             break;
                         case '\u1E8A': // Ẋ  [LATIN CAPITAL LETTER X WITH DOT ABOVE]
                         case '\u1E8C': // Ẍ  [LATIN CAPITAL LETTER X WITH DIAERESIS]
                         case '\u24CD': // Ⓧ  [CIRCLED LATIN CAPITAL LETTER X]
                         case '\uFF38': // Ｘ  [FULLWIDTH LATIN CAPITAL LETTER X]
-                            output += 'X';
+                            output.Append('X');
                             break;
                         case '\u1D8D': // ᶍ  [LATIN SMALL LETTER X WITH PALATAL HOOK]
                         case '\u1E8B': // ẋ  [LATIN SMALL LETTER X WITH DOT ABOVE]
@@ -1377,12 +1376,12 @@ namespace Cyberia.Utils
                         case '\u2093': // ₓ  [LATIN SUBSCRIPT SMALL LETTER X]
                         case '\u24E7': // ⓧ  [CIRCLED LATIN SMALL LETTER X]
                         case '\uFF58': // ｘ  [FULLWIDTH LATIN SMALL LETTER X]
-                            output += 'x';
+                            output.Append('x');
                             break;
                         case '\u24B3': // ⒳  [PARENTHESIZED LATIN SMALL LETTER X]
-                            output += '(';
-                            output += 'x';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('x');
+                            output.Append(')');
                             break;
                         case '\u00DD': // Ý  [LATIN CAPITAL LETTER Y WITH ACUTE]
                         case '\u0176': // Ŷ  [LATIN CAPITAL LETTER Y WITH CIRCUMFLEX]
@@ -1399,7 +1398,7 @@ namespace Cyberia.Utils
                         case '\u1EFE': // Ỿ  [LATIN CAPITAL LETTER Y WITH LOOP]
                         case '\u24CE': // Ⓨ  [CIRCLED LATIN CAPITAL LETTER Y]
                         case '\uFF39': // Ｙ  [FULLWIDTH LATIN CAPITAL LETTER Y]
-                            output += 'Y';
+                            output.Append('Y');
                             break;
                         case '\u00FD': // ý  [LATIN SMALL LETTER Y WITH ACUTE]
                         case '\u00FF': // ÿ  [LATIN SMALL LETTER Y WITH DIAERESIS]
@@ -1417,12 +1416,12 @@ namespace Cyberia.Utils
                         case '\u1EFF': // ỿ  [LATIN SMALL LETTER Y WITH LOOP]
                         case '\u24E8': // ⓨ  [CIRCLED LATIN SMALL LETTER Y]
                         case '\uFF59': // ｙ  [FULLWIDTH LATIN SMALL LETTER Y]
-                            output += 'y';
+                            output.Append('y');
                             break;
                         case '\u24B4': // ⒴  [PARENTHESIZED LATIN SMALL LETTER Y]
-                            output += '(';
-                            output += 'y';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('y');
+                            output.Append(')');
                             break;
                         case '\u0179': // Ź  [LATIN CAPITAL LETTER Z WITH ACUTE]
                         case '\u017B': // Ż  [LATIN CAPITAL LETTER Z WITH DOT ABOVE]
@@ -1438,7 +1437,7 @@ namespace Cyberia.Utils
                         case '\u2C6B': // Ⱬ  [LATIN CAPITAL LETTER Z WITH DESCENDER]
                         case '\uA762': // Ꝣ  [LATIN CAPITAL LETTER VISIGOTHIC Z]
                         case '\uFF3A': // Ｚ  [FULLWIDTH LATIN CAPITAL LETTER Z]
-                            output += 'Z';
+                            output.Append('Z');
                             break;
                         case '\u017A': // ź  [LATIN SMALL LETTER Z WITH ACUTE]
                         case '\u017C': // ż  [LATIN SMALL LETTER Z WITH DOT ABOVE]
@@ -1458,19 +1457,19 @@ namespace Cyberia.Utils
                         case '\u2C6C': // ⱬ  [LATIN SMALL LETTER Z WITH DESCENDER]
                         case '\uA763': // ꝣ  [LATIN SMALL LETTER VISIGOTHIC Z]
                         case '\uFF5A': // ｚ  [FULLWIDTH LATIN SMALL LETTER Z]
-                            output += 'z';
+                            output.Append('z');
                             break;
                         case '\u24B5': // ⒵  [PARENTHESIZED LATIN SMALL LETTER Z]
-                            output += '(';
-                            output += 'z';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('z');
+                            output.Append(')');
                             break;
                         case '\u2070': // ⁰  [SUPERSCRIPT ZERO]
                         case '\u2080': // ₀  [SUBSCRIPT ZERO]
                         case '\u24EA': // ⓪  [CIRCLED DIGIT ZERO]
                         case '\u24FF': // ⓿  [NEGATIVE CIRCLED DIGIT ZERO]
                         case '\uFF10': // ０  [FULLWIDTH DIGIT ZERO]
-                            output += '0';
+                            output.Append('0');
                             break;
                         case '\u00B9': // ¹  [SUPERSCRIPT ONE]
                         case '\u2081': // ₁  [SUBSCRIPT ONE]
@@ -1480,16 +1479,16 @@ namespace Cyberia.Utils
                         case '\u2780': // ➀  [DINGBAT CIRCLED SANS-SERIF DIGIT ONE]
                         case '\u278A': // ➊  [DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT ONE]
                         case '\uFF11': // １  [FULLWIDTH DIGIT ONE]
-                            output += '1';
+                            output.Append('1');
                             break;
                         case '\u2488': // ⒈  [DIGIT ONE FULL STOP]
-                            output += '1';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('.');
                             break;
                         case '\u2474': // ⑴  [PARENTHESIZED DIGIT ONE]
-                            output += '(';
-                            output += '1';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append(')');
                             break;
                         case '\u00B2': // ²  [SUPERSCRIPT TWO]
                         case '\u2082': // ₂  [SUBSCRIPT TWO]
@@ -1499,16 +1498,16 @@ namespace Cyberia.Utils
                         case '\u2781': // ➁  [DINGBAT CIRCLED SANS-SERIF DIGIT TWO]
                         case '\u278B': // ➋  [DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT TWO]
                         case '\uFF12': // ２  [FULLWIDTH DIGIT TWO]
-                            output += '2';
+                            output.Append('2');
                             break;
                         case '\u2489': // ⒉  [DIGIT TWO FULL STOP]
-                            output += '2';
-                            output += '.';
+                            output.Append('2');
+                            output.Append('.');
                             break;
                         case '\u2475': // ⑵  [PARENTHESIZED DIGIT TWO]
-                            output += '(';
-                            output += '2';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('2');
+                            output.Append(')');
                             break;
                         case '\u00B3': // ³  [SUPERSCRIPT THREE]
                         case '\u2083': // ₃  [SUBSCRIPT THREE]
@@ -1518,16 +1517,16 @@ namespace Cyberia.Utils
                         case '\u2782': // ➂  [DINGBAT CIRCLED SANS-SERIF DIGIT THREE]
                         case '\u278C': // ➌  [DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT THREE]
                         case '\uFF13': // ３  [FULLWIDTH DIGIT THREE]
-                            output += '3';
+                            output.Append('3');
                             break;
                         case '\u248A': // ⒊  [DIGIT THREE FULL STOP]
-                            output += '3';
-                            output += '.';
+                            output.Append('3');
+                            output.Append('.');
                             break;
                         case '\u2476': // ⑶  [PARENTHESIZED DIGIT THREE]
-                            output += '(';
-                            output += '3';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('3');
+                            output.Append(')');
                             break;
                         case '\u2074': // ⁴  [SUPERSCRIPT FOUR]
                         case '\u2084': // ₄  [SUBSCRIPT FOUR]
@@ -1537,16 +1536,16 @@ namespace Cyberia.Utils
                         case '\u2783': // ➃  [DINGBAT CIRCLED SANS-SERIF DIGIT FOUR]
                         case '\u278D': // ➍  [DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT FOUR]
                         case '\uFF14': // ４  [FULLWIDTH DIGIT FOUR]
-                            output += '4';
+                            output.Append('4');
                             break;
                         case '\u248B': // ⒋  [DIGIT FOUR FULL STOP]
-                            output += '4';
-                            output += '.';
+                            output.Append('4');
+                            output.Append('.');
                             break;
                         case '\u2477': // ⑷  [PARENTHESIZED DIGIT FOUR]
-                            output += '(';
-                            output += '4';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('4');
+                            output.Append(')');
                             break;
                         case '\u2075': // ⁵  [SUPERSCRIPT FIVE]
                         case '\u2085': // ₅  [SUBSCRIPT FIVE]
@@ -1556,16 +1555,16 @@ namespace Cyberia.Utils
                         case '\u2784': // ➄  [DINGBAT CIRCLED SANS-SERIF DIGIT FIVE]
                         case '\u278E': // ➎  [DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT FIVE]
                         case '\uFF15': // ５  [FULLWIDTH DIGIT FIVE]
-                            output += '5';
+                            output.Append('5');
                             break;
                         case '\u248C': // ⒌  [DIGIT FIVE FULL STOP]
-                            output += '5';
-                            output += '.';
+                            output.Append('5');
+                            output.Append('.');
                             break;
                         case '\u2478': // ⑸  [PARENTHESIZED DIGIT FIVE]
-                            output += '(';
-                            output += '5';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('5');
+                            output.Append(')');
                             break;
                         case '\u2076': // ⁶  [SUPERSCRIPT SIX]
                         case '\u2086': // ₆  [SUBSCRIPT SIX]
@@ -1575,16 +1574,16 @@ namespace Cyberia.Utils
                         case '\u2785': // ➅  [DINGBAT CIRCLED SANS-SERIF DIGIT SIX]
                         case '\u278F': // ➏  [DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT SIX]
                         case '\uFF16': // ６  [FULLWIDTH DIGIT SIX]
-                            output += '6';
+                            output.Append('6');
                             break;
                         case '\u248D': // ⒍  [DIGIT SIX FULL STOP]
-                            output += '6';
-                            output += '.';
+                            output.Append('6');
+                            output.Append('.');
                             break;
                         case '\u2479': // ⑹  [PARENTHESIZED DIGIT SIX]
-                            output += '(';
-                            output += '6';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('6');
+                            output.Append(')');
                             break;
                         case '\u2077': // ⁷  [SUPERSCRIPT SEVEN]
                         case '\u2087': // ₇  [SUBSCRIPT SEVEN]
@@ -1594,16 +1593,16 @@ namespace Cyberia.Utils
                         case '\u2786': // ➆  [DINGBAT CIRCLED SANS-SERIF DIGIT SEVEN]
                         case '\u2790': // ➐  [DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT SEVEN]
                         case '\uFF17': // ７  [FULLWIDTH DIGIT SEVEN]
-                            output += '7';
+                            output.Append('7');
                             break;
                         case '\u248E': // ⒎  [DIGIT SEVEN FULL STOP]
-                            output += '7';
-                            output += '.';
+                            output.Append('7');
+                            output.Append('.');
                             break;
                         case '\u247A': // ⑺  [PARENTHESIZED DIGIT SEVEN]
-                            output += '(';
-                            output += '7';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('7');
+                            output.Append(')');
                             break;
                         case '\u2078': // ⁸  [SUPERSCRIPT EIGHT]
                         case '\u2088': // ₈  [SUBSCRIPT EIGHT]
@@ -1613,16 +1612,16 @@ namespace Cyberia.Utils
                         case '\u2787': // ➇  [DINGBAT CIRCLED SANS-SERIF DIGIT EIGHT]
                         case '\u2791': // ➑  [DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT EIGHT]
                         case '\uFF18': // ８  [FULLWIDTH DIGIT EIGHT]
-                            output += '8';
+                            output.Append('8');
                             break;
                         case '\u248F': // ⒏  [DIGIT EIGHT FULL STOP]
-                            output += '8';
-                            output += '.';
+                            output.Append('8');
+                            output.Append('.');
                             break;
                         case '\u247B': // ⑻  [PARENTHESIZED DIGIT EIGHT]
-                            output += '(';
-                            output += '8';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('8');
+                            output.Append(')');
                             break;
                         case '\u2079': // ⁹  [SUPERSCRIPT NINE]
                         case '\u2089': // ₉  [SUBSCRIPT NINE]
@@ -1632,195 +1631,195 @@ namespace Cyberia.Utils
                         case '\u2788': // ➈  [DINGBAT CIRCLED SANS-SERIF DIGIT NINE]
                         case '\u2792': // ➒  [DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT NINE]
                         case '\uFF19': // ９  [FULLWIDTH DIGIT NINE]
-                            output += '9';
+                            output.Append('9');
                             break;
                         case '\u2490': // ⒐  [DIGIT NINE FULL STOP]
-                            output += '9';
-                            output += '.';
+                            output.Append('9');
+                            output.Append('.');
                             break;
                         case '\u247C': // ⑼  [PARENTHESIZED DIGIT NINE]
-                            output += '(';
-                            output += '9';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('9');
+                            output.Append(')');
                             break;
                         case '\u2469': // ⑩  [CIRCLED NUMBER TEN]
                         case '\u24FE': // ⓾  [DOUBLE CIRCLED NUMBER TEN]
                         case '\u277F': // ❿  [DINGBAT NEGATIVE CIRCLED NUMBER TEN]
                         case '\u2789': // ➉  [DINGBAT CIRCLED SANS-SERIF NUMBER TEN]
                         case '\u2793': // ➓  [DINGBAT NEGATIVE CIRCLED SANS-SERIF NUMBER TEN]
-                            output += '1';
-                            output += '0';
+                            output.Append('1');
+                            output.Append('0');
                             break;
                         case '\u2491': // ⒑  [NUMBER TEN FULL STOP]
-                            output += '1';
-                            output += '0';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('0');
+                            output.Append('.');
                             break;
                         case '\u247D': // ⑽  [PARENTHESIZED NUMBER TEN]
-                            output += '(';
-                            output += '1';
-                            output += '0';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append('0');
+                            output.Append(')');
                             break;
                         case '\u246A': // ⑪  [CIRCLED NUMBER ELEVEN]
                         case '\u24EB': // ⓫  [NEGATIVE CIRCLED NUMBER ELEVEN]
-                            output += '1';
-                            output += '1';
+                            output.Append('1');
+                            output.Append('1');
                             break;
                         case '\u2492': // ⒒  [NUMBER ELEVEN FULL STOP]
-                            output += '1';
-                            output += '1';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('1');
+                            output.Append('.');
                             break;
                         case '\u247E': // ⑾  [PARENTHESIZED NUMBER ELEVEN]
-                            output += '(';
-                            output += '1';
-                            output += '1';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append('1');
+                            output.Append(')');
                             break;
                         case '\u246B': // ⑫  [CIRCLED NUMBER TWELVE]
                         case '\u24EC': // ⓬  [NEGATIVE CIRCLED NUMBER TWELVE]
-                            output += '1';
-                            output += '2';
+                            output.Append('1');
+                            output.Append('2');
                             break;
                         case '\u2493': // ⒓  [NUMBER TWELVE FULL STOP]
-                            output += '1';
-                            output += '2';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('2');
+                            output.Append('.');
                             break;
                         case '\u247F': // ⑿  [PARENTHESIZED NUMBER TWELVE]
-                            output += '(';
-                            output += '1';
-                            output += '2';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append('2');
+                            output.Append(')');
                             break;
                         case '\u246C': // ⑬  [CIRCLED NUMBER THIRTEEN]
                         case '\u24ED': // ⓭  [NEGATIVE CIRCLED NUMBER THIRTEEN]
-                            output += '1';
-                            output += '3';
+                            output.Append('1');
+                            output.Append('3');
                             break;
                         case '\u2494': // ⒔  [NUMBER THIRTEEN FULL STOP]
-                            output += '1';
-                            output += '3';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('3');
+                            output.Append('.');
                             break;
                         case '\u2480': // ⒀  [PARENTHESIZED NUMBER THIRTEEN]
-                            output += '(';
-                            output += '1';
-                            output += '3';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append('3');
+                            output.Append(')');
                             break;
                         case '\u246D': // ⑭  [CIRCLED NUMBER FOURTEEN]
                         case '\u24EE': // ⓮  [NEGATIVE CIRCLED NUMBER FOURTEEN]
-                            output += '1';
-                            output += '4';
+                            output.Append('1');
+                            output.Append('4');
                             break;
                         case '\u2495': // ⒕  [NUMBER FOURTEEN FULL STOP]
-                            output += '1';
-                            output += '4';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('4');
+                            output.Append('.');
                             break;
                         case '\u2481': // ⒁  [PARENTHESIZED NUMBER FOURTEEN]
-                            output += '(';
-                            output += '1';
-                            output += '4';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append('4');
+                            output.Append(')');
                             break;
                         case '\u246E': // ⑮  [CIRCLED NUMBER FIFTEEN]
                         case '\u24EF': // ⓯  [NEGATIVE CIRCLED NUMBER FIFTEEN]
-                            output += '1';
-                            output += '5';
+                            output.Append('1');
+                            output.Append('5');
                             break;
                         case '\u2496': // ⒖  [NUMBER FIFTEEN FULL STOP]
-                            output += '1';
-                            output += '5';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('5');
+                            output.Append('.');
                             break;
                         case '\u2482': // ⒂  [PARENTHESIZED NUMBER FIFTEEN]
-                            output += '(';
-                            output += '1';
-                            output += '5';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append('5');
+                            output.Append(')');
                             break;
                         case '\u246F': // ⑯  [CIRCLED NUMBER SIXTEEN]
                         case '\u24F0': // ⓰  [NEGATIVE CIRCLED NUMBER SIXTEEN]
-                            output += '1';
-                            output += '6';
+                            output.Append('1');
+                            output.Append('6');
                             break;
                         case '\u2497': // ⒗  [NUMBER SIXTEEN FULL STOP]
-                            output += '1';
-                            output += '6';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('6');
+                            output.Append('.');
                             break;
                         case '\u2483': // ⒃  [PARENTHESIZED NUMBER SIXTEEN]
-                            output += '(';
-                            output += '1';
-                            output += '6';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append('6');
+                            output.Append(')');
                             break;
                         case '\u2470': // ⑰  [CIRCLED NUMBER SEVENTEEN]
                         case '\u24F1': // ⓱  [NEGATIVE CIRCLED NUMBER SEVENTEEN]
-                            output += '1';
-                            output += '7';
+                            output.Append('1');
+                            output.Append('7');
                             break;
                         case '\u2498': // ⒘  [NUMBER SEVENTEEN FULL STOP]
-                            output += '1';
-                            output += '7';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('7');
+                            output.Append('.');
                             break;
                         case '\u2484': // ⒄  [PARENTHESIZED NUMBER SEVENTEEN]
-                            output += '(';
-                            output += '1';
-                            output += '7';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append('7');
+                            output.Append(')');
                             break;
                         case '\u2471': // ⑱  [CIRCLED NUMBER EIGHTEEN]
                         case '\u24F2': // ⓲  [NEGATIVE CIRCLED NUMBER EIGHTEEN]
-                            output += '1';
-                            output += '8';
+                            output.Append('1');
+                            output.Append('8');
                             break;
                         case '\u2499': // ⒙  [NUMBER EIGHTEEN FULL STOP]
-                            output += '1';
-                            output += '8';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('8');
+                            output.Append('.');
                             break;
                         case '\u2485': // ⒅  [PARENTHESIZED NUMBER EIGHTEEN]
-                            output += '(';
-                            output += '1';
-                            output += '8';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append('8');
+                            output.Append(')');
                             break;
                         case '\u2472': // ⑲  [CIRCLED NUMBER NINETEEN]
                         case '\u24F3': // ⓳  [NEGATIVE CIRCLED NUMBER NINETEEN]
-                            output += '1';
-                            output += '9';
+                            output.Append('1');
+                            output.Append('9');
                             break;
                         case '\u249A': // ⒚  [NUMBER NINETEEN FULL STOP]
-                            output += '1';
-                            output += '9';
-                            output += '.';
+                            output.Append('1');
+                            output.Append('9');
+                            output.Append('.');
                             break;
                         case '\u2486': // ⒆  [PARENTHESIZED NUMBER NINETEEN]
-                            output += '(';
-                            output += '1';
-                            output += '9';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('1');
+                            output.Append('9');
+                            output.Append(')');
                             break;
                         case '\u2473': // ⑳  [CIRCLED NUMBER TWENTY]
                         case '\u24F4': // ⓴  [NEGATIVE CIRCLED NUMBER TWENTY]
-                            output += '2';
-                            output += '0';
+                            output.Append('2');
+                            output.Append('0');
                             break;
                         case '\u249B': // ⒛  [NUMBER TWENTY FULL STOP]
-                            output += '2';
-                            output += '0';
-                            output += '.';
+                            output.Append('2');
+                            output.Append('0');
+                            output.Append('.');
                             break;
                         case '\u2487': // ⒇  [PARENTHESIZED NUMBER TWENTY]
-                            output += '(';
-                            output += '2';
-                            output += '0';
-                            output += ')';
+                            output.Append('(');
+                            output.Append('2');
+                            output.Append('0');
+                            output.Append(')');
                             break;
                         case '\u00AB': // «  [LEFT-POINTING DOUBLE ANGLE QUOTATION MARK]
                         case '\u00BB': // »  [RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK]
@@ -1834,7 +1833,7 @@ namespace Cyberia.Utils
                         case '\u276E': // ❮  [HEAVY LEFT-POINTING ANGLE QUOTATION MARK ORNAMENT]
                         case '\u276F': // ❯  [HEAVY RIGHT-POINTING ANGLE QUOTATION MARK ORNAMENT]
                         case '\uFF02': // ＂  [FULLWIDTH QUOTATION MARK]
-                            output += '"';
+                            output.Append('"');
                             break;
                         case '\u2018': // ‘  [LEFT SINGLE QUOTATION MARK]
                         case '\u2019': // ’  [RIGHT SINGLE QUOTATION MARK]
@@ -1847,7 +1846,7 @@ namespace Cyberia.Utils
                         case '\u275B': // ❛  [HEAVY SINGLE TURNED COMMA QUOTATION MARK ORNAMENT]
                         case '\u275C': // ❜  [HEAVY SINGLE COMMA QUOTATION MARK ORNAMENT]
                         case '\uFF07': // ＇  [FULLWIDTH APOSTROPHE]
-                            output += '\'';
+                            output.Append('\'');
                             break;
                         case '\u2010': // ‐  [HYPHEN]
                         case '\u2011': // ‑  [NON-BREAKING HYPHEN]
@@ -1857,149 +1856,149 @@ namespace Cyberia.Utils
                         case '\u207B': // ⁻  [SUPERSCRIPT MINUS]
                         case '\u208B': // ₋  [SUBSCRIPT MINUS]
                         case '\uFF0D': // －  [FULLWIDTH HYPHEN-MINUS]
-                            output += '-';
+                            output.Append('-');
                             break;
                         case '\u2045': // ⁅  [LEFT SQUARE BRACKET WITH QUILL]
                         case '\u2772': // ❲  [LIGHT LEFT TORTOISE SHELL BRACKET ORNAMENT]
                         case '\uFF3B': // ［  [FULLWIDTH LEFT SQUARE BRACKET]
-                            output += '[';
+                            output.Append('[');
                             break;
                         case '\u2046': // ⁆  [RIGHT SQUARE BRACKET WITH QUILL]
                         case '\u2773': // ❳  [LIGHT RIGHT TORTOISE SHELL BRACKET ORNAMENT]
                         case '\uFF3D': // ］  [FULLWIDTH RIGHT SQUARE BRACKET]
-                            output += ']';
+                            output.Append(']');
                             break;
                         case '\u207D': // ⁽  [SUPERSCRIPT LEFT PARENTHESIS]
                         case '\u208D': // ₍  [SUBSCRIPT LEFT PARENTHESIS]
                         case '\u2768': // ❨  [MEDIUM LEFT PARENTHESIS ORNAMENT]
                         case '\u276A': // ❪  [MEDIUM FLATTENED LEFT PARENTHESIS ORNAMENT]
                         case '\uFF08': // （  [FULLWIDTH LEFT PARENTHESIS]
-                            output += '(';
+                            output.Append('(');
                             break;
                         case '\u2E28': // ⸨  [LEFT DOUBLE PARENTHESIS]
-                            output += '(';
-                            output += '(';
+                            output.Append('(');
+                            output.Append('(');
                             break;
                         case '\u207E': // ⁾  [SUPERSCRIPT RIGHT PARENTHESIS]
                         case '\u208E': // ₎  [SUBSCRIPT RIGHT PARENTHESIS]
                         case '\u2769': // ❩  [MEDIUM RIGHT PARENTHESIS ORNAMENT]
                         case '\u276B': // ❫  [MEDIUM FLATTENED RIGHT PARENTHESIS ORNAMENT]
                         case '\uFF09': // ）  [FULLWIDTH RIGHT PARENTHESIS]
-                            output += ')';
+                            output.Append(')');
                             break;
                         case '\u2E29': // ⸩  [RIGHT DOUBLE PARENTHESIS]
-                            output += ')';
-                            output += ')';
+                            output.Append(')');
+                            output.Append(')');
                             break;
                         case '\u276C': // ❬  [MEDIUM LEFT-POINTING ANGLE BRACKET ORNAMENT]
                         case '\u2770': // ❰  [HEAVY LEFT-POINTING ANGLE BRACKET ORNAMENT]
                         case '\uFF1C': // ＜  [FULLWIDTH LESS-THAN SIGN]
-                            output += '<';
+                            output.Append('<');
                             break;
                         case '\u276D': // ❭  [MEDIUM RIGHT-POINTING ANGLE BRACKET ORNAMENT]
                         case '\u2771': // ❱  [HEAVY RIGHT-POINTING ANGLE BRACKET ORNAMENT]
                         case '\uFF1E': // ＞  [FULLWIDTH GREATER-THAN SIGN]
-                            output += '>';
+                            output.Append('>');
                             break;
                         case '\u2774': // ❴  [MEDIUM LEFT CURLY BRACKET ORNAMENT]
                         case '\uFF5B': // ｛  [FULLWIDTH LEFT CURLY BRACKET]
-                            output += '{';
+                            output.Append('{');
                             break;
                         case '\u2775': // ❵  [MEDIUM RIGHT CURLY BRACKET ORNAMENT]
                         case '\uFF5D': // ｝  [FULLWIDTH RIGHT CURLY BRACKET]
-                            output += '}';
+                            output.Append('}');
                             break;
                         case '\u207A': // ⁺  [SUPERSCRIPT PLUS SIGN]
                         case '\u208A': // ₊  [SUBSCRIPT PLUS SIGN]
                         case '\uFF0B': // ＋  [FULLWIDTH PLUS SIGN]
-                            output += '+';
+                            output.Append('+');
                             break;
                         case '\u207C': // ⁼  [SUPERSCRIPT EQUALS SIGN]
                         case '\u208C': // ₌  [SUBSCRIPT EQUALS SIGN]
                         case '\uFF1D': // ＝  [FULLWIDTH EQUALS SIGN]
-                            output += '=';
+                            output.Append('=');
                             break;
                         case '\uFF01': // ！  [FULLWIDTH EXCLAMATION MARK]
-                            output += '!';
+                            output.Append('!');
                             break;
                         case '\u203C': // ‼  [DOUBLE EXCLAMATION MARK]
-                            output += '!';
-                            output += '!';
+                            output.Append('!');
+                            output.Append('!');
                             break;
                         case '\u2049': // ⁉  [EXCLAMATION QUESTION MARK]
-                            output += '!';
-                            output += '?';
+                            output.Append('!');
+                            output.Append('?');
                             break;
                         case '\uFF03': // ＃  [FULLWIDTH NUMBER SIGN]
-                            output += '#';
+                            output.Append('#');
                             break;
                         case '\uFF04': // ＄  [FULLWIDTH DOLLAR SIGN]
-                            output += '$';
+                            output.Append('$');
                             break;
                         case '\u2052': // ⁒  [COMMERCIAL MINUS SIGN]
                         case '\uFF05': // ％  [FULLWIDTH PERCENT SIGN]
-                            output += '%';
+                            output.Append('%');
                             break;
                         case '\uFF06': // ＆  [FULLWIDTH AMPERSAND]
-                            output += '&';
+                            output.Append('&');
                             break;
                         case '\u204E': // ⁎  [LOW ASTERISK]
                         case '\uFF0A': // ＊  [FULLWIDTH ASTERISK]
-                            output += '*';
+                            output.Append('*');
                             break;
                         case '\uFF0C': // ，  [FULLWIDTH COMMA]
-                            output += ',';
+                            output.Append(',');
                             break;
                         case '\uFF0E': // ．  [FULLWIDTH FULL STOP]
-                            output += '.';
+                            output.Append('.');
                             break;
                         case '\u2044': // ⁄  [FRACTION SLASH]
                         case '\uFF0F': // ／  [FULLWIDTH SOLIDUS]
-                            output += '/';
+                            output.Append('/');
                             break;
                         case '\uFF1A': // ：  [FULLWIDTH COLON]
-                            output += ':';
+                            output.Append(':');
                             break;
                         case '\u204F': // ⁏  [REVERSED SEMICOLON]
                         case '\uFF1B': // ；  [FULLWIDTH SEMICOLON]
-                            output += ';';
+                            output.Append(';');
                             break;
                         case '\uFF1F': // ？  [FULLWIDTH QUESTION MARK]
-                            output += '?';
+                            output.Append('?');
                             break;
                         case '\u2047': // ⁇  [DOUBLE QUESTION MARK]
-                            output += '?';
-                            output += '?';
+                            output.Append('?');
+                            output.Append('?');
                             break;
                         case '\u2048': // ⁈  [QUESTION EXCLAMATION MARK]
-                            output += '?';
-                            output += '!';
+                            output.Append('?');
+                            output.Append('!');
                             break;
                         case '\uFF20': // ＠  [FULLWIDTH COMMERCIAL AT]
-                            output += '@';
+                            output.Append('@');
                             break;
                         case '\uFF3C': // ＼  [FULLWIDTH REVERSE SOLIDUS]
-                            output += '\\';
+                            output.Append('\\');
                             break;
                         case '\u2038': // ‸  [CARET]
                         case '\uFF3E': // ＾  [FULLWIDTH CIRCUMFLEX ACCENT]
-                            output += '^';
+                            output.Append('^');
                             break;
                         case '\uFF3F': // ＿  [FULLWIDTH LOW LINE]
-                            output += '_';
+                            output.Append('_');
                             break;
                         case '\u2053': // ⁓  [SWUNG DASH]
                         case '\uFF5E': // ～  [FULLWIDTH TILDE]
-                            output += '~';
+                            output.Append('~');
                             break;
                         default:
-                            output += c;
+                            output.Append(c);
                             break;
                     }
                 }
             }
 
-            return output.ToLower();
+            return output.ToString().ToLower();
         }
     }
 }
