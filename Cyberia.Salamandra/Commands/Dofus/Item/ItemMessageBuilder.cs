@@ -126,12 +126,13 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             StringBuilder miscellaneousBuilder = new();
             miscellaneousBuilder.AppendFormat("{0} pod{1}", _item.Weight.ToStringThousandSeparator(), _item.Weight > 1 ? "s" : "");
-            miscellaneousBuilder.Append(_item.Ceremonial ? ", objet d'apparat" : "");
-            miscellaneousBuilder.Append(_item.IsReallyEnhanceable() ? ", forgemageable" : "");
-            miscellaneousBuilder.Append(_item.Ethereal ? ", item éthéré" : "");
-            miscellaneousBuilder.Append(_item.Usable ? ", est consommable" : "");
-            miscellaneousBuilder.Append(_item.Targetable ? ", est ciblable" : "");
-            miscellaneousBuilder.Append(_item.Cursed ? ", malédiction" : "");
+            if (_item.IsExchangeable()) miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _item.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
+            if (_item.Ceremonial) miscellaneousBuilder.Append(", objet d'apparat");
+            if (_item.IsReallyEnhanceable()) miscellaneousBuilder.Append(", forgemageable");
+            if (_item.Ethereal) miscellaneousBuilder.Append(", item éthéré");
+            if (_item.Usable) miscellaneousBuilder.Append(", est consommable");
+            if (_item.Targetable) miscellaneousBuilder.Append(", est ciblable");
+            if (_item.Cursed) miscellaneousBuilder.Append(", malédiction");
             embed.AddField("Divers :", miscellaneousBuilder.ToString());
 
             return embed;

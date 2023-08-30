@@ -26,9 +26,14 @@ namespace Cyberia.Api.Factories.Effects
             return new(effectId, parameters, duration, probability, criteria, area);
         }
 
+        public bool IsLinkedToAccount()
+        {
+            return Year == -1;
+        }
+
         public override string GetDescription()
         {
-            if (Year == -1)
+            if (IsLinkedToAccount())
                 return GetDescriptionFromParameters("Lié au compte");
 
             return GetDescriptionFromParameters($"{Day.ToString().PadLeft(2, '0')}/{Month.ToString().PadLeft(2, '0')}/{Year.ToString().PadLeft(2, '0')} {Hour.ToString().PadLeft(2, '0')}:{Minute.ToString().PadLeft(2, '0')}");

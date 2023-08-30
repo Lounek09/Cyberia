@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Managers;
 using Cyberia.Api.Parser.JsonConverter;
 
 using System.Text.Json.Serialization;
@@ -21,6 +22,8 @@ namespace Cyberia.Api.DatacenterNS
 
     public sealed class ItemSuperType
     {
+        public const int SUPER_TYPE_QUEST = 14;
+
         [JsonPropertyName("id")]
         public int Id { get; init; }
 
@@ -211,6 +214,21 @@ namespace Cyberia.Api.DatacenterNS
         public Craft? GetCraft()
         {
             return DofusApi.Instance.Datacenter.CraftsData.GetCraftById(Id);
+        }
+
+        public bool IsExchangeable()
+        {
+            ItemType? itemType = GetItemType();
+            ItemStats? itemStats = GetItemStat();
+
+            return itemType is not null && itemType.ItemSuperTypeId != ItemSuperType.SUPER_TYPE_QUEST &&
+                !Cursed &&
+                (itemStats is null || !itemStats.Effects.OfType<ExchangeableUntilDateTimeEffect>().Any(x => x.IsLinkedToAccount()));
+        }
+
+        public int GetNpcRetailPrice()
+        {
+            return Price == 0 ? 0 : Math.Max(1, (int)Math.Round(Price / 10d));
         }
     }
 
