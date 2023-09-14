@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
 {
-    public static class ActualMovementPointsCriterion
+    public static class CurrentMovementPointsCriterion
     {
         public static string? GetValue(char @operator, string[] values)
         {

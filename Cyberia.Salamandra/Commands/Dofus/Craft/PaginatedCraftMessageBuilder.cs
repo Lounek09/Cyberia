@@ -47,7 +47,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 Item? item = craft.GetItem();
                 if (item is not null)
-                    yield return $"- Niv.{item.Level} {Formatter.Bold(item.Name.SanitizeMarkDown())} ({craft.Id})";
+                    yield return $"- Niv.{item.Level} {Formatter.Bold(Formatter.Sanitize(item.Name))} ({craft.Id})";
             }
         }
 

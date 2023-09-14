@@ -5,7 +5,6 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-#pragma warning disable CA1822 // Mark members as static
     public sealed class ItemCommandModule : ApplicationCommandModule
     {
         [SlashCommand("item", "Retourne les informations d'un item à partir de son nom")]

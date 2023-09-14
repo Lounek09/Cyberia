@@ -11,11 +11,10 @@ using System.Text.RegularExpressions;
 
 namespace Cyberia.Salamandra.Managers
 {
-    public static class InteractionManager
+    public static partial class InteractionManager
     {
         public const char PACKET_PARAMETER_SEPARATOR = '|';
 
-        private static readonly Regex _selectComponentPacketRegex = new(@"SELECT\d+", RegexOptions.Compiled);
         private static readonly Dictionary<string, Func<int, string[], ICustomMessageBuilder?>> _factory = new()
         {
             { BreedMessageBuilder.PACKET_HEADER, BreedMessageBuilder.Create },
@@ -41,6 +40,9 @@ namespace Cyberia.Salamandra.Managers
             { SpellMessageBuilder.PACKET_HEADER, SpellMessageBuilder.Create },
             { PaginatedSpellMessageBuilder.PACKET_HEADER, PaginatedSpellMessageBuilder.Create }
         };
+
+        [GeneratedRegex(@"SELECT\d+", RegexOptions.Compiled)]
+        private static partial Regex SelectComponentPacketRegex();
 
         public static string ComponentPacketBuilder(string header, int version, params object[] parameters)
         {
@@ -71,7 +73,7 @@ namespace Cyberia.Salamandra.Managers
 
             DiscordInteractionResponseBuilder response = new();
 
-            string[] decomposedPacket = (_selectComponentPacketRegex.IsMatch(e.Id) ? e.Values[0] : e.Id).Split(PACKET_PARAMETER_SEPARATOR);
+            string[] decomposedPacket = (SelectComponentPacketRegex().IsMatch(e.Id) ? e.Values[0] : e.Id).Split(PACKET_PARAMETER_SEPARATOR);
 
             if (decomposedPacket.Length < 2)
             {

@@ -68,7 +68,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private async Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Items")
-                .WithTitle($"{_item.Name.SanitizeMarkDown()} ({_item.Id})")
+                .WithTitle($"{Formatter.Sanitize(_item.Name)} ({_item.Id})")
                 .WithDescription(string.IsNullOrEmpty(_item.Description) ? "" : Formatter.Italic(_item.Description))
                 .WithThumbnail(await _item.GetImagePath())
                 .AddField("Niveau :", _item.Level.ToString(), true)

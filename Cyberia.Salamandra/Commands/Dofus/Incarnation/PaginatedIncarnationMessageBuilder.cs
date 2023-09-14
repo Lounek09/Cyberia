@@ -40,7 +40,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         protected override IEnumerable<string> GetContent()
         {
-            return _data.Select(x => $"- {Formatter.Bold(x.Name.SanitizeMarkDown())} ({x.Id})");
+            return _data.Select(x => $"- {Formatter.Bold(Formatter.Sanitize(x.Name))} ({x.Id})");
         }
 
         protected override DiscordSelectComponent SelectBuilder()

@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
 {
-    public static class ActualActionPointsCriterion
+    public static class CurrentActionPointsCriterion
     {
         public static string? GetValue(char @operator, string[] values)
         {
