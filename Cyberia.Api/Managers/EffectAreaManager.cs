@@ -20,6 +20,9 @@ namespace Cyberia.Api.Managers
                 return "";
 
             EffectArea? effectArea = GetEffectArea();
+            if (effectArea is null)
+                DofusApi.Instance.Log.Information("Unknown effect area {areaId}", Id);
+
             return $"{GetSize()} ({(effectArea is null ? $"Inconnu ({Id})" : effectArea.Name)})";
         }
     }

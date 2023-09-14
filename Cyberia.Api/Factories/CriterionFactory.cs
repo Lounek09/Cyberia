@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
+﻿using Cyberia.Api.DatacenterNS;
+using Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
 using Cyberia.Api.Factories.Criteria.MapCriteria;
 using Cyberia.Api.Factories.Criteria.OtherCriteria;
 using Cyberia.Api.Factories.Criteria.PlayerCriteria;
@@ -91,6 +92,9 @@ namespace Cyberia.Api.Factories
             {
 
             }
+
+            if (parsedCriterion is null)
+                DofusApi.Instance.Log.Information("Unknown criterion {criterion} (args)", criterion, args);
 
             return parsedCriterion ?? $"{criterion} {@operator} {args}";
         }

@@ -53,6 +53,8 @@ namespace Cyberia.Api.Factories.Effects
                 return value;
             }
 
+            DofusApi.Instance.Log.Information("Unknown effect {effectId} (parameters)", EffectId, string.Join(", ", parameters));
+
             return $"Effet {EffectId.ToString().Bold()} non référencé ({string.Join(", ", parameters)})";
         }
     }

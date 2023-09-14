@@ -28,6 +28,8 @@ namespace Cyberia.Api.Factories.QuestObjectives
                 return PatternDecoder.DecodeDescription(questObjectiveType.Description, parameters) + (string.IsNullOrEmpty(coordinate) ? "" : $" - {coordinate}");
             }
 
+            DofusApi.Instance.Log.Information("Unknown quest objective {questObjectiveId} (parameters)", QuestObjectiveData.QuestObjectiveTypeId, string.Join(", ", parameters));
+
             return $"Type d'objectif {QuestObjectiveData.QuestObjectiveTypeId.ToString().Bold()} non référencé ({string.Join(", ", parameters)})";
         }
     }
