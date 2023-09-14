@@ -23,30 +23,41 @@ namespace Cyberia
                 .ReadFrom.Configuration(appConfig)
                 .CreateLogger();
 
-            CyberiaConfig config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>() ?? new();
+            try
+            {
+                CyberiaConfig config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>()!;
 
-            Directory.CreateDirectory("temp");
+                Directory.CreateDirectory("temp");
 
-            CytrusWatcher cytrus = CytrusWatcher.Create(Log.Logger);
+                CytrusWatcher cytrus = CytrusWatcher.Create(Log.Logger);
 
-            LangsWatcher langs = LangsWatcher.Create(Log.Logger);
+                LangsWatcher langs = LangsWatcher.Create(Log.Logger);
 
-            Bot salamandra = Bot.Build(Log.Logger, config.BotConfig, cytrus, langs);
-            await salamandra.Launch();
+                Bot salamandra = Bot.Build(Log.Logger, config.BotConfig, cytrus, langs);
+                await salamandra.Launch();
 
-            if (config.EnableCheckCytrus)
-                cytrus.Watch(10000, 60000);
+                if (config.EnableCheckCytrus)
+                    cytrus.Watch(10000, 60000);
 
-            if (config.EnableCheckLang)
-                langs.WatchAll(LangType.Official, 20000, 360000);
+                if (config.EnableCheckLang)
+                    langs.WatchAll(LangType.Official, 20000, 360000);
 
-            if (config.EnableCheckBetaLang)
-                langs.WatchAll(LangType.Beta, 140000, 360000);
+                if (config.EnableCheckBetaLang)
+                    langs.WatchAll(LangType.Beta, 140000, 360000);
 
-            if (config.EnableCheckTemporisLang)
-                langs.WatchAll(LangType.Temporis, 260000, 360000);
+                if (config.EnableCheckTemporisLang)
+                    langs.WatchAll(LangType.Temporis, 260000, 360000);
 
-            await Task.Delay(-1);
+                await Task.Delay(-1);
+            }
+            catch (Exception e)
+            {
+                Log.Fatal(e, "Fatal error");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
     }
 }

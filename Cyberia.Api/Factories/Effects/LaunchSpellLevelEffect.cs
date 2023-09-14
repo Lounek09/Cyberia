@@ -1,5 +1,4 @@
-﻿using Cyberia.Api.DatacenterNS;
-using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {

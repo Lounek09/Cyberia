@@ -1,14 +1,6 @@
-﻿using Cyberia.Cytrusaurus.Models;
-using Cyberia.Cytrusaurus.Models.FlatBuffers;
-
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-
-using Google.FlatBuffers;
-
-using System.Diagnostics;
-using System.Text;
 
 namespace Cyberia.Salamandra.Managers
 {
@@ -63,8 +55,9 @@ namespace Cyberia.Salamandra.Managers
 
         public static async Task SendFile(this DiscordChannel channel, string filePath)
         {
-            using (FileStream fileStream = File.OpenRead(filePath))
-                await channel.SendMessage(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
+            using FileStream fileStream = File.OpenRead(filePath);
+
+            await channel.SendMessage(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
         }
 
         public static async Task SendLogMessage(string content)

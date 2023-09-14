@@ -7,15 +7,12 @@
             if (values.Length > 0)
             {
                 string value = $"Emplacement {values[0].Bold()}";
-                switch (@operator)
+                return @operator switch
                 {
-                    case '≠':
-                        return $"{value} libre";
-                    case '=':
-                        return $"{value} occupé";
-                    default:
-                        return value;
-                }
+                    '≠' => $"{value} libre",
+                    '=' => $"{value} occupé",
+                    _ => value,
+                };
             }
 
             return null;

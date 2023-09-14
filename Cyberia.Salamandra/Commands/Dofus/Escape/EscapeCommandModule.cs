@@ -7,7 +7,6 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-#pragma warning disable CA1822 // Mark members as static
     public sealed class EscapeCommandModule : ApplicationCommandModule
     {
         [SlashCommand("fuite", "Permet de calculer son % de fuite")]

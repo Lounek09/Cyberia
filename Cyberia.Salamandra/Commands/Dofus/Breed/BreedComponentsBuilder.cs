@@ -1,11 +1,10 @@
 ﻿using Cyberia.Api.DatacenterNS;
-using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus
-{ 
+{
     public static class BreedComponentsBuilder
     {
         public static DiscordButtonComponent BreedButtonBuilder(Breed breed, bool disable = false)

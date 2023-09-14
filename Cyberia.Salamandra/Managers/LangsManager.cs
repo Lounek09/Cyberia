@@ -1,7 +1,8 @@
-﻿using Cyberia.Langzilla.Enums;
-using Cyberia.Langzilla;
-using DSharpPlus.Entities;
+﻿using Cyberia.Langzilla;
+using Cyberia.Langzilla.Enums;
+
 using DSharpPlus;
+using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Managers
 {

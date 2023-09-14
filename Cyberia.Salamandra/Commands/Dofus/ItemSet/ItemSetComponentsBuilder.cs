@@ -16,7 +16,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public static DiscordSelectComponent ItemSetsSelectBuilder(int uniqueIndex, List<ItemSet> itemSets, bool disable = false)
         {
             IEnumerable<DiscordSelectComponentOption> options = itemSets.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), ItemSetMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
-            
+
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une panoplie pour l'afficher", options, disable);
         }
     }

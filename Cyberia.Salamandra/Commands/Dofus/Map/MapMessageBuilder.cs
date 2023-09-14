@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.DatacenterNS;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus

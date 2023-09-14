@@ -18,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Data
             List<DiscordAutoCompleteChoice> choices = new();
 
             foreach (KeyValuePair<string, Dictionary<string, string>> platform in Bot.Instance.CytrusWatcher.CytrusData.Games[game].Platforms)
-                    choices.Add(new(platform.Key.Capitalize(), platform.Key));
+                choices.Add(new(platform.Key.Capitalize(), platform.Key));
 
             return Task.FromResult(choices.AsEnumerable());
         }

@@ -47,11 +47,10 @@ namespace Cyberia.Utils
         {
             string json = JsonSerializer.Serialize(obj, _options);
 
-            using (FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.Write))
-            {
-                using (StreamWriter streamWriter = new(fileStream, Encoding.UTF8))
-                    streamWriter.Write(json);
-            }
+            using FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.Write);
+            using StreamWriter streamWriter = new(fileStream, Encoding.UTF8);
+
+            streamWriter.Write(json);
         }
 
         public static string Indent(string json)

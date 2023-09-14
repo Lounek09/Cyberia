@@ -6,29 +6,18 @@
         {
             if (values.Length > 0)
             {
-                string hand = "";
-                switch (values[0])
+                string hand = values[0] switch
                 {
-                    case "1":
-                        hand = "Une pair";
-                        break;
-                    case "2":
-                        hand = "Double pair";
-                        break;
-                    case "3":
-                        hand = "Brelan";
-                        break;
-                    case "4":
-                        hand = "Carré";
-                        break;
-                    default:
-                        hand = "Inconnu";
-                        break;
-                }
+                    "1" => "Une pair",
+                    "2" => "Double pair",
+                    "3" => "Brelan",
+                    "4" => "Carré",
+                    _ => "Inconnu",
+                };
 
                 return $"Main {@operator} {hand.Bold()}";
             }
-                
+
 
             return null;
         }

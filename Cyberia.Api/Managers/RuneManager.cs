@@ -17,17 +17,13 @@ namespace Cyberia.Api.Managers
 
         public static int GetPower(this Rune rune, RuneType type)
         {
-            switch (type)
+            return type switch
             {
-                case RuneType.BA:
-                    return rune.Power;
-                case RuneType.PA:
-                    return rune.Power * 3 + (rune.Name.Equals("Vi") ? 1 : 0);
-                case RuneType.RA:
-                    return rune.Power * 10;
-                default:
-                    return 0;
-            }
+                RuneType.BA => rune.Power,
+                RuneType.PA => rune.Power * 3 + (rune.Name.Equals("Vi") ? 1 : 0),
+                RuneType.RA => rune.Power * 10,
+                _ => 0,
+            };
         }
 
         public static double GetPercentStatExtractable(this Rune rune, int itemLvl, int statAmount)
@@ -51,17 +47,13 @@ namespace Cyberia.Api.Managers
 
         public static int GetStatAmountExtractableToObtain(this Rune rune, RuneType type)
         {
-            switch (type)
+            return type switch
             {
-                case RuneType.BA:
-                    return rune.GetPower(RuneType.BA);
-                case RuneType.PA:
-                    return 2 * rune.GetPower(RuneType.BA) + rune.GetPower(RuneType.PA);
-                case RuneType.RA:
-                    return 4 * rune.GetPower(RuneType.BA) + 2 * rune.GetPower(RuneType.PA) + rune.GetPower(RuneType.RA);
-                default:
-                    return 0;
-            }
+                RuneType.BA => rune.GetPower(RuneType.BA),
+                RuneType.PA => 2 * rune.GetPower(RuneType.BA) + rune.GetPower(RuneType.PA),
+                RuneType.RA => 4 * rune.GetPower(RuneType.BA) + 2 * rune.GetPower(RuneType.PA) + rune.GetPower(RuneType.RA),
+                _ => 0,
+            };
         }
 
         public static double GetPercentToObtain(this Rune rune, RuneType type, int itemLvl, int statAmount)

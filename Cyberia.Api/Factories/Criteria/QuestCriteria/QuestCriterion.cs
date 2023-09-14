@@ -9,19 +9,14 @@
                 string questName = DofusApi.Instance.Datacenter.QuestsData.GetQuestNameById(questId);
 
                 string value = $"Quête {questName.Bold()}";
-                switch (@operator)
+                return @operator switch
                 {
-                    case '≠':
-                        return $"{value} pas en cours";
-                    case '=':
-                        return $"{value} en cours";
-                    case '>':
-                        return $"{value} validée";
-                    case '<':
-                        return $"{value} non validée";
-                    default:
-                        return value;
-                }
+                    '≠' => $"{value} pas en cours",
+                    '=' => $"{value} en cours",
+                    '>' => $"{value} validée",
+                    '<' => $"{value} non validée",
+                    _ => value,
+                };
             }
 
             return null;

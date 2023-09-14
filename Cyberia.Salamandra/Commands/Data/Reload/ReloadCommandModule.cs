@@ -4,7 +4,6 @@ using DSharpPlus.SlashCommands.Attributes;
 
 namespace Cyberia.Salamandra.Commands.Data
 {
-#pragma warning disable CA1822 // Mark members as static
     public sealed class ReloadCommandModule : ApplicationCommandModule
     {
         [SlashCommand("reload", "[Owner] Recharge les données de Salamandra")]

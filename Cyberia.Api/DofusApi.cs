@@ -18,7 +18,8 @@ namespace Cyberia.Api
         internal LangsWatcher LangsWatcher { get; init; }
         internal HttpClient HttpClient { get; init; }
 
-        internal static DofusApi Instance {
+        internal static DofusApi Instance
+        {
             get => _instance is null ? throw new NullReferenceException("Build the Api before !") : _instance;
             private set => _instance = value;
         }

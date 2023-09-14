@@ -60,221 +60,63 @@
 
         public static string Effect(int id)
         {
-            switch (id)
+            return id switch
             {
-                case 226:
-                    return TRAP_PERCENT;
-                case 225:
-                    return TRAP_DAMAGE;
-                case 724:
-                    return TITLE;
-                case 182:
-                case 780:
-                    return SUMMONABLE_CREATURES;
-                case 118:
-                case 157:
-                case 271:
-                case 607:
-                    return STRENGHT;
-                case 130:
-                    return STEAL_KAMAS;
-                case 283:
-                case 293:
-                    return SPELL_DAMMAGE;
-                case 289:
-                    return SIGHT;
-                case 106:
-                case 220:
-                    return RETURN;
-                case 211:
-                case 216:
-                case 241:
-                case 246:
-                case 251:
-                case 256:
-                case 261:
-                    return RES_WATER;
-                case 214:
-                case 219:
-                case 244:
-                case 249:
-                case 254:
-                case 259:
-                case 264:
-                    return RES_NEUTRAL;
-                case 213:
-                case 218:
-                case 243:
-                case 248:
-                case 253:
-                case 258:
-                case 263:
-                    return RES_FIRE;
-                case 210:
-                case 215:
-                case 240:
-                case 245:
-                case 250:
-                case 255:
-                case 260:
-                    return RES_EARTH;
-                case 212:
-                case 217:
-                case 242:
-                case 247:
-                case 252:
-                case 257:
-                case 262:
-                    return RES_AIR;
-                case 116:
-                case 117:
-                case 135:
-                case 136:
-                case 320:
-                    return RANGE;
-                case 5:
-                case 6:
-                case 783:
-                    return PUSH;
-                case 176:
-                case 177:
-                    return PROSPECTING;
-                case 158:
-                case 159:
-                    return WEIGHT;
-                case 89:
-                case 95:
-                case 100:
-                case 279:
-                case 670:
-                case 671:
-                case 672:
-                    return NEUTRAL_DAMAGE;
-                case 77:
-                case 78:
-                case 127:
-                case 128:
-                case 134:
-                case 169:
-                    return MOVEMENT_POINTS;
-                case 123:
-                case 152:
-                case 266:
-                case 608:
-                    return LUCK;
-                case 146:
-                    return LANGUAGE;
-                case 126:
-                case 155:
-                case 269:
-                case 611:
-                    return INTELLIGENCE;
-                case 669:
-                    return INCARNATION;
-                case 174:
-                case 175:
-                    return INITIATIVE;
-                case 795:
-                    return HUNTING;
-                case 110:
-                case 800:
-                    return HEALTH;
-                case 81:
-                case 108:
-                case 143:
-                case 178:
-                case 179:
-                case 284:
-                case 646:
-                    return HEAL;
-                case 148:
-                    return FOLLOWER;
-                case 88:
-                case 94:
-                case 99:
-                case 278:
-                    return FIRE_DAMAGE;
-                case 281:
-                case 294:
-                    return ENHANCE_RANGE;
-                case 139:
-                case 230:
-                    return ENERGY;
-                case 282:
-                    return ENABLE_RANGE;
-                case 10:
-                    return EMOTE;
-                case 86:
-                case 92:
-                case 97:
-                case 276:
-                    return EARTH_DAMAGE;
-                case 161:
-                    return DODGE_MP;
-                case 160:
-                    return DODGE_AP;
-                case 138:
-                case 186:
-                    return DAMAGES_PERCENT;
-                case 112:
-                case 121:
-                case 145:
-                    return DAMAGE;
-                case 115:
-                case 171:
-                case 287:
-                    return CRIT;
-                case 286:
-                    return CAST_SPEED;
-                case 290:
-                    return CAST_PER_TURN;
-                case 285:
-                    return AP_COST_REDUCTION;
-                case 87:
-                case 93:
-                case 98:
-                case 277:
-                    return AIR_DAMAGE;
-                case 119:
-                case 154:
-                case 268:
-                case 609:
-                    return AGILITY;
-                case 84:
-                case 101:
-                case 111:
-                case 120:
-                case 133:
-                case 168:
-                case 2100:
-                    return ACTION_POINTS;
-                case 124:
-                case 156:
-                case 270:
-                case 606:
-                    return WISDOM;
-                case 165:
-                    return WEAPON_DAMAGE;
-                case 85:
-                case 91:
-                case 96:
-                case 275:
-                    return WATER_DAMAGE;
-                case 125:
-                case 153:
-                case 267:
-                case 610:
-                    return VITALITY;
-                case 141:
-                    return DEAD;
-                case 163:
-                    return ATTACK_MP;
-                case 162:
-                case 166:
-                    return ATTACK_AP;
-                default:
-                    return EMPTY;
-            }
+                226 => TRAP_PERCENT,
+                225 => TRAP_DAMAGE,
+                724 => TITLE,
+                182 or 780 => SUMMONABLE_CREATURES,
+                118 or 157 or 271 or 607 => STRENGHT,
+                130 => STEAL_KAMAS,
+                283 or 293 => SPELL_DAMMAGE,
+                289 => SIGHT,
+                106 or 220 => RETURN,
+                211 or 216 or 241 or 246 or 251 or 256 or 261 => RES_WATER,
+                214 or 219 or 244 or 249 or 254 or 259 or 264 => RES_NEUTRAL,
+                213 or 218 or 243 or 248 or 253 or 258 or 263 => RES_FIRE,
+                210 or 215 or 240 or 245 or 250 or 255 or 260 => RES_EARTH,
+                212 or 217 or 242 or 247 or 252 or 257 or 262 => RES_AIR,
+                116 or 117 or 135 or 136 or 320 => RANGE,
+                5 or 6 or 783 => PUSH,
+                176 or 177 => PROSPECTING,
+                158 or 159 => WEIGHT,
+                89 or 95 or 100 or 279 or 670 or 671 or 672 => NEUTRAL_DAMAGE,
+                77 or 78 or 127 or 128 or 134 or 169 => MOVEMENT_POINTS,
+                123 or 152 or 266 or 608 => LUCK,
+                146 => LANGUAGE,
+                126 or 155 or 269 or 611 => INTELLIGENCE,
+                669 => INCARNATION,
+                174 or 175 => INITIATIVE,
+                795 => HUNTING,
+                110 or 800 => HEALTH,
+                81 or 108 or 143 or 178 or 179 or 284 or 646 => HEAL,
+                148 => FOLLOWER,
+                88 or 94 or 99 or 278 => FIRE_DAMAGE,
+                281 or 294 => ENHANCE_RANGE,
+                139 or 230 => ENERGY,
+                282 => ENABLE_RANGE,
+                10 => EMOTE,
+                86 or 92 or 97 or 276 => EARTH_DAMAGE,
+                161 => DODGE_MP,
+                160 => DODGE_AP,
+                138 or 186 => DAMAGES_PERCENT,
+                112 or 121 or 145 => DAMAGE,
+                115 or 171 or 287 => CRIT,
+                286 => CAST_SPEED,
+                290 => CAST_PER_TURN,
+                285 => AP_COST_REDUCTION,
+                87 or 93 or 98 or 277 => AIR_DAMAGE,
+                119 or 154 or 268 or 609 => AGILITY,
+                84 or 101 or 111 or 120 or 133 or 168 or 2100 => ACTION_POINTS,
+                124 or 156 or 270 or 606 => WISDOM,
+                165 => WEAPON_DAMAGE,
+                85 or 91 or 96 or 275 => WATER_DAMAGE,
+                125 or 153 or 267 or 610 => VITALITY,
+                141 => DEAD,
+                163 => ATTACK_MP,
+                162 or 166 => ATTACK_AP,
+                _ => EMPTY,
+            };
         }
 
 

@@ -62,13 +62,6 @@ namespace Cyberia.Utils
             return result;
         }
 
-        public static string SanitizeMarkDown(this string value)
-        {
-            Regex regex = new(@"([`\*_~<>\[\]\(\)""@\!\&#:\|-])");
-
-            return regex.Replace(value, m => $"\\{m.Groups[1].Value}");
-        }
-
         public static string RemoveDiacritics(this string value)
         {
             StringBuilder output = new();

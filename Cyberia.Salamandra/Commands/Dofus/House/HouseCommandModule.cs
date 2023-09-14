@@ -5,11 +5,8 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-using Newtonsoft.Json.Linq;
-
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-#pragma warning disable CA1822 // Mark members as static
     [SlashCommandGroup("maison", "Retourne les informations des maisons")]
     public sealed class HouseCommandModule : ApplicationCommandModule
     {

@@ -18,7 +18,8 @@ namespace Cyberia.Langzilla
 
         internal HttpClient HttpClient { get; init; }
 
-        internal static LangsWatcher Instance {
+        internal static LangsWatcher Instance
+        {
             get => _instance is null ? throw new NullReferenceException("Build the Langs before !") : _instance;
         }
         private static LangsWatcher? _instance;
@@ -80,7 +81,7 @@ namespace Cyberia.Langzilla
 
             LangsData data = GetLangsByType(type).GetLangsByLanguage(language);
             List<Lang> updatedLangs = await data.FetchLangsAsync(force);
-            
+
             CheckLangFinished?.Invoke(this, new CheckLangFinishedEventArgs(type, language, updatedLangs));
         }
 

@@ -3,11 +3,8 @@
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-using Newtonsoft.Json.Linq;
-
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-#pragma warning disable CA1822 // Mark members as static
     public sealed class QuestCommandModule : ApplicationCommandModule
     {
         [SlashCommand("quete", "Retourne les informations d'une quête à partir de son nom")]

@@ -9,19 +9,14 @@
                 string questObjectiveDescription = DofusApi.Instance.Datacenter.QuestsData.GetQuestObjectiveDescriptionById(questId);
 
                 string value = $"Objectif de quête {questObjectiveDescription}";
-                switch (@operator)
+                return @operator switch
                 {
-                    case '≠':
-                        return $"{value} non finissable";
-                    case '=':
-                        return $"{value} finissable";
-                    case '>':
-                        return $"{value} validé";
-                    case '<':
-                        return $"{value} non validé";
-                    default:
-                        return value;
-                }
+                    '≠' => $"{value} non finissable",
+                    '=' => $"{value} finissable",
+                    '>' => $"{value} validé",
+                    '<' => $"{value} non validé",
+                    _ => value,
+                };
             }
 
             return null;

@@ -5,7 +5,6 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-#pragma warning disable CA1822 // Mark members as static
     public sealed class CraftCommandModule : ApplicationCommandModule
     {
         [SlashCommand("craft", "Permet de calculer les ressources nécéssaire pour craft un objet")]

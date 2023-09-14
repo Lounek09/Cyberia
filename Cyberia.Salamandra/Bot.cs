@@ -27,7 +27,8 @@ namespace Cyberia.Salamandra
         internal DofusApi Api { get; init; }
 
 
-        internal static Bot Instance {
+        internal static Bot Instance
+        {
             get => _instance is null ? throw new NullReferenceException("Build the Bot before !") : _instance;
         }
         private static Bot? _instance;

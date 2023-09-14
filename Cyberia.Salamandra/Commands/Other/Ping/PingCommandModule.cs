@@ -1,7 +1,6 @@
 ﻿using DSharpPlus.SlashCommands;
 namespace Cyberia.Salamandra.Commands.Other
 {
-#pragma warning disable CA1822 // Mark members as static
     public sealed class PingCommandModule : ApplicationCommandModule
     {
         [SlashCommand("ping", "Retourne Pong")]

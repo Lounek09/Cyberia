@@ -150,28 +150,22 @@ namespace Cyberia.Api.Factories
 
         private static string TranslateLogicalOperator(char logicalOperator)
         {
-            switch (logicalOperator)
+            return logicalOperator switch
             {
-                case '&':
-                    return "et";
-                case '|':
-                    return "ou";
-                default:
-                    return logicalOperator.ToString();
-            }
+                '&' => "et",
+                '|' => "ou",
+                _ => logicalOperator.ToString(),
+            };
         }
 
         private static char TranslateOperator(char @operator)
         {
-            switch (@operator)
+            return @operator switch
             {
-                case '!':
-                    return '≠';
-                case '~':
-                    return '=';
-                default:
-                    return @operator;
-            }
+                '!' => '≠',
+                '~' => '=',
+                _ => @operator,
+            };
         }
     }
 }

@@ -9,15 +9,12 @@
                 string monsterName = DofusApi.Instance.Datacenter.MonstersData.GetMonsterNameById(monsterId);
 
                 string value = $"Le monstre {monsterName.Bold()}";
-                switch (@operator)
+                return @operator switch
                 {
-                    case '≠':
-                        return $"{value} est invoqué dans l'équipe alliée";
-                    case '=':
-                        return $"{value} n'est pas invoqué dans l'équipe alliée";
-                    default:
-                        return value;
-                }
+                    '≠' => $"{value} est invoqué dans l'équipe alliée",
+                    '=' => $"{value} n'est pas invoqué dans l'équipe alliée",
+                    _ => value,
+                };
             }
 
             return null;

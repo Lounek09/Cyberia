@@ -17,7 +17,8 @@ namespace Cyberia.Cytrusaurus
         public CytrusData OldCytrusData { get; internal set; }
 
         internal HttpClient HttpClient { get; init; }
-        internal static CytrusWatcher Instance {
+        internal static CytrusWatcher Instance
+        {
             get => _instance is null ? throw new NullReferenceException("Build Cytrus before !") : _instance;
         }
         private static CytrusWatcher? _instance;

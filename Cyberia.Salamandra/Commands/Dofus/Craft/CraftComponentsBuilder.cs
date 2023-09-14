@@ -5,7 +5,7 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus
-{ 
+{
     public static class CraftComponentsBuilder
     {
         public static DiscordButtonComponent CraftButtonBuilder(Craft craft, int qte = 1, bool disable = false)

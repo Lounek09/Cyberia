@@ -6,7 +6,6 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
-using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 

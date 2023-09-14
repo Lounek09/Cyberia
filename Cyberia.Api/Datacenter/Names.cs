@@ -36,7 +36,7 @@ namespace Cyberia.Api.DatacenterNS
 
         [JsonPropertyName("NF.n")]
         public List<TaxCollectorLastName> TaxCollectorLastNames { get; init; }
-        
+
         [JsonPropertyName("NF.f")]
         public List<TaxCollectorFirstName> TaxCollectorFirstNames { get; init; }
 

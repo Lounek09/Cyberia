@@ -38,14 +38,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public static DiscordSelectComponent MapSubAreasSelectBuilder(int uniqueIndex, List<MapSubArea> mapSubAreas, bool disable = false)
         {
             IEnumerable<DiscordSelectComponentOption> options = mapSubAreas.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, x.Id.ToString()), Bot.Instance.Api.Datacenter.MapsData.GetMapAreaNameById(x.MapAreaId)));
-            
+
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une sous-zone pour afficher ses maps", options, disable);
         }
 
         public static DiscordSelectComponent MapAreasSelectBuilder(int uniqueIndex, List<MapArea> mapAreas, bool disable = false)
         {
             IEnumerable<DiscordSelectComponentOption> options = mapAreas.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, x.Id.ToString()), Bot.Instance.Api.Datacenter.MapsData.GetMapSuperAreaNameById(x.MapSuperAreaId)));
-            
+
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une zone pour afficher ses maps", options, disable);
         }
     }

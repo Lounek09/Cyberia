@@ -1,6 +1,4 @@
-﻿using Cyberia.Cytrusaurus.Models;
-
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Data

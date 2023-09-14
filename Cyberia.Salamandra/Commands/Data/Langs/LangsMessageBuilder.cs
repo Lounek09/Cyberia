@@ -64,7 +64,7 @@ namespace Cyberia.Salamandra.Commands.Data
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Langs")
                 .WithTitle($"Langs {_type} en {_language}");
 
-            
+
             if (_langsData.Langs.Count > 0)
             {
                 StringBuilder content = new();

@@ -119,7 +119,7 @@ namespace Cyberia.Langzilla
             foreach (string langInfo in langInfoArray)
             {
                 string[] langParameters = langInfo.Split(',');
-                
+
                 Lang lang = new(langParameters[0], int.Parse(langParameters[2]), Type, Language);
                 if (!File.Exists(lang.GetFilePath()))
                 {

@@ -6,29 +6,18 @@
         {
             if (values.Length > 0)
             {
-                string element = "";
-                switch (values[0])
+                string element = values[0] switch
                 {
-                    case "1":
-                        element = "Force";
-                        break;
-                    case "2":
-                        element = "Inteligence";
-                        break;
-                    case "3":
-                        element = "Chance";
-                        break;
-                    case "4":
-                        element = "Agilité";
-                        break;
-                    default:
-                        element = "Inconnu";
-                        break;
-                }
+                    "1" => "Force",
+                    "2" => "Inteligence",
+                    "3" => "Chance",
+                    "4" => "Agilité",
+                    _ => "Inconnu",
+                };
 
                 return $"Meilleur élément {@operator} {element.Bold()}";
             }
-                
+
 
             return null;
         }
