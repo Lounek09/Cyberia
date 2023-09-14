@@ -220,12 +220,12 @@ namespace Cyberia.Api.DatacenterNS
 
         public async Task<string> GetImagePath()
         {
-            string url = $"{DofusApi.Instance.CdnUrl}/images/spells/{Id}.jpg";
+            string url = $"{DofusApi.Instance.Config.CdnUrl}/images/spells/{Id}.jpg";
 
             if (await DofusApi.Instance.HttpClient.CheckIfPageExistsAsync(url))
                 return url;
 
-            return $"{DofusApi.Instance.CdnUrl}/images/spells/unknown.png";
+            return $"{DofusApi.Instance.Config.CdnUrl}/images/spells/unknown.png";
         }
 
         public Breed? GetBreed()
@@ -250,23 +250,16 @@ namespace Cyberia.Api.DatacenterNS
 
         public SpellLevel? GetSpellLevel(int level = 1)
         {
-            switch (level)
+            return level switch
             {
-                case 1:
-                    return SpellLevel1;
-                case 2:
-                    return SpellLevel2;
-                case 3:
-                    return SpellLevel3;
-                case 4:
-                    return SpellLevel4;
-                case 5:
-                    return SpellLevel5;
-                case 6:
-                    return SpellLevel6;
-                default:
-                    return null;
-            }
+                1 => SpellLevel1,
+                2 => SpellLevel2,
+                3 => SpellLevel3,
+                4 => SpellLevel4,
+                5 => SpellLevel5,
+                6 => SpellLevel6,
+                _ => null,
+            };
         }
 
         public int GetMaxLevelNumber()

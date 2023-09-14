@@ -1,6 +1,6 @@
 ﻿global using Cyberia.Utils;
+
 using Cyberia.Api;
-using Cyberia.Chronicle;
 using Cyberia.Cytrusaurus;
 using Cyberia.Langzilla;
 using Cyberia.Salamandra.Managers;
@@ -9,7 +9,7 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace Cyberia.Salamandra
 {
@@ -17,7 +17,7 @@ namespace Cyberia.Salamandra
     {
         public const string OUTPUT_PATH = "bot";
 
-        public Logger Logger { get; init; }
+        public ILogger Logger { get; init; }
         public BotConfig Config { get; init; }
         public DiscordClient Client { get; init; }
         public SlashCommandsExtension SlashCommands { get; init; }
@@ -32,12 +32,12 @@ namespace Cyberia.Salamandra
         }
         private static Bot? _instance;
 
-        internal Bot(CytrusWatcher cytrus, LangsWatcher langs, DofusApi api)
+        internal Bot(ILogger logger, BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
-            Logger = new("bot");
-            Config = BotConfig.Load();
+            Logger = logger;
+            Config = config;
 
             Client = new(new DiscordConfiguration()
             {
@@ -45,7 +45,7 @@ namespace Cyberia.Salamandra
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
 #if DEBUG
-                MinimumLogLevel = LogLevel.Debug,
+                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug,
 #endif
                 LogTimestampFormat = "yyyy/MM/dd HH:mm:ss:ffff"
             });
@@ -63,14 +63,13 @@ namespace Cyberia.Salamandra
 
             LangsWatcher = langs;
             LangsWatcher.CheckLangFinished += LangsManager.OnCheckLangFinished;
-            
 
-            Api = api;
+            Api = DofusApi.Build(logger, config.ApiConfig, langs);
         }
 
-        public static Bot Build(CytrusWatcher cytrus, LangsWatcher langs, DofusApi api)
+        public static Bot Build(ILogger logger, BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)
         {
-            _instance ??= new(cytrus, langs, api);
+            _instance ??= new(logger, config, cytrus, langs);
             return _instance;
         }
 

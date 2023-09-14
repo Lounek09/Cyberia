@@ -35,12 +35,12 @@ namespace Cyberia.Api.DatacenterNS
 
         public async Task<string> GetImgPath()
         {
-            string url = $"{DofusApi.Instance.CdnUrl}/images/artworks/{GfxId}.png";
+            string url = $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/{GfxId}.png";
 
             if (await DofusApi.Instance.HttpClient.CheckIfPageExistsAsync(url))
                 return url;
 
-            return $"{DofusApi.Instance.CdnUrl}/images/artworks/unknown.png";
+            return $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/unknown.png";
         }
 
         public Item? GetItem()

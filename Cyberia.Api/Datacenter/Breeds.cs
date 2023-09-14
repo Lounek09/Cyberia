@@ -79,12 +79,12 @@ namespace Cyberia.Api.DatacenterNS
 
         public string GetIconImagePath()
         {
-            return $"{DofusApi.Instance.CdnUrl}/images/breeds/icons/{Id}.png";
+            return $"{DofusApi.Instance.Config.CdnUrl}/images/breeds/icons/{Id}.png";
         }
 
         public string GetPreferenceWeaponsImagePath()
         {
-            return $"{DofusApi.Instance.CdnUrl}/images/breeds/preference_weapons/weapons_{Id}.png";
+            return $"{DofusApi.Instance.Config.CdnUrl}/images/breeds/preference_weapons/weapons_{Id}.png";
         }
 
         public List<Spell> GetSpells()
@@ -94,7 +94,7 @@ namespace Cyberia.Api.DatacenterNS
             foreach (int spellId in SpellsId)
             {
                 Spell? spell = DofusApi.Instance.Datacenter.SpellsData.GetSpellById(spellId);
-                if (spell is not null && (!DofusApi.Instance.Temporis || spell.SpellCategoryId == SpellCategory.TEMPORIS_BREED))
+                if (spell is not null && (!DofusApi.Instance.Config.Temporis || spell.SpellCategoryId == SpellCategory.TEMPORIS_BREED))
                     spells.Add(spell);
             }
 

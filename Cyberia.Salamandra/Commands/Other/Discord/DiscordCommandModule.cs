@@ -8,7 +8,7 @@ namespace Cyberia.Salamandra.Commands.Other
         [SlashCommand("discord", "Lien d'invitation du serveur Discord de support")]
         public async Task Command(InteractionContext ctx)
         {
-            await ctx.CreateResponseAsync(Bot.Instance.Config.DiscordInviteUrl, true);
+            await ctx.CreateResponseAsync(Bot.Instance.Config.DiscordServerInviteUrl, true);
         }
     }
 }

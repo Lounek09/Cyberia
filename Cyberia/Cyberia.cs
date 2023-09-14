@@ -1,49 +1,50 @@
-﻿global using Cyberia.Utils;
-using Cyberia.Api;
-using Cyberia.Chronicle;
-using Cyberia.Cytrusaurus;
+﻿using Cyberia.Cytrusaurus;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra;
+
+using Microsoft.Extensions.Configuration;
+
+using Serilog;
 
 namespace Cyberia
 {
     public static class Cyberia
     {
-        public static Logger Logger { get; private set; }
-        public static Config Config { get; private set; }
-        public static CytrusWatcher CytrusWatcher { get; private set; }
-        public static LangsWatcher LangsWatcher { get; private set; }
-        public static DofusApi Api { get; private set; }
-        public static Bot Salamandra { get; private set; }
-
-        static Cyberia()
-        {
-            Logger = new("main");
-            Config = Config.Load();
-            CytrusWatcher = CytrusWatcher.Create();
-            LangsWatcher = LangsWatcher.Create();
-            Api = DofusApi.Build(Config.CdnUrl, Config.Temporis, LangsWatcher, FormatType.MarkDown);
-            Salamandra = Bot.Build(CytrusWatcher, LangsWatcher, Api);
-
-            Directory.CreateDirectory("temp");
-        }
-
         public static async Task Main()
         {
-            await Salamandra.Launch();
+            IConfigurationBuilder builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false);
 
-            if (Config.EnableCheckCytrus)
-                CytrusWatcher.Watch(10000, 60000);
+            IConfigurationRoot appConfig = builder.Build();
 
-            if (Config.EnableCheckLang)
-                LangsWatcher.WatchAll(LangType.Official, 20000, 360000);
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(appConfig)
+                .CreateLogger();
 
-            if (Config.EnableCheckBetaLang)
-                LangsWatcher.WatchAll(LangType.Beta, 140000, 360000);
+            CyberiaConfig config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>() ?? new();
 
-            if (Config.EnableCheckTemporisLang)
-                LangsWatcher.WatchAll(LangType.Temporis, 260000, 360000);
+            Directory.CreateDirectory("temp");
+
+            CytrusWatcher cytrus = CytrusWatcher.Create(Log.Logger);
+
+            LangsWatcher langs = LangsWatcher.Create(Log.Logger);
+
+            Bot salamandra = Bot.Build(Log.Logger, config.BotConfig, cytrus, langs);
+            await salamandra.Launch();
+
+            if (config.EnableCheckCytrus)
+                cytrus.Watch(10000, 60000);
+
+            if (config.EnableCheckLang)
+                langs.WatchAll(LangType.Official, 20000, 360000);
+
+            if (config.EnableCheckBetaLang)
+                langs.WatchAll(LangType.Beta, 140000, 360000);
+
+            if (config.EnableCheckTemporisLang)
+                langs.WatchAll(LangType.Temporis, 260000, 360000);
 
             await Task.Delay(-1);
         }

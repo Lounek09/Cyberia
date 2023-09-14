@@ -1,7 +1,8 @@
 ﻿global using Cyberia.Utils;
 using Cyberia.Api.DatacenterNS;
-using Cyberia.Chronicle;
 using Cyberia.Langzilla;
+
+using Serilog;
 
 namespace Cyberia.Api
 {
@@ -10,14 +11,11 @@ namespace Cyberia.Api
         internal const string OUTPUT_PATH = "api";
         internal const string CUSTOM_PATH = $"{OUTPUT_PATH}/custom";
 
-        public Logger Logger { get; init; }
-        public string CdnUrl { get; init; }
-        public bool Temporis { get; init; }
-
+        public ILogger Log { get; init; }
+        public ApiConfig Config { get; init; }
         public Datacenter Datacenter { get; internal set; }
 
         internal LangsWatcher LangsWatcher { get; init; }
-        internal FormatType FormatType { get; init; }
         internal HttpClient HttpClient { get; init; }
 
         internal static DofusApi Instance {
@@ -26,23 +24,21 @@ namespace Cyberia.Api
         }
         private static DofusApi? _instance;
 
-        internal DofusApi(string cdnUrl, bool temporis, LangsWatcher langsWatcher, FormatType formatType)
+        internal DofusApi(ILogger logger, ApiConfig config, LangsWatcher langsWatcher)
         {
             Directory.CreateDirectory(OUTPUT_PATH);
             Directory.CreateDirectory(CUSTOM_PATH);
 
-            Logger = new("api");
-            CdnUrl = cdnUrl;
-            Temporis = temporis;
+            Log = logger;
+            Config = config;
             LangsWatcher = langsWatcher;
-            FormatType = formatType;
             HttpClient = new();
             Datacenter = new();
         }
 
-        public static DofusApi Build(string cdnUrl, bool temporis, LangsWatcher langsWatcher, FormatType formatType)
+        public static DofusApi Build(ILogger logger, ApiConfig config, LangsWatcher langsWatcher)
         {
-            _instance ??= new(cdnUrl, temporis, langsWatcher, formatType);
+            _instance ??= new(logger, config, langsWatcher);
             return _instance;
         }
 

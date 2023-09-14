@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cyberia.Chronicle\Cyberia.Chronicle.csproj" />
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="Cyberia.Utils" />
+  </ItemGroup>
+  
   <ItemGroup>
     <None Update="flare\flare.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -53,7 +53,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public string GetImagePath()
         {
-            return $"{DofusApi.Instance.CdnUrl}/images/maps/{Id}.jpg";
+            return $"{DofusApi.Instance.Config.CdnUrl}/images/maps/{Id}.jpg";
         }
 
         public MapSubArea? GetMapSubArea()

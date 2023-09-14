@@ -114,7 +114,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             else
             {
                 embed.WithDescription(Formatter.Italic("Incarnation non existante dans les langs du jeu"))
-                    .WithThumbnail($"{Bot.Instance.Api.CdnUrl}/images/items/unknown.png");
+                    .WithThumbnail($"{Bot.Instance.Api.Config.CdnUrl}/images/items/unknown.png");
             }
 
             if (_spells.Count > 0)

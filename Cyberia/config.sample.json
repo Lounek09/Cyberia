@@ -1,8 +1,0 @@
-{
-  "CdnUrl": "URL_OF_YOUR_CDN",
-  "Temporis": false,
-  "EnableCheckLang": false,
-  "EnableCheckBetaLang": false,
-  "EnableCheckTemporisLang": false,
-  "EnableCheckCytrus": false
-}

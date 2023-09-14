@@ -17,7 +17,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public string GetImagePath()
         {
-            return $"{DofusApi.Instance.CdnUrl}/images/effectareas/{Id}.png";
+            return $"{DofusApi.Instance.Config.CdnUrl}/images/effectareas/{Id}.png";
         }
     }
 

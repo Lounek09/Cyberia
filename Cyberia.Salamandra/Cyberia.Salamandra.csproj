@@ -13,16 +13,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cyberia.Api\Cyberia.Api.csproj" />
-    <ProjectReference Include="..\Cyberia.Chronicle\Cyberia.Chronicle.csproj" />
     <ProjectReference Include="..\Cyberia.Cytrusaurus\Cyberia.Cytrusaurus.csproj" />
     <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="bot.config.sample.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Using Include="Cyberia.Utils" />
   </ItemGroup>
 
 </Project>

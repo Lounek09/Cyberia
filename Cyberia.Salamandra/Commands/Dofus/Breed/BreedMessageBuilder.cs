@@ -70,7 +70,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             if (_spells.Count > 0)
                 embed.AddField("Sorts :", string.Join('\n', _spells.Select(x => $"- Niv.{x.GetNeededLevel()} {Formatter.Bold(x.Name)}")));
 
-            if (Bot.Instance.Api.Temporis)
+            if (Bot.Instance.Api.Config.Temporis)
                 embed.AddField("Temporis :", $"{Formatter.Bold(_breed.TemporisPassiveName)} :\n{_breed.TemporisPassiveDescription}");
 
             return Task.FromResult(embed);

@@ -1,6 +1,6 @@
-﻿global using Cyberia.Utils;
-using Cyberia.Chronicle;
-using Cyberia.Langzilla.Enums;
+﻿using Cyberia.Langzilla.Enums;
+
+using Serilog;
 
 using System.Collections.Concurrent;
 
@@ -11,7 +11,7 @@ namespace Cyberia.Langzilla
         public const string OUTPUT_PATH = "langs";
         public const string BASE_URL = "https://dofusretro.cdn.ankama.com";
 
-        public Logger Logger { get; init; }
+        public ILogger Log { get; init; }
         public LangsType Official { get; init; }
         public LangsType Beta { get; init; }
         public LangsType Temporis { get; init; }
@@ -25,9 +25,9 @@ namespace Cyberia.Langzilla
 
         private readonly ConcurrentDictionary<string, Timer> _timers;
 
-        internal LangsWatcher()
+        internal LangsWatcher(ILogger logger)
         {
-            Logger = new("langs");
+            Log = logger;
             Official = new(LangType.Official);
             Beta = new(LangType.Beta);
             Temporis = new(LangType.Temporis);
@@ -37,9 +37,9 @@ namespace Cyberia.Langzilla
             Directory.CreateDirectory(OUTPUT_PATH);
         }
 
-        public static LangsWatcher Create()
+        public static LangsWatcher Create(ILogger logger)
         {
-            _instance ??= new();
+            _instance ??= new(logger);
             return _instance;
         }
 
@@ -91,15 +91,12 @@ namespace Cyberia.Langzilla
 
         internal static string GetRoute(LangType type)
         {
-            switch (type)
+            return type switch
             {
-                case LangType.Beta:
-                    return "betaenv/lang";
-                case LangType.Temporis:
-                    return "ephemeris2releasebucket/lang";
-                default:
-                    return "lang";
-            }
+                LangType.Beta => "betaenv/lang",
+                LangType.Temporis => "ephemeris2releasebucket/lang",
+                _ => "lang",
+            };
         }
     }
 

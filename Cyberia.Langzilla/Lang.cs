@@ -126,18 +126,18 @@ namespace Cyberia.Langzilla
                 {
                     if (retries-- == 0)
                     {
-                        LangsWatcher.Instance.Logger.Error($"Unable to find {fileUrl}");
+                        LangsWatcher.Instance.Log.Error("Unable to find {fileUrl}", fileUrl);
                         return;
                     }
 
-                    LangsWatcher.Instance.Logger.Error($"{retries} retry left to download {fileUrl}", e);
+                    LangsWatcher.Instance.Log.Error(e, "{retries} retry left to download {fileUrl}", retries);
 
                     await Task.Delay(waitTime);
                     waitTime *= 2;
                 }
                 catch (TaskCanceledException e)
                 {
-                    LangsWatcher.Instance.Logger.Error($"The request to get {fileUrl} has been cancelled", e);
+                    LangsWatcher.Instance.Log.Error(e, "The request to get {fileUrl} has been cancelled", fileUrl);
                     return;
                 }
             }
@@ -154,7 +154,7 @@ namespace Cyberia.Langzilla
 
             if (!Flare.TryExtractSwf(filePath, out string warningMessage, out string flareFilePath))
             {
-                LangsWatcher.Instance.Logger.Error($"Error when decompiled {filePath}\nWarning : {warningMessage}");
+                LangsWatcher.Instance.Log.Error("Error when decompiled {filePath}\nWarning : {warningMessage}", filePath, warningMessage);
                 return;
             }
 

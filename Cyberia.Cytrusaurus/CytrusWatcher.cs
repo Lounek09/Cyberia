@@ -1,6 +1,6 @@
-﻿global using Cyberia.Utils;
-using Cyberia.Chronicle;
-using Cyberia.Cytrusaurus.Models;
+﻿using Cyberia.Cytrusaurus.Models;
+
+using Serilog;
 
 namespace Cyberia.Cytrusaurus
 {
@@ -12,7 +12,7 @@ namespace Cyberia.Cytrusaurus
         internal const string OLD_CYTRUS_PATH = $"{OUTPUT_PATH}/old_{CYTRUS_FILE_NAME}";
         internal const string BASE_URL = "https://cytrus.cdn.ankama.com";
 
-        public Logger Logger { get; init; }
+        public ILogger Log { get; init; }
         public CytrusData CytrusData { get; internal set; }
         public CytrusData OldCytrusData { get; internal set; }
 
@@ -25,11 +25,11 @@ namespace Cyberia.Cytrusaurus
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>")]
         private Timer? _timer;
 
-        internal CytrusWatcher()
+        internal CytrusWatcher(ILogger logger)
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
-            Logger = new("cytrus");
+            Log = logger;
             CytrusData = File.Exists(CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(CYTRUS_PATH) : new();
             OldCytrusData = File.Exists(OLD_CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(OLD_CYTRUS_PATH) : new();
             HttpClient = new()
@@ -38,9 +38,9 @@ namespace Cyberia.Cytrusaurus
             };
         }
 
-        public static CytrusWatcher Create()
+        public static CytrusWatcher Create(ILogger logger)
         {
-            _instance ??= new();
+            _instance ??= new(logger);
             return _instance;
         }
 
@@ -56,15 +56,15 @@ namespace Cyberia.Cytrusaurus
             string? cytrus = null;
             try
             {
-                using (HttpResponseMessage response = await HttpClient.GetAsync(CYTRUS_FILE_NAME).ConfigureAwait(false))
-                {
-                    response.EnsureSuccessStatusCode();
-                    cytrus = await response.Content.ReadAsStringAsync();
-                }
+                using HttpResponseMessage response = await HttpClient.GetAsync(CYTRUS_FILE_NAME);
+
+                response.EnsureSuccessStatusCode();
+
+                cytrus = await response.Content.ReadAsStringAsync();
             }
             catch (Exception e) when (e is HttpRequestException or TaskCanceledException)
             {
-                Logger.Error(e);
+                Log.Error(e, "An error occured while sending Get request to {url}/{file}", BASE_URL, CYTRUS_FILE_NAME);
                 return;
             }
 
@@ -82,7 +82,7 @@ namespace Cyberia.Cytrusaurus
             if (string.IsNullOrEmpty(diff))
                 return;
 
-            Logger.Info($"Cytrus update detected :\n{diff}");
+            Log.Information("Cytrus update detected :\n{diff}", diff);
             NewCytrusDetected?.Invoke(this, new NewCytrusDetectedEventArgs(CytrusData, OldCytrusData, diff));
 
             if (File.Exists(CYTRUS_PATH))

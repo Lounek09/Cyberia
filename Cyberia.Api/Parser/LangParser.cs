@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Cyberia.Api.Parser
 {
-    public static class LangParser
+    public static partial class LangParser
     {
         private const string KEY_VALUE_SEPARATOR = " = ";
 
@@ -52,7 +52,6 @@ namespace Cyberia.Api.Parser
             "new Object();",
             "new Array();"
         };
-        private static readonly Regex _keyRegex = new(@"(?'name'[A-Z]+(?:\.[a-z]+|))(?:\[(?'intId'-?\d+)\]|\.(?'stringId'[\w|]+)|)", RegexOptions.Compiled);
 
         public static bool Launch()
         {
@@ -60,7 +59,7 @@ namespace Cyberia.Api.Parser
             {
                 if (!TryParse(langToParse))
                 {
-                    DofusApi.Instance.Logger.Error($"An error occured while parsing {langToParse} lang");
+                    DofusApi.Instance.Log.Error("An error occured while parsing {langToParse} lang", langToParse);
                     return false;
                 }
             }
@@ -68,25 +67,28 @@ namespace Cyberia.Api.Parser
             return true;
         }
 
+        [GeneratedRegex(@"(?'name'[A-Z]+(?:\.[a-z]+|))(?:\[(?'intId'-?\d+)\]|\.(?'stringId'[\w|]+)|)", RegexOptions.Compiled)]
+        private static partial Regex KeyRegex();
+
         private static bool TryParse(string langName)
         {
-            LangsData langsData = DofusApi.Instance.Temporis ? DofusApi.Instance.LangsWatcher.Temporis.French : DofusApi.Instance.LangsWatcher.Official.French;
+            LangsData langsData = DofusApi.Instance.Config.Temporis ? DofusApi.Instance.LangsWatcher.Temporis.French : DofusApi.Instance.LangsWatcher.Official.French;
             
             Lang? lang = langsData.GetLangByName(langName);
             if (lang is null)
             {
-                DofusApi.Instance.Logger.Error($"The lang {langName} doesn't exist");
+                DofusApi.Instance.Log.Error("The lang {langName} doesn't exist", langName);
                 return false;
             }
 
             string filePath = lang.GetCurrentDecompiledFilePath();
             if (!File.Exists(filePath))
             {
-                DofusApi.Instance.Logger.Error($"The lang {langName} has never been decompiled");
+                DofusApi.Instance.Log.Error("The lang {langName} has never been decompiled", langName);
                 return false;
             }
 
-            DofusApi.Instance.Logger.Debug($"Start parsing {langName} lang");
+            DofusApi.Instance.Log.Debug("Start parsing {langName} lang", langName);
 
             string[] lines = File.ReadAllLines(filePath);
             string json = ParseLines(lines);
@@ -97,7 +99,7 @@ namespace Cyberia.Api.Parser
             }
             catch (Exception e)
             {
-                DofusApi.Instance.Logger.Error(e);
+                DofusApi.Instance.Log.Error(e, "The generated json is not valid for {lang} lang", langName);
                 return false;
             }
 
@@ -120,7 +122,7 @@ namespace Cyberia.Api.Parser
                 if (lineSplit.Length < 2)
                     continue;
 
-                Match key = _keyRegex.Match(lineSplit[0]);
+                Match key = KeyRegex().Match(lineSplit[0]);
                 string currentLineName = key.Groups["name"].Value;
                 bool currentLineHasId = key.Groups["intId"].Success || key.Groups["stringId"].Success;
 

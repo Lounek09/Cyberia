@@ -7,18 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cyberia.Chronicle\Cyberia.Chronicle.csproj" />
+    <PackageReference Include="Google.FlatBuffers" Version="23.5.26" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Cyberia.Utils" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="manifest.fbs">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Google.FlatBuffers" Version="23.5.26" />
   </ItemGroup>
 
 </Project>

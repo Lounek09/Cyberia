@@ -171,12 +171,12 @@ namespace Cyberia.Api.DatacenterNS
 
         public async Task<string> GetImagePath()
         {
-            string url = $"{DofusApi.Instance.CdnUrl}/images/artworks/{GfxId}.png";
+            string url = $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/{GfxId}.png";
 
             if (await DofusApi.Instance.HttpClient.CheckIfPageExistsAsync(url))
                 return url;
 
-            return $"{DofusApi.Instance.CdnUrl}/images/artworks/unknown.png";
+            return $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/unknown.png";
         }
 
         public MonsterRace? GetRace()
@@ -196,31 +196,20 @@ namespace Cyberia.Api.DatacenterNS
 
         public MonsterGrade? GetGrade(int grade = 1)
         {
-            switch (grade)
+            return grade switch
             {
-                case 1:
-                    return MonsterGrade1;
-                case 2:
-                    return MonsterGrade2;
-                case 3:
-                    return MonsterGrade3;
-                case 4:
-                    return MonsterGrade4;
-                case 5:
-                    return MonsterGrade5;
-                case 6:
-                    return MonsterGrade6;
-                case 7:
-                    return MonsterGrade7;
-                case 8:
-                    return MonsterGrade8;
-                case 9:
-                    return MonsterGrade9;
-                case 10:
-                    return MonsterGrade10;
-                default:
-                    return null;
-            }
+                1 => MonsterGrade1,
+                2 => MonsterGrade2,
+                3 => MonsterGrade3,
+                4 => MonsterGrade4,
+                5 => MonsterGrade5,
+                6 => MonsterGrade6,
+                7 => MonsterGrade7,
+                8 => MonsterGrade8,
+                9 => MonsterGrade9,
+                10 => MonsterGrade10,
+                _ => null,
+            };
         }
 
         public int GetMaxGradeNumber()
