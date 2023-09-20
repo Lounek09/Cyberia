@@ -15,7 +15,7 @@ namespace Cyberia.Salamandra.Managers
 
             DiscordForumChannel? forum = await GetLangForumChannel();
             if (forum is null)
-                return;          
+                return;
 
             DiscordThreadChannel thread = await CreateThreadAsync(forum, e.Type, e.Language);
 
