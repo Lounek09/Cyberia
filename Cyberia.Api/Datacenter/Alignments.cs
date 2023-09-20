@@ -158,6 +158,30 @@ namespace Cyberia.Api.DatacenterNS
         }
     }
 
+    public sealed class AlignmentBalance
+    {
+        [JsonPropertyName("id")]
+        public int Id { get; init; }
+
+        [JsonPropertyName("s")]
+        public int Start { get; init; }
+
+        [JsonPropertyName("e")]
+        public int End { get; init; }
+
+        [JsonPropertyName("n")]
+        public string Name { get; init; }
+
+        [JsonPropertyName("d")]
+        public string Description { get; init; }
+
+        public AlignmentBalance()
+        {
+            Name = string.Empty;
+            Description = string.Empty;
+        }
+    }
+
     public sealed class AlignmentSpecialization
     {
         [JsonPropertyName("id")]
@@ -217,6 +241,9 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("A.fe")]
         public List<AlignmentFeatEffect> AlignmentFeatEffects { get; init; }
 
+        [JsonPropertyName("A.b")]
+        public List<AlignmentBalance> AlignmentBalance { get; init; }
+
         [JsonPropertyName("A.s")]
         public List<AlignmentSpecialization> AlignmentSpecializations { get; init; }
 
@@ -229,6 +256,7 @@ namespace Cyberia.Api.DatacenterNS
             AlignmentsViewPvpGain = new();
             AlignmentFeats = new();
             AlignmentFeatEffects = new();
+            AlignmentBalance = new();
             AlignmentSpecializations = new();
         }
 

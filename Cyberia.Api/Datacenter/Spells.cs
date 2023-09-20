@@ -75,6 +75,8 @@ namespace Cyberia.Api.DatacenterNS
 
         public bool CricalFailureEndTheTurn { get; init; }
 
+        public int SpellLevelId { get; init; }
+
         public SpellLevel()
         {
             Effects = new();

@@ -16,8 +16,8 @@ namespace Cyberia.Api.Parser.JsonConverter
                 throw new JsonException("Invalid JSON format: expected an array.");
 
             JsonElement[]? elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options);
-            if (elements is null || elements.Length != 20)
-                throw new JsonException($"Invalid JSON format: expected an array of 20 values, but got a length of {elements?.Length}.");
+            if (elements is null || elements.Length != 21)
+                throw new JsonException($"Invalid JSON format: expected an array of 21 values, but got a length of {elements?.Length}.");
 
             JsonElement[] effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0].GetRawText(), options) ?? Array.Empty<JsonElement>();
             JsonElement[] criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1].GetRawText(), options) ?? Array.Empty<JsonElement>();
@@ -47,7 +47,8 @@ namespace Cyberia.Api.Parser.JsonConverter
                 RequiredStatesId = JsonSerializer.Deserialize<List<int>>(elements[16].GetRawText(), options) ?? new(),
                 ForbiddenStatesId = JsonSerializer.Deserialize<List<int>>(elements[17].GetRawText(), options) ?? new(),
                 NeededLevel = elements[18].GetInt32(),
-                CricalFailureEndTheTurn = elements[19].GetBoolean()
+                CricalFailureEndTheTurn = elements[19].GetBoolean(),
+                SpellLevelId = elements[20].GetInt32()
             };
         }
 

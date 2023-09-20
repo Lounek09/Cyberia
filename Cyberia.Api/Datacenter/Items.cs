@@ -103,6 +103,9 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("n")]
         public string Name { get; init; }
 
+        [JsonPropertyName("nn")]
+        public string NormalizedName { get; init; }
+
         [JsonPropertyName("t")]
         public int ItemTypeId { get; init; }
 
@@ -164,6 +167,7 @@ namespace Cyberia.Api.DatacenterNS
         public Item()
         {
             Name = string.Empty;
+            NormalizedName = string.Empty;
             Description = string.Empty;
             Criterion = string.Empty;
         }
