@@ -16,6 +16,8 @@
                         return $"Posséder l'objet {itemName.Bold()}";
                     case 'X':
                         return $"Ne pas avoir équipé l'objet {itemName.Bold()}";
+                    case 'E':
+                        return $"Posséder l'objet {itemName.Bold()}";
                 }
             }
 
