@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Managers;
+﻿using Cyberia.Api.DatacenterNS;
+using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
@@ -17,9 +18,20 @@ namespace Cyberia.Api.Factories.Effects
             return new(effectId, parameters, duration, probability, criteria, area);
         }
 
+        public SpellLevel? GetSpellLevel()
+        {
+            return DofusApi.Instance.Datacenter.SpellsData.GetSpellLevelById(SpellLevelId);
+        }
+
         public override string GetDescription()
         {
-            return GetDescriptionFromParameters(null, null, SpellLevelId.ToString());
+            SpellLevel? spellLevel = GetSpellLevel();
+            if (spellLevel is null)
+                return GetDescriptionFromParameters($"SpellLevel inconnu ({SpellLevelId})", "X");
+
+            string spellName = DofusApi.Instance.Datacenter.SpellsData.GetSpellNameById(spellLevel.SpellId);
+
+            return GetDescriptionFromParameters(spellName, spellLevel.Level.ToString());
         }
     }
 }

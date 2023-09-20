@@ -37,6 +37,8 @@ namespace Cyberia.Api.DatacenterNS
 
     public sealed class SpellLevel
     {
+        public int Id { get; init; }
+
         public List<IEffect> Effects { get; init; }
 
         public List<IEffect> CriticalEffects { get; init; }
@@ -75,7 +77,9 @@ namespace Cyberia.Api.DatacenterNS
 
         public bool CricalFailureEndTheTurn { get; init; }
 
-        public int SpellLevelId { get; init; }
+        public int SpellId { get; internal set; }
+
+        public int Level { get; internal set; }
 
         public SpellLevel()
         {
@@ -83,6 +87,11 @@ namespace Cyberia.Api.DatacenterNS
             CriticalEffects = new();
             RequiredStatesId = new();
             ForbiddenStatesId = new();
+        }
+
+        public Spell? GetSpell()
+        {
+            return DofusApi.Instance.Datacenter.SpellsData.GetSpellById(SpellId);
         }
 
         public List<IEffect> GetTrapEffects()
@@ -321,6 +330,19 @@ namespace Cyberia.Api.DatacenterNS
             SpellsData data = Json.LoadFromFile<SpellsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
             SpellsCustomData customData = Json.LoadFromFile<SpellsCustomData>($"{DofusApi.CUSTOM_PATH}/{FILE_NAME}");
 
+            foreach (Spell spell in data.Spells)
+            {
+                for (int i = 1; i <= 6; i++)
+                {
+                    SpellLevel? spellLevel = spell.GetSpellLevel(i);
+                    if (spellLevel is null)
+                        break;
+
+                    spellLevel.SpellId = spell.Id;
+                    spellLevel.Level = i;
+                }
+            }
+
             data.SpellTypes = customData.SpellTypesCustom;
             data.SpellOrigins = customData.SpellOriginsCustom;
             data.SpellCategories = customData.SpellCategoriesCustom;
@@ -350,6 +372,24 @@ namespace Cyberia.Api.DatacenterNS
             Spell? spell = GetSpellById(id);
 
             return spell is null ? $"Inconnu ({id})" : spell.Name;
+        }
+
+        public SpellLevel? GetSpellLevelById(int id)
+        {
+            foreach (Spell spell in Spells)
+            {
+                for (int i = 1; i <= 6; i++)
+                {
+                    SpellLevel? spellLevel = spell.GetSpellLevel(i);
+                    if (spellLevel is null)
+                        break;
+
+                    if (spellLevel.Id == id)
+                        return spellLevel;
+                }
+            }
+
+            return null;
         }
 
         public SpellType? GetSpellTypeById(int id)

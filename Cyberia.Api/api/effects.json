@@ -899,7 +899,7 @@
     },
     {
       "id": 208,
-      "d": "Lance l'animation du niveau de sort sort #3",
+      "d": "Lance l'animation de sort #3",
       "c": 0,
       "o": ""
     },
@@ -1022,7 +1022,7 @@
     },
     {
       "id": 228,
-      "d": "Lance l'animation du niveau de sort #3",
+      "d": "Lance l'animation de sort #3",
       "c": 0,
       "o": ""
     },
@@ -1435,7 +1435,7 @@
     },
     {
       "id": 300,
-      "d": "Lance le niveau de sort #3",
+      "d": "Lance le sort #1 (level #2)",
       "c": 29,
       "o": "/"
     },
@@ -1567,7 +1567,7 @@
     },
     {
       "id": 604,
-      "d": "Apprend le niveau de sort #3",
+      "d": "Apprend le sort #1 (level #2)",
       "c": 0,
       "o": "",
       "t": true

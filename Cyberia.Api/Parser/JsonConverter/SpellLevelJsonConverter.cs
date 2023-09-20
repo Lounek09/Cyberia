@@ -48,7 +48,7 @@ namespace Cyberia.Api.Parser.JsonConverter
                 ForbiddenStatesId = JsonSerializer.Deserialize<List<int>>(elements[17].GetRawText(), options) ?? new(),
                 NeededLevel = elements[18].GetInt32(),
                 CricalFailureEndTheTurn = elements[19].GetBoolean(),
-                SpellLevelId = elements[20].GetInt32()
+                Id = elements[20].GetInt32()
             };
         }
 
