@@ -11,7 +11,7 @@ namespace Cyberia.Salamandra
         public ulong CommandErrorChannelId { get; init; }
         public ulong LangForumChannelId { get; init; }
         public ulong CytrusChannelId { get; init; }
-        public ulong CytrusManifestDiffChannelId { get; init; }
+        public ulong CytrusManifestChannelId { get; init; }
         public ApiConfig ApiConfig { get; init; }
 
         public BotConfig()

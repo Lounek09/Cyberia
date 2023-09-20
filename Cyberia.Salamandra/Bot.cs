@@ -17,7 +17,7 @@ namespace Cyberia.Salamandra
     {
         public const string OUTPUT_PATH = "bot";
 
-        public ILogger Logger { get; init; }
+        public ILogger Log { get; init; }
         public BotConfig Config { get; init; }
         public DiscordClient Client { get; init; }
         public SlashCommandsExtension SlashCommands { get; init; }
@@ -37,7 +37,7 @@ namespace Cyberia.Salamandra
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
-            Logger = logger;
+            Log = logger;
             Config = config;
 
             Client = new(new DiscordConfiguration()

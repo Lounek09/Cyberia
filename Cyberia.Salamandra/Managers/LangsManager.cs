@@ -15,7 +15,7 @@ namespace Cyberia.Salamandra.Managers
 
             DiscordForumChannel? forum = await GetLangForumChannel();
             if (forum is null)
-                return;
+                return;          
 
             DiscordThreadChannel thread = await CreateThreadAsync(forum, e.Type, e.Language);
 
@@ -37,6 +37,7 @@ namespace Cyberia.Salamandra.Managers
             }
             catch
             {
+                Bot.Instance.Log.Error("Unknown lang forum channel (id:{id})", Bot.Instance.Config.LangForumChannelId);
                 return null;
             }
         }

@@ -77,18 +77,20 @@ namespace Cyberia.Salamandra.Managers
             }
             catch
             {
+                Bot.Instance.Log.Error("Unknown cytrus channel (id:{id})", Bot.Instance.Config.CytrusChannelId);
                 return null;
             }
         }
 
-        private static async Task<DiscordChannel?> GetCytrusManifestDiffChannel()
+        private static async Task<DiscordChannel?> GetCytrusManifestChannel()
         {
             try
             {
-                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.CytrusManifestDiffChannelId);
+                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.CytrusManifestChannelId);
             }
             catch
             {
+                Bot.Instance.Log.Error("Unknown cytrus manifest channel (id:{id})", Bot.Instance.Config.CytrusManifestChannelId);
                 return null;
             }
         }
@@ -97,22 +99,16 @@ namespace Cyberia.Salamandra.Managers
         {
             DiscordChannel? channel = await GetCytrusChannel();
             if (channel is null)
-            {
-                Bot.Instance.Logger.Error($"Unknown cytrus channel (id:{Bot.Instance.Config.CytrusChannelId})");
                 return;
-            }
 
             await channel.SendMessageAsync(new DiscordMessageBuilder().WithContent(Formatter.BlockCode(e.Diff, "json")));
         }
 
         private static async Task SendCytrusManifestDiffAsync(NewCytrusDetectedEventArgs e)
         {
-            DiscordChannel? channel = await GetCytrusManifestDiffChannel();
+            DiscordChannel? channel = await GetCytrusManifestChannel();
             if (channel is null)
-            {
-                Bot.Instance.Logger.Error($"Unknown cytrus manifest channel (id:{Bot.Instance.Config.CytrusManifestDiffChannelId})");
                 return;
-            }
 
             JsonDocument document = JsonDocument.Parse(e.Diff);
             JsonElement root = document.RootElement;
