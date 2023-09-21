@@ -12,6 +12,7 @@
                 Bot.Instance.SlashCommands.RegisterCommands<IpCommandModule>(guildId);
                 Bot.Instance.SlashCommands.RegisterCommands<KillCommandModule>(guildId);
                 Bot.Instance.SlashCommands.RegisterCommands<LeaveCommandModule>(guildId);
+                Bot.Instance.SlashCommands.RegisterCommands<ParseCommandModule>(guildId);
                 Bot.Instance.SlashCommands.RegisterCommands<RestartCommandModule>(guildId);
                 Bot.Instance.SlashCommands.RegisterCommands<TestCommandModule>(guildId);
             }
