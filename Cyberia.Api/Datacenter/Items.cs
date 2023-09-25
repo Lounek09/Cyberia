@@ -220,14 +220,14 @@ namespace Cyberia.Api.DatacenterNS
             return DofusApi.Instance.Datacenter.CraftsData.GetCraftById(Id);
         }
 
-        public bool IsExchangeable()
+        public bool Tradeable()
         {
             ItemType? itemType = GetItemType();
             ItemStats? itemStats = GetItemStat();
 
             return itemType is not null && itemType.ItemSuperTypeId != ItemSuperType.SUPER_TYPE_QUEST &&
                 !Cursed &&
-                (itemStats is null || !itemStats.Effects.OfType<ExchangeableUntilDateTimeEffect>().Any(x => x.IsLinkedToAccount()));
+                (itemStats is null || !itemStats.Effects.OfType<ExchangeableUntilDateTimeEffect>().Any(x => x.IsLinkedToAccount()) || !itemStats.Effects.OfType<UnbreakableEffect>().Any());
         }
 
         public int GetNpcRetailPrice()

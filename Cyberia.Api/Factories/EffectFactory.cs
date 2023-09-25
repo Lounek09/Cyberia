@@ -47,6 +47,7 @@ namespace Cyberia.Api.Factories
             { 401, GlyphSpellEffect.Create },
             { 402, GlyphSpellEffect.Create },
             { 405, KIllAndReplaceByMonsterEffect.Create },
+            { 521, UnbreakableEffect.Create },
             { 601, TeleportToMapEffect.Create },
             { 604, LearnSpellLevelEffect.Create },
             { 614, GiveJobXpEffect.Create },

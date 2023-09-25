@@ -126,7 +126,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             StringBuilder miscellaneousBuilder = new();
             miscellaneousBuilder.AppendFormat("{0} pod{1}", _item.Weight.ToStringThousandSeparator(), _item.Weight > 1 ? "s" : "");
-            if (_item.IsExchangeable()) miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _item.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
+            if (_item.Tradeable()) miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _item.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
             if (_item.Ceremonial) miscellaneousBuilder.Append(", objet d'apparat");
             if (_item.IsReallyEnhanceable()) miscellaneousBuilder.Append(", forgemageable");
             if (_item.Ethereal) miscellaneousBuilder.Append(", item éthéré");
