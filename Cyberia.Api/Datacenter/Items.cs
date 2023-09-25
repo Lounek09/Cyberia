@@ -225,9 +225,11 @@ namespace Cyberia.Api.DatacenterNS
             ItemType? itemType = GetItemType();
             ItemStats? itemStats = GetItemStat();
 
-            return itemType is not null && itemType.ItemSuperTypeId != ItemSuperType.SUPER_TYPE_QUEST &&
-                !Cursed &&
-                (itemStats is null || !itemStats.Effects.OfType<ExchangeableUntilDateTimeEffect>().Any(x => x.IsLinkedToAccount()) || !itemStats.Effects.OfType<UnbreakableEffect>().Any());
+            bool isQuestItem = itemType is not null && itemType.ItemSuperTypeId == ItemSuperType.SUPER_TYPE_QUEST;
+            bool isLinkedToAccount = itemStats is not null && itemStats.Effects.OfType<ExchangeableUntilDateTimeEffect>().Any(x => x.IsLinkedToAccount());
+            bool isUnbreakable = itemStats is not null && itemStats.Effects.OfType<UnbreakableEffect>().Any();
+
+            return !isQuestItem && !Cursed && !isLinkedToAccount && !isUnbreakable;
         }
 
         public int GetNpcRetailPrice()
