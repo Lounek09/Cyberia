@@ -1,11 +1,11 @@
 ﻿using Cyberia.Api.DatacenterNS;
+using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.QuestObjectives;
 using Cyberia.Api.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
-using Cyberia.Api.Factories.Criteria;
 
 namespace Cyberia.Salamandra.DsharpPlus
 {

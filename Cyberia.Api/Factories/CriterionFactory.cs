@@ -7,9 +7,6 @@ using Cyberia.Api.Factories.Criteria.PlayerCriteria;
 using Cyberia.Api.Factories.Criteria.QuestCriteria;
 using Cyberia.Api.Factories.Criteria.ServerCriteria;
 
-using System;
-using System.Text;
-
 namespace Cyberia.Api.Factories
 {
     public static class CriterionFactory
@@ -78,7 +75,7 @@ namespace Cyberia.Api.Factories
         {
             if (string.IsNullOrEmpty(value) || value.Length < 4)
                 return null;
-                
+
 
             string id = value[0..2];
             char @operator = value[2];

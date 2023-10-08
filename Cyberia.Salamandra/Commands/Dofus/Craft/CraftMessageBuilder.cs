@@ -1,5 +1,4 @@
 ﻿using Cyberia.Api.DatacenterNS;
-using Cyberia.Api.Managers;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
