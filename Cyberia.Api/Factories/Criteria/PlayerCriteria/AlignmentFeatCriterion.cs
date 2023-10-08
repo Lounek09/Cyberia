@@ -1,20 +1,51 @@
-﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+﻿using Cyberia.Api.DatacenterNS;
+
+namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 {
-    public static class AlignmentFeatCriterion
+    public sealed record AlignmentFeatCriterion : Criterion, ICriterion<AlignmentFeatCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public int AlignmentFeatId { get; init; }
+        public int? Level { get; init; }
+
+        private AlignmentFeatCriterion(string id, char @operator, int alignmentFeatId, int? level) :
+            base(id, @operator)
         {
-            if (values.Length > 0 && int.TryParse(values[0], out int alignmentFeatId))
-            {
-                string alignementFeatName = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentFeatNameById(alignmentFeatId);
+            AlignmentFeatId = alignmentFeatId;
+            Level = level;
+        }
 
-                if (values.Length > 1)
-                    return $"Don {alignementFeatName.Bold()} {@operator} {values[1].Bold()}";
+        public static AlignmentFeatCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 1 && int.TryParse(parameters[0], out int alignmentFeatId) && int.TryParse(parameters[1], out int level))
+                return new(id, @operator, alignmentFeatId, level);
 
-                return $"Don {@operator} {alignementFeatName.Bold()}";
-            }
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out alignmentFeatId))
+                return new(id, @operator, alignmentFeatId, null);
 
             return null;
+        }
+
+        public AlignmentFeatData? GetAlignmentFeatData()
+        {
+            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentFeatDataById(AlignmentFeatId);
+        }
+
+        protected override string GetDescriptionName()
+        {
+            if (Level.HasValue)
+                return $"Criterion.AlignmentFeat.{GetOperatorDescriptionName()}.Level";
+
+            return $"Criterion.AlignmentFeat.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            string alignmentName = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentFeatNameById(AlignmentFeatId);
+
+            if (Level.HasValue)
+                return GetDescription(alignmentName, Level.Value);
+
+            return GetDescription(alignmentName);
         }
     }
 }

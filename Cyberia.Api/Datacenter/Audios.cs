@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class AudioMusicContent
+    public sealed class AudioMusicContentData
     {
         [JsonPropertyName("id")]
         public string Name { get; init; }
@@ -10,13 +10,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public int AudioMusicId { get; init; }
 
-        public AudioMusicContent()
+        public AudioMusicContentData()
         {
             Name = string.Empty;
         }
     }
 
-    public sealed class AudioMusic
+    public sealed class AudioMusicData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -36,13 +36,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("o")]
         public int Offset { get; init; }
 
-        public AudioMusic()
+        public AudioMusicData()
         {
             FileName = string.Empty;
         }
     }
 
-    public sealed class AudioEffectContent
+    public sealed class AudioEffectContentData
     {
         [JsonPropertyName("id")]
         public string Name { get; init; }
@@ -50,13 +50,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public int AudioEffectId { get; init; }
 
-        public AudioEffectContent()
+        public AudioEffectContentData()
         {
             Name = string.Empty;
         }
     }
 
-    public sealed class AudioEffect
+    public sealed class AudioEffectData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -76,13 +76,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("o")]
         public int Offset { get; init; }
 
-        public AudioEffect()
+        public AudioEffectData()
         {
             FileName = string.Empty;
         }
     }
 
-    public sealed class AudioEnvironmentContent
+    public sealed class AudioEnvironmentContentData
     {
         [JsonPropertyName("id")]
         public string Name { get; init; }
@@ -90,13 +90,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public int AudioEnvironmentId { get; init; }
 
-        public AudioEnvironmentContent()
+        public AudioEnvironmentContentData()
         {
             Name = string.Empty;
         }
     }
 
-    public sealed class AudioEnvironment
+    public sealed class AudioEnvironmentData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -113,7 +113,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("n")]
         public List<int> NoiseAudioEffectIds { get; init; }
 
-        public AudioEnvironment()
+        public AudioEnvironmentData()
         {
             BackgroundAudioEffectIds = new();
             NoiseAudioEffectIds = new();
@@ -125,22 +125,22 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "audio.json";
 
         [JsonPropertyName("AUMC")]
-        public List<AudioMusicContent> AudioMusicsContent { get; init; }
+        public List<AudioMusicContentData> AudioMusicsContent { get; init; }
 
         [JsonPropertyName("AUM")]
-        public List<AudioMusic> AudioMusics { get; init; }
+        public List<AudioMusicData> AudioMusics { get; init; }
 
         [JsonPropertyName("AUEC")]
-        public List<AudioEffectContent> AudioEffectsContent { get; init; }
+        public List<AudioEffectContentData> AudioEffectsContent { get; init; }
 
         [JsonPropertyName("AUE")]
-        public List<AudioEffect> AudioEffects { get; init; }
+        public List<AudioEffectData> AudioEffects { get; init; }
 
         [JsonPropertyName("AUAC")]
-        public List<AudioEnvironmentContent> AudioEnvironmentsContent { get; init; }
+        public List<AudioEnvironmentContentData> AudioEnvironmentsContent { get; init; }
 
         [JsonPropertyName("AUA")]
-        public List<AudioEnvironment> AudioEnvironments { get; init; }
+        public List<AudioEnvironmentData> AudioEnvironments { get; init; }
 
         public AudioData()
         {
@@ -154,10 +154,10 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static AudioData Build()
         {
-            return Json.LoadFromFile<AudioData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<AudioData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public AudioMusic? GetAudioMusicById(int id)
+        public AudioMusicData? GetAudioMusicDataById(int id)
         {
             return AudioMusics.Find(x => x.Id == id);
         }

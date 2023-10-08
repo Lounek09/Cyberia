@@ -1,11 +1,10 @@
-﻿using Cyberia.Api.Managers;
-using Cyberia.Api.Parser.JsonConverter;
+﻿using Cyberia.Api.Parser.JsonConverter;
 
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Craft
+    public sealed class CraftData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -14,22 +13,22 @@ namespace Cyberia.Api.DatacenterNS
         [JsonConverter(typeof(DictionaryJsonConverter<int, int>))]
         public Dictionary<int, int> Ingredients { get; init; }
 
-        public Craft()
+        public CraftData()
         {
             Ingredients = new();
         }
 
-        public Item? GetItem()
+        public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemById(Id);
+            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(Id);
         }
 
         public bool HasSubCraft()
         {
             foreach (KeyValuePair<int, int> ingredient in Ingredients)
             {
-                Craft? subCraft = DofusApi.Instance.Datacenter.CraftsData.GetCraftById(ingredient.Key);
-                if (subCraft is not null)
+                CraftData? subCraftData = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
+                if (subCraftData is not null)
                     return true;
             }
 
@@ -51,14 +50,14 @@ namespace Cyberia.Api.DatacenterNS
             return ingredients;
         }
 
-        public Dictionary<int, int> GetRecursiveIngredients(int qte, Dictionary<int, int>? ingredients = null, Craft? craft = null)
+        public Dictionary<int, int> GetRecursiveIngredients(int qte, Dictionary<int, int>? ingredients = null, CraftData? craftData = null)
         {
             ingredients ??= new();
-            craft ??= this;
+            craftData ??= this;
 
-            foreach (KeyValuePair<int, int> ingredient in craft.GetIngredients(qte))
+            foreach (KeyValuePair<int, int> ingredient in craftData.GetIngredients(qte))
             {
-                Craft? subCraft = DofusApi.Instance.Datacenter.CraftsData.GetCraftById(ingredient.Key);
+                CraftData? subCraft = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
 
                 if (subCraft is null)
                 {
@@ -80,9 +79,9 @@ namespace Cyberia.Api.DatacenterNS
 
             foreach (KeyValuePair<int, int> ingredient in GetIngredients(1))
             {
-                Item? item = DofusApi.Instance.Datacenter.ItemsData.GetItemById(ingredient.Key);
-                if (item is not null)
-                    pods += item.Weight * ingredient.Value;
+                ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ingredient.Key);
+                if (itemData is not null)
+                    pods += itemData.Weight * ingredient.Value;
             }
 
             return pods;
@@ -94,10 +93,10 @@ namespace Cyberia.Api.DatacenterNS
 
             foreach (KeyValuePair<int, int> ingredient in GetRecursiveIngredients(1))
             {
-                Item? item = DofusApi.Instance.Datacenter.ItemsData.GetItemById(ingredient.Key);
+                ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ingredient.Key);
 
-                if (item is not null)
-                    pods += item.Weight * ingredient.Value;
+                if (itemData is not null)
+                    pods += itemData.Weight * ingredient.Value;
             }
 
             return pods;
@@ -105,22 +104,22 @@ namespace Cyberia.Api.DatacenterNS
 
         public TimeSpan GetTimeForMultipleCraft(int qte)
         {
-            return CraftManager.GetTimePerCraft(qte, Ingredients.Count);
+            return Formulas.GetTimePerCraft(qte, Ingredients.Count);
         }
 
-        public TimeSpan GetRecursiveTimeForMultipleCraft(int qte, TimeSpan? totalTime = null, Craft? craft = null)
+        public TimeSpan GetRecursiveTimeForMultipleCraft(int qte, TimeSpan? totalTime = null, CraftData? craftData = null)
         {
             totalTime ??= TimeSpan.Zero;
-            craft ??= this;
+            craftData ??= this;
 
-            foreach (KeyValuePair<int, int> ingredient in craft.Ingredients)
+            foreach (KeyValuePair<int, int> ingredient in craftData.Ingredients)
             {
-                Craft? subCraft = DofusApi.Instance.Datacenter.CraftsData.GetCraftById(ingredient.Key);
-                if (subCraft is not null)
-                    totalTime = GetRecursiveTimeForMultipleCraft(qte * ingredient.Value, totalTime, subCraft);
+                CraftData? subCraftData = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
+                if (subCraftData is not null)
+                    totalTime = GetRecursiveTimeForMultipleCraft(qte * ingredient.Value, totalTime, subCraftData);
             }
 
-            return totalTime.Value + craft.GetTimeForMultipleCraft(qte);
+            return totalTime.Value + craftData.GetTimeForMultipleCraft(qte);
         }
     }
 
@@ -129,7 +128,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "crafts.json";
 
         [JsonPropertyName("CR")]
-        public List<Craft> Crafts { get; init; }
+        public List<CraftData> Crafts { get; init; }
 
         public CraftsData()
         {
@@ -138,26 +137,26 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static CraftsData Build()
         {
-            return Json.LoadFromFile<CraftsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<CraftsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Craft? GetCraftById(int id)
+        public CraftData? GetCraftDataById(int id)
         {
             return Crafts.Find(x => x.Id == id);
         }
 
-        public List<Craft> GetCraftsByItemName(string itemName)
+        public List<CraftData> GetCraftsDataByItemName(string itemName)
         {
             string[] itemNames = itemName.RemoveDiacritics().Split(' ');
-            List<Craft> crafts = new();
-            foreach (Craft craft in Crafts)
+            List<CraftData> craftsData = new();
+            foreach (CraftData craftData in Crafts)
             {
-                Item? item = craft.GetItem();
-                if (item is not null && itemNames.All(item.Name.RemoveDiacritics().Contains))
-                    crafts.Add(craft);
+                ItemData? itemData = craftData.GetItemData();
+                if (itemData is not null && itemNames.All(itemData.Name.RemoveDiacritics().Contains))
+                    craftsData.Add(craftData);
             }
 
-            return crafts;
+            return craftsData;
         }
     }
 }

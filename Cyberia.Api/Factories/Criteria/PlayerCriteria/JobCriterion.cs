@@ -1,20 +1,51 @@
-﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+﻿using Cyberia.Api.DatacenterNS;
+
+namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 {
-    public static class JobCriterion
+    public sealed record JobCriterion : Criterion, ICriterion<JobCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public int JobId { get; init; }
+        public int? Level { get; init; }
+
+        private JobCriterion(string id, char @operator, int jobId, int? level) :
+            base(id, @operator)
         {
-            if (values.Length > 0 && int.TryParse(values[0], out int jobId))
-            {
-                string jobName = DofusApi.Instance.Datacenter.JobsData.GetJobNameById(jobId);
+            JobId = jobId;
+            Level = level;
+        }
 
-                if (values.Length > 1)
-                    return $"Niveau du métier {jobName.Bold()} {@operator} {values[1].Bold()}";
+        public static JobCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 1 && int.TryParse(parameters[0], out int jobId) && int.TryParse(parameters[1], out int level))
+                return new(id, @operator, jobId, level);
 
-                return $"Métier {@operator} {jobName.Bold()}";
-            }
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out jobId))
+                return new(id, @operator, jobId, null);
 
             return null;
+        }
+
+        public JobData? GetJobData()
+        {
+            return DofusApi.Instance.Datacenter.JobsData.GetJobDataById(JobId);
+        }
+
+        protected override string GetDescriptionName()
+        {
+            if (Level.HasValue)
+                return $"Criterion.Job.{GetOperatorDescriptionName()}.Level";
+
+            return $"Criterion.Job.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            string jobName = DofusApi.Instance.Datacenter.JobsData.GetJobNameById(JobId);
+
+            if (Level.HasValue)
+                return GetDescription(jobName, Level.Value);
+
+            return GetDescription(jobName);
         }
     }
 }

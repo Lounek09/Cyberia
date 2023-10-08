@@ -6,7 +6,7 @@
                                                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
                                                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_' };
 
-        public static string DecodeIp(string value)
+        public static string Ip(string value)
         {
             if (value.Length == 11)
             {
@@ -27,7 +27,7 @@
 
                 double port = 0;
                 for (int i = 0; i < portCrypt.Length; i++)
-                    port += Math.Pow(64, 2 - i) * Array.IndexOf(HASH, portCrypt[i]);
+                    port += Math.Pow(64, 2 - i) * Base64(portCrypt[i]);
 
                 return $"{ip}:{port}";
             }
@@ -35,12 +35,12 @@
                 throw new ArgumentException("L'ip encodée doit faire 11 caractères");
         }
 
-        public static int Decode64(char value)
+        public static int Base64(char value)
         {
             return Array.IndexOf(HASH, value);
         }
 
-        public static string DecodeDescription(string description, params string[] parameters)
+        public static string Description(string description, params string[] parameters)
         {
             if (description.Contains('{') && description.Contains('}'))
             {
@@ -73,6 +73,11 @@
                 description = description.Replace($"#{i + 1}", parameters[i]);
 
             return description;
+        }
+
+        public static string Description(string description, params object[] parameters)
+        {
+            return Description(description, Array.ConvertAll(parameters, x => x.ToString() ?? string.Empty));
         }
     }
 }

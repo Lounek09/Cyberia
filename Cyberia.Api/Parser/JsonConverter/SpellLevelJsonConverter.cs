@@ -2,15 +2,16 @@
 using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Managers;
+using Cyberia.Api.Values;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Parser.JsonConverter
 {
-    public sealed class SpellLevelJsonConverter : JsonConverter<SpellLevel>
+    public sealed class SpellLevelJsonConverter : JsonConverter<SpellLevelData>
     {
-        public override SpellLevel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override SpellLevelData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType is not JsonTokenType.StartArray)
                 throw new JsonException("Invalid JSON format: expected an array.");
@@ -21,13 +22,13 @@ namespace Cyberia.Api.Parser.JsonConverter
 
             JsonElement[] effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0].GetRawText(), options) ?? Array.Empty<JsonElement>();
             JsonElement[] criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1].GetRawText(), options) ?? Array.Empty<JsonElement>();
-            List<Area> effectAreas = EffectAreaManager.GetAreas(elements[15].ToString()).ToList();
+            List<EffectArea> effectAreas = EffectAreaManager.GetEffectAreas(elements[15].ToString()).ToList();
 
             List<IEffect> effectParse = EffectFactory.GetEffectsParseFromSpell(effects, effectAreas).ToList();
             effectAreas.RemoveRange(0, effectParse.Count);
             List<IEffect> criticalEffectParse = EffectFactory.GetEffectsParseFromSpell(criticalEffects, effectAreas).ToList();
 
-            return new SpellLevel
+            return new SpellLevelData
             {
                 Effects = effectParse,
                 CriticalEffects = criticalEffectParse,
@@ -40,7 +41,7 @@ namespace Cyberia.Api.Parser.JsonConverter
                 LineOfSight = elements[8].GetBoolean(),
                 NeedFreeCell = elements[9].GetBoolean(),
                 CanBoostRange = elements[10].GetBoolean(),
-                SpellLevelCategoryId = elements[11].GetInt32(),
+                SpellLevelCategory = (SpellLevelCategory)elements[11].GetInt32(),
                 LaunchCountByTurn = elements[12].GetInt32(),
                 LaunchCountByPlayerByTurn = elements[13].GetInt32(),
                 DelayBetweenLaunch = elements[14].GetInt32(),
@@ -52,7 +53,7 @@ namespace Cyberia.Api.Parser.JsonConverter
             };
         }
 
-        public override void Write(Utf8JsonWriter writer, SpellLevel value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, SpellLevelData value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }

@@ -1,10 +1,11 @@
-﻿using Cyberia.Api.Factories.Effects;
+﻿using Cyberia.Api.DatacenterNS.Custom;
+using Cyberia.Api.Factories.Effects;
 
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class ItemSet
+    public sealed class ItemSetData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -17,33 +18,33 @@ namespace Cyberia.Api.DatacenterNS
 
         public List<List<IEffect>> Effects { get; internal set; }
 
-        public ItemSet()
+        public ItemSetData()
         {
             Name = string.Empty;
             ItemsId = new();
             Effects = new();
         }
 
-        public List<Item> GetItems()
+        public List<ItemData> GetItemsData()
         {
-            List<Item> items = new();
+            List<ItemData> itemsData = new();
 
             foreach (int id in ItemsId)
             {
-                Item? item = DofusApi.Instance.Datacenter.ItemsData.GetItemById(id);
-                if (item is not null)
-                    items.Add(item);
+                ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(id);
+                if (itemData is not null)
+                    itemsData.Add(itemData);
             }
 
-            return items;
+            return itemsData;
         }
 
         public int GetLevel()
         {
             int level = 0;
 
-            foreach (Item item in GetItems())
-                level = item.Level > level ? item.Level : level;
+            foreach (ItemData itemData in GetItemsData())
+                level = itemData.Level > level ? itemData.Level : level;
 
             return level;
         }
@@ -55,7 +56,7 @@ namespace Cyberia.Api.DatacenterNS
             return Effects.Count > index && index >= 0 ? Effects[index] : new();
         }
 
-        public Breed? GetBreed()
+        public BreedData? GetBreedData()
         {
             return DofusApi.Instance.Datacenter.BreedsData.Breeds.Find(x => x.ItemSetId == Id);
         }
@@ -66,7 +67,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "itemsets.json";
 
         [JsonPropertyName("IS")]
-        public List<ItemSet> ItemSets { get; init; }
+        public List<ItemSetData> ItemSets { get; init; }
 
         public ItemSetsData()
         {
@@ -75,37 +76,37 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static ItemSetsData Build()
         {
-            ItemSetsData data = Json.LoadFromFile<ItemSetsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
-            ItemSetsCustomData customData = Json.LoadFromFile<ItemSetsCustomData>($"{DofusApi.CUSTOM_PATH}/{FILE_NAME}");
+            ItemSetsData data = Json.LoadFromFile<ItemSetsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            ItemSetsCustomData customData = Json.LoadFromFile<ItemSetsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
-            foreach (ItemSetCustom itemSetCustom in customData.ItemSetsCustom)
+            foreach (ItemSetCustomData itemSetCustomData in customData.ItemSetsCustom)
             {
-                ItemSet? itemSet = data.GetItemSetById(itemSetCustom.Id);
-                if (itemSet is not null)
-                    itemSet.Effects = itemSetCustom.Effects;
+                ItemSetData? itemSetData = data.GetItemSetDataById(itemSetCustomData.Id);
+                if (itemSetData is not null)
+                    itemSetData.Effects = itemSetCustomData.Effects;
             }
 
             return data;
         }
 
-        public ItemSet? GetItemSetById(int id)
+        public ItemSetData? GetItemSetDataById(int id)
         {
             return ItemSets.Find(x => x.Id == id);
         }
 
         public string GetItemSetNameById(int id)
         {
-            ItemSet? itemSet = GetItemSetById(id);
+            ItemSetData? itemSetData = GetItemSetDataById(id);
 
-            return itemSet is null ? $"Inconnu ({id})" : itemSet.Name;
+            return itemSetData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : itemSetData.Name;
         }
 
-        public ItemSet? GetItemSetByName(string name)
+        public ItemSetData? GetItemSetByName(string name)
         {
             return ItemSets.Find(x => x.Name.RemoveDiacritics().Equals(name.RemoveDiacritics()));
         }
 
-        public List<ItemSet> GetItemSetsByName(string name)
+        public List<ItemSetData> GetItemSetsDataByName(string name)
         {
             string[] names = name.RemoveDiacritics().Split(' ');
             return ItemSets.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));

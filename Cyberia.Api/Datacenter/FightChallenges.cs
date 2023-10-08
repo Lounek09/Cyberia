@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class FightChallenge
+    public sealed class FightChallengeData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -16,7 +16,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("g")]
         public int GfxId { get; init; }
 
-        public FightChallenge()
+        public FightChallengeData()
         {
             Name = string.Empty;
             Description = string.Empty;
@@ -28,7 +28,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "fightChallenge.json";
 
         [JsonPropertyName("FC")]
-        public List<FightChallenge> FightChallenges { get; init; }
+        public List<FightChallengeData> FightChallenges { get; init; }
 
         public FightChallengesData()
         {
@@ -37,7 +37,7 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static FightChallengesData Build()
         {
-            return Json.LoadFromFile<FightChallengesData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<FightChallengesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

@@ -17,17 +17,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                Spell? spell = Bot.Instance.Api.Datacenter.SpellsData.GetSpellById(id);
-                if (spell is not null)
-                    response = await new SpellMessageBuilder(spell, spell.GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                SpellData? spellData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellDataById(id);
+                if (spellData is not null)
+                    response = await new SpellMessageBuilder(spellData, spellData.GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else
             {
-                List<Spell> spells = Bot.Instance.Api.Datacenter.SpellsData.GetSpellsByName(value);
-                if (spells.Count == 1)
-                    response = await new SpellMessageBuilder(spells[0], spells[0].GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                else if (spells.Count > 1)
-                    response = await new PaginatedSpellMessageBuilder(spells, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                List<SpellData> spellsData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellsDataByName(value);
+                if (spellsData.Count == 1)
+                    response = await new SpellMessageBuilder(spellsData[0], spellsData[0].GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                else if (spellsData.Count > 1)
+                    response = await new PaginatedSpellMessageBuilder(spellsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Sort introuvable");

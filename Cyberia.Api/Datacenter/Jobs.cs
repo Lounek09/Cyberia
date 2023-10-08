@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Job
+    public sealed class JobData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -16,14 +16,14 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("g")]
         public int GfxId { get; init; }
 
-        public Job()
+        public JobData()
         {
             Name = string.Empty;
         }
 
-        public Job? GetSpecializationOf()
+        public JobData? GetJobDataSpecialization()
         {
-            return DofusApi.Instance.Datacenter.JobsData.GetJobById(SpecializationOfJobId);
+            return DofusApi.Instance.Datacenter.JobsData.GetJobDataById(SpecializationOfJobId);
         }
     }
 
@@ -32,7 +32,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "jobs.json";
 
         [JsonPropertyName("J")]
-        public List<Job> Jobs { get; init; }
+        public List<JobData> Jobs { get; init; }
 
         public JobsData()
         {
@@ -41,19 +41,19 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static JobsData Build()
         {
-            return Json.LoadFromFile<JobsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<JobsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Job? GetJobById(int id)
+        public JobData? GetJobDataById(int id)
         {
             return Jobs.Find(x => x.Id == id);
         }
 
         public string GetJobNameById(int id)
         {
-            Job? job = GetJobById(id);
+            JobData? jobData = GetJobDataById(id);
 
-            return job is null ? $"Inconnu ({id})" : job.Name;
+            return jobData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : jobData.Name;
         }
     }
 }

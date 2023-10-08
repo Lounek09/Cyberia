@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class NpcAction
+    public sealed class NpcActionData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -10,13 +10,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public string Name { get; init; }
 
-        public NpcAction()
+        public NpcActionData()
         {
             Name = string.Empty;
         }
     }
 
-    public sealed class Npcs
+    public sealed class NpcData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -27,24 +27,24 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("a")]
         public List<int> NpcActionsId { get; init; }
 
-        public Npcs()
+        public NpcData()
         {
             Name = string.Empty;
             NpcActionsId = new();
         }
 
-        public List<NpcAction> GetNpcActions()
+        public List<NpcActionData> GetNpcActionsData()
         {
-            List<NpcAction> npcActions = new();
+            List<NpcActionData> npcActionsData = new();
 
             foreach (int npcActionId in NpcActionsId)
             {
-                NpcAction? npcAction = DofusApi.Instance.Datacenter.NpcsData.GetNpcActionById(npcActionId);
-                if (npcAction is not null)
-                    npcActions.Add(npcAction);
+                NpcActionData? npcActionData = DofusApi.Instance.Datacenter.NpcsData.GetNpcActionDataById(npcActionId);
+                if (npcActionData is not null)
+                    npcActionsData.Add(npcActionData);
             }
 
-            return npcActions;
+            return npcActionsData;
         }
     }
 
@@ -53,10 +53,10 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "npc.json";
 
         [JsonPropertyName("N.a")]
-        public List<NpcAction> NpcActions { get; init; }
+        public List<NpcActionData> NpcActions { get; init; }
 
         [JsonPropertyName("N.d")]
-        public List<Npcs> Npcs { get; init; }
+        public List<NpcData> Npcs { get; init; }
 
         public NpcsData()
         {
@@ -66,24 +66,24 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static NpcsData Build()
         {
-            return Json.LoadFromFile<NpcsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<NpcsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public NpcAction? GetNpcActionById(int id)
+        public NpcActionData? GetNpcActionDataById(int id)
         {
             return NpcActions.Find(x => x.Id == id);
         }
 
-        public Npcs? GetNpcById(int id)
+        public NpcData? GetNpcDataById(int id)
         {
             return Npcs.Find(x => x.Id == id);
         }
 
         public string GetNpcNameById(int id)
         {
-            Npcs? npc = GetNpcById(id);
+            NpcData? npc = GetNpcDataById(id);
 
-            return npc is null ? $"Inconnu ({id})" : npc.Name;
+            return npc is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : npc.Name;
         }
     }
 }

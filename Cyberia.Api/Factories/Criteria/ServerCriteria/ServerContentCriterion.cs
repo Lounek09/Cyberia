@@ -1,22 +1,31 @@
-﻿namespace Cyberia.Api.Factories.Criteria.ServerCriteria;
-
-public static class ServerContentCriterion
+﻿namespace Cyberia.Api.Factories.Criteria.ServerCriteria
 {
-    public static string? GetValue(char @operator, string[] values)
+    public sealed record ServerContentCriterion : Criterion, ICriterion<ServerContentCriterion>
     {
-        if (values.Length > 0)
-        {
-            string value = $"Contenu n°{values[0].Bold()}";
+        public int Number { get; init; }
 
-            switch (@operator)
-            {
-                case '≠':
-                    return $"{value} désactivé";
-                case '=':
-                    return $"{value} activé";
-            }
+        private ServerContentCriterion(string id, char @operator, int number) :
+            base(id, @operator)
+        {
+            Number = number;
         }
 
-        return null;
+        public static ServerContentCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out int number))
+                return new(id, @operator, number);
+
+            return null;
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.ServerContent.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            return GetDescription(Number);
+        }
     }
 }

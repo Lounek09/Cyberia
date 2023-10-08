@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Emote
+    public sealed class EmoteData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -13,7 +13,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("s")]
         public string Shortcut { get; init; }
 
-        public Emote()
+        public EmoteData()
         {
             Name = string.Empty;
             Shortcut = string.Empty;
@@ -25,7 +25,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "emotes.json";
 
         [JsonPropertyName("EM")]
-        public List<Emote> Emotes { get; init; }
+        public List<EmoteData> Emotes { get; init; }
 
         public EmotesData()
         {
@@ -34,19 +34,19 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static EmotesData Build()
         {
-            return Json.LoadFromFile<EmotesData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<EmotesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Emote? GetEmoteById(int id)
+        public EmoteData? GetEmoteById(int id)
         {
             return Emotes.Find(x => x.Id == id);
         }
 
         public string GetEmoteNameById(int id)
         {
-            Emote? emote = GetEmoteById(id);
+            EmoteData? emoteData = GetEmoteById(id);
 
-            return emote is null ? $"Inconnu ({id})" : emote.Name;
+            return emoteData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : emoteData.Name;
         }
     }
 }

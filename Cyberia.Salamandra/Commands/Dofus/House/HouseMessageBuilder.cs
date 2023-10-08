@@ -11,16 +11,16 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public const string PACKET_HEADER = "H";
         public const int PACKET_VERSION = 1;
 
-        private readonly House _house;
+        private readonly HouseData _houseData;
         private readonly int _selectedMapIndex;
-        private readonly Map? _outdoorMap;
-        private readonly List<Map> _maps;
+        private readonly MapData? _outdoorMapData;
+        private readonly List<MapData> _mapsData;
 
-        public HouseMessageBuilder(House house, int selectedMapIndex = -1)
+        public HouseMessageBuilder(HouseData houseData, int selectedMapIndex = -1)
         {
-            _house = house;
-            _outdoorMap = house.GetOutdoorMap();
-            _maps = house.GetMaps();
+            _houseData = houseData;
+            _outdoorMapData = houseData.GetOutdoorMapData();
+            _mapsData = houseData.GetMapsData();
             _selectedMapIndex = selectedMapIndex;
         }
 
@@ -31,9 +31,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int houseId) &&
                 int.TryParse(parameters[1], out int selectedMapIndex))
             {
-                House? house = Bot.Instance.Api.Datacenter.HousesData.GetHouseById(houseId);
-                if (house is not null)
-                    return new(house, selectedMapIndex);
+                HouseData? houseData = Bot.Instance.Api.Datacenter.HousesData.GetHouseDataById(houseId);
+                if (houseData is not null)
+                    return new(houseData, selectedMapIndex);
             }
 
             return null;
@@ -49,7 +49,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             IDiscordMessageBuilder message = new T()
                 .AddEmbed(await EmbedBuilder());
 
-            if (_outdoorMap != null || _maps.Count > 0)
+            if (_outdoorMapData != null || _mapsData.Count > 0)
                 message.AddComponents(HouseMapsSelectBuilder());
 
             return (T)message;
@@ -58,15 +58,15 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Houses, "Agence immobilière")
-                .WithTitle($"{_house.Name}{(string.IsNullOrEmpty(_house.GetCoordinate()) ? "" : $" {_house.GetCoordinate()}")} ({_house.Id})")
-                .WithDescription(string.IsNullOrEmpty(_house.Description) ? "" : Formatter.Italic(_house.Description))
-                .AddField("Pièce :", _house.RoomNumber == 0 ? "?" : _house.RoomNumber.ToString(), true)
-                .AddField("Coffre :", _house.ChestNumber == 0 ? "?" : _house.ChestNumber.ToString(), true)
-                .AddField("Prix :", _house.Price == 0 ? "?" : _house.Price.ToStringThousandSeparator(), true);
+                .WithTitle($"{_houseData.Name}{(string.IsNullOrEmpty(_houseData.GetCoordinate()) ? "" : $" {_houseData.GetCoordinate()}")} ({_houseData.Id})")
+                .WithDescription(string.IsNullOrEmpty(_houseData.Description) ? "" : Formatter.Italic(_houseData.Description))
+                .AddField("Pièce :", _houseData.RoomNumber == 0 ? "?" : _houseData.RoomNumber.ToString(), true)
+                .AddField("Coffre :", _houseData.ChestNumber == 0 ? "?" : _houseData.ChestNumber.ToString(), true)
+                .AddField("Prix :", _houseData.Price == 0 ? "?" : _houseData.Price.ToStringThousandSeparator(), true);
 
-            Map? currentMap = _selectedMapIndex == -1 ? _outdoorMap : _maps[_selectedMapIndex];
-            if (currentMap is not null)
-                embed.WithImageUrl(currentMap.GetImagePath());
+            MapData? currentMapData = _selectedMapIndex == -1 ? _outdoorMapData : _mapsData[_selectedMapIndex];
+            if (currentMapData is not null)
+                embed.WithImageUrl(currentMapData.GetImagePath());
 
             return Task.FromResult(embed);
         }
@@ -75,11 +75,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordSelectComponentOption> options = new();
 
-            if (_outdoorMap is not null)
-                options.Add(new("Extérieur", GetPacket(_house.Id), isDefault: _selectedMapIndex == -1));
+            if (_outdoorMapData is not null)
+                options.Add(new("Extérieur", GetPacket(_houseData.Id), isDefault: _selectedMapIndex == -1));
 
-            for (int i = 0; i < _maps.Count; i++)
-                options.Add(new($"Pièce {i + 1}", GetPacket(_house.Id, i), isDefault: i == _selectedMapIndex));
+            for (int i = 0; i < _mapsData.Count; i++)
+                options.Add(new($"Pièce {i + 1}", GetPacket(_houseData.Id, i), isDefault: i == _selectedMapIndex));
 
             return new(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne une pièce pour l'afficher", options);
         }

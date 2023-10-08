@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Guild
+    public sealed class GuildData
     {
         [JsonPropertyName("w")]
         public List<List<int>> BoostCostWeight { get; set; }
@@ -34,7 +34,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("sm")]
         public int SpellMax { get; set; }
 
-        public Guild()
+        public GuildData()
         {
             BoostCostWeight = new();
             BoostCostProspecting = new();
@@ -49,7 +49,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "guilds.json";
 
         [JsonPropertyName("GU.b")]
-        public Guild Guild { get; init; }
+        public GuildData Guild { get; init; }
 
         public GuildsData()
         {
@@ -58,7 +58,7 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static GuildsData Build()
         {
-            return Json.LoadFromFile<GuildsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<GuildsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

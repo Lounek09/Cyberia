@@ -15,11 +15,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (Craft craft in Bot.Instance.Api.Datacenter.CraftsData.GetCraftsByItemName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+            foreach (CraftData craftData in Bot.Instance.Api.Datacenter.CraftsData.GetCraftsDataByItemName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
             {
-                Item? item = craft.GetItem();
-                if (item is not null)
-                    choices.Add(new($"{item.Name.WithMaxLength(90)} ({craft.Id})", craft.Id.ToString()));
+                ItemData? itemData = craftData.GetItemData();
+                if (itemData is not null)
+                    choices.Add(new($"{itemData.Name.WithMaxLength(90)} ({craftData.Id})", craftData.Id.ToString()));
             }
 
             return Task.FromResult(choices.AsEnumerable());

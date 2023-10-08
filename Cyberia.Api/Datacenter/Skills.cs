@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Skill
+    public sealed class SkillData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -28,45 +28,45 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("i")]
         public int HarvestedItemId { get; init; }
 
-        public Skill()
+        public SkillData()
         {
             Description = string.Empty;
             Criterion = string.Empty;
             CraftsId = new();
         }
 
-        public Job? GetJob()
+        public JobData? GetJobData()
         {
-            return DofusApi.Instance.Datacenter.JobsData.GetJobById(JobId);
+            return DofusApi.Instance.Datacenter.JobsData.GetJobDataById(JobId);
         }
 
-        public InteractiveObject? GetInteractiveObject()
+        public InteractiveObjectData? GetInteractiveObjectData()
         {
-            return DofusApi.Instance.Datacenter.InteractiveObjectsData.GetInteractiveObjectById(InteractiveObjectId);
+            return DofusApi.Instance.Datacenter.InteractiveObjectsData.GetInteractiveObjectDataById(InteractiveObjectId);
         }
 
-        public ItemType? GetItemTypeForgemagus()
+        public ItemTypeData? GetItemTypeDataForgemagus()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemTypeById(ItemTypeIdForgemagus);
+            return DofusApi.Instance.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeIdForgemagus);
         }
 
-        public List<Craft> GetCrafts()
+        public List<CraftData> GetCraftsData()
         {
-            List<Craft> crafts = new();
+            List<CraftData> crafts = new();
 
             foreach (int craftId in CraftsId)
             {
-                Craft? craft = DofusApi.Instance.Datacenter.CraftsData.GetCraftById(craftId);
-                if (craft is not null)
-                    crafts.Add(craft);
+                CraftData? craftData = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(craftId);
+                if (craftData is not null)
+                    crafts.Add(craftData);
             }
 
             return crafts;
         }
 
-        public Item? GetHarvestedItem()
+        public ItemData? GetHarvestedItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemById(HarvestedItemId);
+            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(HarvestedItemId);
         }
     }
 
@@ -75,7 +75,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "skills.json";
 
         [JsonPropertyName("SK")]
-        public List<Skill> Skills { get; init; }
+        public List<SkillData> Skills { get; init; }
 
         public SkillsData()
         {
@@ -84,10 +84,10 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static SkillsData Build()
         {
-            return Json.LoadFromFile<SkillsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<SkillsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Skill? GetSkillById(int id)
+        public SkillData? GetSkillDataById(int id)
         {
             return Skills.Find(x => x.Id == id);
         }

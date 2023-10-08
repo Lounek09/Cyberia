@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Factories.Effects;
+﻿using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Managers;
 
 using System.Globalization;
@@ -6,11 +7,11 @@ using System.Text.Json;
 
 namespace Cyberia.Api.Factories
 {
-    public record struct EffectParameters(int Param1, int Param2, int Param3, string Param4);
+    public readonly record struct EffectParameters(int Param1, int Param2, int Param3, string Param4);
 
     public static class EffectFactory
     {
-        private static readonly Dictionary<int, Func<int, EffectParameters, int, int, string, Area, IEffect>> _factory = new()
+        private static readonly Dictionary<int, Func<int, EffectParameters, int, int, List<ICriteriaElement>, EffectArea, IEffect>> _factory = new()
         {
             { -1, PaddockItemEffectivenessEffect.Create },
             { 10, LearnEmoteEffect.Create },
@@ -46,23 +47,23 @@ namespace Cyberia.Api.Factories
             { 400, TrapSpellEffect.Create },
             { 401, GlyphSpellEffect.Create },
             { 402, GlyphSpellEffect.Create },
-            { 405, KIllAndReplaceByMonsterEffect.Create },
+            { 405, KIllAndSummonEffect.Create },
             { 521, UnbreakableEffect.Create },
             { 601, TeleportToMapEffect.Create },
             { 604, LearnSpellLevelEffect.Create },
             { 614, GiveJobXpEffect.Create },
             { 615, ForgetJobEffect.Create },
-            { 616, ForgetSpellLevelEffect.Create },
+            { 616, ForgetSpellEffect.Create },
             { 621, SummonMonsterEffect.Create },
             { 623, SummonMonsterFromSoulStoneEffect.Create },
-            { 624, ForgetSpellLevelEffect.Create },
+            { 624, ForgetSpellEffect.Create },
             { 628, SummonMonsterFromSoulGemEffect.Create },
             { 649, AlignmentEffect.Create },
             { 699, LinkJobEffect.Create },
             { 715, MonsterSuperRaceEffect.Create },
             { 716, MonsterRaceEffect.Create },
             { 717, MonsterEffect.Create },
-            { 724, ShowTitleEffect.Create },
+            { 724, DisplayTitleEffect.Create },
             { 787, LaunchSpellEffect.Create },
             { 805, ReceivedOnDateTimeEffect.Create },
             { 806, PetCorpulenceEffect.Create },
@@ -70,7 +71,7 @@ namespace Cyberia.Api.Factories
             { 808, LastMealDateTimeEffect.Create },
             { 814, KeyEffect.Create },
             { 830, GuildTeleportationEffect.Create },
-            { 905, LaunchFightWithMonsterEffect.Create },
+            { 905, LaunchFightEffect.Create },
             { 939, EnhancePetEffect.Create },
             { 945, GiveRideAbilityEffect.Create },
             { 950, AddStateEffect.Create },
@@ -80,9 +81,9 @@ namespace Cyberia.Api.Factories
             { 970, LivingItemEffect.Create },
             { 971, LivingItemCorpulenceEffect.Create },
             { 973, CompatibleWithItemTypeEffect.Create },
-            { 983, ExchangeableUntilDateTimeEffect.Create },
+            { 983, ExchangeableEffect.Create },
             { 999, TeleportToMap2Effect.Create },
-            { 2101, GiveTTGCardFromPackEffect.Create },
+            { 2101, GiveTTGCardEffect.Create },
             { 2102, AddTTGCardToBinderEffect.Create },
             { 2128, AddStateEffect.Create },
             { 2129, RemoveStateEffect.Create },
@@ -92,15 +93,15 @@ namespace Cyberia.Api.Factories
             { 2144, SummonMonsterInFightEffect.Create }
         };
 
-        public static IEffect GetEffect(int effectId, EffectParameters parameters, int duration, int probability, string criteria, Area area)
+        public static IEffect GetEffect(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
         {
-            if (_factory.TryGetValue(effectId, out Func<int, EffectParameters, int, int, string, Area, IEffect>? builder))
-                return builder(effectId, parameters, duration, probability, criteria, area);
+            if (_factory.TryGetValue(effectId, out Func<int, EffectParameters, int, int, List<ICriteriaElement>, EffectArea, IEffect>? builder))
+                return builder(effectId, parameters, duration, probability, criteria, effectArea);
 
-            return BasicEffect.Create(effectId, parameters, duration, probability, criteria, area);
+            return UntranslatedEffect.Create(effectId, parameters, duration, probability, criteria, effectArea);
         }
 
-        public static IEnumerable<IEffect> GetEffectsParseFromSpell(JsonElement[] effects, List<Area> areas)
+        public static IEnumerable<IEffect> GetEffectsParseFromSpell(JsonElement[] effects, List<EffectArea> effectAreas)
         {
             for (int i = 0; i < effects.Length; i++)
             {
@@ -114,9 +115,9 @@ namespace Cyberia.Api.Factories
                 EffectParameters parameters = new(param1, param2, param3, param4);
                 int duration = effect[4].ValueKind == JsonValueKind.Null ? 0 : effect[4].GetInt32();
                 int probability = effect[5].ValueKind == JsonValueKind.Null ? 0 : effect[5].GetInt32();
-                string criteria = effect[6].GetString() ?? "";
+                List<ICriteriaElement> criteria = CriterionFactory.GetCriteria(effect[6].GetString() ?? "").ToList();
 
-                yield return GetEffect(id, parameters, duration, probability, criteria, areas[i]);
+                yield return GetEffect(id, parameters, duration, probability, criteria, effectAreas[i]);
             }
         }
 
@@ -133,7 +134,7 @@ namespace Cyberia.Api.Factories
                 string param4 = args.Length > 4 ? args[4] : "";
                 EffectParameters parameters = new(param1, param2, param3, param4);
 
-                yield return GetEffect(id, parameters, 0, 0, "", EffectAreaManager.BaseArea);
+                yield return GetEffect(id, parameters, 0, 0, new(), EffectAreaManager.DefaultArea);
             }
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Alignment
+    public sealed class AlignmentData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -13,34 +13,34 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("c")]
         public bool CanConquest { get; init; }
 
-        public Alignment()
+        public AlignmentData()
         {
             Name = string.Empty;
         }
 
         public bool CanJoin(int alignmentId)
         {
-            AlignmentJoin? alignmentJoin = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentJoinById(Id);
+            AlignmentJoinData? alignmentJoinData = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentJoinDataById(Id);
 
-            return alignmentJoin is not null && alignmentJoin.CanJoin(alignmentId);
+            return alignmentJoinData is not null && alignmentJoinData.CanJoin(alignmentId);
         }
 
         public bool CanAttack(int alignmentId)
         {
-            AlignmentAttack? alignmentAttack = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentAttackById(Id);
+            AlignmentAttackData? alignmentAttackData = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentAttackDataById(Id);
 
-            return alignmentAttack is not null && alignmentAttack.CanAttack(alignmentId);
+            return alignmentAttackData is not null && alignmentAttackData.CanAttack(alignmentId);
         }
 
         public bool CanViewPvpGain(int alignmentId)
         {
-            AlignmentViewPvpGain? alignmentViewPvpGain = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentViewPvpGainById(Id);
+            AlignmentViewPvpGainData? alignmentViewPvpGainData = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentViewPvpGainDataById(Id);
 
-            return alignmentViewPvpGain is not null && alignmentViewPvpGain.CanViewPvpGain(alignmentId);
+            return alignmentViewPvpGainData is not null && alignmentViewPvpGainData.CanViewPvpGain(alignmentId);
         }
     }
 
-    public sealed class AlignmentJoin
+    public sealed class AlignmentJoinData
     {
         [JsonPropertyName("id")]
         public int AlignmentId { get; init; }
@@ -48,7 +48,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public List<bool> Values { get; init; }
 
-        public AlignmentJoin()
+        public AlignmentJoinData()
         {
             Values = new();
         }
@@ -59,7 +59,7 @@ namespace Cyberia.Api.DatacenterNS
         }
     }
 
-    public sealed class AlignmentAttack
+    public sealed class AlignmentAttackData
     {
         [JsonPropertyName("id")]
         public int AlignmentId { get; init; }
@@ -67,7 +67,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public List<bool> Values { get; init; }
 
-        public AlignmentAttack()
+        public AlignmentAttackData()
         {
             Values = new();
         }
@@ -78,7 +78,7 @@ namespace Cyberia.Api.DatacenterNS
         }
     }
 
-    public sealed class AlignmentOrder
+    public sealed class AlignmentOrderData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -89,18 +89,18 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("a")]
         public int AlignmentId { get; init; }
 
-        public AlignmentOrder()
+        public AlignmentOrderData()
         {
             Name = string.Empty;
         }
 
-        public Alignment? GetAlignement()
+        public AlignmentData? GetAlignementData()
         {
-            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentById(AlignmentId);
+            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
         }
     }
 
-    public sealed class AlignmentViewPvpGain
+    public sealed class AlignmentViewPvpGainData
     {
         [JsonPropertyName("id")]
         public int AlignmentId { get; init; }
@@ -108,7 +108,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public List<bool> Values { get; init; }
 
-        public AlignmentViewPvpGain()
+        public AlignmentViewPvpGainData()
         {
             Values = new();
         }
@@ -119,7 +119,7 @@ namespace Cyberia.Api.DatacenterNS
         }
     }
 
-    public sealed class AlignmentFeat
+    public sealed class AlignmentFeatData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -133,18 +133,18 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("e")]
         public int AlignmentFeatEffectId { get; init; }
 
-        public AlignmentFeat()
+        public AlignmentFeatData()
         {
             Name = string.Empty;
         }
 
-        public AlignmentFeatEffect? GetAlignmentFeatEffect()
+        public AlignmentFeatEffectData? GetAlignmentFeatEffectData()
         {
-            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentFeatEffectById(AlignmentFeatEffectId);
+            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentFeatEffectDataById(AlignmentFeatEffectId);
         }
     }
 
-    public sealed class AlignmentFeatEffect
+    public sealed class AlignmentFeatEffectData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -152,13 +152,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public string Description { get; init; }
 
-        public AlignmentFeatEffect()
+        public AlignmentFeatEffectData()
         {
             Description = string.Empty;
         }
     }
 
-    public sealed class AlignmentBalance
+    public sealed class AlignmentBalanceData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -175,14 +175,14 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("d")]
         public string Description { get; init; }
 
-        public AlignmentBalance()
+        public AlignmentBalanceData()
         {
             Name = string.Empty;
             Description = string.Empty;
         }
     }
 
-    public sealed class AlignmentSpecialization
+    public sealed class AlignmentSpecializationData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -203,51 +203,51 @@ namespace Cyberia.Api.DatacenterNS
         //TODO: jsonconverter for AlignmentFeatsParameters in AlignmentSpecialization
         public List<List<object>> AlignmentFeatsParameters { get; init; }
 
-        public AlignmentSpecialization()
+        public AlignmentSpecializationData()
         {
             Name = string.Empty;
             Description = string.Empty;
             AlignmentFeatsParameters = new();
         }
 
-        public AlignmentOrder? GetAlignementOrder()
+        public AlignmentOrderData? GetAlignementOrderData()
         {
-            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentOrderById(AlignmentOrderId);
+            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentOrderDataById(AlignmentOrderId);
         }
     }
 
-    public sealed class AlignmentData
+    public sealed class AlignmentsData
     {
         private const string FILE_NAME = "alignment.json";
 
         [JsonPropertyName("A.a")]
-        public List<Alignment> Alignments { get; init; }
+        public List<AlignmentData> Alignments { get; init; }
 
         [JsonPropertyName("A.jo")]
-        public List<AlignmentJoin> AlignmentsJoin { get; init; }
+        public List<AlignmentJoinData> AlignmentsJoin { get; init; }
 
         [JsonPropertyName("A.at")]
-        public List<AlignmentAttack> AlignmentsAttack { get; init; }
+        public List<AlignmentAttackData> AlignmentsAttack { get; init; }
 
         [JsonPropertyName("A.o")]
-        public List<AlignmentOrder> AlignmentOrders { get; init; }
+        public List<AlignmentOrderData> AlignmentOrders { get; init; }
 
         [JsonPropertyName("A.g")]
-        public List<AlignmentViewPvpGain> AlignmentsViewPvpGain { get; init; }
+        public List<AlignmentViewPvpGainData> AlignmentsViewPvpGain { get; init; }
 
         [JsonPropertyName("A.f")]
-        public List<AlignmentFeat> AlignmentFeats { get; init; }
+        public List<AlignmentFeatData> AlignmentFeats { get; init; }
 
         [JsonPropertyName("A.fe")]
-        public List<AlignmentFeatEffect> AlignmentFeatEffects { get; init; }
+        public List<AlignmentFeatEffectData> AlignmentFeatEffects { get; init; }
 
         [JsonPropertyName("A.b")]
-        public List<AlignmentBalance> AlignmentBalance { get; init; }
+        public List<AlignmentBalanceData> AlignmentBalance { get; init; }
 
         [JsonPropertyName("A.s")]
-        public List<AlignmentSpecialization> AlignmentSpecializations { get; init; }
+        public List<AlignmentSpecializationData> AlignmentSpecializations { get; init; }
 
-        public AlignmentData()
+        public AlignmentsData()
         {
             Alignments = new();
             AlignmentsJoin = new();
@@ -260,70 +260,70 @@ namespace Cyberia.Api.DatacenterNS
             AlignmentSpecializations = new();
         }
 
-        internal static AlignmentData Build()
+        internal static AlignmentsData Build()
         {
-            return Json.LoadFromFile<AlignmentData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<AlignmentsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Alignment? GetAlignmentById(int id)
+        public AlignmentData? GetAlignmentDataById(int id)
         {
             return Alignments.Find(x => x.Id == id);
         }
 
         public string GetAlignmentNameById(int id)
         {
-            Alignment? alignment = GetAlignmentById(id);
+            AlignmentData? alignmentData = GetAlignmentDataById(id);
 
-            return alignment is null ? $"Inconnu ({id})" : alignment.Name;
+            return alignmentData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentData.Name;
         }
 
-        public AlignmentJoin? GetAlignmentJoinById(int id)
+        public AlignmentJoinData? GetAlignmentJoinDataById(int id)
         {
             return AlignmentsJoin.Find(x => x.AlignmentId == id);
         }
 
-        public AlignmentAttack? GetAlignmentAttackById(int id)
+        public AlignmentAttackData? GetAlignmentAttackDataById(int id)
         {
             return AlignmentsAttack.Find(x => x.AlignmentId == id);
         }
 
-        public AlignmentOrder? GetAlignmentOrderById(int id)
+        public AlignmentOrderData? GetAlignmentOrderDataById(int id)
         {
             return AlignmentOrders.Find(x => x.Id == id);
         }
 
-        public AlignmentViewPvpGain? GetAlignmentViewPvpGainById(int id)
+        public AlignmentViewPvpGainData? GetAlignmentViewPvpGainDataById(int id)
         {
             return AlignmentsViewPvpGain.Find(x => x.AlignmentId == id);
         }
 
-        public AlignmentFeat? GetAlignmentFeatById(int id)
+        public AlignmentFeatData? GetAlignmentFeatDataById(int id)
         {
             return AlignmentFeats.Find(x => x.Id == id);
         }
 
         public string GetAlignmentFeatNameById(int id)
         {
-            AlignmentFeat? alignmentFeat = GetAlignmentFeatById(id);
+            AlignmentFeatData? alignmentFeatData = GetAlignmentFeatDataById(id);
 
-            return alignmentFeat is null ? $"Inconnu ({id})" : alignmentFeat.Name;
+            return alignmentFeatData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentFeatData.Name;
         }
 
-        public AlignmentFeatEffect? GetAlignmentFeatEffectById(int id)
+        public AlignmentFeatEffectData? GetAlignmentFeatEffectDataById(int id)
         {
             return AlignmentFeatEffects.Find(x => x.Id == id);
         }
 
-        public AlignmentSpecialization? GetAlignmentSpecializationById(int id)
+        public AlignmentSpecializationData? GetAlignmentSpecializationDataById(int id)
         {
             return AlignmentSpecializations.Find(x => x.Id == id);
         }
 
         public string GetAlignmentSpecializationNameById(int id)
         {
-            AlignmentSpecialization? alignmentSpecialization = GetAlignmentSpecializationById(id);
+            AlignmentSpecializationData? alignmentSpecializationData = GetAlignmentSpecializationDataById(id);
 
-            return alignmentSpecialization is null ? $"Inconnu ({id})" : alignmentSpecialization.Name;
+            return alignmentSpecializationData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentSpecializationData.Name;
         }
     }
 }

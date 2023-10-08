@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
+    <ProjectReference Include="..\Cyberia.Translation\Cyberia.Translation.csproj" />
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Using Include="Cyberia.Translation" />
     <Using Include="Cyberia.Utils" />
   </ItemGroup>
 
@@ -33,12 +35,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="api\custom\quests.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="api\custom\spells.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="api\effectareas.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="api\effects.json">

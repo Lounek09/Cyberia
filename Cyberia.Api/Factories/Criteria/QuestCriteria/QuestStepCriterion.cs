@@ -1,25 +1,40 @@
-﻿namespace Cyberia.Api.Factories.Criteria.QuestCriteria
-{
-    public static class QuestStepCriterion
-    {
-        public static string? GetValue(char @operator, string[] values)
-        {
-            if (values.Length > 0 && int.TryParse(values[0], out int questStepId))
-            {
-                string questStepName = DofusApi.Instance.Datacenter.QuestsData.GetQuestStepNameById(questStepId);
+﻿using Cyberia.Api.DatacenterNS;
 
-                string value = $"Étape de quête {questStepName.Bold()}";
-                return @operator switch
-                {
-                    '≠' => $"{value} pas en cours",
-                    '=' => $"{value} en cours",
-                    '>' => $"{value} validée",
-                    '<' => $"{value} non validée",
-                    _ => value,
-                };
-            }
+namespace Cyberia.Api.Factories.Criteria.QuestCriteria
+{
+    public sealed record QuestStepCriterion : Criterion, ICriterion<QuestStepCriterion>
+    {
+        public int QuestStepId { get; init; }
+
+        private QuestStepCriterion(string id, char @operator, int questStepId) :
+            base(id, @operator)
+        {
+            QuestStepId = questStepId;
+        }
+
+        public static QuestStepCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out int questStepId))
+                return new(id, @operator, questStepId);
 
             return null;
+        }
+
+        public QuestStepData? GetQuestStepData()
+        {
+            return DofusApi.Instance.Datacenter.QuestsData.GetQuestStepDataById(QuestStepId);
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.QuestStep.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            string questStepName = DofusApi.Instance.Datacenter.QuestsData.GetQuestStepNameById(QuestStepId);
+
+            return GetDescription(questStepName);
         }
     }
 }

@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.DatacenterNS.Custom;
+using Cyberia.Api.Values;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Breed
+    public sealed class BreedData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -59,7 +62,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public int ItemSetId { get; internal set; }
 
-        public Breed()
+        public BreedData()
         {
             Name = string.Empty;
             LongName = string.Empty;
@@ -87,18 +90,18 @@ namespace Cyberia.Api.DatacenterNS
             return $"{DofusApi.Instance.Config.CdnUrl}/images/breeds/preference_weapons/weapons_{Id}.png";
         }
 
-        public List<Spell> GetSpells()
+        public List<SpellData> GetSpellsData()
         {
-            List<Spell> spells = new();
+            List<SpellData> spellsData = new();
 
             foreach (int spellId in SpellsId)
             {
-                Spell? spell = DofusApi.Instance.Datacenter.SpellsData.GetSpellById(spellId);
-                if (spell is not null && (!DofusApi.Instance.Config.Temporis || spell.SpellCategoryId == SpellCategory.TEMPORIS_BREED))
-                    spells.Add(spell);
+                SpellData? spellData = DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(spellId);
+                if (spellData is not null && (!DofusApi.Instance.Config.Temporis || spellData.SpellCategory is SpellCategory.TemporisBreed))
+                    spellsData.Add(spellData);
             }
 
-            return spells;
+            return spellsData;
         }
 
         public string GetCaracteristics()
@@ -143,14 +146,14 @@ namespace Cyberia.Api.DatacenterNS
             return value;
         }
 
-        public Spell? GetSpecialSpell()
+        public SpellData? GetSpecialSpellData()
         {
-            return DofusApi.Instance.Datacenter.SpellsData.GetSpellById(SpecialSpellId);
+            return DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(SpecialSpellId);
         }
 
-        public ItemSet? GetItemSet()
+        public ItemSetData? GetItemSetData()
         {
-            return DofusApi.Instance.Datacenter.ItemSetsData.GetItemSetById(ItemSetId);
+            return DofusApi.Instance.Datacenter.ItemSetsData.GetItemSetDataById(ItemSetId);
         }
     }
 
@@ -159,7 +162,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "classes.json";
 
         [JsonPropertyName("G")]
-        public List<Breed> Breeds { get; init; }
+        public List<BreedData> Breeds { get; init; }
 
         public BreedsData()
         {
@@ -168,33 +171,33 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static BreedsData Build()
         {
-            BreedsData data = Json.LoadFromFile<BreedsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
-            BreedsCustomData customData = Json.LoadFromFile<BreedsCustomData>($"{DofusApi.CUSTOM_PATH}/{FILE_NAME}");
+            BreedsData data = Json.LoadFromFile<BreedsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            BreedsCustomData customData = Json.LoadFromFile<BreedsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
-            foreach (BreedCustom breedCustom in customData.BreedsCustom)
+            foreach (BreedCustomData breedCustomData in customData.Breeds)
             {
-                Breed? breed = data.GetBreedById(breedCustom.Id);
-                if (breed is not null)
+                BreedData? breedData = data.GetBreedDataById(breedCustomData.Id);
+                if (breedData is not null)
                 {
-                    breed.SpecialSpellId = breedCustom.SpecialSpellId;
-                    breed.ItemSetId = breedCustom.ItemSetId;
+                    breedData.SpecialSpellId = breedCustomData.SpecialSpellId;
+                    breedData.ItemSetId = breedCustomData.ItemSetId;
                 }
             }
 
             return data;
         }
 
-        public Breed? GetBreedById(int id)
+        public BreedData? GetBreedDataById(int id)
         {
             return Breeds.Find(x => x.Id == id);
         }
 
-        public Breed? GetBreedByName(string name)
+        public BreedData? GetBreedDataByName(string name)
         {
             return Breeds.Find(x => x.Name.RemoveDiacritics().Equals(name.RemoveDiacritics()));
         }
 
-        public List<Breed> GetBreedsByName(string name)
+        public List<BreedData> GetBreedsDataByName(string name)
         {
             string[] names = name.RemoveDiacritics().Split(' ');
             return Breeds.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));
@@ -202,9 +205,9 @@ namespace Cyberia.Api.DatacenterNS
 
         public string GetBreedNameById(int id)
         {
-            Breed? breed = GetBreedById(id);
+            BreedData? breed = GetBreedDataById(id);
 
-            return breed is null ? $"Inconnu ({id})" : breed.Name;
+            return breed is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : breed.Name;
         }
     }
 }

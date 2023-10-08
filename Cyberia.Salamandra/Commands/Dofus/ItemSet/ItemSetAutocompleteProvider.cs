@@ -15,8 +15,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (ItemSet itemSet in Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetsByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
-                choices.Add(new($"{itemSet.Name.WithMaxLength(90)} ({itemSet.Id})", itemSet.Id.ToString()));
+            foreach (ItemSetData itemSetData in Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetsDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+                choices.Add(new($"{itemSetData.Name.WithMaxLength(90)} ({itemSetData.Id})", itemSetData.Id.ToString()));
 
             return Task.FromResult(choices.AsEnumerable());
         }

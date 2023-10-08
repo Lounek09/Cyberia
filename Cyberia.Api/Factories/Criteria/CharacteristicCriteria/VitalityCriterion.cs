@@ -1,13 +1,31 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
 {
-    public static class VitalityCriterion
+    public sealed record VitalityCriterion : Criterion, ICriterion<VitalityCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public int Vitality { get; init; }
+
+        private VitalityCriterion(string id, char @operator, int vitality) :
+            base(id, @operator)
         {
-            if (values.Length > 0)
-                return $"Vitalité {@operator} {values[0].Bold()}";
+            Vitality = vitality;
+        }
+
+        public static VitalityCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out int vitality))
+                return new(id, @operator, vitality);
 
             return null;
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.Vitality.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            return GetDescription(Vitality);
         }
     }
 }

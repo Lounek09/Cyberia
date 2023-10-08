@@ -7,9 +7,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
 {
     public static class BreedComponentsBuilder
     {
-        public static DiscordButtonComponent BreedButtonBuilder(Breed breed, bool disable = false)
+        public static DiscordButtonComponent BreedButtonBuilder(BreedData breedData, bool disable = false)
         {
-            return new(ButtonStyle.Success, BreedMessageBuilder.GetPacket(breed.Id), breed.Name, disable);
+            return new(ButtonStyle.Success, BreedMessageBuilder.GetPacket(breedData.Id), breedData.Name, disable);
         }
     }
 }

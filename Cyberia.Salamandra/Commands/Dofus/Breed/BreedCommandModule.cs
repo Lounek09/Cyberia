@@ -13,12 +13,12 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [ChoiceProvider(typeof(BreedChoiceProvider))]
             string breedName)
         {
-            Breed? breed = Bot.Instance.Api.Datacenter.BreedsData.GetBreedByName(breedName);
+            BreedData? breedData = Bot.Instance.Api.Datacenter.BreedsData.GetBreedDataByName(breedName);
 
-            if (breed is null)
+            if (breedData is null)
                 await ctx.CreateResponseAsync("Classe introuvable");
             else
-                await ctx.CreateResponseAsync(await new BreedMessageBuilder(breed).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.CreateResponseAsync(await new BreedMessageBuilder(breedData).GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
     }
 }

@@ -17,17 +17,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                Item? item = Bot.Instance.Api.Datacenter.ItemsData.GetItemById(id);
-                if (item is not null)
-                    response = await new ItemMessageBuilder(item).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                ItemData? itemData = Bot.Instance.Api.Datacenter.ItemsData.GetItemDataById(id);
+                if (itemData is not null)
+                    response = await new ItemMessageBuilder(itemData).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else
             {
-                List<Item> items = Bot.Instance.Api.Datacenter.ItemsData.GetItemsByName(value);
-                if (items.Count == 1)
-                    response = await new ItemMessageBuilder(items[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                else if (items.Count > 1)
-                    response = await new PaginatedItemMessageBuilder(items, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                List<ItemData> itemsData = Bot.Instance.Api.Datacenter.ItemsData.GetItemsDataByName(value);
+                if (itemsData.Count == 1)
+                    response = await new ItemMessageBuilder(itemsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                else if (itemsData.Count > 1)
+                    response = await new PaginatedItemMessageBuilder(itemsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Item introuvable");

@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Effect
+    public sealed class EffectData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -25,21 +25,11 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("e")]
         public string Element { get; init; }
 
-        public Effect()
+        public EffectData()
         {
             Description = string.Empty;
             Operator = string.Empty;
             Element = string.Empty;
-        }
-
-        public bool IsDamagingEffect()
-        {
-            return DofusApi.Instance.Datacenter.EffectsData.DamagingEffectsId.Contains(Id);
-        }
-
-        public bool IsHealingEffect()
-        {
-            return DofusApi.Instance.Datacenter.EffectsData.HealingEffectsId.Contains(Id);
         }
     }
 
@@ -48,27 +38,19 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "effects.json";
 
         [JsonPropertyName("E")]
-        public List<Effect> Effects { get; init; }
-
-        [JsonPropertyName("EDMG")]
-        public List<int> DamagingEffectsId { get; init; }
-
-        [JsonPropertyName("EHEL")]
-        public List<int> HealingEffectsId { get; init; }
+        public List<EffectData> Effects { get; init; }
 
         public EffectsData()
         {
             Effects = new();
-            DamagingEffectsId = new();
-            HealingEffectsId = new();
         }
 
         internal static EffectsData Build()
         {
-            return Json.LoadFromFile<EffectsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<EffectsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Effect? GetEffectById(int id)
+        public EffectData? GetEffectDataById(int id)
         {
             return Effects.Find(x => x.Id == id);
         }

@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Parser.JsonConverter
 {
-    public sealed class QuestStepRewardsJsonConverter : JsonConverter<QuestStepRewards>
+    public sealed class QuestStepRewardsJsonConverter : JsonConverter<QuestStepRewardsData>
     {
-        public override QuestStepRewards Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override QuestStepRewardsData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType is not JsonTokenType.StartArray)
                 throw new JsonException("Invalid JSON format: expected an array.");
@@ -16,7 +16,7 @@ namespace Cyberia.Api.Parser.JsonConverter
             if (elements is null || elements.Length != 6)
                 throw new JsonException($"Invalid JSON format: expected an array of 6 values, but got a length of {elements?.Length}.");
 
-            return new QuestStepRewards
+            return new QuestStepRewardsData
             {
                 Experience = elements[0].ValueKind is JsonValueKind.Null ? 0 : elements[0].GetInt32(),
                 Kamas = elements[1].ValueKind is JsonValueKind.Null ? 0 : elements[1].GetInt32(),
@@ -29,7 +29,7 @@ namespace Cyberia.Api.Parser.JsonConverter
             };
         }
 
-        public override void Write(Utf8JsonWriter writer, QuestStepRewards value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, QuestStepRewardsData value, JsonSerializerOptions options)
         {
             writer.WriteStartArray();
 

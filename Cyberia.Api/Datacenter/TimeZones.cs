@@ -28,33 +28,18 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static TimeZonesData Build()
         {
-            return Json.LoadFromFile<TimeZonesData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<TimeZonesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public int GetYear()
-        {
-            return DateTime.Now.Year + YearLess;
-        }
-
-        public string GetMonth()
+        public string GetMonth(int dayOfYear)
         {
             foreach (KeyValuePair<int, string> month in Enumerable.Reverse(StartDayOfMonths))
             {
-                if (DateTime.Now.DayOfYear > month.Key)
+                if (dayOfYear > month.Key)
                     return month.Value;
             }
 
             return "";
-        }
-
-        public static int GetDay()
-        {
-            return DateTime.Now.Day;
-        }
-
-        public string GetDate()
-        {
-            return $"{GetDay()} {GetMonth()} {GetYear()}";
         }
     }
 }

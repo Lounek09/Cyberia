@@ -11,8 +11,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordApplicationCommandOptionChoice> choices = new();
 
-            foreach (Breed breed in Bot.Instance.Api.Datacenter.BreedsData.Breeds)
-                choices.Add(new(breed.Name, breed.Name));
+            foreach (BreedData breedData in Bot.Instance.Api.Datacenter.BreedsData.Breeds)
+                choices.Add(new(breedData.Name, breedData.Name));
 
             return Task.FromResult(choices.AsEnumerable());
         }

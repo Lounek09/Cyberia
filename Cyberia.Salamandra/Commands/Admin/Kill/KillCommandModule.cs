@@ -9,7 +9,7 @@ namespace Cyberia.Salamandra.Commands.Admin
         [SlashRequireOwner]
         public async Task Command(InteractionContext ctx)
         {
-            await ctx.CreateResponseAsync("💀", true);
+            await ctx.CreateResponseAsync(@"\💀");
 
             await Bot.Instance.Client.DisconnectAsync();
         }

@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class PvpGrade
+    public sealed class PvpGradeData
     {
         [JsonPropertyName("nc")]
         public string ShortName { get; init; }
@@ -10,7 +10,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("nl")]
         public string Name { get; init; }
 
-        public PvpGrade()
+        public PvpGradeData()
         {
             ShortName = string.Empty;
             Name = string.Empty;
@@ -28,7 +28,7 @@ namespace Cyberia.Api.DatacenterNS
         public int MaxDishonourPoint { get; init; }
 
         [JsonPropertyName("PP.grds")]
-        public List<List<PvpGrade>> PvpGrades { get; init; }
+        public List<List<PvpGradeData>> PvpGrades { get; init; }
 
         public PvpData()
         {
@@ -38,7 +38,7 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static PvpData Build()
         {
-            return Json.LoadFromFile<PvpData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<PvpData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

@@ -6,15 +6,15 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell>
+    public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<SpellData>
     {
         public const string PACKET_HEADER = "PS";
         public const int PACKET_VERSION = 1;
 
         private readonly string _search;
 
-        public PaginatedSpellMessageBuilder(List<Spell> spells, string search, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Spells, "Livre de sorts", "Plusieurs sorts trouvés :", spells, selectedPageIndex)
+        public PaginatedSpellMessageBuilder(List<SpellData> spellsData, string search, int selectedPageIndex = 0) :
+            base(DofusEmbedCategory.Spells, "Livre de sorts", "Plusieurs sorts trouvés :", spellsData, selectedPageIndex)
         {
             _search = search;
         }
@@ -25,9 +25,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<Spell> spells = Bot.Instance.Api.Datacenter.SpellsData.GetSpellsByName(parameters[2]);
-                if (spells.Count > 0)
-                    return new(spells, parameters[2], selectedPageIndex);
+                List<SpellData> spellsData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellsDataByName(parameters[2]);
+                if (spellsData.Count > 0)
+                    return new(spellsData, parameters[2], selectedPageIndex);
             }
 
             return null;

@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class SpeakingItem
+    public sealed class SpeakingItemData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -22,7 +22,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("p")]
         public double Probability { get; init; }
 
-        public SpeakingItem()
+        public SpeakingItemData()
         {
             Message = string.Empty;
             ItemsIdCanUse = string.Empty;
@@ -34,9 +34,9 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "speakingitems.json";
 
         [JsonPropertyName("SIM")]
-        public List<SpeakingItem> SpeakingItems { get; init; }
+        public List<SpeakingItemData> SpeakingItems { get; init; }
 
-        //TODO: [API] SIT in SpeakingItems lang
+        //TODO: SIT in SpeakingItems lang
 
         public SpeakingItemsData()
         {
@@ -45,7 +45,7 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static SpeakingItemsData Build()
         {
-            return Json.LoadFromFile<SpeakingItemsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<SpeakingItemsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

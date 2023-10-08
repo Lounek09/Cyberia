@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class HintsCategory
+    public sealed class HintsCategoryData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -13,14 +13,14 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("c")]
         public string Color { get; init; }
 
-        public HintsCategory()
+        public HintsCategoryData()
         {
             Name = string.Empty;
             Color = string.Empty;
         }
     }
 
-    public sealed class Hint
+    public sealed class HintData
     {
         [JsonPropertyName("n")]
         public string Name { get; init; }
@@ -34,7 +34,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("m")]
         public int MapId { get; init; }
 
-        public Hint()
+        public HintData()
         {
             Name = string.Empty;
         }
@@ -45,10 +45,10 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "hints.json";
 
         [JsonPropertyName("HIC")]
-        public List<HintsCategory> HintsCategories { get; init; }
+        public List<HintsCategoryData> HintsCategories { get; init; }
 
         [JsonPropertyName("HI")]
-        public List<Hint> Hints { get; init; }
+        public List<HintData> Hints { get; init; }
 
         public HintsData()
         {
@@ -58,7 +58,7 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static HintsData Build()
         {
-            return Json.LoadFromFile<HintsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<HintsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

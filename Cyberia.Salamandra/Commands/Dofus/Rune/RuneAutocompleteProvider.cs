@@ -15,8 +15,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (Rune rune in Bot.Instance.Api.Datacenter.RunesData.GetRunesByName(ctx.OptionValue.ToString()!).Take(MAX_AUTOCOMPLETE_CHOICE))
-                choices.Add(new(rune.Name, rune.Name));
+            foreach (RuneData runeData in Bot.Instance.Api.Datacenter.RunesData.GetRunesDataByName(ctx.OptionValue.ToString()!).Take(MAX_AUTOCOMPLETE_CHOICE))
+                choices.Add(new(runeData.Name, runeData.Name));
 
             return Task.FromResult(choices.AsEnumerable());
         }

@@ -10,17 +10,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public const string PACKET_HEADER = "MA";
         public const int PACKET_VERSION = 1;
 
-        private readonly Map _map;
-        private readonly MapSubArea? _mapSubArea;
-        private readonly MapArea? _mapArea;
-        private readonly House? _house;
+        private readonly MapData _mapData;
+        private readonly MapSubAreaData? _mapSubAreaData;
+        private readonly MapAreaData? _mapAreaData;
+        private readonly HouseData? _houseData;
 
-        public MapMessageBuilder(Map map)
+        public MapMessageBuilder(MapData mapData)
         {
-            _map = map;
-            _mapSubArea = _map.GetMapSubArea();
-            _mapArea = _mapSubArea?.GetMapArea();
-            _house = _map.GetHouse();
+            _mapData = mapData;
+            _mapSubAreaData = _mapData.GetMapSubAreaData();
+            _mapAreaData = _mapSubAreaData?.GetMapAreaData();
+            _houseData = _mapData.GetHouseData();
         }
 
         public static MapMessageBuilder? Create(int version, string[] parameters)
@@ -29,9 +29,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 0 &&
                 int.TryParse(parameters[0], out int mapId))
             {
-                Map? map = Bot.Instance.Api.Datacenter.MapsData.GetMapById(mapId);
-                if (map is not null)
-                    return new(map);
+                MapData? mapData = Bot.Instance.Api.Datacenter.MapsData.GetMapDataById(mapId);
+                if (mapData is not null)
+                    return new(mapData);
             }
 
             return null;
@@ -57,9 +57,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Map, "Carte du monde")
-                .WithTitle($"{_map.GetCoordinate()} ({_map.Id})")
-                .WithDescription(_map.GetMapAreaName())
-                .WithImageUrl(_map.GetImagePath());
+                .WithTitle($"{_mapData.GetCoordinate()} ({_mapData.Id})")
+                .WithDescription(_mapData.GetMapAreaName())
+                .WithImageUrl(_mapData.GetImagePath());
 
             return Task.FromResult(embed);
         }
@@ -68,18 +68,18 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordButtonComponent> components = new();
 
-            List<Map> maps = Bot.Instance.Api.Datacenter.MapsData.GetMapsByCoordinate(_map.XCoord, _map.YCoord);
-            if (maps.Count > 1)
-                components.Add(MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_map));
+            List<MapData> mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord);
+            if (mapsData.Count > 1)
+                components.Add(MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_mapData));
 
-            if (_mapSubArea is not null)
-                components.Add(MapComponentsBuilder.PaginatedMapMapSubAreaButtonBuilder(_mapSubArea));
+            if (_mapSubAreaData is not null)
+                components.Add(MapComponentsBuilder.PaginatedMapMapSubAreaButtonBuilder(_mapSubAreaData));
 
-            if (_mapArea is not null)
-                components.Add(MapComponentsBuilder.PaginatedMapMapAreaButtonBuilder(_mapArea));
+            if (_mapAreaData is not null)
+                components.Add(MapComponentsBuilder.PaginatedMapMapAreaButtonBuilder(_mapAreaData));
 
-            if (_house is not null)
-                components.Add(HouseComponentsBuilder.HouseButtonBuilder(_house));
+            if (_houseData is not null)
+                components.Add(HouseComponentsBuilder.HouseButtonBuilder(_houseData));
 
             return components;
         }

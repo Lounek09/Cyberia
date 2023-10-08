@@ -2,13 +2,12 @@
 {
     public sealed class Datacenter
     {
-        public AlignmentData AlignmentsData { get; init; }
+        public AlignmentsData AlignmentsData { get; init; }
         public AudioData AudiosData { get; init; }
         public BreedsData BreedsData { get; init; }
         public CraftsData CraftsData { get; init; }
         public DialogsData DialogsData { get; init; }
         public EffectsData EffectsData { get; init; }
-        public EffectAreasData EffectAreasData { get; init; }
         public EmotesData EmotesData { get; init; }
         public FightChallengesData FightChallengesData { get; init; }
         public GuildsData GuildsData { get; init; }
@@ -18,7 +17,7 @@
         public InteractiveObjectsData InteractiveObjectsData { get; init; }
         public ItemsData ItemsData { get; init; }
         public ItemSetsData ItemSetsData { get; init; }
-        public ItemStatsData ItemStatsData { get; init; }
+        public ItemsStatsData ItemsStatsData { get; init; }
         public JobsData JobsData { get; init; }
         public KnowledgeBookData KnowledgeBookData { get; init; }
         public MapsData MapsData { get; init; }
@@ -42,13 +41,12 @@
 
         public Datacenter()
         {
-            AlignmentsData = AlignmentData.Build();
+            AlignmentsData = AlignmentsData.Build();
             AudiosData = AudioData.Build();
             BreedsData = BreedsData.Build();
             CraftsData = CraftsData.Build();
             DialogsData = DialogsData.Build();
             EffectsData = EffectsData.Build();
-            EffectAreasData = EffectAreasData.Build();
             EmotesData = EmotesData.Build();
             FightChallengesData = FightChallengesData.Build();
             GuildsData = GuildsData.Build();
@@ -58,7 +56,7 @@
             InteractiveObjectsData = InteractiveObjectsData.Build();
             ItemsData = ItemsData.Build();
             ItemSetsData = ItemSetsData.Build();
-            ItemStatsData = ItemStatsData.Build();
+            ItemsStatsData = ItemsStatsData.Build();
             JobsData = JobsData.Build();
             KnowledgeBookData = KnowledgeBookData.Build();
             MapsData = MapsData.Build();

@@ -8,20 +8,20 @@ namespace Cyberia.Salamandra.Commands.Dofus
 {
     public static class CraftComponentsBuilder
     {
-        public static DiscordButtonComponent CraftButtonBuilder(Craft craft, int qte = 1, bool disable = false)
+        public static DiscordButtonComponent CraftButtonBuilder(CraftData craftData, int qte = 1, bool disable = false)
         {
-            return new(ButtonStyle.Success, CraftMessageBuilder.GetPacket(craft.Id, qte), "Craft", disable);
+            return new(ButtonStyle.Success, CraftMessageBuilder.GetPacket(craftData.Id, qte), "Craft", disable);
         }
 
-        public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, List<Craft> crafts, int qte = 1, bool disable = false)
+        public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, List<CraftData> craftsData, int qte = 1, bool disable = false)
         {
             List<DiscordSelectComponentOption> options = new();
 
-            foreach (Craft craft in crafts)
+            foreach (CraftData craftData in craftsData)
             {
-                Item? item = craft.GetItem();
-                if (item is not null)
-                    options.Add(new(item.Name.WithMaxLength(100), CraftMessageBuilder.GetPacket(craft.Id, qte), craft.Id.ToString()));
+                ItemData? itemData = craftData.GetItemData();
+                if (itemData is not null)
+                    options.Add(new(itemData.Name.WithMaxLength(100), CraftMessageBuilder.GetPacket(craftData.Id, qte), craftData.Id.ToString()));
             }
 
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne un item pour calculer son craft", options, disable);

@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Title
+    public sealed class TitleData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -16,7 +16,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("pt")]
         public int ParametersType { get; init; }
 
-        public Title()
+        public TitleData()
         {
             Name = string.Empty;
         }
@@ -27,7 +27,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "titles.json";
 
         [JsonPropertyName("PT")]
-        public List<Title> Titles { get; init; }
+        public List<TitleData> Titles { get; init; }
 
         public TitlesData()
         {
@@ -36,19 +36,19 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static TitlesData Build()
         {
-            return Json.LoadFromFile<TitlesData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<TitlesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Title? GetTitleById(int id)
+        public TitleData? GetTitleDataById(int id)
         {
             return Titles.Find(x => x.Id == id);
         }
 
         public string GetTitleNameById(int id)
         {
-            Title? title = GetTitleById(id);
+            TitleData? titleData = GetTitleDataById(id);
 
-            return title is null ? $"Inconnu ({id})" : title.Name;
+            return titleData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : titleData.Name;
         }
     }
 }

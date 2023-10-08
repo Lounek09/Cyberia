@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class InteractiveObjectGfx
+    public sealed class InteractiveObjectGfxData
     {
         [JsonPropertyName("id")]
         public int GfxId { get; init; }
@@ -10,13 +10,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public int InteractiveObjectId { get; init; }
 
-        public InteractiveObjectGfx()
+        public InteractiveObjectGfxData()
         {
 
         }
     }
 
-    public sealed class InteractiveObject
+    public sealed class InteractiveObjectData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -30,24 +30,24 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("sk")]
         public List<int> SkillsId { get; init; }
 
-        public InteractiveObject()
+        public InteractiveObjectData()
         {
             Name = string.Empty;
             SkillsId = new();
         }
 
-        public List<Skill> GetSkills()
+        public List<SkillData> GetSkillsData()
         {
-            List<Skill> skills = new();
+            List<SkillData> skillsData = new();
 
             foreach (int skillId in SkillsId)
             {
-                Skill? skill = DofusApi.Instance.Datacenter.SkillsData.GetSkillById(skillId);
-                if (skill is not null)
-                    skills.Add(skill);
+                SkillData? skillData = DofusApi.Instance.Datacenter.SkillsData.GetSkillDataById(skillId);
+                if (skillData is not null)
+                    skillsData.Add(skillData);
             }
 
-            return skills;
+            return skillsData;
         }
     }
 
@@ -56,10 +56,10 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "interactiveobjects.json";
 
         [JsonPropertyName("IO.g")]
-        public List<InteractiveObjectGfx> InteractiveObjectsGfx { get; init; }
+        public List<InteractiveObjectGfxData> InteractiveObjectsGfx { get; init; }
 
         [JsonPropertyName("IO.d")]
-        public List<InteractiveObject> InteractiveObjects { get; init; }
+        public List<InteractiveObjectData> InteractiveObjects { get; init; }
 
         public InteractiveObjectsData()
         {
@@ -69,10 +69,10 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static InteractiveObjectsData Build()
         {
-            return Json.LoadFromFile<InteractiveObjectsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<InteractiveObjectsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public InteractiveObject? GetInteractiveObjectById(int id)
+        public InteractiveObjectData? GetInteractiveObjectDataById(int id)
         {
             return InteractiveObjects.Find(x => x.Id == id);
         }

@@ -1,13 +1,31 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 {
-    public static class AlignmentLevelCriterion
+    public sealed record AlignmentLevelCriterion : Criterion, ICriterion<AlignmentLevelCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public int Level { get; init; }
+
+        private AlignmentLevelCriterion(string id, char @operator, int level) :
+            base(id, @operator)
         {
-            if (values.Length > 0)
-                return $"Niveau d'alignement {@operator} {values[0].Bold()}";
+            Level = level;
+        }
+
+        public static AlignmentLevelCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out int level))
+                return new(id, @operator, level);
 
             return null;
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.AlignmentLevel.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            return GetDescription(Level);
         }
     }
 }

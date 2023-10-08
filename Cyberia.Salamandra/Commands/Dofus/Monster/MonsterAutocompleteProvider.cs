@@ -15,8 +15,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (Monster monster in Bot.Instance.Api.Datacenter.MonstersData.GetMonstersByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
-                choices.Add(new($"{$"{monster.Name} {(monster.BreedSummon ? "(invocation)" : "")}".WithMaxLength(90)} ({monster.Id})", monster.Id.ToString()));
+            foreach (MonsterData monsterData in Bot.Instance.Api.Datacenter.MonstersData.GetMonstersDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+                choices.Add(new($"{$"{monsterData.Name} {(monsterData.BreedSummon ? "(invocation)" : "")}".WithMaxLength(90)} ({monsterData.Id})", monsterData.Id.ToString()));
 
             return Task.FromResult(choices.AsEnumerable());
         }

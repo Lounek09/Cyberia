@@ -8,14 +8,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
 {
     public static class HouseComponentsBuilder
     {
-        public static DiscordButtonComponent HouseButtonBuilder(House house, bool disable = false)
+        public static DiscordButtonComponent HouseButtonBuilder(HouseData houseData, bool disable = false)
         {
-            return new(ButtonStyle.Success, HouseMessageBuilder.GetPacket(house.Id), house.Name, disable);
+            return new(ButtonStyle.Success, HouseMessageBuilder.GetPacket(houseData.Id), houseData.Name, disable);
         }
 
-        public static DiscordSelectComponent HousesSelectBuilder(int uniqueIndex, List<House> houses, bool disable = false)
+        public static DiscordSelectComponent HousesSelectBuilder(int uniqueIndex, List<HouseData> housesData, bool disable = false)
         {
-            IEnumerable<DiscordSelectComponentOption> options = houses.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), HouseMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
+            IEnumerable<DiscordSelectComponentOption> options = housesData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), HouseMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
 
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une maison pour l'afficher", options, disable);
         }

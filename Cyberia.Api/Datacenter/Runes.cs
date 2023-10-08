@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Rune
+    public sealed class RuneData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -22,14 +22,14 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("ra")]
         public bool HasRa { get; init; }
 
-        public Rune()
+        public RuneData()
         {
             Name = string.Empty;
         }
 
         public string GetFullName()
         {
-            return $"Rune {Name}";
+            return PatternDecoder.Description(Resources.Rune, Name);
         }
     }
     public sealed class RunesData
@@ -37,7 +37,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "runes.json";
 
         [JsonPropertyName("RU")]
-        public List<Rune> Runes { get; init; }
+        public List<RuneData> Runes { get; init; }
 
         public RunesData()
         {
@@ -46,20 +46,20 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static RunesData Build()
         {
-            return Json.LoadFromFile<RunesData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<RunesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Rune? GetRuneById(int id)
+        public RuneData? GetRuneDataById(int id)
         {
             return Runes.Find(x => x.Id == id);
         }
 
-        public Rune? GetRuneByName(string name)
+        public RuneData? GetRuneDataByName(string name)
         {
             return Runes.Find(x => x.Name.RemoveDiacritics().Equals(name.RemoveDiacritics()));
         }
 
-        public List<Rune> GetRunesByName(string name)
+        public List<RuneData> GetRunesDataByName(string name)
         {
             string[] names = name.RemoveDiacritics().Split(' ');
             return Runes.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));
@@ -67,12 +67,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public string GetAllRuneName()
         {
-            List<string> runesName = new();
-
-            foreach (Rune rune in Runes)
-                runesName.Add(rune.Name);
-
-            return string.Join(", ", runesName);
+            return string.Join(", ", Runes.Select(x => x.Name));
         }
     }
 }

@@ -13,17 +13,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public const string PACKET_HEADER = "IS";
         public const int PACKET_VERSION = 1;
 
-        private readonly ItemSet _itemSet;
+        private readonly ItemSetData _itemSetData;
         private readonly int _nbItemSelected;
-        private readonly List<Item> _items;
-        private readonly Breed? _breed;
+        private readonly List<ItemData> _itemsData;
+        private readonly BreedData? _breedData;
 
-        public ItemSetMessageBuilder(ItemSet itemSet, int nbItemSelected = 2)
+        public ItemSetMessageBuilder(ItemSetData itemSetData, int nbItemSelected = 2)
         {
-            _itemSet = itemSet;
+            _itemSetData = itemSetData;
             _nbItemSelected = nbItemSelected;
-            _items = itemSet.GetItems();
-            _breed = itemSet.GetBreed();
+            _itemsData = itemSetData.GetItemsData();
+            _breedData = itemSetData.GetBreedData();
         }
 
         public static ItemSetMessageBuilder? Create(int version, string[] parameters)
@@ -33,9 +33,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int itemSetId) &&
                 int.TryParse(parameters[1], out int nbItemSelected))
             {
-                ItemSet? itemSet = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetById(itemSetId);
-                if (itemSet is not null)
-                    return new(itemSet, nbItemSelected);
+                ItemSetData? itemSetData = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetDataById(itemSetId);
+                if (itemSetData is not null)
+                    return new(itemSetData, nbItemSelected);
             }
 
             return null;
@@ -59,8 +59,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
             if (buttons.Count > 0)
                 message.AddComponents(buttons);
 
-            if (_items.Count > 0)
-                message.AddComponents(ItemComponentsBuilder.ItemsSelectBuilder(0, _items));
+            if (_itemsData.Count > 0)
+                message.AddComponents(ItemComponentsBuilder.ItemsSelectBuilder(0, _itemsData));
 
             return (T)message;
         }
@@ -68,13 +68,13 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Panoplies")
-                .WithTitle($"{_itemSet.Name} ({_itemSet.Id})")
-                .AddField("Niveau :", _itemSet.GetLevel().ToString());
+                .WithTitle($"{_itemSetData.Name} ({_itemSetData.Id})")
+                .AddField("Niveau :", _itemSetData.GetLevel().ToString());
 
-            if (_items.Count > 0)
-                embed.AddField("Items :", string.Join('\n', _items.Select(x => $"- Niv.{x.Level} {Formatter.Bold(x.Name)}")));
+            if (_itemsData.Count > 0)
+                embed.AddField("Items :", string.Join('\n', _itemsData.Select(x => $"- Niv.{x.Level} {Formatter.Bold(x.Name)}")));
 
-            List<IEffect> effects = _itemSet.GetEffects(_nbItemSelected);
+            List<IEffect> effects = _itemSetData.GetEffects(_nbItemSelected);
             if (effects.Count > 0)
                 embed.AddEffectFields("Effets :", effects);
 
@@ -85,8 +85,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordButtonComponent> components = new();
 
-            for (int i = 2; i < _itemSet.ItemsId.Count + 1 && i < 7; i++)
-                components.Add(new(ButtonStyle.Primary, GetPacket(_itemSet.Id, i), $"{i}/{_itemSet.ItemsId.Count}", _nbItemSelected == i));
+            for (int i = 2; i < _itemSetData.ItemsId.Count + 1 && i < 7; i++)
+                components.Add(new(ButtonStyle.Primary, GetPacket(_itemSetData.Id, i), $"{i}/{_itemSetData.ItemsId.Count}", _nbItemSelected == i));
 
             return components;
         }
@@ -95,11 +95,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordButtonComponent> components = new();
 
-            for (int i = 7; i < _itemSet.ItemsId.Count + 1 && i < 10; i++)
-                components.Add(new(ButtonStyle.Primary, GetPacket(_itemSet.Id, i), $"{i}/{_itemSet.ItemsId.Count}", _nbItemSelected == i));
+            for (int i = 7; i < _itemSetData.ItemsId.Count + 1 && i < 10; i++)
+                components.Add(new(ButtonStyle.Primary, GetPacket(_itemSetData.Id, i), $"{i}/{_itemSetData.ItemsId.Count}", _nbItemSelected == i));
 
-            if (_breed is not null)
-                components.Add(BreedComponentsBuilder.BreedButtonBuilder(_breed));
+            if (_breedData is not null)
+                components.Add(BreedComponentsBuilder.BreedButtonBuilder(_breedData));
 
             return components;
         }

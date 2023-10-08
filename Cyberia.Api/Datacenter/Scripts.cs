@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class ScriptDialog
+    public sealed class ScriptDialogData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -10,7 +10,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public string Message { get; init; }
 
-        public ScriptDialog()
+        public ScriptDialogData()
         {
             Message = string.Empty;
         }
@@ -21,7 +21,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "scripts.json";
 
         [JsonPropertyName("SCR")]
-        public List<ScriptDialog> ScriptDialogs { get; init; }
+        public List<ScriptDialogData> ScriptDialogs { get; init; }
 
         public ScriptsData()
         {
@@ -30,7 +30,7 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static ScriptsData Build()
         {
-            return Json.LoadFromFile<ScriptsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<ScriptsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

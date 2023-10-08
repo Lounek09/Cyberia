@@ -6,15 +6,15 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest>
+    public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<QuestData>
     {
         public const string PACKET_HEADER = "PQ";
         public const int PACKET_VERSION = 1;
 
         private readonly string _search;
 
-        public PaginatedQuestMessageBuilder(List<Quest> quests, string search, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Quests, "Livre de quêtes", "Plusieurs quêtes trouvées :", quests, selectedPageIndex)
+        public PaginatedQuestMessageBuilder(List<QuestData> questsData, string search, int selectedPageIndex = 0) :
+            base(DofusEmbedCategory.Quests, "Livre de quêtes", "Plusieurs quêtes trouvées :", questsData, selectedPageIndex)
         {
             _search = search
                 ;
@@ -26,9 +26,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<Quest> quests = Bot.Instance.Api.Datacenter.QuestsData.GetQuestsByName(parameters[2]);
-                if (quests.Count > 0)
-                    return new(quests, parameters[2], selectedPageIndex);
+                List<QuestData> questsData = Bot.Instance.Api.Datacenter.QuestsData.GetQuestsDataByName(parameters[2]);
+                if (questsData.Count > 0)
+                    return new(questsData, parameters[2], selectedPageIndex);
             }
 
             return null;

@@ -6,15 +6,15 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<MapSubArea>
+    public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<MapSubAreaData>
     {
         public const string PACKET_HEADER = "PMA.SA";
         public const int PACKET_VERSION = 1;
 
         private readonly string _search;
 
-        public PaginatedMapSubAreaMessageBuilder(List<MapSubArea> mapSubAreas, string search, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs sous-zones trouvées :", mapSubAreas, selectedPageIndex)
+        public PaginatedMapSubAreaMessageBuilder(List<MapSubAreaData> mapSubAreasData, string search, int selectedPageIndex = 0) :
+            base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs sous-zones trouvées :", mapSubAreasData, selectedPageIndex)
         {
             _search = search;
         }
@@ -25,9 +25,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<MapSubArea> mapSubAreas = Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreasByName(parameters[2]);
-                if (mapSubAreas.Count > 0)
-                    return new(mapSubAreas, parameters[2], selectedPageIndex);
+                List<MapSubAreaData> mapSubAreasData = Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreasDataByName(parameters[2]);
+                if (mapSubAreasData.Count > 0)
+                    return new(mapSubAreasData, parameters[2], selectedPageIndex);
             }
 
             return null;

@@ -1,13 +1,31 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
 {
-    public static class BaseWisdomCriterion
+    public sealed record BaseWisdomCriterion : Criterion, ICriterion<BaseWisdomCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public int Wisdom { get; init; }
+
+        private BaseWisdomCriterion(string id, char @operator, int wisdom) :
+            base(id, @operator)
         {
-            if (values.Length > 0)
-                return $"Sagesse de base {@operator} {values[0].Bold()}";
+            Wisdom = wisdom;
+        }
+
+        public static BaseWisdomCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out int wisdom))
+                return new(id, @operator, wisdom);
 
             return null;
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.BaseWisdom.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            return GetDescription(Wisdom);
         }
     }
 }

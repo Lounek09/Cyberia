@@ -1,13 +1,31 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 {
-    public static class NameCriterion
+    public sealed record NameCriterion : Criterion, ICriterion<NameCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public string Name { get; init; }
+
+        private NameCriterion(string id, char @operator, string name) :
+            base(id, @operator)
         {
-            if (values.Length > 0)
-                return $"Nom {@operator} {values[0].Bold()}";
+            Name = name;
+        }
+
+        public static NameCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0)
+                return new(id, @operator, parameters[0]);
 
             return null;
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.Name.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            return GetDescription(Name);
         }
     }
 }

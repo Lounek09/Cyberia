@@ -1,5 +1,4 @@
-﻿global using Cyberia.Utils;
-using Cyberia.Api.DatacenterNS;
+﻿using Cyberia.Api.DatacenterNS;
 using Cyberia.Langzilla;
 
 using Serilog;

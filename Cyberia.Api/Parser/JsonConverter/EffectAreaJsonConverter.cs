@@ -5,15 +5,15 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Parser.JsonConverter
 {
-    public sealed class EffectAreaJsonConverter : JsonConverter<Area>
+    public sealed class EffectAreaJsonConverter : JsonConverter<EffectArea>
     {
-        public override Area Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override EffectArea Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             JsonElement element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
-            return EffectAreaManager.GetArea(element.GetString() ?? "");
+            return EffectAreaManager.GetEffectArea(element.GetString() ?? "");
         }
 
-        public override void Write(Utf8JsonWriter writer, Area values, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, EffectArea values, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }

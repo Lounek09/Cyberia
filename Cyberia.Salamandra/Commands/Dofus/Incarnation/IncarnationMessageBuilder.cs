@@ -16,15 +16,15 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public const string PACKET_HEADER = "INCA";
         public const int PACKET_VERSION = 1;
 
-        private readonly Incarnation _incarnation;
-        private readonly Item? _item;
-        private readonly List<Spell> _spells;
+        private readonly IncarnationData _incarnationData;
+        private readonly ItemData? _itemData;
+        private readonly List<SpellData> _spellsData;
 
-        public IncarnationMessageBuilder(Incarnation incarnation)
+        public IncarnationMessageBuilder(IncarnationData incarnationData)
         {
-            _incarnation = incarnation;
-            _item = incarnation.GetItem();
-            _spells = incarnation.GetSpells();
+            _incarnationData = incarnationData;
+            _itemData = incarnationData.GetItemData();
+            _spellsData = incarnationData.GetSpellsData();
         }
 
         public static IncarnationMessageBuilder? Create(int version, string[] parameters)
@@ -33,9 +33,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 0 &&
                 int.TryParse(parameters[0], out int incarnationId))
             {
-                Incarnation? incarnartion = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationById(incarnationId);
-                if (incarnartion is not null)
-                    return new(incarnartion);
+                IncarnationData? incarnartionData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataById(incarnationId);
+                if (incarnartionData is not null)
+                    return new(incarnartionData);
             }
 
             return null;
@@ -51,11 +51,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
             IDiscordMessageBuilder message = new T()
                 .AddEmbed(await EmbedBuilder());
 
-            if (_spells.Count > 0)
-                message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spells));
+            if (_spellsData.Count > 0)
+                message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData));
 
-            if (_item is not null)
-                message.AddComponents(ItemComponentsBuilder.ItemButtonBuilder(_item));
+            if (_itemData is not null)
+                message.AddComponents(ItemComponentsBuilder.ItemButtonBuilder(_itemData));
 
             return (T)message;
         }
@@ -63,50 +63,50 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private async Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Incarnations")
-                .WithTitle($"{_incarnation.Name} ({_incarnation.Id})")
-                .WithImageUrl(await _incarnation.GetImgPath());
+                .WithTitle($"{_incarnationData.Name} ({_incarnationData.Id})")
+                .WithImageUrl(await _incarnationData.GetImgPath());
 
-            if (_item is not null)
+            if (_itemData is not null)
             {
-                embed.WithDescription(string.IsNullOrEmpty(_item.Description) ? "" : Formatter.Italic(_item.Description))
-                    .WithThumbnail(await _item.GetImagePath())
-                    .AddField("Niveau :", _item.Level.ToString(), true)
-                    .AddField("Type :", Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(_item.ItemTypeId), true)
+                embed.WithDescription(string.IsNullOrEmpty(_itemData.Description) ? "" : Formatter.Italic(_itemData.Description))
+                    .WithThumbnail(await _itemData.GetImagePath())
+                    .AddField("Niveau :", _itemData.Level.ToString(), true)
+                    .AddField("Type :", Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true)
                     .AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
 
-                List<IEffect> effects = _incarnation.GetEffects();
+                List<IEffect> effects = _incarnationData.GetEffects();
                 if (effects.Count > 0)
                     embed.AddEffectFields("Effets :", effects);
 
-                if (_item.WeaponInfos is not null)
+                if (_itemData.WeaponInfosData is not null)
                 {
                     StringBuilder caracteristicsBuilder = new();
-                    caracteristicsBuilder.AppendFormat("PA : {0}\n", _item.WeaponInfos.ActionPointCost);
-                    caracteristicsBuilder.AppendFormat("Portée : {0}{1}\n", _item.WeaponInfos.MinRange, (_item.WeaponInfos.MinRange == _item.WeaponInfos.MaxRange ? "" : $" à {_item.WeaponInfos.MaxRange}"));
+                    caracteristicsBuilder.AppendFormat("PA : {0}\n", _itemData.WeaponInfosData.ActionPointCost);
+                    caracteristicsBuilder.AppendFormat("Portée : {0}{1}\n", _itemData.WeaponInfosData.MinRange, (_itemData.WeaponInfosData.MinRange == _itemData.WeaponInfosData.MaxRange ? "" : $" à {_itemData.WeaponInfosData.MaxRange}"));
 
-                    if (_item.WeaponInfos.CriticalBonus != 0)
-                        caracteristicsBuilder.AppendFormat("Bonus coups critique : {0}\n", _item.WeaponInfos.CriticalBonus);
+                    if (_itemData.WeaponInfosData.CriticalBonus != 0)
+                        caracteristicsBuilder.AppendFormat("Bonus coups critique : {0}\n", _itemData.WeaponInfosData.CriticalBonus);
 
-                    if (_item.WeaponInfos.CriticalHitRate != 0)
+                    if (_itemData.WeaponInfosData.CriticalHitRate != 0)
                     {
-                        caracteristicsBuilder.AppendFormat("Critique : 1/{0}", _item.WeaponInfos.CriticalHitRate);
-                        caracteristicsBuilder.Append(_item.WeaponInfos.CriticalFailureRate != 0 ? " - " : "\n");
+                        caracteristicsBuilder.AppendFormat("Critique : 1/{0}", _itemData.WeaponInfosData.CriticalHitRate);
+                        caracteristicsBuilder.Append(_itemData.WeaponInfosData.CriticalFailureRate != 0 ? " - " : "\n");
                     }
 
-                    if (_item.WeaponInfos.CriticalFailureRate != 0)
-                        caracteristicsBuilder.AppendFormat("Échec : 1/{0}\n", _item.WeaponInfos.CriticalFailureRate);
+                    if (_itemData.WeaponInfosData.CriticalFailureRate != 0)
+                        caracteristicsBuilder.AppendFormat("Échec : 1/{0}\n", _itemData.WeaponInfosData.CriticalFailureRate);
 
-                    if (_item.WeaponInfos.LineOnly)
+                    if (_itemData.WeaponInfosData.LineOnly)
                         caracteristicsBuilder.AppendLine("Lancer en ligne uniquement");
 
-                    if (!_item.WeaponInfos.LineOfSight && _item.WeaponInfos.MaxRange != 1)
+                    if (!_itemData.WeaponInfosData.LineOfSight && _itemData.WeaponInfosData.MaxRange != 1)
                         caracteristicsBuilder.AppendLine("Ne possède pas de ligne de vue");
 
-                    caracteristicsBuilder.Append(_item.TwoHanded ? "Arme à deux mains" : "Arme à une main");
+                    caracteristicsBuilder.Append(_itemData.TwoHanded ? "Arme à deux mains" : "Arme à une main");
 
-                    ItemType? itemType = _item.GetItemType();
-                    if (itemType is not null && itemType.Area.Id != EffectAreaManager.BaseArea.Id)
-                        caracteristicsBuilder.AppendFormat("\nZone : {0} {1}", Emojis.Area(itemType.Area.Id), itemType.Area.GetDescription());
+                    ItemTypeData? itemType = _itemData.GetItemTypeData();
+                    if (itemType is not null && itemType.EffectArea.Id != EffectAreaManager.DefaultArea.Id)
+                        caracteristicsBuilder.AppendFormat("\nZone : {0} {1}", Emojis.Area(itemType.EffectArea.Id), itemType.EffectArea.GetDescription());
 
                     embed.AddField("Caractéristiques :", caracteristicsBuilder.ToString());
                 }
@@ -117,8 +117,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
                     .WithThumbnail($"{Bot.Instance.Api.Config.CdnUrl}/images/items/unknown.png");
             }
 
-            if (_spells.Count > 0)
-                embed.AddField("Sorts :", string.Join('\n', _spells.Select(x => $"- {Formatter.Bold(x.Name)}")));
+            if (_spellsData.Count > 0)
+                embed.AddField("Sorts :", string.Join('\n', _spellsData.Select(x => $"- {Formatter.Bold(x.Name)}")));
 
             return embed;
         }

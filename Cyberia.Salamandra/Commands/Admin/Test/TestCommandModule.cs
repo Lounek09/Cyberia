@@ -13,9 +13,9 @@ namespace Cyberia.Salamandra.Commands.Admin
         {
             await ctx.CreateResponseAsync(".");
 
-            foreach (Spell spell in Bot.Instance.Api.Datacenter.SpellsData.Spells)
+            foreach (SpellData spell in Bot.Instance.Api.Datacenter.SpellsData.Spells)
             {
-                if (spell.SpellLevel1?.Effects.Find(x => x.EffectId == 111) is not null)
+                if (spell.SpellLevelData1?.Effects.Find(x => x.EffectId == 111) is not null)
                     await ctx.Channel.SendMessageAsync(spell.Name);
             }
         }

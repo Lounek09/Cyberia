@@ -1,48 +1,49 @@
-﻿using Cyberia.Api.DatacenterNS;
-
-namespace Cyberia.Api.Managers
+﻿namespace Cyberia.Api.Managers
 {
-    public readonly record struct Area(int Id, int Size)
+    public readonly record struct EffectArea(int Id, int Size)
     {
-        public EffectArea? GetEffectArea()
+        public string GetImagePath()
         {
-            return DofusApi.Instance.Datacenter.EffectAreasData.GetEffectAreaById(Id);
+            return $"{DofusApi.Instance.Config.CdnUrl}/images/effectareas/{Id}.png";
         }
 
         public string GetSize()
         {
-            return Size >= 63 ? "inf." : Size.ToString();
+            return Size >= 63 ? Resources.Infinity : Size.ToString();
         }
 
         public string GetDescription()
         {
-            if (Id == EffectAreaManager.BaseArea.Id)
+            if (Id == EffectAreaManager.DefaultArea.Id)
                 return "";
 
-            EffectArea? effectArea = GetEffectArea();
-            if (effectArea is null)
-                DofusApi.Instance.Log.Information("Unknown effect area {areaId}", Id);
+            string? effectAreaName = Resources.ResourceManager.GetString($"EffectArea.{Id}");
+            if (effectAreaName is null)
+            {
+                DofusApi.Instance.Log.Warning("Unknown EffectArea {id}", Id);
+                return $"{GetSize()} {PatternDecoder.Description(Resources.Unknown_Data, Id)}";
+            }
 
-            return $"{GetSize()} ({(effectArea is null ? $"Inconnu ({Id})" : effectArea.Name)})";
+            return $"{GetSize()} {effectAreaName}";
         }
     }
 
     public static class EffectAreaManager
     {
-        public static readonly Area BaseArea = new(80, 0);
+        public static readonly EffectArea DefaultArea = new(80, 0);
 
-        public static Area GetArea(string value)
+        public static EffectArea GetEffectArea(string value)
         {
             if (value.Length == 2)
-                return new(value[0], PatternDecoder.Decode64(value[1]));
+                return new(value[0], PatternDecoder.Base64(value[1]));
 
             return new(-1, 0);
         }
 
-        public static IEnumerable<Area> GetAreas(string values)
+        public static IEnumerable<EffectArea> GetEffectAreas(string values)
         {
             foreach (string value in values.SplitByLength(2))
-                yield return GetArea(value);
+                yield return GetEffectArea(value);
         }
     }
 }

@@ -20,17 +20,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                House? house = Bot.Instance.Api.Datacenter.HousesData.GetHouseById(id);
-                if (house is not null)
-                    response = await new HouseMessageBuilder(house).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                HouseData? houseData = Bot.Instance.Api.Datacenter.HousesData.GetHouseDataById(id);
+                if (houseData is not null)
+                    response = await new HouseMessageBuilder(houseData).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else
             {
-                List<House> houses = Bot.Instance.Api.Datacenter.HousesData.GetHousesByName(value);
-                if (houses.Count == 1)
-                    response = await new HouseMessageBuilder(houses[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                else if (houses.Count > 1)
-                    response = await new PaginatedHouseMessageBuilder(houses, HouseSearchCategory.Name, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                List<HouseData> housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByName(value);
+                if (housesData.Count == 1)
+                    response = await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                else if (housesData.Count > 1)
+                    response = await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Name, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Maison introuvable");
@@ -47,14 +47,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Minimum(-666), Maximum(666)]
             long yCoord)
         {
-            List<House> houses = Bot.Instance.Api.Datacenter.HousesData.GetHousesByCoordinate((int)xCoord, (int)yCoord);
+            List<HouseData> housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByCoordinate((int)xCoord, (int)yCoord);
 
-            if (houses.Count == 0)
+            if (housesData.Count == 0)
                 await ctx.CreateResponseAsync($"Il n'y a aucune maison en [{xCoord}, {yCoord}]");
-            else if (houses.Count == 1)
-                await ctx.CreateResponseAsync(await new HouseMessageBuilder(houses[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+            else if (housesData.Count == 1)
+                await ctx.CreateResponseAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
             else
-                await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(houses, HouseSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
 
 
@@ -64,23 +64,23 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Autocomplete(typeof(MapSubAreaAutocompleteProvider))]
             string value)
         {
-            MapSubArea? mapSubArea = null;
+            MapSubAreaData? mapSubAreaData = null;
 
             if (int.TryParse(value, out int id))
-                mapSubArea = Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreaById(id);
+                mapSubAreaData = Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreaDataById(id);
 
-            if (mapSubArea is null)
+            if (mapSubAreaData is null)
                 await ctx.CreateResponseAsync("Sous-zone introuvable");
             else
             {
-                List<House> houses = Bot.Instance.Api.Datacenter.HousesData.GetHousesByMapSubAreaId(id);
+                List<HouseData> housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByMapSubAreaId(id);
 
-                if (houses.Count == 0)
-                    await ctx.CreateResponseAsync($"La sous-zone {Formatter.Bold(mapSubArea.Name)} ne contient aucune maison");
-                else if (houses.Count == 1)
-                    await ctx.CreateResponseAsync(await new HouseMessageBuilder(houses[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                if (housesData.Count == 0)
+                    await ctx.CreateResponseAsync($"La sous-zone {Formatter.Bold(mapSubAreaData.Name)} ne contient aucune maison");
+                else if (housesData.Count == 1)
+                    await ctx.CreateResponseAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
                 else
-                    await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(houses, HouseSearchCategory.MapSubArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                    await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapSubArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
 
@@ -91,23 +91,23 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Autocomplete(typeof(MapAreaAutocompleteProvider))]
             string value)
         {
-            MapArea? mapArea = null;
+            MapAreaData? mapAreaData = null;
 
             if (int.TryParse(value, out int id))
-                mapArea = Bot.Instance.Api.Datacenter.MapsData.GetMapAreaById(id);
+                mapAreaData = Bot.Instance.Api.Datacenter.MapsData.GetMapAreaDataById(id);
 
-            if (mapArea is null)
+            if (mapAreaData is null)
                 await ctx.CreateResponseAsync("Zone introuvable");
             else
             {
-                List<House> houses = Bot.Instance.Api.Datacenter.HousesData.GetHousesByMapAreaId(id);
+                List<HouseData> housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByMapAreaId(id);
 
-                if (houses.Count == 0)
-                    await ctx.CreateResponseAsync($"La zone {Formatter.Bold(mapArea.Name)} ne contient aucune maison");
-                else if (houses.Count == 1)
-                    await ctx.CreateResponseAsync(await new HouseMessageBuilder(houses[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                if (housesData.Count == 0)
+                    await ctx.CreateResponseAsync($"La zone {Formatter.Bold(mapAreaData.Name)} ne contient aucune maison");
+                else if (housesData.Count == 1)
+                    await ctx.CreateResponseAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
                 else
-                    await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(houses, HouseSearchCategory.MapArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                    await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }

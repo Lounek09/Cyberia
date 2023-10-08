@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class GuildRank
+    public sealed class GuildRankData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -16,7 +16,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("i")]
         public int Index { get; init; }
 
-        public GuildRank()
+        public GuildRankData()
         {
             Name = string.Empty;
         }
@@ -27,11 +27,11 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "ranks.json";
 
         [JsonPropertyName("R")]
-        public List<GuildRank> GuildRanks { get; init; }
+        public List<GuildRankData> GuildRanks { get; init; }
 
         internal static RanksData Build()
         {
-            return Json.LoadFromFile<RanksData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<RanksData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public RanksData()

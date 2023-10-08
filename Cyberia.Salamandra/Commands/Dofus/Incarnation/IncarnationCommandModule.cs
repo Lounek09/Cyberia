@@ -17,17 +17,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                Incarnation? incarnation = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationById(id);
-                if (incarnation is not null)
-                    response = await new IncarnationMessageBuilder(incarnation).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                IncarnationData? incarnationData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataById(id);
+                if (incarnationData is not null)
+                    response = await new IncarnationMessageBuilder(incarnationData).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else
             {
-                List<Incarnation> incarnations = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationsByName(value);
-                if (incarnations.Count == 1)
-                    response = await new IncarnationMessageBuilder(incarnations[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                else if (incarnations.Count > 1)
-                    response = await new PaginatedIncarnationMessageBuilder(incarnations, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                List<IncarnationData> incarnationsData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationsDataByName(value);
+                if (incarnationsData.Count == 1)
+                    response = await new IncarnationMessageBuilder(incarnationsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                else if (incarnationsData.Count > 1)
+                    response = await new PaginatedIncarnationMessageBuilder(incarnationsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Incarnation introuvable");

@@ -1,8 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.DatacenterNS.Custom;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class House
+    public sealed class HouseData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -21,40 +23,40 @@ namespace Cyberia.Api.DatacenterNS
 
         public int Price { get; internal set; }
 
-        public House()
+        public HouseData()
         {
             Name = string.Empty;
             Description = string.Empty;
         }
 
-        public List<Map> GetMaps()
+        public List<MapData> GetMapsData()
         {
-            List<Map> maps = new();
+            List<MapData> mapsData = new();
 
-            foreach (HouseMap houseMap in DofusApi.Instance.Datacenter.HousesData.GetHouseMapsByHouseId(Id))
+            foreach (HouseMapData houseMapData in DofusApi.Instance.Datacenter.HousesData.GetHouseMapsDataByHouseId(Id))
             {
-                Map? map = houseMap.GetMap();
-                if (map is not null)
-                    maps.Add(map);
+                MapData? mapData = houseMapData.GetMapData();
+                if (mapData is not null)
+                    mapsData.Add(mapData);
             }
 
-            return maps;
+            return mapsData;
         }
 
-        public Map? GetOutdoorMap()
+        public MapData? GetOutdoorMapData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapById(OutdoorMapId);
+            return DofusApi.Instance.Datacenter.MapsData.GetMapDataById(OutdoorMapId);
         }
 
         public string GetCoordinate()
         {
-            Map? map = GetOutdoorMap();
+            MapData? mapData = GetOutdoorMapData();
 
-            return map is null ? "" : map.GetCoordinate();
+            return mapData is null ? "" : mapData.GetCoordinate();
         }
     }
 
-    public sealed class HouseMap
+    public sealed class HouseMapData
     {
         [JsonPropertyName("id")]
         public int MapId { get; init; }
@@ -62,19 +64,19 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public int HouseId { get; init; }
 
-        public HouseMap()
+        public HouseMapData()
         {
 
         }
 
-        public Map? GetMap()
+        public MapData? GetMapData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapById(MapId);
+            return DofusApi.Instance.Datacenter.MapsData.GetMapDataById(MapId);
         }
 
-        public House? GetHouse()
+        public HouseData? GetHouseData()
         {
-            return DofusApi.Instance.Datacenter.HousesData.GetHouseById(HouseId);
+            return DofusApi.Instance.Datacenter.HousesData.GetHouseDataById(HouseId);
         }
     }
 
@@ -83,10 +85,10 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "houses.json";
 
         [JsonPropertyName("H.h")]
-        public List<House> Houses { get; init; }
+        public List<HouseData> Houses { get; init; }
 
         [JsonPropertyName("H.m")]
-        public List<HouseMap> HouseMaps { get; init; }
+        public List<HouseMapData> HouseMaps { get; init; }
 
         [JsonPropertyName("H.ids")]
         public List<int> HousesIndoorSkillsId { get; init; }
@@ -100,83 +102,83 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static HousesData Build()
         {
-            HousesData data = Json.LoadFromFile<HousesData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
-            HousesCustomData customData = Json.LoadFromFile<HousesCustomData>($"{DofusApi.CUSTOM_PATH}/{FILE_NAME}");
+            HousesData data = Json.LoadFromFile<HousesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            HousesCustomData customData = Json.LoadFromFile<HousesCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
-            foreach (HouseCustom houseCustom in customData.HousesCustom)
+            foreach (HouseCustomData houseCustomData in customData.HousesCustom)
             {
-                House? house = data.GetHouseById(houseCustom.Id);
-                if (house is not null)
+                HouseData? houseData = data.GetHouseDataById(houseCustomData.Id);
+                if (houseData is not null)
                 {
-                    house.OutdoorMapId = houseCustom.OutdoorMapId;
-                    house.RoomNumber = houseCustom.RoomNumber;
-                    house.ChestNumber = houseCustom.ChestNumber;
-                    house.Price = houseCustom.Price;
+                    houseData.OutdoorMapId = houseCustomData.OutdoorMapId;
+                    houseData.RoomNumber = houseCustomData.RoomNumber;
+                    houseData.ChestNumber = houseCustomData.ChestNumber;
+                    houseData.Price = houseCustomData.Price;
                 }
             }
 
             return data;
         }
 
-        public House? GetHouseById(int id)
+        public HouseData? GetHouseDataById(int id)
         {
             return Houses.Find(x => x.Id == id);
         }
 
-        public List<House> GetHousesByName(string name)
+        public List<HouseData> GetHousesDataByName(string name)
         {
             string[] names = name.RemoveDiacritics().Split(' ');
             return Houses.FindAll(h => names.All(h.Name.RemoveDiacritics().Contains)).OrderBy(h => h.Id).ToList();
         }
 
-        public List<House> GetHousesByCoordinate(int x, int y)
+        public List<HouseData> GetHousesDataByCoordinate(int x, int y)
         {
-            List<House> houses = new();
+            List<HouseData> housesData = new();
 
-            foreach (House house in Houses)
+            foreach (HouseData houseData in Houses)
             {
-                Map? map = house.GetOutdoorMap();
+                MapData? map = houseData.GetOutdoorMapData();
                 if (map is not null && map.XCoord == x && map.YCoord == y)
-                    houses.Add(house);
+                    housesData.Add(houseData);
             }
 
-            return houses;
+            return housesData;
         }
 
-        public List<House> GetHousesByMapSubAreaId(int id)
+        public List<HouseData> GetHousesDataByMapSubAreaId(int id)
         {
-            List<House> houses = new();
+            List<HouseData> housesData = new();
 
-            foreach (House house in Houses)
+            foreach (HouseData houseData in Houses)
             {
-                Map? map = house.GetOutdoorMap();
-                if (map is not null && map.GetMapSubArea()?.Id == id)
-                    houses.Add(house);
+                MapData? map = houseData.GetOutdoorMapData();
+                if (map is not null && map.GetMapSubAreaData()?.Id == id)
+                    housesData.Add(houseData);
             }
 
-            return houses;
+            return housesData;
         }
 
-        public List<House> GetHousesByMapAreaId(int id)
+        public List<HouseData> GetHousesDataByMapAreaId(int id)
         {
-            List<House> houses = new();
+            List<HouseData> housesData = new();
 
-            foreach (House house in Houses)
+            foreach (HouseData houseData in Houses)
             {
-                Map? map = house.GetOutdoorMap();
-                if (map is not null && map.GetMapSubArea()?.GetMapArea()?.Id == id)
-                    houses.Add(house);
+                MapData? map = houseData.GetOutdoorMapData();
+                if (map is not null && map.GetMapSubAreaData()?.GetMapAreaData()?.Id == id)
+                    housesData.Add(houseData);
             }
 
-            return houses;
+            return housesData;
         }
 
-        public List<HouseMap> GetHouseMapsByHouseId(int id)
+        public List<HouseMapData> GetHouseMapsDataByHouseId(int id)
         {
             return HouseMaps.FindAll(x => x.HouseId == id);
         }
 
-        public HouseMap? GetHouseMapByMapId(int id)
+        public HouseMapData? GetHouseMapDataByMapId(int id)
         {
             return HouseMaps.Find(x => x.MapId == id);
         }

@@ -1,25 +1,40 @@
-﻿namespace Cyberia.Api.Factories.Criteria.QuestCriteria
-{
-    public static class QuestObjectiveCriterion
-    {
-        public static string? GetValue(char @operator, string[] values)
-        {
-            if (values.Length > 0 && int.TryParse(values[0], out int questId))
-            {
-                string questObjectiveDescription = DofusApi.Instance.Datacenter.QuestsData.GetQuestObjectiveDescriptionById(questId);
+﻿using Cyberia.Api.DatacenterNS;
 
-                string value = $"Objectif de quête {questObjectiveDescription}";
-                return @operator switch
-                {
-                    '≠' => $"{value} non finissable",
-                    '=' => $"{value} finissable",
-                    '>' => $"{value} validé",
-                    '<' => $"{value} non validé",
-                    _ => value,
-                };
-            }
+namespace Cyberia.Api.Factories.Criteria.QuestCriteria
+{
+    public sealed record QuestObjectiveCriterion : Criterion, ICriterion<QuestObjectiveCriterion>
+    {
+        public int QuestObjectiveId { get; init; }
+
+        private QuestObjectiveCriterion(string id, char @operator, int questStepId) :
+            base(id, @operator)
+        {
+            QuestObjectiveId = questStepId;
+        }
+
+        public static QuestObjectiveCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out int questObjectiveId))
+                return new(id, @operator, questObjectiveId);
 
             return null;
+        }
+
+        public QuestObjectiveData? GetQuestObjectiveData()
+        {
+            return DofusApi.Instance.Datacenter.QuestsData.GetQuestObjectiveDataById(QuestObjectiveId);
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.QuestObjective.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            Description questObjectiveDescription = DofusApi.Instance.Datacenter.QuestsData.GetQuestObjectiveDescriptionById(QuestObjectiveId);
+
+            return GetDescription(questObjectiveDescription);
         }
     }
 }

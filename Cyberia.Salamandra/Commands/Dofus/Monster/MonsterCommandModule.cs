@@ -17,17 +17,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                Monster? monster = Bot.Instance.Api.Datacenter.MonstersData.GetMonsterById(id);
-                if (monster is not null)
-                    response = await new MonsterMessageBuilder(monster).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                MonsterData? monsterData = Bot.Instance.Api.Datacenter.MonstersData.GetMonsterDataById(id);
+                if (monsterData is not null)
+                    response = await new MonsterMessageBuilder(monsterData).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else
             {
-                List<Monster> monsters = Bot.Instance.Api.Datacenter.MonstersData.GetMonstersByName(value);
-                if (monsters.Count == 1)
-                    response = await new MonsterMessageBuilder(monsters[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                else if (monsters.Count > 1)
-                    response = await new PaginatedMonsterMessageBuilder(monsters, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                List<MonsterData> monstersData = Bot.Instance.Api.Datacenter.MonstersData.GetMonstersDataByName(value);
+                if (monstersData.Count == 1)
+                    response = await new MonsterMessageBuilder(monstersData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                else if (monstersData.Count > 1)
+                    response = await new PaginatedMonsterMessageBuilder(monstersData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Monstre introuvable");

@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Factories.Effects;
+﻿using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Managers;
 using Cyberia.Api.Parser.JsonConverter;
 
@@ -6,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class ItemUnicString
+    public sealed class ItemUnicStringData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -14,13 +15,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public string Value { get; init; }
 
-        public ItemUnicString()
+        public ItemUnicStringData()
         {
             Value = string.Empty;
         }
     }
 
-    public sealed class ItemSuperType
+    public sealed class ItemSuperTypeData
     {
         public const int SUPER_TYPE_QUEST = 14;
 
@@ -30,13 +31,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public bool V { get; init; }
 
-        public ItemSuperType()
+        public ItemSuperTypeData()
         {
 
         }
     }
 
-    public sealed class ItemSuperTypeSlot
+    public sealed class ItemSuperTypeSlotData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -44,13 +45,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public List<int> SlotsId { get; init; }
 
-        public ItemSuperTypeSlot()
+        public ItemSuperTypeSlotData()
         {
             SlotsId = new();
         }
     }
 
-    public sealed class ItemType
+    public sealed class ItemTypeData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -63,15 +64,15 @@ namespace Cyberia.Api.DatacenterNS
 
         [JsonPropertyName("z")]
         [JsonConverter(typeof(EffectAreaJsonConverter))]
-        public Area Area { get; init; }
+        public EffectArea EffectArea { get; init; }
 
-        public ItemType()
+        public ItemTypeData()
         {
             Name = string.Empty;
         }
     }
 
-    public sealed class ItemWeaponInfos
+    public sealed class ItemWeaponInfosData
     {
         public int CriticalBonus { get; init; }
 
@@ -89,13 +90,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public bool LineOfSight { get; init; }
 
-        public ItemWeaponInfos()
+        public ItemWeaponInfosData()
         {
 
         }
     }
 
-    public sealed class Item
+    public sealed class ItemData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -140,11 +141,12 @@ namespace Cyberia.Api.DatacenterNS
         public bool TwoHanded { get; init; }
 
         [JsonPropertyName("e")]
-        [JsonConverter(typeof(ItemWeaponInfosJsonConverter))]
-        public ItemWeaponInfos? WeaponInfos { get; init; }
+        [JsonConverter(typeof(ItemWeaponInfosDataJsonConverter))]
+        public ItemWeaponInfosData? WeaponInfosData { get; init; }
 
         [JsonPropertyName("c")]
-        public string Criterion { get; init; }
+        [JsonConverter(typeof(CriteriaListJsonConverter))]
+        public List<ICriteriaElement> Criteria { get; init; }
 
         [JsonPropertyName("s")]
         public int ItemSetId { get; init; }
@@ -164,12 +166,12 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("p")]
         public int Price { get; init; }
 
-        public Item()
+        public ItemData()
         {
             Name = string.Empty;
             NormalizedName = string.Empty;
             Description = string.Empty;
-            Criterion = string.Empty;
+            Criteria = new();
         }
 
         public async Task<string> GetImagePath()
@@ -182,52 +184,52 @@ namespace Cyberia.Api.DatacenterNS
             return $"{DofusApi.Instance.Config.CdnUrl}/images/items/unknown.png";
         }
 
-        public ItemType? GetItemType()
+        public ItemTypeData? GetItemTypeData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemTypeById(ItemTypeId);
+            return DofusApi.Instance.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeId);
         }
 
-        public ItemStats? GetItemStat()
+        public ItemStatsData? GetItemStatData()
         {
-            return DofusApi.Instance.Datacenter.ItemStatsData.GetItemStatById(Id);
+            return DofusApi.Instance.Datacenter.ItemsStatsData.GetItemStatDataById(Id);
         }
 
         public bool IsReallyEnhanceable()
         {
-            ItemType? itemType = GetItemType();
-            if (itemType is not null)
+            ItemTypeData? itemTypeData = GetItemTypeData();
+            if (itemTypeData is not null)
             {
                 int[] enhanceableSuperTypes = { 1, 2, 3, 4, 5, 10, 11 };
                 int[] nonEnhanceableWeaponTypes = { 20, 21, 22, 102, 114 };
-                return enhanceableSuperTypes.Contains(itemType.ItemSuperTypeId) && !nonEnhanceableWeaponTypes.Contains(itemType.Id) && Enhanceable;
+                return enhanceableSuperTypes.Contains(itemTypeData.ItemSuperTypeId) && !nonEnhanceableWeaponTypes.Contains(itemTypeData.Id) && Enhanceable;
             }
 
             return false;
         }
 
-        public ItemSet? GetItemSet()
+        public ItemSetData? GetItemSetData()
         {
-            return DofusApi.Instance.Datacenter.ItemSetsData.GetItemSetById(ItemSetId);
+            return DofusApi.Instance.Datacenter.ItemSetsData.GetItemSetDataById(ItemSetId);
         }
 
         public bool IsWeapon()
         {
-            return WeaponInfos is not null;
+            return WeaponInfosData is not null;
         }
 
-        public Craft? GetCraft()
+        public CraftData? GetCraftData()
         {
-            return DofusApi.Instance.Datacenter.CraftsData.GetCraftById(Id);
+            return DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(Id);
         }
 
         public bool Tradeable()
         {
-            ItemType? itemType = GetItemType();
-            ItemStats? itemStats = GetItemStat();
+            ItemTypeData? itemTypeData = GetItemTypeData();
+            ItemStatsData? itemStatsData = GetItemStatData();
 
-            bool isQuestItem = itemType is not null && itemType.ItemSuperTypeId == ItemSuperType.SUPER_TYPE_QUEST;
-            bool isLinkedToAccount = itemStats is not null && itemStats.Effects.OfType<ExchangeableUntilDateTimeEffect>().Any(x => x.IsLinkedToAccount());
-            bool isUnbreakable = itemStats is not null && itemStats.Effects.OfType<UnbreakableEffect>().Any();
+            bool isQuestItem = itemTypeData is not null && itemTypeData.ItemSuperTypeId == ItemSuperTypeData.SUPER_TYPE_QUEST;
+            bool isLinkedToAccount = itemStatsData is not null && itemStatsData.Effects.OfType<ExchangeableEffect>().Any(x => x.IsLinkedToAccount());
+            bool isUnbreakable = itemStatsData is not null && itemStatsData.Effects.OfType<UnbreakableEffect>().Any();
 
             return !isQuestItem && !Cursed && !isLinkedToAccount && !isUnbreakable;
         }
@@ -243,19 +245,19 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "items.json";
 
         [JsonPropertyName("I.us")]
-        public List<ItemUnicString> ItemUnicStrings { get; init; }
+        public List<ItemUnicStringData> ItemUnicStrings { get; init; }
 
         [JsonPropertyName("I.st")]
-        public List<ItemSuperType> ItemSuperTypes { get; init; }
+        public List<ItemSuperTypeData> ItemSuperTypes { get; init; }
 
         [JsonPropertyName("I.ss")]
-        public List<ItemSuperTypeSlot> ItemSuperTypeSlots { get; init; }
+        public List<ItemSuperTypeSlotData> ItemSuperTypeSlots { get; init; }
 
         [JsonPropertyName("I.t")]
-        public List<ItemType> ItemTypes { get; init; }
+        public List<ItemTypeData> ItemTypes { get; init; }
 
         [JsonPropertyName("I.u")]
-        public List<Item> Items { get; init; }
+        public List<ItemData> Items { get; init; }
 
         public ItemsData()
         {
@@ -268,32 +270,32 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static ItemsData Build()
         {
-            return Json.LoadFromFile<ItemsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<ItemsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public ItemType? GetItemTypeById(int id)
+        public ItemTypeData? GetItemTypeDataById(int id)
         {
             return ItemTypes.Find(x => x.Id == id);
         }
 
         public string GetItemTypeNameById(int id)
         {
-            ItemType? itemType = GetItemTypeById(id);
+            ItemTypeData? itemTypeData = GetItemTypeDataById(id);
 
-            return itemType is null ? $"Inconnu ({id})" : itemType.Name;
+            return itemTypeData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : itemTypeData.Name;
         }
 
-        public Item? GetItemById(int id)
+        public ItemData? GetItemDataById(int id)
         {
             return Items.Find(x => x.Id == id);
         }
 
-        public Item? GetItemByName(string name)
+        public ItemData? GetItemDataByName(string name)
         {
             return Items.Find(x => x.Name.RemoveDiacritics().Equals(name.RemoveDiacritics()));
         }
 
-        public List<Item> GetItemsByName(string name)
+        public List<ItemData> GetItemsDataByName(string name)
         {
             string[] names = name.RemoveDiacritics().Split(' ');
             return Items.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));
@@ -301,9 +303,9 @@ namespace Cyberia.Api.DatacenterNS
 
         public string GetItemNameById(int id)
         {
-            Item? item = GetItemById(id);
+            ItemData? itemData = GetItemDataById(id);
 
-            return item is null ? $"Inconnu ({id})" : item.Name;
+            return itemData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : itemData.Name;
         }
     }
 }

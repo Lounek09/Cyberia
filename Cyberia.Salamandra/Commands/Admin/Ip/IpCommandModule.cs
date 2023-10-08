@@ -13,7 +13,7 @@ namespace Cyberia.Salamandra.Commands.Admin
         {
             try
             {
-                await ctx.CreateResponseAsync(PatternDecoder.DecodeIp(value));
+                await ctx.CreateResponseAsync(PatternDecoder.Ip(value));
             }
             catch (ArgumentException e)
             {

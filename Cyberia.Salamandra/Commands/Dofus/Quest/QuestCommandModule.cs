@@ -17,17 +17,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                Quest? quest = Bot.Instance.Api.Datacenter.QuestsData.GetQuestById(id);
-                if (quest is not null)
-                    response = await new QuestMessageBuilder(quest).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                QuestData? questData = Bot.Instance.Api.Datacenter.QuestsData.GetQuestDataById(id);
+                if (questData is not null)
+                    response = await new QuestMessageBuilder(questData).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else
             {
-                List<Quest> quests = Bot.Instance.Api.Datacenter.QuestsData.GetQuestsByName(value);
-                if (quests.Count == 1)
-                    response = await new QuestMessageBuilder(quests[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                else if (quests.Count > 1)
-                    response = await new PaginatedQuestMessageBuilder(quests, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                List<QuestData> questsData = Bot.Instance.Api.Datacenter.QuestsData.GetQuestsDataByName(value);
+                if (questsData.Count == 1)
+                    response = await new QuestMessageBuilder(questsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                else if (questsData.Count > 1)
+                    response = await new PaginatedQuestMessageBuilder(questsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Quête introuvable");

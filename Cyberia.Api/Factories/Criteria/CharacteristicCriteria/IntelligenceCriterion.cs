@@ -1,13 +1,31 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
 {
-    public static class IntelligenceCriterion
+    public sealed record IntelligenceCriterion : Criterion, ICriterion<IntelligenceCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public int Intelligence { get; init; }
+
+        private IntelligenceCriterion(string id, char @operator, int intelligence) :
+            base(id, @operator)
         {
-            if (values.Length > 0)
-                return $"Intelligence {@operator} {values[0].Bold()}";
+            Intelligence = intelligence;
+        }
+
+        public static IntelligenceCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out int intelligence))
+                return new(id, @operator, intelligence);
 
             return null;
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.Intelligence.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            return GetDescription(Intelligence);
         }
     }
 }

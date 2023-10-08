@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class TaxCollectorLastName
+    public sealed class TaxCollectorLastNameData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -10,13 +10,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public string Name { get; init; }
 
-        public TaxCollectorLastName()
+        public TaxCollectorLastNameData()
         {
             Name = string.Empty;
         }
     }
 
-    public sealed class TaxCollectorFirstName
+    public sealed class TaxCollectorFirstNameData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -24,7 +24,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public string Name { get; init; }
 
-        public TaxCollectorFirstName()
+        public TaxCollectorFirstNameData()
         {
             Name = string.Empty;
         }
@@ -35,10 +35,10 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "names.json";
 
         [JsonPropertyName("NF.n")]
-        public List<TaxCollectorLastName> TaxCollectorLastNames { get; init; }
+        public List<TaxCollectorLastNameData> TaxCollectorLastNames { get; init; }
 
         [JsonPropertyName("NF.f")]
-        public List<TaxCollectorFirstName> TaxCollectorFirstNames { get; init; }
+        public List<TaxCollectorFirstNameData> TaxCollectorFirstNames { get; init; }
 
         public TaxCollectorNamesData()
         {
@@ -48,7 +48,7 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static TaxCollectorNamesData Build()
         {
-            return Json.LoadFromFile<TaxCollectorNamesData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<TaxCollectorNamesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public string GetRandomTaxCollectorName()

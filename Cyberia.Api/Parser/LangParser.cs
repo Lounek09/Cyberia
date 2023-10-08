@@ -70,6 +70,9 @@ namespace Cyberia.Api.Parser
         [GeneratedRegex(@"(?'name'[A-Z]+(?:\.[a-z]+|))(?:\[(?'intId'-?\d+)\]|\.(?'stringId'[\w|]+)|)", RegexOptions.Compiled)]
         private static partial Regex KeyRegex();
 
+        [GeneratedRegex(@"(?<!\\)'")]
+        private static partial Regex EscapedQuoteRegex();
+
         private static bool TryParse(string langName)
         {
             LangsData langsData = DofusApi.Instance.Config.Temporis ? DofusApi.Instance.LangsWatcher.Temporis.French : DofusApi.Instance.LangsWatcher.Official.French;
@@ -148,7 +151,7 @@ namespace Cyberia.Api.Parser
                     json.AppendFormat("{{\"id\":\"{0}\",", key.Groups["stringId"].Value);
 
                 string value = lineSplit[1].Replace("' + '\"' + '", @"\""");
-                value = Regex.Replace(value, @"(?<!\\)'", "\"").Replace(@"\'", "'");
+                value = EscapedQuoteRegex().Replace(value, "\"").Replace(@"\'", "'");
                 value = HttpUtility.JavaScriptStringEncode(value).Replace(@"\""", "\"").Replace(@"\\", @"\");
 
                 if (currentLineHasId)

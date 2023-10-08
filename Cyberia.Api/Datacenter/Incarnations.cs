@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Incarnation
+    public sealed class IncarnationData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -23,10 +23,10 @@ namespace Cyberia.Api.DatacenterNS
         public List<int> SpellsId { get; init; }
 
         [JsonPropertyName("e")]
-        [JsonConverter(typeof(ItemEffectsJsonConverter))]
+        [JsonConverter(typeof(ItemEffectListJsonConverter))]
         public List<IEffect> EffectsFromLeveling { get; init; }
 
-        public Incarnation()
+        public IncarnationData()
         {
             Name = string.Empty;
             SpellsId = new();
@@ -43,41 +43,41 @@ namespace Cyberia.Api.DatacenterNS
             return $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/unknown.png";
         }
 
-        public Item? GetItem()
+        public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemById(ItemId);
+            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ItemId);
         }
 
-        public List<Spell> GetSpells()
+        public List<SpellData> GetSpellsData()
         {
-            List<Spell> spells = new();
+            List<SpellData> spellsData = new();
 
             foreach (int spellId in SpellsId)
             {
-                Spell? spell = DofusApi.Instance.Datacenter.SpellsData.GetSpellById(spellId);
-                if (spell is not null)
-                    spells.Add(spell);
+                SpellData? spellData = DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(spellId);
+                if (spellData is not null)
+                    spellsData.Add(spellData);
             }
 
-            return spells;
+            return spellsData;
         }
 
         public List<IEffect> GetEffects()
         {
-            Item? item = GetItem();
-            if (item is not null)
+            ItemData? itemData = GetItemData();
+            if (itemData is not null)
             {
-                ItemStats? itemStats = item.GetItemStat();
-                if (itemStats is not null)
+                ItemStatsData? itemStatsData = itemData.GetItemStatData();
+                if (itemStatsData is not null)
                 {
-                    List<IEffect> effects = itemStats.Effects.Where(x => x is not ExchangeableUntilDateTimeEffect).ToList();
+                    List<IEffect> effects = itemStatsData.Effects.Where(x => x is not ExchangeableEffect).ToList();
                     effects.AddRange(EffectsFromLeveling);
 
                     return effects;
                 }
             }
 
-            return new();
+            return EffectsFromLeveling;
         }
     }
 
@@ -86,7 +86,7 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "incarnation.json";
 
         [JsonPropertyName("INCA")]
-        public List<Incarnation> Incarnations { get; init; }
+        public List<IncarnationData> Incarnations { get; init; }
 
         public IncarnationsData()
         {
@@ -95,21 +95,21 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static IncarnationsData Build()
         {
-            return Json.LoadFromFile<IncarnationsData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<IncarnationsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Incarnation? GetIncarnationById(int id)
+        public IncarnationData? GetIncarnationDataById(int id)
         {
             return Incarnations.Find(x => x.Id == id);
         }
 
-        public List<Incarnation> GetIncarnationsByName(string name)
+        public List<IncarnationData> GetIncarnationsDataByName(string name)
         {
             string[] names = name.RemoveDiacritics().Split(' ');
             return Incarnations.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));
         }
 
-        public Incarnation? GetIncarnationByItemId(int id)
+        public IncarnationData? GetIncarnationDataByItemId(int id)
         {
             return Incarnations.Find(x => x.ItemId == id);
         }

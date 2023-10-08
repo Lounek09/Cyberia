@@ -11,17 +11,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public const string PACKET_HEADER = "G";
         public const int PACKET_VERSION = 1;
 
-        private readonly Breed _breed;
-        private readonly List<Spell> _spells;
-        private readonly Spell? _specialSpell;
-        private readonly ItemSet? _itemSet;
+        private readonly BreedData _breedData;
+        private readonly List<SpellData> _spellsData;
+        private readonly SpellData? _specialSpellData;
+        private readonly ItemSetData? _itemSetData;
 
-        public BreedMessageBuilder(Breed breed)
+        public BreedMessageBuilder(BreedData breedData)
         {
-            _breed = breed;
-            _spells = breed.GetSpells();
-            _specialSpell = breed.GetSpecialSpell();
-            _itemSet = breed.GetItemSet();
+            _breedData = breedData;
+            _spellsData = breedData.GetSpellsData();
+            _specialSpellData = breedData.GetSpecialSpellData();
+            _itemSetData = breedData.GetItemSetData();
         }
 
         public static BreedMessageBuilder? Create(int version, string[] parameters)
@@ -30,9 +30,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 0 &&
                 int.TryParse(parameters[0], out int breedId))
             {
-                Breed? breed = Bot.Instance.Api.Datacenter.BreedsData.GetBreedById(breedId);
-                if (breed is not null)
-                    return new(breed);
+                BreedData? breedData = Bot.Instance.Api.Datacenter.BreedsData.GetBreedDataById(breedId);
+                if (breedData is not null)
+                    return new(breedData);
             }
 
             return null;
@@ -48,8 +48,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
             IDiscordMessageBuilder message = new T()
                 .AddEmbed(await EmbedBuilder());
 
-            if (_spells.Count > 0)
-                message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spells));
+            if (_spellsData.Count > 0)
+                message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData));
 
             List<DiscordButtonComponent> buttons = ButtonsBuilder();
             if (buttons.Count > 0)
@@ -61,17 +61,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Breeds, "Classes")
-                .WithTitle($"{_breed.LongName} ({_breed.Id})")
-                .WithDescription(Formatter.Italic(_breed.Description))
-                .WithThumbnail(_breed.GetIconImagePath())
-                .WithImageUrl(_breed.GetPreferenceWeaponsImagePath())
-                .AddField("Caractérisques :", _breed.GetCaracteristics());
+                .WithTitle($"{_breedData.LongName} ({_breedData.Id})")
+                .WithDescription(Formatter.Italic(_breedData.Description))
+                .WithThumbnail(_breedData.GetIconImagePath())
+                .WithImageUrl(_breedData.GetPreferenceWeaponsImagePath())
+                .AddField("Caractérisques :", _breedData.GetCaracteristics());
 
-            if (_spells.Count > 0)
-                embed.AddField("Sorts :", string.Join('\n', _spells.Select(x => $"- Niv.{x.GetNeededLevel()} {Formatter.Bold(x.Name)}")));
+            if (_spellsData.Count > 0)
+                embed.AddField("Sorts :", string.Join('\n', _spellsData.Select(x => $"- Niv.{x.GetNeededLevel()} {Formatter.Bold(x.Name)}")));
 
             if (Bot.Instance.Api.Config.Temporis)
-                embed.AddField("Temporis :", $"{Formatter.Bold(_breed.TemporisPassiveName)} :\n{_breed.TemporisPassiveDescription}");
+                embed.AddField("Temporis :", $"{Formatter.Bold(_breedData.TemporisPassiveName)} :\n{_breedData.TemporisPassiveDescription}");
 
             return Task.FromResult(embed);
         }
@@ -80,11 +80,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordButtonComponent> buttons = new();
 
-            if (_specialSpell is not null)
-                buttons.Add(SpellComponentsBuilder.SpellButtonBuilder(_specialSpell));
+            if (_specialSpellData is not null)
+                buttons.Add(SpellComponentsBuilder.SpellButtonBuilder(_specialSpellData));
 
-            if (_itemSet is not null)
-                buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSet));
+            if (_itemSetData is not null)
+                buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData));
 
             return buttons;
         }

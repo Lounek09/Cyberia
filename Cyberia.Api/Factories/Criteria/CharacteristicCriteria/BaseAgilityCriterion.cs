@@ -1,13 +1,31 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
 {
-    public static class BaseAgilityCriterion
+    public sealed record BaseAgilityCriterion : Criterion, ICriterion<BaseAgilityCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public int Agility { get; init; }
+
+        private BaseAgilityCriterion(string id, char @operator, int agility) :
+            base(id, @operator)
         {
-            if (values.Length > 0)
-                return $"Agilité de base {@operator} {values[0].Bold()}";
+            Agility = agility;
+        }
+
+        public static BaseAgilityCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out int agility))
+                return new(id, @operator, agility);
 
             return null;
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.BaseAgility.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            return GetDescription(Agility);
         }
     }
 }

@@ -15,8 +15,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (House house in Bot.Instance.Api.Datacenter.HousesData.GetHousesByName(ctx.OptionValue.ToString()!).Take(MAX_AUTOCOMPLETE_CHOICE))
-                choices.Add(new($"{house.Name.WithMaxLength(90)} ({house.Id})", house.Id.ToString()));
+            foreach (HouseData houseData in Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByName(ctx.OptionValue.ToString()!).Take(MAX_AUTOCOMPLETE_CHOICE))
+                choices.Add(new($"{houseData.Name.WithMaxLength(90)} ({houseData.Id})", houseData.Id.ToString()));
 
             return Task.FromResult(choices.AsEnumerable());
         }

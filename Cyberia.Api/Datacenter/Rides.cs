@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Ride
+    public sealed class RideData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -26,13 +26,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
         public int Color3 { get; init; }
 
-        public Ride()
+        public RideData()
         {
             Name = string.Empty;
         }
     }
 
-    public sealed class RideAbility
+    public sealed class RideAbilityData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -46,7 +46,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("e")]
         public string E { get; init; }
 
-        public RideAbility()
+        public RideAbilityData()
         {
             Name = string.Empty;
             Description = string.Empty;
@@ -59,10 +59,10 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "rides.json";
 
         [JsonPropertyName("RI")]
-        public List<Ride> Rides { get; init; }
+        public List<RideData> Rides { get; init; }
 
         [JsonPropertyName("RIA")]
-        public List<RideAbility> RideAbilities { get; init; }
+        public List<RideAbilityData> RideAbilities { get; init; }
 
         public RidesData()
         {
@@ -72,31 +72,31 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static RidesData Build()
         {
-            return Json.LoadFromFile<RidesData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<RidesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Ride? GetRideById(int id)
+        public RideData? GetRideDataById(int id)
         {
             return Rides.Find(x => x.Id == id);
         }
 
         public string GetRideNameById(int id)
         {
-            Ride? ride = GetRideById(id);
+            RideData? rideData = GetRideDataById(id);
 
-            return ride is null ? $"Inconnu ({id})" : ride.Name;
+            return rideData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : rideData.Name;
         }
 
-        public RideAbility? GetRideAbilityById(int id)
+        public RideAbilityData? GetRideAbilityDataById(int id)
         {
             return RideAbilities.Find(x => x.Id == id);
         }
 
         public string GetRideAbilityNameById(int id)
         {
-            RideAbility? rideAbility = GetRideAbilityById(id);
+            RideAbilityData? rideAbilityData = GetRideAbilityDataById(id);
 
-            return rideAbility is null ? $"Inconnu ({id})" : rideAbility.Name;
+            return rideAbilityData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : rideAbilityData.Name;
         }
     }
 

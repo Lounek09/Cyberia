@@ -16,21 +16,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public const string PACKET_HEADER = "I";
         public const int PACKET_VERSION = 2;
 
-        private readonly Item _item;
-        private readonly ItemSet? _itemSet;
-        private readonly ItemStats? _itemStats;
-        private readonly Craft? _craft;
+        private readonly ItemData _itemData;
+        private readonly ItemSetData? _itemSetData;
+        private readonly ItemStatsData? _itemStatsData;
+        private readonly CraftData? _craftData;
         private readonly int _craftQte;
-        private readonly Incarnation? _incarnation;
+        private readonly IncarnationData? _incarnationData;
 
-        public ItemMessageBuilder(Item item, int craftQte = 1)
+        public ItemMessageBuilder(ItemData itemData, int craftQte = 1)
         {
-            _item = item;
-            _itemSet = item.GetItemSet();
-            _itemStats = item.GetItemStat();
-            _craft = item.GetCraft();
+            _itemData = itemData;
+            _itemSetData = itemData.GetItemSetData();
+            _itemStatsData = itemData.GetItemStatData();
+            _craftData = itemData.GetCraftData();
             _craftQte = craftQte;
-            _incarnation = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationByItemId(_item.Id);
+            _incarnationData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataByItemId(_itemData.Id);
         }
 
         public static ItemMessageBuilder? Create(int version, string[] parameters)
@@ -40,9 +40,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int itemId) &&
                 int.TryParse(parameters[1], out int craftQte))
             {
-                Item? item = Bot.Instance.Api.Datacenter.ItemsData.GetItemById(itemId);
-                if (item is not null)
-                    return new(item, craftQte);
+                ItemData? itemData = Bot.Instance.Api.Datacenter.ItemsData.GetItemDataById(itemId);
+                if (itemData is not null)
+                    return new(itemData, craftQte);
             }
 
             return null;
@@ -68,71 +68,66 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private async Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Items")
-                .WithTitle($"{Formatter.Sanitize(_item.Name)} ({_item.Id})")
-                .WithDescription(string.IsNullOrEmpty(_item.Description) ? "" : Formatter.Italic(_item.Description))
-                .WithThumbnail(await _item.GetImagePath())
-                .AddField("Niveau :", _item.Level.ToString(), true)
-                .AddField("Type :", Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(_item.ItemTypeId), true);
+                .WithTitle($"{Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
+                .WithDescription(string.IsNullOrEmpty(_itemData.Description) ? "" : Formatter.Italic(_itemData.Description))
+                .WithThumbnail(await _itemData.GetImagePath())
+                .AddField("Niveau :", _itemData.Level.ToString(), true)
+                .AddField("Type :", Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true);
 
-            if (_itemSet is not null)
-                embed.AddField("Panoplie :", _itemSet.Name, true);
+            if (_itemSetData is not null)
+                embed.AddField("Panoplie :", _itemSetData.Name, true);
 
-            if (_itemStats is not null)
-                embed.AddEffectFields("Effets :", _itemStats.Effects);
+            if (_itemStatsData is not null)
+                embed.AddEffectFields("Effets :", _itemStatsData.Effects);
 
-            List<string> criteria = CriterionFactory.GetCriteriaParse(_item.Criterion);
-            if (criteria.Count > 0)
-                embed.AddFields("Conditions :", criteria);
+            if (_itemData.Criteria.Count > 0)
+                embed.AddCriteriaFields(_itemData.Criteria);
 
-            if (_item.WeaponInfos is not null)
+            if (_itemData.WeaponInfosData is not null)
             {
                 StringBuilder caracteristicsBuilder = new();
-                caracteristicsBuilder.AppendFormat("PA : {0}\n", _item.WeaponInfos.ActionPointCost);
-                caracteristicsBuilder.AppendFormat("Portée : {0}{1}\n", _item.WeaponInfos.MinRange, (_item.WeaponInfos.MinRange == _item.WeaponInfos.MaxRange ? "" : $" à {_item.WeaponInfos.MaxRange}"));
+                caracteristicsBuilder.AppendFormat("PA : {0}\n", _itemData.WeaponInfosData.ActionPointCost);
+                caracteristicsBuilder.AppendFormat("Portée : {0}{1}\n", _itemData.WeaponInfosData.MinRange, (_itemData.WeaponInfosData.MinRange == _itemData.WeaponInfosData.MaxRange ? "" : $" à {_itemData.WeaponInfosData.MaxRange}"));
 
-                if (_item.WeaponInfos.CriticalBonus != 0)
-                    caracteristicsBuilder.AppendFormat("Bonus coups critique : {0}\n", _item.WeaponInfos.CriticalBonus);
+                if (_itemData.WeaponInfosData.CriticalBonus != 0)
+                    caracteristicsBuilder.AppendFormat("Bonus coups critique : {0}\n", _itemData.WeaponInfosData.CriticalBonus);
 
-                if (_item.WeaponInfos.CriticalHitRate != 0)
+                if (_itemData.WeaponInfosData.CriticalHitRate != 0)
                 {
-                    caracteristicsBuilder.AppendFormat("Critique : 1/{0}", _item.WeaponInfos.CriticalHitRate);
-                    caracteristicsBuilder.Append(_item.WeaponInfos.CriticalFailureRate != 0 ? " - " : "\n");
+                    caracteristicsBuilder.AppendFormat("Critique : 1/{0}", _itemData.WeaponInfosData.CriticalHitRate);
+                    caracteristicsBuilder.Append(_itemData.WeaponInfosData.CriticalFailureRate != 0 ? " - " : "\n");
                 }
 
-                if (_item.WeaponInfos.CriticalFailureRate != 0)
-                    caracteristicsBuilder.AppendFormat("Échec : 1/{0}\n", _item.WeaponInfos.CriticalFailureRate);
+                if (_itemData.WeaponInfosData.CriticalFailureRate != 0)
+                    caracteristicsBuilder.AppendFormat("Échec : 1/{0}\n", _itemData.WeaponInfosData.CriticalFailureRate);
 
-                if (_item.WeaponInfos.LineOnly)
+                if (_itemData.WeaponInfosData.LineOnly)
                     caracteristicsBuilder.AppendLine("Lancer en ligne uniquement");
 
-                if (!_item.WeaponInfos.LineOfSight && _item.WeaponInfos.MaxRange != 1)
+                if (!_itemData.WeaponInfosData.LineOfSight && _itemData.WeaponInfosData.MaxRange != 1)
                     caracteristicsBuilder.AppendLine("Ne possède pas de ligne de vue");
 
-                caracteristicsBuilder.Append(_item.TwoHanded ? "Arme à deux mains" : "Arme à une main");
+                caracteristicsBuilder.Append(_itemData.TwoHanded ? "Arme à deux mains" : "Arme à une main");
 
-                ItemType? itemType = _item.GetItemType();
-                if (itemType is not null && itemType.Area.Id != EffectAreaManager.BaseArea.Id)
-                    caracteristicsBuilder.AppendFormat("\nZone : {0} {1}", Emojis.Area(itemType.Area.Id), itemType.Area.GetDescription());
+                ItemTypeData? itemType = _itemData.GetItemTypeData();
+                if (itemType is not null && itemType.EffectArea.Id != EffectAreaManager.DefaultArea.Id)
+                    caracteristicsBuilder.AppendFormat("\nZone : {0} {1}", Emojis.Area(itemType.EffectArea.Id), itemType.EffectArea.GetDescription());
 
                 embed.AddField("Caractéristiques :", caracteristicsBuilder.ToString());
             }
 
-            if (_craft is not null)
-            {
-                string recipe = string.Join(" + ", _craft.GetCraftToString(1, false, false));
-                if (!string.IsNullOrEmpty(recipe))
-                    embed.AddField("Craft :", recipe);
-            }
+            if (_craftData is not null)
+                embed.AddCraftField(_craftData, _craftQte);
 
             StringBuilder miscellaneousBuilder = new();
-            miscellaneousBuilder.AppendFormat("{0} pod{1}", _item.Weight.ToStringThousandSeparator(), _item.Weight > 1 ? "s" : "");
-            if (_item.Tradeable()) miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _item.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
-            if (_item.Ceremonial) miscellaneousBuilder.Append(", objet d'apparat");
-            if (_item.IsReallyEnhanceable()) miscellaneousBuilder.Append(", forgemageable");
-            if (_item.Ethereal) miscellaneousBuilder.Append(", item éthéré");
-            if (_item.Usable) miscellaneousBuilder.Append(", est consommable");
-            if (_item.Targetable) miscellaneousBuilder.Append(", est ciblable");
-            if (_item.Cursed) miscellaneousBuilder.Append(", malédiction");
+            miscellaneousBuilder.AppendFormat("{0} pod{1}", _itemData.Weight.ToStringThousandSeparator(), _itemData.Weight > 1 ? "s" : "");
+            if (_itemData.Tradeable()) miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _itemData.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
+            if (_itemData.Ceremonial) miscellaneousBuilder.Append(", objet d'apparat");
+            if (_itemData.IsReallyEnhanceable()) miscellaneousBuilder.Append(", forgemageable");
+            if (_itemData.Ethereal) miscellaneousBuilder.Append(", item éthéré");
+            if (_itemData.Usable) miscellaneousBuilder.Append(", est consommable");
+            if (_itemData.Targetable) miscellaneousBuilder.Append(", est ciblable");
+            if (_itemData.Cursed) miscellaneousBuilder.Append(", malédiction");
             embed.AddField("Divers :", miscellaneousBuilder.ToString());
 
             return embed;
@@ -142,14 +137,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordButtonComponent> buttons = new();
 
-            if (_itemSet is not null)
-                buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSet));
+            if (_itemSetData is not null)
+                buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData));
 
-            if (_craft is not null)
-                buttons.Add(CraftComponentsBuilder.CraftButtonBuilder(_craft, _craftQte));
+            if (_craftData is not null)
+                buttons.Add(CraftComponentsBuilder.CraftButtonBuilder(_craftData, _craftQte));
 
-            if (_incarnation is not null)
-                buttons.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnation));
+            if (_incarnationData is not null)
+                buttons.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData));
 
             return buttons;
         }

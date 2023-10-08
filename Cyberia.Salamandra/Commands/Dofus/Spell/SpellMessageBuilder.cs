@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.DatacenterNS;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Values;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
@@ -13,21 +14,19 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public const string PACKET_HEADER = "S";
         public const int PACKET_VERSION = 1;
 
-        private readonly Spell _spell;
+        private readonly SpellData _spellData;
         private readonly int _selectedLevel;
-        private readonly SpellLevel? _spellLevel;
-        private readonly SpellCategory? _spellCategory;
-        private readonly Breed? _breed;
-        private readonly Incarnation? _incarnation;
+        private readonly SpellLevelData? _spellLevelData;
+        private readonly BreedData? _breedData;
+        private readonly IncarnationData? _incarnationData;
 
-        public SpellMessageBuilder(Spell spell, int selectedLevel)
+        public SpellMessageBuilder(SpellData spell, int selectedLevel)
         {
-            _spell = spell;
+            _spellData = spell;
             _selectedLevel = selectedLevel;
-            _spellLevel = spell.GetSpellLevel(selectedLevel);
-            _spellCategory = spell.GetSpellCategory();
-            _breed = spell.GetBreed();
-            _incarnation = spell.GetIncarnation();
+            _spellLevelData = spell.GetSpellLevelData(selectedLevel);
+            _breedData = spell.GetBreedData();
+            _incarnationData = spell.GetIncarnationData();
         }
 
         public static SpellMessageBuilder? Create(int version, string[] parameters)
@@ -37,9 +36,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int spellId) &&
                 int.TryParse(parameters[1], out int selectedLevel))
             {
-                Spell? spell = Bot.Instance.Api.Datacenter.SpellsData.GetSpellById(spellId);
-                if (spell is not null)
-                    return new SpellMessageBuilder(spell, selectedLevel);
+                SpellData? spellData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellDataById(spellId);
+                if (spellData is not null)
+                    return new SpellMessageBuilder(spellData, selectedLevel);
             }
 
             return null;
@@ -69,39 +68,36 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private async Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Spells, "Livre de sorts")
-                .WithTitle($"{_spell.Name} ({_spell.Id}) - Rang {_selectedLevel}")
-                .WithDescription(string.IsNullOrEmpty(_spell.Description) ? "" : Formatter.Italic(_spell.Description.Trim()))
-                .WithThumbnail(await _spell.GetImagePath());
+                .WithTitle($"{_spellData.Name} ({_spellData.Id}) - Rang {_selectedLevel}")
+                .WithDescription(string.IsNullOrEmpty(_spellData.Description) ? "" : Formatter.Italic(_spellData.Description.Trim()))
+                .WithThumbnail(await _spellData.GetImagePath());
 
-            if (_spellLevel is not null)
+            if (_spellLevelData is not null)
             {
-                embed.AddField(Constant.ZERO_WIDTH_SPACE, $"Niveau requis : {Formatter.Bold(_spellLevel.NeededLevel.ToString())}", true);
+                embed.AddField(Constant.ZERO_WIDTH_SPACE, $"Niveau requis : {Formatter.Bold(_spellLevelData.NeededLevel.ToString())}", true);
 
-                string range = $"{Formatter.Bold(_spellLevel.MinRange.ToString())}{(_spellLevel.MinRange == _spellLevel.MaxRange ? "" : $" à {Formatter.Bold(_spellLevel.MaxRange.ToString())}")} PO";
-                string apCost = $"{Formatter.Bold(_spellLevel.ActionPointCost.ToString())} PA";
+                string range = $"{Formatter.Bold(_spellLevelData.MinRange.ToString())}{(_spellLevelData.MinRange == _spellLevelData.MaxRange ? "" : $" à {Formatter.Bold(_spellLevelData.MaxRange.ToString())}")} PO";
+                string apCost = $"{Formatter.Bold(_spellLevelData.ActionPointCost.ToString())} PA";
                 embed.AddField(Constant.ZERO_WIDTH_SPACE, $"{range}\n{apCost}", true);
 
-                if (_spellCategory is not null)
-                    embed.AddField("Catégorie :", _spellCategory.Name, true);
-                else
-                    embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
+                embed.AddField("Catégorie :", _spellData.SpellCategory.GetDescription(), true);
 
-                List<State> requiredStates = _spellLevel.GetRequiredStates();
-                if (requiredStates.Count > 0)
-                    embed.AddField("Etats requis :", string.Join(", ", requiredStates.Select(x => x.Name)), true);
+                List<StateData> requiredStatesData = _spellLevelData.GetRequiredStatesData();
+                if (requiredStatesData.Count > 0)
+                    embed.AddField("Etats requis :", string.Join(", ", requiredStatesData.Select(x => x.Name)), true);
 
-                List<State> forbiddenStates = _spellLevel.GetForbiddenStates();
-                if (forbiddenStates.Count > 0)
-                    embed.AddField("Etats interdits :", string.Join(", ", forbiddenStates.Select(x => x.Name)), true);
+                List<StateData> forbiddenStatesData = _spellLevelData.GetForbiddenStatesData();
+                if (forbiddenStatesData.Count > 0)
+                    embed.AddField("Etats interdits :", string.Join(", ", forbiddenStatesData.Select(x => x.Name)), true);
 
-                if (_spell.Id == 101 || _spell.Id == 2083)
+                if (_spellData.Id == 101 || _spellData.Id == 2083)
                     embed.AddField("Effets :", "Fuck roulette");
                 else
                 {
-                    List<IEffect> effects = _spellLevel.Effects;
-                    List<IEffect> trapEffects = _spellLevel.GetTrapEffects();
-                    List<IEffect> glyphEffects = _spellLevel.GetGlyphEffects();
-                    List<IEffect> criticalEffects = _spellLevel.CriticalEffects;
+                    List<IEffect> effects = _spellLevelData.Effects;
+                    List<IEffect> trapEffects = _spellLevelData.GetTrapEffects();
+                    List<IEffect> glyphEffects = _spellLevelData.GetGlyphEffects();
+                    List<IEffect> criticalEffects = _spellLevelData.CriticalEffects;
 
                     if (effects.Count == 0 && trapEffects.Count == 0 && glyphEffects.Count == 0 && criticalEffects.Count == 0)
                         embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE);
@@ -119,22 +115,22 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 }
 
                 string caracteristics = $"""
-                                         Probabilité de coup critique : {Formatter.Bold(_spellLevel.CriticalHitRate == 0 ? "-" : $"1/{_spellLevel.CriticalHitRate}")}
-                                         Probabilité d'échec : {Formatter.Bold(_spellLevel.CriticalFailureRate == 0 ? "-" : $"1/{_spellLevel.CriticalFailureRate}")}
-                                         Nb. de lancers par tour : {Formatter.Bold(_spellLevel.LaunchCountByTurn == 0 ? "-" : _spellLevel.LaunchCountByTurn.ToString())}
-                                         Nb. de lancers par tour par joueur : {Formatter.Bold(_spellLevel.LaunchCountByPlayerByTurn == 0 ? "-" : _spellLevel.LaunchCountByPlayerByTurn.ToString())}
-                                         Nb. de tours entre deux lancers : {Formatter.Bold(_spellLevel.DelayBetweenLaunch == 0 ? "-" : _spellLevel.DelayBetweenLaunch == 63 ? "inf." : _spellLevel.DelayBetweenLaunch.ToString())}
-                                         {(_spell.GlobalInterval ? "Intervalle de relance global" : "")}
-                                         """;
+                     Probabilité de coup critique : {Formatter.Bold(_spellLevelData.CriticalHitRate == 0 ? "-" : $"1/{_spellLevelData.CriticalHitRate}")}
+                     Probabilité d'échec : {Formatter.Bold(_spellLevelData.CriticalFailureRate == 0 ? "-" : $"1/{_spellLevelData.CriticalFailureRate}")}
+                     Nb. de lancers par tour : {Formatter.Bold(_spellLevelData.LaunchCountByTurn == 0 ? "-" : _spellLevelData.LaunchCountByTurn.ToString())}
+                     Nb. de lancers par tour par joueur : {Formatter.Bold(_spellLevelData.LaunchCountByPlayerByTurn == 0 ? "-" : _spellLevelData.LaunchCountByPlayerByTurn.ToString())}
+                     Nb. de tours entre deux lancers : {Formatter.Bold(_spellLevelData.DelayBetweenLaunch == 0 ? "-" : _spellLevelData.DelayBetweenLaunch == 63 ? "inf." : _spellLevelData.DelayBetweenLaunch.ToString())}
+                     {(_spellData.GlobalInterval ? "Intervalle de relance global" : "")}
+                     """;
                 embed.AddField("Autres caractéristiques : ", caracteristics, true);
 
                 caracteristics = $"""
-                                  {Emojis.Bool(_spellLevel.CanBoostRange)} Portée modifiable
-                                  {Emojis.Bool(_spellLevel.LineOfSight)} Ligne de vue
-                                  {Emojis.Bool(_spellLevel.LineOnly)} Lancer en ligne
-                                  {Emojis.Bool(_spellLevel.NeedFreeCell)} Cellules libres
-                                  {Emojis.Bool(_spellLevel.CricalFailureEndTheTurn)} EC fini le tour
-                                  """;
+                    {Emojis.Bool(_spellLevelData.CanBoostRange)} Portée modifiable
+                    {Emojis.Bool(_spellLevelData.LineOfSight)} Ligne de vue
+                    {Emojis.Bool(_spellLevelData.LineOnly)} Lancer en ligne
+                    {Emojis.Bool(_spellLevelData.NeedFreeCell)} Cellules libres
+                    {Emojis.Bool(_spellLevelData.CricalFailureEndTheTurn)} EC fini le tour
+                    """;
                 embed.AddField(Constant.ZERO_WIDTH_SPACE, caracteristics, true);
             }
 
@@ -147,8 +143,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             for (int i = 1; i < 6; i++)
             {
-                if (_spell.GetSpellLevel(i) is not null)
-                    components.Add(new(ButtonStyle.Primary, GetPacket(_spell.Id, i), i.ToString(), _selectedLevel == i));
+                if (_spellData.GetSpellLevelData(i) is not null)
+                    components.Add(new(ButtonStyle.Primary, GetPacket(_spellData.Id, i), i.ToString(), _selectedLevel == i));
             }
 
             return components;
@@ -158,14 +154,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordButtonComponent> components = new();
 
-            if (_spell.GetSpellLevel(6) is not null)
-                components.Add(new(ButtonStyle.Primary, GetPacket(_spell.Id, 6), "6", _selectedLevel == 6));
+            if (_spellData.GetSpellLevelData(6) is not null)
+                components.Add(new(ButtonStyle.Primary, GetPacket(_spellData.Id, 6), "6", _selectedLevel == 6));
 
-            if (_breed is not null)
-                components.Add(BreedComponentsBuilder.BreedButtonBuilder(_breed));
+            if (_breedData is not null)
+                components.Add(BreedComponentsBuilder.BreedButtonBuilder(_breedData));
 
-            if (_incarnation is not null)
-                components.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnation));
+            if (_incarnationData is not null)
+                components.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData));
 
             return components;
         }

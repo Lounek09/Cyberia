@@ -5,7 +5,7 @@ namespace Cyberia.Api.Factories
 {
     public static class QuestObjectiveFactory
     {
-        private static readonly Dictionary<int, Func<QuestObjective, IQuestObjective>> _factory = new()
+        private static readonly Dictionary<int, Func<QuestObjectiveData, IQuestObjective?>> _factory = new()
         {
             { 0, FreeFormQuestObjective.Create },
             { 1, GoToNpcQuestObjective.Create },
@@ -23,17 +23,23 @@ namespace Cyberia.Api.Factories
             { 13, FightMonsterQuestObjective.Create }
         };
 
-        public static IQuestObjective GetQuestObjective(QuestObjective questObjective)
+        public static IQuestObjective GetQuestObjective(QuestObjectiveData questObjectiveData)
         {
-            if (_factory.TryGetValue(questObjective.QuestObjectiveTypeId, out Func<QuestObjective, IQuestObjective>? builder))
-                return builder(questObjective);
+            if (_factory.TryGetValue(questObjectiveData.QuestObjectiveTypeId, out Func<QuestObjectiveData, IQuestObjective?>? builder))
+            {
+                IQuestObjective? questObjective = builder(questObjectiveData);
+                if (questObjective is not null)
+                    return questObjective;
 
-            return BasicQuestObjective.Create(questObjective);
+                return ErroredQuestObjective.Create(questObjectiveData);
+            }
+
+            return UntranslatedQuestObjective.Create(questObjectiveData);
         }
 
-        public static IEnumerable<IQuestObjective> GetQuestObjectives(IEnumerable<QuestObjective> questObjectives)
+        public static IEnumerable<IQuestObjective> GetQuestObjectives(IEnumerable<QuestObjectiveData> questObjectivesData)
         {
-            foreach (QuestObjective questObjective in questObjectives)
+            foreach (QuestObjectiveData questObjective in questObjectivesData)
                 yield return GetQuestObjective(questObjective);
         }
     }

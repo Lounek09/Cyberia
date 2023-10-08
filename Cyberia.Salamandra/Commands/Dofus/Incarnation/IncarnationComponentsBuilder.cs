@@ -8,14 +8,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
 {
     public static class IncarnationComponentsBuilder
     {
-        public static DiscordButtonComponent IncarnationButtonBuilder(Incarnation incarnation, bool disable = false)
+        public static DiscordButtonComponent IncarnationButtonBuilder(IncarnationData incarnationData, bool disable = false)
         {
-            return new(ButtonStyle.Success, IncarnationMessageBuilder.GetPacket(incarnation.Id), incarnation.Name, disable);
+            return new(ButtonStyle.Success, IncarnationMessageBuilder.GetPacket(incarnationData.Id), incarnationData.Name, disable);
         }
 
-        public static DiscordSelectComponent IncarnationsSelectBuilder(int index, List<Incarnation> incarnations, bool disable = false)
+        public static DiscordSelectComponent IncarnationsSelectBuilder(int index, List<IncarnationData> incarnationsData, bool disable = false)
         {
-            IEnumerable<DiscordSelectComponentOption> options = incarnations.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), IncarnationMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
+            IEnumerable<DiscordSelectComponentOption> options = incarnationsData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), IncarnationMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
 
             return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne une incarnation pour l'afficher", options, disable);
         }

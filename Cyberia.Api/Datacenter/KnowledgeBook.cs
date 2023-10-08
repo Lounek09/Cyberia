@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class KnowledgeBookCatagory
+    public sealed class KnowledgeBookCatagoryData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -19,13 +19,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("ep")]
         public int Episode { get; init; }
 
-        public KnowledgeBookCatagory()
+        public KnowledgeBookCatagoryData()
         {
             Name = string.Empty;
         }
     }
 
-    public sealed class KnowledgeBookArticle
+    public sealed class KnowledgeBookArticleData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -51,20 +51,20 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("ep")]
         public int Episode { get; init; }
 
-        public KnowledgeBookArticle()
+        public KnowledgeBookArticleData()
         {
             Name = string.Empty;
             Description = string.Empty;
             KeyWords = new();
         }
 
-        public KnowledgeBookCatagory? GetKnowledgeBookCatagory()
+        public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryData()
         {
-            return DofusApi.Instance.Datacenter.KnowledgeBookData.GetKnowledgeBookCatagoryById(KnowledgeBookCatagoryId);
+            return DofusApi.Instance.Datacenter.KnowledgeBookData.GetKnowledgeBookCatagoryDataById(KnowledgeBookCatagoryId);
         }
     }
 
-    public sealed class KnowledgeBookTip
+    public sealed class KnowledgeBookTipData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -78,18 +78,18 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("l")]
         public int KnowledgeBookArticleId { get; init; }
 
-        public KnowledgeBookTip()
+        public KnowledgeBookTipData()
         {
             Description = string.Empty;
         }
 
-        public KnowledgeBookArticle? GetKnowledgeBookArticle()
+        public KnowledgeBookArticleData? GetKnowledgeBookArticleData()
         {
-            return DofusApi.Instance.Datacenter.KnowledgeBookData.GetKnowledgeBookArticleById(KnowledgeBookArticleId);
+            return DofusApi.Instance.Datacenter.KnowledgeBookData.GetKnowledgeBookArticleDataById(KnowledgeBookArticleId);
         }
     }
 
-    public sealed class KnowledgeBookTrigger
+    public sealed class KnowledgeBookTriggerData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -104,14 +104,14 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("d")]
         public int KnowledgeBookTipId { get; init; }
 
-        public KnowledgeBookTrigger()
+        public KnowledgeBookTriggerData()
         {
             Values = new();
         }
 
-        public KnowledgeBookTip? GetKnowledgeBookTip()
+        public KnowledgeBookTipData? GetKnowledgeBookTipData()
         {
-            return DofusApi.Instance.Datacenter.KnowledgeBookData.GetKnowledgeBookTipById(KnowledgeBookTipId);
+            return DofusApi.Instance.Datacenter.KnowledgeBookData.GetKnowledgeBookTipDataById(KnowledgeBookTipId);
         }
     }
 
@@ -120,16 +120,16 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "kb.json";
 
         [JsonPropertyName("KBC")]
-        public List<KnowledgeBookCatagory> KnowledgeBookCatagories { get; init; }
+        public List<KnowledgeBookCatagoryData> KnowledgeBookCatagories { get; init; }
 
         [JsonPropertyName("KBA")]
-        public List<KnowledgeBookArticle> KnowledgeBookArticles { get; init; }
+        public List<KnowledgeBookArticleData> KnowledgeBookArticles { get; init; }
 
         [JsonPropertyName("KBT")]
-        public List<KnowledgeBookTip> KnowledgeBookTips { get; init; }
+        public List<KnowledgeBookTipData> KnowledgeBookTips { get; init; }
 
         [JsonPropertyName("KBD")]
-        public List<KnowledgeBookTrigger> KnowledgeBookTriggers { get; init; }
+        public List<KnowledgeBookTriggerData> KnowledgeBookTriggers { get; init; }
 
         public KnowledgeBookData()
         {
@@ -141,20 +141,20 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static KnowledgeBookData Build()
         {
-            return Json.LoadFromFile<KnowledgeBookData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<KnowledgeBookData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public KnowledgeBookCatagory? GetKnowledgeBookCatagoryById(int id)
+        public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryDataById(int id)
         {
             return KnowledgeBookCatagories.Find(x => x.Id == id);
         }
 
-        public KnowledgeBookArticle? GetKnowledgeBookArticleById(int id)
+        public KnowledgeBookArticleData? GetKnowledgeBookArticleDataById(int id)
         {
             return KnowledgeBookArticles.Find(x => x.Id == id);
         }
 
-        public KnowledgeBookTip? GetKnowledgeBookTipById(int id)
+        public KnowledgeBookTipData? GetKnowledgeBookTipDataById(int id)
         {
             return KnowledgeBookTips.Find(x => x.Id == id);
         }

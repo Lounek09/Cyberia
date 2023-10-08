@@ -40,5 +40,17 @@
         {
             return 25 + 2 * foeAgility;
         }
+
+        public static TimeSpan GetTimePerCraft(int qte, int nbSlot)
+        {
+            try
+            {
+                return TimeSpan.FromSeconds((1 + (nbSlot - 1) * 0.15) * qte);
+            }
+            catch
+            {
+                return TimeSpan.Zero;
+            }
+        }
     }
 }

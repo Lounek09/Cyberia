@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class Server
+    public sealed class ServerData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -34,7 +34,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("rlng")]
         public List<string> RealLanguages { get; init; }
 
-        public Server()
+        public ServerData()
         {
             Name = string.Empty;
             Description = string.Empty;
@@ -42,23 +42,23 @@ namespace Cyberia.Api.DatacenterNS
             RealLanguages = new();
         }
 
-        public ServerPopulation? GetServerPopulation()
+        public ServerPopulationData? GetServerPopulationData()
         {
-            return DofusApi.Instance.Datacenter.ServersData.GetServerPopulationById(ServerPopulationId);
+            return DofusApi.Instance.Datacenter.ServersData.GetServerPopulationDataById(ServerPopulationId);
         }
 
-        public ServerPopulationWeight? GetServerPopulationWeight()
+        public ServerPopulationWeightData? GetServerPopulationWeightData()
         {
-            return DofusApi.Instance.Datacenter.ServersData.GetServerPopulationWeightById(ServerPopulationId);
+            return DofusApi.Instance.Datacenter.ServersData.GetServerPopulationWeightDataById(ServerPopulationId);
         }
 
-        public ServerCommunity? GetServerCommunity()
+        public ServerCommunityData? GetServerCommunityData()
         {
-            return DofusApi.Instance.Datacenter.ServersData.GetServerCommunityById(ServerCommunityId);
+            return DofusApi.Instance.Datacenter.ServersData.GetServerCommunityDataById(ServerCommunityId);
         }
     }
 
-    public sealed class ServerPopulation
+    public sealed class ServerPopulationData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -66,13 +66,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public string Name { get; init; }
 
-        public ServerPopulation()
+        public ServerPopulationData()
         {
             Name = string.Empty;
         }
     }
 
-    public sealed class ServerPopulationWeight
+    public sealed class ServerPopulationWeightData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -80,13 +80,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public int Weight { get; init; }
 
-        public ServerPopulationWeight()
+        public ServerPopulationWeightData()
         {
 
         }
     }
 
-    public sealed class ServerCommunity
+    public sealed class ServerCommunityData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -103,14 +103,14 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("c")]
         public List<string> Countries { get; init; }
 
-        public ServerCommunity()
+        public ServerCommunityData()
         {
             Name = string.Empty;
             Countries = new();
         }
     }
 
-    public sealed class DefaultServerSpecificText
+    public sealed class DefaultServerSpecificTextData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -121,14 +121,14 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("d")]
         public string Description { get; init; }
 
-        public DefaultServerSpecificText()
+        public DefaultServerSpecificTextData()
         {
             Label = string.Empty;
             Description = string.Empty;
         }
     }
 
-    public sealed class ServerSpecificText
+    public sealed class ServerSpecificTextData
     {
         [JsonPropertyName("id")]
         public string Id { get; init; }
@@ -136,7 +136,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("v")]
         public string Description { get; init; }
 
-        public ServerSpecificText()
+        public ServerSpecificTextData()
         {
             Id = string.Empty;
             Description = string.Empty;
@@ -148,22 +148,22 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "servers.json";
 
         [JsonPropertyName("SR")]
-        public List<Server> Servers { get; init; }
+        public List<ServerData> Servers { get; init; }
 
         [JsonPropertyName("SRP")]
-        public List<ServerPopulation> ServerPopulations { get; init; }
+        public List<ServerPopulationData> ServerPopulations { get; init; }
 
         [JsonPropertyName("SRPW")]
-        public List<ServerPopulationWeight> ServerPopulationsWeight { get; init; }
+        public List<ServerPopulationWeightData> ServerPopulationsWeight { get; init; }
 
         [JsonPropertyName("SRC")]
-        public List<ServerCommunity> ServerCommunities { get; init; }
+        public List<ServerCommunityData> ServerCommunities { get; init; }
 
         [JsonPropertyName("SRVT")]
-        public List<DefaultServerSpecificText> DefaultServerSpecificTexts { get; init; }
+        public List<DefaultServerSpecificTextData> DefaultServerSpecificTexts { get; init; }
 
         [JsonPropertyName("SRVC")]
-        public List<ServerSpecificText> ServerSpecificTexts { get; init; }
+        public List<ServerSpecificTextData> ServerSpecificTexts { get; init; }
 
         public ServersData()
         {
@@ -177,32 +177,32 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static ServersData Build()
         {
-            return Json.LoadFromFile<ServersData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
+            return Json.LoadFromFile<ServersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public Server? GetServerById(int id)
+        public ServerData? GetServerDataById(int id)
         {
             return Servers.Find(x => x.Id == id);
         }
 
         public string GetServerNameById(int id)
         {
-            Server? server = GetServerById(id);
+            ServerData? serverData = GetServerDataById(id);
 
-            return server is null ? $"Inconnu ({id})" : server.Name;
+            return serverData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : serverData.Name;
         }
 
-        public ServerPopulation? GetServerPopulationById(int id)
+        public ServerPopulationData? GetServerPopulationDataById(int id)
         {
             return ServerPopulations.Find(x => x.Id == id);
         }
 
-        public ServerPopulationWeight? GetServerPopulationWeightById(int id)
+        public ServerPopulationWeightData? GetServerPopulationWeightDataById(int id)
         {
             return ServerPopulationsWeight.Find(x => x.Id == id);
         }
 
-        public ServerCommunity? GetServerCommunityById(int id)
+        public ServerCommunityData? GetServerCommunityDataById(int id)
         {
             return ServerCommunities.Find(x => x.Id == id);
         }

@@ -6,7 +6,7 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft>
+    public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<CraftData>
     {
         public const string PACKET_HEADER = "PC";
         public const int PACKET_VERSION = 1;
@@ -14,8 +14,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private readonly string _search;
         private readonly int _qte;
 
-        public PaginatedCraftMessageBuilder(List<Craft> crafts, string search, int qte = 1, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Jobs, "Calculateur de crafts", "Plusieurs crafts trouvés :", crafts, selectedPageIndex)
+        public PaginatedCraftMessageBuilder(List<CraftData> craftsData, string search, int qte = 1, int selectedPageIndex = 0) :
+            base(DofusEmbedCategory.Jobs, "Calculateur de crafts", "Plusieurs crafts trouvés :", craftsData, selectedPageIndex)
         {
             _search = search;
             _qte = qte;
@@ -28,9 +28,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[1], out int selectedPageIndex) &&
                 int.TryParse(parameters[3], out int qte))
             {
-                List<Craft> crafts = Bot.Instance.Api.Datacenter.CraftsData.GetCraftsByItemName(parameters[2]);
-                if (crafts.Count > 0)
-                    return new(crafts, parameters[2], qte, selectedPageIndex);
+                List<CraftData> craftsData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftsDataByItemName(parameters[2]);
+                if (craftsData.Count > 0)
+                    return new(craftsData, parameters[2], qte, selectedPageIndex);
             }
 
             return null;
@@ -43,11 +43,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         protected override IEnumerable<string> GetContent()
         {
-            foreach (Craft craft in _data)
+            foreach (CraftData craftData in _data)
             {
-                Item? item = craft.GetItem();
-                if (item is not null)
-                    yield return $"- Niv.{item.Level} {Formatter.Bold(Formatter.Sanitize(item.Name))} ({craft.Id})";
+                ItemData? itemData = craftData.GetItemData();
+                if (itemData is not null)
+                    yield return $"- Niv.{itemData.Level} {Formatter.Bold(Formatter.Sanitize(itemData.Name))} ({craftData.Id})";
             }
         }
 

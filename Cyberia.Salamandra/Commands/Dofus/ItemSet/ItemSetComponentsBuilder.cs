@@ -8,14 +8,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
 {
     public static class ItemSetComponentsBuilder
     {
-        public static DiscordButtonComponent ItemSetButtonBuilder(ItemSet itemSet, bool disable = false)
+        public static DiscordButtonComponent ItemSetButtonBuilder(ItemSetData itemSetData, bool disable = false)
         {
-            return new(ButtonStyle.Success, ItemSetMessageBuilder.GetPacket(itemSet.Id), itemSet.Name, disable);
+            return new(ButtonStyle.Success, ItemSetMessageBuilder.GetPacket(itemSetData.Id), itemSetData.Name, disable);
         }
 
-        public static DiscordSelectComponent ItemSetsSelectBuilder(int uniqueIndex, List<ItemSet> itemSets, bool disable = false)
+        public static DiscordSelectComponent ItemSetsSelectBuilder(int uniqueIndex, List<ItemSetData> itemSetsData, bool disable = false)
         {
-            IEnumerable<DiscordSelectComponentOption> options = itemSets.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), ItemSetMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
+            IEnumerable<DiscordSelectComponentOption> options = itemSetsData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), ItemSetMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
 
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une panoplie pour l'afficher", options, disable);
         }

@@ -6,15 +6,15 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class PaginatedMapAreaMessageBuilder : PaginatedMessageBuilder<MapArea>
+    public sealed class PaginatedMapAreaMessageBuilder : PaginatedMessageBuilder<MapAreaData>
     {
         public const string PACKET_HEADER = "PMA.A";
         public const int PACKET_VERSION = 1;
 
         private readonly string _search;
 
-        public PaginatedMapAreaMessageBuilder(List<MapArea> mapAreas, string search, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs zones trouvées :", mapAreas, selectedPageIndex)
+        public PaginatedMapAreaMessageBuilder(List<MapAreaData> mapAreasData, string search, int selectedPageIndex = 0) :
+            base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs zones trouvées :", mapAreasData, selectedPageIndex)
         {
             _search = search;
         }
@@ -25,9 +25,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<MapArea> mapAreas = Bot.Instance.Api.Datacenter.MapsData.GetMapAreasByName(parameters[2]);
-                if (mapAreas.Count > 0)
-                    return new(mapAreas, parameters[2], selectedPageIndex);
+                List<MapAreaData> mapAreasData = Bot.Instance.Api.Datacenter.MapsData.GetMapAreasDataByName(parameters[2]);
+                if (mapAreasData.Count > 0)
+                    return new(mapAreasData, parameters[2], selectedPageIndex);
             }
 
             return null;

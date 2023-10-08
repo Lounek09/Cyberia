@@ -1,15 +1,31 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.ServerCriteria
 {
-    public static class MinuteCriterion
+    public sealed record MinuteCriterion : Criterion, ICriterion<MinuteCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public int Minute { get; init; }
+
+        private MinuteCriterion(string id, char @operator, int minute) :
+            base(id, @operator)
         {
-            if (values.Length > 0)
-            {
-                return $"Minute {@operator} {values[0].Bold()}";
-            }
+            Minute = minute;
+        }
+
+        public static MinuteCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out int minute))
+                return new(id, @operator, minute);
 
             return null;
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.Minute.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            return GetDescription(Minute);
         }
     }
 }

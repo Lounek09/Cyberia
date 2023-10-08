@@ -17,17 +17,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                ItemSet? itemSet = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetById(id);
-                if (itemSet is not null)
-                    response = await new ItemSetMessageBuilder(itemSet).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                ItemSetData? itemSetData = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetDataById(id);
+                if (itemSetData is not null)
+                    response = await new ItemSetMessageBuilder(itemSetData).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else
             {
-                List<ItemSet> itemSets = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetsByName(value);
-                if (itemSets.Count == 1)
-                    response = await new ItemSetMessageBuilder(itemSets[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                else if (itemSets.Count > 1)
-                    response = await new PaginatedItemSetMessageBuilder(itemSets, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                List<ItemSetData> itemSetsData = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetsDataByName(value);
+                if (itemSetsData.Count == 1)
+                    response = await new ItemSetMessageBuilder(itemSetsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                else if (itemSetsData.Count > 1)
+                    response = await new PaginatedItemSetMessageBuilder(itemSetsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Panoplie introuvable");

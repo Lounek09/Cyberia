@@ -8,7 +8,7 @@ namespace Cyberia.Salamandra.Commands
         public const int MIN_LENGTH_AUTOCOMPLETE = 2;
         public const int MAX_AUTOCOMPLETE_CHOICE = 25;
 
-        protected static T? GetValueFromOption<T>(AutocompleteContext ctx, string name)
+        protected static T? CreateFromOption<T>(AutocompleteContext ctx, string name)
         {
             DiscordInteractionDataOption? option = ctx.Options.FirstOrDefault(x => x.Name.Equals(name));
 

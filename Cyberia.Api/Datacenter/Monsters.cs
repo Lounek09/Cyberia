@@ -1,8 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.DatacenterNS.Custom;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.DatacenterNS
 {
-    public sealed class MonsterSuperRace
+    public sealed class MonsterSuperRaceData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -14,13 +16,13 @@ namespace Cyberia.Api.DatacenterNS
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
         public int MonsterSuperRaceId { get; init; }
 
-        public MonsterSuperRace()
+        public MonsterSuperRaceData()
         {
             Name = string.Empty;
         }
     }
 
-    public sealed class MonsterRace
+    public sealed class MonsterRaceData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -32,20 +34,20 @@ namespace Cyberia.Api.DatacenterNS
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
         public int MonsterSuperRaceId { get; init; }
 
-        public MonsterRace()
+        public MonsterRaceData()
         {
             Name = string.Empty;
         }
 
-        public MonsterSuperRace? GetMonsterSuperRace()
+        public MonsterSuperRaceData? GetMonsterSuperRaceData()
         {
-            return DofusApi.Instance.Datacenter.MonstersData.GetMonsterSuperRaceById(MonsterSuperRaceId);
+            return DofusApi.Instance.Datacenter.MonstersData.GetMonsterSuperRaceDataById(MonsterSuperRaceId);
         }
     }
 
 
 
-    public sealed class MonsterGrade
+    public sealed class MonsterGradeData
     {
         [JsonPropertyName("l")]
         public int Level { get; init; }
@@ -62,7 +64,7 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("mp")]
         public int? MovementPoint { get; init; }
 
-        public MonsterGrade()
+        public MonsterGradeData()
         {
             Resistances = new();
         }
@@ -103,7 +105,7 @@ namespace Cyberia.Api.DatacenterNS
         }
     }
 
-    public sealed class Monster
+    public sealed class MonsterData
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -130,40 +132,40 @@ namespace Cyberia.Api.DatacenterNS
         public bool SearcheableInBigStore { get; init; }
 
         [JsonPropertyName("g1")]
-        public MonsterGrade? MonsterGrade1 { get; init; }
+        public MonsterGradeData? MonsterGradeData1 { get; init; }
 
         [JsonPropertyName("g2")]
-        public MonsterGrade? MonsterGrade2 { get; init; }
+        public MonsterGradeData? MonsterGradeData2 { get; init; }
 
         [JsonPropertyName("g3")]
-        public MonsterGrade? MonsterGrade3 { get; init; }
+        public MonsterGradeData? MonsterGradeData3 { get; init; }
 
         [JsonPropertyName("g4")]
-        public MonsterGrade? MonsterGrade4 { get; init; }
+        public MonsterGradeData? MonsterGradeData4 { get; init; }
 
         [JsonPropertyName("g5")]
-        public MonsterGrade? MonsterGrade5 { get; init; }
+        public MonsterGradeData? MonsterGradeData5 { get; init; }
 
         [JsonPropertyName("g6")]
-        public MonsterGrade? MonsterGrade6 { get; init; }
+        public MonsterGradeData? MonsterGradeData6 { get; init; }
 
         [JsonPropertyName("g7")]
-        public MonsterGrade? MonsterGrade7 { get; init; }
+        public MonsterGradeData? MonsterGradeData7 { get; init; }
 
         [JsonPropertyName("g8")]
-        public MonsterGrade? MonsterGrade8 { get; init; }
+        public MonsterGradeData? MonsterGradeData8 { get; init; }
 
         [JsonPropertyName("g9")]
-        public MonsterGrade? MonsterGrade9 { get; init; }
+        public MonsterGradeData? MonsterGradeData9 { get; init; }
 
         [JsonPropertyName("g10")]
-        public MonsterGrade? MonsterGrade10 { get; init; }
+        public MonsterGradeData? MonsterGradeData10 { get; init; }
 
         public bool BreedSummon { get; internal set; }
 
         public string TrelloUrl { get; internal set; }
 
-        public Monster()
+        public MonsterData()
         {
             Name = string.Empty;
             TrelloUrl = string.Empty;
@@ -179,14 +181,14 @@ namespace Cyberia.Api.DatacenterNS
             return $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/unknown.png";
         }
 
-        public MonsterRace? GetRace()
+        public MonsterRaceData? GetMonsterRaceData()
         {
-            return DofusApi.Instance.Datacenter.MonstersData.GetMonsterRaceById(MonsterRaceId);
+            return DofusApi.Instance.Datacenter.MonstersData.GetMonsterRaceDataById(MonsterRaceId);
         }
 
-        public Alignment? GetAlignment()
+        public AlignmentData? GetAlignmentData()
         {
-            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentById(AlignmentId);
+            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
         }
 
         public string GetAlignementName()
@@ -194,20 +196,20 @@ namespace Cyberia.Api.DatacenterNS
             return AlignmentId == -1 ? "" : DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentNameById(AlignmentId);
         }
 
-        public MonsterGrade? GetGrade(int grade = 1)
+        public MonsterGradeData? GetMonsterGradeData(int grade = 1)
         {
             return grade switch
             {
-                1 => MonsterGrade1,
-                2 => MonsterGrade2,
-                3 => MonsterGrade3,
-                4 => MonsterGrade4,
-                5 => MonsterGrade5,
-                6 => MonsterGrade6,
-                7 => MonsterGrade7,
-                8 => MonsterGrade8,
-                9 => MonsterGrade9,
-                10 => MonsterGrade10,
+                1 => MonsterGradeData1,
+                2 => MonsterGradeData2,
+                3 => MonsterGradeData3,
+                4 => MonsterGradeData4,
+                5 => MonsterGradeData5,
+                6 => MonsterGradeData6,
+                7 => MonsterGradeData7,
+                8 => MonsterGradeData8,
+                9 => MonsterGradeData9,
+                10 => MonsterGradeData10,
                 _ => null,
             };
         }
@@ -216,7 +218,7 @@ namespace Cyberia.Api.DatacenterNS
         {
             for (int i = 10; i > 0; i--)
             {
-                if (GetGrade(i) is not null)
+                if (GetMonsterGradeData(i) is not null)
                     return i;
             }
 
@@ -225,13 +227,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public int GetMinLevel()
         {
-            return MonsterGrade1 is null ? -1 : MonsterGrade1.Level;
+            return MonsterGradeData1 is null ? -1 : MonsterGradeData1.Level;
         }
 
         public int GetMaxLevel()
         {
-            MonsterGrade? grade = GetGrade(GetMaxGradeNumber());
-            return grade is null ? -1 : grade.Level;
+            MonsterGradeData? monsterGradeData = GetMonsterGradeData(GetMaxGradeNumber());
+            return monsterGradeData is null ? -1 : monsterGradeData.Level;
         }
     }
 
@@ -240,13 +242,13 @@ namespace Cyberia.Api.DatacenterNS
         private const string FILE_NAME = "monsters.json";
 
         [JsonPropertyName("MSR")]
-        public List<MonsterSuperRace> MonsterSuperRaces { get; init; }
+        public List<MonsterSuperRaceData> MonsterSuperRaces { get; init; }
 
         [JsonPropertyName("MR")]
-        public List<MonsterRace> MonsterRaces { get; init; }
+        public List<MonsterRaceData> MonsterRaces { get; init; }
 
         [JsonPropertyName("M")]
-        public List<Monster> Monsters { get; init; }
+        public List<MonsterData> Monsters { get; init; }
 
         public MonstersData()
         {
@@ -257,57 +259,57 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static MonstersData Build()
         {
-            MonstersData data = Json.LoadFromFile<MonstersData>($"{DofusApi.OUTPUT_PATH}/{FILE_NAME}");
-            MonstersCustomData customData = Json.LoadFromFile<MonstersCustomData>($"{DofusApi.CUSTOM_PATH}/{FILE_NAME}");
+            MonstersData data = Json.LoadFromFile<MonstersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            MonstersCustomData customData = Json.LoadFromFile<MonstersCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
-            foreach (MonsterCustom monsterCustom in customData.MonstersCustom)
+            foreach (MonsterCustomData monsterCustomData in customData.MonstersCustom)
             {
-                Monster? monster = data.GetMonsterById(monsterCustom.Id);
-                if (monster is not null)
+                MonsterData? monsterData = data.GetMonsterDataById(monsterCustomData.Id);
+                if (monsterData is not null)
                 {
-                    monster.BreedSummon = monsterCustom.BreedSummon;
-                    monster.TrelloUrl = monsterCustom.TrelloUrl;
+                    monsterData.BreedSummon = monsterCustomData.BreedSummon;
+                    monsterData.TrelloUrl = monsterCustomData.TrelloUrl;
                 }
             }
 
             return data;
         }
 
-        public MonsterSuperRace? GetMonsterSuperRaceById(int id)
+        public MonsterSuperRaceData? GetMonsterSuperRaceDataById(int id)
         {
             return MonsterSuperRaces.Find(x => x.Id == id);
         }
 
         public string GetMonsterSuperRaceNameById(int id)
         {
-            MonsterSuperRace? monsterSuperRace = GetMonsterSuperRaceById(id);
+            MonsterSuperRaceData? monsterSuperRaceData = GetMonsterSuperRaceDataById(id);
 
-            return monsterSuperRace is null ? $"Inconnu ({id})" : monsterSuperRace.Name;
+            return monsterSuperRaceData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : monsterSuperRaceData.Name;
         }
 
-        public MonsterRace? GetMonsterRaceById(int id)
+        public MonsterRaceData? GetMonsterRaceDataById(int id)
         {
             return MonsterRaces.Find(x => x.Id == id);
         }
 
         public string GetMonsterRaceNameById(int id)
         {
-            MonsterRace? monsterRace = GetMonsterRaceById(id);
+            MonsterRaceData? monsterRaceData = GetMonsterRaceDataById(id);
 
-            return monsterRace is null ? $"Inconnu ({id})" : monsterRace.Name;
+            return monsterRaceData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : monsterRaceData.Name;
         }
 
-        public Monster? GetMonsterById(int id)
+        public MonsterData? GetMonsterDataById(int id)
         {
             return Monsters.Find(x => x.Id == id);
         }
 
-        public Monster? GetMonsterByName(string name)
+        public MonsterData? GetMonsterDataByName(string name)
         {
             return Monsters.Find(m => m.Name.RemoveDiacritics().Equals(name.RemoveDiacritics()));
         }
 
-        public List<Monster> GetMonstersByName(string name)
+        public List<MonsterData> GetMonstersDataByName(string name)
         {
             string[] names = name.RemoveDiacritics().Split(' ');
             return Monsters.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));
@@ -315,9 +317,9 @@ namespace Cyberia.Api.DatacenterNS
 
         public string GetMonsterNameById(int id)
         {
-            Monster? monster = GetMonsterById(id);
+            MonsterData? monsterData = GetMonsterDataById(id);
 
-            return monster is null ? $"Inconnu ({id})" : monster.Name;
+            return monsterData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : monsterData.Name;
         }
     }
 }

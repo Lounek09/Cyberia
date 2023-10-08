@@ -1,4 +1,6 @@
-﻿using DSharpPlus.Entities;
+﻿using Cyberia.Api.Managers;
+
+using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Managers
 {
@@ -8,7 +10,7 @@ namespace Cyberia.Salamandra.Managers
         {
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
                 .WithColor(new DiscordColor(Bot.Instance.Config.EmbedColor))
-                .WithFooter($"{Bot.Instance.Client.CurrentUser.Username}  •  {Bot.Instance.Api.Datacenter.TimeZonesData.GetDate()} - {DateTime.Now:HH:mm}", $"{Bot.Instance.Api.Config.CdnUrl}/images/mini_salamandra.png");
+                .WithFooter($"{Bot.Instance.Client.CurrentUser.Username} • {DateTime.Now.ToRolePlayString()} - {DateTime.Now:HH:mm}", $"{Bot.Instance.Api.Config.CdnUrl}/images/mini_salamandra.png");
 
             string iconUrl = $"{Bot.Instance.Api.Config.CdnUrl}/images/embed_categories";
             switch (category)

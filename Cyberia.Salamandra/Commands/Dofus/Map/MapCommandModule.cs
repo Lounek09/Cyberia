@@ -16,12 +16,12 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Minimum(1), Maximum(99999)]
             long id)
         {
-            Map? map = Bot.Instance.Api.Datacenter.MapsData.GetMapById((int)id);
+            MapData? mapData = Bot.Instance.Api.Datacenter.MapsData.GetMapDataById((int)id);
 
-            if (map is null)
+            if (mapData is null)
                 await ctx.CreateResponseAsync("Map introuvable");
             else
-                await ctx.CreateResponseAsync(await new MapMessageBuilder(map).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.CreateResponseAsync(await new MapMessageBuilder(mapData).GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
 
 
@@ -34,14 +34,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Minimum(-666), Maximum(666)]
             long yCoord)
         {
-            List<Map> maps = Bot.Instance.Api.Datacenter.MapsData.GetMapsByCoordinate((int)xCoord, (int)yCoord);
+            List<MapData> mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByCoordinate((int)xCoord, (int)yCoord);
 
-            if (maps.Count == 0)
+            if (mapsData.Count == 0)
                 await ctx.CreateResponseAsync($"Il n'y a aucune map en [{xCoord}, {yCoord}]");
-            else if (maps.Count == 1)
-                await ctx.CreateResponseAsync(await new MapMessageBuilder(maps[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+            else if (mapsData.Count == 1)
+                await ctx.CreateResponseAsync(await new MapMessageBuilder(mapsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
             else
-                await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(maps, MapSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
 
 
@@ -51,21 +51,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Autocomplete(typeof(MapSubAreaAutocompleteProvider))]
             string value)
         {
-            MapSubArea? mapSubArea = null;
+            MapSubAreaData? mapSubAreaData = null;
 
             if (int.TryParse(value, out int id))
-                mapSubArea = Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreaById(id);
+                mapSubAreaData = Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreaDataById(id);
 
-            if (mapSubArea is null)
+            if (mapSubAreaData is null)
                 await ctx.CreateResponseAsync("Sous-zone introuvable");
             else
             {
-                List<Map> maps = mapSubArea.GetMaps();
+                List<MapData> mapsData = mapSubAreaData.GetMapsData();
 
-                if (maps.Count == 0)
-                    await ctx.CreateResponseAsync($"La sous-zone {Formatter.Bold(mapSubArea.Name)} ne contient aucune map");
+                if (mapsData.Count == 0)
+                    await ctx.CreateResponseAsync($"La sous-zone {Formatter.Bold(mapSubAreaData.Name)} ne contient aucune map");
                 else
-                    await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(maps, MapSearchCategory.MapSubArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                    await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapSubArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
 
@@ -76,21 +76,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Autocomplete(typeof(MapAreaAutocompleteProvider))]
             string value)
         {
-            MapArea? mapArea = null;
+            MapAreaData? mapAreaData = null;
 
             if (int.TryParse(value, out int id))
-                mapArea = Bot.Instance.Api.Datacenter.MapsData.GetMapAreaById(id);
+                mapAreaData = Bot.Instance.Api.Datacenter.MapsData.GetMapAreaDataById(id);
 
-            if (mapArea is null)
+            if (mapAreaData is null)
                 await ctx.CreateResponseAsync("Zone introuvable");
             else
             {
-                List<Map> maps = mapArea.GetMaps();
+                List<MapData> mapsData = mapAreaData.GetMapsData();
 
-                if (maps.Count == 0)
-                    await ctx.CreateResponseAsync($"La zone {Formatter.Bold(mapArea.Name)} ne contient aucune map");
+                if (mapsData.Count == 0)
+                    await ctx.CreateResponseAsync($"La zone {Formatter.Bold(mapAreaData.Name)} ne contient aucune map");
                 else
-                    await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(maps, MapSearchCategory.MapArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                    await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }

@@ -6,15 +6,15 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Monster>
+    public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<MonsterData>
     {
         public const string PACKET_HEADER = "PM";
         public const int PACKET_VERSION = 1;
 
         private readonly string _search;
 
-        public PaginatedMonsterMessageBuilder(List<Monster> monsters, string search, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Bestiary, "Bestiaire", "Plusieurs monstres trouvés :", monsters, selectedPageIndex)
+        public PaginatedMonsterMessageBuilder(List<MonsterData> monstersData, string search, int selectedPageIndex = 0) :
+            base(DofusEmbedCategory.Bestiary, "Bestiaire", "Plusieurs monstres trouvés :", monstersData, selectedPageIndex)
         {
             _search = search;
         }
@@ -25,9 +25,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<Monster> monsters = Bot.Instance.Api.Datacenter.MonstersData.GetMonstersByName(parameters[2]);
-                if (monsters.Count > 0)
-                    return new PaginatedMonsterMessageBuilder(monsters, parameters[2], selectedPageIndex);
+                List<MonsterData> monstersData = Bot.Instance.Api.Datacenter.MonstersData.GetMonstersDataByName(parameters[2]);
+                if (monstersData.Count > 0)
+                    return new PaginatedMonsterMessageBuilder(monstersData, parameters[2], selectedPageIndex);
             }
 
             return null;
@@ -40,12 +40,12 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         protected override IEnumerable<string> GetContent()
         {
-            foreach (Monster monster in _data)
+            foreach (MonsterData monsterData in _data)
             {
-                int minLevel = monster.GetMinLevel();
-                int maxLevel = monster.GetMaxLevel();
+                int minLevel = monsterData.GetMinLevel();
+                int maxLevel = monsterData.GetMaxLevel();
 
-                yield return $"- Niv.{minLevel}{(minLevel == maxLevel ? "" : $"-{maxLevel}")} {Formatter.Bold($"{monster.Name} {(monster.BreedSummon ? "(invocation)" : "")}")} ({monster.Id})";
+                yield return $"- Niv.{minLevel}{(minLevel == maxLevel ? "" : $"-{maxLevel}")} {Formatter.Bold($"{monsterData.Name} {(monsterData.BreedSummon ? "(invocation)" : "")}")} ({monsterData.Id})";
             }
         }
 

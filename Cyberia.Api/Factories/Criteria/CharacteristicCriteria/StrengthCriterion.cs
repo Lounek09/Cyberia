@@ -1,13 +1,31 @@
 ﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
 {
-    public static class StrengthCriterion
+    public sealed record StrengthCriterion : Criterion, ICriterion<StrengthCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public int Strength { get; init; }
+
+        private StrengthCriterion(string id, char @operator, int strength) :
+            base(id, @operator)
         {
-            if (values.Length > 0)
-                return $"Force {@operator} {values[0].Bold()}";
+            Strength = strength;
+        }
+
+        public static StrengthCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0 && int.TryParse(parameters[0], out int strength))
+                return new(id, @operator, strength);
 
             return null;
+        }
+
+        protected override string GetDescriptionName()
+        {
+            return $"Criterion.Strength.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            return GetDescription(Strength);
         }
     }
 }

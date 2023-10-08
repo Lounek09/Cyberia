@@ -13,7 +13,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         MapArea
     }
 
-    public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<Map>
+    public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData>
     {
         public const string PACKET_HEADER = "PMA";
         public const int PACKET_VERSION = 1;
@@ -21,8 +21,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private readonly MapSearchCategory _searchCategory;
         private readonly string _search;
 
-        public PaginatedMapMessageBuilder(List<Map> maps, MapSearchCategory searchCategory, string search, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs maps trouvées :", maps.OrderBy(x => x.Id).ToList(), selectedPageIndex)
+        public PaginatedMapMessageBuilder(List<MapData> mapsData, MapSearchCategory searchCategory, string search, int selectedPageIndex = 0) :
+            base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs maps trouvées :", mapsData.OrderBy(x => x.Id).ToList(), selectedPageIndex)
         {
             _searchCategory = searchCategory;
             _search = search;
@@ -35,7 +35,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[1], out int selectedPageIndex) &&
                 Enum.TryParse(parameters[2], true, out MapSearchCategory searchCategory))
             {
-                List<Map> maps = new();
+                List<MapData> mapsData = new();
                 string search = "";
                 switch (searchCategory)
                 {
@@ -44,28 +44,28 @@ namespace Cyberia.Salamandra.Commands.Dofus
                             int.TryParse(parameters[3], out int xCoord) &&
                             int.TryParse(parameters[4], out int yCoord))
                         {
-                            maps = Bot.Instance.Api.Datacenter.MapsData.GetMapsByCoordinate(xCoord, yCoord);
+                            mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByCoordinate(xCoord, yCoord);
                             search = $"{parameters[3]}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{parameters[4]}";
                         }
                         break;
                     case MapSearchCategory.MapSubArea:
                         if (int.TryParse(parameters[3], out int mapSubAreaId))
                         {
-                            maps = Bot.Instance.Api.Datacenter.MapsData.GetMapsByMapSubAreaId(mapSubAreaId);
+                            mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByMapSubAreaId(mapSubAreaId);
                             search = parameters[3];
                         }
                         break;
                     case MapSearchCategory.MapArea:
                         if (int.TryParse(parameters[3], out int mapAreaId))
                         {
-                            maps = Bot.Instance.Api.Datacenter.MapsData.GetMapsByMapAreaId(mapAreaId);
+                            mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByMapAreaId(mapAreaId);
                             search = parameters[3];
                         }
                         break;
                 }
 
-                if (maps.Count > 0 && !string.IsNullOrEmpty(search))
-                    return new(maps, searchCategory, search, selectedPageIndex);
+                if (mapsData.Count > 0 && !string.IsNullOrEmpty(search))
+                    return new(mapsData, searchCategory, search, selectedPageIndex);
             }
 
             return null;

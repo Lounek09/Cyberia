@@ -11,11 +11,11 @@ namespace Cyberia.Salamandra.Commands.Data
             if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
 
-            string? game = GetValueFromOption<string>(ctx, "game");
+            string? game = CreateFromOption<string>(ctx, "game");
             if (string.IsNullOrEmpty(game))
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
 
-            string? platform = GetValueFromOption<string>(ctx, "platform");
+            string? platform = CreateFromOption<string>(ctx, "platform");
             if (string.IsNullOrEmpty(platform))
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
 

@@ -6,15 +6,15 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder<Incarnation>
+    public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder<IncarnationData>
     {
         public const string PACKET_HEADER = "PINCA";
         public const int PACKET_VERSION = 1;
 
         private readonly string _search;
 
-        public PaginatedIncarnationMessageBuilder(List<Incarnation> incarnations, string search, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Inventory, "Incarnations", "Plusieurs incarnations trouvés :", incarnations, selectedPageIndex)
+        public PaginatedIncarnationMessageBuilder(List<IncarnationData> incarnationsData, string search, int selectedPageIndex = 0) :
+            base(DofusEmbedCategory.Inventory, "Incarnations", "Plusieurs incarnations trouvés :", incarnationsData, selectedPageIndex)
         {
             _search = search;
         }
@@ -25,9 +25,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<Incarnation> incarnations = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationsByName(parameters[2]);
-                if (incarnations.Count > 0)
-                    return new(incarnations, parameters[2], selectedPageIndex);
+                List<IncarnationData> incarnationsData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationsDataByName(parameters[2]);
+                if (incarnationsData.Count > 0)
+                    return new(incarnationsData, parameters[2], selectedPageIndex);
             }
 
             return null;

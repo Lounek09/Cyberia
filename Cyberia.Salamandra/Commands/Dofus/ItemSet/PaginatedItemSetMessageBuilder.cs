@@ -6,15 +6,15 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
-    public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<ItemSet>
+    public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<ItemSetData>
     {
         public const string PACKET_HEADER = "PIS";
         public const int PACKET_VERSION = 1;
 
         private readonly string _search;
 
-        public PaginatedItemSetMessageBuilder(List<ItemSet> itemSets, string search, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Inventory, "Items", "Plusieurs panoplies trouvées :", itemSets, selectedPageIndex)
+        public PaginatedItemSetMessageBuilder(List<ItemSetData> itemSetsData, string search, int selectedPageIndex = 0) :
+            base(DofusEmbedCategory.Inventory, "Items", "Plusieurs panoplies trouvées :", itemSetsData, selectedPageIndex)
         {
             _search = search;
         }
@@ -25,9 +25,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<ItemSet> itemSets = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetsByName(parameters[2]);
-                if (itemSets.Count > 0)
-                    return new(itemSets, parameters[2], selectedPageIndex);
+                List<ItemSetData> itemSetsData = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetsDataByName(parameters[2]);
+                if (itemSetsData.Count > 0)
+                    return new(itemSetsData, parameters[2], selectedPageIndex);
             }
 
             return null;

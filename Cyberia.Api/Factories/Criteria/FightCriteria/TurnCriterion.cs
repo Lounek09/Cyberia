@@ -1,25 +1,39 @@
-﻿namespace Cyberia.Api.Factories.Criteria.QuestCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.FightCriteria
 {
-    public static class TurnCriterion
+    public sealed record TurnCriterion : Criterion, ICriterion<TurnCriterion>
     {
-        public static string? GetValue(char @operator, string[] values)
+        public string Turn { get; init; }
+
+        private TurnCriterion(string id, char @operator, string turn) :
+            base(id, @operator)
         {
-            if (values.Length > 0)
-            {
-                switch (@operator)
-                {
-                    case '%':
-                        if (values[0].Equals("2:1"))
-                            return $"Tour {"impair".Bold()}";
-                        if (values[0].Equals("2:0"))
-                            return $"Tour {"pair".Bold()}";
-                        break;
-                    default:
-                        return $"Tour {@operator} {values[0].Bold()}";
-                }
-            }
+            Turn = turn;
+        }
+
+        public static TurnCriterion? Create(string id, char @operator, params string[] parameters)
+        {
+            if (parameters.Length > 0)
+                return new(id, @operator, parameters[0]);
 
             return null;
+        }
+
+        protected override string GetDescriptionName()
+        {
+            if (Operator is '%')
+            {
+                if (Turn.Equals("2:0"))
+                    return $"Criterion.Turn.Even";
+                if (Turn.Equals("2:1"))
+                    return $"Criterion.Turn.Odd";
+            }
+
+            return $"Criterion.Turn.{GetOperatorDescriptionName()}";
+        }
+
+        public Description GetDescription()
+        {
+            return GetDescription(Turn);
         }
     }
 }

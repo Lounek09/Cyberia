@@ -1,175 +1,161 @@
-﻿using Cyberia.Api.DatacenterNS;
+﻿using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
+using Cyberia.Api.Factories.Criteria.FightCriteria;
 using Cyberia.Api.Factories.Criteria.MapCriteria;
 using Cyberia.Api.Factories.Criteria.OtherCriteria;
 using Cyberia.Api.Factories.Criteria.PlayerCriteria;
 using Cyberia.Api.Factories.Criteria.QuestCriteria;
 using Cyberia.Api.Factories.Criteria.ServerCriteria;
 
+using System;
+using System.Text;
+
 namespace Cyberia.Api.Factories
 {
     public static class CriterionFactory
     {
-        private static readonly char[] _logicalOperators = new char[] { '&', '|' };
-        private static readonly Dictionary<string, Func<char, string[], string?>> _factory = new()
+        private static readonly Dictionary<string, Func<string, char, string[], ICriterion?>> _factory = new()
         {
-            { "BI", UnusableItemCriterion.GetValue },
-            { "CA", AgilityCriterion.GetValue },
-            { "Ca", BaseAgilityCriterion.GetValue },
-            { "CB", BastCharacteristicCriterion.GetValue },
-            { "CC", ChanceCriterion.GetValue },
-            { "Cc", BaseChanceCriterion.GetValue },
-            { "CD", DisgracePointsCriterion.GetValue },
-            { "CH", HonorPointsCriterion.GetValue },
-            { "CI", IntelligenceCriterion.GetValue },
-            { "Ci", BaseIntelligenceCriterion.GetValue },
-            { "Cl", PercentLifeCriterion.GetValue },
-            { "CM", MovementPointsCriterion.GetValue },
-            { "Cm", CurrentMovementPointsCriterion.GetValue },
-            { "CO", HouseCriterion.GetValue },
-            { "CP", ActionPointsCriterion.GetValue },
-            { "Cp", CurrentActionPointsCriterion.GetValue },
-            { "CS", StrengthCriterion.GetValue },
-            { "Cs", BaseStrengthCriterion.GetValue },
-            { "CV", VitalityCriterion.GetValue },
-            { "Cv", BaseVitalityCriterion.GetValue },
-            { "CW", WisdomCriterion.GetValue },
-            { "Cw", BaseWisdomCriterion.GetValue },
-            { "Cz", AvailableSummonCriterion.GetValue },
-            { "FC", CardInHandCriterion.GetValue },
-            { "FS", StateCriterion.GetValue },
-            { "FT", TurnCriterion.GetValue },
-            { "Fz", MonsterSummonCriterion.GetValue },
-            { "MK", MapPlayerCriterion.GetValue },
-            { "Pa", AlignmentLevelCriterion.GetValue },
-            { "PB", MapSubAreaCriterion.GetValue },
-            { "PE", EmoteCriterion.GetValue },
-            { "PG", BreedCriterion.GetValue },
-            { "Pg", AlignmentFeatCriterion.GetValue },
-            { "PJ", JobCriterion.GetValue },
-            { "Pj", JobCriterion.GetValue },
-            { "PK", KamasCriterion.GetValue },
-            { "PL", LevelCriterion.GetValue },
-            { "PM", LookCriterion.GetValue },
-            { "Pm", MapCriterion.GetValue },
-            { "PN", NameCriterion.GetValue },
-            { "Pn", SlotCriterion.GetValue },
-            { "PO", ItemCriterion.GetValue },
-            { "PP", AlignmentRankCriterion.GetValue },
-            { "PR", MariedCriterion.GetValue },
-            { "Pr", AlignmentSpecializationCriterion.GetValue },
-            { "PS", SexCriterion.GetValue },
-            { "Ps", AlignmentCriterion.GetValue },
-            { "PW", FreeWeightCriterion.GetValue },
-            { "PX", PlayerRightsCriterion.GetValue },
-            { "PZ", SubscribeCriterion.GetValue },
-            { "Qa", QuestCriterion.GetValue },
-            { "Qo", QuestObjectiveCriterion.GetValue },
-            { "Qs", QuestStepCriterion.GetValue },
-            { "Sc", ServerContentCriterion.GetValue },
-            { "SI", ServerCriterion.GetValue },
-            { "SM", MinuteCriterion.GetValue }
+            { "BI", UnusableItemCriterion.Create },
+            { "CA", AgilityCriterion.Create },
+            { "Ca", BaseAgilityCriterion.Create },
+            { "CB", BestElementCriterion.Create },
+            { "CC", ChanceCriterion.Create },
+            { "Cc", BaseChanceCriterion.Create },
+            { "CD", DisgracePointCriterion.Create },
+            { "CH", HonorPointCriterion.Create },
+            { "CI", IntelligenceCriterion.Create },
+            { "Ci", BaseIntelligenceCriterion.Create },
+            { "Cl", PercentVitalityCriterion.Create },
+            { "CM", MovementPointCriterion.Create },
+            { "Cm", CurrentMovementPointCriterion.Create },
+            { "CO", HomeownerCriterion.Create },
+            { "CP", ActionPointCriterion.Create },
+            { "Cp", CurrentActionPointCriterion.Create },
+            { "CS", StrengthCriterion.Create },
+            { "Cs", BaseStrengthCriterion.Create },
+            { "CV", VitalityCriterion.Create },
+            { "Cv", BaseVitalityCriterion.Create },
+            { "CW", WisdomCriterion.Create },
+            { "Cw", BaseWisdomCriterion.Create },
+            { "Cz", AvailableSummonCriterion.Create },
+            { "FC", CardCombinationCriterion.Create },
+            { "FS", StateCriterion.Create },
+            { "FT", TurnCriterion.Create },
+            { "Fz", MonsterSummonCriterion.Create },
+            { "MK", MapPlayerCriterion.Create },
+            { "Pa", AlignmentLevelCriterion.Create },
+            { "PB", MapSubAreaCriterion.Create },
+            { "PE", EmoteCriterion.Create },
+            { "PG", BreedCriterion.Create },
+            { "Pg", AlignmentFeatCriterion.Create },
+            { "PJ", JobCriterion.Create },
+            { "Pj", JobCriterion.Create },
+            { "PK", KamasCriterion.Create },
+            { "PL", LevelCriterion.Create },
+            { "PM", LookCriterion.Create },
+            { "Pm", MapCriterion.Create },
+            { "PN", NameCriterion.Create },
+            { "Pn", SlotCriterion.Create },
+            { "PO", ItemCriterion.Create },
+            { "PP", AlignmentRankCriterion.Create },
+            { "PR", MaritalStatusCriterion.Create },
+            { "Pr", AlignmentSpecializationCriterion.Create },
+            { "PS", GenderCriterion.Create },
+            { "Ps", AlignmentCriterion.Create },
+            { "PW", FreeWeightCriterion.Create },
+            { "PX", PlayerRightsCriterion.Create },
+            { "PZ", SubscribeCriterion.Create },
+            { "Qa", QuestCriterion.Create },
+            { "Qo", QuestObjectiveCriterion.Create },
+            { "Qs", QuestStepCriterion.Create },
+            { "Sc", ServerContentCriterion.Create },
+            { "SI", ServerCriterion.Create },
+            { "SM", MinuteCriterion.Create }
         };
 
-        public static string GetCriterionParse(string value)
+        public static ICriterion? GetCriterion(string value)
         {
             if (string.IsNullOrEmpty(value) || value.Length < 4)
+                return null;
+                
+
+            string id = value[0..2];
+            char @operator = value[2];
+            string[] args = value[3..].Split(',');
+
+            if (_factory.TryGetValue(id, out Func<string, char, string[], ICriterion?>? builder))
             {
-                Console.WriteLine($"Criterion value incorrect : {value}");
-                return value;
+                ICriterion? criterion = builder(id, @operator, args);
+                if (criterion is not null)
+                    return criterion;
+
+                return ErroredCriterion.Create(id, @operator, args);
             }
 
-            string criterion = value[0..2];
-            char @operator = TranslateOperator(value[2]);
-            string args = value[3..];
-
-            string? parsedCriterion = null;
-            try
-            {
-                parsedCriterion = _factory[criterion](@operator, args.Split(','));
-            }
-            catch (KeyNotFoundException)
-            {
-
-            }
-
-            if (parsedCriterion is null)
-                DofusApi.Instance.Log.Information("Unknown criterion {criterion} (args)", criterion, args);
-
-            return parsedCriterion ?? $"{criterion} {@operator} {args}";
+            return UntranslatedCriterion.Create(id, @operator, args);
         }
 
-        public static List<string> GetCriteriaParse(string value, List<string>? result = null)
+        public static IEnumerable<ICriteriaElement> GetCriteria(string value)
         {
-            result ??= new();
-
-            if (result.Count == 0)
-                result.Add("");
-
-            for (int i = 0; i < value.Length; i++)
-                if (value[i].Equals('('))
+            int index = 0;
+            while (index < value.Length)
+            {
+                switch (value[index])
                 {
-                    int parenthesisNumber = 0;
-                    int indexOfEndParenthesis = -1;
-                    for (int j = 0; j < value.Length; j++)
-                        if (value[j].Equals('('))
-                            parenthesisNumber++;
-                        else if (value[j].Equals(')'))
-                        {
-                            parenthesisNumber--;
-                            if (parenthesisNumber == 0)
-                            {
-                                indexOfEndParenthesis = j;
-                                break;
-                            }
-                        }
+                    case '(':
+                        (string token, index) = ExtractToken(value, index + 1, ')');
 
-                    string subValue = value[1..indexOfEndParenthesis];
+                        yield return new CollectionCriteriaElement(GetCriteria(token));
+                        break;
+                    case '&' or '|':
+                        yield return new LogicalOperatorCriteriaElement(value[index]);
+                        break;
+                    default:
+                        (token, index) = ExtractToken(value, index, '&', '|', ')');
+                        index--;
 
-                    result[^1] += "(";
-                    result = GetCriteriaParse(subValue, result);
-                    result[^1] += ")";
+                        ICriteriaElement? criterion = GetCriterion(token.ToString());
+                        if (criterion is null)
+                            yield break;
 
-                    value = value[(indexOfEndParenthesis + 1)..];
-                    i = -1;
+                        yield return criterion;
+                        break;
                 }
-                else if (_logicalOperators.Contains(value[i]))
+
+                index++;
+            }
+        }
+
+        private static (string token, int newIndex) ExtractToken(string value, int startIndex, params char[] endChars)
+        {
+            int endIndex = startIndex;
+            int openParenthesesCount = 0;
+
+            while (endIndex < value.Length)
+            {
+                switch (value[endIndex])
                 {
-                    string subValue = value[0..i];
+                    case '(':
+                        openParenthesesCount++;
+                        break;
+                    case ')':
+                        if (openParenthesesCount == 0)
+                            return (value[startIndex..endIndex], endIndex);
 
-                    result = GetCriteriaParse(subValue, result);
-                    result.Add($"{TranslateLogicalOperator(value[i])} ");
+                        openParenthesesCount--;
+                        break;
+                    default:
+                        if (openParenthesesCount == 0 && endChars.Contains(value[endIndex]))
+                            return (value[startIndex..endIndex], endIndex);
 
-                    value = value[(i + 1)..];
-                    i = -1;
+                        break;
                 }
-                else if (i == value.Length - 1)
-                    result[^1] += GetCriterionParse(value);
 
-            if (string.IsNullOrEmpty(result[0]))
-                return new();
+                endIndex++;
+            }
 
-            return result;
-        }
-
-        private static string TranslateLogicalOperator(char logicalOperator)
-        {
-            return logicalOperator switch
-            {
-                '&' => "et",
-                '|' => "ou",
-                _ => logicalOperator.ToString(),
-            };
-        }
-
-        private static char TranslateOperator(char @operator)
-        {
-            return @operator switch
-            {
-                '!' => '≠',
-                '~' => '=',
-                _ => @operator,
-            };
+            return (value[startIndex..endIndex], endIndex);
         }
     }
 }

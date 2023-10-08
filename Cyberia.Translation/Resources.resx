@@ -1,0 +1,966 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CardCombination.FourOfAKind" xml:space="preserve">
+    <value>Carré</value>
+  </data>
+  <data name="CardCombination.None" xml:space="preserve">
+    <value>Aucune</value>
+  </data>
+  <data name="CardCombination.Pair" xml:space="preserve">
+    <value>Une paire</value>
+  </data>
+  <data name="CardCombination.ThreeOfAKind" xml:space="preserve">
+    <value>Brelan</value>
+  </data>
+  <data name="CardCombination.TwoPair" xml:space="preserve">
+    <value>Double paire</value>
+  </data>
+  <data name="Corpulence.Obese" xml:space="preserve">
+    <value>Obèse</value>
+  </data>
+  <data name="Corpulence.Satisfied" xml:space="preserve">
+    <value>Rassasié</value>
+  </data>
+  <data name="Corpulence.Skinny" xml:space="preserve">
+    <value>Maigrichon</value>
+  </data>
+  <data name="Criterion.ActionPoint.Different" xml:space="preserve">
+    <value>PA ≠ #1</value>
+  </data>
+  <data name="Criterion.ActionPoint.Equal" xml:space="preserve">
+    <value>PA = #1</value>
+  </data>
+  <data name="Criterion.ActionPoint.Inferior" xml:space="preserve">
+    <value>PA &lt; #1</value>
+  </data>
+  <data name="Criterion.ActionPoint.Superior" xml:space="preserve">
+    <value>PA &gt; #1</value>
+  </data>
+  <data name="Criterion.Agility.Different" xml:space="preserve">
+    <value>Agilité ≠ #1</value>
+  </data>
+  <data name="Criterion.Agility.Equal" xml:space="preserve">
+    <value>Agilité = #1</value>
+  </data>
+  <data name="Criterion.Agility.Inferior" xml:space="preserve">
+    <value>Agilité &lt; #1</value>
+  </data>
+  <data name="Criterion.Agility.Superior" xml:space="preserve">
+    <value>Agilité &gt; #1</value>
+  </data>
+  <data name="Criterion.Alignment.Different" xml:space="preserve">
+    <value>Alignement ≠ #1</value>
+  </data>
+  <data name="Criterion.Alignment.Equal" xml:space="preserve">
+    <value>Alignement = #1</value>
+  </data>
+  <data name="Criterion.AlignmentFeat.Different" xml:space="preserve">
+    <value>Don ≠ #1</value>
+  </data>
+  <data name="Criterion.AlignmentFeat.Different.Level" xml:space="preserve">
+    <value>Don #1 ≠ #2</value>
+  </data>
+  <data name="Criterion.AlignmentFeat.Equal" xml:space="preserve">
+    <value>Don = #1</value>
+  </data>
+  <data name="Criterion.AlignmentFeat.Equal.Level" xml:space="preserve">
+    <value>Don #1 = #2</value>
+  </data>
+  <data name="Criterion.AlignmentFeat.Inferior" xml:space="preserve">
+    <value>Don &lt; #1</value>
+  </data>
+  <data name="Criterion.AlignmentFeat.Inferior.Level" xml:space="preserve">
+    <value>Don #1 &lt; #2</value>
+  </data>
+  <data name="Criterion.AlignmentFeat.Superior" xml:space="preserve">
+    <value>Don &gt; #1</value>
+  </data>
+  <data name="Criterion.AlignmentFeat.Superior.Level" xml:space="preserve">
+    <value>Don #1 &gt; #2</value>
+  </data>
+  <data name="Criterion.AlignmentLevel.Different" xml:space="preserve">
+    <value>Niveau d'alignement ≠ #1</value>
+  </data>
+  <data name="Criterion.AlignmentLevel.Equal" xml:space="preserve">
+    <value>Niveau d'alignement = #1</value>
+  </data>
+  <data name="Criterion.AlignmentLevel.Inferior" xml:space="preserve">
+    <value>Niveau d'alignement &lt; #1</value>
+  </data>
+  <data name="Criterion.AlignmentLevel.Superior" xml:space="preserve">
+    <value>Niveau d'alignement &gt; #1</value>
+  </data>
+  <data name="Criterion.AlignmentRank.Different" xml:space="preserve">
+    <value>Grade ≠ #1</value>
+  </data>
+  <data name="Criterion.AlignmentRank.Different1" xml:space="preserve">
+    <value>Minute ≠ #1</value>
+  </data>
+  <data name="Criterion.AlignmentRank.Equal" xml:space="preserve">
+    <value>Grade = #1</value>
+  </data>
+  <data name="Criterion.AlignmentRank.Equal1" xml:space="preserve">
+    <value>Minute = #1</value>
+  </data>
+  <data name="Criterion.AlignmentRank.Inferior" xml:space="preserve">
+    <value>Grade &lt; #1</value>
+  </data>
+  <data name="Criterion.AlignmentRank.Inferior1" xml:space="preserve">
+    <value>Minute &lt; #1</value>
+  </data>
+  <data name="Criterion.AlignmentRank.Superior" xml:space="preserve">
+    <value>Grade &gt; #1</value>
+  </data>
+  <data name="Criterion.AlignmentRank.Superior1" xml:space="preserve">
+    <value>Minute &gt; #1</value>
+  </data>
+  <data name="Criterion.AlignmentSpecialization.Different" xml:space="preserve">
+    <value>Spécialisation ≠ #1</value>
+  </data>
+  <data name="Criterion.AlignmentSpecialization.Equal" xml:space="preserve">
+    <value>Spécialisation = #1</value>
+  </data>
+  <data name="Criterion.And" xml:space="preserve">
+    <value>et</value>
+  </data>
+  <data name="Criterion.AvailableSummon.Different" xml:space="preserve">
+    <value>Créature invocable disponible ≠ #1</value>
+  </data>
+  <data name="Criterion.AvailableSummon.Equal" xml:space="preserve">
+    <value>Créature invocable disponible = #1</value>
+  </data>
+  <data name="Criterion.AvailableSummon.Inferior" xml:space="preserve">
+    <value>Créature invocable disponible &lt; #1</value>
+  </data>
+  <data name="Criterion.AvailableSummon.Superior" xml:space="preserve">
+    <value>Créature invocable disponible &gt; #1</value>
+  </data>
+  <data name="Criterion.BaseAgility.Different" xml:space="preserve">
+    <value>Agilité de base ≠ #1</value>
+  </data>
+  <data name="Criterion.BaseAgility.Equal" xml:space="preserve">
+    <value>Agilité de base = #1</value>
+  </data>
+  <data name="Criterion.BaseAgility.Inferior" xml:space="preserve">
+    <value>Agilité de base &lt; #1</value>
+  </data>
+  <data name="Criterion.BaseAgility.Superior" xml:space="preserve">
+    <value>Agilité de base &gt; #1</value>
+  </data>
+  <data name="Criterion.BaseChance.Different" xml:space="preserve">
+    <value>Chance de base ≠ #1</value>
+  </data>
+  <data name="Criterion.BaseChance.Equal" xml:space="preserve">
+    <value>Chance de base = #1</value>
+  </data>
+  <data name="Criterion.BaseChance.Inferior" xml:space="preserve">
+    <value>Chance de base &lt; #1</value>
+  </data>
+  <data name="Criterion.BaseChance.Superior" xml:space="preserve">
+    <value>Chance de base &gt; #1</value>
+  </data>
+  <data name="Criterion.BaseIntelligence.Different" xml:space="preserve">
+    <value>Intelligence de base ≠ #1</value>
+  </data>
+  <data name="Criterion.BaseIntelligence.Equal" xml:space="preserve">
+    <value>Intelligence de base = #1</value>
+  </data>
+  <data name="Criterion.BaseIntelligence.Inferior" xml:space="preserve">
+    <value>Intelligence de base &lt; #1</value>
+  </data>
+  <data name="Criterion.BaseIntelligence.Superior" xml:space="preserve">
+    <value>Intelligence de base &gt; #1</value>
+  </data>
+  <data name="Criterion.BaseStrength.Different" xml:space="preserve">
+    <value>Force de base ≠ #1</value>
+  </data>
+  <data name="Criterion.BaseStrength.Equal" xml:space="preserve">
+    <value>Force de base = #1</value>
+  </data>
+  <data name="Criterion.BaseStrength.Inferior" xml:space="preserve">
+    <value>Force de base &lt; #1</value>
+  </data>
+  <data name="Criterion.BaseStrength.Superior" xml:space="preserve">
+    <value>Force de base &gt; #1</value>
+  </data>
+  <data name="Criterion.BaseVitality.Different" xml:space="preserve">
+    <value>Vitalité de base ≠ #1</value>
+  </data>
+  <data name="Criterion.BaseVitality.Equal" xml:space="preserve">
+    <value>Vitalité de base = #1</value>
+  </data>
+  <data name="Criterion.BaseVitality.Inferior" xml:space="preserve">
+    <value>Vitalité de base &lt; #1</value>
+  </data>
+  <data name="Criterion.BaseVitality.Superior" xml:space="preserve">
+    <value>Vitalité de base &gt; #1</value>
+  </data>
+  <data name="Criterion.BaseWisdom.Different" xml:space="preserve">
+    <value>Sagesse de base ≠ #1</value>
+  </data>
+  <data name="Criterion.BaseWisdom.Equal" xml:space="preserve">
+    <value>Sagesse de base = #1</value>
+  </data>
+  <data name="Criterion.BaseWisdom.Inferior" xml:space="preserve">
+    <value>Sagesse de base &lt; #1</value>
+  </data>
+  <data name="Criterion.BaseWisdom.Superior" xml:space="preserve">
+    <value>Sagesse de base &gt; #1</value>
+  </data>
+  <data name="Criterion.BestElement.Different" xml:space="preserve">
+    <value>Meilleur élément ≠ #1</value>
+  </data>
+  <data name="Criterion.BestElement.Equal" xml:space="preserve">
+    <value>Meilleur élément = #1</value>
+  </data>
+  <data name="Criterion.Breed.Different" xml:space="preserve">
+    <value>Classe ≠ #1</value>
+  </data>
+  <data name="Criterion.Breed.Equal" xml:space="preserve">
+    <value>Classe = #1</value>
+  </data>
+  <data name="Criterion.CardCombination.Different" xml:space="preserve">
+    <value>Main ≠ #1</value>
+  </data>
+  <data name="Criterion.CardCombination.Equal" xml:space="preserve">
+    <value>Main = #1</value>
+  </data>
+  <data name="Criterion.Chance.Different" xml:space="preserve">
+    <value>Chance ≠ #1</value>
+  </data>
+  <data name="Criterion.Chance.Equal" xml:space="preserve">
+    <value>Chance = #1</value>
+  </data>
+  <data name="Criterion.Chance.Inferior" xml:space="preserve">
+    <value>Chance &lt; #1</value>
+  </data>
+  <data name="Criterion.Chance.Superior" xml:space="preserve">
+    <value>Chance &gt; #1</value>
+  </data>
+  <data name="Criterion.CurrentActionPoint.Different" xml:space="preserve">
+    <value>PA ≠ #1</value>
+  </data>
+  <data name="Criterion.CurrentActionPoint.Equal" xml:space="preserve">
+    <value>PA = #1</value>
+  </data>
+  <data name="Criterion.CurrentActionPoint.Inferior" xml:space="preserve">
+    <value>PA &lt; #1</value>
+  </data>
+  <data name="Criterion.CurrentActionPoint.Superior" xml:space="preserve">
+    <value>PA &gt; #1</value>
+  </data>
+  <data name="Criterion.CurrentMovementPoint.Different" xml:space="preserve">
+    <value>PM ≠ #1</value>
+  </data>
+  <data name="Criterion.CurrentMovementPoint.Equal" xml:space="preserve">
+    <value>PM = #1</value>
+  </data>
+  <data name="Criterion.CurrentMovementPoint.Inferior" xml:space="preserve">
+    <value>PM &lt; #1</value>
+  </data>
+  <data name="Criterion.CurrentMovementPoint.Superior" xml:space="preserve">
+    <value>PM &gt; #1</value>
+  </data>
+  <data name="Criterion.DisgracePoint.Different" xml:space="preserve">
+    <value>Points de déshonneur ≠ #1</value>
+  </data>
+  <data name="Criterion.DisgracePoint.Equal" xml:space="preserve">
+    <value>Points de déshonneur = #1</value>
+  </data>
+  <data name="Criterion.DisgracePoint.Inferior" xml:space="preserve">
+    <value>Points de déshonneur &lt; #1</value>
+  </data>
+  <data name="Criterion.DisgracePoint.Superior" xml:space="preserve">
+    <value>Points de déshonneur &gt; #1</value>
+  </data>
+  <data name="Criterion.Emote.Different" xml:space="preserve">
+    <value>Ne pas connaître l'attitude #1</value>
+  </data>
+  <data name="Criterion.Emote.Equal" xml:space="preserve">
+    <value>Connaître l'attitude #1</value>
+  </data>
+  <data name="Criterion.FreeWeight.Different" xml:space="preserve">
+    <value>Pods libre ≠ #1</value>
+  </data>
+  <data name="Criterion.FreeWeight.Equal" xml:space="preserve">
+    <value>Pods libre = #1</value>
+  </data>
+  <data name="Criterion.FreeWeight.Inferior" xml:space="preserve">
+    <value>Pods libre &lt; #1</value>
+  </data>
+  <data name="Criterion.FreeWeight.Superior" xml:space="preserve">
+    <value>Pods libre &gt; #1</value>
+  </data>
+  <data name="Criterion.Gender.Different" xml:space="preserve">
+    <value>Sexe ≠ #1</value>
+  </data>
+  <data name="Criterion.Gender.Equal" xml:space="preserve">
+    <value>Sexe = #1</value>
+  </data>
+  <data name="Criterion.Homeowner.Equal.False" xml:space="preserve">
+    <value>Ne pas être propriétaire d'une maison</value>
+  </data>
+  <data name="Criterion.Homeowner.Equal.True" xml:space="preserve">
+    <value>Etre propriétaire d'une maison</value>
+  </data>
+  <data name="Criterion.HonorPoint.Different" xml:space="preserve">
+    <value>Points d'honneur ≠ #1</value>
+  </data>
+  <data name="Criterion.HonorPoint.Equal" xml:space="preserve">
+    <value>Points d'honneur = #1</value>
+  </data>
+  <data name="Criterion.HonorPoint.Inferior" xml:space="preserve">
+    <value>Points d'honneur &lt; #1</value>
+  </data>
+  <data name="Criterion.HonorPoint.Superior" xml:space="preserve">
+    <value>Points d'honneur &gt; #1</value>
+  </data>
+  <data name="Criterion.Intelligence.Different" xml:space="preserve">
+    <value>Intelligence ≠ #1</value>
+  </data>
+  <data name="Criterion.Intelligence.Equal" xml:space="preserve">
+    <value>Intelligence = #1</value>
+  </data>
+  <data name="Criterion.Intelligence.Inferior" xml:space="preserve">
+    <value>Intelligence &lt; #1</value>
+  </data>
+  <data name="Criterion.Intelligence.Superior" xml:space="preserve">
+    <value>Intelligence &gt; #1</value>
+  </data>
+  <data name="Criterion.Item.Different" xml:space="preserve">
+    <value>Ne pas posséder l'objet #1</value>
+  </data>
+  <data name="Criterion.Item.E" xml:space="preserve">
+    <value>Avoir équipé l'objet #1</value>
+  </data>
+  <data name="Criterion.Item.Equal" xml:space="preserve">
+    <value>Posséder l'objet #1</value>
+  </data>
+  <data name="Criterion.Item.X" xml:space="preserve">
+    <value>Ne pas avoir équipé l'objet #1</value>
+  </data>
+  <data name="Criterion.Job.Different" xml:space="preserve">
+    <value>Métier ≠ #1</value>
+  </data>
+  <data name="Criterion.Job.Different.Level" xml:space="preserve">
+    <value>Métier #1 ≠ #2</value>
+  </data>
+  <data name="Criterion.Job.Equal" xml:space="preserve">
+    <value>Métier = #1</value>
+  </data>
+  <data name="Criterion.Job.Equal.Level" xml:space="preserve">
+    <value>Métier #1 = #2</value>
+  </data>
+  <data name="Criterion.Job.Inferior" xml:space="preserve">
+    <value>Métier &lt; #1</value>
+  </data>
+  <data name="Criterion.Job.Inferior.Level" xml:space="preserve">
+    <value>Métier #1 &lt; #2</value>
+  </data>
+  <data name="Criterion.Job.Superior" xml:space="preserve">
+    <value>Métier &gt; #1</value>
+  </data>
+  <data name="Criterion.Job.Superior.Level" xml:space="preserve">
+    <value>Métier #1 &gt; #2</value>
+  </data>
+  <data name="Criterion.Kamas.Different" xml:space="preserve">
+    <value>Kamas ≠ #1</value>
+  </data>
+  <data name="Criterion.Kamas.Equal" xml:space="preserve">
+    <value>Kamas = #1</value>
+  </data>
+  <data name="Criterion.Kamas.Inferior" xml:space="preserve">
+    <value>Kamas &lt; #1</value>
+  </data>
+  <data name="Criterion.Kamas.Superior" xml:space="preserve">
+    <value>Kamas &gt; #1</value>
+  </data>
+  <data name="Criterion.Level.Different" xml:space="preserve">
+    <value>Level ≠ #1</value>
+  </data>
+  <data name="Criterion.Level.Equal" xml:space="preserve">
+    <value>Level = #1</value>
+  </data>
+  <data name="Criterion.Level.Inferior" xml:space="preserve">
+    <value>Level &lt; #1</value>
+  </data>
+  <data name="Criterion.Level.Superior" xml:space="preserve">
+    <value>Level &gt; #1</value>
+  </data>
+  <data name="Criterion.Look.Different" xml:space="preserve">
+    <value>Apparence ≠ #1</value>
+  </data>
+  <data name="Criterion.Look.Equal" xml:space="preserve">
+    <value>Apparence = #1</value>
+  </data>
+  <data name="Criterion.Map.Different" xml:space="preserve">
+    <value>Ne pas être sur la map #1 (#2)</value>
+  </data>
+  <data name="Criterion.Map.Equal" xml:space="preserve">
+    <value>Etre sur la map #1 (#2)</value>
+  </data>
+  <data name="Criterion.MapPlayer.Different" xml:space="preserve">
+    <value>Nombre de joueurs sur la map #1 (#2) ≠ #3</value>
+  </data>
+  <data name="Criterion.MapPlayer.Equal" xml:space="preserve">
+    <value>Nombre de joueurs sur la map #1 (#2) = #3</value>
+  </data>
+  <data name="Criterion.MapPlayer.Inferior" xml:space="preserve">
+    <value>Nombre de joueurs sur la map #1 (#2) &lt; #3</value>
+  </data>
+  <data name="Criterion.MapPlayer.Superior" xml:space="preserve">
+    <value>Nombre de joueurs sur la map #1 (#2) &gt; #3</value>
+  </data>
+  <data name="Criterion.MapSubArea.Different" xml:space="preserve">
+    <value>Sous-zone ≠ #1</value>
+  </data>
+  <data name="Criterion.MapSubArea.Equal" xml:space="preserve">
+    <value>Sous-zone = #1</value>
+  </data>
+  <data name="Criterion.MaritalStatus.Equal" xml:space="preserve">
+    <value>Etre #1</value>
+  </data>
+  <data name="Criterion.MonsterSummon.Different" xml:space="preserve">
+    <value>Le monstre #1 n'est pas invoqué dans l'équipe alliée</value>
+  </data>
+  <data name="Criterion.MonsterSummon.Equal" xml:space="preserve">
+    <value>Le monstre #1 est invoqué dans l'équipe alliée</value>
+  </data>
+  <data name="Criterion.MovementPoint.Different" xml:space="preserve">
+    <value>PM ≠ #1</value>
+  </data>
+  <data name="Criterion.MovementPoint.Equal" xml:space="preserve">
+    <value>PM = #1</value>
+  </data>
+  <data name="Criterion.MovementPoint.Inferior" xml:space="preserve">
+    <value>PM &lt; #1</value>
+  </data>
+  <data name="Criterion.MovementPoint.Superior" xml:space="preserve">
+    <value>PM &gt; #1</value>
+  </data>
+  <data name="Criterion.Name.Different" xml:space="preserve">
+    <value>Nom ≠ #1</value>
+  </data>
+  <data name="Criterion.Name.Equal" xml:space="preserve">
+    <value>Nom = #1</value>
+  </data>
+  <data name="Criterion.Name.SoftEqual" xml:space="preserve">
+    <value>Nom ≈ #1</value>
+  </data>
+  <data name="Criterion.Or" xml:space="preserve">
+    <value>ou</value>
+  </data>
+  <data name="Criterion.PercentVitality.Different" xml:space="preserve">
+    <value>Vitalité ≠ #1%</value>
+  </data>
+  <data name="Criterion.PercentVitality.Equal" xml:space="preserve">
+    <value>Vitalité = #1%</value>
+  </data>
+  <data name="Criterion.PercentVitality.Inferior" xml:space="preserve">
+    <value>Vitalité &lt; #1%</value>
+  </data>
+  <data name="Criterion.PercentVitality.Superior" xml:space="preserve">
+    <value>Vitalité &gt; #1%</value>
+  </data>
+  <data name="Criterion.PlayerRights.Different" xml:space="preserve">
+    <value>Niveau admin ≠ #1</value>
+  </data>
+  <data name="Criterion.PlayerRights.Equal" xml:space="preserve">
+    <value>Niveau admin = #1</value>
+  </data>
+  <data name="Criterion.PlayerRights.Inferior" xml:space="preserve">
+    <value>Niveau admin &lt; #1</value>
+  </data>
+  <data name="Criterion.PlayerRights.Superior" xml:space="preserve">
+    <value>Niveau admin &gt; #1</value>
+  </data>
+  <data name="Criterion.Quest.Different" xml:space="preserve">
+    <value>Quête #1 pas en cours</value>
+  </data>
+  <data name="Criterion.Quest.Equal" xml:space="preserve">
+    <value>Quête #1 en cours</value>
+  </data>
+  <data name="Criterion.Quest.Inferior" xml:space="preserve">
+    <value>Quête #1 non validée</value>
+  </data>
+  <data name="Criterion.Quest.Superior" xml:space="preserve">
+    <value>Quête #1 validée</value>
+  </data>
+  <data name="Criterion.QuestObjective.Different" xml:space="preserve">
+    <value>Objectif de quête #1 pas en cours</value>
+  </data>
+  <data name="Criterion.QuestObjective.Equal" xml:space="preserve">
+    <value>Objectif de quête #1 en cours</value>
+  </data>
+  <data name="Criterion.QuestObjective.Inferior" xml:space="preserve">
+    <value>Objectif de quête #1 non validé</value>
+  </data>
+  <data name="Criterion.QuestObjective.Superior" xml:space="preserve">
+    <value>Objectif de quête #1 validé</value>
+  </data>
+  <data name="Criterion.QuestStep.Different" xml:space="preserve">
+    <value>Etape de quête #1 pas en cours</value>
+  </data>
+  <data name="Criterion.QuestStep.Equal" xml:space="preserve">
+    <value>Etape de quête #1 en cours</value>
+  </data>
+  <data name="Criterion.QuestStep.Inferior" xml:space="preserve">
+    <value>Etape de quête #1 non validée</value>
+  </data>
+  <data name="Criterion.QuestStep.Superior" xml:space="preserve">
+    <value>Etape de quête #1 validée</value>
+  </data>
+  <data name="Criterion.Server.Different" xml:space="preserve">
+    <value>Ne pas être sur le serveur #1</value>
+  </data>
+  <data name="Criterion.Server.Equal" xml:space="preserve">
+    <value>Etre sur le serveur #1</value>
+  </data>
+  <data name="Criterion.ServerContent.Different" xml:space="preserve">
+    <value>Contenu n°#1 désactivé</value>
+  </data>
+  <data name="Criterion.ServerContent.Equal" xml:space="preserve">
+    <value>Contenu n°#1 activé</value>
+  </data>
+  <data name="Criterion.Slot.Different" xml:space="preserve">
+    <value>Emplacement #1 libre</value>
+  </data>
+  <data name="Criterion.Slot.Equal" xml:space="preserve">
+    <value>Emplacement #1 occupé</value>
+  </data>
+  <data name="Criterion.State.Different" xml:space="preserve">
+    <value>Ne pas être dans l'état #1</value>
+  </data>
+  <data name="Criterion.State.Equal" xml:space="preserve">
+    <value>Etre dans l'état #1</value>
+  </data>
+  <data name="Criterion.Strength.Different" xml:space="preserve">
+    <value>Force ≠ #1</value>
+  </data>
+  <data name="Criterion.Strength.Equal" xml:space="preserve">
+    <value>Force = #1</value>
+  </data>
+  <data name="Criterion.Strength.Inferior" xml:space="preserve">
+    <value>Force &lt; #1</value>
+  </data>
+  <data name="Criterion.Strength.Superior" xml:space="preserve">
+    <value>Force &gt; #1</value>
+  </data>
+  <data name="Criterion.Subscribe.Equal.False" xml:space="preserve">
+    <value>Ne pas être abonné</value>
+  </data>
+  <data name="Criterion.Subscribe.Equal.True" xml:space="preserve">
+    <value>Etre abonné</value>
+  </data>
+  <data name="Criterion.Turn.Different" xml:space="preserve">
+    <value>Tour ≠ #1</value>
+  </data>
+  <data name="Criterion.Turn.Equal" xml:space="preserve">
+    <value>Tour = #1</value>
+  </data>
+  <data name="Criterion.Turn.Even" xml:space="preserve">
+    <value>Tour pair</value>
+  </data>
+  <data name="Criterion.Turn.Inferior" xml:space="preserve">
+    <value>Tour &lt; #1</value>
+  </data>
+  <data name="Criterion.Turn.Odd" xml:space="preserve">
+    <value>Tour impair</value>
+  </data>
+  <data name="Criterion.Turn.Superior" xml:space="preserve">
+    <value>Tour &gt; #1</value>
+  </data>
+  <data name="Criterion.UnusableItem.Equal" xml:space="preserve">
+    <value>Inutilisable</value>
+  </data>
+  <data name="Criterion.Vitality.Different" xml:space="preserve">
+    <value>Vitalité ≠ #1</value>
+  </data>
+  <data name="Criterion.Vitality.Equal" xml:space="preserve">
+    <value>Vitalité = #1</value>
+  </data>
+  <data name="Criterion.Vitality.Inferior" xml:space="preserve">
+    <value>Vitalité &lt; #1</value>
+  </data>
+  <data name="Criterion.Vitality.Superior" xml:space="preserve">
+    <value>Vitalité &gt; #1</value>
+  </data>
+  <data name="Criterion.Wisdom.Different" xml:space="preserve">
+    <value>Sagesse ≠ #1</value>
+  </data>
+  <data name="Criterion.Wisdom.Equal" xml:space="preserve">
+    <value>Sagesse = #1</value>
+  </data>
+  <data name="Criterion.Wisdom.Inferior" xml:space="preserve">
+    <value>Sagesse &lt; #1</value>
+  </data>
+  <data name="Criterion.Wisdom.Superior" xml:space="preserve">
+    <value>Sagesse &gt; #1</value>
+  </data>
+  <data name="Effect.LinkedToAccount" xml:space="preserve">
+    <value>Lié au compte</value>
+  </data>
+  <data name="Effect.Probability" xml:space="preserve">
+    <value>Dans #1% des cas</value>
+  </data>
+  <data name="Effect.Turn" xml:space="preserve">
+    <value>#1 tour(s)</value>
+  </data>
+  <data name="Effect.Unknown" xml:space="preserve">
+    <value>Effet #1 inconnu non référencé (#2)</value>
+  </data>
+  <data name="EffectArea.1" xml:space="preserve">
+    <value>Croix</value>
+  </data>
+  <data name="EffectArea.10" xml:space="preserve">
+    <value>Cone</value>
+  </data>
+  <data name="EffectArea.11" xml:space="preserve">
+    <value>Croix diagonale</value>
+  </data>
+  <data name="EffectArea.12" xml:space="preserve">
+    <value>En T</value>
+  </data>
+  <data name="EffectArea.13" xml:space="preserve">
+    <value>En T</value>
+  </data>
+  <data name="EffectArea.14" xml:space="preserve">
+    <value>Inconnu (14)</value>
+  </data>
+  <data name="EffectArea.15" xml:space="preserve">
+    <value>Croix vide</value>
+  </data>
+  <data name="EffectArea.16" xml:space="preserve">
+    <value>Ligne large</value>
+  </data>
+  <data name="EffectArea.17" xml:space="preserve">
+    <value>Pointe</value>
+  </data>
+  <data name="EffectArea.2" xml:space="preserve">
+    <value>Ligne perpendiculaire</value>
+  </data>
+  <data name="EffectArea.21" xml:space="preserve">
+    <value>Etoile</value>
+  </data>
+  <data name="EffectArea.22" xml:space="preserve">
+    <value>Inconnu (22)</value>
+  </data>
+  <data name="EffectArea.23" xml:space="preserve">
+    <value>Fourche</value>
+  </data>
+  <data name="EffectArea.3" xml:space="preserve">
+    <value>Cercle</value>
+  </data>
+  <data name="EffectArea.4" xml:space="preserve">
+    <value>Point</value>
+  </data>
+  <data name="EffectArea.5" xml:space="preserve">
+    <value>Ligne</value>
+  </data>
+  <data name="EffectArea.6" xml:space="preserve">
+    <value>Damier</value>
+  </data>
+  <data name="EffectArea.67" xml:space="preserve">
+    <value>Cercle</value>
+  </data>
+  <data name="EffectArea.68" xml:space="preserve">
+    <value>Damier</value>
+  </data>
+  <data name="EffectArea.7" xml:space="preserve">
+    <value>Anneau</value>
+  </data>
+  <data name="EffectArea.76" xml:space="preserve">
+    <value>Ligne</value>
+  </data>
+  <data name="EffectArea.79" xml:space="preserve">
+    <value>Anneau</value>
+  </data>
+  <data name="EffectArea.8" xml:space="preserve">
+    <value>Carré</value>
+  </data>
+  <data name="EffectArea.80" xml:space="preserve">
+    <value>Point</value>
+  </data>
+  <data name="EffectArea.84" xml:space="preserve">
+    <value>Ligne perpendiculaire</value>
+  </data>
+  <data name="EffectArea.88" xml:space="preserve">
+    <value>Croix</value>
+  </data>
+  <data name="EffectArea.9" xml:space="preserve">
+    <value>Carré vide</value>
+  </data>
+  <data name="Element.Agility" xml:space="preserve">
+    <value>Agilité</value>
+  </data>
+  <data name="Element.Chance" xml:space="preserve">
+    <value>Chance</value>
+  </data>
+  <data name="Element.Intelligence" xml:space="preserve">
+    <value>Intelligence</value>
+  </data>
+  <data name="Element.Neutral" xml:space="preserve">
+    <value>Neutre</value>
+  </data>
+  <data name="Element.Strength" xml:space="preserve">
+    <value>Force</value>
+  </data>
+  <data name="Gender.Female" xml:space="preserve">
+    <value>Femme</value>
+  </data>
+  <data name="Gender.Male" xml:space="preserve">
+    <value>Homme</value>
+  </data>
+  <data name="GiveItemTarget.CasterCheckCaster" xml:space="preserve">
+    <value>Lanceur, check lanceur</value>
+  </data>
+  <data name="GiveItemTarget.CasterCheckTarget" xml:space="preserve">
+    <value>Lanceur, check cible</value>
+  </data>
+  <data name="GiveItemTarget.TargetCheckTarget" xml:space="preserve">
+    <value>Cible, check cible</value>
+  </data>
+  <data name="GuildTeleportation.Enclosure" xml:space="preserve">
+    <value>Téléporte devant un enclos de guilde</value>
+  </data>
+  <data name="GuildTeleportation.House" xml:space="preserve">
+    <value>Téléporte dans une maison de guilde</value>
+  </data>
+  <data name="Infertile" xml:space="preserve">
+    <value>Stérile</value>
+  </data>
+  <data name="Infinity" xml:space="preserve">
+    <value>inf.</value>
+  </data>
+  <data name="LastMeal.None" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
+  <data name="MaritalStatus.Married" xml:space="preserve">
+    <value>Marié(e)</value>
+  </data>
+  <data name="MaritalStatus.Single" xml:space="preserve">
+    <value>Célibataire</value>
+  </data>
+  <data name="QuestObjectiveType.Unknown" xml:space="preserve">
+    <value>Type d'objectif #1 inconnu non référencé (#2)</value>
+  </data>
+  <data name="Rune" xml:space="preserve">
+    <value>Rune #1</value>
+  </data>
+  <data name="SpellCategory.Breed" xml:space="preserve">
+    <value>Classe</value>
+  </data>
+  <data name="SpellCategory.Elementary" xml:space="preserve">
+    <value>Elémentaire</value>
+  </data>
+  <data name="SpellCategory.Event" xml:space="preserve">
+    <value>Evenement</value>
+  </data>
+  <data name="SpellCategory.Fairywork" xml:space="preserve">
+    <value>Fée d'artifice</value>
+  </data>
+  <data name="SpellCategory.Perceptor" xml:space="preserve">
+    <value>Percepteur</value>
+  </data>
+  <data name="SpellCategory.Special" xml:space="preserve">
+    <value>Spécial</value>
+  </data>
+  <data name="SpellCategory.Summon" xml:space="preserve">
+    <value>Invocation</value>
+  </data>
+  <data name="SpellCategory.TemporisBreed" xml:space="preserve">
+    <value>Classe - Temporis</value>
+  </data>
+  <data name="SpellCategory.TemporisCommon" xml:space="preserve">
+    <value>Commun - Temporis</value>
+  </data>
+  <data name="SpellCategory.TemporisEpic" xml:space="preserve">
+    <value>Epic - Temporis</value>
+  </data>
+  <data name="SpellCategory.TemporisLegendary" xml:space="preserve">
+    <value>Legendaire - Temporis</value>
+  </data>
+  <data name="SpellCategory.TemporisMonster" xml:space="preserve">
+    <value>Monstre - Temporis</value>
+  </data>
+  <data name="SpellCategory.TemporisRare" xml:space="preserve">
+    <value>Rare - Temporis</value>
+  </data>
+  <data name="SpellCategory.TemporisTriggeredSpell" xml:space="preserve">
+    <value>Sort déclenché - Temporis</value>
+  </data>
+  <data name="SpellCategory.WeaponSkill" xml:space="preserve">
+    <value>Maîtrise</value>
+  </data>
+  <data name="SpellLevelCategory.Breed" xml:space="preserve">
+    <value>Classe</value>
+  </data>
+  <data name="SpellLevelCategory.Elementary" xml:space="preserve">
+    <value>Elémentaire</value>
+  </data>
+  <data name="SpellLevelCategory.Special" xml:space="preserve">
+    <value>Spécial</value>
+  </data>
+  <data name="SpellLevelCategory.Summon" xml:space="preserve">
+    <value>Invocation</value>
+  </data>
+  <data name="SpellLevelCategory.WeaponSkill" xml:space="preserve">
+    <value>Maîtrise</value>
+  </data>
+  <data name="SpellOrigin.Craft" xml:space="preserve">
+    <value>Craft</value>
+  </data>
+  <data name="SpellOrigin.Drop" xml:space="preserve">
+    <value>Drop</value>
+  </data>
+  <data name="SpellOrigin.Unknown" xml:space="preserve">
+    <value>Inconnu</value>
+  </data>
+  <data name="SpellType.Agility" xml:space="preserve">
+    <value>Agilité</value>
+  </data>
+  <data name="SpellType.Chance" xml:space="preserve">
+    <value>Chance</value>
+  </data>
+  <data name="SpellType.Heal" xml:space="preserve">
+    <value>Soin</value>
+  </data>
+  <data name="SpellType.Intelligence" xml:space="preserve">
+    <value>Intelligence</value>
+  </data>
+  <data name="SpellType.MultiElement" xml:space="preserve">
+    <value>Multi-élément</value>
+  </data>
+  <data name="SpellType.Neutral" xml:space="preserve">
+    <value>Neutre</value>
+  </data>
+  <data name="SpellType.Strength" xml:space="preserve">
+    <value>Force</value>
+  </data>
+  <data name="SpellType.Summon" xml:space="preserve">
+    <value>Invocation</value>
+  </data>
+  <data name="SpellType.Utility" xml:space="preserve">
+    <value>Utilitaire</value>
+  </data>
+  <data name="Unknown.Data" xml:space="preserve">
+    <value>Inconnu (#1)</value>
+  </data>
+</root>

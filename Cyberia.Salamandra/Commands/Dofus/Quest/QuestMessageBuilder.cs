@@ -14,17 +14,19 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public const string PACKET_HEADER = "Q";
         public const int PACKET_VERSION = 1;
 
-        private readonly Quest _quest;
-        private readonly List<QuestStep> _questSteps;
+        private readonly QuestData _questData;
+        private readonly List<QuestStepData> _questStepsData;
         private readonly int _selectedQuestStepIndex;
-        private readonly QuestStep? _questStep;
+        private readonly QuestStepData? _questStepData;
+        private readonly DialogQuestionData? _dialogQuestionData;
 
-        public QuestMessageBuilder(Quest quest, int selectedQuestStepIndex = 0)
+        public QuestMessageBuilder(QuestData questData, int selectedQuestStepIndex = 0)
         {
-            _quest = quest;
-            _questSteps = quest.GetQuestSteps();
+            _questData = questData;
+            _questStepsData = questData.GetQuestStepsData();
             _selectedQuestStepIndex = selectedQuestStepIndex;
-            _questStep = _questSteps.Count > selectedQuestStepIndex ? _questSteps[selectedQuestStepIndex] : null;
+            _questStepData = _questStepsData.Count > selectedQuestStepIndex ? _questStepsData[selectedQuestStepIndex] : null;
+            _dialogQuestionData = _questStepData?.GetDialogQuestionData();
         }
 
         public static QuestMessageBuilder? Create(int version, string[] parameters)
@@ -34,9 +36,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int questId) &&
                 int.TryParse(parameters[1], out int selectedQuestStepIndex))
             {
-                Quest? quest = Bot.Instance.Api.Datacenter.QuestsData.GetQuestById(questId);
-                if (quest is not null)
-                    return new QuestMessageBuilder(quest, selectedQuestStepIndex);
+                QuestData? questData = Bot.Instance.Api.Datacenter.QuestsData.GetQuestDataById(questId);
+                if (questData is not null)
+                    return new QuestMessageBuilder(questData, selectedQuestStepIndex);
             }
 
             return null;
@@ -66,46 +68,45 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private Task<DiscordEmbedBuilder> EmbedBuilder()
         {
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Quests, "Livre de quêtes")
-                .WithTitle($"{_quest.Name} ({_quest.Id}) {Emojis.Quest(_quest.Repeatable, _quest.Account)}{(_quest.HasDungeon ? Emojis.DUNGEON : "")}");
+                .WithTitle($"{_questData.Name} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.DUNGEON : "")}");
 
-            if (_questStep is not null)
+            if (_questStepData is not null)
             {
-                embed.WithDescription($"{Formatter.Bold(_questStep.Name)}\n{(string.IsNullOrEmpty(_questStep.Description) ? "" : Formatter.Italic(_questStep.Description))}");
+                embed.WithDescription($"{Formatter.Bold(_questStepData.Name)}\n{(string.IsNullOrEmpty(_questStepData.Description) ? "" : Formatter.Italic(_questStepData.Description))}");
 
-                int optimalLevel = _questStep.OptimalLevel;
+                int optimalLevel = _questStepData.OptimalLevel;
                 if (optimalLevel > 0)
                     embed.AddField("Niveau optimal :", optimalLevel.ToString());
 
-                DialogQuestion? dialogQuestion = _questStep.GetDialogQuestion();
-                if (dialogQuestion is not null)
-                    embed.AddField("Dialogue :", dialogQuestion.Question);
+                if (_dialogQuestionData is not null)
+                    embed.AddField("Dialogue :", _dialogQuestionData.Question);
 
-                if (_questStep.QuestObjectives.Count > 0)
-                    embed.AddQuestObjectiveFields("Objectifs :", _questStep.QuestObjectives);
+                if (_questStepData.QuestObjectives.Count > 0)
+                    embed.AddQuestObjectiveFields(_questStepData.QuestObjectives);
 
-                if (_questStep.HasReward())
+                if (_questStepData.HasReward())
                 {
                     StringBuilder rewards = new();
 
-                    if (_questStep.Rewards.Experience > 0)
-                        rewards.AppendFormat("{0} {1}\n", _questStep.Rewards.Experience.ToStringThousandSeparator(), Emojis.XP);
+                    if (_questStepData.RewardsData.Experience > 0)
+                        rewards.AppendFormat("{0} {1}\n", _questStepData.RewardsData.Experience.ToStringThousandSeparator(), Emojis.XP);
 
-                    if (_questStep.Rewards.Kamas > 0)
-                        rewards.AppendFormat("{0} {1}\n", _questStep.Rewards.Kamas.ToStringThousandSeparator(), Emojis.KAMAS);
+                    if (_questStepData.RewardsData.Kamas > 0)
+                        rewards.AppendFormat("{0} {1}\n", _questStepData.RewardsData.Kamas.ToStringThousandSeparator(), Emojis.KAMAS);
 
-                    List<KeyValuePair<Item, int>> itemsReward = _questStep.Rewards.GetItemsQuantities();
+                    List<KeyValuePair<ItemData, int>> itemsReward = _questStepData.RewardsData.GetItemsDataQuantities();
                     if (itemsReward.Count > 0)
                         rewards.AppendLine(string.Join(", ", itemsReward.Select(x => $"{Formatter.Bold(x.Value.ToString())}x {x.Key.Name}")));
 
-                    List<Emote> emotesReward = _questStep.Rewards.GetEmotes();
+                    List<EmoteData> emotesReward = _questStepData.RewardsData.GetEmotesData();
                     if (emotesReward.Count > 0)
                         rewards.AppendFormat("Emotes : {0}\n", string.Join(", ", emotesReward.Select(x => x.Name)));
 
-                    List<Job> jobsReward = _questStep.Rewards.GetJobs();
+                    List<JobData> jobsReward = _questStepData.RewardsData.GetJobsData();
                     if (jobsReward.Count > 0)
                         rewards.AppendFormat("Métiers : {0}\n", string.Join(", ", jobsReward.Select(x => x.Name)));
 
-                    List<Spell> spellsReward = _questStep.Rewards.GetSpells();
+                    List<SpellData> spellsReward = _questStepData.RewardsData.GetSpellsData();
                     if (emotesReward.Count > 0)
                         rewards.AppendFormat("Sorts : {0}", string.Join(", ", spellsReward.Select(x => x.Name)));
 
@@ -121,8 +122,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordSelectComponentOption> options = new();
 
-            for (int i = 0; i < _questSteps.Count && i < 25; i++)
-                options.Add(new($"Etape {i + 1}", GetPacket(_quest.Id, i), _questSteps[i].Name.WithMaxLength(100), isDefault: i == _selectedQuestStepIndex));
+            for (int i = 0; i < _questStepsData.Count && i < 25; i++)
+                options.Add(new($"Etape {i + 1}", GetPacket(_questData.Id, i), _questStepsData[i].Name.WithMaxLength(100), isDefault: i == _selectedQuestStepIndex));
 
             return new(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne une étape pour l'afficher", options);
         }
@@ -131,8 +132,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordSelectComponentOption> options = new();
 
-            for (int i = 25; i < _questSteps.Count; i++)
-                options.Add(new($"Etape {i + 1}", GetPacket(_quest.Id, i), _questSteps[i].Name.WithMaxLength(100), isDefault: i == _selectedQuestStepIndex));
+            for (int i = 25; i < _questStepsData.Count; i++)
+                options.Add(new($"Etape {i + 1}", GetPacket(_questData.Id, i), _questStepsData[i].Name.WithMaxLength(100), isDefault: i == _selectedQuestStepIndex));
 
             return new(InteractionManager.SelectComponentPacketBuilder(1), "Sélectionne une étape pour l'afficher", options);
         }

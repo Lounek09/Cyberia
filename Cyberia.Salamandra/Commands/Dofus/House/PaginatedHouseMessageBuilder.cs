@@ -14,7 +14,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         MapArea
     }
 
-    public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House>
+    public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<HouseData>
     {
         public const string PACKET_HEADER = "PH";
         public const int PACKET_VERSION = 1;
@@ -22,8 +22,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private readonly HouseSearchCategory _searchCategory;
         private readonly string _search;
 
-        public PaginatedHouseMessageBuilder(List<House> houses, HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Houses, "Agence immobilière", "Plusieurs maisons trouvées :", houses, selectedPageIndex)
+        public PaginatedHouseMessageBuilder(List<HouseData> housesData, HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0) :
+            base(DofusEmbedCategory.Houses, "Agence immobilière", "Plusieurs maisons trouvées :", housesData, selectedPageIndex)
         {
             _searchCategory = searchCategory;
             _search = search;
@@ -36,12 +36,12 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[1], out int selectedPageIndex) &&
                 Enum.TryParse(parameters[2], true, out HouseSearchCategory searchCategory))
             {
-                List<House> houses = new();
+                List<HouseData> housesData = new();
                 string search = "";
                 switch (searchCategory)
                 {
                     case HouseSearchCategory.Name:
-                        houses = Bot.Instance.Api.Datacenter.HousesData.GetHousesByName(parameters[3]);
+                        housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByName(parameters[3]);
                         search = parameters[3];
                         break;
                     case HouseSearchCategory.Coordinate:
@@ -49,28 +49,28 @@ namespace Cyberia.Salamandra.Commands.Dofus
                             int.TryParse(parameters[3], out int xCoord) &&
                             int.TryParse(parameters[4], out int yCoord))
                         {
-                            houses = Bot.Instance.Api.Datacenter.HousesData.GetHousesByCoordinate(xCoord, yCoord);
+                            housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByCoordinate(xCoord, yCoord);
                             search = $"{parameters[3]}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{parameters[4]}";
                         }
                         break;
                     case HouseSearchCategory.MapSubArea:
                         if (int.TryParse(parameters[3], out int mapSubAreaId))
                         {
-                            houses = Bot.Instance.Api.Datacenter.HousesData.GetHousesByMapSubAreaId(mapSubAreaId);
+                            housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByMapSubAreaId(mapSubAreaId);
                             search = parameters[3];
                         }
                         break;
                     case HouseSearchCategory.MapArea:
                         if (int.TryParse(parameters[3], out int mapAreaId))
                         {
-                            houses = Bot.Instance.Api.Datacenter.HousesData.GetHousesByMapAreaId(mapAreaId);
+                            housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByMapAreaId(mapAreaId);
                             search = parameters[3];
                         }
                         break;
                 }
 
-                if (houses.Count > 0 && !string.IsNullOrEmpty(search))
-                    return new(houses, searchCategory, search, selectedPageIndex);
+                if (housesData.Count > 0 && !string.IsNullOrEmpty(search))
+                    return new(housesData, searchCategory, search, selectedPageIndex);
             }
 
             return null;
