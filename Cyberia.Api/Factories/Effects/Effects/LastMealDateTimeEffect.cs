@@ -20,7 +20,7 @@ namespace Cyberia.Api.Factories.Effects
 
         public Description GetDescription()
         {
-            return GetDescription(DateTime.ToString("dd/MM/yyy"));
+            return GetDescription(DateTime.ToString("dd/MM/yyy HH:mm"));
         }
     }
 }

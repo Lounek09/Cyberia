@@ -76,7 +76,6 @@ namespace Cyberia.Api.Factories
             if (string.IsNullOrEmpty(value) || value.Length < 4)
                 return null;
 
-
             string id = value[0..2];
             char @operator = value[2];
             string[] args = value[3..].Split(',');
