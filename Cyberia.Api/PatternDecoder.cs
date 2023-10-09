@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api
+﻿using System.Text;
+
+namespace Cyberia.Api
 {
     public static class PatternDecoder
     {
@@ -40,44 +42,49 @@
             return Array.IndexOf(HASH, value);
         }
 
-        public static string Description(string description, params string[] parameters)
+        public static string Description(string value, params string[] parameters)
         {
-            if (description.Contains('{') && description.Contains('}'))
-            {
-                int a = -1, b = -1;
-                for (int i = 0; i < parameters.Length; i++)
-                {
-                    if (description.Contains("~" + (i + 1)))
-                    {
-                        if (a == -1)
-                            a = i;
-                        else
-                            b = i;
-                    }
-                }
-
-                if (string.IsNullOrEmpty(parameters[a]) || string.IsNullOrEmpty(parameters[b]) || parameters[a] == parameters[b])
-                {
-                    int length = description.Split("{")[1].Split("}")[0].Length;
-                    description = description.Replace("{" + description.Split("{")[1][..length] + "}", "");
-                    description = description.Replace($"#{b + 1}", "");
-                }
-                else
-                {
-                    description = description.Replace("{" + description.Split("{")[1][..4], "");
-                    description = description.Replace("}", "");
-                }
-            }
+            StringBuilder result = new(value);
 
             for (int i = 0; i < parameters.Length; i++)
-                description = description.Replace($"#{i + 1}", parameters[i]);
+                result.Replace($"#{i + 1}", parameters[i]); 
 
-            return description;
+            int indexOfOpenBrace = value.IndexOf('{');
+            while (indexOfOpenBrace != -1)
+            {
+                int indexOfCloseBrace = value.IndexOf('}', indexOfOpenBrace);
+                if (indexOfCloseBrace == -1)
+                    break;
+
+                string replacement = value[(indexOfOpenBrace + 1)..indexOfCloseBrace];
+                for (int i = 0; i < parameters.Length; i++)
+                {
+                    if (!value[(indexOfOpenBrace + 1)..indexOfCloseBrace].Contains($"~{i + 1}"))
+                        continue;
+
+                    if (string.IsNullOrEmpty(parameters[i]))
+                    {
+                        replacement = string.Empty;
+                        break;
+                    }
+
+                    replacement = replacement.Replace($"~{i + 1}", string.Empty);
+                }
+
+                if (replacement.Contains('~'))
+                    replacement = string.Empty;
+
+                result.Replace(value[indexOfOpenBrace..(indexOfCloseBrace + 1)], replacement);
+
+                indexOfOpenBrace = value.IndexOf('{', indexOfCloseBrace);
+            }
+
+            return result.ToString();
         }
 
-        public static string Description(string description, params object[] parameters)
+        public static string Description(string value, params object[] parameters)
         {
-            return Description(description, Array.ConvertAll(parameters, x => x.ToString() ?? string.Empty));
+            return Description(value, Array.ConvertAll(parameters, x => x.ToString() ?? string.Empty));
         }
     }
 }
