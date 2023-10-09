@@ -4,19 +4,21 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed record MonsterEffect : Effect, IEffect<MonsterEffect>
+    public sealed record MonsterKillCounterEffect : Effect, IEffect<MonsterKillCounterEffect>
     {
         public int MonsterId { get; init; }
+        public int Count { get; init; }
 
-        private MonsterEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int monsterId) :
+        private MonsterKillCounterEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int monsterId, int count) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             MonsterId = monsterId;
+            Count = count;
         }
 
-        public static MonsterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static MonsterKillCounterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
         {
-            return new(effectId, duration, probability, criteria, effectArea, parameters.Param1);
+            return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param3);
         }
 
         public MonsterData? GetMonsterData()
@@ -28,7 +30,7 @@ namespace Cyberia.Api.Factories.Effects
         {
             string monsterName = DofusApi.Instance.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
 
-            return GetDescription(monsterName);
+            return GetDescription(monsterName, null, Count);
         }
     }
 }

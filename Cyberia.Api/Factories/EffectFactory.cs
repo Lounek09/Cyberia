@@ -62,7 +62,7 @@ namespace Cyberia.Api.Factories
             { 699, LinkJobEffect.Create },
             { 715, MonsterSuperRaceEffect.Create },
             { 716, MonsterRaceEffect.Create },
-            { 717, MonsterEffect.Create },
+            { 717, MonsterKillCounterEffect.Create },
             { 724, DisplayTitleEffect.Create },
             { 787, LaunchSpellEffect.Create },
             { 805, ReceivedOnDateTimeEffect.Create },
