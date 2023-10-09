@@ -94,7 +94,7 @@ namespace Cyberia.Salamandra.DsharpPlus
                         itemName = Formatter.Bold(itemName);
                 }
 
-                result.Add($"{ingredient.Value.ToStringThousandSeparator()}x {itemName}");
+                result.Add($"{Formatter.Bold(ingredient.Value.ToStringThousandSeparator())}x {itemName}");
             }
 
             return embed.WithDescription(string.Join('\n', result));
@@ -108,7 +108,7 @@ namespace Cyberia.Salamandra.DsharpPlus
             {
                 string itemName = Formatter.Sanitize(Bot.Instance.Api.Datacenter.ItemsData.GetItemNameById(ingredient.Key));
 
-                result.Add($"{ingredient.Value.ToStringThousandSeparator()}x {itemName}");
+                result.Add($"{Formatter.Bold(ingredient.Value.ToStringThousandSeparator())}x {itemName}");
             }
 
             return embed.AddField("Craft :", string.Join(" + ", result), inline);
