@@ -47,7 +47,7 @@ namespace Cyberia.Cytrusaurus
 
         public event EventHandler<NewCytrusDetectedEventArgs>? NewCytrusDetected;
 
-        public void Watch(int dueTime, int interval)
+        public void Watch(TimeSpan dueTime, TimeSpan interval)
         {
             _timer = new(async _ => await LaunchAsync(), null, dueTime, interval);
         }

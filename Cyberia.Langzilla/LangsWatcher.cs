@@ -47,14 +47,14 @@ namespace Cyberia.Langzilla
         public event EventHandler<CheckLangStartedEventArgs>? CheckLangStarted;
         public event EventHandler<CheckLangFinishedEventArgs>? CheckLangFinished;
 
-        public void Watch(LangType type, Language language, int dueTime, int interval)
+        public void Watch(LangType type, Language language, TimeSpan dueTime, TimeSpan interval)
         {
             Timer timer = new(async _ => await LaunchAsync(type, language), null, dueTime, interval);
 
             _timers.AddOrUpdate($"{type}_{language}", timer, (key, oldValue) => oldValue = timer);
         }
 
-        public void WatchAll(LangType type, int dueTime, int interval)
+        public void WatchAll(LangType type, TimeSpan dueTime, TimeSpan interval)
         {
             foreach (Language language in Enum.GetValues<Language>())
             {

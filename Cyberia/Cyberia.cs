@@ -37,16 +37,16 @@ namespace Cyberia
                 await salamandra.Launch();
 
                 if (config.EnableCheckCytrus)
-                    cytrus.Watch(10000, 60000);
+                    cytrus.Watch(TimeSpan.FromSeconds(10), TimeSpan.FromMinutes(1));
 
                 if (config.EnableCheckLang)
-                    langs.WatchAll(LangType.Official, 20000, 360000);
+                    langs.WatchAll(LangType.Official, TimeSpan.FromSeconds(20), TimeSpan.FromMinutes(5));
 
                 if (config.EnableCheckBetaLang)
-                    langs.WatchAll(LangType.Beta, 140000, 360000);
+                    langs.WatchAll(LangType.Beta, TimeSpan.FromSeconds(140), TimeSpan.FromMinutes(5));
 
                 if (config.EnableCheckTemporisLang)
-                    langs.WatchAll(LangType.Temporis, 260000, 360000);
+                    langs.WatchAll(LangType.Temporis, TimeSpan.FromSeconds(260), TimeSpan.FromMinutes(5));
 
                 await Task.Delay(-1);
             }
