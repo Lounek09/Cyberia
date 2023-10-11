@@ -31,13 +31,17 @@ namespace Cyberia.Salamandra.Managers
 
         private static async Task<DiscordForumChannel?> GetLangForumChannel()
         {
+            ulong id = Bot.Instance.Config.LangForumChannelId;
+            if (id == 0)
+                return null;
+
             try
             {
-                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.LangForumChannelId) as DiscordForumChannel;
+                return await Bot.Instance.Client.GetChannelAsync(id) as DiscordForumChannel;
             }
             catch
             {
-                Bot.Instance.Log.Error("Unknown lang forum channel (id:{id})", Bot.Instance.Config.LangForumChannelId);
+                Bot.Instance.Log.Error("Unknown lang forum channel (id:{id})", id);
                 return null;
             }
         }

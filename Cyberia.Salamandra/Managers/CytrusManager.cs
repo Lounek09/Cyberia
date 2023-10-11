@@ -56,9 +56,9 @@ namespace Cyberia.Salamandra.Managers
             string diff = client2.Diff(client1);
 
             string mainContent = $"""
-                                  Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform)}
-                                  {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
-                                  """;
+                 Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform)}
+                 {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
+                 """;
 
             if (mainContent.Length + diff.Length < 2000)
                 await channel.SendMessage(message.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
@@ -71,26 +71,34 @@ namespace Cyberia.Salamandra.Managers
 
         private static async Task<DiscordChannel?> GetCytrusChannel()
         {
+            ulong id = Bot.Instance.Config.CytrusChannelId;
+            if (id == 0)
+                return null;
+
             try
             {
-                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.CytrusChannelId);
+                return await Bot.Instance.Client.GetChannelAsync(id);
             }
             catch
             {
-                Bot.Instance.Log.Error("Unknown cytrus channel (id:{id})", Bot.Instance.Config.CytrusChannelId);
+                Bot.Instance.Log.Error("Unknown cytrus channel (id:{id})", id);
                 return null;
             }
         }
 
         private static async Task<DiscordChannel?> GetCytrusManifestChannel()
         {
+            ulong id = Bot.Instance.Config.CytrusManifestChannelId;
+            if (id == 0)
+                return null;
+
             try
             {
-                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.CytrusManifestChannelId);
+                return await Bot.Instance.Client.GetChannelAsync(id);
             }
             catch
             {
-                Bot.Instance.Log.Error("Unknown cytrus manifest channel (id:{id})", Bot.Instance.Config.CytrusManifestChannelId);
+                Bot.Instance.Log.Error("Unknown cytrus manifest channel (id:{id})", id);
                 return null;
             }
         }
