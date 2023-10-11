@@ -36,17 +36,17 @@ namespace Cyberia
                 Bot salamandra = Bot.Build(Log.Logger, config.BotConfig, cytrus, langs);
                 await salamandra.Launch();
 
-                if (config.EnableCheckCytrus)
-                    cytrus.Watch(TimeSpan.FromSeconds(10), TimeSpan.FromMinutes(1));
+                if (config.EnableCheckCytrus && config.CheckCytrusInterval > 0)
+                    cytrus.Watch(TimeSpan.FromSeconds(10), TimeSpan.FromMinutes(config.CheckCytrusInterval));
 
-                if (config.EnableCheckLang)
-                    langs.WatchAll(LangType.Official, TimeSpan.FromSeconds(20), TimeSpan.FromMinutes(5));
+                if (config.EnableCheckLang && config.CheckLangInterval > 0)
+                    langs.WatchAll(LangType.Official, TimeSpan.FromSeconds(20), TimeSpan.FromMinutes(config.CheckLangInterval));
 
-                if (config.EnableCheckBetaLang)
-                    langs.WatchAll(LangType.Beta, TimeSpan.FromSeconds(140), TimeSpan.FromMinutes(5));
+                if (config.EnableCheckBetaLang && config.CheckBetaLangInterval > 0)
+                    langs.WatchAll(LangType.Beta, TimeSpan.FromSeconds(140), TimeSpan.FromMinutes(config.CheckBetaLangInterval));
 
-                if (config.EnableCheckTemporisLang)
-                    langs.WatchAll(LangType.Temporis, TimeSpan.FromSeconds(260), TimeSpan.FromMinutes(5));
+                if (config.EnableCheckTemporisLang && config.CheckCytrusInterval > 0)
+                    langs.WatchAll(LangType.Temporis, TimeSpan.FromSeconds(260), TimeSpan.FromMinutes(config.CheckCytrusInterval));
 
                 await Task.Delay(-1);
             }
