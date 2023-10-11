@@ -89,8 +89,8 @@ namespace Cyberia.Salamandra.DsharpPlus
 
                 if (!recursive)
                 {
-                    ItemData? itemData = Bot.Instance.Api.Datacenter.ItemsData.GetItemDataById(ingredient.Key);
-                    if (itemData is not null)
+                    CraftData? subCraftData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
+                    if (subCraftData is not null)
                         itemName = Formatter.Bold(itemName);
                 }
 
