@@ -2,15 +2,16 @@
 {
     public static class ExtendHttpClient
     {
-        public static async Task<bool> CheckIfPageExistsAsync(this HttpClient httpClient, string url)
+        public static async Task<bool> ExistsAsync(this HttpClient httpClient, string url)
         {
             try
             {
-                HttpResponseMessage result = await httpClient.GetAsync(url).ConfigureAwait(false);
+                using HttpRequestMessage request = new(HttpMethod.Head, url);
+                using HttpResponseMessage result = await httpClient.SendAsync(request);
 
                 return result.IsSuccessStatusCode;
             }
-            catch (HttpRequestException)
+            catch
             {
                 return false;
             }

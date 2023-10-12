@@ -175,7 +175,7 @@ namespace Cyberia.Api.DatacenterNS
         {
             string url = $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/{GfxId}.png";
 
-            if (await DofusApi.Instance.HttpClient.CheckIfPageExistsAsync(url))
+            if (await DofusApi.Instance.HttpClient.ExistsAsync(url))
                 return url;
 
             return $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/unknown.png";
