@@ -14,6 +14,7 @@ namespace Cyberia.Langzilla
         public LangsType Temporis { get; init; }
 
         internal HttpClient HttpClient { get; init; }
+        internal HttpRetryPolicy HttpRetryPolicy { get; init; }
 
         internal static LangsWatcher Instance
         {
@@ -29,6 +30,7 @@ namespace Cyberia.Langzilla
             Beta = new(LangType.Beta);
             Temporis = new(LangType.Temporis);
             HttpClient = new();
+            HttpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
             _timers = new();
 
             Directory.CreateDirectory(OUTPUT_PATH);

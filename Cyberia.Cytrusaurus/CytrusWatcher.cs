@@ -14,6 +14,8 @@ namespace Cyberia.Cytrusaurus
         public CytrusData OldCytrusData { get; internal set; }
 
         internal HttpClient HttpClient { get; init; }
+        internal HttpRetryPolicy HttpRetryPolicy { get; init; }
+
         internal static CytrusWatcher Instance
         {
             get => _instance is null ? throw new NullReferenceException("Build Cytrus before !") : _instance;
@@ -34,6 +36,7 @@ namespace Cyberia.Cytrusaurus
             {
                 BaseAddress = new Uri(BASE_URL)
             };
+            HttpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
         }
 
         public static CytrusWatcher Create()
@@ -54,15 +57,14 @@ namespace Cyberia.Cytrusaurus
             string? cytrus = null;
             try
             {
-                using HttpResponseMessage response = await HttpClient.GetAsync(CYTRUS_FILE_NAME);
-
+                using HttpResponseMessage response = await HttpRetryPolicy.ExecuteAsync(async () => await HttpClient.GetAsync(CYTRUS_FILE_NAME));
                 response.EnsureSuccessStatusCode();
 
                 cytrus = await response.Content.ReadAsStringAsync();
             }
-            catch (Exception e) when (e is HttpRequestException or TaskCanceledException)
+            catch (HttpRequestException e)
             {
-                Log.Error(e, "An error occured while sending Get request to {url}/{file}", BASE_URL, CYTRUS_FILE_NAME);
+                Log.Error(e, "An error occured while sending Get request to {url}}", $"{BASE_URL}/{CYTRUS_FILE_NAME}");
                 return;
             }
 

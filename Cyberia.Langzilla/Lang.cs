@@ -93,7 +93,7 @@ namespace Cyberia.Langzilla
             foreach (KeyValuePair<int, string> row in modelRows)
                 diff.Add((row.Key, $"- {row.Value}"));
 
-            return string.Join("\n", diff.OrderBy(x => x.Index).Select(x => x.Row));
+            return string.Join('\n', diff.OrderBy(x => x.Index).Select(x => x.Row));
         }
 
         public async Task DownloadExtractAndDiffAsync()
@@ -108,38 +108,20 @@ namespace Cyberia.Langzilla
             Array.ForEach(Directory.GetFiles(GetDirectoryPath(), "*.swf"), File.Delete);
 
             string fileUrl = GetFileUrl();
-            int retries = 5;
-            int waitTime = 1000;
-            while (true)
+
+            try
             {
-                try
-                {
-                    using HttpResponseMessage response = await LangsWatcher.Instance.HttpClient.GetAsync(fileUrl);
-                    response.EnsureSuccessStatusCode();
+                using HttpResponseMessage response = await LangsWatcher.Instance.HttpRetryPolicy.ExecuteAsync(async () => await LangsWatcher.Instance.HttpClient.GetAsync(fileUrl));
+                response.EnsureSuccessStatusCode();
 
-                    using FileStream fileStream = new(GetFilePath(), FileMode.Create);
-                    await response.Content.CopyToAsync(fileStream);
+                using FileStream fileStream = new(GetFilePath(), FileMode.Create);
+                await response.Content.CopyToAsync(fileStream);
 
-                    return;
-                }
-                catch (HttpRequestException e)
-                {
-                    if (retries-- == 0)
-                    {
-                        Log.Error("Unable to find {fileUrl}", fileUrl);
-                        return;
-                    }
-
-                    Log.Error(e, "{retries} retry left to download {fileUrl}", retries);
-
-                    await Task.Delay(waitTime);
-                    waitTime *= 2;
-                }
-                catch (TaskCanceledException e)
-                {
-                    Log.Error(e, "The request to get {fileUrl} has been cancelled", fileUrl);
-                    return;
-                }
+                return;
+            }
+            catch (HttpRequestException e)
+            {
+                Log.Error(e, "An error occured while sending Get request to {url}}", fileUrl);
             }
         }
 

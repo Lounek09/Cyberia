@@ -79,12 +79,11 @@ namespace Cyberia.Langzilla
 
             try
             {
-                using HttpResponseMessage response = await LangsWatcher.Instance.HttpClient.GetAsync(versionFileUrl);
+                using HttpResponseMessage response = await LangsWatcher.Instance.HttpRetryPolicy.ExecuteAsync(async () => await LangsWatcher.Instance.HttpClient.GetAsync(versionFileUrl));
                 response.EnsureSuccessStatusCode();
 
                 long lastModifiedHeader = response.Content.Headers.LastModified!.Value.ToUnixTimeMilliseconds();
-                long lastModified = LastModified;
-                bool isMoreRecent = lastModifiedHeader > lastModified;
+                bool isMoreRecent = lastModifiedHeader > LastModified;
 
                 if (isMoreRecent)
                     LastModified = lastModifiedHeader;
@@ -101,11 +100,7 @@ namespace Cyberia.Langzilla
             }
             catch (HttpRequestException e)
             {
-                Log.Error(e, "Unable to find {versionFileUrl}", versionFileUrl);
-            }
-            catch (TaskCanceledException e)
-            {
-                Log.Error(e, "The request to get {versionFileUrl} has been cancelled", versionFileUrl);
+                Log.Error(e, "An error occured while sending Get request to {url}}", versionFileUrl);
             }
 
             return string.Empty;
