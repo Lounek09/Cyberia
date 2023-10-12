@@ -20,7 +20,7 @@
             string? effectAreaName = Resources.ResourceManager.GetString($"EffectArea.{Id}");
             if (effectAreaName is null)
             {
-                DofusApi.Instance.Log.Warning("Unknown EffectArea {id}", Id);
+                Log.Warning("Unknown EffectArea {id}", Id);
                 return $"{GetSize()} {PatternDecoder.Description(Resources.Unknown_Data, Id)}";
             }
 

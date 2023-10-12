@@ -1,7 +1,5 @@
 ﻿using Cyberia.Cytrusaurus.Models;
 
-using Serilog;
-
 namespace Cyberia.Cytrusaurus
 {
     public sealed class CytrusWatcher
@@ -12,7 +10,6 @@ namespace Cyberia.Cytrusaurus
         internal const string OLD_CYTRUS_PATH = $"{OUTPUT_PATH}/old_{CYTRUS_FILE_NAME}";
         internal const string BASE_URL = "https://cytrus.cdn.ankama.com";
 
-        public ILogger Log { get; init; }
         public CytrusData CytrusData { get; internal set; }
         public CytrusData OldCytrusData { get; internal set; }
 
@@ -23,14 +20,14 @@ namespace Cyberia.Cytrusaurus
         }
         private static CytrusWatcher? _instance;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>")]
+#pragma warning disable IDE0052 // Remove unread private members
         private Timer? _timer;
+#pragma warning restore IDE0052 // Remove unread private members
 
-        internal CytrusWatcher(ILogger logger)
+        internal CytrusWatcher()
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
-            Log = logger;
             CytrusData = File.Exists(CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(CYTRUS_PATH) : new();
             OldCytrusData = File.Exists(OLD_CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(OLD_CYTRUS_PATH) : new();
             HttpClient = new()
@@ -39,9 +36,9 @@ namespace Cyberia.Cytrusaurus
             };
         }
 
-        public static CytrusWatcher Create(ILogger logger)
+        public static CytrusWatcher Create()
         {
-            _instance ??= new(logger);
+            _instance ??= new();
             return _instance;
         }
 

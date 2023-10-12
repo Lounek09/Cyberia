@@ -34,19 +34,19 @@ namespace Cyberia.Salamandra.Managers
 
             if (!permissions.HasPermission(Permissions.AccessChannels))
             {
-                Bot.Instance.Log.Error("No permission to access to this channel (id:{id})", channel.Id);
+                Log.Error("No permission to access to this channel (id:{id})", channel.Id);
                 return;
             }
 
             if (!permissions.HasPermission(Permissions.SendMessages))
             {
-                Bot.Instance.Log.Error("No permission to send message in this channel (id:{id})", channel.Id);
+                Log.Error("No permission to send message in this channel (id:{id})", channel.Id);
                 return;
             }
 
             if (message.Files.Count > 0 && !permissions.HasPermission(Permissions.AttachFiles))
             {
-                Bot.Instance.Log.Error("No permission to attach files in this channel (id:{id})", channel.Id);
+                Log.Error("No permission to attach files in this channel (id:{id})", channel.Id);
                 return;
             }
 
@@ -66,7 +66,7 @@ namespace Cyberia.Salamandra.Managers
 
             if (logChannel is null)
             {
-                Bot.Instance.Log.Error("Unknown log channel (id:{id})", Bot.Instance.Config.LogChannelId);
+                Log.Error("Unknown log channel (id:{id})", Bot.Instance.Config.LogChannelId);
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace Cyberia.Salamandra.Managers
 
             if (commandErrorChannel is null)
             {
-                Bot.Instance.Log.Error("Unknown command error channel (id:{id})", Bot.Instance.Config.LogChannelId);
+                Log.Error("Unknown command error channel (id:{id})", Bot.Instance.Config.LogChannelId);
                 return;
             }
 
@@ -93,13 +93,13 @@ namespace Cyberia.Salamandra.Managers
 
             if (!permissions.HasPermission(Permissions.AccessChannels))
             {
-                Bot.Instance.Log.Error("No permission to access to this channel (id:{id})", channel.Id);
+                Log.Error("No permission to access to this channel (id:{id})", channel.Id);
                 return;
             }
 
             if (message.Author.Id != Bot.Instance.Client.CurrentUser.Id && !permissions.HasPermission(Permissions.ManageMessages))
             {
-                Bot.Instance.Log.Error("No permission to delete this message (id:{id})", message.Id);
+                Log.Error("No permission to delete this message (id:{id})", message.Id);
                 return;
             }
 
@@ -114,7 +114,7 @@ namespace Cyberia.Salamandra.Managers
             }
             catch
             {
-                Bot.Instance.Log.Error("Unknown log channel (id:{id})", Bot.Instance.Config.LogChannelId);
+                Log.Error("Unknown log channel (id:{id})", Bot.Instance.Config.LogChannelId);
                 return null;
             }
         }
@@ -127,7 +127,7 @@ namespace Cyberia.Salamandra.Managers
             }
             catch
             {
-                Bot.Instance.Log.Error("Unknown command error channel (id:{id})", Bot.Instance.Config.CommandErrorChannelId);
+                Log.Error("Unknown command error channel (id:{id})", Bot.Instance.Config.CommandErrorChannelId);
                 return null;
             }
         }

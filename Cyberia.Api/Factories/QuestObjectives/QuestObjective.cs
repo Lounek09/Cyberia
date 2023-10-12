@@ -16,7 +16,7 @@ namespace Cyberia.Api.Factories.QuestObjectives
                 return new(questObjectiveTypeData.Description + (string.IsNullOrEmpty(coordinate) ? "" : $" - {coordinate}"), strParameters);
             }
 
-            DofusApi.Instance.Log.Warning("Unknown {name} {id} (parameters)", nameof(QuestObjectiveTypeData), QuestObjectiveData.QuestObjectiveTypeId, string.Join(", ", strParameters));
+            Log.Warning("Unknown {name} {id} (parameters)", nameof(QuestObjectiveTypeData), QuestObjectiveData.QuestObjectiveTypeId, string.Join(", ", strParameters));
             return new(Resources.QuestObjectiveType_Unknown, QuestObjectiveData.QuestObjectiveTypeId.ToString(), string.Join(", ", strParameters));
         }
     }

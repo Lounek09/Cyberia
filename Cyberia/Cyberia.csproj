@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Using Include="Cyberia.Utils" />
+    <Using Include="Serilog" />
   </ItemGroup>
 
   <ItemGroup>

@@ -27,7 +27,7 @@
             }
 
             PlatformNotSupportedException exception = new();
-            LangsWatcher.Instance.Log.Fatal(exception, "Flare is only available in Windows or Linux (it's false but fuck mac)");
+            Log.Fatal(exception, "Flare is only available in Windows or Linux (it's false but fuck mac)");
             throw exception;
         }
     }

@@ -1,8 +1,6 @@
 ﻿using Cyberia.Api.DatacenterNS;
 using Cyberia.Langzilla;
 
-using Serilog;
-
 namespace Cyberia.Api
 {
     public sealed class DofusApi
@@ -10,7 +8,6 @@ namespace Cyberia.Api
         internal const string OUTPUT_PATH = "api";
         internal const string CUSTOM_PATH = $"{OUTPUT_PATH}/custom";
 
-        public ILogger Log { get; init; }
         public ApiConfig Config { get; init; }
         public Datacenter Datacenter { get; internal set; }
 
@@ -24,21 +21,20 @@ namespace Cyberia.Api
         }
         private static DofusApi? _instance;
 
-        internal DofusApi(ILogger logger, ApiConfig config, LangsWatcher langsWatcher)
+        internal DofusApi(ApiConfig config, LangsWatcher langsWatcher)
         {
             Directory.CreateDirectory(OUTPUT_PATH);
             Directory.CreateDirectory(CUSTOM_PATH);
 
-            Log = logger;
             Config = config;
             LangsWatcher = langsWatcher;
             HttpClient = new();
             Datacenter = new();
         }
 
-        public static DofusApi Build(ILogger logger, ApiConfig config, LangsWatcher langsWatcher)
+        public static DofusApi Build(ApiConfig config, LangsWatcher langsWatcher)
         {
-            _instance ??= new(logger, config, langsWatcher);
+            _instance ??= new(config, langsWatcher);
             return _instance;
         }
 

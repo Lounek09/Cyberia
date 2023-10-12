@@ -15,6 +15,7 @@
   <ItemGroup>
     <Using Include="Cyberia.Translation" />
     <Using Include="Cyberia.Utils" />
+    <Using Include="Serilog" />
   </ItemGroup>
 
   <ItemGroup>

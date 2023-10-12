@@ -47,7 +47,7 @@ namespace Cyberia.Api
             StringBuilder result = new(value);
 
             for (int i = 0; i < parameters.Length; i++)
-                result.Replace($"#{i + 1}", parameters[i]); 
+                result.Replace($"#{i + 1}", parameters[i]);
 
             int indexOfOpenBrace = value.IndexOf('{');
             while (indexOfOpenBrace != -1)

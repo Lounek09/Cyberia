@@ -41,11 +41,11 @@ namespace Cyberia.Salamandra.Managers
                 if (channel is DiscordForumChannel forum)
                     return forum;
 
-                Bot.Instance.Log.Error("The given lang channel is not a forum (id:{id})", id);
+                Log.Error("The given lang channel is not a forum (id:{id})", id);
             }
             catch
             {
-                Bot.Instance.Log.Error("Unknown lang forum channel (id:{id})", id);
+                Log.Error("Unknown lang forum channel (id:{id})", id);
             }
 
             return null;

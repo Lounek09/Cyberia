@@ -81,7 +81,7 @@ namespace Cyberia.Salamandra.Managers
             }
             catch
             {
-                Bot.Instance.Log.Error("Unknown cytrus channel (id:{id})", id);
+                Log.Error("Unknown cytrus channel (id:{id})", id);
                 return null;
             }
         }
@@ -98,7 +98,7 @@ namespace Cyberia.Salamandra.Managers
             }
             catch
             {
-                Bot.Instance.Log.Error("Unknown cytrus manifest channel (id:{id})", id);
+                Log.Error("Unknown cytrus manifest channel (id:{id})", id);
                 return null;
             }
         }

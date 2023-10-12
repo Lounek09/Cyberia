@@ -13,7 +13,7 @@ namespace Cyberia.Utils
             WriteIndented = true
         };
 
-        public static T Load<T>(string json)
+        public static T Load<T>(string json) where T : new()
         {
             try
             {
@@ -21,13 +21,13 @@ namespace Cyberia.Utils
             }
             catch (Exception e) when (e is JsonException or NotSupportedException or InvalidOperationException)
             {
-                Console.WriteLine($"Error when deserialize '{Path.GetFileName(json)}'\n{e.Message}");
+                Log.Error(e, "Failed to deserialize JSON");
             }
 
-            return Activator.CreateInstance<T>();
+            return new();
         }
 
-        public static T LoadFromFile<T>(string filePath)
+        public static T LoadFromFile<T>(string filePath) where T : new()
         {
             try
             {
@@ -37,10 +37,10 @@ namespace Cyberia.Utils
             }
             catch (Exception e) when (e is FileNotFoundException or DirectoryNotFoundException)
             {
-                Console.WriteLine($"File not found for deserialization '{Path.GetFileName(filePath)}'\n{e.Message}");
+                Log.Error(e, "File not found: {filePath}", filePath);
             }
 
-            return Activator.CreateInstance<T>();
+            return new();
         }
 
         public static void Save(object obj, string filePath)

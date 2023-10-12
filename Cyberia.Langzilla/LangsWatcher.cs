@@ -1,7 +1,5 @@
 ﻿using Cyberia.Langzilla.Enums;
 
-using Serilog;
-
 using System.Collections.Concurrent;
 
 namespace Cyberia.Langzilla
@@ -11,7 +9,6 @@ namespace Cyberia.Langzilla
         public const string OUTPUT_PATH = "langs";
         public const string BASE_URL = "https://dofusretro.cdn.ankama.com";
 
-        public ILogger Log { get; init; }
         public LangsType Official { get; init; }
         public LangsType Beta { get; init; }
         public LangsType Temporis { get; init; }
@@ -26,9 +23,8 @@ namespace Cyberia.Langzilla
 
         private readonly ConcurrentDictionary<string, Timer> _timers;
 
-        internal LangsWatcher(ILogger logger)
+        internal LangsWatcher()
         {
-            Log = logger;
             Official = new(LangType.Official);
             Beta = new(LangType.Beta);
             Temporis = new(LangType.Temporis);
@@ -38,9 +34,9 @@ namespace Cyberia.Langzilla
             Directory.CreateDirectory(OUTPUT_PATH);
         }
 
-        public static LangsWatcher Create(ILogger logger)
+        public static LangsWatcher Create()
         {
-            _instance ??= new(logger);
+            _instance ??= new();
             return _instance;
         }
 

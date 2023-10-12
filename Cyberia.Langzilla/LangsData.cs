@@ -93,7 +93,7 @@ namespace Cyberia.Langzilla
                 {
                     string versionFile = await response.Content.ReadAsStringAsync();
 
-                    LangsWatcher.Instance.Log.Information("New {type} langs detected in {language} :\n{versionFile}", Type, Language, versionFile);
+                    Log.Information("New {type} langs detected in {language} :\n{versionFile}", Type, Language, versionFile);
                     File.WriteAllText(GetVersionFilePath(), versionFile);
 
                     return versionFile;
@@ -101,11 +101,11 @@ namespace Cyberia.Langzilla
             }
             catch (HttpRequestException e)
             {
-                LangsWatcher.Instance.Log.Error(e, "Unable to find {versionFileUrl}", versionFileUrl);
+                Log.Error(e, "Unable to find {versionFileUrl}", versionFileUrl);
             }
             catch (TaskCanceledException e)
             {
-                LangsWatcher.Instance.Log.Error(e, "The request to get {versionFileUrl} has been cancelled", versionFileUrl);
+                Log.Error(e, "The request to get {versionFileUrl} has been cancelled", versionFileUrl);
             }
 
             return string.Empty;

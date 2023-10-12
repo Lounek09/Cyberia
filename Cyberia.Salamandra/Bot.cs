@@ -9,15 +9,12 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-using Serilog;
-
 namespace Cyberia.Salamandra
 {
     public sealed class Bot
     {
         public const string OUTPUT_PATH = "bot";
 
-        public ILogger Log { get; init; }
         public BotConfig Config { get; init; }
         public DiscordClient Client { get; init; }
         public SlashCommandsExtension SlashCommands { get; init; }
@@ -33,11 +30,10 @@ namespace Cyberia.Salamandra
         }
         private static Bot? _instance;
 
-        internal Bot(ILogger logger, BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)
+        internal Bot(BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
-            Log = logger;
             Config = config;
 
             Client = new(new DiscordConfiguration()
@@ -65,12 +61,12 @@ namespace Cyberia.Salamandra
             LangsWatcher = langs;
             LangsWatcher.CheckLangFinished += LangsManager.OnCheckLangFinished;
 
-            Api = DofusApi.Build(logger, config.ApiConfig, langs);
+            Api = DofusApi.Build(config.ApiConfig, langs);
         }
 
-        public static Bot Build(ILogger logger, BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)
+        public static Bot Build(BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)
         {
-            _instance ??= new(logger, config, cytrus, langs);
+            _instance ??= new(config, cytrus, langs);
             return _instance;
         }
 

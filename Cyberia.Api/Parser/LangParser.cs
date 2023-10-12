@@ -59,7 +59,7 @@ namespace Cyberia.Api.Parser
             {
                 if (!TryParse(langToParse))
                 {
-                    DofusApi.Instance.Log.Error("An error occured while parsing {langToParse} lang", langToParse);
+                    Log.Error("An error occured while parsing {langToParse} lang", langToParse);
                     return false;
                 }
             }
@@ -80,18 +80,18 @@ namespace Cyberia.Api.Parser
             Lang? lang = langsData.GetLangByName(langName);
             if (lang is null)
             {
-                DofusApi.Instance.Log.Error("The lang {langName} doesn't exist", langName);
+                Log.Error("The lang {langName} doesn't exist", langName);
                 return false;
             }
 
             string filePath = lang.GetCurrentDecompiledFilePath();
             if (!File.Exists(filePath))
             {
-                DofusApi.Instance.Log.Error("The lang {langName} has never been decompiled", langName);
+                Log.Error("The lang {langName} has never been decompiled", langName);
                 return false;
             }
 
-            DofusApi.Instance.Log.Debug("Start parsing {langName} lang", langName);
+            Log.Debug("Start parsing {langName} lang", langName);
 
             string[] lines = File.ReadAllLines(filePath);
             string json = ParseLines(lines);
@@ -102,7 +102,7 @@ namespace Cyberia.Api.Parser
             }
             catch (Exception e)
             {
-                DofusApi.Instance.Log.Error(e, "The generated json is not valid for {lang} lang", langName);
+                Log.Error(e, "The generated json is not valid for {lang} lang", langName);
                 return false;
             }
 

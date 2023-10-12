@@ -5,8 +5,6 @@ using Cyberia.Salamandra;
 
 using Microsoft.Extensions.Configuration;
 
-using Serilog;
-
 namespace Cyberia
 {
     public static class Cyberia
@@ -27,11 +25,11 @@ namespace Cyberia
             {
                 CyberiaConfig config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>()!;
 
-                CytrusWatcher cytrus = CytrusWatcher.Create(Log.Logger);
+                CytrusWatcher cytrus = CytrusWatcher.Create();
 
-                LangsWatcher langs = LangsWatcher.Create(Log.Logger);
+                LangsWatcher langs = LangsWatcher.Create();
 
-                Bot salamandra = Bot.Build(Log.Logger, config.BotConfig, cytrus, langs);
+                Bot salamandra = Bot.Build(config.BotConfig, cytrus, langs);
                 await salamandra.Launch();
 
                 if (config.EnableCheckCytrus && config.CheckCytrusInterval > 0)
