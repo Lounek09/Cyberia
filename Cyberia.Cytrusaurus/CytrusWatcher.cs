@@ -57,7 +57,7 @@ namespace Cyberia.Cytrusaurus
             string? cytrus = null;
             try
             {
-                using HttpResponseMessage response = await HttpRetryPolicy.ExecuteAsync(async () => await HttpClient.GetAsync(CYTRUS_FILE_NAME));
+                using HttpResponseMessage response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(CYTRUS_FILE_NAME));
                 response.EnsureSuccessStatusCode();
 
                 cytrus = await response.Content.ReadAsStringAsync();
