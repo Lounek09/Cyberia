@@ -27,8 +27,6 @@ namespace Cyberia
             {
                 CyberiaConfig config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>()!;
 
-                Directory.CreateDirectory("temp");
-
                 CytrusWatcher cytrus = CytrusWatcher.Create(Log.Logger);
 
                 LangsWatcher langs = LangsWatcher.Create(Log.Logger);
