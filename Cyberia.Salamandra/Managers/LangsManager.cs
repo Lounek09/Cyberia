@@ -37,13 +37,18 @@ namespace Cyberia.Salamandra.Managers
 
             try
             {
-                return await Bot.Instance.Client.GetChannelAsync(id) as DiscordForumChannel;
+                DiscordChannel channel = await Bot.Instance.Client.GetChannelAsync(id);
+                if (channel is DiscordForumChannel forum)
+                    return forum;
+
+                Bot.Instance.Log.Error("The given lang channel is not a forum (id:{id})", id);
             }
             catch
             {
                 Bot.Instance.Log.Error("Unknown lang forum channel (id:{id})", id);
-                return null;
             }
+
+            return null;
         }
 
         private static async Task<DiscordThreadChannel> CreateThreadAsync(DiscordForumChannel forum, LangType type, Language language)
