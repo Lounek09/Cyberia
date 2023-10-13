@@ -340,29 +340,11 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minute ≠ #1.
-        /// </summary>
-        public static string Criterion_AlignmentRank_Different1 {
-            get {
-                return ResourceManager.GetString("Criterion.AlignmentRank.Different1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Grade = #1.
         /// </summary>
         public static string Criterion_AlignmentRank_Equal {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentRank.Equal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minute = #1.
-        /// </summary>
-        public static string Criterion_AlignmentRank_Equal1 {
-            get {
-                return ResourceManager.GetString("Criterion.AlignmentRank.Equal1", resourceCulture);
             }
         }
         
@@ -376,29 +358,11 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minute &lt; #1.
-        /// </summary>
-        public static string Criterion_AlignmentRank_Inferior1 {
-            get {
-                return ResourceManager.GetString("Criterion.AlignmentRank.Inferior1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Grade &gt; #1.
         /// </summary>
         public static string Criterion_AlignmentRank_Superior {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentRank.Superior", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minute &gt; #1.
-        /// </summary>
-        public static string Criterion_AlignmentRank_Superior1 {
-            get {
-                return ResourceManager.GetString("Criterion.AlignmentRank.Superior1", resourceCulture);
             }
         }
         
@@ -1186,7 +1150,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level ≠ #1.
+        ///   Looks up a localized string similar to Niveau ≠ #1.
         /// </summary>
         public static string Criterion_Level_Different {
             get {
@@ -1195,7 +1159,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level = #1.
+        ///   Looks up a localized string similar to Niveau = #1.
         /// </summary>
         public static string Criterion_Level_Equal {
             get {
@@ -1204,7 +1168,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level &lt; #1.
+        ///   Looks up a localized string similar to Niveau &lt; #1.
         /// </summary>
         public static string Criterion_Level_Inferior {
             get {
@@ -1213,7 +1177,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level &gt; #1.
+        ///   Looks up a localized string similar to Niveau &gt; #1.
         /// </summary>
         public static string Criterion_Level_Superior {
             get {
@@ -1317,6 +1281,42 @@ namespace Cyberia.Translation {
         public static string Criterion_MaritalStatus_Equal {
             get {
                 return ResourceManager.GetString("Criterion.MaritalStatus.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minute ≠ #1.
+        /// </summary>
+        public static string Criterion_Minute_Different {
+            get {
+                return ResourceManager.GetString("Criterion.Minute.Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minute = #1.
+        /// </summary>
+        public static string Criterion_Minute_Equal {
+            get {
+                return ResourceManager.GetString("Criterion.Minute.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minute &lt; #1.
+        /// </summary>
+        public static string Criterion_Minute_Inferior {
+            get {
+                return ResourceManager.GetString("Criterion.Minute.Inferior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minute &gt; #1.
+        /// </summary>
+        public static string Criterion_Minute_Superior {
+            get {
+                return ResourceManager.GetString("Criterion.Minute.Superior", resourceCulture);
             }
         }
         

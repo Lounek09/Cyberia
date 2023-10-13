@@ -210,26 +210,14 @@
   <data name="Criterion.AlignmentRank.Different" xml:space="preserve">
     <value>Grade ≠ #1</value>
   </data>
-  <data name="Criterion.AlignmentRank.Different1" xml:space="preserve">
-    <value>Minute ≠ #1</value>
-  </data>
   <data name="Criterion.AlignmentRank.Equal" xml:space="preserve">
     <value>Grade = #1</value>
-  </data>
-  <data name="Criterion.AlignmentRank.Equal1" xml:space="preserve">
-    <value>Minute = #1</value>
   </data>
   <data name="Criterion.AlignmentRank.Inferior" xml:space="preserve">
     <value>Grade &lt; #1</value>
   </data>
-  <data name="Criterion.AlignmentRank.Inferior1" xml:space="preserve">
-    <value>Minute &lt; #1</value>
-  </data>
   <data name="Criterion.AlignmentRank.Superior" xml:space="preserve">
     <value>Grade &gt; #1</value>
-  </data>
-  <data name="Criterion.AlignmentRank.Superior1" xml:space="preserve">
-    <value>Minute &gt; #1</value>
   </data>
   <data name="Criterion.AlignmentSpecialization.Different" xml:space="preserve">
     <value>Spécialisation ≠ #1</value>
@@ -493,16 +481,16 @@
     <value>Kamas &gt; #1</value>
   </data>
   <data name="Criterion.Level.Different" xml:space="preserve">
-    <value>Level ≠ #1</value>
+    <value>Niveau ≠ #1</value>
   </data>
   <data name="Criterion.Level.Equal" xml:space="preserve">
-    <value>Level = #1</value>
+    <value>Niveau = #1</value>
   </data>
   <data name="Criterion.Level.Inferior" xml:space="preserve">
-    <value>Level &lt; #1</value>
+    <value>Niveau &lt; #1</value>
   </data>
   <data name="Criterion.Level.Superior" xml:space="preserve">
-    <value>Level &gt; #1</value>
+    <value>Niveau &gt; #1</value>
   </data>
   <data name="Criterion.Look.Different" xml:space="preserve">
     <value>Apparence ≠ #1</value>
@@ -536,6 +524,18 @@
   </data>
   <data name="Criterion.MaritalStatus.Equal" xml:space="preserve">
     <value>Etre #1</value>
+  </data>
+  <data name="Criterion.Minute.Different" xml:space="preserve">
+    <value>Minute ≠ #1</value>
+  </data>
+  <data name="Criterion.Minute.Equal" xml:space="preserve">
+    <value>Minute = #1</value>
+  </data>
+  <data name="Criterion.Minute.Inferior" xml:space="preserve">
+    <value>Minute &lt; #1</value>
+  </data>
+  <data name="Criterion.Minute.Superior" xml:space="preserve">
+    <value>Minute &gt; #1</value>
   </data>
   <data name="Criterion.MonsterSummon.Different" xml:space="preserve">
     <value>Le monstre #1 n'est pas invoqué dans l'équipe alliée</value>
