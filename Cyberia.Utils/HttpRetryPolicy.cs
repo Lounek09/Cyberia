@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Sockets;
 
 namespace Cyberia.Utils
 {
@@ -30,7 +31,7 @@ namespace Cyberia.Utils
                         return await ExecuteAsync(operation, retryCount + 1);
                     }
 
-                    throw new HttpRequestException($"The request failed with status {response.StatusCode} after the maximum number of reties.");
+                    throw new HttpRequestException($"The request failed after the maximum number of retries.", null, response.StatusCode);
                 }
 
                 return response;
@@ -46,7 +47,7 @@ namespace Cyberia.Utils
 
                 throw;
             }
-            catch (TaskCanceledException e) when (e.InnerException is IOException)
+            catch (HttpRequestException e) when (e.InnerException is IOException)
             {
                 if (retryCount < _maxRetries)
                 {
