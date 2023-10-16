@@ -12,7 +12,7 @@ namespace Cyberia.Api.DatacenterNS
 
         [JsonPropertyName("v")]
         [JsonConverter(typeof(ItemEffectListJsonConverter))]
-        public List<IEffect> Effects { get; init; }
+        public List<IEffect> Effects { get; set; } //TODO: Set as internal set when dotnet8 is out using [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
 
         public ItemStatsData()
         {
@@ -34,7 +34,19 @@ namespace Cyberia.Api.DatacenterNS
 
         internal static ItemsStatsData Build()
         {
-            return Json.LoadFromFile<ItemsStatsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            ItemsStatsData data = Json.LoadFromFile<ItemsStatsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            ItemsStatsCustomData customData = Json.LoadFromFile<ItemsStatsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+
+            foreach (ItemStatsCustomData itemStatsCustomData in customData.ItemsStatsCustom)
+            {
+                ItemStatsData? itemStatsData = data.GetItemStatDataById(itemStatsCustomData.Id);
+                if (itemStatsData is not null)
+                    itemStatsData.Effects = itemStatsCustomData.Effects;
+                else
+                    data.ItemsStats.Add(itemStatsCustomData.ToItemStatsData());
+            }
+
+            return data;
         }
 
         public ItemStatsData? GetItemStatDataById(int id)
