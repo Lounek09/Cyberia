@@ -12,7 +12,7 @@ namespace Cyberia.Api.DatacenterNS
 
         [JsonPropertyName("v")]
         [JsonConverter(typeof(ItemEffectListJsonConverter))]
-        public List<IEffect> Effects { get; set; } //TODO: Set as internal set when dotnet8 is out using [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+        public List<IEffect> Effects { get; init; }
 
         public ItemStatsData()
         {
@@ -41,7 +41,7 @@ namespace Cyberia.Api.DatacenterNS
             {
                 ItemStatsData? itemStatsData = data.GetItemStatDataById(itemStatsCustomData.Id);
                 if (itemStatsData is not null)
-                    itemStatsData.Effects = itemStatsCustomData.Effects;
+                    itemStatsData.Effects.AddRange(itemStatsCustomData.Effects);
                 else
                     data.ItemsStats.Add(itemStatsCustomData.ToItemStatsData());
             }

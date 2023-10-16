@@ -49,7 +49,7 @@ namespace Cyberia.Salamandra.Managers
 
         public static async Task OnSlashCommandExecuted(SlashCommandsExtension _, SlashCommandExecutedEventArgs _1)
         {
-            //TODO: [BOT] Stats des commandes utilisés
+            //TODO: Stats des commandes utilisés
             await Task.Delay(0);
         }
     }
