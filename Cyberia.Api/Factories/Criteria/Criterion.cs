@@ -25,7 +25,7 @@
             string? descriptionValue = Resources.ResourceManager.GetString(descriptionName);
             if (descriptionValue is null)
             {
-                Log.Warning("No translation for {descriptionName}, {raw}", descriptionName, $"{Id}{Operator}{string.Join(',', strParameters)}");
+                Log.Warning("No translation for {descriptionName} ({raw})", descriptionName, $"{Id}{Operator}{string.Join(',', strParameters)}");
                 return new($"{Id} {Operator} #1", strParameters);
             }
 

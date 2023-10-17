@@ -36,7 +36,7 @@ namespace Cyberia.Api.Factories.Effects
                 }));
             }
 
-            Log.Information("Unknown {name} {effectId} (parameters)", nameof(EffectData), EffectId, string.Join(", ", parameters));
+            Log.Information("Unknown {name} {effectId} ({parameters})", nameof(EffectData), EffectId, string.Join(", ", parameters));
             return new(Resources.Effect_Unknown, EffectId.ToString(), string.Join(", ", parameters));
         }
     }
