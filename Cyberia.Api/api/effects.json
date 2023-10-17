@@ -2813,6 +2813,13 @@
       "d": "Dévoreur d'âmes : valeur max",
       "c": 0,
       "o": ""
+    },
+    {
+      "id": 2149,
+      "d": "Résistance d'apparat : #2 / #3",
+      "c": 0,
+      "o": "",
+      "t": true
     }
   ]
 }
