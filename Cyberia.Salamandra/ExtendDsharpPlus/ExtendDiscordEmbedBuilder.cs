@@ -16,23 +16,26 @@ namespace Cyberia.Salamandra.DsharpPlus
     {
         public static DiscordEmbedBuilder AddFields(this DiscordEmbedBuilder embed, string name, IEnumerable<string> rows, bool inline = false)
         {
-            string content = "";
+            StringBuilder builder = new();
 
             foreach (string row in rows)
             {
                 if (row.Length > 1024)
-                    throw new ArgumentException("One row exceed 1024 characters and embed field value cannot exceed this length.");
+                    throw new ArgumentException("One row exceeds 1024 characters and embed field value cannot exceed this length.");
 
-                if (content.Length + row.Length > 1024)
+                if (builder.Length + row.Length > 1024)
                 {
-                    embed.AddField(name, content[..^1], inline);
-                    content = "";
+                    builder.Length--;
+                    embed.AddField(name, builder.ToString(), inline);
+                    builder.Clear();
                 }
 
-                content += $"{row}\n";
+                builder.Append(row);
+                builder.Append('\n'); //Not using builder.AppendLine() because it adds \r\n in windows
             }
 
-            return embed.AddField(name, content[..^1], inline);
+            builder.Length--;
+            return embed.AddField(name, builder.ToString(), inline);
         }
 
         public static DiscordEmbedBuilder AddEffectFields(this DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool inline = false)
