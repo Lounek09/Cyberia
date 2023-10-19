@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.DatacenterNS;
+﻿using Cyberia.Api;
+using Cyberia.Api.DatacenterNS;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.QuestObjectives;
@@ -6,6 +7,8 @@ using Cyberia.Api.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using System.Text;
 
 namespace Cyberia.Salamandra.DsharpPlus
 {
@@ -112,6 +115,39 @@ namespace Cyberia.Salamandra.DsharpPlus
             }
 
             return embed.AddField("Craft :", string.Join(" + ", result), inline);
+        }
+
+        public static DiscordEmbedBuilder AddWeaponInfosField(this DiscordEmbedBuilder embed, ItemWeaponInfosData itemWeaponInfosData, bool twoHanded, ItemTypeData? itemTypeData, bool inline = false)
+        {
+            StringBuilder builder = new();
+
+            builder.AppendFormat("PA : {0}\n", itemWeaponInfosData.ActionPointCost);
+            builder.AppendFormat("Portée : {0} à {1}\n", itemWeaponInfosData.MinRange, itemWeaponInfosData.MaxRange);
+
+            if (itemWeaponInfosData.CriticalBonus != 0)
+                builder.AppendFormat("Bonus coups critique : {0}\n", itemWeaponInfosData.CriticalBonus);
+
+            if (itemWeaponInfosData.CriticalHitRate != 0)
+            {
+                builder.AppendFormat("Critique : 1/{0}", itemWeaponInfosData.CriticalHitRate);
+                builder.Append(itemWeaponInfosData.CriticalFailureRate != 0 ? " - " : "\n");
+            }
+
+            if (itemWeaponInfosData.CriticalFailureRate != 0)
+                builder.AppendFormat("Échec : 1/{0}\n", itemWeaponInfosData.CriticalFailureRate);
+
+            if (itemWeaponInfosData.LineOnly)
+                builder.AppendLine("Lancer en ligne uniquement");
+
+            if (!itemWeaponInfosData.LineOfSight && itemWeaponInfosData.MaxRange > 1)
+                builder.AppendLine("Ne possède pas de ligne de vue");
+
+            builder.Append(twoHanded ? "Arme à deux mains" : "Arme à une main");
+
+            if (itemTypeData is not null && itemTypeData.EffectArea.Id != EffectAreaManager.DefaultArea.Id)
+                builder.AppendFormat("\nZone : {0} {1}", Emojis.Area(itemTypeData.EffectArea.Id), itemTypeData.EffectArea.GetDescription());
+
+            return embed.AddField("Caractéristiques :", builder.ToString(), inline);
         }
 
         private static List<string> GetCriteriaParse(IEnumerable<ICriteriaElement> criteriaElements, Func<string, string>? parametersDecorator = null)

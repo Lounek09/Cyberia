@@ -18,12 +18,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         private readonly IncarnationData _incarnationData;
         private readonly ItemData? _itemData;
+        private readonly ItemTypeData? _itemTypeData;
         private readonly List<SpellData> _spellsData;
 
         public IncarnationMessageBuilder(IncarnationData incarnationData)
         {
             _incarnationData = incarnationData;
             _itemData = incarnationData.GetItemData();
+            _itemTypeData = _itemData?.GetItemTypeData();
             _spellsData = incarnationData.GetSpellsData();
         }
 
@@ -79,41 +81,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
                     embed.AddEffectFields("Effets :", effects);
 
                 if (_itemData.WeaponInfosData is not null)
-                {
-                    StringBuilder caracteristicsBuilder = new();
-                    caracteristicsBuilder.AppendFormat("PA : {0}\n", _itemData.WeaponInfosData.ActionPointCost);
-                    caracteristicsBuilder.AppendFormat("Portée : {0}{1}\n", _itemData.WeaponInfosData.MinRange, (_itemData.WeaponInfosData.MinRange == _itemData.WeaponInfosData.MaxRange ? "" : $" à {_itemData.WeaponInfosData.MaxRange}"));
-
-                    if (_itemData.WeaponInfosData.CriticalBonus != 0)
-                        caracteristicsBuilder.AppendFormat("Bonus coups critique : {0}\n", _itemData.WeaponInfosData.CriticalBonus);
-
-                    if (_itemData.WeaponInfosData.CriticalHitRate != 0)
-                    {
-                        caracteristicsBuilder.AppendFormat("Critique : 1/{0}", _itemData.WeaponInfosData.CriticalHitRate);
-                        caracteristicsBuilder.Append(_itemData.WeaponInfosData.CriticalFailureRate != 0 ? " - " : "\n");
-                    }
-
-                    if (_itemData.WeaponInfosData.CriticalFailureRate != 0)
-                        caracteristicsBuilder.AppendFormat("Échec : 1/{0}\n", _itemData.WeaponInfosData.CriticalFailureRate);
-
-                    if (_itemData.WeaponInfosData.LineOnly)
-                        caracteristicsBuilder.AppendLine("Lancer en ligne uniquement");
-
-                    if (!_itemData.WeaponInfosData.LineOfSight && _itemData.WeaponInfosData.MaxRange != 1)
-                        caracteristicsBuilder.AppendLine("Ne possède pas de ligne de vue");
-
-                    caracteristicsBuilder.Append(_itemData.TwoHanded ? "Arme à deux mains" : "Arme à une main");
-
-                    ItemTypeData? itemType = _itemData.GetItemTypeData();
-                    if (itemType is not null && itemType.EffectArea.Id != EffectAreaManager.DefaultArea.Id)
-                        caracteristicsBuilder.AppendFormat("\nZone : {0} {1}", Emojis.Area(itemType.EffectArea.Id), itemType.EffectArea.GetDescription());
-
-                    embed.AddField("Caractéristiques :", caracteristicsBuilder.ToString());
-                }
+                    embed.AddWeaponInfosField(_itemData.WeaponInfosData, _itemData.TwoHanded, _itemTypeData);
             }
             else
             {
-                embed.WithDescription(Formatter.Italic("Incarnation non existante dans les langs du jeu"))
+                embed.WithDescription(Formatter.Italic("Incarnation non existante dans les données du jeu"))
                     .WithThumbnail($"{Bot.Instance.Api.Config.CdnUrl}/images/items/unknown.png");
             }
 
