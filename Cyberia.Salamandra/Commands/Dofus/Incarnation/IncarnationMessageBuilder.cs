@@ -1,13 +1,10 @@
 ﻿using Cyberia.Api.DatacenterNS;
 using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Managers;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
-
-using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus
 {
@@ -80,8 +77,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 if (effects.Count > 0)
                     embed.AddEffectFields("Effets :", effects);
 
-                if (_itemData.WeaponInfosData is not null)
-                    embed.AddWeaponInfosField(_itemData.WeaponInfosData, _itemData.TwoHanded, _itemTypeData);
+                if (_itemData.WeaponData is not null)
+                    embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, _itemTypeData);
             }
             else
             {

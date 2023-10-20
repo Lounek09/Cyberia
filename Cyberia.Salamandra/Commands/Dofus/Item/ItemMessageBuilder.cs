@@ -83,8 +83,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
             if (_itemData.Criteria.Count > 0)
                 embed.AddCriteriaFields(_itemData.Criteria);
 
-            if (_itemData.WeaponInfosData is not null)
-                embed.AddWeaponInfosField(_itemData.WeaponInfosData, _itemData.TwoHanded, _itemTypeData);
+            if (_itemData.WeaponData is not null)
+                embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, _itemTypeData);
 
             if (_craftData is not null)
                 embed.AddCraftField(_craftData, _craftQte);

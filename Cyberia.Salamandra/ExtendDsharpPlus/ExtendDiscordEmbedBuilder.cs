@@ -1,5 +1,4 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.DatacenterNS;
+﻿using Cyberia.Api.DatacenterNS;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.QuestObjectives;
@@ -120,29 +119,29 @@ namespace Cyberia.Salamandra.DsharpPlus
             return embed.AddField("Craft :", string.Join(" + ", result), inline);
         }
 
-        public static DiscordEmbedBuilder AddWeaponInfosField(this DiscordEmbedBuilder embed, ItemWeaponInfosData itemWeaponInfosData, bool twoHanded, ItemTypeData? itemTypeData, bool inline = false)
+        public static DiscordEmbedBuilder AddWeaponInfosField(this DiscordEmbedBuilder embed, ItemWeaponData itemWeaponData, bool twoHanded, ItemTypeData? itemTypeData, bool inline = false)
         {
             StringBuilder builder = new();
 
-            builder.AppendFormat("PA : {0}\n", itemWeaponInfosData.ActionPointCost);
-            builder.AppendFormat("Portée : {0} à {1}\n", itemWeaponInfosData.MinRange, itemWeaponInfosData.MaxRange);
+            builder.AppendFormat("PA : {0}\n", itemWeaponData.ActionPointCost);
+            builder.AppendFormat("Portée : {0} à {1}\n", itemWeaponData.MinRange, itemWeaponData.MaxRange);
 
-            if (itemWeaponInfosData.CriticalBonus != 0)
-                builder.AppendFormat("Bonus coups critique : {0}\n", itemWeaponInfosData.CriticalBonus);
+            if (itemWeaponData.CriticalBonus != 0)
+                builder.AppendFormat("Bonus coups critique : {0}\n", itemWeaponData.CriticalBonus);
 
-            if (itemWeaponInfosData.CriticalHitRate != 0)
+            if (itemWeaponData.CriticalHitRate != 0)
             {
-                builder.AppendFormat("Critique : 1/{0}", itemWeaponInfosData.CriticalHitRate);
-                builder.Append(itemWeaponInfosData.CriticalFailureRate != 0 ? " - " : "\n");
+                builder.AppendFormat("Critique : 1/{0}", itemWeaponData.CriticalHitRate);
+                builder.Append(itemWeaponData.CriticalFailureRate != 0 ? " - " : "\n");
             }
 
-            if (itemWeaponInfosData.CriticalFailureRate != 0)
-                builder.AppendFormat("Échec : 1/{0}\n", itemWeaponInfosData.CriticalFailureRate);
+            if (itemWeaponData.CriticalFailureRate != 0)
+                builder.AppendFormat("Échec : 1/{0}\n", itemWeaponData.CriticalFailureRate);
 
-            if (itemWeaponInfosData.LineOnly)
+            if (itemWeaponData.LineOnly)
                 builder.AppendLine("Lancer en ligne uniquement");
 
-            if (!itemWeaponInfosData.LineOfSight && itemWeaponInfosData.MaxRange > 1)
+            if (!itemWeaponData.LineOfSight && itemWeaponData.MaxRange > 1)
                 builder.AppendLine("Ne possède pas de ligne de vue");
 
             builder.Append(twoHanded ? "Arme à deux mains" : "Arme à une main");

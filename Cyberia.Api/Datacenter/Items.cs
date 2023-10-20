@@ -72,7 +72,7 @@ namespace Cyberia.Api.DatacenterNS
         }
     }
 
-    public sealed class ItemWeaponInfosData
+    public sealed class ItemWeaponData
     {
         public int CriticalBonus { get; init; }
 
@@ -90,7 +90,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public bool LineOfSight { get; init; }
 
-        public ItemWeaponInfosData()
+        public ItemWeaponData()
         {
 
         }
@@ -141,8 +141,8 @@ namespace Cyberia.Api.DatacenterNS
         public bool TwoHanded { get; init; }
 
         [JsonPropertyName("e")]
-        [JsonConverter(typeof(ItemWeaponInfosDataJsonConverter))]
-        public ItemWeaponInfosData? WeaponInfosData { get; init; }
+        [JsonConverter(typeof(ItemWeaponDataJsonConverter))]
+        public ItemWeaponData? WeaponData { get; init; }
 
         [JsonPropertyName("c")]
         [JsonConverter(typeof(CriteriaListJsonConverter))]
@@ -214,7 +214,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public bool IsWeapon()
         {
-            return WeaponInfosData is not null;
+            return WeaponData is not null;
         }
 
         public CraftData? GetCraftData()

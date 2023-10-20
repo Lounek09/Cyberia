@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Parser.JsonConverter
 {
-    public sealed class ItemWeaponInfosDataJsonConverter : JsonConverter<ItemWeaponInfosData>
+    public sealed class ItemWeaponDataJsonConverter : JsonConverter<ItemWeaponData>
     {
-        public override ItemWeaponInfosData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override ItemWeaponData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType is not JsonTokenType.StartArray)
                 throw new JsonException("Invalid JSON format: expected an array.");
@@ -16,7 +16,7 @@ namespace Cyberia.Api.Parser.JsonConverter
             if (elements is null || elements.Length != 8)
                 throw new JsonException($"Invalid JSON format: expected an array of 8 values, but got a length of {elements?.Length}.");
 
-            return new ItemWeaponInfosData
+            return new ItemWeaponData
             {
                 CriticalBonus = elements[0].GetInt32(),
                 ActionPointCost = elements[1].GetInt32(),
@@ -29,7 +29,7 @@ namespace Cyberia.Api.Parser.JsonConverter
             };
         }
 
-        public override void Write(Utf8JsonWriter writer, ItemWeaponInfosData value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, ItemWeaponData value, JsonSerializerOptions options)
         {
             writer.WriteStartArray();
 
