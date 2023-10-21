@@ -16,9 +16,6 @@ namespace Cyberia.Api.DatacenterNS
         [JsonPropertyName("g")]
         public int GfxId { get; init; }
 
-        [JsonPropertyName("i")]
-        public int ItemId { get; init; }
-
         [JsonPropertyName("s")]
         public List<int> SpellsId { get; init; }
 
@@ -45,7 +42,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ItemId);
+            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(Id);
         }
 
         public List<SpellData> GetSpellsData()
@@ -98,7 +95,7 @@ namespace Cyberia.Api.DatacenterNS
             return Json.LoadFromFile<IncarnationsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public IncarnationData? GetIncarnationDataById(int id)
+        public IncarnationData? GetIncarnationDataByItemId(int id)
         {
             return Incarnations.Find(x => x.Id == id);
         }
@@ -107,11 +104,6 @@ namespace Cyberia.Api.DatacenterNS
         {
             string[] names = name.RemoveDiacritics().Split(' ');
             return Incarnations.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));
-        }
-
-        public IncarnationData? GetIncarnationDataByItemId(int id)
-        {
-            return Incarnations.Find(x => x.ItemId == id);
         }
     }
 }

@@ -22,8 +22,8 @@
         public KnowledgeBookData KnowledgeBookData { get; init; }
         public MapsData MapsData { get; init; }
         public MonstersData MonstersData { get; init; }
-        public TaxCollectorNamesData TaxCollectorNamesData { get; init; }
         public NpcsData NpcsData { get; init; }
+        public PetsData PetsData { get; init; }
         public PvpData PvpData { get; init; }
         public QuestsData QuestsData { get; init; }
         public RanksData RanksData { get; init; }
@@ -35,6 +35,7 @@
         public SpeakingItemsData SpeakingItemsData { get; init; }
         public SpellsData SpellsData { get; init; }
         public StatesData StatesData { get; init; }
+        public TaxCollectorNamesData TaxCollectorNamesData { get; init; }
         public TimeZonesData TimeZonesData { get; init; }
         public TitlesData TitlesData { get; init; }
         public TTGData TTGData { get; init; }
@@ -61,8 +62,8 @@
             KnowledgeBookData = KnowledgeBookData.Build();
             MapsData = MapsData.Build();
             MonstersData = MonstersData.Build();
-            TaxCollectorNamesData = TaxCollectorNamesData.Build();
             NpcsData = NpcsData.Build();
+            PetsData = PetsData.Build();
             PvpData = PvpData.Build();
             QuestsData = QuestsData.Build();
             RanksData = RanksData.Build();
@@ -74,6 +75,7 @@
             SpeakingItemsData = SpeakingItemsData.Build();
             SpellsData = SpellsData.Build();
             StatesData = StatesData.Build();
+            TaxCollectorNamesData = TaxCollectorNamesData.Build();
             TimeZonesData = TimeZonesData.Build();
             TitlesData = TitlesData.Build();
             TTGData = TTGData.Build();

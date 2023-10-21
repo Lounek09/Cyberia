@@ -18,6 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private readonly ItemTypeData? _itemTypeData;
         private readonly ItemSetData? _itemSetData;
         private readonly ItemStatsData? _itemStatsData;
+        private readonly PetData? _petData;
         private readonly CraftData? _craftData;
         private readonly int _craftQte;
         private readonly IncarnationData? _incarnationData;
@@ -28,9 +29,10 @@ namespace Cyberia.Salamandra.Commands.Dofus
             _itemTypeData = itemData.GetItemTypeData();
             _itemSetData = itemData.GetItemSetData();
             _itemStatsData = itemData.GetItemStatData();
+            _petData = _itemData.ItemTypeId == ItemTypeData.TYPE_PET ? Bot.Instance.Api.Datacenter.PetsData.GetPetDataByItemId(_itemData.Id) : null;
             _craftData = itemData.GetCraftData();
             _craftQte = craftQte;
-            _incarnationData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataByItemId(_itemData.Id);
+            _incarnationData = _itemData.IsWeapon() ? Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataByItemId(_itemData.Id) : null;
         }
 
         public static ItemMessageBuilder? Create(int version, string[] parameters)
@@ -85,6 +87,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (_itemData.WeaponData is not null)
                 embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, _itemTypeData);
+
+            if (_petData is not null)
+                embed.AddPetField(_petData);
 
             if (_craftData is not null)
                 embed.AddCraftField(_craftData, _craftQte);

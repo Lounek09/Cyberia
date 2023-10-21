@@ -53,6 +53,8 @@ namespace Cyberia.Api.DatacenterNS
 
     public sealed class ItemTypeData
     {
+        public const int TYPE_PET = 18;
+
         [JsonPropertyName("id")]
         public int Id { get; init; }
 

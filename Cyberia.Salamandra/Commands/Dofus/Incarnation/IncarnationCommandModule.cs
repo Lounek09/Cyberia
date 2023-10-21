@@ -17,7 +17,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                IncarnationData? incarnationData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataById(id);
+                IncarnationData? incarnationData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataByItemId(id);
                 if (incarnationData is not null)
                     response = await new IncarnationMessageBuilder(incarnationData).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }

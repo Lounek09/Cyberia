@@ -52,7 +52,7 @@ namespace Cyberia.Salamandra.DsharpPlus
 
                 string effectDescription = effect.GetDescription().ToString(x => Formatter.Bold(Formatter.Sanitize(x)));
 
-                string areaInfo = (effect.EffectArea.Size == EffectAreaManager.DefaultArea.Size) ? "" : $" - {Emojis.Area(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
+                string areaInfo = effect.EffectArea.Size == EffectAreaManager.DefaultArea.Size ? "" : $" - {Emojis.Area(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
 
                 string effectParse = $"{emoji} {effectDescription}{areaInfo}";
 
@@ -70,7 +70,8 @@ namespace Cyberia.Salamandra.DsharpPlus
 
         public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, IEnumerable<ICriteriaElement> criteria, bool inline = false)
         {
-            return embed.AddFields("Conditions : ", GetCriteriaParse(criteria, x => Formatter.Bold(Formatter.Sanitize(x))), inline);
+            List<string> criteriaParse = GetCriteriaParse(criteria, x => Formatter.Bold(Formatter.Sanitize(x)));
+            return embed.AddFields("Conditions : ", criteriaParse, inline);
         }
 
         public static DiscordEmbedBuilder AddQuestObjectiveFields(this DiscordEmbedBuilder embed, IEnumerable<IQuestObjective> questObjectives, bool inline = false)
@@ -78,7 +79,10 @@ namespace Cyberia.Salamandra.DsharpPlus
             List<string> questObjectivesParse = new();
 
             foreach (IQuestObjective questObjective in questObjectives)
-                questObjectivesParse.Add(questObjective.GetDescription().ToString(x => Formatter.Bold(Formatter.Sanitize(x))));
+            {
+                string questObjectiveDescription = questObjective.GetDescription().ToString(x => Formatter.Bold(Formatter.Sanitize(x)));
+                questObjectivesParse.Add(questObjectiveDescription);
+            }
 
             return embed.AddFields("Objectifs :", questObjectivesParse, inline);
         }
@@ -90,6 +94,7 @@ namespace Cyberia.Salamandra.DsharpPlus
             Dictionary<int, int> ingredients = recursive ? craftData.GetRecursiveIngredients(qte) : craftData.GetIngredients(qte);
             foreach (KeyValuePair<int, int> ingredient in ingredients)
             {
+                string quantity = Formatter.Bold(ingredient.Value.ToStringThousandSeparator());
                 string itemName = Formatter.Sanitize(Bot.Instance.Api.Datacenter.ItemsData.GetItemNameById(ingredient.Key));
 
                 if (!recursive)
@@ -99,7 +104,7 @@ namespace Cyberia.Salamandra.DsharpPlus
                         itemName = Formatter.Bold(itemName);
                 }
 
-                result.Add($"{Formatter.Bold(ingredient.Value.ToStringThousandSeparator())}x {itemName}");
+                result.Add($"{quantity}x {itemName}");
             }
 
             return embed.WithDescription(string.Join('\n', result));
@@ -111,9 +116,10 @@ namespace Cyberia.Salamandra.DsharpPlus
 
             foreach (KeyValuePair<int, int> ingredient in craftData.GetIngredients(qte))
             {
+                string quantity = Formatter.Bold(ingredient.Value.ToStringThousandSeparator());
                 string itemName = Formatter.Sanitize(Bot.Instance.Api.Datacenter.ItemsData.GetItemNameById(ingredient.Key));
 
-                result.Add($"{Formatter.Bold(ingredient.Value.ToStringThousandSeparator())}x {itemName}");
+                result.Add($"{quantity}x {itemName}");
             }
 
             return embed.AddField("Craft :", string.Join(" + ", result), inline);
@@ -123,20 +129,32 @@ namespace Cyberia.Salamandra.DsharpPlus
         {
             StringBuilder builder = new();
 
-            builder.AppendFormat("PA : {0}\n", itemWeaponData.ActionPointCost);
-            builder.AppendFormat("Portée : {0} à {1}\n", itemWeaponData.MinRange, itemWeaponData.MaxRange);
+            string actionPointCost = Formatter.Bold(itemWeaponData.ActionPointCost.ToString());
+            builder.AppendFormat("PA : {0}\n", actionPointCost);
+
+            string minRange = Formatter.Bold(itemWeaponData.MinRange.ToString());
+            string maxRange = Formatter.Bold(itemWeaponData.MaxRange.ToString());
+            builder.AppendFormat("Portée : {0} à {1}\n", minRange, maxRange);
 
             if (itemWeaponData.CriticalBonus != 0)
-                builder.AppendFormat("Bonus coups critique : {0}\n", itemWeaponData.CriticalBonus);
+            {
+                string criticalBonus = Formatter.Bold(itemWeaponData.CriticalBonus.ToString());
+                builder.AppendFormat("Bonus coups critique : {0}\n", criticalBonus);
+            }
 
             if (itemWeaponData.CriticalHitRate != 0)
             {
-                builder.AppendFormat("Critique : 1/{0}", itemWeaponData.CriticalHitRate);
+                string criticalHitRate = Formatter.Bold(itemWeaponData.CriticalHitRate.ToString());
+                builder.AppendFormat("Critique : 1/{0}", criticalHitRate);
                 builder.Append(itemWeaponData.CriticalFailureRate != 0 ? " - " : "\n");
             }
 
             if (itemWeaponData.CriticalFailureRate != 0)
-                builder.AppendFormat("Échec : 1/{0}\n", itemWeaponData.CriticalFailureRate);
+            {
+                string criticalFailureRate = Formatter.Bold(itemWeaponData.CriticalFailureRate.ToString());
+                builder.AppendFormat("Échec : 1/{0}\n", criticalFailureRate);
+            }
+                
 
             if (itemWeaponData.LineOnly)
                 builder.AppendLine("Lancer en ligne uniquement");
@@ -147,9 +165,58 @@ namespace Cyberia.Salamandra.DsharpPlus
             builder.Append(twoHanded ? "Arme à deux mains" : "Arme à une main");
 
             if (itemTypeData is not null && itemTypeData.EffectArea.Id != EffectAreaManager.DefaultArea.Id)
-                builder.AppendFormat("\nZone : {0} {1}", Emojis.Area(itemTypeData.EffectArea.Id), itemTypeData.EffectArea.GetDescription());
+            {
+                string emoji = Emojis.Area(itemTypeData.EffectArea.Id);
+                string description = itemTypeData.EffectArea.GetDescription();
+                builder.AppendFormat("\nZone : {0} {1}", emoji, description);
+            }
 
             return embed.AddField("Caractéristiques :", builder.ToString(), inline);
+        }
+
+        public static DiscordEmbedBuilder AddPetField(this DiscordEmbedBuilder embed, PetData petData, bool inline = false)
+        {
+            StringBuilder builder = new();
+
+            if (petData.MinFoodInterval.HasValue && petData.MaxFoodInterval.HasValue)
+            {
+                string minHoursInterval = Formatter.Bold(petData.MinFoodInterval.Value.TotalHours.ToString());
+                string maxHoursInterval = Formatter.Bold(petData.MaxFoodInterval.Value.TotalHours.ToString());
+                builder.AppendFormat("Repas entre {0}h et {1}h\n", minHoursInterval, maxHoursInterval);
+            }
+
+            foreach (PetFoodsData petFoodsData in petData.Foods)
+            {
+                if (petFoodsData.Effect is not null)
+                {
+                    builder.AppendFormat("{0} {1} :\n", Emojis.Effect(petFoodsData.Effect.EffectId), Formatter.Bold(petFoodsData.Effect.GetDescription()));
+
+                    if (petFoodsData.ItemsId.Count > 0)
+                    {
+                        IEnumerable<string> itemsName = petFoodsData.ItemsId.Select(x => Bot.Instance.Api.Datacenter.ItemsData.GetItemNameById(x));
+                        builder.AppendLine(string.Join(", ", itemsName));
+                    }
+
+                    if (petFoodsData.ItemTypesId.Count > 0)
+                    {
+                        IEnumerable<string> itemTypesName = petFoodsData.ItemTypesId.Select(x => Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(x));
+                        builder.AppendLine(string.Join(", ", itemTypesName));
+                    }
+                        
+
+                    if (petFoodsData.MonstersIdQuantities.Count > 0)
+                    {
+                        foreach (IGrouping<int, KeyValuePair<int, int>> group in petFoodsData.MonstersIdQuantities.GroupBy(x => x.Value))
+                        {
+                            string quantity = Formatter.Bold(group.Key.ToString());
+                            IEnumerable<string> monsterName = group.Select(x => Bot.Instance.Api.Datacenter.MonstersData.GetMonsterNameById(x.Key));
+                            builder.AppendFormat("{0}x {1}\n", quantity, string.Join(", ", monsterName));
+                        }
+                    }
+                }
+            }
+
+            return embed.AddField("Familier :", builder.ToString(), inline);
         }
 
         private static List<string> GetCriteriaParse(IEnumerable<ICriteriaElement> criteriaElements, Func<string, string>? parametersDecorator = null)

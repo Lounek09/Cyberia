@@ -32,7 +32,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 0 &&
                 int.TryParse(parameters[0], out int incarnationId))
             {
-                IncarnationData? incarnartionData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataById(incarnationId);
+                IncarnationData? incarnartionData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataByItemId(incarnationId);
                 if (incarnartionData is not null)
                     return new(incarnartionData);
             }

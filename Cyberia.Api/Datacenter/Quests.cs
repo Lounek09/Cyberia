@@ -135,7 +135,7 @@ namespace Cyberia.Api.DatacenterNS
         public string Description { get; init; }
 
         [JsonPropertyName("r")]
-        [JsonConverter(typeof(QuestStepRewardsJsonConverter))]
+        [JsonConverter(typeof(QuestStepRewardsDataJsonConverter))]
         public QuestStepRewardsData RewardsData { get; init; }
 
         public int DialogQuestionId { get; internal set; }

@@ -43,6 +43,9 @@
     <None Update="api\incarnation.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="api\pets.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="api\runes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
