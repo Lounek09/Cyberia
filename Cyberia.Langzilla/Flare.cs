@@ -16,14 +16,14 @@
         private static string GetFlareExecutablePath()
         {
             if (OperatingSystem.IsWindows())
-                return "flare/flare.exe";
+                return Path.Join("flare", "flare.exe");
 
             if (OperatingSystem.IsLinux())
             {
                 if (Environment.Is64BitOperatingSystem)
-                    return "flare/flare64";
+                    return Path.Join("flare", "flare64");
 
-                return "flare/flare32";
+                return Path.Join("flare", "flare32");
             }
 
             PlatformNotSupportedException exception = new();

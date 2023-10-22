@@ -32,17 +32,29 @@ namespace Cyberia
                 Bot salamandra = Bot.Build(config.BotConfig, cytrus, langs);
                 await salamandra.Launch();
 
-                if (config.EnableCheckCytrus && config.CheckCytrusInterval > 0)
-                    cytrus.Watch(TimeSpan.FromSeconds(10), TimeSpan.FromMinutes(config.CheckCytrusInterval));
+                if (config.EnableCheckCytrus)
+                {
+                    Log.Information("Listening to Cytrus each {interval}", config.CheckCytrusInterval);
+                    cytrus.Listen(TimeSpan.FromSeconds(10), config.CheckCytrusInterval);
+                }
 
-                if (config.EnableCheckLang && config.CheckLangInterval > 0)
-                    langs.WatchAll(LangType.Official, TimeSpan.FromSeconds(20), TimeSpan.FromMinutes(config.CheckLangInterval));
+                if (config.EnableCheckLang)
+                {
+                    Log.Information("Listening to {type} Lang each {interval}", LangType.Official, config.CheckLangInterval);
+                    langs.Listen(LangType.Official, TimeSpan.FromSeconds(20), config.CheckLangInterval);
+                }
+                    
+                if (config.EnableCheckBetaLang)
+                {
+                    Log.Information("Listening to {type} Lang each {interval}", LangType.Beta, config.CheckBetaLangInterval);
+                    langs.Listen(LangType.Beta, TimeSpan.FromSeconds(140), config.CheckBetaLangInterval);
+                }
 
-                if (config.EnableCheckBetaLang && config.CheckBetaLangInterval > 0)
-                    langs.WatchAll(LangType.Beta, TimeSpan.FromSeconds(140), TimeSpan.FromMinutes(config.CheckBetaLangInterval));
-
-                if (config.EnableCheckTemporisLang && config.CheckCytrusInterval > 0)
-                    langs.WatchAll(LangType.Temporis, TimeSpan.FromSeconds(260), TimeSpan.FromMinutes(config.CheckCytrusInterval));
+                if (config.EnableCheckTemporisLang)
+                {
+                    Log.Information("Listening to {type} Lang each {interval}", LangType.Temporis, config.CheckTemporisLangInterval);
+                    langs.Listen(LangType.Temporis, TimeSpan.FromSeconds(260), config.CheckCytrusInterval);
+                }
 
                 await Task.Delay(-1);
             }
