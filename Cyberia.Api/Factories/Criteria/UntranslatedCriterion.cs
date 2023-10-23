@@ -1,10 +1,10 @@
-﻿namespace Cyberia.Api.Factories.Criteria.ServerCriteria
+﻿namespace Cyberia.Api.Factories.Criteria
 {
     public sealed record UntranslatedCriterion : Criterion, ICriterion<UntranslatedCriterion>
     {
-        List<string> Parameters { get; init; }
+        string[] Parameters { get; init; }
 
-        private UntranslatedCriterion(string id, char @operator, List<string> parameters) :
+        private UntranslatedCriterion(string id, char @operator, string[] parameters) :
             base(id, @operator)
         {
             Parameters = parameters;
@@ -12,7 +12,7 @@
 
         public static UntranslatedCriterion Create(string id, char @operator, params string[] parameters)
         {
-            return new(id, @operator, parameters.ToList());
+            return new(id, @operator, parameters);
         }
 
         protected override string GetDescriptionName()
@@ -22,7 +22,7 @@
 
         public Description GetDescription()
         {
-            return GetDescription(Parameters.ToArray());
+            return GetDescription(Parameters);
         }
     }
 }

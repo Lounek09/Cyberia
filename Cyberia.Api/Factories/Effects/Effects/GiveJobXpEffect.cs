@@ -9,14 +9,14 @@ namespace Cyberia.Api.Factories.Effects
         public int JobId { get; init; }
         public int XpAmount { get; init; }
 
-        private GiveJobXpEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int jobId, int xpAmount) :
+        private GiveJobXpEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int jobId, int xpAmount) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             JobId = jobId;
             XpAmount = xpAmount;
         }
 
-        public static GiveJobXpEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static GiveJobXpEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param2, parameters.Param3);
         }

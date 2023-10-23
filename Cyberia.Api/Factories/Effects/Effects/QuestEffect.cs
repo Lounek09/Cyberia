@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int QuestId { get; init; }
 
-        private QuestEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int questId) :
+        private QuestEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int questId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             QuestId = questId;
         }
 
-        public static QuestEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static QuestEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

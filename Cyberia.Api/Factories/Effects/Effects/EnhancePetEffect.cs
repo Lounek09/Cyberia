@@ -9,14 +9,14 @@ namespace Cyberia.Api.Factories.Effects
         public int StatsWeightBonus { get; init; }
         public int ItemId { get; init; }
 
-        private EnhancePetEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int statsWeightBonus, int itemId) :
+        private EnhancePetEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int statsWeightBonus, int itemId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             StatsWeightBonus = statsWeightBonus;
             ItemId = itemId;
         }
 
-        public static EnhancePetEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static EnhancePetEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param2, parameters.Param3);
         }

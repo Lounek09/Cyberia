@@ -9,14 +9,14 @@ namespace Cyberia.Api.Factories.Effects
         public int MapId { get; init; }
         public int Cell { get; init; }
 
-        private TeleportToMap2Effect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int mapId, int cell) :
+        private TeleportToMap2Effect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int mapId, int cell) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             MapId = mapId;
             Cell = cell;
         }
 
-        public static TeleportToMap2Effect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static TeleportToMap2Effect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             string binary1 = Convert.ToString(parameters.Param1, 2);
             string binary2 = Convert.ToString(parameters.Param2, 2);

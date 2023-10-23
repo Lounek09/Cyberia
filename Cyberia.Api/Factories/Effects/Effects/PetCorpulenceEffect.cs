@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public Corpulence Corpulence { get; init; }
 
-        private PetCorpulenceEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, Corpulence corpulence) :
+        private PetCorpulenceEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, Corpulence corpulence) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             Corpulence = corpulence;
         }
 
-        public static PetCorpulenceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static PetCorpulenceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             Corpulence corpulence = parameters.Param2 <= 6 ? parameters.Param3 <= 6 ? Corpulence.Satisfied : Corpulence.Skinny : Corpulence.Obese;
 

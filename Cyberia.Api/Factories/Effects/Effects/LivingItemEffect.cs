@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int ItemId { get; init; }
 
-        private LivingItemEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int itemId) :
+        private LivingItemEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             ItemId = itemId;
         }
 
-        public static LivingItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static LivingItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

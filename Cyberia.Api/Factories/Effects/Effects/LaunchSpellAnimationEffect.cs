@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int GfxId { get; init; }
 
-        private LaunchSpellGfxAnimationEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int gfxId) :
+        private LaunchSpellGfxAnimationEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int gfxId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             GfxId = gfxId;
         }
 
-        public static LaunchSpellGfxAnimationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static LaunchSpellGfxAnimationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

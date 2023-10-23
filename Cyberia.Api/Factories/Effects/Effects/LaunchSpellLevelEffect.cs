@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int SpellLevelId { get; init; }
 
-        private LaunchSpellLevelEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int spellLevelId) :
+        private LaunchSpellLevelEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellLevelId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             SpellLevelId = spellLevelId;
         }
 
-        public static LaunchSpellLevelEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static LaunchSpellLevelEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

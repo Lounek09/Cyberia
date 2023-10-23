@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int Effectiveness { get; init; }
 
-        private PaddockItemEffectivenessEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int effectiveness) :
+        private PaddockItemEffectivenessEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int effectiveness) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             Effectiveness = effectiveness;
         }
 
-        public static PaddockItemEffectivenessEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static PaddockItemEffectivenessEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

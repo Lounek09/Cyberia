@@ -11,7 +11,7 @@ namespace Cyberia.Api.Factories
 
     public static class EffectFactory
     {
-        private static readonly Dictionary<int, Func<int, EffectParameters, int, int, List<ICriteriaElement>, EffectArea, IEffect>> _factory = new()
+        private static readonly Dictionary<int, Func<int, EffectParameters, int, int, CriteriaCollection, EffectArea, IEffect>> _factory = new()
         {
             { -1, PaddockItemEffectivenessEffect.Create },
             { 10, LearnEmoteEffect.Create },
@@ -93,10 +93,12 @@ namespace Cyberia.Api.Factories
             { 2144, SummonMonsterInFightEffect.Create }
         };
 
-        public static IEffect GetEffect(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static IEffect GetEffect(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
-            if (_factory.TryGetValue(effectId, out Func<int, EffectParameters, int, int, List<ICriteriaElement>, EffectArea, IEffect>? builder))
+            if (_factory.TryGetValue(effectId, out Func<int, EffectParameters, int, int, CriteriaCollection, EffectArea, IEffect>? builder))
+            {
                 return builder(effectId, parameters, duration, probability, criteria, effectArea);
+            }
 
             return UntranslatedEffect.Create(effectId, parameters, duration, probability, criteria, effectArea);
         }
@@ -115,7 +117,7 @@ namespace Cyberia.Api.Factories
                 EffectParameters parameters = new(param1, param2, param3, param4);
                 int duration = effect[4].ValueKind == JsonValueKind.Null ? 0 : effect[4].GetInt32();
                 int probability = effect[5].ValueKind == JsonValueKind.Null ? 0 : effect[5].GetInt32();
-                List<ICriteriaElement> criteria = CriterionFactory.GetCriteria(effect[6].GetString() ?? "").ToList();
+                CriteriaCollection criteria = CriterionFactory.GetCriteria(effect[6].GetString() ?? "");
 
                 yield return GetEffect(id, parameters, duration, probability, criteria, effectAreas[i]);
             }

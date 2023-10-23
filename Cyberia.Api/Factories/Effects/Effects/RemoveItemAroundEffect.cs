@@ -9,14 +9,14 @@ namespace Cyberia.Api.Factories.Effects
         public int ItemId { get; init; }
         public int Qte { get; init; }
 
-        private RemoveItemAroundEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int itemId, int qte) :
+        private RemoveItemAroundEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId, int qte) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             ItemId = itemId;
             Qte = qte;
         }
 
-        public static RemoveItemAroundEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static RemoveItemAroundEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3, parameters.Param2);
         }

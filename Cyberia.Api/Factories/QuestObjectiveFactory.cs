@@ -29,7 +29,9 @@ namespace Cyberia.Api.Factories
             {
                 IQuestObjective? questObjective = builder(questObjectiveData);
                 if (questObjective is not null)
+                {
                     return questObjective;
+                }
 
                 return ErroredQuestObjective.Create(questObjectiveData);
             }
@@ -40,7 +42,9 @@ namespace Cyberia.Api.Factories
         public static IEnumerable<IQuestObjective> GetQuestObjectives(IEnumerable<QuestObjectiveData> questObjectivesData)
         {
             foreach (QuestObjectiveData questObjective in questObjectivesData)
+            {
                 yield return GetQuestObjective(questObjective);
+            }
         }
     }
 }

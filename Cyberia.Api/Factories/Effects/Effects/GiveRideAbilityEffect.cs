@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int RideAbilityId { get; init; }
 
-        private GiveRideAbilityEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int rideAbilityId) :
+        private GiveRideAbilityEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rideAbilityId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             RideAbilityId = rideAbilityId;
         }
 
-        public static GiveRideAbilityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static GiveRideAbilityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

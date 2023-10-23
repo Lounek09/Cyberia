@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int TTGCardId { get; init; }
 
-        private AddTTGCardToBinderEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int ttgCardId) :
+        private AddTTGCardToBinderEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int ttgCardId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             TTGCardId = ttgCardId;
         }
 
-        public static AddTTGCardToBinderEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static AddTTGCardToBinderEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

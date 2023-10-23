@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int StateId { get; init; }
 
-        private AddStateEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int stateId) :
+        private AddStateEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int stateId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             StateId = stateId;
         }
 
-        public static AddStateEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static AddStateEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

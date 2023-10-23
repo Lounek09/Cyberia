@@ -9,7 +9,7 @@ namespace Cyberia.Api.Factories.Effects
         int EffectId { get; init; }
         int Duration { get; init; }
         int Probability { get; init; }
-        List<ICriteriaElement> Criteria { get; init; }
+        CriteriaCollection Criteria { get; init; }
         EffectArea EffectArea { get; init; }
 
         EffectData? GetEffectData();
@@ -19,6 +19,6 @@ namespace Cyberia.Api.Factories.Effects
 
     public interface IEffect<T> : IEffect where T : IEffect<T>
     {
-        static abstract T Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea);
+        static abstract T Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection Criteria, EffectArea EffectArea);
     }
 }

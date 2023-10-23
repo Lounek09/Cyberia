@@ -74,7 +74,9 @@ namespace Cyberia.Api.Factories
         public static ICriterion? GetCriterion(string value)
         {
             if (string.IsNullOrEmpty(value) || value.Length < 4)
+            {
                 return null;
+            }
 
             string id = value[0..2];
             char @operator = value[2];
@@ -84,7 +86,9 @@ namespace Cyberia.Api.Factories
             {
                 ICriterion? criterion = builder(id, @operator, args);
                 if (criterion is not null)
+                {
                     return criterion;
+                }
 
                 return ErroredCriterion.Create(id, @operator, args);
             }
@@ -92,8 +96,10 @@ namespace Cyberia.Api.Factories
             return UntranslatedCriterion.Create(id, @operator, args);
         }
 
-        public static IEnumerable<ICriteriaElement> GetCriteria(string value)
+        public static CriteriaCollection GetCriteria(string value)
         {
+            CriteriaCollection criteria = new();
+
             int index = 0;
             while (index < value.Length)
             {
@@ -102,28 +108,32 @@ namespace Cyberia.Api.Factories
                     case '(':
                         (string token, index) = ExtractToken(value, index + 1, ')');
 
-                        yield return new CollectionCriteriaElement(GetCriteria(token));
+                        criteria.Add(GetCriteria(token));
                         break;
                     case '&' or '|':
-                        yield return new LogicalOperatorCriteriaElement(value[index]);
+                        criteria.Add(new CriteriaLogicalOperator(value[index]));
                         break;
                     default:
                         (token, index) = ExtractToken(value, index, '&', '|', ')');
                         index--;
 
-                        ICriteriaElement? criterion = GetCriterion(token.ToString());
+                        ICriteriaElement? criterion = GetCriterion(token);
                         if (criterion is null)
-                            yield break;
+                        {
+                            return criteria;
+                        }
 
-                        yield return criterion;
+                        criteria.Add(criterion);
                         break;
                 }
 
                 index++;
             }
+
+            return criteria;
         }
 
-        private static (string token, int newIndex) ExtractToken(string value, int startIndex, params char[] endChars)
+        private static (string, int) ExtractToken(string value, int startIndex, params char[] endChars)
         {
             int endIndex = startIndex;
             int openParenthesesCount = 0;
@@ -137,13 +147,17 @@ namespace Cyberia.Api.Factories
                         break;
                     case ')':
                         if (openParenthesesCount == 0)
+                        {
                             return (value[startIndex..endIndex], endIndex);
+                        }
 
                         openParenthesesCount--;
                         break;
                     default:
                         if (openParenthesesCount == 0 && endChars.Contains(value[endIndex]))
+                        {
                             return (value[startIndex..endIndex], endIndex);
+                        }
 
                         break;
                 }

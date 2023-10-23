@@ -4,7 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public abstract record Effect(int EffectId, int Duration, int Probability, List<ICriteriaElement> Criteria, EffectArea EffectArea)
+    public abstract record Effect(int EffectId, int Duration, int Probability, CriteriaCollection Criteria, EffectArea EffectArea)
     {
         public EffectData? GetEffectData()
         {

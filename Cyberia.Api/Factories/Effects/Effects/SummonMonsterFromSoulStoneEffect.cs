@@ -10,13 +10,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public List<int> MonstersId { get; init; }
 
-        private SummonMonsterFromSoulStoneEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, List<int> monstersId) :
+        private SummonMonsterFromSoulStoneEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, List<int> monstersId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             MonstersId = monstersId;
         }
 
-        public static SummonMonsterFromSoulStoneEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static SummonMonsterFromSoulStoneEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             List<int> monstersId = parameters.Param4.Split(":").Select(x => int.Parse(x, NumberStyles.HexNumber)).ToList();
 

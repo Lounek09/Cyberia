@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public DateTime DateTime { get; init; }
 
-        private ExchangeableEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, DateTime dateTime) :
+        private ExchangeableEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, DateTime dateTime) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             DateTime = dateTime;
         }
 
-        public static ExchangeableEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static ExchangeableEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, DateManager.GetDateTimeFromEffectParameters(parameters));
         }

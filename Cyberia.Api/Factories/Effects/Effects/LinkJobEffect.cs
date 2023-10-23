@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int JobId { get; init; }
 
-        private LinkJobEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int jobId) :
+        private LinkJobEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int jobId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             JobId = jobId;
         }
 
-        public static LinkJobEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static LinkJobEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param1);
         }

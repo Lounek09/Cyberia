@@ -11,7 +11,7 @@ namespace Cyberia.Api.Factories.Effects
         public int Qte { get; init; }
         public GiveItemTarget Target { get; init; }
 
-        private GiveItemEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int itemId, int qte, GiveItemTarget giveItemTarget) :
+        private GiveItemEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId, int qte, GiveItemTarget giveItemTarget) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             ItemId = itemId;
@@ -19,7 +19,7 @@ namespace Cyberia.Api.Factories.Effects
             Target = giveItemTarget;
         }
 
-        public static GiveItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static GiveItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3, parameters.Param2, (GiveItemTarget)parameters.Param1); ;
         }

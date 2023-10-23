@@ -9,14 +9,14 @@ namespace Cyberia.Api.Factories.Effects
         public int MonsterId { get; init; }
         public int Grade { get; init; }
 
-        private SummonMonsterFromSoulGemEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int monsterId, int grade) :
+        private SummonMonsterFromSoulGemEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int grade) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             MonsterId = monsterId;
             Grade = grade;
         }
 
-        public static SummonMonsterFromSoulGemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static SummonMonsterFromSoulGemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3, parameters.Param1);
         }

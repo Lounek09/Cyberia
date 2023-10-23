@@ -9,14 +9,14 @@ namespace Cyberia.Api.Factories.Effects
         public int MonsterId { get; init; }
         public int Grade { get; init; }
 
-        private KIllAndSummonEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int monsterId, int grade) :
+        private KIllAndSummonEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int grade) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             MonsterId = monsterId;
             Grade = grade;
         }
 
-        public static KIllAndSummonEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static KIllAndSummonEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param2);
         }

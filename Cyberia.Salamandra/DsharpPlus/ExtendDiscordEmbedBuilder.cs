@@ -68,7 +68,7 @@ namespace Cyberia.Salamandra.DsharpPlus
             return embed.AddFields(name, effectsParse, inline);
         }
 
-        public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, IEnumerable<ICriteriaElement> criteria, bool inline = false)
+        public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, CriteriaCollection criteria, bool inline = false)
         {
             List<string> criteriaParse = GetCriteriaParse(criteria, x => Formatter.Bold(Formatter.Sanitize(x)));
             return embed.AddFields("Conditions : ", criteriaParse, inline);
@@ -219,19 +219,19 @@ namespace Cyberia.Salamandra.DsharpPlus
             return embed.AddField("Familier :", builder.ToString(), inline);
         }
 
-        private static List<string> GetCriteriaParse(IEnumerable<ICriteriaElement> criteriaElements, Func<string, string>? parametersDecorator = null)
+        private static List<string> GetCriteriaParse(CriteriaCollection criteria, Func<string, string>? parametersDecorator = null)
         {
             List<string> criteriaParse = new() { "" };
 
-            foreach (ICriteriaElement element in criteriaElements)
+            foreach (ICriteriaElement element in criteria)
             {
                 switch (element)
                 {
-                    case LogicalOperatorCriteriaElement logicalOperator:
+                    case CriteriaLogicalOperator logicalOperator:
                         criteriaParse[^1] += $"{logicalOperator.GetDescription()} ";
                         break;
-                    case CollectionCriteriaElement collection:
-                        List<string> subCriteriaParse = GetCriteriaParse(collection.Criteria, parametersDecorator);
+                    case CriteriaCollection subCriteria:
+                        List<string> subCriteriaParse = GetCriteriaParse(subCriteria, parametersDecorator);
                         criteriaParse[^1] += "(" + subCriteriaParse[0];
 
                         if (subCriteriaParse.Count > 1)

@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         EffectParameters Parameters { get; init; }
 
-        private UntranslatedEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, EffectParameters parameters) :
+        private UntranslatedEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, EffectParameters parameters) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             Parameters = parameters;
         }
 
-        public static UntranslatedEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static UntranslatedEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters);
         }

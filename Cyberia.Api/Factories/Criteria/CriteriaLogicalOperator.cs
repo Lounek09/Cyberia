@@ -1,10 +1,10 @@
 ﻿namespace Cyberia.Api.Factories.Criteria
 {
-    public sealed record LogicalOperatorCriteriaElement : ICriteriaElement
+    public sealed record CriteriaLogicalOperator : ICriteriaElement
     {
         public char Operator { get; init; }
 
-        internal LogicalOperatorCriteriaElement(char @operator)
+        internal CriteriaLogicalOperator(char @operator)
         {
             Operator = @operator;
         }

@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int SpellId { get; init; }
 
-        private ForgetSpellEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int spellId) :
+        private ForgetSpellEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             SpellId = spellId;
         }
 
-        public static ForgetSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static ForgetSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

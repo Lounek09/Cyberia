@@ -9,14 +9,14 @@ namespace Cyberia.Api.Factories.Effects
         public int ItemTypeId { get; init; }
         public int Value { get; init; }
 
-        private IncreaseWeaponDamageEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int itemTypeId, int value) :
+        private IncreaseWeaponDamageEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId, int value) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             ItemTypeId = itemTypeId;
             Value = value;
         }
 
-        public static IncreaseWeaponDamageEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static IncreaseWeaponDamageEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param2);
         }

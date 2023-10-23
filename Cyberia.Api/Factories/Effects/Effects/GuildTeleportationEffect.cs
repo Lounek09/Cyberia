@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public GuildTeleportation GuildTeleportation { get; init; }
 
-        private GuildTeleportationEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, GuildTeleportation guildTeleportation) :
+        private GuildTeleportationEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, GuildTeleportation guildTeleportation) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             GuildTeleportation = guildTeleportation;
         }
 
-        public static GuildTeleportationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static GuildTeleportationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, (GuildTeleportation)parameters.Param3);
         }

@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int AlignmentId { get; init; }
 
-        private AlignmentEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int alignmentId) :
+        private AlignmentEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int alignmentId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             AlignmentId = alignmentId;
         }
 
-        public static AlignmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static AlignmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

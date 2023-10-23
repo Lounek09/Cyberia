@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int TitleId { get; init; }
 
-        private DisplayTitleEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int titleId) :
+        private DisplayTitleEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int titleId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             TitleId = titleId;
         }
 
-        public static DisplayTitleEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static DisplayTitleEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

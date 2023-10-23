@@ -10,7 +10,7 @@ namespace Cyberia.Api.Factories.Effects
         public int RideAbilityId { get; init; }
         public bool Infertile { get; init; }
 
-        private GiveRideEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int rideId, int rideAbilityId, bool infertile) :
+        private GiveRideEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rideId, int rideAbilityId, bool infertile) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             RideId = rideId;
@@ -18,7 +18,7 @@ namespace Cyberia.Api.Factories.Effects
             Infertile = infertile;
         }
 
-        public static GiveRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static GiveRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3, parameters.Param2, parameters.Param1 == 1);
         }

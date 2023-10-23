@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int ItemTypeId { get; init; }
 
-        private CompatibleWithItemTypeEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int itemTypeId) :
+        private CompatibleWithItemTypeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             ItemTypeId = itemTypeId;
         }
 
-        public static CompatibleWithItemTypeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static CompatibleWithItemTypeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
         }

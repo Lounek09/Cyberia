@@ -147,8 +147,8 @@ namespace Cyberia.Api.DatacenterNS
         public ItemWeaponData? WeaponData { get; init; }
 
         [JsonPropertyName("c")]
-        [JsonConverter(typeof(CriteriaListJsonConverter))]
-        public List<ICriteriaElement> Criteria { get; init; }
+        [JsonConverter(typeof(CriteriaCollectionJsonConverter))]
+        public CriteriaCollection Criteria { get; init; }
 
         [JsonPropertyName("s")]
         public int ItemSetId { get; init; }

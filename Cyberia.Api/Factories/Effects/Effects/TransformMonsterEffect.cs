@@ -8,13 +8,13 @@ namespace Cyberia.Api.Factories.Effects
     {
         public int MonsterId { get; init; }
 
-        private TransformIntoMonsterEffect(int effectId, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea, int monsterId) :
+        private TransformIntoMonsterEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             MonsterId = monsterId;
         }
 
-        public static TransformIntoMonsterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, List<ICriteriaElement> criteria, EffectArea effectArea)
+        public static TransformIntoMonsterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param1);
         }
