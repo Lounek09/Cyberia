@@ -40,7 +40,9 @@ namespace Cyberia.Salamandra.Commands.Data
                     content.Add(Formatter.Underline($"{platform.Key.Capitalize()} :"));
 
                     foreach (KeyValuePair<string, string> release in game.Value.GetReleasesFromPlatform(platform.Key))
+                    {
                         content.Add($" - {release.Key.Capitalize()} : {Formatter.InlineCode(release.Value)}");
+                    }
                 }
 
                 embed.AddField($"{game.Value.Name.Capitalize()} ({game.Value.GameId})", string.Join("\n", content));

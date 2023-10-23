@@ -24,17 +24,23 @@ namespace Cyberia.Api
                     d2 = ipCrypt[i] - 48;
                     ip += (d1 & 15) << 4 | d2 & 15;
                     if (i < ipCrypt.Length - 1)
+                    {
                         ip += ".";
+                    }
                 }
 
                 double port = 0;
                 for (int i = 0; i < portCrypt.Length; i++)
+                {
                     port += Math.Pow(64, 2 - i) * Base64(portCrypt[i]);
+                }
 
                 return $"{ip}:{port}";
             }
             else
+            {
                 throw new ArgumentException("L'ip encodée doit faire 11 caractères");
+            }
         }
 
         public static int Base64(char value)
@@ -47,20 +53,26 @@ namespace Cyberia.Api
             StringBuilder result = new(value);
 
             for (int i = 0; i < parameters.Length; i++)
+            {
                 result.Replace($"#{i + 1}", parameters[i]);
+            }
 
             int indexOfOpenBrace = value.IndexOf('{');
             while (indexOfOpenBrace != -1)
             {
                 int indexOfCloseBrace = value.IndexOf('}', indexOfOpenBrace);
                 if (indexOfCloseBrace == -1)
+                {
                     break;
+                }
 
                 string replacement = value[(indexOfOpenBrace + 1)..indexOfCloseBrace];
                 for (int i = 0; i < parameters.Length; i++)
                 {
                     if (!value[(indexOfOpenBrace + 1)..indexOfCloseBrace].Contains($"~{i + 1}"))
+                    {
                         continue;
+                    }
 
                     if (string.IsNullOrEmpty(parameters[i]))
                     {
@@ -72,7 +84,9 @@ namespace Cyberia.Api
                 }
 
                 if (replacement.Contains('~'))
+                {
                     replacement = string.Empty;
+                }
 
                 result.Replace(value[indexOfOpenBrace..(indexOfCloseBrace + 1)], replacement);
 

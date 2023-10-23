@@ -34,7 +34,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 IncarnationData? incarnartionData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataByItemId(incarnationId);
                 if (incarnartionData is not null)
+                {
                     return new(incarnartionData);
+                }
             }
 
             return null;
@@ -51,10 +53,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 .AddEmbed(await EmbedBuilder());
 
             if (_spellsData.Count > 0)
+            {
                 message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData));
+            }
 
             if (_itemData is not null)
+            {
                 message.AddComponents(ItemComponentsBuilder.ItemButtonBuilder(_itemData));
+            }
 
             return (T)message;
         }
@@ -75,10 +81,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
                 List<IEffect> effects = _incarnationData.GetEffects();
                 if (effects.Count > 0)
+                {
                     embed.AddEffectFields("Effets :", effects);
+                }
 
                 if (_itemData.WeaponData is not null)
+                {
                     embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, _itemTypeData);
+                }
             }
             else
             {
@@ -87,7 +97,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
 
             if (_spellsData.Count > 0)
+            {
                 embed.AddField("Sorts :", string.Join('\n', _spellsData.Select(x => $"- {Formatter.Bold(x.Name)}")));
+            }
 
             return embed;
         }

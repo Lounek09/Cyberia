@@ -19,15 +19,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 ItemData? itemData = Bot.Instance.Api.Datacenter.ItemsData.GetItemDataById(id);
                 if (itemData is not null)
+                {
                     response = await new ItemMessageBuilder(itemData).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
             else
             {
                 List<ItemData> itemsData = Bot.Instance.Api.Datacenter.ItemsData.GetItemsDataByName(value);
                 if (itemsData.Count == 1)
+                {
                     response = await new ItemMessageBuilder(itemsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
                 else if (itemsData.Count > 1)
+                {
                     response = await new PaginatedItemMessageBuilder(itemsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Item introuvable");

@@ -61,10 +61,14 @@ namespace Cyberia.Api.Managers
             double multiplicator = runeData.GetStatAmountExtractableToObtain(type) / (runeData.GetPercentStatExtractable(itemLvl, statAmount) / 100) / statAmount;
 
             if (multiplicator <= MIN_MULTIPLICATOR)
+            {
                 return 100;
+            }
 
             if (multiplicator >= MAX_MULTIPLICATOR)
+            {
                 return 0;
+            }
 
             return (multiplicator - MAX_MULTIPLICATOR) / (MIN_MULTIPLICATOR - MAX_MULTIPLICATOR) * 100;
         }
@@ -76,6 +80,7 @@ namespace Cyberia.Api.Managers
             double amontBeforeRa = amountExtractable;
             double transitionalRaRate = runeData.GetStatAmountExtractableToObtain(RuneType.RA);
             if (runeData.HasRa && amontBeforeRa > transitionalRaRate)
+            {
                 for (int i = 0; i < Math.Floor(amontBeforeRa / transitionalRaRate); i++)
                 {
                     runesAmont[0] += 4;
@@ -84,10 +89,12 @@ namespace Cyberia.Api.Managers
 
                     amountExtractable -= transitionalRaRate;
                 }
+            }
 
             double amontBeforePa = amountExtractable;
             double transitionalPaRate = runeData.GetStatAmountExtractableToObtain(RuneType.PA);
             if (runeData.HasPa && amontBeforePa > transitionalPaRate)
+            {
                 for (int i = 0; i < Math.Floor(amontBeforePa / transitionalPaRate); i++)
                 {
                     runesAmont[0] += 2;
@@ -95,6 +102,7 @@ namespace Cyberia.Api.Managers
 
                     amountExtractable -= transitionalPaRate;
                 }
+            }
 
             amountExtractable /= runeData.GetStatAmountExtractableToObtain(RuneType.BA);
 

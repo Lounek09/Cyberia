@@ -116,17 +116,34 @@ namespace Cyberia.Api.DatacenterNS
             tab[0, 5] = "Age ";
 
             foreach (List<int> l in VitalityBoostCost)
+            {
                 tab[l[1], 0] = "|" + l[0].ToString().PadLeft(4) + " ";
+            }
+
             foreach (List<int> l in WisdomBoostCost)
+            {
                 tab[l[1], 1] = "|" + l[0].ToString().PadLeft(4) + " ";
+            }
+
             foreach (List<int> l in StrengthBoostCost)
+            {
                 tab[l[1], 2] = "|" + l[0].ToString().PadLeft(4) + " ";
+            }
+
             foreach (List<int> l in IntelligenceBoostCost)
+            {
                 tab[l[1], 3] = "|" + l[0].ToString().PadLeft(4) + " ";
+            }
+
             foreach (List<int> l in LuckBoostCost)
+            {
                 tab[l[1], 4] = "|" + l[0].ToString().PadLeft(4) + " ";
+            }
+
             foreach (List<int> l in AgilityBoostCost)
+            {
                 tab[l[1], 5] = "|" + l[0].ToString().PadLeft(4) + " ";
+            }
 
             string value = "`    |1 / " + (Id == 11 ? 2 : 1) + "|2 / 1|3 / 1|4 / 1|5 / 1`\n";
 
@@ -136,9 +153,13 @@ namespace Cyberia.Api.DatacenterNS
                 for (int j = 0; j < 6; j++)
                 {
                     if (tab[j, i] is null)
+                    {
                         value += "|     ";
+                    }
                     else
+                    {
                         value += tab[j, i];
+                    }
                 }
                 value += "`\n";
             }
@@ -194,13 +215,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public BreedData? GetBreedDataByName(string name)
         {
-            return Breeds.Find(x => x.Name.RemoveDiacritics().Equals(name.RemoveDiacritics()));
+            return Breeds.Find(x => ExtendString.Normalize(x.Name).Equals(ExtendString.Normalize(name)));
         }
 
         public List<BreedData> GetBreedsDataByName(string name)
         {
-            string[] names = name.RemoveDiacritics().Split(' ');
-            return Breeds.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));
+            string[] names = ExtendString.Normalize(name).Split(' ');
+            return Breeds.FindAll(x => names.All(ExtendString.Normalize(x.Name).Contains));
         }
 
         public string GetBreedNameById(int id)

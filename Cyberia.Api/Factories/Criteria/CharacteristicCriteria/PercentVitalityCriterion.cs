@@ -13,7 +13,9 @@
         public static PercentVitalityCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && int.TryParse(parameters[0], out int percentVitality))
+            {
                 return new(id, @operator, percentVitality);
+            }
 
             return null;
         }

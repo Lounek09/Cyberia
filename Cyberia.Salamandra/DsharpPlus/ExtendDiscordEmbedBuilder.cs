@@ -20,7 +20,9 @@ namespace Cyberia.Salamandra.DsharpPlus
             foreach (string row in rows)
             {
                 if (row.Length > 1024)
+                {
                     throw new ArgumentException("One row exceeds 1024 characters and embed field value cannot exceed this length.");
+                }
 
                 if (builder.Length + row.Length > 1024)
                 {
@@ -101,7 +103,9 @@ namespace Cyberia.Salamandra.DsharpPlus
                 {
                     CraftData? subCraftData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
                     if (subCraftData is not null)
+                    {
                         itemName = Formatter.Bold(itemName);
+                    }
                 }
 
                 result.Add($"{quantity}x {itemName}");
@@ -156,10 +160,14 @@ namespace Cyberia.Salamandra.DsharpPlus
             }
 
             if (itemWeaponData.LineOnly)
+            {
                 builder.AppendLine("Lancer en ligne uniquement");
+            }
 
             if (!itemWeaponData.LineOfSight && itemWeaponData.MaxRange > 1)
+            {
                 builder.AppendLine("Ne possède pas de ligne de vue");
+            }
 
             builder.Append(twoHanded ? "Arme à deux mains" : "Arme à une main");
 
@@ -233,7 +241,9 @@ namespace Cyberia.Salamandra.DsharpPlus
                         criteriaParse[^1] += "(" + subCriteriaParse[0];
 
                         if (subCriteriaParse.Count > 1)
+                        {
                             criteriaParse.AddRange(subCriteriaParse.GetRange(1, subCriteriaParse.Count - 1));
+                        }
 
                         criteriaParse[^1] += ")";
                         criteriaParse.Add("");
@@ -246,7 +256,9 @@ namespace Cyberia.Salamandra.DsharpPlus
             }
 
             if (string.IsNullOrEmpty(criteriaParse[^1]))
+            {
                 criteriaParse.RemoveAt(criteriaParse.Count - 1);
+            }
 
             return criteriaParse;
         }

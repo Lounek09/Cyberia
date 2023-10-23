@@ -29,7 +29,9 @@ namespace Cyberia.Langzilla
         {
             string dataFilePath = Path.Join(LangsWatcher.GetOutputDirectoryPath(type, language), DATA_FILE_NAME);
             if (File.Exists(dataFilePath))
+            {
                 return Json.LoadFromFile<LangsData>(dataFilePath);
+            }
 
             return new(type, language);
         }
@@ -61,14 +63,16 @@ namespace Cyberia.Langzilla
 
         public List<Lang> GetLangsByName(string name)
         {
-            return Langs.FindAll(x => x.Name.RemoveDiacritics().Contains(name.RemoveDiacritics()));
+            return Langs.FindAll(x => ExtendString.Normalize(x.Name).Contains(ExtendString.Normalize(name)));
         }
 
         internal async Task<List<Lang>> FetchLangsAsync(bool force)
         {
             string versionFile = await FetchVersionFileAsync(force);
             if (string.IsNullOrEmpty(versionFile))
+            {
                 return new();
+            }
 
             return await ProcessLangsAsync(versionFile);
         }
@@ -86,7 +90,9 @@ namespace Cyberia.Langzilla
                 bool isMoreRecent = lastModifiedHeader > LastModified;
 
                 if (isMoreRecent)
+                {
                     LastModified = lastModifiedHeader;
+                }
 
                 if (isMoreRecent || force)
                 {
@@ -124,9 +130,13 @@ namespace Cyberia.Langzilla
 
                     int index = Langs.FindIndex(x => x.Name.Equals(lang.Name));
                     if (index == -1)
+                    {
                         Langs.Add(lang);
+                    }
                     else
+                    {
                         Langs[index] = lang;
+                    }
                 }
             }
 

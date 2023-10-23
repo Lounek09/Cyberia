@@ -92,7 +92,9 @@ namespace Cyberia.Utils
                         JsonNode resultChild = current[key]!.Diff(model[key]!);
 
                         if (resultChild.AsObject().Count > 0)
+                        {
                             result[key] = resultChild;
+                        }
                     }
                 }
                 else if (current is JsonArray currentArray && model is JsonArray modelArray)
@@ -104,7 +106,9 @@ namespace Cyberia.Utils
                     foreach (JsonNode? node in removedValues)
                     {
                         if (node is not null)
+                        {
                             tempArray.Add(node.Deserialize<JsonNode>());
+                        }
                     }
                     result["-"] = tempArray;
 
@@ -112,7 +116,9 @@ namespace Cyberia.Utils
                     foreach (JsonNode? node in addedValues)
                     {
                         if (node is not null)
+                        {
                             tempArray.Add(node.Deserialize<JsonNode>());
+                        }
                     }
                     result["+"] = tempArray;
                 }
@@ -132,14 +138,18 @@ namespace Cyberia.Utils
             JsonNode? modelNode = JsonNode.Parse(model);
 
             if (currentNode is null || modelNode is null)
+            {
                 return "";
+            }
 
             JsonNode resultNode = currentNode.Diff(modelNode);
 
             string result = resultNode.ToJsonString(_options);
 
             if (result.Equals("{}"))
+            {
                 return "";
+            }
 
             return result;
         }
@@ -152,20 +162,28 @@ namespace Cyberia.Utils
                 foreach (KeyValuePair<string, JsonNode?> child in jsonObject)
                 {
                     if (fields.Any(x => x.Equals(child.Key)))
+                    {
                         fieldsFound.Add(child.Key);
+                    }
                     else if (child.Value is JsonObject or JsonArray)
+                    {
                         child.Value.RemoveFieldsRecursively(fields);
+                    }
                 }
 
                 foreach (string field in fieldsFound)
+                {
                     jsonObject.Remove(field);
+                }
             }
             else if (value is JsonArray jsonArray)
             {
                 foreach (JsonNode? child in jsonArray)
                 {
                     if (child is JsonObject or JsonArray)
+                    {
                         child.RemoveFieldsRecursively(fields);
+                    }
                 }
             }
         }

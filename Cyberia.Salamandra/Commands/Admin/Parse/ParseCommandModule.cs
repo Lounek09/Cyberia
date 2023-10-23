@@ -26,7 +26,9 @@ namespace Cyberia.Salamandra.Commands.Admin
                 await ctx.CreateResponseAsync(embed);
             }
             else
+            {
                 await ctx.CreateResponseAsync("Valeur incorrect !");
+            }
         }
     }
 }

@@ -15,7 +15,9 @@ namespace Cyberia.Api.Factories.Criteria.QuestCriteria
         public static QuestCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && int.TryParse(parameters[0], out int questId))
+            {
                 return new(id, @operator, questId);
+            }
 
             return null;
         }

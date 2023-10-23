@@ -70,7 +70,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 }
 
                 if (housesData.Count > 0 && !string.IsNullOrEmpty(search))
+                {
                     return new(housesData, searchCategory, search, selectedPageIndex);
+                }
             }
 
             return null;

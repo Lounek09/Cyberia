@@ -35,7 +35,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 CraftData? craftData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftDataById(craftId);
                 if (craftData is not null)
+                {
                     return new(craftData, qte, recursive);
+                }
             }
 
             return null;
@@ -55,7 +57,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordButtonComponent> buttons = ButtonsBuilder();
             if (buttons.Count > 0)
+            {
                 message.AddComponents(buttons);
+            }
 
             return (T)message;
         }
@@ -114,7 +118,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             };
 
             if (_itemData is not null)
+            {
                 buttons.Add(ItemComponentsBuilder.ItemButtonBuilder(_itemData, _qte));
+            }
 
             return buttons;
         }

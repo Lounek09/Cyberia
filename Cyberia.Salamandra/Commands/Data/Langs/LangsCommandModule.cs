@@ -32,7 +32,10 @@ namespace Cyberia.Salamandra.Commands.Data
             {
                 await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} dans toutes les langues...");
                 foreach (Language language in Enum.GetValues<Language>())
+                {
                     await Bot.Instance.LangsWatcher.LaunchAsync(type, language, force);
+                }
+
                 await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check des langs {Formatter.Bold(typeStr)} dans toutes les langues terminé"));
             }
             else

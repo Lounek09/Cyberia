@@ -12,15 +12,21 @@ namespace Cyberia.Salamandra.Commands.Data
         {
             string? value = ctx.OptionValue.ToString();
             if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
+            {
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+            }
 
             string? typeStr = CreateFromOption<string>(ctx, "typeStr");
             if (string.IsNullOrEmpty(typeStr))
+            {
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+            }
 
             string? languageStr = CreateFromOption<string>(ctx, "languageStr");
             if (string.IsNullOrEmpty(languageStr))
+            {
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+            }
 
             HashSet<DiscordAutoCompleteChoice> choices = new();
 
@@ -28,7 +34,9 @@ namespace Cyberia.Salamandra.Commands.Data
             Language language = Enum.Parse<Language>(languageStr);
 
             foreach (Lang lang in Bot.Instance.LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangsByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+            {
                 choices.Add(new(lang.Name, lang.Name));
+            }
 
             return Task.FromResult(choices.AsEnumerable());
         }

@@ -13,7 +13,9 @@ namespace Cyberia.Salamandra.Commands
             DiscordInteractionDataOption? option = ctx.Options.FirstOrDefault(x => x.Name.Equals(name));
 
             if (option is not null && option.Value is T value)
+            {
                 return value;
+            }
 
             return default;
         }

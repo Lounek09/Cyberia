@@ -19,15 +19,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 ItemSetData? itemSetData = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetDataById(id);
                 if (itemSetData is not null)
+                {
                     response = await new ItemSetMessageBuilder(itemSetData).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
             else
             {
                 List<ItemSetData> itemSetsData = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetsDataByName(value);
                 if (itemSetsData.Count == 1)
+                {
                     response = await new ItemSetMessageBuilder(itemSetsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
                 else if (itemSetsData.Count > 1)
+                {
                     response = await new PaginatedItemSetMessageBuilder(itemSetsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Panoplie introuvable");

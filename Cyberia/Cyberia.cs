@@ -45,7 +45,7 @@ namespace Cyberia
                     Log.Information("Listening to {type} Lang each {interval}", LangType.Official, config.CheckLangInterval);
                     langs.Listen(LangType.Official, TimeSpan.FromSeconds(20), config.CheckLangInterval);
                 }
-                    
+
                 if (config.EnableCheckBetaLang)
                 {
                     Log.Information("Listening to {type} Lang each {interval}", LangType.Beta, config.CheckBetaLangInterval);

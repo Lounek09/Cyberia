@@ -31,7 +31,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 MapData? mapData = Bot.Instance.Api.Datacenter.MapsData.GetMapDataById(mapId);
                 if (mapData is not null)
+                {
                     return new(mapData);
+                }
             }
 
             return null;
@@ -49,7 +51,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordButtonComponent> components = ButtonsBuilder();
             if (components.Count > 0)
+            {
                 message.AddComponents(components);
+            }
 
             return (T)message;
         }
@@ -70,16 +74,24 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<MapData> mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord);
             if (mapsData.Count > 1)
+            {
                 components.Add(MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_mapData));
+            }
 
             if (_mapSubAreaData is not null)
+            {
                 components.Add(MapComponentsBuilder.PaginatedMapMapSubAreaButtonBuilder(_mapSubAreaData));
+            }
 
             if (_mapAreaData is not null)
+            {
                 components.Add(MapComponentsBuilder.PaginatedMapMapAreaButtonBuilder(_mapAreaData));
+            }
 
             if (_houseData is not null)
+            {
                 components.Add(HouseComponentsBuilder.HouseButtonBuilder(_houseData));
+            }
 
             return components;
         }

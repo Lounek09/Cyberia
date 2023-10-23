@@ -119,11 +119,15 @@ namespace Cyberia.Api.Parser
             foreach (string line in lines)
             {
                 if (_ignoredLines.Any(x => line.EndsWith(x)))
+                {
                     continue;
+                }
 
                 string[] lineSplit = line.Split(KEY_VALUE_SEPARATOR, 2);
                 if (lineSplit.Length < 2)
+                {
                     continue;
+                }
 
                 Match key = KeyRegex().Match(lineSplit[0]);
                 string currentLineName = key.Groups["name"].Value;
@@ -134,21 +138,32 @@ namespace Cyberia.Api.Parser
                     if (!string.IsNullOrEmpty(lastLineName))
                     {
                         json.Remove(json.Length - 1, 1);
-                        if (lastLineHasId) json.Append(']');
+                        if (lastLineHasId)
+                        {
+                            json.Append(']');
+                        }
+
                         json.Append(',');
                     }
 
                     json.AppendFormat("\"{0}\":", currentLineName);
-                    if (currentLineHasId) json.Append('[');
+                    if (currentLineHasId)
+                    {
+                        json.Append('[');
+                    }
 
                     lastLineName = currentLineName;
                     lastLineHasId = currentLineHasId;
                 }
 
                 if (key.Groups["intId"].Success)
+                {
                     json.AppendFormat("{{\"id\":{0},", key.Groups["intId"].Value);
+                }
                 else if (key.Groups["stringId"].Success)
+                {
                     json.AppendFormat("{{\"id\":\"{0}\",", key.Groups["stringId"].Value);
+                }
 
                 string value = lineSplit[1].Replace("' + '\"' + '", @"\""");
                 value = EscapedQuoteRegex().Replace(value, "\"").Replace(@"\'", "'");
@@ -157,12 +172,18 @@ namespace Cyberia.Api.Parser
                 if (currentLineHasId)
                 {
                     if (value.StartsWith('{'))
+                    {
                         json.Append(value[1..^1]);
+                    }
                     else
+                    {
                         json.AppendFormat("\"v\":{0}}}", value[..^1]);
+                    }
                 }
                 else
+                {
                     json.Append(value[..^1]);
+                }
 
                 json.Append(',');
             }
@@ -170,7 +191,10 @@ namespace Cyberia.Api.Parser
             if (json.Length > 0)
             {
                 json.Remove(json.Length - 1, 1);
-                if (lastLineHasId) json.Append(']');
+                if (lastLineHasId)
+                {
+                    json.Append(']');
+                }
             }
 
             return "{" + json.ToString() + "}";

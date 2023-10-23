@@ -65,7 +65,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 }
 
                 if (mapsData.Count > 0 && !string.IsNullOrEmpty(search))
+                {
                     return new(mapsData, searchCategory, search, selectedPageIndex);
+                }
             }
 
             return null;

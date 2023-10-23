@@ -16,7 +16,9 @@ namespace Cyberia.Salamandra.Commands.Admin
             foreach (SpellData spell in Bot.Instance.Api.Datacenter.SpellsData.Spells)
             {
                 if (spell.SpellLevelData1?.Effects.Find(x => x.EffectId == 111) is not null)
+                {
                     await ctx.Channel.SendMessageAsync(spell.Name);
+                }
             }
         }
     }

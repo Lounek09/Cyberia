@@ -22,15 +22,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 CraftData? craftData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftDataById(id);
                 if (craftData is not null)
+                {
                     response = await new CraftMessageBuilder(craftData, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
             else
             {
                 List<CraftData> craftsData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftsDataByItemName(value);
                 if (craftsData.Count == 1)
+                {
                     response = await new CraftMessageBuilder(craftsData[0], (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
                 else if (craftsData.Count > 1)
+                {
                     response = await new PaginatedCraftMessageBuilder(craftsData, value, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Craft introuvable");

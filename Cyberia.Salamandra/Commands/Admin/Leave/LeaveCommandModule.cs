@@ -19,7 +19,9 @@ namespace Cyberia.Salamandra.Commands.Admin
                 await guild.LeaveAsync();
 
                 if (guild.Id != ctx.Guild.Id)
+                {
                     await ctx.CreateResponseAsync($"Bot kick du discord {Formatter.Bold(guild.Name)} ({guild.Id}) !");
+                }
             }
             catch
             {

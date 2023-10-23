@@ -27,7 +27,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 List<MonsterData> monstersData = Bot.Instance.Api.Datacenter.MonstersData.GetMonstersDataByName(parameters[2]);
                 if (monstersData.Count > 0)
+                {
                     return new PaginatedMonsterMessageBuilder(monstersData, parameters[2], selectedPageIndex);
+                }
             }
 
             return null;

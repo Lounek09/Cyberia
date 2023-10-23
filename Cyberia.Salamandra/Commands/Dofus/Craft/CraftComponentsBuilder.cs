@@ -21,7 +21,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 ItemData? itemData = craftData.GetItemData();
                 if (itemData is not null)
+                {
                     options.Add(new(itemData.Name.WithMaxLength(100), CraftMessageBuilder.GetPacket(craftData.Id, qte), craftData.Id.ToString()));
+                }
             }
 
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne un item pour calculer son craft", options, disable);

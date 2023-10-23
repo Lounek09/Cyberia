@@ -38,7 +38,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 SpellData? spellData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellDataById(spellId);
                 if (spellData is not null)
+                {
                     return new SpellMessageBuilder(spellData, selectedLevel);
+                }
             }
 
             return null;
@@ -56,11 +58,15 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordButtonComponent> buttons = Buttons1Builder();
             if (buttons.Count > 0)
+            {
                 message.AddComponents(buttons);
+            }
 
             buttons = Buttons2Builder();
             if (buttons.Count > 0)
+            {
                 message.AddComponents(buttons);
+            }
 
             return (T)message;
         }
@@ -84,14 +90,20 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
                 List<StateData> requiredStatesData = _spellLevelData.GetRequiredStatesData().ToList();
                 if (requiredStatesData.Count > 0)
+                {
                     embed.AddField("Etats requis :", string.Join(", ", requiredStatesData.Select(x => x.Name)), true);
+                }
 
                 List<StateData> forbiddenStatesData = _spellLevelData.GetForbiddenStatesData().ToList();
                 if (forbiddenStatesData.Count > 0)
+                {
                     embed.AddField("Etats interdits :", string.Join(", ", forbiddenStatesData.Select(x => x.Name)), true);
+                }
 
                 if (_spellData.Id == 101 || _spellData.Id == 2083)
+                {
                     embed.AddField("Effets :", "Fuck roulette");
+                }
                 else
                 {
                     List<IEffect> effects = _spellLevelData.Effects;
@@ -100,17 +112,30 @@ namespace Cyberia.Salamandra.Commands.Dofus
                     List<IEffect> criticalEffects = _spellLevelData.CriticalEffects;
 
                     if (effects.Count == 0 && trapEffects.Count == 0 && glyphEffects.Count == 0 && criticalEffects.Count == 0)
+                    {
                         embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE);
+                    }
                     else
                     {
                         if (effects.Count > 0)
+                        {
                             embed.AddEffectFields("Effets :", effects);
+                        }
+
                         if (trapEffects.Count > 0)
+                        {
                             embed.AddEffectFields("Effets piege :", trapEffects);
+                        }
+
                         if (glyphEffects.Count > 0)
+                        {
                             embed.AddEffectFields("Effets glyphe :", glyphEffects);
+                        }
+
                         if (criticalEffects.Count > 0)
+                        {
                             embed.AddEffectFields("Effets critiques :", criticalEffects);
+                        }
                     }
                 }
 
@@ -144,7 +169,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             for (int i = 1; i < 6; i++)
             {
                 if (_spellData.GetSpellLevelData(i) is not null)
+                {
                     components.Add(new(ButtonStyle.Primary, GetPacket(_spellData.Id, i), i.ToString(), _selectedLevel == i));
+                }
             }
 
             return components;
@@ -155,13 +182,19 @@ namespace Cyberia.Salamandra.Commands.Dofus
             List<DiscordButtonComponent> components = new();
 
             if (_spellData.GetSpellLevelData(6) is not null)
+            {
                 components.Add(new(ButtonStyle.Primary, GetPacket(_spellData.Id, 6), "6", _selectedLevel == 6));
+            }
 
             if (_breedData is not null)
+            {
                 components.Add(BreedComponentsBuilder.BreedButtonBuilder(_breedData));
+            }
 
             if (_incarnationData is not null)
+            {
                 components.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData));
+            }
 
             return components;
         }

@@ -16,9 +16,13 @@ namespace Cyberia.Salamandra.Commands.Dofus
             BreedData? breedData = Bot.Instance.Api.Datacenter.BreedsData.GetBreedDataByName(breedName);
 
             if (breedData is null)
+            {
                 await ctx.CreateResponseAsync("Classe introuvable");
+            }
             else
+            {
                 await ctx.CreateResponseAsync(await new BreedMessageBuilder(breedData).GetMessageAsync<DiscordInteractionResponseBuilder>());
+            }
         }
     }
 }

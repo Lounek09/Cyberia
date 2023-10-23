@@ -11,7 +11,9 @@ namespace Cyberia.Salamandra.Commands.Data
         {
             List<DiscordApplicationCommandOptionChoice> choices = new();
             foreach (LangType type in Enum.GetValues<LangType>())
+            {
                 choices.Add(new(type.ToString(), type.ToString()));
+            }
 
             return Task.FromResult(choices.AsEnumerable());
         }

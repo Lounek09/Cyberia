@@ -11,11 +11,15 @@ namespace Cyberia.Salamandra.Managers
         public static async void OnCheckLangFinished(object? _, CheckLangFinishedEventArgs e)
         {
             if (e.UpdatedLangs.Count == 0)
+            {
                 return;
+            }
 
             DiscordForumChannel? forum = await GetLangForumChannel();
             if (forum is null)
+            {
                 return;
+            }
 
             DiscordThreadChannel thread = await CreateThreadAsync(forum, e.Type, e.Language);
 
@@ -33,13 +37,17 @@ namespace Cyberia.Salamandra.Managers
         {
             ulong id = Bot.Instance.Config.LangForumChannelId;
             if (id == 0)
+            {
                 return null;
+            }
 
             try
             {
                 DiscordChannel channel = await Bot.Instance.Client.GetChannelAsync(id);
                 if (channel is DiscordForumChannel forum)
+                {
                     return forum;
+                }
 
                 Log.Error("The given lang channel is not a forum (id:{id})", id);
             }
@@ -61,11 +69,15 @@ namespace Cyberia.Salamandra.Managers
 
             DiscordForumTag? typeTag = GetDiscordForumTagByName(forum, type.ToString());
             if (typeTag is not null)
+            {
                 postBuilder.AddTag(typeTag);
+            }
 
             DiscordForumTag? languageTag = GetDiscordForumTagByName(forum, language.ToString());
             if (languageTag is not null)
+            {
                 postBuilder.AddTag(languageTag);
+            }
 
             DiscordForumPostStarter post = await forum.CreateForumPostAsync(postBuilder);
 
@@ -84,7 +96,9 @@ namespace Cyberia.Salamandra.Managers
 
             string diffFilePath = lang.GetDiffFilePath();
             if (!File.Exists(diffFilePath))
+            {
                 return await thread.SendMessageAsync(message);
+            }
 
             using FileStream fileStream = File.OpenRead(diffFilePath);
             return await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", fileStream));

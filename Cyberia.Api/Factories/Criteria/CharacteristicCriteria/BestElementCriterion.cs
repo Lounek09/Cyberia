@@ -15,7 +15,9 @@ namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
         public static BestElementCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && Enum.TryParse(parameters[0], out Element element))
+            {
                 return new(id, @operator, element);
+            }
 
             return null;
         }

@@ -33,7 +33,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 HouseData? houseData = Bot.Instance.Api.Datacenter.HousesData.GetHouseDataById(houseId);
                 if (houseData is not null)
+                {
                     return new(houseData, selectedMapIndex);
+                }
             }
 
             return null;
@@ -50,7 +52,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 .AddEmbed(await EmbedBuilder());
 
             if (_outdoorMapData != null || _mapsData.Count > 0)
+            {
                 message.AddComponents(HouseMapsSelectBuilder());
+            }
 
             return (T)message;
         }
@@ -66,7 +70,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             MapData? currentMapData = _selectedMapIndex == -1 ? _outdoorMapData : _mapsData[_selectedMapIndex];
             if (currentMapData is not null)
+            {
                 embed.WithImageUrl(currentMapData.GetImagePath());
+            }
 
             return Task.FromResult(embed);
         }
@@ -76,10 +82,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
             List<DiscordSelectComponentOption> options = new();
 
             if (_outdoorMapData is not null)
+            {
                 options.Add(new("Extérieur", GetPacket(_houseData.Id), isDefault: _selectedMapIndex == -1));
+            }
 
             for (int i = 0; i < _mapsData.Count; i++)
+            {
                 options.Add(new($"Pièce {i + 1}", GetPacket(_houseData.Id, i), isDefault: i == _selectedMapIndex));
+            }
 
             return new(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne une pièce pour l'afficher", options);
         }

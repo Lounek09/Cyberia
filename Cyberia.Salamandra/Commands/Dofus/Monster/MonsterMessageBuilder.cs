@@ -39,7 +39,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 MonsterData? monsterData = Bot.Instance.Api.Datacenter.MonstersData.GetMonsterDataById(monsterId);
                 if (monsterData is not null)
+                {
                     return new MonsterMessageBuilder(monsterData, selectedGrade);
+                }
             }
 
             return null;
@@ -57,11 +59,15 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordButtonComponent> buttons = Buttons1Builder();
             if (buttons.Count > 0)
+            {
                 message.AddComponents(buttons);
+            }
 
             buttons = Buttons2Builder();
             if (buttons.Count > 0)
+            {
                 message.AddComponents(buttons);
+            }
 
             return (T)message;
         }
@@ -73,24 +79,39 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 .WithThumbnail(await _monsterData.GetImagePath());
 
             if (_monsterSuperRaceData is not null)
+            {
                 embed.AddField("Ecosystème :", _monsterSuperRaceData.Name, true);
+            }
 
             if (_monsterRaceData is not null)
+            {
                 embed.AddField("Race :", _monsterRaceData.Name, true);
+            }
 
             if (_monsterGradeData is not null)
             {
                 if (_alignmentData is not null)
+                {
                     embed.AddField("Alignement :", _alignmentData.Name, true);
+                }
 
                 StringBuilder caracteristicsBuilder = new();
                 caracteristicsBuilder.AppendFormat("Niveau. {0}\n", Formatter.Bold(_monsterGradeData.Level.ToString()));
                 if (_monsterGradeData.LifePoint is not null)
+                {
                     caracteristicsBuilder.AppendFormat("{0}{1} ", Emojis.HEALTH, Formatter.Bold(_monsterGradeData.LifePoint.Value.ToStringThousandSeparator()));
+                }
+
                 if (_monsterGradeData.ActionPoint is not null)
+                {
                     caracteristicsBuilder.AppendFormat("{0}{1} ", Emojis.ACTION_POINTS, Formatter.Bold(_monsterGradeData.ActionPoint.Value.ToStringThousandSeparator()));
+                }
+
                 if (_monsterGradeData.MovementPoint is not null)
+                {
                     caracteristicsBuilder.AppendFormat("{0}{1} ", Emojis.MOVEMENT_POINTS, Formatter.Bold(_monsterGradeData.MovementPoint.Value.ToStringThousandSeparator()));
+                }
+
                 caracteristicsBuilder.AppendFormat("{0}{1}% ", Emojis.DODGE_AP, Formatter.Bold(_monsterGradeData.GetActionPointDodge().ToStringThousandSeparator()));
                 caracteristicsBuilder.AppendFormat("{0}{1}%\n", Emojis.DODGE_MP, Formatter.Bold(_monsterGradeData.GetMovementPointDodge().ToStringThousandSeparator()));
                 caracteristicsBuilder.AppendFormat("{0}{1}% ", Emojis.RES_NEUTRAL, Formatter.Bold(_monsterGradeData.GetNeutralResistance().ToStringThousandSeparator()));
@@ -101,7 +122,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 embed.AddField("Caractéristiques :", caracteristicsBuilder.ToString());
 
                 if (!string.IsNullOrEmpty(_monsterData.TrelloUrl))
+                {
                     embed.AddField(Constant.ZERO_WIDTH_SPACE, _monsterData.TrelloUrl);
+                }
             }
 
             return embed;
@@ -114,7 +137,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             for (int i = 1; i < 6; i++)
             {
                 if (_monsterData.GetMonsterGradeData(i) is not null)
+                {
                     components.Add(new(ButtonStyle.Primary, GetPacket(_monsterData.Id, i), i.ToString(), _selectedGrade == i));
+                }
             }
 
             return components;
@@ -127,7 +152,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             for (int i = 6; i < 11; i++)
             {
                 if (_monsterData.GetMonsterGradeData(i) is not null)
+                {
                     components.Add(new(ButtonStyle.Primary, GetPacket(_monsterData.Id, i), i.ToString(), _selectedGrade == i));
+                }
             }
 
             return components;

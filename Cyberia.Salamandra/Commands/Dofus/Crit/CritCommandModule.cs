@@ -30,12 +30,16 @@ namespace Cyberia.Salamandra.Commands.Dofus
                     .WithDescription($"Tu seras {Formatter.Bold($"1/{rate}")} au {Formatter.Bold($"1/{target}")} avec {Formatter.Bold(number.ToString())}crit et {Formatter.Bold(agility.ToString())}agi");
 
                 if (rate != 2 && agilityNeeded > -1)
+                {
                     embed.Description += $"\nPour atteindre le 1/2 il te faudra au minimum {Formatter.Bold(agilityNeeded.ToString())}agi !";
+                }
 
                 await ctx.CreateResponseAsync(embed);
             }
             else
+            {
                 await ctx.CreateResponseAsync("Paramètre incorrect");
+            }
         }
     }
 }

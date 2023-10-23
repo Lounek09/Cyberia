@@ -26,7 +26,9 @@ namespace Cyberia.Api.Factories.Effects
         public Description GetDescription()
         {
             if (IsLinkedToAccount())
+            {
                 return GetDescription(Resources.Effect_LinkedToAccount);
+            }
 
             return GetDescription(DateTime.ToString("dd/MM/yyy HH:mm"));
         }

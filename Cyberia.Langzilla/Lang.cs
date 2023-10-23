@@ -68,12 +68,16 @@ namespace Cyberia.Langzilla
         {
             string currentDecompiledFilePath = GetCurrentDecompiledFilePath();
             if (!File.Exists(currentDecompiledFilePath))
+            {
                 return "";
+            }
             string[] currentLines = File.ReadAllLines(currentDecompiledFilePath);
 
             string modelDecompiledFilePath = lang == this ? GetOldDecompiledFilePath() : lang.GetCurrentDecompiledFilePath();
             if (!File.Exists(modelDecompiledFilePath))
+            {
                 return string.Join('\n', currentLines.Select(x => $"+ {x}"));
+            }
             string[] modelLines = File.ReadAllLines(modelDecompiledFilePath);
 
             List<(int Index, string Row)> diff = new();
@@ -87,11 +91,15 @@ namespace Cyberia.Langzilla
             foreach (KeyValuePair<int, string> row in currentRows)
             {
                 if (!modelRows.RemoveByValue(row.Value, true))
+                {
                     diff.Add((row.Key, $"+ {row.Value}"));
+                }
             }
 
             foreach (KeyValuePair<int, string> row in modelRows)
+            {
                 diff.Add((row.Key, $"- {row.Value}"));
+            }
 
             return string.Join('\n', diff.OrderBy(x => x.Index).Select(x => x.Row));
         }
@@ -129,7 +137,9 @@ namespace Cyberia.Langzilla
         {
             string filePath = GetFilePath();
             if (!File.Exists(filePath))
+            {
                 return;
+            }
 
             string currentDecompiledFilePath = GetCurrentDecompiledFilePath();
             string oldDecompiledFilePath = GetOldDecompiledFilePath();
@@ -146,13 +156,17 @@ namespace Cyberia.Langzilla
                 string temp = line.Trim();
 
                 if (temp.Length == 0 || temp.Equals("}") || temp.Equals("frame 1 {"))
+                {
                     continue;
+                }
 
                 content.Add(temp);
             }
 
             if (File.Exists(currentDecompiledFilePath))
+            {
                 File.Move(currentDecompiledFilePath, oldDecompiledFilePath, true);
+            }
             File.WriteAllLines(currentDecompiledFilePath, content, Encoding.UTF8);
             File.Delete(flareFilePath);
         }

@@ -15,7 +15,9 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
         public static ItemCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && int.TryParse(parameters[0], out int itemId))
+            {
                 return new(id, @operator, itemId);
+            }
 
             return null;
         }

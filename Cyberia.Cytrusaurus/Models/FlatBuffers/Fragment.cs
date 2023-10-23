@@ -66,7 +66,9 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
             Dictionary<int, GameFile> files = new();
 
             for (int i = 0; i < FilesLength; i++)
+            {
                 files.Add(i, Files(i).Value);
+            }
 
             return files;
         }
@@ -83,7 +85,9 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
 
             Dictionary<string, int> oldFileKeys = new();
             foreach (KeyValuePair<int, GameFile> file in oldFiles)
+            {
                 oldFileKeys[file.Value.Name] = file.Key;
+            }
 
             HashSet<int> processedKeys = new();
             foreach (KeyValuePair<int, GameFile> file in currentFiles)
@@ -93,16 +97,21 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
                     GameFile oldFile = oldFiles[oldKey];
 
                     if (!file.Value.GetHashArray().SequenceEqual(oldFile.GetHashArray()))
+                    {
                         diff.Add(new(file.Key, $"~ {file.Value.Name} {(oldFile.Size == file.Value.Size ? "" : $"({oldFile.Size} -> {file.Value.Size})")}"));
+                    }
 
                     processedKeys.Add(oldKey);
+                    continue;
                 }
-                else
-                    diff.Add(new(file.Key, $"+ {file.Value.Name}"));
+
+                diff.Add(new(file.Key, $"+ {file.Value.Name}"));
             }
 
             foreach (int key in oldFiles.Keys.Except(processedKeys))
+            {
                 diff.Add(new(key, $"- {oldFiles[key].Name}"));
+            }
 
             return diff.OrderBy(x => x.Key).Select(x => x.Value).ToList();
         }

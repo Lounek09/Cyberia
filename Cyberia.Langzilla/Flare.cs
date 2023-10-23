@@ -16,12 +16,16 @@
         private static string GetFlareExecutablePath()
         {
             if (OperatingSystem.IsWindows())
+            {
                 return Path.Join("flare", "flare.exe");
+            }
 
             if (OperatingSystem.IsLinux())
             {
                 if (Environment.Is64BitOperatingSystem)
+                {
                     return Path.Join("flare", "flare64");
+                }
 
                 return Path.Join("flare", "flare32");
             }

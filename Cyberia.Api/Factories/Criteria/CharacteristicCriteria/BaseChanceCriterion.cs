@@ -13,7 +13,9 @@
         public static BaseChanceCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && int.TryParse(parameters[0], out int chance))
+            {
                 return new(id, @operator, chance);
+            }
 
             return null;
         }

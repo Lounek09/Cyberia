@@ -27,7 +27,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 List<ItemData> itemsData = Bot.Instance.Api.Datacenter.ItemsData.GetItemsDataByName(parameters[2]);
                 if (itemsData.Count > 0)
+                {
                     return new(itemsData, parameters[2], selectedPageIndex);
+                }
             }
 
             return null;

@@ -309,13 +309,19 @@
         public static string Quest(bool isRepeatable, bool isAccount)
         {
             if (isRepeatable && isAccount)
+            {
                 return ACCOUNT_REPEATABLE_QUEST;
+            }
 
             if (isAccount)
+            {
                 return ACCOUNT_QUEST;
+            }
 
             if (isRepeatable)
+            {
                 return REPEATABLE_QUEST;
+            }
 
             return QUEST;
         }

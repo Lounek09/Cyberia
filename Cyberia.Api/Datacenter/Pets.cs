@@ -72,7 +72,9 @@ namespace Cyberia.Api.DatacenterNS
             {
                 MonsterData? monsterData = DofusApi.Instance.Datacenter.MonstersData.GetMonsterDataById(pair.Key);
                 if (monsterData is not null)
+                {
                     MonstersDataQuantities.Add(monsterData, pair.Value);
+                }
             }
 
             return MonstersDataQuantities;

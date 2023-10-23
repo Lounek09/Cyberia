@@ -15,7 +15,9 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
         public static GenderCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && Enum.TryParse(parameters[0], out Gender gender))
+            {
                 return new(id, @operator, gender);
+            }
 
             return null;
         }

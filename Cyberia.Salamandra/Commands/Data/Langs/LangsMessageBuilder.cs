@@ -50,11 +50,15 @@ namespace Cyberia.Salamandra.Commands.Data
 
             DiscordSelectComponent select = Select1Builder();
             if (select.Options.Count > 0)
+            {
                 message.AddComponents(select);
+            }
 
             DiscordSelectComponent select2 = Select2Builder();
             if (select2.Options.Count > 0)
+            {
                 message.AddComponents(select2);
+            }
 
             return (T)message;
         }
@@ -73,12 +77,16 @@ namespace Cyberia.Salamandra.Commands.Data
                 content.AppendLine(Formatter.MaskedUrl(Formatter.Bold(_langsData.GetVersionFileName()), new Uri(_langsData.GetVersionFileUrl())));
 
                 foreach (Lang lang in _langsData.Langs)
+                {
                     content.AppendLine($"- {Formatter.MaskedUrl(lang.Name, new Uri(lang.GetFileUrl()))} {Formatter.InlineCode(lang.Version.ToString())}");
+                }
 
                 embed.WithDescription(content.ToString());
             }
             else
+            {
                 embed.WithDescription("void (°~°)");
+            }
 
             return Task.FromResult(embed);
         }
@@ -89,7 +97,9 @@ namespace Cyberia.Salamandra.Commands.Data
 
             LangType[] types = Enum.GetValues<LangType>();
             for (int i = 0; i < types.Length && i < 25; i++)
+            {
                 options.Add(new(types[i].ToString(), GetPacket(types[i], _language), isDefault: (int)_type == i));
+            }
 
             return new(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne un type pour l'afficher", options);
         }
@@ -100,7 +110,9 @@ namespace Cyberia.Salamandra.Commands.Data
 
             Language[] languages = Enum.GetValues<Language>();
             for (int i = 0; i < languages.Length && i < 25; i++)
+            {
                 options.Add(new(languages[i].ToString(), GetPacket(_type, languages[i]), isDefault: (int)_language == i));
+            }
 
             return new(InteractionManager.SelectComponentPacketBuilder(1), "Sélectionne une langue pour l'afficher", options);
         }

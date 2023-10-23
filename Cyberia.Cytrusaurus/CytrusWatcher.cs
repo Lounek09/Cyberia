@@ -69,24 +69,32 @@ namespace Cyberia.Cytrusaurus
             }
 
             if (cytrus is null)
+            {
                 return;
+            }
 
             string lastCytrus = "{}";
             if (File.Exists(CYTRUS_PATH))
+            {
                 lastCytrus = File.ReadAllText(CYTRUS_PATH);
+            }
 
             OldCytrusData = CytrusData;
             CytrusData = Json.Load<CytrusData>(cytrus);
 
             string diff = Json.Diff(cytrus, lastCytrus);
             if (string.IsNullOrEmpty(diff))
+            {
                 return;
+            }
 
             Log.Information("Cytrus update detected :\n{diff}", diff);
             NewCytrusDetected?.Invoke(this, new NewCytrusDetectedEventArgs(CytrusData, OldCytrusData, diff));
 
             if (File.Exists(CYTRUS_PATH))
+            {
                 File.Move(CYTRUS_PATH, OLD_CYTRUS_PATH, true);
+            }
             File.WriteAllText(CYTRUS_PATH, cytrus);
         }
     }

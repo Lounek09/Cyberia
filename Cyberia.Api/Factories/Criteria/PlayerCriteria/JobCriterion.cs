@@ -17,10 +17,14 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
         public static JobCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 1 && int.TryParse(parameters[0], out int jobId) && int.TryParse(parameters[1], out int level))
+            {
                 return new(id, @operator, jobId, level);
+            }
 
             if (parameters.Length > 0 && int.TryParse(parameters[0], out jobId))
+            {
                 return new(id, @operator, jobId, null);
+            }
 
             return null;
         }
@@ -33,7 +37,9 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
         protected override string GetDescriptionName()
         {
             if (Level.HasValue)
+            {
                 return $"Criterion.Job.{GetOperatorDescriptionName()}.Level";
+            }
 
             return $"Criterion.Job.{GetOperatorDescriptionName()}";
         }
@@ -43,7 +49,9 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
             string jobName = DofusApi.Instance.Datacenter.JobsData.GetJobNameById(JobId);
 
             if (Level.HasValue)
+            {
                 return GetDescription(jobName, Level.Value);
+            }
 
             return GetDescription(jobName);
         }

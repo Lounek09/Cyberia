@@ -27,9 +27,13 @@ namespace Cyberia.Salamandra.Managers
                 foreach (SlashCheckBaseAttribute check in slashExecutionChecksFailedException.FailedChecks)
                 {
                     if (check is SlashRequireOwnerAttribute)
+                    {
                         await e.Context.CreateResponseAsync("Cette commande est utilisable uniquement par le propriétaire du bot !", true);
+                    }
                     else if (check is SlashRequireGuildAttribute)
+                    {
                         await e.Context.CreateResponseAsync("Cette commande n'est utilisable que dans un serveur !", true);
+                    }
                 }
             }
             else

@@ -27,7 +27,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 List<IncarnationData> incarnationsData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationsDataByName(parameters[2]);
                 if (incarnationsData.Count > 0)
+                {
                     return new(incarnationsData, parameters[2], selectedPageIndex);
+                }
             }
 
             return null;

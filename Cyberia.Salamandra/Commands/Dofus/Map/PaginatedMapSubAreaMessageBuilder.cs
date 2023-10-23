@@ -27,7 +27,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 List<MapSubAreaData> mapSubAreasData = Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreasDataByName(parameters[2]);
                 if (mapSubAreasData.Count > 0)
+                {
                     return new(mapSubAreasData, parameters[2], selectedPageIndex);
+                }
             }
 
             return null;

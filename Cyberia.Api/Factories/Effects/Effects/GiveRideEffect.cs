@@ -39,10 +39,14 @@ namespace Cyberia.Api.Factories.Effects
 
             RideAbilityData? rideAbility = GetRideAbilityData();
             if (rideAbility is not null)
+            {
                 value += $" {rideAbility.Name}";
+            }
 
             if (Infertile)
+            {
                 value += $" {Resources.Infertile}";
+            }
 
             return GetDescription(value);
         }

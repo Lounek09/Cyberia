@@ -20,7 +20,9 @@ namespace Cyberia.Api.Factories.Criteria.FightCriteria
         public static StateCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && int.TryParse(parameters[0], out int stateId))
+            {
                 return new(id, @operator, stateId);
+            }
 
             return null;
         }

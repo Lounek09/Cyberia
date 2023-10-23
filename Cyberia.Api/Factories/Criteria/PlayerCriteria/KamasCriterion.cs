@@ -13,7 +13,9 @@
         public static KamasCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && int.TryParse(parameters[0], out int kamasId))
+            {
                 return new(id, @operator, kamasId);
+            }
 
             return null;
         }

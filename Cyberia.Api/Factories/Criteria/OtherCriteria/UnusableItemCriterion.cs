@@ -13,7 +13,9 @@
         public static UnusableItemCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0)
+            {
                 return new(id, @operator, parameters[0]);
+            }
 
             return null;
         }

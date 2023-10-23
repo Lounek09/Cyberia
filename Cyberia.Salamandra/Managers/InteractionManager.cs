@@ -69,7 +69,9 @@ namespace Cyberia.Salamandra.Managers
         public static async Task OnComponentInteractionCreated(DiscordClient _, ComponentInteractionCreateEventArgs e)
         {
             if (e.User.IsBot || string.IsNullOrEmpty(e.Id))
+            {
                 return;
+            }
 
             DiscordInteractionResponseBuilder response = new();
 

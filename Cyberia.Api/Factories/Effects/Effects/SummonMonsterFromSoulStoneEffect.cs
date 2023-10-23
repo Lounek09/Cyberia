@@ -23,18 +23,16 @@ namespace Cyberia.Api.Factories.Effects
             return new(effectId, duration, probability, criteria, effectArea, monstersId);
         }
 
-        public List<MonsterData> GetMonstersData()
+        public IEnumerable<MonsterData> GetMonstersData()
         {
-            List<MonsterData> monsters = new();
-
             foreach (int monsterId in MonstersId)
             {
                 MonsterData? monster = DofusApi.Instance.Datacenter.MonstersData.GetMonsterDataById(monsterId);
                 if (monster is not null)
-                    monsters.Add(monster);
+                {
+                    yield return monster;
+                }
             }
-
-            return monsters;
         }
 
         public Description GetDescription()

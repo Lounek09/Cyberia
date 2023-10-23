@@ -28,7 +28,9 @@ namespace Cyberia.Api.Factories.Effects
         {
             SpellLevelData? spellLevel = GetSpellLevelData();
             if (spellLevel is null)
+            {
                 return GetDescription($"{nameof(SpellLevelData)} {PatternDecoder.Description(Resources.Unknown_Data, SpellLevelId)}", 0);
+            }
 
             string spellName = DofusApi.Instance.Datacenter.SpellsData.GetSpellNameById(spellLevel.SpellId);
 

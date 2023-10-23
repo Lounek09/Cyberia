@@ -15,7 +15,9 @@
         public string GetDescription()
         {
             if (Id == EffectAreaManager.DefaultArea.Id)
+            {
                 return "";
+            }
 
             string? effectAreaName = Resources.ResourceManager.GetString($"EffectArea.{Id}");
             if (effectAreaName is null)
@@ -35,7 +37,9 @@
         public static EffectArea GetEffectArea(string value)
         {
             if (value.Length == 2)
+            {
                 return new(value[0], PatternDecoder.Base64(value[1]));
+            }
 
             return new(-1, 0);
         }
@@ -43,7 +47,9 @@
         public static IEnumerable<EffectArea> GetEffectAreas(string values)
         {
             foreach (string value in values.SplitByLength(2))
+            {
                 yield return GetEffectArea(value);
+            }
         }
     }
 }

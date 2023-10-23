@@ -17,10 +17,14 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
         public static AlignmentFeatCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 1 && int.TryParse(parameters[0], out int alignmentFeatId) && int.TryParse(parameters[1], out int level))
+            {
                 return new(id, @operator, alignmentFeatId, level);
+            }
 
             if (parameters.Length > 0 && int.TryParse(parameters[0], out alignmentFeatId))
+            {
                 return new(id, @operator, alignmentFeatId, null);
+            }
 
             return null;
         }
@@ -33,7 +37,9 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
         protected override string GetDescriptionName()
         {
             if (Level.HasValue)
+            {
                 return $"Criterion.AlignmentFeat.{GetOperatorDescriptionName()}.Level";
+            }
 
             return $"Criterion.AlignmentFeat.{GetOperatorDescriptionName()}";
         }
@@ -43,7 +49,9 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
             string alignmentName = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentFeatNameById(AlignmentFeatId);
 
             if (Level.HasValue)
+            {
                 return GetDescription(alignmentName, Level.Value);
+            }
 
             return GetDescription(alignmentName);
         }

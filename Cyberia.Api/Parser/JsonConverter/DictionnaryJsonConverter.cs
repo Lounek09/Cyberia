@@ -11,7 +11,9 @@ namespace Cyberia.Api.Parser.JsonConverter
             JsonElement element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
 
             if (element.ValueKind is not JsonValueKind.Array)
+            {
                 throw new JsonException("Invalid JSON format: expected an array.");
+            }
 
             foreach (JsonElement pairElement in element.EnumerateArray())
             {

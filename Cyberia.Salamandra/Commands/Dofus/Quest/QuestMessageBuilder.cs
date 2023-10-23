@@ -38,7 +38,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 QuestData? questData = Bot.Instance.Api.Datacenter.QuestsData.GetQuestDataById(questId);
                 if (questData is not null)
+                {
                     return new QuestMessageBuilder(questData, selectedQuestStepIndex);
+                }
             }
 
             return null;
@@ -56,11 +58,15 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             DiscordSelectComponent select = Select1Builder();
             if (select.Options.Count > 1)
+            {
                 message.AddComponents(select);
+            }
 
             DiscordSelectComponent select2 = Select2Builder();
             if (select2.Options.Count > 0)
+            {
                 message.AddComponents(select2);
+            }
 
             return (T)message;
         }
@@ -76,42 +82,62 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
                 int optimalLevel = _questStepData.OptimalLevel;
                 if (optimalLevel > 0)
+                {
                     embed.AddField("Niveau optimal :", optimalLevel.ToString());
+                }
 
                 if (_dialogQuestionData is not null)
+                {
                     embed.AddField("Dialogue :", _dialogQuestionData.Question);
+                }
 
                 if (_questStepData.QuestObjectives.Count > 0)
+                {
                     embed.AddQuestObjectiveFields(_questStepData.QuestObjectives);
+                }
 
                 if (_questStepData.HasReward())
                 {
                     StringBuilder rewards = new();
 
                     if (_questStepData.RewardsData.Experience > 0)
+                    {
                         rewards.AppendFormat("{0} {1}\n", _questStepData.RewardsData.Experience.ToStringThousandSeparator(), Emojis.XP);
+                    }
 
                     if (_questStepData.RewardsData.Kamas > 0)
+                    {
                         rewards.AppendFormat("{0} {1}\n", _questStepData.RewardsData.Kamas.ToStringThousandSeparator(), Emojis.KAMAS);
+                    }
 
                     Dictionary<ItemData, int> itemsReward = _questStepData.RewardsData.GetItemsDataQuantities();
                     if (itemsReward.Count > 0)
+                    {
                         rewards.AppendLine(string.Join(", ", itemsReward.Select(x => $"{Formatter.Bold(x.Value.ToString())}x {x.Key.Name}")));
+                    }
 
                     List<EmoteData> emotesReward = _questStepData.RewardsData.GetEmotesData().ToList();
                     if (emotesReward.Count > 0)
+                    {
                         rewards.AppendFormat("Emotes : {0}\n", string.Join(", ", emotesReward.Select(x => x.Name)));
+                    }
 
                     List<JobData> jobsReward = _questStepData.RewardsData.GetJobsData().ToList();
                     if (jobsReward.Count > 0)
+                    {
                         rewards.AppendFormat("Métiers : {0}\n", string.Join(", ", jobsReward.Select(x => x.Name)));
+                    }
 
                     List<SpellData> spellsReward = _questStepData.RewardsData.GetSpellsData().ToList();
                     if (emotesReward.Count > 0)
+                    {
                         rewards.AppendFormat("Sorts : {0}", string.Join(", ", spellsReward.Select(x => x.Name)));
+                    }
 
                     if (rewards.Length > 0)
+                    {
                         embed.AddField("Récompenses :", rewards.ToString());
+                    }
                 }
             }
 
@@ -123,7 +149,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             List<DiscordSelectComponentOption> options = new();
 
             for (int i = 0; i < _questStepsData.Count && i < 25; i++)
+            {
                 options.Add(new($"Etape {i + 1}", GetPacket(_questData.Id, i), _questStepsData[i].Name.WithMaxLength(100), isDefault: i == _selectedQuestStepIndex));
+            }
 
             return new(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne une étape pour l'afficher", options);
         }
@@ -133,7 +161,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             List<DiscordSelectComponentOption> options = new();
 
             for (int i = 25; i < _questStepsData.Count; i++)
+            {
                 options.Add(new($"Etape {i + 1}", GetPacket(_questData.Id, i), _questStepsData[i].Name.WithMaxLength(100), isDefault: i == _selectedQuestStepIndex));
+            }
 
             return new(InteractionManager.SelectComponentPacketBuilder(1), "Sélectionne une étape pour l'afficher", options);
         }

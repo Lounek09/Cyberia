@@ -7,7 +7,9 @@ namespace Cyberia.Api.Managers
         public static DateTime GetDateTimeFromEffectParameters(EffectParameters parameters)
         {
             if (parameters.Param1 == -1)
+            {
                 return DateTime.MaxValue;
+            }
 
             int year = parameters.Param1;
             int month = (int)Math.Floor(parameters.Param2 / 100D) + 1;

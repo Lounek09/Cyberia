@@ -312,13 +312,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public SpellData? GetSpellDataByName(string name)
         {
-            return Spells.Find(x => x.Name.RemoveDiacritics().Equals(name.RemoveDiacritics()));
+            return Spells.Find(x => ExtendString.Normalize(x.Name).Equals(ExtendString.Normalize(name)));
         }
 
         public List<SpellData> GetSpellsDataByName(string name)
         {
-            string[] names = name.RemoveDiacritics().Split(' ');
-            return Spells.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));
+            string[] names = ExtendString.Normalize(name).Split(' ');
+            return Spells.FindAll(x => names.All(ExtendString.Normalize(x.Name).Contains));
         }
 
         public string GetSpellNameById(int id)

@@ -13,7 +13,9 @@
         public static TurnCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0)
+            {
                 return new(id, @operator, parameters[0]);
+            }
 
             return null;
         }
@@ -23,9 +25,13 @@
             if (Operator is '%')
             {
                 if (Turn.Equals("2:0"))
+                {
                     return $"Criterion.Turn.Even";
+                }
                 if (Turn.Equals("2:1"))
+                {
                     return $"Criterion.Turn.Odd";
+                }
             }
 
             return $"Criterion.Turn.{GetOperatorDescriptionName()}";

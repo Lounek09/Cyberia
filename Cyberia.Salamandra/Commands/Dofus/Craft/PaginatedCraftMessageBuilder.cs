@@ -30,7 +30,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 List<CraftData> craftsData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftsDataByItemName(parameters[2]);
                 if (craftsData.Count > 0)
+                {
                     return new(craftsData, parameters[2], qte, selectedPageIndex);
+                }
             }
 
             return null;
@@ -47,7 +49,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 ItemData? itemData = craftData.GetItemData();
                 if (itemData is not null)
+                {
                     yield return $"- Niv.{itemData.Level} {Formatter.Bold(Formatter.Sanitize(itemData.Name))} ({craftData.Id})";
+                }
             }
         }
 

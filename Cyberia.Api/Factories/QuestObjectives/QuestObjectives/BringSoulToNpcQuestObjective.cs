@@ -20,7 +20,9 @@ namespace Cyberia.Api.Factories.QuestObjectives
         {
             List<string> parameters = questObjectiveData.Parameters;
             if (parameters.Count > 2 && int.TryParse(parameters[0], out int npcId) && int.TryParse(parameters[1], out int monsterId) && int.TryParse(parameters[2], out int quantity))
+            {
                 return new(questObjectiveData, npcId, monsterId, quantity);
+            }
 
             return null;
         }

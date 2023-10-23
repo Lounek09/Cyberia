@@ -13,7 +13,9 @@
         public static LevelCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && int.TryParse(parameters[0], out int level))
+            {
                 return new(id, @operator, level);
+            }
 
             return null;
         }

@@ -28,7 +28,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 List<QuestData> questsData = Bot.Instance.Api.Datacenter.QuestsData.GetQuestsDataByName(parameters[2]);
                 if (questsData.Count > 0)
+                {
                     return new(questsData, parameters[2], selectedPageIndex);
+                }
             }
 
             return null;

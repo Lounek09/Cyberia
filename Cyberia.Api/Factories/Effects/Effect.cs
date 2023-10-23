@@ -19,18 +19,26 @@ namespace Cyberia.Api.Factories.Effects
                 string value = effect.Description;
 
                 if (Probability > 0)
+                {
                     value = $"{PatternDecoder.Description(Resources.Effect_Probability, Probability)} : " + value;
+                }
 
                 if (Duration <= -1 || Duration >= 63)
+                {
                     value += $" ({Resources.Infinity})";
+                }
                 else if (Duration != 0)
+                {
                     value += $" ({PatternDecoder.Description(Resources.Effect_Turn, Duration)})";
+                }
 
                 return new(value, Array.ConvertAll(parameters, x =>
                 {
                     //Workaround before the translation of ALL effects
                     if (x is int i && i == 0)
+                    {
                         return string.Empty;
+                    }
 
                     return x?.ToString() ?? string.Empty;
                 }));

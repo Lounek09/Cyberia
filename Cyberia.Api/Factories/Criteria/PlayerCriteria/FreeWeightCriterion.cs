@@ -13,7 +13,9 @@
         public static FreeWeightCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && int.TryParse(parameters[0], out int weight))
+            {
                 return new(id, @operator, weight);
+            }
 
             return null;
         }

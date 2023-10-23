@@ -84,7 +84,9 @@ namespace Cyberia.Api.DatacenterNS
             {
                 ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(pair.Key);
                 if (itemData is not null)
+                {
                     itemsDataQuantities.Add(itemData, pair.Value);
+                }
             }
 
             return itemsDataQuantities;
@@ -300,13 +302,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public QuestData? GetQuestDataByName(string name)
         {
-            return Quests.Find(x => x.Name.RemoveDiacritics().Equals(name.RemoveDiacritics()));
+            return Quests.Find(x => ExtendString.Normalize(x.Name).Equals(ExtendString.Normalize(name)));
         }
 
         public List<QuestData> GetQuestsDataByName(string name)
         {
-            string[] names = name.RemoveDiacritics().Split(' ');
-            return Quests.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));
+            string[] names = ExtendString.Normalize(name).Split(' ');
+            return Quests.FindAll(x => names.All(ExtendString.Normalize(x.Name).Contains));
         }
 
         public string GetQuestNameById(int id)

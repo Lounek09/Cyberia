@@ -35,7 +35,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 ItemSetData? itemSetData = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetDataById(itemSetId);
                 if (itemSetData is not null)
+                {
                     return new(itemSetData, nbItemSelected);
+                }
             }
 
             return null;
@@ -53,14 +55,20 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordButtonComponent> buttons = Buttons1Builder();
             if (buttons.Count > 0)
+            {
                 message.AddComponents(buttons);
+            }
 
             buttons = Buttons2Builder();
             if (buttons.Count > 0)
+            {
                 message.AddComponents(buttons);
+            }
 
             if (_itemsData.Count > 0)
+            {
                 message.AddComponents(ItemComponentsBuilder.ItemsSelectBuilder(0, _itemsData));
+            }
 
             return (T)message;
         }
@@ -72,11 +80,15 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 .AddField("Niveau :", _itemSetData.GetLevel().ToString());
 
             if (_itemsData.Count > 0)
+            {
                 embed.AddField("Items :", string.Join('\n', _itemsData.Select(x => $"- Niv.{x.Level} {Formatter.Bold(x.Name)}")));
+            }
 
             List<IEffect> effects = _itemSetData.GetEffects(_nbItemSelected);
             if (effects.Count > 0)
+            {
                 embed.AddEffectFields("Effets :", effects);
+            }
 
             return Task.FromResult(embed);
         }
@@ -86,7 +98,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             List<DiscordButtonComponent> components = new();
 
             for (int i = 2; i < _itemSetData.ItemsId.Count + 1 && i < 7; i++)
+            {
                 components.Add(new(ButtonStyle.Primary, GetPacket(_itemSetData.Id, i), $"{i}/{_itemSetData.ItemsId.Count}", _nbItemSelected == i));
+            }
 
             return components;
         }
@@ -96,10 +110,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
             List<DiscordButtonComponent> components = new();
 
             for (int i = 7; i < _itemSetData.ItemsId.Count + 1 && i < 10; i++)
+            {
                 components.Add(new(ButtonStyle.Primary, GetPacket(_itemSetData.Id, i), $"{i}/{_itemSetData.ItemsId.Count}", _nbItemSelected == i));
+            }
 
             if (_breedData is not null)
+            {
                 components.Add(BreedComponentsBuilder.BreedButtonBuilder(_breedData));
+            }
 
             return components;
         }

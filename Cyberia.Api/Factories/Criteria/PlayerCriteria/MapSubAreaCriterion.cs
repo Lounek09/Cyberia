@@ -15,7 +15,9 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
         public static MapSubAreaCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && int.TryParse(parameters[0], out int mapSubAreaId))
+            {
                 return new(id, @operator, mapSubAreaId);
+            }
 
             return null;
         }

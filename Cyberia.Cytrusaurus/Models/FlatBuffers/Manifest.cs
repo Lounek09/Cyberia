@@ -48,7 +48,9 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
             Dictionary<int, Fragment> fragments = new();
 
             for (int i = 0; i < FragmentsLength; i++)
+            {
                 fragments.Add(i, Fragments(i).Value);
+            }
 
             return fragments;
         }
@@ -62,7 +64,9 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
 
             Dictionary<string, int> oldFragmentKeys = new Dictionary<string, int>();
             foreach (KeyValuePair<int, Fragment> fragment in oldFragments)
+            {
                 oldFragmentKeys[fragment.Value.Name] = fragment.Key;
+            }
 
             HashSet<int> processedKeys = new();
             foreach (KeyValuePair<int, Fragment> fragment in currentFragments)
@@ -78,11 +82,15 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
                 {
                     fragmentDiff.Add($"// {fragment.Value.Name.ToUpper()} \\\\");
                     for (int i = 0; i < fragment.Value.FilesLength; i++)
+                    {
                         fragmentDiff.Add($"+ {fragment.Value.Files(i).Value.Name}");
+                    }
                 }
 
                 if (fragmentDiff.Count > 1)
+                {
                     diff.Add(new(fragment.Key, fragmentDiff));
+                }
             }
 
             foreach (int key in oldFragments.Keys.Except(processedKeys))
@@ -95,25 +103,29 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
                 };
 
                 for (int i = 0; i < fragment.FilesLength; i++)
+                {
                     fragmentDiff.Add($"- {fragment.Files(i).Value.Name}");
+                }
 
                 if (fragmentDiff.Count > 1)
+                {
                     diff.Add(new(key, fragmentDiff));
+                }
             }
 
-            List<string> output = new();
             if (diff.Count > 0)
             {
+                List<string> output = new();
                 foreach (KeyValuePair<int, List<string>> orderedFragmentDiff in diff.OrderBy(x => x.Key))
                 {
                     output.AddRange(orderedFragmentDiff.Value);
                     output.Add("");
                 }
-            }
-            else
-                output.Add("Aucune différence");
 
-            return string.Join("\n", output);
+                return string.Join("\n", output);
+            }
+
+            return "Aucune différence";
         }
     }
 }

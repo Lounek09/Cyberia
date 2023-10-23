@@ -19,9 +19,13 @@ namespace Cyberia.Salamandra.Commands.Dofus
             MapData? mapData = Bot.Instance.Api.Datacenter.MapsData.GetMapDataById((int)id);
 
             if (mapData is null)
+            {
                 await ctx.CreateResponseAsync("Map introuvable");
+            }
             else
+            {
                 await ctx.CreateResponseAsync(await new MapMessageBuilder(mapData).GetMessageAsync<DiscordInteractionResponseBuilder>());
+            }
         }
 
 
@@ -37,11 +41,17 @@ namespace Cyberia.Salamandra.Commands.Dofus
             List<MapData> mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByCoordinate((int)xCoord, (int)yCoord);
 
             if (mapsData.Count == 0)
+            {
                 await ctx.CreateResponseAsync($"Il n'y a aucune map en [{xCoord}, {yCoord}]");
+            }
             else if (mapsData.Count == 1)
+            {
                 await ctx.CreateResponseAsync(await new MapMessageBuilder(mapsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+            }
             else
+            {
                 await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
+            }
         }
 
 
@@ -54,18 +64,26 @@ namespace Cyberia.Salamandra.Commands.Dofus
             MapSubAreaData? mapSubAreaData = null;
 
             if (int.TryParse(value, out int id))
+            {
                 mapSubAreaData = Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreaDataById(id);
+            }
 
             if (mapSubAreaData is null)
+            {
                 await ctx.CreateResponseAsync("Sous-zone introuvable");
+            }
             else
             {
                 List<MapData> mapsData = mapSubAreaData.GetMapsData();
 
                 if (mapsData.Count == 0)
+                {
                     await ctx.CreateResponseAsync($"La sous-zone {Formatter.Bold(mapSubAreaData.Name)} ne contient aucune map");
+                }
                 else
+                {
                     await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapSubArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                }
             }
         }
 
@@ -79,18 +97,26 @@ namespace Cyberia.Salamandra.Commands.Dofus
             MapAreaData? mapAreaData = null;
 
             if (int.TryParse(value, out int id))
+            {
                 mapAreaData = Bot.Instance.Api.Datacenter.MapsData.GetMapAreaDataById(id);
+            }
 
             if (mapAreaData is null)
+            {
                 await ctx.CreateResponseAsync("Zone introuvable");
+            }
             else
             {
                 List<MapData> mapsData = mapAreaData.GetMapsData();
 
                 if (mapsData.Count == 0)
+                {
                     await ctx.CreateResponseAsync($"La zone {Formatter.Bold(mapAreaData.Name)} ne contient aucune map");
+                }
                 else
+                {
                     await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                }
             }
         }
     }

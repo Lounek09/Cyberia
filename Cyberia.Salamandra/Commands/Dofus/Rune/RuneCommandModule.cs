@@ -40,7 +40,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 .WithTitle(runeData.GetFullName());
 
             if (statAmount == 1)
+            {
                 embed.WithDescription($"{Emojis.BaRune(runeData.Id)} {Formatter.Bold(percentRuneExtractable.ToString())}% de chance sur un objet de niveau {Formatter.Bold(itemLevel.ToString())}");
+            }
             else
             {
                 embed.WithDescription($"{Formatter.Bold(percentRuneExtractable.ToString())}% de puissance extractible sur un objet niveau {Formatter.Bold(itemLevel.ToString())} comprenant {Formatter.Bold(statAmount.ToString())} stats");
@@ -90,10 +92,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
             string result = $"{Emojis.BaRune(rune.Id)} {Formatter.Bold(runesAmount[0].ToString())}";
 
             if (runesAmount[1] > 0)
+            {
                 result += $"\n{Emojis.PaRune(rune.Id)} {Formatter.Bold(runesAmount[1].ToString())}";
+            }
 
             if (runesAmount[2] > 0)
+            {
                 result += $"\n{Emojis.RaRune(rune.Id)} {Formatter.Bold(runesAmount[2].ToString())}";
+            }
 
             return result;
         }

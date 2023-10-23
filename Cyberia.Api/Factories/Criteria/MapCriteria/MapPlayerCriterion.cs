@@ -17,7 +17,9 @@ namespace Cyberia.Api.Factories.Criteria.MapCriteria
         public static MapPlayerCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 1 && int.TryParse(parameters[0], out int mapId) && int.TryParse(parameters[1], out int maxPlayers))
+            {
                 return new(id, @operator, mapId, maxPlayers);
+            }
 
             return null;
         }

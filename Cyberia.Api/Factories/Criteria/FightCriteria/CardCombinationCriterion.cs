@@ -15,7 +15,9 @@ namespace Cyberia.Api.Factories.Criteria.FightCriteria
         public static CardCombinationCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && Enum.TryParse(parameters[0], out CardCombination cardCombination))
+            {
                 return new(id, @operator, cardCombination);
+            }
 
             return null;
         }

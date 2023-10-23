@@ -61,7 +61,9 @@ namespace Cyberia.Salamandra.Managers
                  """;
 
             if (mainContent.Length + diff.Length < 2000)
+            {
                 await channel.SendMessage(message.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
+            }
             else
             {
                 using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
@@ -73,7 +75,9 @@ namespace Cyberia.Salamandra.Managers
         {
             ulong id = Bot.Instance.Config.CytrusChannelId;
             if (id == 0)
+            {
                 return null;
+            }
 
             try
             {
@@ -90,7 +94,9 @@ namespace Cyberia.Salamandra.Managers
         {
             ulong id = Bot.Instance.Config.CytrusManifestChannelId;
             if (id == 0)
+            {
                 return null;
+            }
 
             try
             {
@@ -107,7 +113,9 @@ namespace Cyberia.Salamandra.Managers
         {
             DiscordChannel? channel = await GetCytrusChannel();
             if (channel is null)
+            {
                 return;
+            }
 
             await channel.SendMessageAsync(new DiscordMessageBuilder().WithContent(Formatter.BlockCode(e.Diff, "json")));
         }
@@ -116,35 +124,49 @@ namespace Cyberia.Salamandra.Managers
         {
             DiscordChannel? channel = await GetCytrusManifestChannel();
             if (channel is null)
+            {
                 return;
+            }
 
             JsonDocument document = JsonDocument.Parse(e.Diff);
             JsonElement root = document.RootElement;
 
             if (!root.TryGetProperty("games", out JsonElement games))
+            {
                 return;
+            }
 
             foreach (JsonProperty game in games.EnumerateObject())
             {
                 if (!game.Value.TryGetProperty("platforms", out JsonElement platforms))
+                {
                     return;
+                }
 
                 if (!platforms.TryGetProperty("windows", out JsonElement platform))
+                {
                     return;
+                }
 
                 foreach (JsonProperty release in platform.EnumerateObject())
                 {
                     if (!release.Value.TryGetProperty("-", out JsonElement minus))
+                    {
                         return;
+                    }
 
                     if (!release.Value.TryGetProperty("+", out JsonElement plus))
+                    {
                         return;
+                    }
 
                     string? oldVersion = minus.GetString();
                     string? newVersion = plus.GetString();
 
                     if (string.IsNullOrEmpty(oldVersion) || string.IsNullOrEmpty(newVersion))
+                    {
                         return;
+                    }
 
                     await channel.SendCytrusManifestDiffMessageAsync(game.Name, "windows", release.Name, oldVersion, release.Name, newVersion);
                 }

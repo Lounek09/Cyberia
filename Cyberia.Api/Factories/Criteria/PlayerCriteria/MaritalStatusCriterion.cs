@@ -15,7 +15,9 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
         public static MaritalStatusCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && Enum.TryParse(parameters[0], out MaritalStatus maritalStatus))
+            {
                 return new(id, @operator, maritalStatus);
+            }
 
             return null;
         }

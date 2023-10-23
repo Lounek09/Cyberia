@@ -13,7 +13,9 @@
         public static AlignmentRankCriterion? Create(string id, char @operator, params string[] parameters)
         {
             if (parameters.Length > 0 && int.TryParse(parameters[0], out int rank))
+            {
                 return new(id, @operator, rank);
+            }
 
             return null;
         }

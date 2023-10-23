@@ -44,7 +44,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 ItemData? itemData = Bot.Instance.Api.Datacenter.ItemsData.GetItemDataById(itemId);
                 if (itemData is not null)
+                {
                     return new(itemData, craftQte);
+                }
             }
 
             return null;
@@ -62,7 +64,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordButtonComponent> buttons = ButtonsBuilder();
             if (buttons.Count > 0)
+            {
                 message.AddComponents(buttons);
+            }
 
             return (T)message;
         }
@@ -77,32 +81,72 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 .AddField("Type :", Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true);
 
             if (_itemSetData is not null)
+            {
                 embed.AddField("Panoplie :", _itemSetData.Name, true);
+            }
 
             if (_itemStatsData is not null)
+            {
                 embed.AddEffectFields("Effets :", _itemStatsData.Effects);
+            }
 
             if (_itemData.Criteria.Count > 0)
+            {
                 embed.AddCriteriaFields(_itemData.Criteria);
+            }
 
             if (_itemData.WeaponData is not null)
+            {
                 embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, _itemTypeData);
+            }
 
             if (_petData is not null)
+            {
                 embed.AddPetField(_petData);
+            }
 
             if (_craftData is not null)
+            {
                 embed.AddCraftField(_craftData, _craftQte);
+            }
 
             StringBuilder miscellaneousBuilder = new();
             miscellaneousBuilder.AppendFormat("{0} pod{1}", _itemData.Weight.ToStringThousandSeparator(), _itemData.Weight > 1 ? "s" : "");
-            if (_itemData.Tradeable()) miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _itemData.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
-            if (_itemData.Ceremonial) miscellaneousBuilder.Append(", objet d'apparat");
-            if (_itemData.IsReallyEnhanceable()) miscellaneousBuilder.Append(", forgemageable");
-            if (_itemData.Ethereal) miscellaneousBuilder.Append(", item éthéré");
-            if (_itemData.Usable) miscellaneousBuilder.Append(", est consommable");
-            if (_itemData.Targetable) miscellaneousBuilder.Append(", est ciblable");
-            if (_itemData.Cursed) miscellaneousBuilder.Append(", malédiction");
+            if (_itemData.Tradeable())
+            {
+                miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _itemData.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
+            }
+
+            if (_itemData.Ceremonial)
+            {
+                miscellaneousBuilder.Append(", objet d'apparat");
+            }
+
+            if (_itemData.IsReallyEnhanceable())
+            {
+                miscellaneousBuilder.Append(", forgemageable");
+            }
+
+            if (_itemData.Ethereal)
+            {
+                miscellaneousBuilder.Append(", item éthéré");
+            }
+
+            if (_itemData.Usable)
+            {
+                miscellaneousBuilder.Append(", est consommable");
+            }
+
+            if (_itemData.Targetable)
+            {
+                miscellaneousBuilder.Append(", est ciblable");
+            }
+
+            if (_itemData.Cursed)
+            {
+                miscellaneousBuilder.Append(", malédiction");
+            }
+
             embed.AddField("Divers :", miscellaneousBuilder.ToString());
 
             return embed;
@@ -113,13 +157,19 @@ namespace Cyberia.Salamandra.Commands.Dofus
             List<DiscordButtonComponent> buttons = new();
 
             if (_itemSetData is not null)
+            {
                 buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData));
+            }
 
             if (_craftData is not null)
+            {
                 buttons.Add(CraftComponentsBuilder.CraftButtonBuilder(_craftData, _craftQte));
+            }
 
             if (_incarnationData is not null)
+            {
                 buttons.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData));
+            }
 
             return buttons;
         }

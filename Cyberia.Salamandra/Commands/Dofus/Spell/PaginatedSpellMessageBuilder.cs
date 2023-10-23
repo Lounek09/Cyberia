@@ -27,7 +27,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 List<SpellData> spellsData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellsDataByName(parameters[2]);
                 if (spellsData.Count > 0)
+                {
                     return new(spellsData, parameters[2], selectedPageIndex);
+                }
             }
 
             return null;

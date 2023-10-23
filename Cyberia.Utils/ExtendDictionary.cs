@@ -15,12 +15,16 @@
                     success = true;
 
                     if (firstOnly)
+                    {
                         break;
+                    }
                 }
             }
 
             foreach (TKey key in keysToRemove)
+            {
                 source.Remove(key);
+            }
 
             return success;
         }

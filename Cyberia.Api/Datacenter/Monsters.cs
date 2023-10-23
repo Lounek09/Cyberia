@@ -216,7 +216,9 @@ namespace Cyberia.Api.DatacenterNS
             for (int i = 10; i > 0; i--)
             {
                 if (GetMonsterGradeData(i) is not null)
+                {
                     return i;
+                }
             }
 
             return -1;
@@ -303,13 +305,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public MonsterData? GetMonsterDataByName(string name)
         {
-            return Monsters.Find(m => m.Name.RemoveDiacritics().Equals(name.RemoveDiacritics()));
+            return Monsters.Find(m => ExtendString.Normalize(m.Name).Equals(ExtendString.Normalize(name)));
         }
 
         public List<MonsterData> GetMonstersDataByName(string name)
         {
-            string[] names = name.RemoveDiacritics().Split(' ');
-            return Monsters.FindAll(x => names.All(x.Name.RemoveDiacritics().Contains));
+            string[] names = ExtendString.Normalize(name).Split(' ');
+            return Monsters.FindAll(x => names.All(ExtendString.Normalize(x.Name).Contains));
         }
 
         public string GetMonsterNameById(int id)

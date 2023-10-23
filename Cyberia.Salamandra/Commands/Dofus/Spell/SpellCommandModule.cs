@@ -19,15 +19,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 SpellData? spellData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellDataById(id);
                 if (spellData is not null)
+                {
                     response = await new SpellMessageBuilder(spellData, spellData.GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
             else
             {
                 List<SpellData> spellsData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellsDataByName(value);
                 if (spellsData.Count == 1)
+                {
                     response = await new SpellMessageBuilder(spellsData[0], spellsData[0].GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
                 else if (spellsData.Count > 1)
+                {
                     response = await new PaginatedSpellMessageBuilder(spellsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Sort introuvable");

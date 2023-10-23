@@ -19,15 +19,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 MonsterData? monsterData = Bot.Instance.Api.Datacenter.MonstersData.GetMonsterDataById(id);
                 if (monsterData is not null)
+                {
                     response = await new MonsterMessageBuilder(monsterData).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
             else
             {
                 List<MonsterData> monstersData = Bot.Instance.Api.Datacenter.MonstersData.GetMonstersDataByName(value);
                 if (monstersData.Count == 1)
+                {
                     response = await new MonsterMessageBuilder(monstersData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
                 else if (monstersData.Count > 1)
+                {
                     response = await new PaginatedMonsterMessageBuilder(monstersData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Monstre introuvable");

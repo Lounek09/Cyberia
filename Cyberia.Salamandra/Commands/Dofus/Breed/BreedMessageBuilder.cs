@@ -32,7 +32,9 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 BreedData? breedData = Bot.Instance.Api.Datacenter.BreedsData.GetBreedDataById(breedId);
                 if (breedData is not null)
+                {
                     return new(breedData);
+                }
             }
 
             return null;
@@ -49,11 +51,15 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 .AddEmbed(await EmbedBuilder());
 
             if (_spellsData.Count > 0)
+            {
                 message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData));
+            }
 
             List<DiscordButtonComponent> buttons = ButtonsBuilder();
             if (buttons.Count > 0)
+            {
                 message.AddComponents(buttons);
+            }
 
             return (T)message;
         }
@@ -68,10 +74,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 .AddField("Caractérisques :", _breedData.GetCaracteristics());
 
             if (_spellsData.Count > 0)
+            {
                 embed.AddField("Sorts :", string.Join('\n', _spellsData.Select(x => $"- Niv.{x.GetNeededLevel()} {Formatter.Bold(x.Name)}")));
+            }
 
             if (Bot.Instance.Api.Config.Temporis)
+            {
                 embed.AddField("Temporis :", $"{Formatter.Bold(_breedData.TemporisPassiveName)} :\n{_breedData.TemporisPassiveDescription}");
+            }
 
             return Task.FromResult(embed);
         }
@@ -81,10 +91,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
             List<DiscordButtonComponent> buttons = new();
 
             if (_specialSpellData is not null)
+            {
                 buttons.Add(SpellComponentsBuilder.SpellButtonBuilder(_specialSpellData));
+            }
 
             if (_itemSetData is not null)
+            {
                 buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData));
+            }
 
             return buttons;
         }

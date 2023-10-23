@@ -10,11 +10,15 @@ namespace Cyberia.Api.Parser.JsonConverter
         public override QuestStepRewardsData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType is not JsonTokenType.StartArray)
+            {
                 throw new JsonException("Invalid JSON format: expected an array.");
+            }
 
             JsonElement[]? elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options);
             if (elements is null || elements.Length != 6)
+            {
                 throw new JsonException($"Invalid JSON format: expected an array of 6 values, but got a length of {elements?.Length}.");
+            }
 
             return new QuestStepRewardsData
             {
@@ -34,17 +38,27 @@ namespace Cyberia.Api.Parser.JsonConverter
             writer.WriteStartArray();
 
             if (value.Experience == 0)
+            {
                 writer.WriteNullValue();
+            }
             else
+            {
                 writer.WriteNumberValue(value.Experience);
+            }
 
             if (value.Kamas == 0)
+            {
                 writer.WriteNullValue();
+            }
             else
+            {
                 writer.WriteNumberValue(value.Kamas);
+            }
 
             if (value.ItemsIdQuantities.Count == 0)
+            {
                 writer.WriteNullValue();
+            }
             else
             {
                 writer.WriteStartArray();
@@ -59,32 +73,47 @@ namespace Cyberia.Api.Parser.JsonConverter
             }
 
             if (value.EmotesId.Count == 0)
+            {
                 writer.WriteNullValue();
+            }
             else
             {
                 writer.WriteStartArray();
                 foreach (int emoteId in value.EmotesId)
+                {
                     writer.WriteNumberValue(emoteId);
+                }
+
                 writer.WriteEndArray();
             }
 
             if (value.JobsId.Count == 0)
+            {
                 writer.WriteNullValue();
+            }
             else
             {
                 writer.WriteStartArray();
                 foreach (int jobId in value.JobsId)
+                {
                     writer.WriteNumberValue(jobId);
+                }
+
                 writer.WriteEndArray();
             }
 
             if (value.SpellsId.Count == 0)
+            {
                 writer.WriteNullValue();
+            }
             else
             {
                 writer.WriteStartArray();
                 foreach (int spellId in value.SpellsId)
+                {
                     writer.WriteNumberValue(spellId);
+                }
+
                 writer.WriteEndArray();
             }
 

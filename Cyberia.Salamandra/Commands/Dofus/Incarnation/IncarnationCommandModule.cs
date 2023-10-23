@@ -19,15 +19,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
             {
                 IncarnationData? incarnationData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataByItemId(id);
                 if (incarnationData is not null)
+                {
                     response = await new IncarnationMessageBuilder(incarnationData).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
             else
             {
                 List<IncarnationData> incarnationsData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationsDataByName(value);
                 if (incarnationsData.Count == 1)
+                {
                     response = await new IncarnationMessageBuilder(incarnationsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
                 else if (incarnationsData.Count > 1)
+                {
                     response = await new PaginatedIncarnationMessageBuilder(incarnationsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                }
             }
 
             response ??= new DiscordInteractionResponseBuilder().WithContent("Incarnation introuvable");

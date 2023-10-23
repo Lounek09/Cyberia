@@ -46,11 +46,10 @@ namespace Cyberia.Api.DatacenterNS
                 if (ingredients.TryGetValue(ingredient.Key, out _))
                 {
                     ingredients[ingredient.Key] += qte * ingredient.Value;
+                    continue;
                 }
-                else
-                {
-                    ingredients.Add(ingredient.Key, qte * ingredient.Value);
-                }
+
+                ingredients.Add(ingredient.Key, qte * ingredient.Value);
             }
 
             return ingredients;
@@ -162,12 +161,12 @@ namespace Cyberia.Api.DatacenterNS
 
         public List<CraftData> GetCraftsDataByItemName(string itemName)
         {
-            string[] itemNames = itemName.RemoveDiacritics().Split(' ');
+            string[] itemNames = ExtendString.Normalize(itemName).Split(' ');
             List<CraftData> craftsData = new();
             foreach (CraftData craftData in Crafts)
             {
                 ItemData? itemData = craftData.GetItemData();
-                if (itemData is not null && itemNames.All(itemData.Name.RemoveDiacritics().Contains))
+                if (itemData is not null && itemNames.All(itemData.NormalizedName.Contains))
                 {
                     craftsData.Add(craftData);
                 }

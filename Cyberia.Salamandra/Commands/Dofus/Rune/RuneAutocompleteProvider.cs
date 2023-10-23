@@ -11,12 +11,16 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             string? value = ctx.OptionValue.ToString();
             if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
+            {
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+            }
 
             List<DiscordAutoCompleteChoice> choices = new();
 
             foreach (RuneData runeData in Bot.Instance.Api.Datacenter.RunesData.GetRunesDataByName(ctx.OptionValue.ToString()!).Take(MAX_AUTOCOMPLETE_CHOICE))
+            {
                 choices.Add(new(runeData.Name, runeData.Name));
+            }
 
             return Task.FromResult(choices.AsEnumerable());
         }
