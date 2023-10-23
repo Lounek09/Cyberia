@@ -246,8 +246,8 @@ namespace Cyberia.Api.DatacenterNS
 
         public List<MapAreaData> GetMapAreasDataByName(string name)
         {
-            string[] names = ExtendString.Normalize(name).Split(' ');
-            return MapAreas.FindAll(x => names.All(ExtendString.Normalize(x.Name).Contains));
+            string[] names = name.Normalize().Split(' ');
+            return MapAreas.FindAll(x => names.All(x.Name.Normalize().Contains));
         }
 
         public string GetMapAreaNameById(int id)
@@ -264,8 +264,8 @@ namespace Cyberia.Api.DatacenterNS
 
         public List<MapSubAreaData> GetMapSubAreasDataByName(string name)
         {
-            string[] names = ExtendString.Normalize(name).Split(' ');
-            return MapSubAreas.FindAll(x => names.All(ExtendString.Normalize(x.Name).Contains));
+            string[] names = name.Normalize().Split(' ');
+            return MapSubAreas.FindAll(x => names.All(x.Name.Normalize().Contains));
         }
 
         public string GetMapSubAreaNameById(int id)

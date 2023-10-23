@@ -98,13 +98,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public ItemSetData? GetItemSetByName(string name)
         {
-            return ItemSets.Find(x => ExtendString.Normalize(x.Name).Equals(ExtendString.Normalize(name)));
+            return ItemSets.Find(x => x.Name.Normalize().Equals(name.Normalize()));
         }
 
         public List<ItemSetData> GetItemSetsDataByName(string name)
         {
-            string[] names = ExtendString.Normalize(name).Split(' ');
-            return ItemSets.FindAll(x => names.All(ExtendString.Normalize(x.Name).Contains));
+            string[] names = name.Normalize().Split(' ');
+            return ItemSets.FindAll(x => names.All(x.Name.Normalize().Contains));
         }
     }
 }

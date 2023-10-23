@@ -296,12 +296,12 @@ namespace Cyberia.Api.DatacenterNS
 
         public ItemData? GetItemDataByName(string name)
         {
-            return Items.Find(x => x.NormalizedName.Equals(ExtendString.Normalize(name)));
+            return Items.Find(x => x.NormalizedName.Equals(name.Normalize()));
         }
 
         public List<ItemData> GetItemsDataByName(string name)
         {
-            string[] names = ExtendString.Normalize(name).Split(' ');
+            string[] names = name.Normalize().Split(' ');
             return Items.FindAll(x => names.All(x.NormalizedName.Contains));
         }
 
