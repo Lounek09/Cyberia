@@ -154,7 +154,7 @@ namespace Cyberia.Salamandra.DsharpPlus
                 string criticalFailureRate = Formatter.Bold(itemWeaponData.CriticalFailureRate.ToString());
                 builder.AppendFormat("Échec : 1/{0}\n", criticalFailureRate);
             }
-                
+
 
             if (itemWeaponData.LineOnly)
                 builder.AppendLine("Lancer en ligne uniquement");
@@ -202,7 +202,7 @@ namespace Cyberia.Salamandra.DsharpPlus
                         IEnumerable<string> itemTypesName = petFoodsData.ItemTypesId.Select(x => Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(x));
                         builder.AppendLine(string.Join(", ", itemTypesName));
                     }
-                        
+
 
                     if (petFoodsData.MonstersIdQuantities.Count > 0)
                     {

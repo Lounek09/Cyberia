@@ -19,6 +19,6 @@ namespace Cyberia.Api.Factories.Effects
 
     public interface IEffect<T> : IEffect where T : IEffect<T>
     {
-        static abstract T Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection Criteria, EffectArea EffectArea);
+        static abstract T Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea);
     }
 }
