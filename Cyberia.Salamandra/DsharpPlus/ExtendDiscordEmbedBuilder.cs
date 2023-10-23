@@ -155,7 +155,6 @@ namespace Cyberia.Salamandra.DsharpPlus
                 builder.AppendFormat("Échec : 1/{0}\n", criticalFailureRate);
             }
 
-
             if (itemWeaponData.LineOnly)
                 builder.AppendLine("Lancer en ligne uniquement");
 
@@ -203,14 +202,13 @@ namespace Cyberia.Salamandra.DsharpPlus
                         builder.AppendLine(string.Join(", ", itemTypesName));
                     }
 
-
                     if (petFoodsData.MonstersIdQuantities.Count > 0)
                     {
                         foreach (IGrouping<int, KeyValuePair<int, int>> group in petFoodsData.MonstersIdQuantities.GroupBy(x => x.Value))
                         {
                             string quantity = Formatter.Bold(group.Key.ToString());
-                            IEnumerable<string> monsterName = group.Select(x => Bot.Instance.Api.Datacenter.MonstersData.GetMonsterNameById(x.Key));
-                            builder.AppendFormat("{0}x {1}\n", quantity, string.Join(", ", monsterName));
+                            IEnumerable<string> monstersName = group.Select(x => Bot.Instance.Api.Datacenter.MonstersData.GetMonsterNameById(x.Key));
+                            builder.AppendFormat("{0}x {1}\n", quantity, string.Join(", ", monstersName));
                         }
                     }
                 }

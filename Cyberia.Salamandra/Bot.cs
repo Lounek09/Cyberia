@@ -41,9 +41,6 @@ namespace Cyberia.Salamandra
                 Token = Config.Token,
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
-#if DEBUG
-                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug,
-#endif
                 LogTimestampFormat = "yyyy/MM/dd HH:mm:ss:ffff"
             });
             Client.GuildCreated += GuildManager.OnGuildCreated;

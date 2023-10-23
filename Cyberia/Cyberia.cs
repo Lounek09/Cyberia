@@ -23,6 +23,8 @@ namespace Cyberia
 
             try
             {
+                Log.Information("Starting Cyberia");
+
                 CyberiaConfig config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>()!;
 
                 CytrusWatcher cytrus = CytrusWatcher.Create();
@@ -56,6 +58,7 @@ namespace Cyberia
                     langs.Listen(LangType.Temporis, TimeSpan.FromSeconds(260), config.CheckCytrusInterval);
                 }
 
+                Log.Information("Cyberia started");
                 await Task.Delay(-1);
             }
             catch (Exception e)
