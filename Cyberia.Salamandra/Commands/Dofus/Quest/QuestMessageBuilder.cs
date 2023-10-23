@@ -23,7 +23,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public QuestMessageBuilder(QuestData questData, int selectedQuestStepIndex = 0)
         {
             _questData = questData;
-            _questStepsData = questData.GetQuestStepsData();
+            _questStepsData = questData.GetQuestStepsData().ToList();
             _selectedQuestStepIndex = selectedQuestStepIndex;
             _questStepData = _questStepsData.Count > selectedQuestStepIndex ? _questStepsData[selectedQuestStepIndex] : null;
             _dialogQuestionData = _questStepData?.GetDialogQuestionData();
@@ -94,19 +94,19 @@ namespace Cyberia.Salamandra.Commands.Dofus
                     if (_questStepData.RewardsData.Kamas > 0)
                         rewards.AppendFormat("{0} {1}\n", _questStepData.RewardsData.Kamas.ToStringThousandSeparator(), Emojis.KAMAS);
 
-                    List<KeyValuePair<ItemData, int>> itemsReward = _questStepData.RewardsData.GetItemsDataQuantities();
+                    Dictionary<ItemData, int> itemsReward = _questStepData.RewardsData.GetItemsDataQuantities();
                     if (itemsReward.Count > 0)
                         rewards.AppendLine(string.Join(", ", itemsReward.Select(x => $"{Formatter.Bold(x.Value.ToString())}x {x.Key.Name}")));
 
-                    List<EmoteData> emotesReward = _questStepData.RewardsData.GetEmotesData();
+                    List<EmoteData> emotesReward = _questStepData.RewardsData.GetEmotesData().ToList();
                     if (emotesReward.Count > 0)
                         rewards.AppendFormat("Emotes : {0}\n", string.Join(", ", emotesReward.Select(x => x.Name)));
 
-                    List<JobData> jobsReward = _questStepData.RewardsData.GetJobsData();
+                    List<JobData> jobsReward = _questStepData.RewardsData.GetJobsData().ToList();
                     if (jobsReward.Count > 0)
                         rewards.AppendFormat("Métiers : {0}\n", string.Join(", ", jobsReward.Select(x => x.Name)));
 
-                    List<SpellData> spellsReward = _questStepData.RewardsData.GetSpellsData();
+                    List<SpellData> spellsReward = _questStepData.RewardsData.GetSpellsData().ToList();
                     if (emotesReward.Count > 0)
                         rewards.AppendFormat("Sorts : {0}", string.Join(", ", spellsReward.Select(x => x.Name)));
 

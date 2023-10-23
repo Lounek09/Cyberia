@@ -36,18 +36,16 @@ namespace Cyberia.Api.DatacenterNS
             SkillsId = new();
         }
 
-        public List<SkillData> GetSkillsData()
+        public IEnumerable<SkillData> GetSkillsData()
         {
-            List<SkillData> skillsData = new();
-
             foreach (int skillId in SkillsId)
             {
                 SkillData? skillData = DofusApi.Instance.Datacenter.SkillsData.GetSkillDataById(skillId);
                 if (skillData is not null)
-                    skillsData.Add(skillData);
+                {
+                    yield return skillData;
+                }
             }
-
-            return skillsData;
         }
     }
 

@@ -33,10 +33,12 @@ namespace Cyberia.Api.DatacenterNS
 
         public string GetMonth(int dayOfYear)
         {
-            foreach (KeyValuePair<int, string> month in Enumerable.Reverse(StartDayOfMonths))
+            foreach (KeyValuePair<int, string> pair in Enumerable.Reverse(StartDayOfMonths))
             {
-                if (dayOfYear > month.Key)
-                    return month.Value;
+                if (dayOfYear > pair.Key)
+                {
+                    return pair.Value;
+                }
             }
 
             return "";

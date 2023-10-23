@@ -35,7 +35,9 @@ namespace Cyberia.Api.DatacenterNS
             string url = $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/{GfxId}.png";
 
             if (await DofusApi.Instance.HttpClient.ExistsAsync(url))
+            {
                 return url;
+            }
 
             return $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/unknown.png";
         }
@@ -45,18 +47,16 @@ namespace Cyberia.Api.DatacenterNS
             return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(Id);
         }
 
-        public List<SpellData> GetSpellsData()
+        public IEnumerable<SpellData> GetSpellsData()
         {
-            List<SpellData> spellsData = new();
-
             foreach (int spellId in SpellsId)
             {
                 SpellData? spellData = DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(spellId);
                 if (spellData is not null)
-                    spellsData.Add(spellData);
+                {
+                    yield return spellData;
+                }
             }
-
-            return spellsData;
         }
 
         public List<IEffect> GetEffects()

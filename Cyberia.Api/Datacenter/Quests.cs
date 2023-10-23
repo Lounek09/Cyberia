@@ -29,18 +29,16 @@ namespace Cyberia.Api.DatacenterNS
             QuestStepsId = new();
         }
 
-        public List<QuestStepData> GetQuestStepsData()
+        public IEnumerable<QuestStepData> GetQuestStepsData()
         {
-            List<QuestStepData> questStepsData = new();
-
             foreach (int questStepId in QuestStepsId)
             {
                 QuestStepData? questStepData = DofusApi.Instance.Datacenter.QuestsData.GetQuestStepDataById(questStepId);
                 if (questStepData is not null)
-                    questStepsData.Add(questStepData);
+                {
+                    yield return questStepData;
+                }
             }
-
-            return questStepsData;
         }
     }
 
@@ -50,7 +48,7 @@ namespace Cyberia.Api.DatacenterNS
 
         public int Kamas { get; init; }
 
-        public List<KeyValuePair<int, int>> ItemsIdQuantities { get; init; }
+        public Dictionary<int, int> ItemsIdQuantities { get; init; }
 
         public List<int> EmotesId { get; init; }
 
@@ -66,60 +64,66 @@ namespace Cyberia.Api.DatacenterNS
             SpellsId = new();
         }
 
-        public List<KeyValuePair<ItemData, int>> GetItemsDataQuantities()
+        public IEnumerable<ItemData> GetItemsData()
         {
-            List<KeyValuePair<ItemData, int>> itemsDataQuantities = new();
+            foreach (KeyValuePair<int, int> pair in ItemsIdQuantities)
+            {
+                ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(pair.Key);
+                if (itemData is not null)
+                {
+                    yield return itemData;
+                }
+            }
+        }
+
+        public Dictionary<ItemData, int> GetItemsDataQuantities()
+        {
+            Dictionary<ItemData, int> itemsDataQuantities = new();
 
             foreach (KeyValuePair<int, int> pair in ItemsIdQuantities)
             {
                 ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(pair.Key);
                 if (itemData is not null)
-                    itemsDataQuantities.Add(new(itemData, pair.Value));
+                    itemsDataQuantities.Add(itemData, pair.Value);
             }
 
             return itemsDataQuantities;
         }
 
-        public List<EmoteData> GetEmotesData()
+        public IEnumerable<EmoteData> GetEmotesData()
         {
-            List<EmoteData> emotesData = new();
-
             foreach (int emoteId in EmotesId)
             {
                 EmoteData? emoteData = DofusApi.Instance.Datacenter.EmotesData.GetEmoteById(emoteId);
                 if (emoteData is not null)
-                    emotesData.Add(emoteData);
+                {
+                    yield return emoteData;
+                }
             }
-
-            return emotesData;
         }
 
-        public List<JobData> GetJobsData()
+        public IEnumerable<JobData> GetJobsData()
         {
-            List<JobData> jobsData = new();
-
             foreach (int jobId in JobsId)
             {
                 JobData? jobData = DofusApi.Instance.Datacenter.JobsData.GetJobDataById(jobId);
                 if (jobData is not null)
-                    jobsData.Add(jobData);
+                {
+                    yield return jobData;
+                }
             }
-
-            return jobsData;
         }
 
-        public List<SpellData> GetSpellsData()
+        public IEnumerable<SpellData> GetSpellsData()
         {
-            List<SpellData> spellsData = new();
-
             foreach (int spellId in SpellsId)
             {
                 SpellData? spellData = DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(spellId);
                 if (spellData is not null)
-                    spellsData.Add(spellData);
+                {
+                    yield return spellData;
+                }
             }
-
-            return spellsData;
         }
     }
 
@@ -278,7 +282,9 @@ namespace Cyberia.Api.DatacenterNS
                 {
                     QuestObjectiveData? questObjectiveData = data.GetQuestObjectiveDataById(questObjectiveId);
                     if (questObjectiveData is not null)
+                    {
                         questObjectivesData.Add(questObjectiveData);
+                    }
                 }
 
                 questStepData.QuestObjectives = QuestObjectiveFactory.GetQuestObjectives(questObjectivesData).ToList();

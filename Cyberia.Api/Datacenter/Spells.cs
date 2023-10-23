@@ -106,7 +106,9 @@ namespace Cyberia.Api.DatacenterNS
                     {
                         SpellLevelData? trapSpellLevelData = trapSpellData.GetSpellLevelData(trapSpellEffect.Level);
                         if (trapSpellLevelData is not null)
+                        {
                             return trapSpellLevelData.Effects;
+                        }
                     }
                 }
             }
@@ -125,7 +127,9 @@ namespace Cyberia.Api.DatacenterNS
                     {
                         SpellLevelData? glyphSpellLevelData = glyphSpellData.GetSpellLevelData(glyphSpellEffect.Level);
                         if (glyphSpellLevelData is not null)
+                        {
                             return glyphSpellLevelData.Effects;
+                        }
                     }
                 }
             }
@@ -133,32 +137,28 @@ namespace Cyberia.Api.DatacenterNS
             return new();
         }
 
-        public List<StateData> GetRequiredStatesData()
+        public IEnumerable<StateData> GetRequiredStatesData()
         {
-            List<StateData> statesData = new();
-
             foreach (int stateId in RequiredStatesId)
             {
                 StateData? stateData = DofusApi.Instance.Datacenter.StatesData.GetStateDataById(stateId);
                 if (stateData is not null)
-                    statesData.Add(stateData);
+                {
+                    yield return stateData;
+                }
             }
-
-            return statesData;
         }
 
-        public List<StateData> GetForbiddenStatesData()
+        public IEnumerable<StateData> GetForbiddenStatesData()
         {
-            List<StateData> states = new();
-
             foreach (int stateId in ForbiddenStatesId)
             {
                 StateData? stateData = DofusApi.Instance.Datacenter.StatesData.GetStateDataById(stateId);
                 if (stateData is not null)
-                    states.Add(stateData);
+                {
+                    yield return stateData;
+                }
             }
-
-            return states;
         }
     }
 
@@ -230,7 +230,9 @@ namespace Cyberia.Api.DatacenterNS
             string url = $"{DofusApi.Instance.Config.CdnUrl}/images/spells/{Id}.jpg";
 
             if (await DofusApi.Instance.HttpClient.ExistsAsync(url))
+            {
                 return url;
+            }
 
             return $"{DofusApi.Instance.Config.CdnUrl}/images/spells/unknown.png";
         }
@@ -259,7 +261,9 @@ namespace Cyberia.Api.DatacenterNS
             for (int i = 6; i > 0; i--)
             {
                 if (GetSpellLevelData(i) is not null)
+                {
                     return i;
+                }
             }
 
             return -1;
@@ -275,7 +279,9 @@ namespace Cyberia.Api.DatacenterNS
             foreach (IncarnationData incarnation in DofusApi.Instance.Datacenter.IncarnationsData.Incarnations)
             {
                 if (incarnation.SpellsId.Contains(Id))
+                {
                     return incarnation;
+                }
             }
 
             return null;
@@ -330,10 +336,14 @@ namespace Cyberia.Api.DatacenterNS
                 {
                     SpellLevelData? spellLevelData = spellData.GetSpellLevelData(i);
                     if (spellLevelData is null)
+                    {
                         break;
+                    }
 
                     if (spellLevelData.Id == id)
+                    {
                         return spellLevelData;
+                    }
                 }
             }
 

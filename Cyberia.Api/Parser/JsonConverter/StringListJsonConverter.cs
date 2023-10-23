@@ -8,7 +8,9 @@ namespace Cyberia.Api.Parser.JsonConverter
         public override List<string> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType is not JsonTokenType.StartArray)
+            {
                 throw new JsonException("Invalid JSON format: expected an array.");
+            }
 
             JsonElement[]? elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? throw new JsonException($"Invalid JSON format: unable to deserialize into an array of JsonElement.");
             return elements.Select(x => x.ToString()).ToList();
@@ -19,12 +21,21 @@ namespace Cyberia.Api.Parser.JsonConverter
             writer.WriteStartArray();
 
             foreach (string value in values)
+            {
                 if (double.TryParse(value, out double doubleValue))
+                {
                     writer.WriteNumberValue(doubleValue);
-                else if (int.TryParse(value, out int intValue))
+                    continue;
+                }
+
+                if (int.TryParse(value, out int intValue))
+                {
                     writer.WriteNumberValue(intValue);
-                else
-                    writer.WriteStringValue(value);
+                    continue;
+                }
+
+                writer.WriteStringValue(value);
+            }
 
             writer.WriteEndArray();
         }

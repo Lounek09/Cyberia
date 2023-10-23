@@ -176,7 +176,9 @@ namespace Cyberia.Api.DatacenterNS
             string url = $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/{GfxId}.png";
 
             if (await DofusApi.Instance.HttpClient.ExistsAsync(url))
+            {
                 return url;
+            }
 
             return $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/unknown.png";
         }
@@ -189,11 +191,6 @@ namespace Cyberia.Api.DatacenterNS
         public AlignmentData? GetAlignmentData()
         {
             return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
-        }
-
-        public string GetAlignementName()
-        {
-            return AlignmentId == -1 ? "" : DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentNameById(AlignmentId);
         }
 
         public MonsterGradeData? GetMonsterGradeData(int grade = 1)

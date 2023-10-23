@@ -33,18 +33,16 @@ namespace Cyberia.Api.DatacenterNS
             NpcActionsId = new();
         }
 
-        public List<NpcActionData> GetNpcActionsData()
+        public IEnumerable<NpcActionData> GetNpcActionsData()
         {
-            List<NpcActionData> npcActionsData = new();
-
             foreach (int npcActionId in NpcActionsId)
             {
                 NpcActionData? npcActionData = DofusApi.Instance.Datacenter.NpcsData.GetNpcActionDataById(npcActionId);
                 if (npcActionData is not null)
-                    npcActionsData.Add(npcActionData);
+                {
+                    yield return npcActionData;
+                }
             }
-
-            return npcActionsData;
         }
     }
 

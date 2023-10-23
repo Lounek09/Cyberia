@@ -28,32 +28,40 @@ namespace Cyberia.Api.DatacenterNS
             MonstersIdQuantities = new();
         }
 
-        public List<ItemData> GetItemsData()
+        public IEnumerable<ItemData> GetItemsData()
         {
-            List<ItemData> itemsData = new();
-
             foreach (int itemId in ItemTypesId)
             {
                 ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(itemId);
                 if (itemData is not null)
-                    itemsData.Add(itemData);
+                {
+                    yield return itemData;
+                }
             }
-
-            return itemsData;
         }
 
-        public List<ItemTypeData> GetItemTypesData()
+        public IEnumerable<ItemTypeData> GetItemTypesData()
         {
-            List<ItemTypeData> itemsData = new();
-
             foreach (int itemTypeId in ItemTypesId)
             {
                 ItemTypeData? itemTypeData = DofusApi.Instance.Datacenter.ItemsData.GetItemTypeDataById(itemTypeId);
                 if (itemTypeData is not null)
-                    itemsData.Add(itemTypeData);
+                {
+                    yield return itemTypeData;
+                }
             }
+        }
 
-            return itemsData;
+        public IEnumerable<MonsterData> GetMonstersData()
+        {
+            foreach (KeyValuePair<int, int> pair in MonstersIdQuantities)
+            {
+                MonsterData? monsterData = DofusApi.Instance.Datacenter.MonstersData.GetMonsterDataById(pair.Key);
+                if (monsterData is not null)
+                {
+                    yield return monsterData;
+                }
+            }
         }
 
         public Dictionary<MonsterData, int> GetMonstersDataQuantities()

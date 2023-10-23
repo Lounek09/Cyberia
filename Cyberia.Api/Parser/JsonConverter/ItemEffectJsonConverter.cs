@@ -14,7 +14,9 @@ namespace Cyberia.Api.Parser.JsonConverter
             List<IEffect> effects = EffectFactory.GetEffectsParseFromItem(element.GetString() ?? "").ToList();
 
             if (effects.Count == 0)
+            {
                 throw new JsonException("Invalid JSON format: unable to parse item effect");
+            }
 
             return effects[0];
         }

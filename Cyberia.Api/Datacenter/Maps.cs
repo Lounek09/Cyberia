@@ -155,18 +155,16 @@ namespace Cyberia.Api.DatacenterNS
             return DofusApi.Instance.Datacenter.MapsData.GetMapAreaDataById(MapAreaId);
         }
 
-        public List<MapSubAreaData> GetNearMapSubAreasData()
+        public IEnumerable<MapSubAreaData> GetNearMapSubAreasData()
         {
-            List<MapSubAreaData> mapSubAreasData = new();
-
             foreach (int mapSubAreaId in NearMapSubAreasId)
             {
                 MapSubAreaData? mapSubAreaData = DofusApi.Instance.Datacenter.MapsData.GetMapSubAreaDataById(mapSubAreaId);
                 if (mapSubAreaData is not null)
-                    mapSubAreasData.Add(mapSubAreaData);
+                {
+                    yield return mapSubAreaData;
+                }
             }
-
-            return mapSubAreasData;
         }
 
         public AudioMusicData? GetFightAudioMusicData()

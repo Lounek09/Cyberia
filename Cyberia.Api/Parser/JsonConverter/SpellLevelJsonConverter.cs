@@ -14,11 +14,15 @@ namespace Cyberia.Api.Parser.JsonConverter
         public override SpellLevelData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType is not JsonTokenType.StartArray)
+            {
                 throw new JsonException("Invalid JSON format: expected an array.");
+            }
 
             JsonElement[]? elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options);
             if (elements is null || elements.Length != 21)
+            {
                 throw new JsonException($"Invalid JSON format: expected an array of 21 values, but got a length of {elements?.Length}.");
+            }
 
             JsonElement[] effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0].GetRawText(), options) ?? Array.Empty<JsonElement>();
             JsonElement[] criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1].GetRawText(), options) ?? Array.Empty<JsonElement>();

@@ -23,7 +23,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             _incarnationData = incarnationData;
             _itemData = incarnationData.GetItemData();
             _itemTypeData = _itemData?.GetItemTypeData();
-            _spellsData = incarnationData.GetSpellsData();
+            _spellsData = incarnationData.GetSpellsData().ToList();
         }
 
         public static IncarnationMessageBuilder? Create(int version, string[] parameters)

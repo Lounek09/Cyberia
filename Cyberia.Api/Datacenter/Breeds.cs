@@ -90,20 +90,20 @@ namespace Cyberia.Api.DatacenterNS
             return $"{DofusApi.Instance.Config.CdnUrl}/images/breeds/preference_weapons/weapons_{Id}.png";
         }
 
-        public List<SpellData> GetSpellsData()
+        public IEnumerable<SpellData> GetSpellsData()
         {
-            List<SpellData> spellsData = new();
-
             foreach (int spellId in SpellsId)
             {
                 SpellData? spellData = DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(spellId);
                 if (spellData is not null && (!DofusApi.Instance.Config.Temporis || spellData.SpellCategory is SpellCategory.TemporisBreed))
-                    spellsData.Add(spellData);
+                {
+                    yield return spellData;
+                }
             }
-
-            return spellsData;
         }
 
+
+        //TODO: Re-do this piece of shit
         public string GetCaracteristics()
         {
             string[,] tab = new string[6, 6];

@@ -18,6 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         private readonly MonsterGradeData? _monsterGradeData;
         private readonly MonsterRaceData? _monsterRaceData;
         private readonly MonsterSuperRaceData? _monsterSuperRaceData;
+        private readonly AlignmentData? _alignmentData;
 
         public MonsterMessageBuilder(MonsterData monster, int selectedGrade = 1)
         {
@@ -26,6 +27,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             _monsterGradeData = _monsterData.GetMonsterGradeData(selectedGrade);
             _monsterRaceData = monster.GetMonsterRaceData();
             _monsterSuperRaceData = _monsterRaceData?.GetMonsterSuperRaceData();
+            _alignmentData = _monsterData.GetAlignmentData();
         }
 
         public static MonsterMessageBuilder? Create(int version, string[] parameters)
@@ -78,9 +80,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (_monsterGradeData is not null)
             {
-                string alignmentName = _monsterData.GetAlignementName();
-                if (!string.IsNullOrEmpty(alignmentName))
-                    embed.AddField("Alignement :", alignmentName, true);
+                if (_alignmentData is not null)
+                    embed.AddField("Alignement :", _alignmentData.Name, true);
 
                 StringBuilder caracteristicsBuilder = new();
                 caracteristicsBuilder.AppendFormat("Niveau. {0}\n", Formatter.Bold(_monsterGradeData.Level.ToString()));

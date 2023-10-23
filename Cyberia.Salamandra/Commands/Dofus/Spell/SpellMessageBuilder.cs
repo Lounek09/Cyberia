@@ -82,11 +82,11 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
                 embed.AddField("Catégorie :", _spellData.SpellCategory.GetDescription(), true);
 
-                List<StateData> requiredStatesData = _spellLevelData.GetRequiredStatesData();
+                List<StateData> requiredStatesData = _spellLevelData.GetRequiredStatesData().ToList();
                 if (requiredStatesData.Count > 0)
                     embed.AddField("Etats requis :", string.Join(", ", requiredStatesData.Select(x => x.Name)), true);
 
-                List<StateData> forbiddenStatesData = _spellLevelData.GetForbiddenStatesData();
+                List<StateData> forbiddenStatesData = _spellLevelData.GetForbiddenStatesData().ToList();
                 if (forbiddenStatesData.Count > 0)
                     embed.AddField("Etats interdits :", string.Join(", ", forbiddenStatesData.Select(x => x.Name)), true);
 

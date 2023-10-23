@@ -29,7 +29,9 @@ namespace Cyberia.Api.DatacenterNS
             {
                 CraftData? subCraftData = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
                 if (subCraftData is not null)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -42,9 +44,13 @@ namespace Cyberia.Api.DatacenterNS
             foreach (KeyValuePair<int, int> ingredient in Ingredients)
             {
                 if (ingredients.TryGetValue(ingredient.Key, out _))
+                {
                     ingredients[ingredient.Key] += qte * ingredient.Value;
+                }
                 else
+                {
                     ingredients.Add(ingredient.Key, qte * ingredient.Value);
+                }
             }
 
             return ingredients;
@@ -59,15 +65,19 @@ namespace Cyberia.Api.DatacenterNS
             {
                 CraftData? subCraft = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
 
-                if (subCraft is null)
+                if (subCraft is not null)
                 {
-                    if (ingredients.TryGetValue(ingredient.Key, out _))
-                        ingredients[ingredient.Key] += ingredient.Value;
-                    else
-                        ingredients.Add(ingredient.Key, ingredient.Value);
-                }
-                else
                     ingredients = GetRecursiveIngredients(ingredient.Value, ingredients, subCraft);
+                    continue;
+                }
+
+                if (ingredients.TryGetValue(ingredient.Key, out _))
+                {
+                    ingredients[ingredient.Key] += ingredient.Value;
+                    continue;
+                }
+
+                ingredients.Add(ingredient.Key, ingredient.Value);
             }
 
             return ingredients;
@@ -81,7 +91,9 @@ namespace Cyberia.Api.DatacenterNS
             {
                 ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ingredient.Key);
                 if (itemData is not null)
+                {
                     pods += itemData.Weight * ingredient.Value;
+                }
             }
 
             return pods;
@@ -94,9 +106,10 @@ namespace Cyberia.Api.DatacenterNS
             foreach (KeyValuePair<int, int> ingredient in GetRecursiveIngredients(1))
             {
                 ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ingredient.Key);
-
                 if (itemData is not null)
+                {
                     pods += itemData.Weight * ingredient.Value;
+                }
             }
 
             return pods;
@@ -116,7 +129,9 @@ namespace Cyberia.Api.DatacenterNS
             {
                 CraftData? subCraftData = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
                 if (subCraftData is not null)
+                {
                     totalTime = GetRecursiveTimeForMultipleCraft(qte * ingredient.Value, totalTime, subCraftData);
+                }
             }
 
             return totalTime.Value + craftData.GetTimeForMultipleCraft(qte);
@@ -153,7 +168,9 @@ namespace Cyberia.Api.DatacenterNS
             {
                 ItemData? itemData = craftData.GetItemData();
                 if (itemData is not null && itemNames.All(itemData.Name.RemoveDiacritics().Contains))
+                {
                     craftsData.Add(craftData);
+                }
             }
 
             return craftsData;

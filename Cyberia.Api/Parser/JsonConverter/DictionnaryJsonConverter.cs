@@ -21,7 +21,9 @@ namespace Cyberia.Api.Parser.JsonConverter
                     TValue? value = JsonSerializer.Deserialize<TValue>(pairElement[1].GetRawText(), options);
 
                     if (key is not null && value is not null)
+                    {
                         dict[key] = value;
+                    }
                 }
             }
 

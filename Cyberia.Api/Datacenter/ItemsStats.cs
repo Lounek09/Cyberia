@@ -41,9 +41,12 @@ namespace Cyberia.Api.DatacenterNS
             {
                 ItemStatsData? itemStatsData = data.GetItemStatDataById(itemStatsCustomData.Id);
                 if (itemStatsData is not null)
+                {
                     itemStatsData.Effects.AddRange(itemStatsCustomData.Effects);
-                else
-                    data.ItemsStats.Add(itemStatsCustomData.ToItemStatsData());
+                    continue;
+                }
+
+                data.ItemsStats.Add(itemStatsCustomData.ToItemStatsData());
             }
 
             return data;

@@ -50,18 +50,16 @@ namespace Cyberia.Api.DatacenterNS
             return DofusApi.Instance.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeIdForgemagus);
         }
 
-        public List<CraftData> GetCraftsData()
+        public IEnumerable<CraftData> GetCraftsData()
         {
-            List<CraftData> crafts = new();
-
             foreach (int craftId in CraftsId)
             {
                 CraftData? craftData = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(craftId);
                 if (craftData is not null)
-                    crafts.Add(craftData);
+                {
+                    yield return craftData;
+                }
             }
-
-            return crafts;
         }
 
         public ItemData? GetHarvestedItemData()

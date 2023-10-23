@@ -22,7 +22,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             _itemSetData = itemSetData;
             _nbItemSelected = nbItemSelected;
-            _itemsData = itemSetData.GetItemsData();
+            _itemsData = itemSetData.GetItemsData().ToList();
             _breedData = itemSetData.GetBreedData();
         }
 

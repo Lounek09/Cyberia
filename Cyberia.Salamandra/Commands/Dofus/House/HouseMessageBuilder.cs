@@ -20,7 +20,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             _houseData = houseData;
             _outdoorMapData = houseData.GetOutdoorMapData();
-            _mapsData = houseData.GetMapsData();
+            _mapsData = houseData.GetMapsData().ToList();
             _selectedMapIndex = selectedMapIndex;
         }
 

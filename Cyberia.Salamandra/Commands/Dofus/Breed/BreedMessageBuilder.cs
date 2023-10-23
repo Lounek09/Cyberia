@@ -19,7 +19,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         public BreedMessageBuilder(BreedData breedData)
         {
             _breedData = breedData;
-            _spellsData = breedData.GetSpellsData();
+            _spellsData = breedData.GetSpellsData().ToList();
             _specialSpellData = breedData.GetSpecialSpellData();
             _itemSetData = breedData.GetItemSetData();
         }

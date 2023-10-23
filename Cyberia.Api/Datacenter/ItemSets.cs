@@ -25,28 +25,21 @@ namespace Cyberia.Api.DatacenterNS
             Effects = new();
         }
 
-        public List<ItemData> GetItemsData()
+        public IEnumerable<ItemData> GetItemsData()
         {
-            List<ItemData> itemsData = new();
-
             foreach (int id in ItemsId)
             {
                 ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(id);
                 if (itemData is not null)
-                    itemsData.Add(itemData);
+                {
+                    yield return itemData;
+                }
             }
-
-            return itemsData;
         }
 
         public int GetLevel()
         {
-            int level = 0;
-
-            foreach (ItemData itemData in GetItemsData())
-                level = itemData.Level > level ? itemData.Level : level;
-
-            return level;
+            return GetItemsData().Max(x => x.Level);
         }
 
         public List<IEffect> GetEffects(int nbItem)
@@ -83,7 +76,9 @@ namespace Cyberia.Api.DatacenterNS
             {
                 ItemSetData? itemSetData = data.GetItemSetDataById(itemSetCustomData.Id);
                 if (itemSetData is not null)
+                {
                     itemSetData.Effects = itemSetCustomData.Effects;
+                }
             }
 
             return data;

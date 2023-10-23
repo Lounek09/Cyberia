@@ -29,18 +29,16 @@ namespace Cyberia.Api.DatacenterNS
             Description = string.Empty;
         }
 
-        public List<MapData> GetMapsData()
+        public IEnumerable<MapData> GetMapsData()
         {
-            List<MapData> mapsData = new();
-
             foreach (HouseMapData houseMapData in DofusApi.Instance.Datacenter.HousesData.GetHouseMapsDataByHouseId(Id))
             {
                 MapData? mapData = houseMapData.GetMapData();
                 if (mapData is not null)
-                    mapsData.Add(mapData);
+                {
+                    yield return mapData;
+                }
             }
-
-            return mapsData;
         }
 
         public MapData? GetOutdoorMapData()
@@ -139,7 +137,9 @@ namespace Cyberia.Api.DatacenterNS
             {
                 MapData? map = houseData.GetOutdoorMapData();
                 if (map is not null && map.XCoord == x && map.YCoord == y)
+                {
                     housesData.Add(houseData);
+                }
             }
 
             return housesData;
@@ -153,7 +153,9 @@ namespace Cyberia.Api.DatacenterNS
             {
                 MapData? map = houseData.GetOutdoorMapData();
                 if (map is not null && map.GetMapSubAreaData()?.Id == id)
+                {
                     housesData.Add(houseData);
+                }
             }
 
             return housesData;
@@ -167,7 +169,9 @@ namespace Cyberia.Api.DatacenterNS
             {
                 MapData? map = houseData.GetOutdoorMapData();
                 if (map is not null && map.GetMapSubAreaData()?.GetMapAreaData()?.Id == id)
+                {
                     housesData.Add(houseData);
+                }
             }
 
             return housesData;
