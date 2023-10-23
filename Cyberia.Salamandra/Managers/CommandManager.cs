@@ -50,11 +50,5 @@ namespace Cyberia.Salamandra.Managers
 #endif
             }
         }
-
-        public static async Task OnSlashCommandExecuted(SlashCommandsExtension _, SlashCommandExecutedEventArgs _1)
-        {
-            //TODO: Stats des commandes utilisés
-            await Task.Delay(0);
-        }
     }
 }

@@ -50,7 +50,6 @@ namespace Cyberia.Salamandra
 
             SlashCommands = Client.UseSlashCommands();
             SlashCommands.SlashCommandErrored += CommandManager.OnSlashCommandErrored;
-            SlashCommands.SlashCommandExecuted += CommandManager.OnSlashCommandExecuted;
 
             CytrusWatcher = cytrus;
             CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
