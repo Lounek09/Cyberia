@@ -215,13 +215,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public BreedData? GetBreedDataByName(string name)
         {
-            return Breeds.Find(x => x.Name.Normalize().Equals(name.Normalize()));
+            return Breeds.Find(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
         }
 
         public List<BreedData> GetBreedsDataByName(string name)
         {
-            string[] names = name.Normalize().Split(' ');
-            return Breeds.FindAll(x => names.All(x.Name.Normalize().Contains));
+            string[] names = name.NormalizeCustom().Split(' ');
+            return Breeds.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetBreedNameById(int id)

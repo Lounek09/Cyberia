@@ -302,13 +302,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public QuestData? GetQuestDataByName(string name)
         {
-            return Quests.Find(x => x.Name.Normalize().Equals(name.Normalize()));
+            return Quests.Find(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
         }
 
         public List<QuestData> GetQuestsDataByName(string name)
         {
-            string[] names = name.Normalize().Split(' ');
-            return Quests.FindAll(x => names.All(x.Name.Normalize().Contains));
+            string[] names = name.NormalizeCustom().Split(' ');
+            return Quests.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetQuestNameById(int id)

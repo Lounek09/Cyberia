@@ -63,7 +63,7 @@ namespace Cyberia.Langzilla
 
         public List<Lang> GetLangsByName(string name)
         {
-            return Langs.FindAll(x => x.Name.Normalize().Contains(name.Normalize()));
+            return Langs.FindAll(x => x.Name.NormalizeCustom().Contains(name.NormalizeCustom()));
         }
 
         internal async Task<List<Lang>> FetchLangsAsync(bool force)

@@ -102,8 +102,8 @@ namespace Cyberia.Api.DatacenterNS
 
         public List<IncarnationData> GetIncarnationsDataByName(string name)
         {
-            string[] names = name.Normalize().Split(' ');
-            return Incarnations.FindAll(x => names.All(x.Name.Normalize().Contains));
+            string[] names = name.NormalizeCustom().Split(' ');
+            return Incarnations.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
         }
     }
 }

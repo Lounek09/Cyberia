@@ -161,8 +161,9 @@ namespace Cyberia.Api.DatacenterNS
 
         public List<CraftData> GetCraftsDataByItemName(string itemName)
         {
-            string[] itemNames = itemName.Normalize().Split(' ');
             List<CraftData> craftsData = new();
+
+            string[] itemNames = itemName.NormalizeCustom().Split(' ');
             foreach (CraftData craftData in Crafts)
             {
                 ItemData? itemData = craftData.GetItemData();

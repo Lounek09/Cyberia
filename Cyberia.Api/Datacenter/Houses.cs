@@ -125,8 +125,8 @@ namespace Cyberia.Api.DatacenterNS
 
         public List<HouseData> GetHousesDataByName(string name)
         {
-            string[] names = name.Normalize().Split(' ');
-            return Houses.FindAll(h => names.All(h.Name.Normalize().Contains)).OrderBy(h => h.Id).ToList();
+            string[] names = name.NormalizeCustom().Split(' ');
+            return Houses.FindAll(h => names.All(h.Name.NormalizeCustom().Contains)).OrderBy(h => h.Id).ToList();
         }
 
         public List<HouseData> GetHousesDataByCoordinate(int x, int y)

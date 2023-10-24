@@ -112,41 +112,13 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             StringBuilder miscellaneousBuilder = new();
             miscellaneousBuilder.AppendFormat("{0} pod{1}", _itemData.Weight.ToStringThousandSeparator(), _itemData.Weight > 1 ? "s" : "");
-            if (_itemData.Tradeable())
-            {
-                miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _itemData.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
-            }
-
-            if (_itemData.Ceremonial)
-            {
-                miscellaneousBuilder.Append(", objet d'apparat");
-            }
-
-            if (_itemData.IsReallyEnhanceable())
-            {
-                miscellaneousBuilder.Append(", forgemageable");
-            }
-
-            if (_itemData.Ethereal)
-            {
-                miscellaneousBuilder.Append(", item éthéré");
-            }
-
-            if (_itemData.Usable)
-            {
-                miscellaneousBuilder.Append(", est consommable");
-            }
-
-            if (_itemData.Targetable)
-            {
-                miscellaneousBuilder.Append(", est ciblable");
-            }
-
-            if (_itemData.Cursed)
-            {
-                miscellaneousBuilder.Append(", malédiction");
-            }
-
+            if (_itemData.Tradeable()) miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _itemData.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
+            if (_itemData.Ceremonial) miscellaneousBuilder.Append(", objet d'apparat");
+            if (_itemData.IsReallyEnhanceable()) miscellaneousBuilder.Append(", forgemageable");
+            if (_itemData.Ethereal) miscellaneousBuilder.Append(", item éthéré");
+            if (_itemData.Usable) miscellaneousBuilder.Append(", est consommable");
+            if (_itemData.Targetable) miscellaneousBuilder.Append(", est ciblable");
+            if (_itemData.Cursed) miscellaneousBuilder.Append(", malédiction");
             embed.AddField("Divers :", miscellaneousBuilder.ToString());
 
             return embed;

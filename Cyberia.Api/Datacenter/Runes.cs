@@ -56,13 +56,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public RuneData? GetRuneDataByName(string name)
         {
-            return Runes.Find(x => x.Name.Normalize().Equals(name.Normalize()));
+            return Runes.Find(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
         }
 
         public List<RuneData> GetRunesDataByName(string name)
         {
-            string[] names = name.Normalize().Split(' ');
-            return Runes.FindAll(x => names.All(x.Name.Normalize().Contains));
+            string[] names = name.NormalizeCustom().Split(' ');
+            return Runes.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetAllRuneName()

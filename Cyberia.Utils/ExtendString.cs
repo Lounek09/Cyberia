@@ -75,7 +75,7 @@ namespace Cyberia.Utils
             return result;
         }
 
-        public static string Normalize(this string value)
+        public static string NormalizeCustom(this string value)
         {
             StringBuilder output = new();
 

@@ -305,13 +305,13 @@ namespace Cyberia.Api.DatacenterNS
 
         public MonsterData? GetMonsterDataByName(string name)
         {
-            return Monsters.Find(x => x.Name.Normalize().Equals(name.Normalize()));
+            return Monsters.Find(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
         }
 
         public List<MonsterData> GetMonstersDataByName(string name)
         {
-            string[] names = name.Normalize().Split(' ');
-            return Monsters.FindAll(x => names.All(x.Name.Normalize().Contains));
+            string[] names = name.NormalizeCustom().Split(' ');
+            return Monsters.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetMonsterNameById(int id)
