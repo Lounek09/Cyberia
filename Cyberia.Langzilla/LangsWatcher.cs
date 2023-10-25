@@ -22,7 +22,7 @@ namespace Cyberia.Langzilla
         }
         private static LangsWatcher? _instance;
 
-        private readonly ConcurrentDictionary<LangType, Timer> _timers;
+        private readonly ConcurrentDictionary<string, Timer> _timers;
 
         internal LangsWatcher()
         {
@@ -51,7 +51,7 @@ namespace Cyberia.Langzilla
             {
                 Timer timer = new(async _ => await LaunchAsync(type, language), null, dueTime, interval);
 
-                _timers.AddOrUpdate(type, timer, (key, oldValue) => oldValue = timer);
+                _timers.AddOrUpdate($"{type}_{language}", timer, (key, oldValue) => oldValue = timer);
             }
         }
 
