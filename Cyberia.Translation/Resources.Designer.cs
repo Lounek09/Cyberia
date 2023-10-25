@@ -2239,6 +2239,15 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Téléporte nul part.
+        /// </summary>
+        public static string GuildTeleportation_None {
+            get {
+                return ResourceManager.GetString("GuildTeleportation.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stérile.
         /// </summary>
         public static string Infertile {
@@ -2334,6 +2343,15 @@ namespace Cyberia.Translation {
         public static string SpellCategory_Fairywork {
             get {
                 return ResourceManager.GetString("SpellCategory.Fairywork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aucune.
+        /// </summary>
+        public static string SpellCategory_None {
+            get {
+                return ResourceManager.GetString("SpellCategory.None", resourceCulture);
             }
         }
         
@@ -2500,6 +2518,15 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aucune.
+        /// </summary>
+        public static string SpellOrigin_None {
+            get {
+                return ResourceManager.GetString("SpellOrigin.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inconnu.
         /// </summary>
         public static string SpellOrigin_Unknown {
@@ -2559,6 +2586,15 @@ namespace Cyberia.Translation {
         public static string SpellType_Neutral {
             get {
                 return ResourceManager.GetString("SpellType.Neutral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aucun.
+        /// </summary>
+        public static string SpellType_None {
+            get {
+                return ResourceManager.GetString("SpellType.None", resourceCulture);
             }
         }
         
