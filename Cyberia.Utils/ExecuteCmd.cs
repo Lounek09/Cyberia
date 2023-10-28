@@ -4,11 +4,11 @@ namespace Cyberia.Utils
 {
     public static class ExecuteCmd
     {
-        public static bool ExecuteCommand(string command, string args, out string message)
+        public static bool ExecuteCommand(string command, string args)
         {
             try
             {
-                Process process = new()
+                using Process process = new()
                 {
                     StartInfo = new ProcessStartInfo(command, args)
                     {
@@ -21,11 +21,14 @@ namespace Cyberia.Utils
 
                 process.Start();
 
-                message = process.StandardOutput.ReadToEnd();
-                string error = process.StandardError.ReadToEnd();
-                if (!string.IsNullOrEmpty(error))
+                if (process.StandardOutput.BaseStream.Length > 0)
                 {
-                    message += "\n" + error;
+                    Log.Information(process.StandardOutput.ReadToEnd());
+                }
+
+                if (process.StandardError.BaseStream.Length > 0)
+                {
+                    Log.Error(process.StandardError.ReadToEnd());
                     return false;
                 }
 
@@ -33,7 +36,7 @@ namespace Cyberia.Utils
             }
             catch (Exception)
             {
-                message = $"Error when execute command {command}{(string.IsNullOrEmpty(args) ? "" : " with args " + args)}";
+                Log.Error("An error occured while executing {command} with {args} arguments", command, args);
                 return false;
             }
         }

@@ -4,12 +4,12 @@
     {
         private static readonly object _lock = new();
 
-        internal static bool TryExtractSwf(string swfFilePath, out string warningMessage, out string outputFilePath)
+        internal static bool TryExtractSwf(string swfFilePath, out string outputFilePath)
         {
             lock (_lock)
             {
                 outputFilePath = $"{swfFilePath.TrimEnd(".swf")}.flr";
-                return ExecuteCmd.ExecuteCommand(GetFlareExecutablePath(), swfFilePath, out warningMessage);
+                return ExecuteCmd.ExecuteCommand(GetFlareExecutablePath(), swfFilePath);
             }
         }
 

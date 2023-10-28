@@ -144,14 +144,14 @@ namespace Cyberia.Langzilla
             string currentDecompiledFilePath = GetCurrentDecompiledFilePath();
             string oldDecompiledFilePath = GetOldDecompiledFilePath();
 
-            if (!Flare.TryExtractSwf(filePath, out string warningMessage, out string flareFilePath))
+            if (!Flare.TryExtractSwf(filePath, out string flareOutputFilePath))
             {
-                Log.Error("Error when decompiling {filePath}\nWarning : {warningMessage}", filePath, warningMessage);
+                Log.Error("Error when decompiling {filePath}", filePath);
                 return;
             }
 
             List<string> content = new();
-            foreach (string line in File.ReadAllLines(flareFilePath, Encoding.UTF8).Skip(7).SkipLast(3))
+            foreach (string line in File.ReadAllLines(flareOutputFilePath, Encoding.UTF8).Skip(7).SkipLast(3))
             {
                 string temp = line.Trim();
 
@@ -168,7 +168,7 @@ namespace Cyberia.Langzilla
                 File.Move(currentDecompiledFilePath, oldDecompiledFilePath, true);
             }
             File.WriteAllLines(currentDecompiledFilePath, content, Encoding.UTF8);
-            File.Delete(flareFilePath);
+            File.Delete(flareOutputFilePath);
         }
 
         private void Diff()
