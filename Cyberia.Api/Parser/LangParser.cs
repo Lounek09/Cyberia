@@ -75,7 +75,7 @@ namespace Cyberia.Api.Parser
 
         private static bool TryParse(string langName)
         {
-            LangsData langsData = DofusApi.Config.Temporis ? DofusApi.LangsWatcher.Temporis.French : DofusApi.LangsWatcher.Official.French;
+            LangsData langsData = DofusApi.Config.Temporis ? LangsWatcher.Temporis.French : LangsWatcher.Official.French;
 
             Lang? lang = langsData.GetLangByName(langName);
             if (lang is null)

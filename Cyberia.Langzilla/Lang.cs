@@ -119,7 +119,7 @@ namespace Cyberia.Langzilla
 
             try
             {
-                using HttpResponseMessage response = await LangsWatcher.Instance.HttpRetryPolicy.ExecuteAsync(() => LangsWatcher.Instance.HttpClient.GetAsync(fileUrl));
+                using HttpResponseMessage response = await LangsWatcher.HttpRetryPolicy.ExecuteAsync(() => LangsWatcher.HttpClient.GetAsync(fileUrl));
                 response.EnsureSuccessStatusCode();
 
                 using FileStream fileStream = new(GetFilePath(), FileMode.Create);

@@ -33,7 +33,7 @@ namespace Cyberia.Salamandra.Commands.Data
             LangType type = Enum.Parse<LangType>(typeStr);
             Language language = Enum.Parse<Language>(languageStr);
 
-            foreach (Lang lang in Bot.LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangsByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+            foreach (Lang lang in LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangsByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
             {
                 choices.Add(new(lang.Name, lang.Name));
             }

@@ -83,7 +83,7 @@ namespace Cyberia.Langzilla
 
             try
             {
-                using HttpResponseMessage response = await LangsWatcher.Instance.HttpRetryPolicy.ExecuteAsync(() => LangsWatcher.Instance.HttpClient.GetAsync(versionFileUrl));
+                using HttpResponseMessage response = await LangsWatcher.HttpRetryPolicy.ExecuteAsync(() => LangsWatcher.HttpClient.GetAsync(versionFileUrl));
                 response.EnsureSuccessStatusCode();
 
                 long lastModifiedHeader = response.Content.Headers.LastModified!.Value.ToUnixTimeMilliseconds();

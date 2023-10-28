@@ -4,58 +4,45 @@ using System.Collections.Concurrent;
 
 namespace Cyberia.Langzilla
 {
-    public sealed class LangsWatcher
+    public static class LangsWatcher
     {
         public const string OUTPUT_PATH = "langs";
         public const string BASE_URL = "https://dofusretro.cdn.ankama.com";
 
-        public LangsType Official { get; init; }
-        public LangsType Beta { get; init; }
-        public LangsType Temporis { get; init; }
+        public static LangsType Official { get; private set; } = default!;
+        public static LangsType Beta { get; private set; } = default!;
+        public static LangsType Temporis { get; private set; } = default!;
 
-        internal HttpClient HttpClient { get; init; }
-        internal HttpRetryPolicy HttpRetryPolicy { get; init; }
+        internal static HttpClient HttpClient { get; private set; } = default!;
+        internal static HttpRetryPolicy HttpRetryPolicy { get; private set; } = default!;
 
-        internal static LangsWatcher Instance
+        private static readonly ConcurrentDictionary<string, Timer> _timers = new();
+
+        public static void Initialize()
         {
-            get => _instance is null ? throw new NullReferenceException("Build the Langs before !") : _instance;
-        }
-        private static LangsWatcher? _instance;
+            Directory.CreateDirectory(OUTPUT_PATH);
 
-        private readonly ConcurrentDictionary<string, Timer> _timers;
-
-        internal LangsWatcher()
-        {
             Official = new(LangType.Official);
             Beta = new(LangType.Beta);
             Temporis = new(LangType.Temporis);
             HttpClient = new();
             HttpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
-            _timers = new();
-
-            Directory.CreateDirectory(OUTPUT_PATH);
         }
 
-        public static LangsWatcher Create()
-        {
-            _instance ??= new();
-            return _instance;
-        }
+        public static event EventHandler<CheckLangStartedEventArgs>? CheckLangStarted;
+        public static event EventHandler<CheckLangFinishedEventArgs>? CheckLangFinished;
 
-        public event EventHandler<CheckLangStartedEventArgs>? CheckLangStarted;
-        public event EventHandler<CheckLangFinishedEventArgs>? CheckLangFinished;
-
-        public void Listen(LangType type, TimeSpan dueTime, TimeSpan interval)
+        public static void Watch(LangType type, TimeSpan dueTime, TimeSpan interval)
         {
             foreach (Language language in Enum.GetValues<Language>())
             {
-                Timer timer = new(async _ => await LaunchAsync(type, language), null, dueTime, interval);
+                Timer timer = new(async _ => await CheckAsync(type, language), null, dueTime, interval);
 
                 _timers.AddOrUpdate($"{type}_{language}", timer, (key, oldValue) => oldValue = timer);
             }
         }
 
-        public LangsType GetLangsByType(LangType type)
+        public static LangsType GetLangsByType(LangType type)
         {
             return type switch
             {
@@ -66,14 +53,14 @@ namespace Cyberia.Langzilla
             };
         }
 
-        public async Task LaunchAsync(LangType type, Language language, bool force = false)
+        public static async Task CheckAsync(LangType type, Language language, bool force = false)
         {
-            CheckLangStarted?.Invoke(this, new CheckLangStartedEventArgs(type, language));
+            CheckLangStarted?.Invoke(null, new CheckLangStartedEventArgs(type, language));
 
             LangsData data = GetLangsByType(type).GetLangsByLanguage(language);
             List<Lang> updatedLangs = await data.FetchLangsAsync(force);
 
-            CheckLangFinished?.Invoke(this, new CheckLangFinishedEventArgs(type, language, updatedLangs));
+            CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(type, language, updatedLangs));
         }
 
         internal static string GetOutputDirectoryPath(LangType type, Language language)

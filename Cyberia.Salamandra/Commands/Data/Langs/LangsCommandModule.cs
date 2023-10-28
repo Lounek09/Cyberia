@@ -33,7 +33,7 @@ namespace Cyberia.Salamandra.Commands.Data
                 await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} dans toutes les langues...");
                 foreach (Language language in Enum.GetValues<Language>())
                 {
-                    await Bot.LangsWatcher.LaunchAsync(type, language, force);
+                    await LangsWatcher.CheckAsync(type, language, force);
                 }
 
                 await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check des langs {Formatter.Bold(typeStr)} dans toutes les langues terminé"));
@@ -41,8 +41,10 @@ namespace Cyberia.Salamandra.Commands.Data
             else
             {
                 Language language = Enum.Parse<Language>(languageStr);
+
                 await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)}...");
-                await Bot.LangsWatcher.LaunchAsync(type, language, force);
+                await LangsWatcher.CheckAsync(type, language, force);
+
                 await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)} terminé"));
             }
         }
@@ -77,7 +79,7 @@ namespace Cyberia.Salamandra.Commands.Data
             LangType type = Enum.Parse<LangType>(typeStr);
             Language language = Enum.Parse<Language>(languageStr);
 
-            Lang? lang = Bot.LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangByName(name);
+            Lang? lang = LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangByName(name);
             if (lang is null)
             {
                 await ctx.CreateResponseAsync("Ce lang n'existe pas ou n'a jamais été décompilé");
@@ -120,8 +122,8 @@ namespace Cyberia.Salamandra.Commands.Data
                 {
                     DiscordThreadChannel thread = await ctx.Channel.CreateThreadAsync($"Diff entre {type} et {typeModel} en {language}", AutoArchiveDuration.Hour, ChannelType.PublicThread);
 
-                    LangsData data = Bot.LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language);
-                    LangsData dataModel = Bot.LangsWatcher.GetLangsByType(typeModel).GetLangsByLanguage(language);
+                    LangsData data = LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language);
+                    LangsData dataModel = LangsWatcher.GetLangsByType(typeModel).GetLangsByLanguage(language);
 
                     foreach (Lang lang in data.Langs)
                     {

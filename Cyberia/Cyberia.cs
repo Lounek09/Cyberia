@@ -31,13 +31,15 @@ namespace Cyberia
                 Log.Information("Initializing CytrusWatcher");
                 CytrusWatcher.Initialize();
 
-                LangsWatcher langs = LangsWatcher.Create();
+                Log.Information("Initializing LangsWatcher");
+                LangsWatcher.Initialize();
 
                 Log.Information("Initializing DofusApi");
-                DofusApi.Initialize(config.ApiConfig, langs);
+                DofusApi.Initialize(config.ApiConfig);
 
                 Log.Information("Initializing Salamandra");
-                Bot.Initialize(config.BotConfig, langs);
+                Bot.Initialize(config.BotConfig);
+
                 await Bot.Launch();
 
                 if (config.EnableCheckCytrus)
@@ -48,20 +50,20 @@ namespace Cyberia
 
                 if (config.EnableCheckLang)
                 {
-                    Log.Information("Listening to {type} Lang each {interval}", LangType.Official, config.CheckLangInterval);
-                    langs.Listen(LangType.Official, TimeSpan.FromSeconds(20), config.CheckLangInterval);
+                    Log.Information("Waching {type} Langs each {interval}", LangType.Official, config.CheckLangInterval);
+                    LangsWatcher.Watch(LangType.Official, TimeSpan.FromSeconds(20), config.CheckLangInterval);
                 }
 
                 if (config.EnableCheckBetaLang)
                 {
-                    Log.Information("Listening to {type} Lang each {interval}", LangType.Beta, config.CheckBetaLangInterval);
-                    langs.Listen(LangType.Beta, TimeSpan.FromSeconds(140), config.CheckBetaLangInterval);
+                    Log.Information("Waching {type} Langs each {interval}", LangType.Beta, config.CheckBetaLangInterval);
+                    LangsWatcher.Watch(LangType.Beta, TimeSpan.FromSeconds(140), config.CheckBetaLangInterval);
                 }
 
                 if (config.EnableCheckTemporisLang)
                 {
-                    Log.Information("Listening to {type} Lang each {interval}", LangType.Temporis, config.CheckTemporisLangInterval);
-                    langs.Listen(LangType.Temporis, TimeSpan.FromSeconds(260), config.CheckCytrusInterval);
+                    Log.Information("Waching {type} Langs each {interval}", LangType.Temporis, config.CheckTemporisLangInterval);
+                    LangsWatcher.Watch(LangType.Temporis, TimeSpan.FromSeconds(260), config.CheckCytrusInterval);
                 }
 
                 Log.Information("Cyberia started");

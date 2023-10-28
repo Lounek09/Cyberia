@@ -16,9 +16,7 @@ namespace Cyberia.Salamandra
         public static DiscordClient Client { get; private set; } = default!;
         public static SlashCommandsExtension SlashCommands { get; private set; } = default!;
 
-        internal static LangsWatcher LangsWatcher { get; private set; } = default!;
-
-        public static void Initialize(BotConfig config, LangsWatcher langs)
+        public static void Initialize(BotConfig config)
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
@@ -41,7 +39,6 @@ namespace Cyberia.Salamandra
 
             CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
 
-            LangsWatcher = langs;
             LangsWatcher.CheckLangFinished += LangsManager.OnCheckLangFinished;
         }
 
