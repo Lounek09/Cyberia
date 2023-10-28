@@ -35,7 +35,7 @@ namespace Cyberia.Salamandra.Managers
 
         private static async Task<DiscordForumChannel?> GetLangForumChannel()
         {
-            ulong id = Bot.Instance.Config.LangForumChannelId;
+            ulong id = Bot.Config.LangForumChannelId;
             if (id == 0)
             {
                 return null;
@@ -43,7 +43,7 @@ namespace Cyberia.Salamandra.Managers
 
             try
             {
-                DiscordChannel channel = await Bot.Instance.Client.GetChannelAsync(id);
+                DiscordChannel channel = await Bot.Client.GetChannelAsync(id);
                 if (channel is DiscordForumChannel forum)
                 {
                     return forum;

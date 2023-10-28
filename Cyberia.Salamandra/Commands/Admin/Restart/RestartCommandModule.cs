@@ -12,9 +12,9 @@ namespace Cyberia.Salamandra.Commands.Admin
         {
             await ctx.CreateResponseAsync("🔃", true);
 
-            await Bot.Instance.Client.DisconnectAsync();
+            await Bot.Client.DisconnectAsync();
 
-            await Bot.Instance.Client.ConnectAsync(new("Dofus Retro", ActivityType.Playing));
+            await Bot.Client.ConnectAsync(new("Dofus Retro", ActivityType.Playing));
         }
     }
 }

@@ -4,8 +4,8 @@
     {
         public static void Register()
         {
-            Bot.Instance.SlashCommands.RegisterCommands<DiscordCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<PingCommandModule>();
+            Bot.SlashCommands.RegisterCommands<DiscordCommandModule>();
+            Bot.SlashCommands.RegisterCommands<PingCommandModule>();
         }
     }
 }

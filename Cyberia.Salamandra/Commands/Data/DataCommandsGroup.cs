@@ -11,9 +11,9 @@
 
             foreach (ulong guildId in guildsId)
             {
-                Bot.Instance.SlashCommands.RegisterCommands<CytrusCommandModule>(guildId);
-                Bot.Instance.SlashCommands.RegisterCommands<LangsCommandModule>(guildId);
-                Bot.Instance.SlashCommands.RegisterCommands<ReloadCommandModule>(guildId);
+                Bot.SlashCommands.RegisterCommands<CytrusCommandModule>(guildId);
+                Bot.SlashCommands.RegisterCommands<LangsCommandModule>(guildId);
+                Bot.SlashCommands.RegisterCommands<ReloadCommandModule>(guildId);
             }
         }
     }

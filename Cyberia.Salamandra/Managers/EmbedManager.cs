@@ -10,8 +10,8 @@ namespace Cyberia.Salamandra.Managers
         public static DiscordEmbedBuilder BuildDofusEmbed(DofusEmbedCategory category, string authorText)
         {
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
-                .WithColor(new DiscordColor(Bot.Instance.Config.EmbedColor))
-                .WithFooter($"{Bot.Instance.Client.CurrentUser.Username} • {DateTime.Now.ToRolePlayString()} - {DateTime.Now:HH:mm}", $"{DofusApi.Config.CdnUrl}/images/mini-salamandra.png");
+                .WithColor(new DiscordColor(Bot.Config.EmbedColor))
+                .WithFooter($"{Bot.Client.CurrentUser.Username} • {DateTime.Now.ToRolePlayString()} - {DateTime.Now:HH:mm}", $"{DofusApi.Config.CdnUrl}/images/mini-salamandra.png");
 
             string iconUrl = $"{DofusApi.Config.CdnUrl}/images/embed_categories";
             switch (category)

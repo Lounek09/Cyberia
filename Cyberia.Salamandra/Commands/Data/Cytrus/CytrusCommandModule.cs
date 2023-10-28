@@ -16,14 +16,14 @@ namespace Cyberia.Salamandra.Commands.Data
         public async Task CheckCytrusCommand(InteractionContext ctx)
         {
             await ctx.CreateResponseAsync($"Lancement du check de Cytrus...");
-            await Bot.Instance.CytrusWatcher.LaunchAsync();
+            await Bot.CytrusWatcher.LaunchAsync();
             await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check de Cytrus terminé"));
         }
 
         [SlashCommand("show", "Affiche les informations du cytrus actuellement en ligne")]
         public async Task ShowCytrusCommand(InteractionContext ctx)
         {
-            CytrusData cytrusData = Bot.Instance.CytrusWatcher.CytrusData;
+            CytrusData cytrusData = Bot.CytrusWatcher.CytrusData;
 
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Cytrus");
 

@@ -4,19 +4,19 @@
     {
         public static void Register()
         {
-            Bot.Instance.SlashCommands.RegisterCommands<BreedCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<CraftCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<CritCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<EscapeCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<HouseCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<IncarnationCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<ItemCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<ItemSetCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<MapCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<MonsterCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<QuestCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<RuneCommandModule>();
-            Bot.Instance.SlashCommands.RegisterCommands<SpellCommandModule>();
+            Bot.SlashCommands.RegisterCommands<BreedCommandModule>();
+            Bot.SlashCommands.RegisterCommands<CraftCommandModule>();
+            Bot.SlashCommands.RegisterCommands<CritCommandModule>();
+            Bot.SlashCommands.RegisterCommands<EscapeCommandModule>();
+            Bot.SlashCommands.RegisterCommands<HouseCommandModule>();
+            Bot.SlashCommands.RegisterCommands<IncarnationCommandModule>();
+            Bot.SlashCommands.RegisterCommands<ItemCommandModule>();
+            Bot.SlashCommands.RegisterCommands<ItemSetCommandModule>();
+            Bot.SlashCommands.RegisterCommands<MapCommandModule>();
+            Bot.SlashCommands.RegisterCommands<MonsterCommandModule>();
+            Bot.SlashCommands.RegisterCommands<QuestCommandModule>();
+            Bot.SlashCommands.RegisterCommands<RuneCommandModule>();
+            Bot.SlashCommands.RegisterCommands<SpellCommandModule>();
         }
     }
 }

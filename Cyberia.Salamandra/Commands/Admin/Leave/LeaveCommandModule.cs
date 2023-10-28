@@ -15,7 +15,7 @@ namespace Cyberia.Salamandra.Commands.Admin
         {
             try
             {
-                DiscordGuild guild = await Bot.Instance.Client.GetGuildAsync(Convert.ToUInt64(guildId));
+                DiscordGuild guild = await Bot.Client.GetGuildAsync(Convert.ToUInt64(guildId));
                 await guild.LeaveAsync();
 
                 if (guild.Id != ctx.Guild.Id)

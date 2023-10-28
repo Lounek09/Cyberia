@@ -73,7 +73,7 @@ namespace Cyberia.Salamandra.Managers
 
         private static async Task<DiscordChannel?> GetCytrusChannel()
         {
-            ulong id = Bot.Instance.Config.CytrusChannelId;
+            ulong id = Bot.Config.CytrusChannelId;
             if (id == 0)
             {
                 return null;
@@ -81,7 +81,7 @@ namespace Cyberia.Salamandra.Managers
 
             try
             {
-                return await Bot.Instance.Client.GetChannelAsync(id);
+                return await Bot.Client.GetChannelAsync(id);
             }
             catch
             {
@@ -92,7 +92,7 @@ namespace Cyberia.Salamandra.Managers
 
         private static async Task<DiscordChannel?> GetCytrusManifestChannel()
         {
-            ulong id = Bot.Instance.Config.CytrusManifestChannelId;
+            ulong id = Bot.Config.CytrusManifestChannelId;
             if (id == 0)
             {
                 return null;
@@ -100,7 +100,7 @@ namespace Cyberia.Salamandra.Managers
 
             try
             {
-                return await Bot.Instance.Client.GetChannelAsync(id);
+                return await Bot.Client.GetChannelAsync(id);
             }
             catch
             {

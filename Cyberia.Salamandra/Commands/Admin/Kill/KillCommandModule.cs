@@ -11,7 +11,7 @@ namespace Cyberia.Salamandra.Commands.Admin
         {
             await ctx.CreateResponseAsync(@"\💀");
 
-            await Bot.Instance.Client.DisconnectAsync();
+            await Bot.Client.DisconnectAsync();
         }
     }
 }

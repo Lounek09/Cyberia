@@ -35,8 +35,9 @@ namespace Cyberia
                 Log.Information("Initializing DofusApi");
                 DofusApi.Initialize(config.ApiConfig, langs);
 
-                Bot salamandra = Bot.Build(config.BotConfig, cytrus, langs);
-                await salamandra.Launch();
+                Log.Information("Initializing Salamandra");
+                Bot.Initialize(config.BotConfig, cytrus, langs);
+                await Bot.Launch();
 
                 if (config.EnableCheckCytrus)
                 {

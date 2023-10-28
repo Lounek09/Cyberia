@@ -66,7 +66,7 @@ namespace Cyberia.Salamandra.Managers
 
             if (logChannel is null)
             {
-                Log.Error("Unknown log channel (id:{id})", Bot.Instance.Config.LogChannelId);
+                Log.Error("Unknown log channel (id:{id})", Bot.Config.LogChannelId);
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace Cyberia.Salamandra.Managers
 
             if (commandErrorChannel is null)
             {
-                Log.Error("Unknown command error channel (id:{id})", Bot.Instance.Config.LogChannelId);
+                Log.Error("Unknown command error channel (id:{id})", Bot.Config.LogChannelId);
                 return;
             }
 
@@ -97,7 +97,7 @@ namespace Cyberia.Salamandra.Managers
                 return;
             }
 
-            if (message.Author.Id != Bot.Instance.Client.CurrentUser.Id && !permissions.HasPermission(Permissions.ManageMessages))
+            if (message.Author.Id != Bot.Client.CurrentUser.Id && !permissions.HasPermission(Permissions.ManageMessages))
             {
                 Log.Error("No permission to delete this message (id:{id})", message.Id);
                 return;
@@ -110,11 +110,11 @@ namespace Cyberia.Salamandra.Managers
         {
             try
             {
-                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.LogChannelId);
+                return await Bot.Client.GetChannelAsync(Bot.Config.LogChannelId);
             }
             catch
             {
-                Log.Error("Unknown log channel (id:{id})", Bot.Instance.Config.LogChannelId);
+                Log.Error("Unknown log channel (id:{id})", Bot.Config.LogChannelId);
                 return null;
             }
         }
@@ -123,11 +123,11 @@ namespace Cyberia.Salamandra.Managers
         {
             try
             {
-                return await Bot.Instance.Client.GetChannelAsync(Bot.Instance.Config.CommandErrorChannelId);
+                return await Bot.Client.GetChannelAsync(Bot.Config.CommandErrorChannelId);
             }
             catch
             {
-                Log.Error("Unknown command error channel (id:{id})", Bot.Instance.Config.CommandErrorChannelId);
+                Log.Error("Unknown command error channel (id:{id})", Bot.Config.CommandErrorChannelId);
                 return null;
             }
         }

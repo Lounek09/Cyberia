@@ -22,7 +22,7 @@ namespace Cyberia.Salamandra.Commands.Data
         {
             _type = type;
             _language = language;
-            _langsData = Bot.Instance.LangsWatcher.GetLangsByType(_type).GetLangsByLanguage(_language);
+            _langsData = Bot.LangsWatcher.GetLangsByType(_type).GetLangsByLanguage(_language);
         }
 
         public static LangsMessageBuilder? Create(int version, string[] parameters)

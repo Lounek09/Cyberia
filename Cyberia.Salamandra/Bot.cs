@@ -8,25 +8,18 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra
 {
-    public sealed class Bot
+    public static class Bot
     {
         public const string OUTPUT_PATH = "bot";
 
-        public BotConfig Config { get; init; }
-        public DiscordClient Client { get; init; }
-        public SlashCommandsExtension SlashCommands { get; init; }
+        public static BotConfig Config { get; private set; } = default!;
+        public static DiscordClient Client { get; private set; } = default!;
+        public static SlashCommandsExtension SlashCommands { get; private set; } = default!;
 
-        internal CytrusWatcher CytrusWatcher { get; init; }
-        internal LangsWatcher LangsWatcher { get; init; }
+        internal static CytrusWatcher CytrusWatcher { get; private set; } = default!;
+        internal static LangsWatcher LangsWatcher { get; private set; } = default!;
 
-
-        internal static Bot Instance
-        {
-            get => _instance is null ? throw new NullReferenceException("Build the Bot before !") : _instance;
-        }
-        private static Bot? _instance;
-
-        internal Bot(BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)
+        public static void Initialize(BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
@@ -54,13 +47,7 @@ namespace Cyberia.Salamandra
             LangsWatcher.CheckLangFinished += LangsManager.OnCheckLangFinished;
         }
 
-        public static Bot Build(BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)
-        {
-            _instance ??= new(config, cytrus, langs);
-            return _instance;
-        }
-
-        public async Task Launch()
+        public static async Task Launch()
         {
             CommandManager.RegisterCommands();
 
