@@ -53,7 +53,7 @@ namespace Cyberia.Cytrusaurus
             }
             catch (HttpRequestException e)
             {
-                Log.Error(e, "An error occured while sending Get request to {url}", $"{BASE_URL}/{CYTRUS_FILE_NAME}");
+                Log.Error(e, "An error occurred while sending Get request to {url}", $"{BASE_URL}/{CYTRUS_FILE_NAME}");
                 return;
             }
 

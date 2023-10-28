@@ -59,7 +59,7 @@ namespace Cyberia.Api.Parser
             {
                 if (!TryParse(langToParse))
                 {
-                    Log.Error("An error occured while parsing {langToParse} lang", langToParse);
+                    Log.Error("An error occurred while parsing {langToParse} lang", langToParse);
                     return false;
                 }
             }

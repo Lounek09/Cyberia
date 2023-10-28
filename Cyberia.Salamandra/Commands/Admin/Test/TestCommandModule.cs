@@ -4,23 +4,19 @@ using Cyberia.Api.Data;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
 
+using System.Reflection.Metadata;
+
 namespace Cyberia.Salamandra.Commands.Admin
 {
     public sealed class TestCommandModule : ApplicationCommandModule
     {
         [SlashCommand("test", "[Owner] Commande pour tester des trucs")]
         [SlashRequireOwner]
-        public async Task Command(InteractionContext ctx)
+        public async Task Command(InteractionContext _)
         {
-            await ctx.CreateResponseAsync(".");
+            await Task.Delay(0);
 
-            foreach (SpellData spell in DofusApi.Datacenter.SpellsData.Spells)
-            {
-                if (spell.SpellLevelData1?.Effects.Find(x => x.EffectId == 111) is not null)
-                {
-                    await ctx.Channel.SendMessageAsync(spell.Name);
-                }
-            }
+            throw new NotImplementedException();
         }
     }
 }

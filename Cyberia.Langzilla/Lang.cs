@@ -129,7 +129,7 @@ namespace Cyberia.Langzilla
             }
             catch (HttpRequestException e)
             {
-                Log.Error(e, "An error occured while sending Get request to {url}}", fileUrl);
+                Log.Error(e, "An error occurred while sending Get request to {url}}", fileUrl);
             }
         }
 

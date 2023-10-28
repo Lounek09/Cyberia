@@ -106,7 +106,7 @@ namespace Cyberia.Langzilla
             }
             catch (HttpRequestException e)
             {
-                Log.Error(e, "An error occured while sending Get request to {url}}", versionFileUrl);
+                Log.Error(e, "An error occurred while sending Get request to {url}}", versionFileUrl);
             }
 
             return string.Empty;

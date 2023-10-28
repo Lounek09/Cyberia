@@ -36,7 +36,7 @@ namespace Cyberia.Utils
             }
             catch (Exception)
             {
-                Log.Error("An error occured while executing {command} with {args} arguments", command, args);
+                Log.Error("An error occurred while executing {command} with {args} arguments", command, args);
                 return false;
             }
         }

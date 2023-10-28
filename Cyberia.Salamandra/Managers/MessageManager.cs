@@ -73,7 +73,7 @@ namespace Cyberia.Salamandra.Managers
             await logChannel.SendMessage(new DiscordMessageBuilder().WithContent(content));
         }
 
-        public static async Task SendCommandErrorMessage(string content)
+        public static async Task SendCommandErrorMessage(DiscordEmbed embed)
         {
             DiscordChannel? commandErrorChannel = await GetCommandErrorChannel();
 
@@ -83,7 +83,7 @@ namespace Cyberia.Salamandra.Managers
                 return;
             }
 
-            await commandErrorChannel.SendMessage(new DiscordMessageBuilder().WithContent(content));
+            await commandErrorChannel.SendMessage(new DiscordMessageBuilder().AddEmbed(embed));
         }
 
         public static async Task DeleteMessage(this DiscordMessage message)
