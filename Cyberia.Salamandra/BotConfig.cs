@@ -4,7 +4,8 @@
     {
         public string Token { get; init; }
         public string EmbedColor { get; init; }
-        public string DiscordServerInviteUrl { get; init; }
+        public ulong AdminGuildId { get; init; }
+        public string DiscordGuildInviteUrl { get; init; }
         public ulong LogChannelId { get; init; }
         public ulong CommandErrorChannelId { get; init; }
         public ulong LangForumChannelId { get; init; }
@@ -15,7 +16,7 @@
         {
             Token = string.Empty;
             EmbedColor = string.Empty;
-            DiscordServerInviteUrl = string.Empty;
+            DiscordGuildInviteUrl = string.Empty;
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Cyberia.Salamandra.Managers
     {
         public static void RegisterCommands()
         {
-            AdminCommandsGroup.Register(650835844369743884);
-            DataCommandsGroup.Register(650835844369743884);
+            AdminCommandsGroup.Register(Bot.Config.AdminGuildId);
+            DataCommandsGroup.Register(Bot.Config.AdminGuildId);
             DofusCommandsGroup.Register();
             OtherCommandsGroup.Register();
         }
