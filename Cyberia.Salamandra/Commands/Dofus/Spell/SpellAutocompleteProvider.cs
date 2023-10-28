@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (SpellData spellData in Bot.Instance.Api.Datacenter.SpellsData.GetSpellsDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+            foreach (SpellData spellData in DofusApi.Datacenter.SpellsData.GetSpellsDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
             {
                 choices.Add(new($"{spellData.Name.WithMaxLength(90)} ({spellData.Id})", spellData.Id.ToString()));
             }

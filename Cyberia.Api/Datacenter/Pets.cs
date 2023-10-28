@@ -32,7 +32,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int itemId in ItemTypesId)
             {
-                ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(itemId);
+                ItemData? itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemId);
                 if (itemData is not null)
                 {
                     yield return itemData;
@@ -44,7 +44,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int itemTypeId in ItemTypesId)
             {
-                ItemTypeData? itemTypeData = DofusApi.Instance.Datacenter.ItemsData.GetItemTypeDataById(itemTypeId);
+                ItemTypeData? itemTypeData = DofusApi.Datacenter.ItemsData.GetItemTypeDataById(itemTypeId);
                 if (itemTypeData is not null)
                 {
                     yield return itemTypeData;
@@ -56,7 +56,7 @@ namespace Cyberia.Api.Data
         {
             foreach (KeyValuePair<int, int> pair in MonstersIdQuantities)
             {
-                MonsterData? monsterData = DofusApi.Instance.Datacenter.MonstersData.GetMonsterDataById(pair.Key);
+                MonsterData? monsterData = DofusApi.Datacenter.MonstersData.GetMonsterDataById(pair.Key);
                 if (monsterData is not null)
                 {
                     yield return monsterData;
@@ -70,7 +70,7 @@ namespace Cyberia.Api.Data
 
             foreach (KeyValuePair<int, int> pair in MonstersIdQuantities)
             {
-                MonsterData? monsterData = DofusApi.Instance.Datacenter.MonstersData.GetMonsterDataById(pair.Key);
+                MonsterData? monsterData = DofusApi.Datacenter.MonstersData.GetMonsterDataById(pair.Key);
                 if (monsterData is not null)
                 {
                     MonstersDataQuantities.Add(monsterData, pair.Value);
@@ -102,7 +102,7 @@ namespace Cyberia.Api.Data
 
         public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(Id);
+            return DofusApi.Datacenter.ItemsData.GetItemDataById(Id);
         }
     }
 

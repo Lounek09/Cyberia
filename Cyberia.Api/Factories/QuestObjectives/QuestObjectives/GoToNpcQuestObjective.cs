@@ -25,12 +25,12 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public NpcData? GetNpcData()
         {
-            return DofusApi.Instance.Datacenter.NpcsData.GetNpcDataById(NpcId);
+            return DofusApi.Datacenter.NpcsData.GetNpcDataById(NpcId);
         }
 
         public Description GetDescription()
         {
-            string npcName = DofusApi.Instance.Datacenter.NpcsData.GetNpcNameById(NpcId);
+            string npcName = DofusApi.Datacenter.NpcsData.GetNpcNameById(NpcId);
 
             return GetDescription(npcName);
         }

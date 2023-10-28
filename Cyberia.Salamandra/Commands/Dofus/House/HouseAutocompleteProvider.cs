@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (HouseData houseData in Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByName(ctx.OptionValue.ToString()!).Take(MAX_AUTOCOMPLETE_CHOICE))
+            foreach (HouseData houseData in DofusApi.Datacenter.HousesData.GetHousesDataByName(ctx.OptionValue.ToString()!).Take(MAX_AUTOCOMPLETE_CHOICE))
             {
                 choices.Add(new($"{houseData.Name.WithMaxLength(90)} ({houseData.Id})", houseData.Id.ToString()));
             }

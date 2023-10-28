@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -25,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<MapAreaData> mapAreasData = Bot.Instance.Api.Datacenter.MapsData.GetMapAreasDataByName(parameters[2]);
+                List<MapAreaData> mapAreasData = DofusApi.Datacenter.MapsData.GetMapAreasDataByName(parameters[2]);
                 if (mapAreasData.Count > 0)
                 {
                     return new(mapAreasData, parameters[2], selectedPageIndex);

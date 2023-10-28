@@ -20,7 +20,7 @@ namespace Cyberia.Api.Data
 
         public string GetImagePath()
         {
-            return $"{DofusApi.Instance.Config.CdnUrl}/images/states/{Id}.png";
+            return $"{DofusApi.Config.CdnUrl}/images/states/{Id}.png";
         }
     }
 

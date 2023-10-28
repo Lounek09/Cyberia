@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -16,7 +17,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Minimum(1), Maximum(99999)]
             long id)
         {
-            MapData? mapData = Bot.Instance.Api.Datacenter.MapsData.GetMapDataById((int)id);
+            MapData? mapData = DofusApi.Datacenter.MapsData.GetMapDataById((int)id);
 
             if (mapData is null)
             {
@@ -38,7 +39,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Minimum(-666), Maximum(666)]
             long yCoord)
         {
-            List<MapData> mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByCoordinate((int)xCoord, (int)yCoord);
+            List<MapData> mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate((int)xCoord, (int)yCoord);
 
             if (mapsData.Count == 0)
             {
@@ -65,7 +66,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                mapSubAreaData = Bot.Instance.Api.Datacenter.MapsData.GetMapSubAreaDataById(id);
+                mapSubAreaData = DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(id);
             }
 
             if (mapSubAreaData is null)
@@ -98,7 +99,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                mapAreaData = Bot.Instance.Api.Datacenter.MapsData.GetMapAreaDataById(id);
+                mapAreaData = DofusApi.Datacenter.MapsData.GetMapAreaDataById(id);
             }
 
             if (mapAreaData is null)

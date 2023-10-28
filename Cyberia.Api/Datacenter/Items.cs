@@ -178,24 +178,24 @@ namespace Cyberia.Api.Data
 
         public async Task<string> GetImagePath()
         {
-            string url = $"{DofusApi.Instance.Config.CdnUrl}/images/items/{ItemTypeId}/{GfxId}.png";
+            string url = $"{DofusApi.Config.CdnUrl}/images/items/{ItemTypeId}/{GfxId}.png";
 
-            if (await DofusApi.Instance.HttpClient.ExistsAsync(url))
+            if (await DofusApi.HttpClient.ExistsAsync(url))
             {
                 return url;
             }
 
-            return $"{DofusApi.Instance.Config.CdnUrl}/images/items/unknown.png";
+            return $"{DofusApi.Config.CdnUrl}/images/items/unknown.png";
         }
 
         public ItemTypeData? GetItemTypeData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeId);
+            return DofusApi.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeId);
         }
 
         public ItemStatsData? GetItemStatData()
         {
-            return DofusApi.Instance.Datacenter.ItemsStatsData.GetItemStatDataById(Id);
+            return DofusApi.Datacenter.ItemsStatsData.GetItemStatDataById(Id);
         }
 
         public bool IsReallyEnhanceable()
@@ -213,7 +213,7 @@ namespace Cyberia.Api.Data
 
         public ItemSetData? GetItemSetData()
         {
-            return DofusApi.Instance.Datacenter.ItemSetsData.GetItemSetDataById(ItemSetId);
+            return DofusApi.Datacenter.ItemSetsData.GetItemSetDataById(ItemSetId);
         }
 
         public bool IsWeapon()
@@ -223,7 +223,7 @@ namespace Cyberia.Api.Data
 
         public CraftData? GetCraftData()
         {
-            return DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(Id);
+            return DofusApi.Datacenter.CraftsData.GetCraftDataById(Id);
         }
 
         public bool Tradeable()

@@ -82,20 +82,20 @@ namespace Cyberia.Api.Data
 
         public string GetIconImagePath()
         {
-            return $"{DofusApi.Instance.Config.CdnUrl}/images/breeds/icons/{Id}.png";
+            return $"{DofusApi.Config.CdnUrl}/images/breeds/icons/{Id}.png";
         }
 
         public string GetPreferenceWeaponsImagePath()
         {
-            return $"{DofusApi.Instance.Config.CdnUrl}/images/breeds/preference_weapons/weapons_{Id}.png";
+            return $"{DofusApi.Config.CdnUrl}/images/breeds/preference_weapons/weapons_{Id}.png";
         }
 
         public IEnumerable<SpellData> GetSpellsData()
         {
             foreach (int spellId in SpellsId)
             {
-                SpellData? spellData = DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(spellId);
-                if (spellData is not null && (!DofusApi.Instance.Config.Temporis || spellData.SpellCategory is SpellCategory.TemporisBreed))
+                SpellData? spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spellId);
+                if (spellData is not null && (!DofusApi.Config.Temporis || spellData.SpellCategory is SpellCategory.TemporisBreed))
                 {
                     yield return spellData;
                 }
@@ -169,12 +169,12 @@ namespace Cyberia.Api.Data
 
         public SpellData? GetSpecialSpellData()
         {
-            return DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(SpecialSpellId);
+            return DofusApi.Datacenter.SpellsData.GetSpellDataById(SpecialSpellId);
         }
 
         public ItemSetData? GetItemSetData()
         {
-            return DofusApi.Instance.Datacenter.ItemSetsData.GetItemSetDataById(ItemSetId);
+            return DofusApi.Datacenter.ItemSetsData.GetItemSetDataById(ItemSetId);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -26,7 +27,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<QuestData> questsData = Bot.Instance.Api.Datacenter.QuestsData.GetQuestsDataByName(parameters[2]);
+                List<QuestData> questsData = DofusApi.Datacenter.QuestsData.GetQuestsDataByName(parameters[2]);
                 if (questsData.Count > 0)
                 {
                     return new(questsData, parameters[2], selectedPageIndex);

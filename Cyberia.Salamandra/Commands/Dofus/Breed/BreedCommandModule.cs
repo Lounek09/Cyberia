@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -13,7 +14,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [ChoiceProvider(typeof(BreedChoiceProvider))]
             string breedName)
         {
-            BreedData? breedData = Bot.Instance.Api.Datacenter.BreedsData.GetBreedDataByName(breedName);
+            BreedData? breedData = DofusApi.Datacenter.BreedsData.GetBreedDataByName(breedName);
 
             if (breedData is null)
             {

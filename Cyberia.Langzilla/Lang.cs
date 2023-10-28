@@ -146,7 +146,7 @@ namespace Cyberia.Langzilla
 
             if (!Flare.TryExtractSwf(filePath, out string warningMessage, out string flareFilePath))
             {
-                Log.Error("Error when decompiled {filePath}\nWarning : {warningMessage}", filePath, warningMessage);
+                Log.Error("Error when decompiling {filePath}\nWarning : {warningMessage}", filePath, warningMessage);
                 return;
             }
 

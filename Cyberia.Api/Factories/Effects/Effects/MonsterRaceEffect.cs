@@ -21,12 +21,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public MonsterRaceData? GetMonsterRaceData()
         {
-            return DofusApi.Instance.Datacenter.MonstersData.GetMonsterRaceDataById(MonsterRaceId);
+            return DofusApi.Datacenter.MonstersData.GetMonsterRaceDataById(MonsterRaceId);
         }
 
         public Description GetDescription()
         {
-            string monsterRaceName = DofusApi.Instance.Datacenter.MonstersData.GetMonsterRaceNameById(MonsterRaceId);
+            string monsterRaceName = DofusApi.Datacenter.MonstersData.GetMonsterRaceNameById(MonsterRaceId);
 
             return GetDescription(monsterRaceName);
         }

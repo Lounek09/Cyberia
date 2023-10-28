@@ -21,12 +21,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public RideAbilityData? GetRideAbilityData()
         {
-            return DofusApi.Instance.Datacenter.RidesData.GetRideAbilityDataById(RideAbilityId);
+            return DofusApi.Datacenter.RidesData.GetRideAbilityDataById(RideAbilityId);
         }
 
         public Description GetDescription()
         {
-            string rideAbilityName = DofusApi.Instance.Datacenter.RidesData.GetRideAbilityNameById(RideAbilityId);
+            string rideAbilityName = DofusApi.Datacenter.RidesData.GetRideAbilityNameById(RideAbilityId);
 
             return GetDescription(null, null, rideAbilityName);
         }

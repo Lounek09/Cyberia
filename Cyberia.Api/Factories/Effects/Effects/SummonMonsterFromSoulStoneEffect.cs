@@ -27,7 +27,7 @@ namespace Cyberia.Api.Factories.Effects
         {
             foreach (int monsterId in MonstersId)
             {
-                MonsterData? monster = DofusApi.Instance.Datacenter.MonstersData.GetMonsterDataById(monsterId);
+                MonsterData? monster = DofusApi.Datacenter.MonstersData.GetMonsterDataById(monsterId);
                 if (monster is not null)
                 {
                     yield return monster;
@@ -37,7 +37,7 @@ namespace Cyberia.Api.Factories.Effects
 
         public Description GetDescription()
         {
-            string monstersName = string.Join(", ", MonstersId.Select(x => DofusApi.Instance.Datacenter.MonstersData.GetMonsterNameById(x)));
+            string monstersName = string.Join(", ", MonstersId.Select(x => DofusApi.Datacenter.MonstersData.GetMonsterNameById(x)));
 
             return GetDescription(monstersName);
         }

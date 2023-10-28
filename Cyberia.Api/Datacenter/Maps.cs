@@ -53,12 +53,12 @@ namespace Cyberia.Api.Data
 
         public string GetImagePath()
         {
-            return $"{DofusApi.Instance.Config.CdnUrl}/images/maps/{Id}.jpg";
+            return $"{DofusApi.Config.CdnUrl}/images/maps/{Id}.jpg";
         }
 
         public MapSubAreaData? GetMapSubAreaData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
+            return DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
         }
 
         public string GetMapAreaName()
@@ -74,7 +74,7 @@ namespace Cyberia.Api.Data
 
         public HouseData? GetHouseData()
         {
-            HouseMapData? houseMapData = DofusApi.Instance.Datacenter.HousesData.GetHouseMapDataByMapId(Id);
+            HouseMapData? houseMapData = DofusApi.Datacenter.HousesData.GetHouseMapDataByMapId(Id);
 
             return houseMapData?.GetHouseData();
         }
@@ -117,12 +117,12 @@ namespace Cyberia.Api.Data
 
         public MapSuperAreaData? GetMapSuperAreaData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapSuperAreaDataById(MapSuperAreaId);
+            return DofusApi.Datacenter.MapsData.GetMapSuperAreaDataById(MapSuperAreaId);
         }
 
         public List<MapData> GetMapsData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapsDataByMapAreaId(Id);
+            return DofusApi.Datacenter.MapsData.GetMapsDataByMapAreaId(Id);
         }
     }
 
@@ -152,14 +152,14 @@ namespace Cyberia.Api.Data
 
         public MapAreaData? GetMapAreaData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapAreaDataById(MapAreaId);
+            return DofusApi.Datacenter.MapsData.GetMapAreaDataById(MapAreaId);
         }
 
         public IEnumerable<MapSubAreaData> GetNearMapSubAreasData()
         {
             foreach (int mapSubAreaId in NearMapSubAreasId)
             {
-                MapSubAreaData? mapSubAreaData = DofusApi.Instance.Datacenter.MapsData.GetMapSubAreaDataById(mapSubAreaId);
+                MapSubAreaData? mapSubAreaData = DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(mapSubAreaId);
                 if (mapSubAreaData is not null)
                 {
                     yield return mapSubAreaData;
@@ -169,12 +169,12 @@ namespace Cyberia.Api.Data
 
         public AudioMusicData? GetFightAudioMusicData()
         {
-            return FightAudioMusicId[0] is null ? null : DofusApi.Instance.Datacenter.AudiosData.GetAudioMusicDataById(FightAudioMusicId[0]!.Value);
+            return FightAudioMusicId[0] is null ? null : DofusApi.Datacenter.AudiosData.GetAudioMusicDataById(FightAudioMusicId[0]!.Value);
         }
 
         public List<MapData> GetMapsData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapsDataByMapSubAreaId(Id);
+            return DofusApi.Datacenter.MapsData.GetMapsDataByMapSubAreaId(Id);
         }
     }
 

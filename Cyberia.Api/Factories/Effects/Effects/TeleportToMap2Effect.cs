@@ -30,7 +30,7 @@ namespace Cyberia.Api.Factories.Effects
 
         public MapData? GetMapData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapDataById(MapId);
+            return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
         }
 
         public Description GetDescription()

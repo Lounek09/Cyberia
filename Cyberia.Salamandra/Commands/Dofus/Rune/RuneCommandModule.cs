@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Managers;
 using Cyberia.Salamandra.Managers;
 
@@ -22,10 +23,10 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Autocomplete(typeof(RuneAutocompleteProvider))]
             string name)
         {
-            RuneData? runeData = Bot.Instance.Api.Datacenter.RunesData.GetRuneDataByName(name);
+            RuneData? runeData = DofusApi.Datacenter.RunesData.GetRuneDataByName(name);
             if (runeData is null)
             {
-                await ctx.CreateResponseAsync($"Paramètre incorrect\n{Formatter.Italic("Valeur possible :")} {Formatter.InlineCode(Bot.Instance.Api.Datacenter.RunesData.GetAllRuneName())}");
+                await ctx.CreateResponseAsync($"Paramètre incorrect\n{Formatter.Italic("Valeur possible :")} {Formatter.InlineCode(DofusApi.Datacenter.RunesData.GetAllRuneName())}");
                 return;
             }
 

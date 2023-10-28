@@ -1,4 +1,5 @@
-﻿using Cyberia.Cytrusaurus;
+﻿using Cyberia.Api;
+using Cyberia.Cytrusaurus;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra;
@@ -30,6 +31,9 @@ namespace Cyberia
                 CytrusWatcher cytrus = CytrusWatcher.Create();
 
                 LangsWatcher langs = LangsWatcher.Create();
+
+                Log.Information("Initializing DofusApi");
+                DofusApi.Initialize(config.ApiConfig, langs);
 
                 Bot salamandra = Bot.Build(config.BotConfig, cytrus, langs);
                 await salamandra.Launch();

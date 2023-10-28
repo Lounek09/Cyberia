@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
@@ -36,7 +37,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int questId) &&
                 int.TryParse(parameters[1], out int selectedQuestStepIndex))
             {
-                QuestData? questData = Bot.Instance.Api.Datacenter.QuestsData.GetQuestDataById(questId);
+                QuestData? questData = DofusApi.Datacenter.QuestsData.GetQuestDataById(questId);
                 if (questData is not null)
                 {
                     return new QuestMessageBuilder(questData, selectedQuestStepIndex);

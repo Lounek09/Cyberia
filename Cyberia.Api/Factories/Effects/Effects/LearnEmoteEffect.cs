@@ -21,12 +21,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public EmoteData? GetEmoteData()
         {
-            return DofusApi.Instance.Datacenter.EmotesData.GetEmoteById(EmoteId);
+            return DofusApi.Datacenter.EmotesData.GetEmoteById(EmoteId);
         }
 
         public Description GetDescription()
         {
-            string emoteName = DofusApi.Instance.Datacenter.EmotesData.GetEmoteNameById(EmoteId);
+            string emoteName = DofusApi.Datacenter.EmotesData.GetEmoteNameById(EmoteId);
 
             return GetDescription(null, null, emoteName);
         }

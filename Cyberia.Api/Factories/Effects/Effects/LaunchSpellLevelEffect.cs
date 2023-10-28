@@ -21,7 +21,7 @@ namespace Cyberia.Api.Factories.Effects
 
         public SpellLevelData? GetSpellLevelData()
         {
-            return DofusApi.Instance.Datacenter.SpellsData.GetSpellLevelDataById(SpellLevelId);
+            return DofusApi.Datacenter.SpellsData.GetSpellLevelDataById(SpellLevelId);
         }
 
         public Description GetDescription()
@@ -32,7 +32,7 @@ namespace Cyberia.Api.Factories.Effects
                 return GetDescription($"{nameof(SpellLevelData)} {PatternDecoder.Description(Resources.Unknown_Data, SpellLevelId)}", 0);
             }
 
-            string spellName = DofusApi.Instance.Datacenter.SpellsData.GetSpellNameById(spellLevel.SpellId);
+            string spellName = DofusApi.Datacenter.SpellsData.GetSpellNameById(spellLevel.SpellId);
 
             return GetDescription(spellName, spellLevel.Level);
         }

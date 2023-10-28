@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -44,21 +45,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
                             int.TryParse(parameters[3], out int xCoord) &&
                             int.TryParse(parameters[4], out int yCoord))
                         {
-                            mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByCoordinate(xCoord, yCoord);
+                            mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(xCoord, yCoord);
                             search = $"{parameters[3]}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{parameters[4]}";
                         }
                         break;
                     case MapSearchCategory.MapSubArea:
                         if (int.TryParse(parameters[3], out int mapSubAreaId))
                         {
-                            mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByMapSubAreaId(mapSubAreaId);
+                            mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByMapSubAreaId(mapSubAreaId);
                             search = parameters[3];
                         }
                         break;
                     case MapSearchCategory.MapArea:
                         if (int.TryParse(parameters[3], out int mapAreaId))
                         {
-                            mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByMapAreaId(mapAreaId);
+                            mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByMapAreaId(mapAreaId);
                             search = parameters[3];
                         }
                         break;

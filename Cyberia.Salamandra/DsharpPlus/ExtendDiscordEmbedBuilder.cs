@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.QuestObjectives;
@@ -97,11 +98,11 @@ namespace Cyberia.Salamandra.DsharpPlus
             foreach (KeyValuePair<int, int> ingredient in ingredients)
             {
                 string quantity = Formatter.Bold(ingredient.Value.ToStringThousandSeparator());
-                string itemName = Formatter.Sanitize(Bot.Instance.Api.Datacenter.ItemsData.GetItemNameById(ingredient.Key));
+                string itemName = Formatter.Sanitize(DofusApi.Datacenter.ItemsData.GetItemNameById(ingredient.Key));
 
                 if (!recursive)
                 {
-                    CraftData? subCraftData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
+                    CraftData? subCraftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
                     if (subCraftData is not null)
                     {
                         itemName = Formatter.Bold(itemName);
@@ -121,7 +122,7 @@ namespace Cyberia.Salamandra.DsharpPlus
             foreach (KeyValuePair<int, int> ingredient in craftData.GetIngredients(qte))
             {
                 string quantity = Formatter.Bold(ingredient.Value.ToStringThousandSeparator());
-                string itemName = Formatter.Sanitize(Bot.Instance.Api.Datacenter.ItemsData.GetItemNameById(ingredient.Key));
+                string itemName = Formatter.Sanitize(DofusApi.Datacenter.ItemsData.GetItemNameById(ingredient.Key));
 
                 result.Add($"{quantity}x {itemName}");
             }
@@ -200,13 +201,13 @@ namespace Cyberia.Salamandra.DsharpPlus
 
                     if (petFoodsData.ItemsId.Count > 0)
                     {
-                        IEnumerable<string> itemsName = petFoodsData.ItemsId.Select(x => Bot.Instance.Api.Datacenter.ItemsData.GetItemNameById(x));
+                        IEnumerable<string> itemsName = petFoodsData.ItemsId.Select(x => DofusApi.Datacenter.ItemsData.GetItemNameById(x));
                         builder.AppendLine(string.Join(", ", itemsName));
                     }
 
                     if (petFoodsData.ItemTypesId.Count > 0)
                     {
-                        IEnumerable<string> itemTypesName = petFoodsData.ItemTypesId.Select(x => Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(x));
+                        IEnumerable<string> itemTypesName = petFoodsData.ItemTypesId.Select(x => DofusApi.Datacenter.ItemsData.GetItemTypeNameById(x));
                         builder.AppendLine(string.Join(", ", itemTypesName));
                     }
 
@@ -215,7 +216,7 @@ namespace Cyberia.Salamandra.DsharpPlus
                         foreach (IGrouping<int, KeyValuePair<int, int>> group in petFoodsData.MonstersIdQuantities.GroupBy(x => x.Value))
                         {
                             string quantity = Formatter.Bold(group.Key.ToString());
-                            IEnumerable<string> monstersName = group.Select(x => Bot.Instance.Api.Datacenter.MonstersData.GetMonsterNameById(x.Key));
+                            IEnumerable<string> monstersName = group.Select(x => DofusApi.Datacenter.MonstersData.GetMonsterNameById(x.Key));
                             builder.AppendFormat("{0}x {1}\n", quantity, string.Join(", ", monstersName));
                         }
                     }

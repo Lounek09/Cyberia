@@ -24,7 +24,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public EmoteData? GetEmoteData()
         {
-            return DofusApi.Instance.Datacenter.EmotesData.GetEmoteById(EmoteId);
+            return DofusApi.Datacenter.EmotesData.GetEmoteById(EmoteId);
         }
 
         protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public Description GetDescription()
         {
-            string emoteName = DofusApi.Instance.Datacenter.EmotesData.GetEmoteNameById(EmoteId);
+            string emoteName = DofusApi.Datacenter.EmotesData.GetEmoteNameById(EmoteId);
 
             return GetDescription(emoteName);
         }

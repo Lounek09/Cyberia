@@ -32,26 +32,26 @@ namespace Cyberia.Api.Data
 
         public async Task<string> GetImgPath()
         {
-            string url = $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/{GfxId}.png";
+            string url = $"{DofusApi.Config.CdnUrl}/images/artworks/{GfxId}.png";
 
-            if (await DofusApi.Instance.HttpClient.ExistsAsync(url))
+            if (await DofusApi.HttpClient.ExistsAsync(url))
             {
                 return url;
             }
 
-            return $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/unknown.png";
+            return $"{DofusApi.Config.CdnUrl}/images/artworks/unknown.png";
         }
 
         public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(Id);
+            return DofusApi.Datacenter.ItemsData.GetItemDataById(Id);
         }
 
         public IEnumerable<SpellData> GetSpellsData()
         {
             foreach (int spellId in SpellsId)
             {
-                SpellData? spellData = DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(spellId);
+                SpellData? spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spellId);
                 if (spellData is not null)
                 {
                     yield return spellData;

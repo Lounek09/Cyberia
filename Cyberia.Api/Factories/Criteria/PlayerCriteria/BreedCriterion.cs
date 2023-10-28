@@ -24,7 +24,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public BreedData? GetBreedData()
         {
-            return DofusApi.Instance.Datacenter.BreedsData.GetBreedDataById(BreedId);
+            return DofusApi.Datacenter.BreedsData.GetBreedDataById(BreedId);
         }
 
         protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public Description GetDescription()
         {
-            string breedName = DofusApi.Instance.Datacenter.BreedsData.GetBreedNameById(BreedId);
+            string breedName = DofusApi.Datacenter.BreedsData.GetBreedNameById(BreedId);
 
             return GetDescription(breedName);
         }

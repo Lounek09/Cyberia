@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                QuestData? questData = Bot.Instance.Api.Datacenter.QuestsData.GetQuestDataById(id);
+                QuestData? questData = DofusApi.Datacenter.QuestsData.GetQuestDataById(id);
                 if (questData is not null)
                 {
                     response = await new QuestMessageBuilder(questData).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -25,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<QuestData> questsData = Bot.Instance.Api.Datacenter.QuestsData.GetQuestsDataByName(value);
+                List<QuestData> questsData = DofusApi.Datacenter.QuestsData.GetQuestsDataByName(value);
                 if (questsData.Count == 1)
                 {
                     response = await new QuestMessageBuilder(questsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

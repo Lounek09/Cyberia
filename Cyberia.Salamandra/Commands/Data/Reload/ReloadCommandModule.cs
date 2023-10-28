@@ -1,4 +1,6 @@
-﻿using DSharpPlus.Entities;
+﻿using Cyberia.Api;
+
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
 
@@ -12,7 +14,7 @@ namespace Cyberia.Salamandra.Commands.Data
         {
             await ctx.DeferAsync();
 
-            Bot.Instance.Api.Reload();
+            DofusApi.Reload();
 
             await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Api reload !"));
         }

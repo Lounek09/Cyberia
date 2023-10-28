@@ -1,4 +1,5 @@
-﻿using Cyberia.Salamandra;
+﻿using Cyberia.Api;
+using Cyberia.Salamandra;
 
 namespace Cyberia
 {
@@ -16,10 +17,12 @@ namespace Cyberia
         public bool EnableCheckTemporisLang { get; init; }
         public TimeSpan CheckTemporisLangInterval { get; init; }
 
+        public ApiConfig ApiConfig { get; init; }
         public BotConfig BotConfig { get; init; }
 
         public CyberiaConfig()
         {
+            ApiConfig = new();
             BotConfig = new();
         }
     }

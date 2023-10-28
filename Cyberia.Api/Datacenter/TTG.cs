@@ -26,12 +26,12 @@ namespace Cyberia.Api.Data
 
         public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ItemId);
+            return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
         }
 
         public TTGEntityData? GetTTGEntityData()
         {
-            return DofusApi.Instance.Datacenter.TTGData.GetTTGEntityDataById(ItemId);
+            return DofusApi.Datacenter.TTGData.GetTTGEntityDataById(ItemId);
         }
     }
 
@@ -59,7 +59,7 @@ namespace Cyberia.Api.Data
 
         public TTGFamilyData? GetTTGFamilyData()
         {
-            return DofusApi.Instance.Datacenter.TTGData.GetTTGFamilyDataById(TTGFamilyId);
+            return DofusApi.Datacenter.TTGData.GetTTGFamilyDataById(TTGFamilyId);
         }
     }
 
@@ -84,7 +84,7 @@ namespace Cyberia.Api.Data
 
         public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ItemId);
+            return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
         }
     }
 

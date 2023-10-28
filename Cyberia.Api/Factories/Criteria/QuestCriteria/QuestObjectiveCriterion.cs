@@ -24,7 +24,7 @@ namespace Cyberia.Api.Factories.Criteria.QuestCriteria
 
         public QuestObjectiveData? GetQuestObjectiveData()
         {
-            return DofusApi.Instance.Datacenter.QuestsData.GetQuestObjectiveDataById(QuestObjectiveId);
+            return DofusApi.Datacenter.QuestsData.GetQuestObjectiveDataById(QuestObjectiveId);
         }
 
         protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ namespace Cyberia.Api.Factories.Criteria.QuestCriteria
 
         public Description GetDescription()
         {
-            Description questObjectiveDescription = DofusApi.Instance.Datacenter.QuestsData.GetQuestObjectiveDescriptionById(QuestObjectiveId);
+            Description questObjectiveDescription = DofusApi.Datacenter.QuestsData.GetQuestObjectiveDescriptionById(QuestObjectiveId);
 
             return GetDescription(questObjectiveDescription);
         }

@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Values;
 using Cyberia.Salamandra.DsharpPlus;
@@ -36,7 +37,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int spellId) &&
                 int.TryParse(parameters[1], out int selectedLevel))
             {
-                SpellData? spellData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellDataById(spellId);
+                SpellData? spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spellId);
                 if (spellData is not null)
                 {
                     return new SpellMessageBuilder(spellData, selectedLevel);

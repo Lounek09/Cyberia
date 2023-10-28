@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
@@ -13,7 +14,7 @@ namespace Cyberia.Salamandra.Commands.Admin
         {
             await ctx.CreateResponseAsync(".");
 
-            foreach (SpellData spell in Bot.Instance.Api.Datacenter.SpellsData.Spells)
+            foreach (SpellData spell in DofusApi.Datacenter.SpellsData.Spells)
             {
                 if (spell.SpellLevelData1?.Effects.Find(x => x.EffectId == 111) is not null)
                 {

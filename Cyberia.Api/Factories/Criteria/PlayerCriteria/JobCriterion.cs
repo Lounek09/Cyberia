@@ -31,7 +31,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public JobData? GetJobData()
         {
-            return DofusApi.Instance.Datacenter.JobsData.GetJobDataById(JobId);
+            return DofusApi.Datacenter.JobsData.GetJobDataById(JobId);
         }
 
         protected override string GetDescriptionName()
@@ -46,7 +46,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public Description GetDescription()
         {
-            string jobName = DofusApi.Instance.Datacenter.JobsData.GetJobNameById(JobId);
+            string jobName = DofusApi.Datacenter.JobsData.GetJobNameById(JobId);
 
             if (Level.HasValue)
             {

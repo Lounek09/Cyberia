@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (QuestData questData in Bot.Instance.Api.Datacenter.QuestsData.GetQuestsDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+            foreach (QuestData questData in DofusApi.Datacenter.QuestsData.GetQuestsDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
             {
                 choices.Add(new($"{questData.Name.WithMaxLength(90)} ({questData.Id})", questData.Id.ToString()));
             }

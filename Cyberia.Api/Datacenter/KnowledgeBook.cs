@@ -60,7 +60,7 @@ namespace Cyberia.Api.Data
 
         public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryData()
         {
-            return DofusApi.Instance.Datacenter.KnowledgeBookData.GetKnowledgeBookCatagoryDataById(KnowledgeBookCatagoryId);
+            return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookCatagoryDataById(KnowledgeBookCatagoryId);
         }
     }
 
@@ -85,7 +85,7 @@ namespace Cyberia.Api.Data
 
         public KnowledgeBookArticleData? GetKnowledgeBookArticleData()
         {
-            return DofusApi.Instance.Datacenter.KnowledgeBookData.GetKnowledgeBookArticleDataById(KnowledgeBookArticleId);
+            return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookArticleDataById(KnowledgeBookArticleId);
         }
     }
 
@@ -111,7 +111,7 @@ namespace Cyberia.Api.Data
 
         public KnowledgeBookTipData? GetKnowledgeBookTipData()
         {
-            return DofusApi.Instance.Datacenter.KnowledgeBookData.GetKnowledgeBookTipDataById(KnowledgeBookTipId);
+            return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookTipDataById(KnowledgeBookTipId);
         }
     }
 

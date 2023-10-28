@@ -24,7 +24,7 @@ namespace Cyberia.Api.Factories.Criteria.ServerCriteria
 
         public ServerData? GetServerData()
         {
-            return DofusApi.Instance.Datacenter.ServersData.GetServerDataById(ServerId);
+            return DofusApi.Datacenter.ServersData.GetServerDataById(ServerId);
         }
 
         protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ namespace Cyberia.Api.Factories.Criteria.ServerCriteria
 
         public Description GetDescription()
         {
-            string serverName = DofusApi.Instance.Datacenter.ServersData.GetServerNameById(ServerId);
+            string serverName = DofusApi.Datacenter.ServersData.GetServerNameById(ServerId);
 
             return GetDescription(serverName);
         }

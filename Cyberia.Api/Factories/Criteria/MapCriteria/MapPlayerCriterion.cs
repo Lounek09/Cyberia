@@ -26,7 +26,7 @@ namespace Cyberia.Api.Factories.Criteria.MapCriteria
 
         public MapData? GetMapData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapDataById(MapId);
+            return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
         }
 
         protected override string GetDescriptionName()

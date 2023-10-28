@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                SpellData? spellData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellDataById(id);
+                SpellData? spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(id);
                 if (spellData is not null)
                 {
                     response = await new SpellMessageBuilder(spellData, spellData.GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -25,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<SpellData> spellsData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellsDataByName(value);
+                List<SpellData> spellsData = DofusApi.Datacenter.SpellsData.GetSpellsDataByName(value);
                 if (spellsData.Count == 1)
                 {
                     response = await new SpellMessageBuilder(spellsData[0], spellsData[0].GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();

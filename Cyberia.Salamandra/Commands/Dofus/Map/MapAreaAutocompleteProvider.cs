@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (MapAreaData mapAreaData in Bot.Instance.Api.Datacenter.MapsData.GetMapAreasDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+            foreach (MapAreaData mapAreaData in DofusApi.Datacenter.MapsData.GetMapAreasDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
             {
                 choices.Add(new($"{mapAreaData.Name.WithMaxLength(90)} ({mapAreaData.Id})", mapAreaData.Id.ToString()));
             }

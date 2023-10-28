@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
@@ -29,10 +30,10 @@ namespace Cyberia.Salamandra.Commands.Dofus
             _itemTypeData = itemData.GetItemTypeData();
             _itemSetData = itemData.GetItemSetData();
             _itemStatsData = itemData.GetItemStatData();
-            _petData = _itemData.ItemTypeId == ItemTypeData.TYPE_PET ? Bot.Instance.Api.Datacenter.PetsData.GetPetDataByItemId(_itemData.Id) : null;
+            _petData = _itemData.ItemTypeId == ItemTypeData.TYPE_PET ? DofusApi.Datacenter.PetsData.GetPetDataByItemId(_itemData.Id) : null;
             _craftData = itemData.GetCraftData();
             _craftQte = craftQte;
-            _incarnationData = _itemData.IsWeapon() ? Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataByItemId(_itemData.Id) : null;
+            _incarnationData = _itemData.IsWeapon() ? DofusApi.Datacenter.IncarnationsData.GetIncarnationDataByItemId(_itemData.Id) : null;
         }
 
         public static ItemMessageBuilder? Create(int version, string[] parameters)
@@ -42,7 +43,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int itemId) &&
                 int.TryParse(parameters[1], out int craftQte))
             {
-                ItemData? itemData = Bot.Instance.Api.Datacenter.ItemsData.GetItemDataById(itemId);
+                ItemData? itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemId);
                 if (itemData is not null)
                 {
                     return new(itemData, craftQte);
@@ -78,7 +79,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 .WithDescription(string.IsNullOrEmpty(_itemData.Description) ? "" : Formatter.Italic(_itemData.Description))
                 .WithThumbnail(await _itemData.GetImagePath())
                 .AddField("Niveau :", _itemData.Level.ToString(), true)
-                .AddField("Type :", Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true);
+                .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true);
 
             if (_itemSetData is not null)
             {
@@ -112,13 +113,41 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             StringBuilder miscellaneousBuilder = new();
             miscellaneousBuilder.AppendFormat("{0} pod{1}", _itemData.Weight.ToStringThousandSeparator(), _itemData.Weight > 1 ? "s" : "");
-            if (_itemData.Tradeable()) miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _itemData.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
-            if (_itemData.Ceremonial) miscellaneousBuilder.Append(", objet d'apparat");
-            if (_itemData.IsReallyEnhanceable()) miscellaneousBuilder.Append(", forgemageable");
-            if (_itemData.Ethereal) miscellaneousBuilder.Append(", item éthéré");
-            if (_itemData.Usable) miscellaneousBuilder.Append(", est consommable");
-            if (_itemData.Targetable) miscellaneousBuilder.Append(", est ciblable");
-            if (_itemData.Cursed) miscellaneousBuilder.Append(", malédiction");
+            if (_itemData.Tradeable())
+            {
+                miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _itemData.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
+            }
+
+            if (_itemData.Ceremonial)
+            {
+                miscellaneousBuilder.Append(", objet d'apparat");
+            }
+
+            if (_itemData.IsReallyEnhanceable())
+            {
+                miscellaneousBuilder.Append(", forgemageable");
+            }
+
+            if (_itemData.Ethereal)
+            {
+                miscellaneousBuilder.Append(", item éthéré");
+            }
+
+            if (_itemData.Usable)
+            {
+                miscellaneousBuilder.Append(", est consommable");
+            }
+
+            if (_itemData.Targetable)
+            {
+                miscellaneousBuilder.Append(", est ciblable");
+            }
+
+            if (_itemData.Cursed)
+            {
+                miscellaneousBuilder.Append(", malédiction");
+            }
+
             embed.AddField("Divers :", miscellaneousBuilder.ToString());
 
             return embed;

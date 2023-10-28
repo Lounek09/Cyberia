@@ -37,24 +37,24 @@ namespace Cyberia.Api.Data
 
         public JobData? GetJobData()
         {
-            return DofusApi.Instance.Datacenter.JobsData.GetJobDataById(JobId);
+            return DofusApi.Datacenter.JobsData.GetJobDataById(JobId);
         }
 
         public InteractiveObjectData? GetInteractiveObjectData()
         {
-            return DofusApi.Instance.Datacenter.InteractiveObjectsData.GetInteractiveObjectDataById(InteractiveObjectId);
+            return DofusApi.Datacenter.InteractiveObjectsData.GetInteractiveObjectDataById(InteractiveObjectId);
         }
 
         public ItemTypeData? GetItemTypeDataForgemagus()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeIdForgemagus);
+            return DofusApi.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeIdForgemagus);
         }
 
         public IEnumerable<CraftData> GetCraftsData()
         {
             foreach (int craftId in CraftsId)
             {
-                CraftData? craftData = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(craftId);
+                CraftData? craftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(craftId);
                 if (craftData is not null)
                 {
                     yield return craftData;
@@ -64,7 +64,7 @@ namespace Cyberia.Api.Data
 
         public ItemData? GetHarvestedItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(HarvestedItemId);
+            return DofusApi.Datacenter.ItemsData.GetItemDataById(HarvestedItemId);
         }
     }
 

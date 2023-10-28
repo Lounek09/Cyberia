@@ -21,12 +21,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public QuestData? GetQuestData()
         {
-            return DofusApi.Instance.Datacenter.QuestsData.GetQuestDataById(QuestId);
+            return DofusApi.Datacenter.QuestsData.GetQuestDataById(QuestId);
         }
 
         public Description GetDescription()
         {
-            string questName = DofusApi.Instance.Datacenter.QuestsData.GetQuestNameById(QuestId);
+            string questName = DofusApi.Datacenter.QuestsData.GetQuestNameById(QuestId);
 
             return GetDescription(null, null, questName);
         }

@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
@@ -33,7 +34,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int itemSetId) &&
                 int.TryParse(parameters[1], out int nbItemSelected))
             {
-                ItemSetData? itemSetData = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetDataById(itemSetId);
+                ItemSetData? itemSetData = DofusApi.Datacenter.ItemSetsData.GetItemSetDataById(itemSetId);
                 if (itemSetData is not null)
                 {
                     return new(itemSetData, nbItemSelected);

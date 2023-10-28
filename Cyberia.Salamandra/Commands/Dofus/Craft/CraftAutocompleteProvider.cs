@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (CraftData craftData in Bot.Instance.Api.Datacenter.CraftsData.GetCraftsDataByItemName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+            foreach (CraftData craftData in DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
             {
                 ItemData? itemData = craftData.GetItemData();
                 if (itemData is not null)

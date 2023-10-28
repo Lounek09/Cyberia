@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                ItemSetData? itemSetData = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetDataById(id);
+                ItemSetData? itemSetData = DofusApi.Datacenter.ItemSetsData.GetItemSetDataById(id);
                 if (itemSetData is not null)
                 {
                     response = await new ItemSetMessageBuilder(itemSetData).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -25,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<ItemSetData> itemSetsData = Bot.Instance.Api.Datacenter.ItemSetsData.GetItemSetsDataByName(value);
+                List<ItemSetData> itemSetsData = DofusApi.Datacenter.ItemSetsData.GetItemSetsDataByName(value);
                 if (itemSetsData.Count == 1)
                 {
                     response = await new ItemSetMessageBuilder(itemSetsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

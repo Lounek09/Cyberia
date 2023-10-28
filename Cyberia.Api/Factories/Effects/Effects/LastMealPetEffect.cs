@@ -21,12 +21,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ItemId);
+            return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
         }
 
         public Description GetDescription()
         {
-            string itemName = ItemId == 0 ? Resources.LastMeal_None : DofusApi.Instance.Datacenter.ItemsData.GetItemNameById(ItemId);
+            string itemName = ItemId == 0 ? Resources.LastMeal_None : DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
 
             return GetDescription(itemName);
         }

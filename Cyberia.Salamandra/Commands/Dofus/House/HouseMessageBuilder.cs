@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -31,7 +32,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int houseId) &&
                 int.TryParse(parameters[1], out int selectedMapIndex))
             {
-                HouseData? houseData = Bot.Instance.Api.Datacenter.HousesData.GetHouseDataById(houseId);
+                HouseData? houseData = DofusApi.Datacenter.HousesData.GetHouseDataById(houseId);
                 if (houseData is not null)
                 {
                     return new(houseData, selectedMapIndex);

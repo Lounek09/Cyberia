@@ -21,13 +21,13 @@ namespace Cyberia.Api.Factories.Effects
 
         public TTGCardData? GetTTGCardData()
         {
-            return DofusApi.Instance.Datacenter.TTGData.GetTTGCardDataById(TTGCardId);
+            return DofusApi.Datacenter.TTGData.GetTTGCardDataById(TTGCardId);
         }
 
         public Description GetDescription()
         {
             TTGCardData? ttgCard = GetTTGCardData();
-            string ttgEntityName = ttgCard is null ? $"{nameof(TTGCardData)} {PatternDecoder.Description(Resources.Unknown_Data, TTGCardId)}" : DofusApi.Instance.Datacenter.TTGData.GetTTGEntityNameById(ttgCard.TTGEntityId);
+            string ttgEntityName = ttgCard is null ? $"{nameof(TTGCardData)} {PatternDecoder.Description(Resources.Unknown_Data, TTGCardId)}" : DofusApi.Datacenter.TTGData.GetTTGEntityNameById(ttgCard.TTGEntityId);
 
             return GetDescription(null, null, ttgEntityName);
         }

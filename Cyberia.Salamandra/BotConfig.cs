@@ -1,6 +1,4 @@
-﻿using Cyberia.Api;
-
-namespace Cyberia.Salamandra
+﻿namespace Cyberia.Salamandra
 {
     public sealed class BotConfig
     {
@@ -12,14 +10,12 @@ namespace Cyberia.Salamandra
         public ulong LangForumChannelId { get; init; }
         public ulong CytrusChannelId { get; init; }
         public ulong CytrusManifestChannelId { get; init; }
-        public ApiConfig ApiConfig { get; init; }
 
         public BotConfig()
         {
             Token = string.Empty;
             EmbedColor = string.Empty;
             DiscordServerInviteUrl = string.Empty;
-            ApiConfig = new();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Entities;
@@ -29,7 +30,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 0 &&
                 int.TryParse(parameters[0], out int mapId))
             {
-                MapData? mapData = Bot.Instance.Api.Datacenter.MapsData.GetMapDataById(mapId);
+                MapData? mapData = DofusApi.Datacenter.MapsData.GetMapDataById(mapId);
                 if (mapData is not null)
                 {
                     return new(mapData);
@@ -72,7 +73,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordButtonComponent> components = new();
 
-            List<MapData> mapsData = Bot.Instance.Api.Datacenter.MapsData.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord);
+            List<MapData> mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord);
             if (mapsData.Count > 1)
             {
                 components.Add(MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_mapData));

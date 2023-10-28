@@ -25,17 +25,17 @@ namespace Cyberia.Api.Factories.Effects
 
         public RideData? GetRideData()
         {
-            return DofusApi.Instance.Datacenter.RidesData.GetRideDataById(RideId);
+            return DofusApi.Datacenter.RidesData.GetRideDataById(RideId);
         }
 
         public RideAbilityData? GetRideAbilityData()
         {
-            return DofusApi.Instance.Datacenter.RidesData.GetRideAbilityDataById(RideAbilityId);
+            return DofusApi.Datacenter.RidesData.GetRideAbilityDataById(RideAbilityId);
         }
 
         public Description GetDescription()
         {
-            string value = DofusApi.Instance.Datacenter.RidesData.GetRideNameById(RideId);
+            string value = DofusApi.Datacenter.RidesData.GetRideNameById(RideId);
 
             RideAbilityData? rideAbility = GetRideAbilityData();
             if (rideAbility is not null)

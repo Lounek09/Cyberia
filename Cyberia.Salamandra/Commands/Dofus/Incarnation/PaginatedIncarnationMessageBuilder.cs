@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -25,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<IncarnationData> incarnationsData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationsDataByName(parameters[2]);
+                List<IncarnationData> incarnationsData = DofusApi.Datacenter.IncarnationsData.GetIncarnationsDataByName(parameters[2]);
                 if (incarnationsData.Count > 0)
                 {
                     return new(incarnationsData, parameters[2], selectedPageIndex);

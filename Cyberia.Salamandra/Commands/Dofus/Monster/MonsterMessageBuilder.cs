@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -37,7 +38,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[0], out int monsterId) &&
                 int.TryParse(parameters[1], out int selectedGrade))
             {
-                MonsterData? monsterData = Bot.Instance.Api.Datacenter.MonstersData.GetMonsterDataById(monsterId);
+                MonsterData? monsterData = DofusApi.Datacenter.MonstersData.GetMonsterDataById(monsterId);
                 if (monsterData is not null)
                 {
                     return new MonsterMessageBuilder(monsterData, selectedGrade);

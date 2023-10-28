@@ -21,12 +21,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public JobData? GetJobData()
         {
-            return DofusApi.Instance.Datacenter.JobsData.GetJobDataById(JobId);
+            return DofusApi.Datacenter.JobsData.GetJobDataById(JobId);
         }
 
         public Description GetDescription()
         {
-            string jobName = DofusApi.Instance.Datacenter.JobsData.GetJobNameById(JobId);
+            string jobName = DofusApi.Datacenter.JobsData.GetJobNameById(JobId);
 
             return GetDescription(null, null, jobName);
         }

@@ -22,12 +22,12 @@ namespace Cyberia.Api.Managers
 
         public static DateTime ToInGameDateTime(this DateTime dateTime)
         {
-            return dateTime.AddYears(-DofusApi.Instance.Datacenter.TimeZonesData.YearLess);
+            return dateTime.AddYears(-DofusApi.Datacenter.TimeZonesData.YearLess);
         }
 
         public static string ToRolePlayString(this DateTime dateTime)
         {
-            return $"{dateTime:dd} {DofusApi.Instance.Datacenter.TimeZonesData.GetMonth(dateTime.DayOfYear)} {dateTime:yyy}";
+            return $"{dateTime:dd} {DofusApi.Datacenter.TimeZonesData.GetMonth(dateTime.DayOfYear)} {dateTime:yyy}";
         }
     }
 }

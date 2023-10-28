@@ -29,18 +29,18 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public NpcData? GetNpcData()
         {
-            return DofusApi.Instance.Datacenter.NpcsData.GetNpcDataById(NpcId);
+            return DofusApi.Datacenter.NpcsData.GetNpcDataById(NpcId);
         }
 
         public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ItemId);
+            return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
         }
 
         public Description GetDescription()
         {
-            string npcName = DofusApi.Instance.Datacenter.NpcsData.GetNpcNameById(NpcId);
-            string itemName = DofusApi.Instance.Datacenter.ItemsData.GetItemNameById(ItemId);
+            string npcName = DofusApi.Datacenter.NpcsData.GetNpcNameById(NpcId);
+            string itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
 
             return GetDescription(npcName, itemName, Quantity);
         }

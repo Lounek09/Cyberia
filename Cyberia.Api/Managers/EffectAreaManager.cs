@@ -4,7 +4,7 @@
     {
         public string GetImagePath()
         {
-            return $"{DofusApi.Instance.Config.CdnUrl}/images/effectareas/{Id}.png";
+            return $"{DofusApi.Config.CdnUrl}/images/effectareas/{Id}.png";
         }
 
         public string GetSize()

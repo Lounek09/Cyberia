@@ -25,12 +25,12 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public MapSubAreaData? GetMapSubAreaData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
+            return DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
         }
 
         public Description GetDescription()
         {
-            string mapSubAreaName = DofusApi.Instance.Datacenter.MapsData.GetMapSubAreaNameById(MapSubAreaId);
+            string mapSubAreaName = DofusApi.Datacenter.MapsData.GetMapSubAreaNameById(MapSubAreaId);
 
             return GetDescription(mapSubAreaName);
         }

@@ -23,12 +23,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public SpellData? GetSpellData()
         {
-            return DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(SpellId);
+            return DofusApi.Datacenter.SpellsData.GetSpellDataById(SpellId);
         }
 
         public Description GetDescription()
         {
-            string spellName = DofusApi.Instance.Datacenter.SpellsData.GetSpellNameById(SpellId);
+            string spellName = DofusApi.Datacenter.SpellsData.GetSpellNameById(SpellId);
 
             return GetDescription(spellName, Level);
         }

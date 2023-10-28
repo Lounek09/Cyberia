@@ -37,7 +37,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int npcActionId in NpcActionsId)
             {
-                NpcActionData? npcActionData = DofusApi.Instance.Datacenter.NpcsData.GetNpcActionDataById(npcActionId);
+                NpcActionData? npcActionData = DofusApi.Datacenter.NpcsData.GetNpcActionDataById(npcActionId);
                 if (npcActionData is not null)
                 {
                     yield return npcActionData;

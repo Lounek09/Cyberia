@@ -31,7 +31,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public AlignmentFeatData? GetAlignmentFeatData()
         {
-            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentFeatDataById(AlignmentFeatId);
+            return DofusApi.Datacenter.AlignmentsData.GetAlignmentFeatDataById(AlignmentFeatId);
         }
 
         protected override string GetDescriptionName()
@@ -46,7 +46,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public Description GetDescription()
         {
-            string alignmentName = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentFeatNameById(AlignmentFeatId);
+            string alignmentName = DofusApi.Datacenter.AlignmentsData.GetAlignmentFeatNameById(AlignmentFeatId);
 
             if (Level.HasValue)
             {

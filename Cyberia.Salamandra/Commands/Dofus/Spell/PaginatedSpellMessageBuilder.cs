@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -25,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<SpellData> spellsData = Bot.Instance.Api.Datacenter.SpellsData.GetSpellsDataByName(parameters[2]);
+                List<SpellData> spellsData = DofusApi.Datacenter.SpellsData.GetSpellsDataByName(parameters[2]);
                 if (spellsData.Count > 0)
                 {
                     return new(spellsData, parameters[2], selectedPageIndex);

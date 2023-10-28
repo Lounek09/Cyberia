@@ -1,7 +1,4 @@
-﻿global using Cyberia.Utils;
-
-using Cyberia.Api;
-using Cyberia.Cytrusaurus;
+﻿using Cyberia.Cytrusaurus;
 using Cyberia.Langzilla;
 using Cyberia.Salamandra.Managers;
 
@@ -21,7 +18,6 @@ namespace Cyberia.Salamandra
 
         internal CytrusWatcher CytrusWatcher { get; init; }
         internal LangsWatcher LangsWatcher { get; init; }
-        internal DofusApi Api { get; init; }
 
 
         internal static Bot Instance
@@ -56,8 +52,6 @@ namespace Cyberia.Salamandra
 
             LangsWatcher = langs;
             LangsWatcher.CheckLangFinished += LangsManager.OnCheckLangFinished;
-
-            Api = DofusApi.Build(config.ApiConfig, langs);
         }
 
         public static Bot Build(BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)

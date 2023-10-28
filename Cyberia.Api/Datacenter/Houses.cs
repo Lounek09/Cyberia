@@ -31,7 +31,7 @@ namespace Cyberia.Api.Data
 
         public IEnumerable<MapData> GetMapsData()
         {
-            foreach (HouseMapData houseMapData in DofusApi.Instance.Datacenter.HousesData.GetHouseMapsDataByHouseId(Id))
+            foreach (HouseMapData houseMapData in DofusApi.Datacenter.HousesData.GetHouseMapsDataByHouseId(Id))
             {
                 MapData? mapData = houseMapData.GetMapData();
                 if (mapData is not null)
@@ -43,7 +43,7 @@ namespace Cyberia.Api.Data
 
         public MapData? GetOutdoorMapData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapDataById(OutdoorMapId);
+            return DofusApi.Datacenter.MapsData.GetMapDataById(OutdoorMapId);
         }
 
         public string GetCoordinate()
@@ -69,12 +69,12 @@ namespace Cyberia.Api.Data
 
         public MapData? GetMapData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapDataById(MapId);
+            return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
         }
 
         public HouseData? GetHouseData()
         {
-            return DofusApi.Instance.Datacenter.HousesData.GetHouseDataById(HouseId);
+            return DofusApi.Datacenter.HousesData.GetHouseDataById(HouseId);
         }
     }
 

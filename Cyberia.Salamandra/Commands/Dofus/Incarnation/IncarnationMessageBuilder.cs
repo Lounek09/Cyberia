@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
@@ -32,7 +33,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 0 &&
                 int.TryParse(parameters[0], out int incarnationId))
             {
-                IncarnationData? incarnartionData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataByItemId(incarnationId);
+                IncarnationData? incarnartionData = DofusApi.Datacenter.IncarnationsData.GetIncarnationDataByItemId(incarnationId);
                 if (incarnartionData is not null)
                 {
                     return new(incarnartionData);
@@ -76,7 +77,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 embed.WithDescription(string.IsNullOrEmpty(_itemData.Description) ? "" : Formatter.Italic(_itemData.Description))
                     .WithThumbnail(await _itemData.GetImagePath())
                     .AddField("Niveau :", _itemData.Level.ToString(), true)
-                    .AddField("Type :", Bot.Instance.Api.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true)
+                    .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true)
                     .AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
 
                 List<IEffect> effects = _incarnationData.GetEffects();
@@ -93,7 +94,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             else
             {
                 embed.WithDescription(Formatter.Italic("Incarnation non existante dans les données du jeu"))
-                    .WithThumbnail($"{Bot.Instance.Api.Config.CdnUrl}/images/items/unknown.png");
+                    .WithThumbnail($"{DofusApi.Config.CdnUrl}/images/items/unknown.png");
             }
 
             if (_spellsData.Count > 0)

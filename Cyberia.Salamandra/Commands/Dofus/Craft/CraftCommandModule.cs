@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -20,7 +21,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                CraftData? craftData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftDataById(id);
+                CraftData? craftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(id);
                 if (craftData is not null)
                 {
                     response = await new CraftMessageBuilder(craftData, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -28,7 +29,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<CraftData> craftsData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftsDataByItemName(value);
+                List<CraftData> craftsData = DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value);
                 if (craftsData.Count == 1)
                 {
                     response = await new CraftMessageBuilder(craftsData[0], (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();

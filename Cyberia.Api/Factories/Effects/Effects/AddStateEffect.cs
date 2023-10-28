@@ -21,12 +21,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public StateData? GetStateData()
         {
-            return DofusApi.Instance.Datacenter.StatesData.GetStateDataById(StateId);
+            return DofusApi.Datacenter.StatesData.GetStateDataById(StateId);
         }
 
         public Description GetDescription()
         {
-            string stateName = DofusApi.Instance.Datacenter.StatesData.GetStateNameById(StateId);
+            string stateName = DofusApi.Datacenter.StatesData.GetStateNameById(StateId);
 
             return GetDescription(null, null, stateName);
         }

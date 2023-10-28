@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
@@ -33,7 +34,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[1], out int qte) &&
                 bool.TryParse(parameters[2], out bool recursive))
             {
-                CraftData? craftData = Bot.Instance.Api.Datacenter.CraftsData.GetCraftDataById(craftId);
+                CraftData? craftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(craftId);
                 if (craftData is not null)
                 {
                     return new(craftData, qte, recursive);

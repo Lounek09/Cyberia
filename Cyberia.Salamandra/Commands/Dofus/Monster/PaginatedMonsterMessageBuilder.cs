@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -25,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<MonsterData> monstersData = Bot.Instance.Api.Datacenter.MonstersData.GetMonstersDataByName(parameters[2]);
+                List<MonsterData> monstersData = DofusApi.Datacenter.MonstersData.GetMonstersDataByName(parameters[2]);
                 if (monstersData.Count > 0)
                 {
                     return new PaginatedMonsterMessageBuilder(monstersData, parameters[2], selectedPageIndex);

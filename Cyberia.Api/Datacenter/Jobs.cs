@@ -23,7 +23,7 @@ namespace Cyberia.Api.Data
 
         public JobData? GetJobDataSpecialization()
         {
-            return DofusApi.Instance.Datacenter.JobsData.GetJobDataById(SpecializationOfJobId);
+            return DofusApi.Datacenter.JobsData.GetJobDataById(SpecializationOfJobId);
         }
     }
 

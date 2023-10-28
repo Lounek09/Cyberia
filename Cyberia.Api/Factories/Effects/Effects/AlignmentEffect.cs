@@ -21,12 +21,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public AlignmentData? GetAlignmentData()
         {
-            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
+            return DofusApi.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
         }
 
         public Description GetDescription()
         {
-            string alignmentName = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentNameById(AlignmentId);
+            string alignmentName = DofusApi.Datacenter.AlignmentsData.GetAlignmentNameById(AlignmentId);
 
             return GetDescription(null, null, alignmentName);
         }

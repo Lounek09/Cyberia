@@ -24,7 +24,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ItemId);
+            return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
         }
 
         protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public Description GetDescription()
         {
-            string itemName = DofusApi.Instance.Datacenter.ItemsData.GetItemNameById(ItemId);
+            string itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
 
             return GetDescription(itemName);
         }

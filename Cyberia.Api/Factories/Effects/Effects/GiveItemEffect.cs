@@ -26,12 +26,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ItemId);
+            return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
         }
 
         public Description GetDescription()
         {
-            string itemName = DofusApi.Instance.Datacenter.ItemsData.GetItemNameById(ItemId);
+            string itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
 
             return GetDescription(Target.GetDescription(), Qte, itemName);
         }

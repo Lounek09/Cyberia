@@ -29,7 +29,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int id in ItemsId)
             {
-                ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(id);
+                ItemData? itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(id);
                 if (itemData is not null)
                 {
                     yield return itemData;
@@ -51,7 +51,7 @@ namespace Cyberia.Api.Data
 
         public BreedData? GetBreedData()
         {
-            return DofusApi.Instance.Datacenter.BreedsData.Breeds.Find(x => x.ItemSetId == Id);
+            return DofusApi.Datacenter.BreedsData.Breeds.Find(x => x.ItemSetId == Id);
         }
     }
 

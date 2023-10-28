@@ -21,12 +21,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public TTGFamilyData? GetTTGFamilyData()
         {
-            return DofusApi.Instance.Datacenter.TTGData.GetTTGFamilyDataById(TTGFamilyId);
+            return DofusApi.Datacenter.TTGData.GetTTGFamilyDataById(TTGFamilyId);
         }
 
         public Description GetDescription()
         {
-            string ttgFamilyName = DofusApi.Instance.Datacenter.TTGData.GetTTGFamilyNameById(TTGFamilyId);
+            string ttgFamilyName = DofusApi.Datacenter.TTGData.GetTTGFamilyNameById(TTGFamilyId);
 
             return GetDescription(null, null, ttgFamilyName);
         }

@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -11,7 +12,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordApplicationCommandOptionChoice> choices = new();
 
-            foreach (BreedData breedData in Bot.Instance.Api.Datacenter.BreedsData.Breeds)
+            foreach (BreedData breedData in DofusApi.Datacenter.BreedsData.Breeds)
             {
                 choices.Add(new(breedData.Name, breedData.Name));
             }

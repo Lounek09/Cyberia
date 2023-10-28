@@ -41,7 +41,7 @@ namespace Cyberia.Api.Data
 
         public MonsterSuperRaceData? GetMonsterSuperRaceData()
         {
-            return DofusApi.Instance.Datacenter.MonstersData.GetMonsterSuperRaceDataById(MonsterSuperRaceId);
+            return DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceDataById(MonsterSuperRaceId);
         }
     }
 
@@ -173,24 +173,24 @@ namespace Cyberia.Api.Data
 
         public async Task<string> GetImagePath()
         {
-            string url = $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/{GfxId}.png";
+            string url = $"{DofusApi.Config.CdnUrl}/images/artworks/{GfxId}.png";
 
-            if (await DofusApi.Instance.HttpClient.ExistsAsync(url))
+            if (await DofusApi.HttpClient.ExistsAsync(url))
             {
                 return url;
             }
 
-            return $"{DofusApi.Instance.Config.CdnUrl}/images/artworks/unknown.png";
+            return $"{DofusApi.Config.CdnUrl}/images/artworks/unknown.png";
         }
 
         public MonsterRaceData? GetMonsterRaceData()
         {
-            return DofusApi.Instance.Datacenter.MonstersData.GetMonsterRaceDataById(MonsterRaceId);
+            return DofusApi.Datacenter.MonstersData.GetMonsterRaceDataById(MonsterRaceId);
         }
 
         public AlignmentData? GetAlignmentData()
         {
-            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
+            return DofusApi.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
         }
 
         public MonsterGradeData? GetMonsterGradeData(int grade = 1)

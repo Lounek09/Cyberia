@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                IncarnationData? incarnationData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationDataByItemId(id);
+                IncarnationData? incarnationData = DofusApi.Datacenter.IncarnationsData.GetIncarnationDataByItemId(id);
                 if (incarnationData is not null)
                 {
                     response = await new IncarnationMessageBuilder(incarnationData).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -25,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<IncarnationData> incarnationsData = Bot.Instance.Api.Datacenter.IncarnationsData.GetIncarnationsDataByName(value);
+                List<IncarnationData> incarnationsData = DofusApi.Datacenter.IncarnationsData.GetIncarnationsDataByName(value);
                 if (incarnationsData.Count == 1)
                 {
                     response = await new IncarnationMessageBuilder(incarnationsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

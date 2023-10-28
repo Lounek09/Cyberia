@@ -40,7 +40,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int skillId in SkillsId)
             {
-                SkillData? skillData = DofusApi.Instance.Datacenter.SkillsData.GetSkillDataById(skillId);
+                SkillData? skillData = DofusApi.Datacenter.SkillsData.GetSkillDataById(skillId);
                 if (skillData is not null)
                 {
                     yield return skillData;

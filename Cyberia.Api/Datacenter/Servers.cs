@@ -44,17 +44,17 @@ namespace Cyberia.Api.Data
 
         public ServerPopulationData? GetServerPopulationData()
         {
-            return DofusApi.Instance.Datacenter.ServersData.GetServerPopulationDataById(ServerPopulationId);
+            return DofusApi.Datacenter.ServersData.GetServerPopulationDataById(ServerPopulationId);
         }
 
         public ServerPopulationWeightData? GetServerPopulationWeightData()
         {
-            return DofusApi.Instance.Datacenter.ServersData.GetServerPopulationWeightDataById(ServerPopulationId);
+            return DofusApi.Datacenter.ServersData.GetServerPopulationWeightDataById(ServerPopulationId);
         }
 
         public ServerCommunityData? GetServerCommunityData()
         {
-            return DofusApi.Instance.Datacenter.ServersData.GetServerCommunityDataById(ServerCommunityId);
+            return DofusApi.Datacenter.ServersData.GetServerCommunityDataById(ServerCommunityId);
         }
     }
 

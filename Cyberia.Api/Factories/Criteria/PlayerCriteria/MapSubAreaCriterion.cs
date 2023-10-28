@@ -24,7 +24,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public MapSubAreaData? GetMapSubAreaData()
         {
-            return DofusApi.Instance.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
+            return DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
         }
 
         protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
 
         public Description GetDescription()
         {
-            string mapSubAreaName = DofusApi.Instance.Datacenter.MapsData.GetMapSubAreaNameById(MapSubAreaId);
+            string mapSubAreaName = DofusApi.Datacenter.MapsData.GetMapSubAreaNameById(MapSubAreaId);
 
             return GetDescription(mapSubAreaName);
         }

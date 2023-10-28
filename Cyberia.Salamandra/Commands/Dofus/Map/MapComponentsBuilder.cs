@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -37,14 +38,14 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         public static DiscordSelectComponent MapSubAreasSelectBuilder(int uniqueIndex, List<MapSubAreaData> mapSubAreasData, bool disable = false)
         {
-            IEnumerable<DiscordSelectComponentOption> options = mapSubAreasData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, x.Id.ToString()), Bot.Instance.Api.Datacenter.MapsData.GetMapAreaNameById(x.MapAreaId)));
+            IEnumerable<DiscordSelectComponentOption> options = mapSubAreasData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, x.Id.ToString()), DofusApi.Datacenter.MapsData.GetMapAreaNameById(x.MapAreaId)));
 
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une sous-zone pour afficher ses maps", options, disable);
         }
 
         public static DiscordSelectComponent MapAreasSelectBuilder(int uniqueIndex, List<MapAreaData> mapAreasData, bool disable = false)
         {
-            IEnumerable<DiscordSelectComponentOption> options = mapAreasData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, x.Id.ToString()), Bot.Instance.Api.Datacenter.MapsData.GetMapSuperAreaNameById(x.MapSuperAreaId)));
+            IEnumerable<DiscordSelectComponentOption> options = mapAreasData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, x.Id.ToString()), DofusApi.Datacenter.MapsData.GetMapSuperAreaNameById(x.MapSuperAreaId)));
 
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une zone pour afficher ses maps", options, disable);
         }

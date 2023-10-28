@@ -21,12 +21,12 @@ namespace Cyberia.Api.Factories.Effects
 
         public TitleData? GetTitleData()
         {
-            return DofusApi.Instance.Datacenter.TitlesData.GetTitleDataById(TitleId);
+            return DofusApi.Datacenter.TitlesData.GetTitleDataById(TitleId);
         }
 
         public Description GetDescription()
         {
-            string titleName = DofusApi.Instance.Datacenter.TitlesData.GetTitleNameById(TitleId);
+            string titleName = DofusApi.Datacenter.TitlesData.GetTitleNameById(TitleId);
 
             return GetDescription(null, null, titleName);
         }

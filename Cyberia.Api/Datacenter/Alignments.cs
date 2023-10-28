@@ -20,21 +20,21 @@ namespace Cyberia.Api.Data
 
         public bool CanJoin(int alignmentId)
         {
-            AlignmentJoinData? alignmentJoinData = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentJoinDataById(Id);
+            AlignmentJoinData? alignmentJoinData = DofusApi.Datacenter.AlignmentsData.GetAlignmentJoinDataById(Id);
 
             return alignmentJoinData is not null && alignmentJoinData.CanJoin(alignmentId);
         }
 
         public bool CanAttack(int alignmentId)
         {
-            AlignmentAttackData? alignmentAttackData = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentAttackDataById(Id);
+            AlignmentAttackData? alignmentAttackData = DofusApi.Datacenter.AlignmentsData.GetAlignmentAttackDataById(Id);
 
             return alignmentAttackData is not null && alignmentAttackData.CanAttack(alignmentId);
         }
 
         public bool CanViewPvpGain(int alignmentId)
         {
-            AlignmentViewPvpGainData? alignmentViewPvpGainData = DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentViewPvpGainDataById(Id);
+            AlignmentViewPvpGainData? alignmentViewPvpGainData = DofusApi.Datacenter.AlignmentsData.GetAlignmentViewPvpGainDataById(Id);
 
             return alignmentViewPvpGainData is not null && alignmentViewPvpGainData.CanViewPvpGain(alignmentId);
         }
@@ -96,7 +96,7 @@ namespace Cyberia.Api.Data
 
         public AlignmentData? GetAlignementData()
         {
-            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
+            return DofusApi.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
         }
     }
 
@@ -140,7 +140,7 @@ namespace Cyberia.Api.Data
 
         public AlignmentFeatEffectData? GetAlignmentFeatEffectData()
         {
-            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentFeatEffectDataById(AlignmentFeatEffectId);
+            return DofusApi.Datacenter.AlignmentsData.GetAlignmentFeatEffectDataById(AlignmentFeatEffectId);
         }
     }
 
@@ -212,7 +212,7 @@ namespace Cyberia.Api.Data
 
         public AlignmentOrderData? GetAlignementOrderData()
         {
-            return DofusApi.Instance.Datacenter.AlignmentsData.GetAlignmentOrderDataById(AlignmentOrderId);
+            return DofusApi.Datacenter.AlignmentsData.GetAlignmentOrderDataById(AlignmentOrderId);
         }
     }
 

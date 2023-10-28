@@ -92,7 +92,7 @@ namespace Cyberia.Api.Data
 
         public SpellData? GetSpellData()
         {
-            return DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(SpellId);
+            return DofusApi.Datacenter.SpellsData.GetSpellDataById(SpellId);
         }
 
         public List<IEffect> GetTrapEffects()
@@ -141,7 +141,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int stateId in RequiredStatesId)
             {
-                StateData? stateData = DofusApi.Instance.Datacenter.StatesData.GetStateDataById(stateId);
+                StateData? stateData = DofusApi.Datacenter.StatesData.GetStateDataById(stateId);
                 if (stateData is not null)
                 {
                     yield return stateData;
@@ -153,7 +153,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int stateId in ForbiddenStatesId)
             {
-                StateData? stateData = DofusApi.Instance.Datacenter.StatesData.GetStateDataById(stateId);
+                StateData? stateData = DofusApi.Datacenter.StatesData.GetStateDataById(stateId);
                 if (stateData is not null)
                 {
                     yield return stateData;
@@ -227,19 +227,19 @@ namespace Cyberia.Api.Data
 
         public async Task<string> GetImagePath()
         {
-            string url = $"{DofusApi.Instance.Config.CdnUrl}/images/spells/{Id}.jpg";
+            string url = $"{DofusApi.Config.CdnUrl}/images/spells/{Id}.jpg";
 
-            if (await DofusApi.Instance.HttpClient.ExistsAsync(url))
+            if (await DofusApi.HttpClient.ExistsAsync(url))
             {
                 return url;
             }
 
-            return $"{DofusApi.Instance.Config.CdnUrl}/images/spells/unknown.png";
+            return $"{DofusApi.Config.CdnUrl}/images/spells/unknown.png";
         }
 
         public BreedData? GetBreedData()
         {
-            return DofusApi.Instance.Datacenter.BreedsData.GetBreedDataById(BreedId) ?? DofusApi.Instance.Datacenter.BreedsData.Breeds.Find(x => x.SpecialSpellId == Id);
+            return DofusApi.Datacenter.BreedsData.GetBreedDataById(BreedId) ?? DofusApi.Datacenter.BreedsData.Breeds.Find(x => x.SpecialSpellId == Id);
         }
 
         public SpellLevelData? GetSpellLevelData(int level = 1)
@@ -276,7 +276,7 @@ namespace Cyberia.Api.Data
 
         public IncarnationData? GetIncarnationData()
         {
-            foreach (IncarnationData incarnation in DofusApi.Instance.Datacenter.IncarnationsData.Incarnations)
+            foreach (IncarnationData incarnation in DofusApi.Datacenter.IncarnationsData.Incarnations)
             {
                 if (incarnation.SpellsId.Contains(Id))
                 {

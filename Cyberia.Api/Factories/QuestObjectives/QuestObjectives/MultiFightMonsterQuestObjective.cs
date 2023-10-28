@@ -27,12 +27,12 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public MonsterData? GetMonsterData()
         {
-            return DofusApi.Instance.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
+            return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
         }
 
         public Description GetDescription()
         {
-            string monsterName = DofusApi.Instance.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
+            string monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
 
             return GetDescription(monsterName, Quantity);
         }

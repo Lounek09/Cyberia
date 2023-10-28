@@ -29,18 +29,18 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public NpcData? GetNpcData()
         {
-            return DofusApi.Instance.Datacenter.NpcsData.GetNpcDataById(NpcId);
+            return DofusApi.Datacenter.NpcsData.GetNpcDataById(NpcId);
         }
 
         public MonsterData? GetMonsterData()
         {
-            return DofusApi.Instance.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
+            return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
         }
 
         public Description GetDescription()
         {
-            string npcName = DofusApi.Instance.Datacenter.NpcsData.GetNpcNameById(NpcId);
-            string monsterName = DofusApi.Instance.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
+            string npcName = DofusApi.Datacenter.NpcsData.GetNpcNameById(NpcId);
+            string monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
 
             return GetDescription(npcName, monsterName, Quantity);
         }

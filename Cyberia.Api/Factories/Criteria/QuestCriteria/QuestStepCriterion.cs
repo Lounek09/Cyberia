@@ -24,7 +24,7 @@ namespace Cyberia.Api.Factories.Criteria.QuestCriteria
 
         public QuestStepData? GetQuestStepData()
         {
-            return DofusApi.Instance.Datacenter.QuestsData.GetQuestStepDataById(QuestStepId);
+            return DofusApi.Datacenter.QuestsData.GetQuestStepDataById(QuestStepId);
         }
 
         protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ namespace Cyberia.Api.Factories.Criteria.QuestCriteria
 
         public Description GetDescription()
         {
-            string questStepName = DofusApi.Instance.Datacenter.QuestsData.GetQuestStepNameById(QuestStepId);
+            string questStepName = DofusApi.Datacenter.QuestsData.GetQuestStepNameById(QuestStepId);
 
             return GetDescription(questStepName);
         }

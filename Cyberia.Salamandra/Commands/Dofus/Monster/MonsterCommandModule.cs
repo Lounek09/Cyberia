@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -17,7 +18,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
             if (int.TryParse(value, out int id))
             {
-                MonsterData? monsterData = Bot.Instance.Api.Datacenter.MonstersData.GetMonsterDataById(id);
+                MonsterData? monsterData = DofusApi.Datacenter.MonstersData.GetMonsterDataById(id);
                 if (monsterData is not null)
                 {
                     response = await new MonsterMessageBuilder(monsterData).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -25,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<MonsterData> monstersData = Bot.Instance.Api.Datacenter.MonstersData.GetMonstersDataByName(value);
+                List<MonsterData> monstersData = DofusApi.Datacenter.MonstersData.GetMonstersDataByName(value);
                 if (monstersData.Count == 1)
                 {
                     response = await new MonsterMessageBuilder(monstersData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

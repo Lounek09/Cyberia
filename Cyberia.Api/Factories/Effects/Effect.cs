@@ -8,7 +8,7 @@ namespace Cyberia.Api.Factories.Effects
     {
         public EffectData? GetEffectData()
         {
-            return DofusApi.Instance.Datacenter.EffectsData.GetEffectDataById(EffectId);
+            return DofusApi.Datacenter.EffectsData.GetEffectDataById(EffectId);
         }
 
         protected Description GetDescription(params object?[] parameters)

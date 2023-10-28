@@ -33,7 +33,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int questStepId in QuestStepsId)
             {
-                QuestStepData? questStepData = DofusApi.Instance.Datacenter.QuestsData.GetQuestStepDataById(questStepId);
+                QuestStepData? questStepData = DofusApi.Datacenter.QuestsData.GetQuestStepDataById(questStepId);
                 if (questStepData is not null)
                 {
                     yield return questStepData;
@@ -68,7 +68,7 @@ namespace Cyberia.Api.Data
         {
             foreach (KeyValuePair<int, int> pair in ItemsIdQuantities)
             {
-                ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(pair.Key);
+                ItemData? itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(pair.Key);
                 if (itemData is not null)
                 {
                     yield return itemData;
@@ -82,7 +82,7 @@ namespace Cyberia.Api.Data
 
             foreach (KeyValuePair<int, int> pair in ItemsIdQuantities)
             {
-                ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(pair.Key);
+                ItemData? itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(pair.Key);
                 if (itemData is not null)
                 {
                     itemsDataQuantities.Add(itemData, pair.Value);
@@ -96,7 +96,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int emoteId in EmotesId)
             {
-                EmoteData? emoteData = DofusApi.Instance.Datacenter.EmotesData.GetEmoteById(emoteId);
+                EmoteData? emoteData = DofusApi.Datacenter.EmotesData.GetEmoteById(emoteId);
                 if (emoteData is not null)
                 {
                     yield return emoteData;
@@ -108,7 +108,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int jobId in JobsId)
             {
-                JobData? jobData = DofusApi.Instance.Datacenter.JobsData.GetJobDataById(jobId);
+                JobData? jobData = DofusApi.Datacenter.JobsData.GetJobDataById(jobId);
                 if (jobData is not null)
                 {
                     yield return jobData;
@@ -120,7 +120,7 @@ namespace Cyberia.Api.Data
         {
             foreach (int spellId in SpellsId)
             {
-                SpellData? spellData = DofusApi.Instance.Datacenter.SpellsData.GetSpellDataById(spellId);
+                SpellData? spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spellId);
                 if (spellData is not null)
                 {
                     yield return spellData;
@@ -173,7 +173,7 @@ namespace Cyberia.Api.Data
 
         public DialogQuestionData? GetDialogQuestionData()
         {
-            return DofusApi.Instance.Datacenter.DialogsData.GetDialogQuestionDataById(DialogQuestionId);
+            return DofusApi.Datacenter.DialogsData.GetDialogQuestionDataById(DialogQuestionId);
         }
     }
 
@@ -202,7 +202,7 @@ namespace Cyberia.Api.Data
 
         public QuestObjectiveTypeData? GetQuestObjectiveTypeData()
         {
-            return DofusApi.Instance.Datacenter.QuestsData.GetQuestObjectiveTypeDataById(QuestObjectiveTypeId);
+            return DofusApi.Datacenter.QuestsData.GetQuestObjectiveTypeDataById(QuestObjectiveTypeId);
         }
 
         public string GetCoordinate()

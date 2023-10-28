@@ -20,14 +20,14 @@ namespace Cyberia.Api.Data
 
         public ItemData? GetItemData()
         {
-            return DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(Id);
+            return DofusApi.Datacenter.ItemsData.GetItemDataById(Id);
         }
 
         public bool HasSubCraft()
         {
             foreach (KeyValuePair<int, int> ingredient in Ingredients)
             {
-                CraftData? subCraftData = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
+                CraftData? subCraftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
                 if (subCraftData is not null)
                 {
                     return true;
@@ -62,7 +62,7 @@ namespace Cyberia.Api.Data
 
             foreach (KeyValuePair<int, int> ingredient in craftData.GetIngredients(qte))
             {
-                CraftData? subCraft = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
+                CraftData? subCraft = DofusApi.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
 
                 if (subCraft is not null)
                 {
@@ -88,7 +88,7 @@ namespace Cyberia.Api.Data
 
             foreach (KeyValuePair<int, int> ingredient in GetIngredients(1))
             {
-                ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ingredient.Key);
+                ItemData? itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(ingredient.Key);
                 if (itemData is not null)
                 {
                     pods += itemData.Weight * ingredient.Value;
@@ -104,7 +104,7 @@ namespace Cyberia.Api.Data
 
             foreach (KeyValuePair<int, int> ingredient in GetRecursiveIngredients(1))
             {
-                ItemData? itemData = DofusApi.Instance.Datacenter.ItemsData.GetItemDataById(ingredient.Key);
+                ItemData? itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(ingredient.Key);
                 if (itemData is not null)
                 {
                     pods += itemData.Weight * ingredient.Value;
@@ -126,7 +126,7 @@ namespace Cyberia.Api.Data
 
             foreach (KeyValuePair<int, int> ingredient in craftData.Ingredients)
             {
-                CraftData? subCraftData = DofusApi.Instance.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
+                CraftData? subCraftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
                 if (subCraftData is not null)
                 {
                     totalTime = GetRecursiveTimeForMultipleCraft(qte * ingredient.Value, totalTime, subCraftData);

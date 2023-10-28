@@ -14,7 +14,7 @@ namespace Cyberia.Api.Factories.Criteria.FightCriteria
 
         public MonsterData? GetMonsterData()
         {
-            return DofusApi.Instance.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
+            return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
         }
 
         public static MonsterSummonCriterion? Create(string id, char @operator, params string[] parameters)
@@ -34,7 +34,7 @@ namespace Cyberia.Api.Factories.Criteria.FightCriteria
 
         public Description GetDescription()
         {
-            string monsterName = DofusApi.Instance.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
+            string monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
 
             return GetDescription(monsterName);
         }

@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -30,7 +31,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 0 &&
                 int.TryParse(parameters[0], out int breedId))
             {
-                BreedData? breedData = Bot.Instance.Api.Datacenter.BreedsData.GetBreedDataById(breedId);
+                BreedData? breedData = DofusApi.Datacenter.BreedsData.GetBreedDataById(breedId);
                 if (breedData is not null)
                 {
                     return new(breedData);
@@ -78,7 +79,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 embed.AddField("Sorts :", string.Join('\n', _spellsData.Select(x => $"- Niv.{x.GetNeededLevel()} {Formatter.Bold(x.Name)}")));
             }
 
-            if (Bot.Instance.Api.Config.Temporis)
+            if (DofusApi.Config.Temporis)
             {
                 embed.AddField("Temporis :", $"{Formatter.Bold(_breedData.TemporisPassiveName)} :\n{_breedData.TemporisPassiveDescription}");
             }

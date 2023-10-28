@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -41,7 +42,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 switch (searchCategory)
                 {
                     case HouseSearchCategory.Name:
-                        housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByName(parameters[3]);
+                        housesData = DofusApi.Datacenter.HousesData.GetHousesDataByName(parameters[3]);
                         search = parameters[3];
                         break;
                     case HouseSearchCategory.Coordinate:
@@ -49,21 +50,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
                             int.TryParse(parameters[3], out int xCoord) &&
                             int.TryParse(parameters[4], out int yCoord))
                         {
-                            housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByCoordinate(xCoord, yCoord);
+                            housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate(xCoord, yCoord);
                             search = $"{parameters[3]}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{parameters[4]}";
                         }
                         break;
                     case HouseSearchCategory.MapSubArea:
                         if (int.TryParse(parameters[3], out int mapSubAreaId))
                         {
-                            housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByMapSubAreaId(mapSubAreaId);
+                            housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapSubAreaId(mapSubAreaId);
                             search = parameters[3];
                         }
                         break;
                     case HouseSearchCategory.MapArea:
                         if (int.TryParse(parameters[3], out int mapAreaId))
                         {
-                            housesData = Bot.Instance.Api.Datacenter.HousesData.GetHousesDataByMapAreaId(mapAreaId);
+                            housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapAreaId(mapAreaId);
                             search = parameters[3];
                         }
                         break;
