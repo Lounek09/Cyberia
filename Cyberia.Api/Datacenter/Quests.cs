@@ -1,11 +1,11 @@
-﻿using Cyberia.Api.DatacenterNS.Custom;
+﻿using Cyberia.Api.Data.Custom;
 using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.QuestObjectives;
 using Cyberia.Api.Parser.JsonConverter;
 
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.DatacenterNS
+namespace Cyberia.Api.Data
 {
     public sealed class QuestData
     {

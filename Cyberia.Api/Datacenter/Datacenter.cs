@@ -1,4 +1,4 @@
-﻿namespace Cyberia.Api.DatacenterNS
+﻿namespace Cyberia.Api.Data
 {
     public sealed class Datacenter
     {

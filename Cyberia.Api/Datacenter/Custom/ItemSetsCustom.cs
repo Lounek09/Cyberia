@@ -3,7 +3,7 @@ using Cyberia.Api.Parser.JsonConverter;
 
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.DatacenterNS.Custom
+namespace Cyberia.Api.Data.Custom
 {
     internal sealed class ItemSetCustomData
     {

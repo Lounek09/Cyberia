@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.DatacenterNS;
+﻿using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;

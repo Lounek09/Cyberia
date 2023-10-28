@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.DatacenterNS;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.QuestObjectives;

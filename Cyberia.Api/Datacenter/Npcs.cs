@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.DatacenterNS
+namespace Cyberia.Api.Data
 {
     public sealed class NpcActionData
     {

@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.DatacenterNS;
+﻿using Cyberia.Api.Data;
 
 namespace Cyberia.Api.Factories.Criteria.ServerCriteria
 {

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.DatacenterNS.Custom
+namespace Cyberia.Api.Data.Custom
 {
     internal sealed class QuestCustomData
     {

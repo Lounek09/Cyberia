@@ -1,8 +1,8 @@
-﻿using Cyberia.Api.DatacenterNS.Custom;
+﻿using Cyberia.Api.Data.Custom;
 
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.DatacenterNS
+namespace Cyberia.Api.Data
 {
     public sealed class HouseData
     {
