@@ -2,7 +2,7 @@
 
 namespace Cyberia.Cytrusaurus
 {
-    public sealed class CytrusWatcher
+    public static class CytrusWatcher
     {
         internal const string OUTPUT_PATH = "cytrus";
         internal const string CYTRUS_FILE_NAME = "cytrus.json";
@@ -10,28 +10,23 @@ namespace Cyberia.Cytrusaurus
         internal const string OLD_CYTRUS_PATH = $"{OUTPUT_PATH}/old_{CYTRUS_FILE_NAME}";
         internal const string BASE_URL = "https://cytrus.cdn.ankama.com";
 
-        public CytrusData CytrusData { get; internal set; }
-        public CytrusData OldCytrusData { get; internal set; }
+        public static CytrusData Data { get; internal set; } = default!;
+        public static CytrusData OldData { get; internal set; } = default!;
 
-        internal HttpClient HttpClient { get; init; }
-        internal HttpRetryPolicy HttpRetryPolicy { get; init; }
+        internal static HttpClient HttpClient { get; private set; } = default!;
+        internal static HttpRetryPolicy HttpRetryPolicy { get; private set; } = default!;
 
-        internal static CytrusWatcher Instance
-        {
-            get => _instance is null ? throw new NullReferenceException("Build Cytrus before !") : _instance;
-        }
-        private static CytrusWatcher? _instance;
 
 #pragma warning disable IDE0052 // Remove unread private members
-        private Timer? _timer;
+        private static Timer? _timer;
 #pragma warning restore IDE0052 // Remove unread private members
 
-        internal CytrusWatcher()
+        public static void Initialize()
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
-            CytrusData = File.Exists(CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(CYTRUS_PATH) : new();
-            OldCytrusData = File.Exists(OLD_CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(OLD_CYTRUS_PATH) : new();
+            Data = File.Exists(CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(CYTRUS_PATH) : new();
+            OldData = File.Exists(OLD_CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(OLD_CYTRUS_PATH) : new();
             HttpClient = new()
             {
                 BaseAddress = new Uri(BASE_URL)
@@ -39,22 +34,16 @@ namespace Cyberia.Cytrusaurus
             HttpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
         }
 
-        public static CytrusWatcher Create()
+        public static event EventHandler<NewCytrusDetectedEventArgs>? NewCytrusDetected;
+
+        public static void Watch(TimeSpan dueTime, TimeSpan interval)
         {
-            _instance ??= new();
-            return _instance;
+            _timer = new(async _ => await CheckAsync(), null, dueTime, interval);
         }
 
-        public event EventHandler<NewCytrusDetectedEventArgs>? NewCytrusDetected;
-
-        public void Listen(TimeSpan dueTime, TimeSpan interval)
+        public static async Task CheckAsync()
         {
-            _timer = new(async _ => await LaunchAsync(), null, dueTime, interval);
-        }
-
-        public async Task LaunchAsync()
-        {
-            string? cytrus = null;
+            string cytrus = string.Empty;
             try
             {
                 using HttpResponseMessage response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(CYTRUS_FILE_NAME));
@@ -64,12 +53,7 @@ namespace Cyberia.Cytrusaurus
             }
             catch (HttpRequestException e)
             {
-                Log.Error(e, "An error occured while sending Get request to {url}}", $"{BASE_URL}/{CYTRUS_FILE_NAME}");
-                return;
-            }
-
-            if (cytrus is null)
-            {
+                Log.Error(e, "An error occured while sending Get request to {url}", $"{BASE_URL}/{CYTRUS_FILE_NAME}");
                 return;
             }
 
@@ -79,8 +63,8 @@ namespace Cyberia.Cytrusaurus
                 lastCytrus = File.ReadAllText(CYTRUS_PATH);
             }
 
-            OldCytrusData = CytrusData;
-            CytrusData = Json.Load<CytrusData>(cytrus);
+            OldData = Data;
+            Data = Json.Load<CytrusData>(cytrus);
 
             string diff = Json.Diff(cytrus, lastCytrus);
             if (string.IsNullOrEmpty(diff))
@@ -89,7 +73,7 @@ namespace Cyberia.Cytrusaurus
             }
 
             Log.Information("Cytrus update detected :\n{diff}", diff);
-            NewCytrusDetected?.Invoke(this, new NewCytrusDetectedEventArgs(CytrusData, OldCytrusData, diff));
+            NewCytrusDetected?.Invoke(null, new NewCytrusDetectedEventArgs(Data, OldData, diff));
 
             if (File.Exists(CYTRUS_PATH))
             {

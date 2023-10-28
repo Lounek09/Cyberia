@@ -28,7 +28,8 @@ namespace Cyberia
 
                 CyberiaConfig config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>()!;
 
-                CytrusWatcher cytrus = CytrusWatcher.Create();
+                Log.Information("Initializing CytrusWatcher");
+                CytrusWatcher.Initialize();
 
                 LangsWatcher langs = LangsWatcher.Create();
 
@@ -36,13 +37,13 @@ namespace Cyberia
                 DofusApi.Initialize(config.ApiConfig, langs);
 
                 Log.Information("Initializing Salamandra");
-                Bot.Initialize(config.BotConfig, cytrus, langs);
+                Bot.Initialize(config.BotConfig, langs);
                 await Bot.Launch();
 
                 if (config.EnableCheckCytrus)
                 {
-                    Log.Information("Listening to Cytrus each {interval}", config.CheckCytrusInterval);
-                    cytrus.Listen(TimeSpan.FromSeconds(10), config.CheckCytrusInterval);
+                    Log.Information("Waching Cytrus each {interval}", config.CheckCytrusInterval);
+                    CytrusWatcher.Watch(TimeSpan.FromSeconds(10), config.CheckCytrusInterval);
                 }
 
                 if (config.EnableCheckLang)

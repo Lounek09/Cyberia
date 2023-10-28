@@ -1,4 +1,6 @@
-﻿using DSharpPlus.Entities;
+﻿using Cyberia.Cytrusaurus;
+
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Data
@@ -33,7 +35,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
             List<DiscordAutoCompleteChoice> choices = new();
 
-            string? version = Bot.CytrusWatcher.CytrusData.Games[game].GetVersionFromPlatformAndRelease(platform, release);
+            string? version = CytrusWatcher.Data.Games[game].GetVersionFromPlatformAndRelease(platform, release);
             if (!string.IsNullOrEmpty(version))
             {
                 choices.Add(new(version, version));

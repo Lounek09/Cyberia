@@ -16,10 +16,9 @@ namespace Cyberia.Salamandra
         public static DiscordClient Client { get; private set; } = default!;
         public static SlashCommandsExtension SlashCommands { get; private set; } = default!;
 
-        internal static CytrusWatcher CytrusWatcher { get; private set; } = default!;
         internal static LangsWatcher LangsWatcher { get; private set; } = default!;
 
-        public static void Initialize(BotConfig config, CytrusWatcher cytrus, LangsWatcher langs)
+        public static void Initialize(BotConfig config, LangsWatcher langs)
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
@@ -40,7 +39,6 @@ namespace Cyberia.Salamandra
             SlashCommands = Client.UseSlashCommands();
             SlashCommands.SlashCommandErrored += CommandManager.OnSlashCommandErrored;
 
-            CytrusWatcher = cytrus;
             CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
 
             LangsWatcher = langs;

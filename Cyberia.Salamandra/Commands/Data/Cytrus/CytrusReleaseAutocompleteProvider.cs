@@ -1,4 +1,6 @@
-﻿using DSharpPlus.Entities;
+﻿using Cyberia.Cytrusaurus;
+
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Data
@@ -27,7 +29,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
             HashSet<DiscordAutoCompleteChoice> choices = new();
 
-            foreach (KeyValuePair<string, string> release in Bot.CytrusWatcher.CytrusData.Games[game].GetReleasesFromPlatform(platform))
+            foreach (KeyValuePair<string, string> release in CytrusWatcher.Data.Games[game].GetReleasesFromPlatform(platform))
             {
                 choices.Add(new(release.Key.Capitalize(), release.Key));
             }

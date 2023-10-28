@@ -1,4 +1,5 @@
-﻿using Cyberia.Cytrusaurus.Models;
+﻿using Cyberia.Cytrusaurus;
+using Cyberia.Cytrusaurus.Models;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -16,22 +17,20 @@ namespace Cyberia.Salamandra.Commands.Data
         public async Task CheckCytrusCommand(InteractionContext ctx)
         {
             await ctx.CreateResponseAsync($"Lancement du check de Cytrus...");
-            await Bot.CytrusWatcher.LaunchAsync();
+            await CytrusWatcher.CheckAsync();
             await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check de Cytrus terminé"));
         }
 
         [SlashCommand("show", "Affiche les informations du cytrus actuellement en ligne")]
         public async Task ShowCytrusCommand(InteractionContext ctx)
         {
-            CytrusData cytrusData = Bot.CytrusWatcher.CytrusData;
-
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Cytrus");
 
-            embed.AddField("Name", cytrusData.Name.Capitalize(), true);
-            embed.AddField("Version", cytrusData.Version.ToString(), true);
+            embed.AddField("Name", CytrusWatcher.Data.Name.Capitalize(), true);
+            embed.AddField("Version", CytrusWatcher.Data.Version.ToString(), true);
             embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
 
-            foreach (KeyValuePair<string, Game> game in cytrusData.Games.OrderBy(x => x.Value.Order))
+            foreach (KeyValuePair<string, Game> game in CytrusWatcher.Data.Games.OrderBy(x => x.Value.Order))
             {
                 List<string> content = new();
 
