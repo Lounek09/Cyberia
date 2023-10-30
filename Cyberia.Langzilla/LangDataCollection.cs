@@ -16,7 +16,7 @@ namespace Cyberia.Langzilla
         public LangLanguage Language { get; init; }
 
         [JsonPropertyName("lastChange")]
-        public long LastChange { get; internal set; }
+        public long LastChange { get; set; }
 
         [JsonPropertyName("langs")]
         public List<LangData> LangsData { get; init; }
