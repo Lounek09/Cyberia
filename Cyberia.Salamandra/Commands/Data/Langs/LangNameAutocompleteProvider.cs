@@ -16,13 +16,13 @@ namespace Cyberia.Salamandra.Commands.Data
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
             }
 
-            string? typeStr = CreateFromOption<string>(ctx, "typeStr");
+            string? typeStr = CreateFromOption<string>(ctx, "type");
             if (string.IsNullOrEmpty(typeStr))
             {
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
             }
 
-            string? languageStr = CreateFromOption<string>(ctx, "languageStr");
+            string? languageStr = CreateFromOption<string>(ctx, "langue");
             if (string.IsNullOrEmpty(languageStr))
             {
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());

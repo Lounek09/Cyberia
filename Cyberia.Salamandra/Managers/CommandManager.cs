@@ -9,8 +9,6 @@ using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
 using DSharpPlus.SlashCommands.EventArgs;
 
-using System;
-
 namespace Cyberia.Salamandra.Managers
 {
     public static class CommandManager

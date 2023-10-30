@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Langzilla
 {
-    public sealed class LangDataCollection : IEnumerable<LangData>
+    public sealed class LangDataCollection
     {
         private const string DATA_FILE_NAME = "data.json";
 
@@ -85,11 +85,6 @@ namespace Cyberia.Langzilla
             return LangsData.GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
-
         internal async Task<List<LangData>> FetchLangsAsync(bool force)
         {
             string versionFile = await FetchVersionFileAsync(force);
@@ -138,10 +133,10 @@ namespace Cyberia.Langzilla
 
         private async Task<List<LangData>> ProcessLangsAsync(string versionFileContent)
         {
-            List<LangData> updatedLangs = new();
+            List<LangData> updatedLangsData = new();
 
-            string[] langInfoArray = versionFileContent[3..].Split("|", StringSplitOptions.RemoveEmptyEntries);
-            foreach (string langInfo in langInfoArray)
+            string[] langInfos = versionFileContent[3..].Split("|", StringSplitOptions.RemoveEmptyEntries);
+            foreach (string langInfo in langInfos)
             {
                 string[] langParameters = langInfo.Split(',');
 
@@ -150,7 +145,7 @@ namespace Cyberia.Langzilla
                 {
                     await langData.DownloadExtractAndDiffAsync();
 
-                    updatedLangs.Add(langData);
+                    updatedLangsData.Add(langData);
 
                     int index = LangsData.FindIndex(x => x.Name.Equals(langData.Name));
                     if (index == -1)
@@ -165,7 +160,7 @@ namespace Cyberia.Langzilla
             }
 
             Save();
-            return updatedLangs;
+            return updatedLangsData;
         }
 
         private void Save()

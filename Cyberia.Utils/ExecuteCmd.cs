@@ -21,14 +21,16 @@ namespace Cyberia.Utils
 
                 process.Start();
 
-                if (process.StandardOutput.BaseStream.Length > 0)
+                string message = process.StandardOutput.ReadToEnd();
+                if (!string.IsNullOrEmpty(message))
                 {
-                    Log.Information(process.StandardOutput.ReadToEnd());
+                    Log.Information(message);
                 }
 
-                if (process.StandardError.BaseStream.Length > 0)
+                string error = process.StandardError.ReadToEnd();
+                if (!string.IsNullOrEmpty(error))
                 {
-                    Log.Error(process.StandardError.ReadToEnd());
+                    Log.Error(error);
                     return false;
                 }
 
