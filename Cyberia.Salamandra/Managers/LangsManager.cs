@@ -49,11 +49,11 @@ namespace Cyberia.Salamandra.Managers
                     return forum;
                 }
 
-                Log.Error("The given lang channel is not a forum (id:{id})", id);
+                Log.Error("The given lang channel is not a forum {ChannelId}", id);
             }
             catch
             {
-                Log.Error("Unknown lang forum channel (id:{id})", id);
+                Log.Error("Unknown lang forum channel {ChannelId}", id);
             }
 
             return null;

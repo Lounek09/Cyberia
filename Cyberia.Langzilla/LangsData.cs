@@ -98,7 +98,7 @@ namespace Cyberia.Langzilla
                 {
                     string versionFile = await response.Content.ReadAsStringAsync();
 
-                    Log.Information("New {type} langs detected in {language} :\n{versionFile}", Type, Language, versionFile);
+                    Log.Information("New {LangType} langs detected in {LangLanguage} :\n{VersionFileContent}", Type, Language, versionFile);
                     File.WriteAllText(GetVersionFilePath(), versionFile);
 
                     return versionFile;
@@ -106,7 +106,7 @@ namespace Cyberia.Langzilla
             }
             catch (HttpRequestException e)
             {
-                Log.Error(e, "An error occurred while sending Get request to {url}}", versionFileUrl);
+                Log.Error(e, "An error occurred while sending Get request to {Url}}", versionFileUrl);
             }
 
             return string.Empty;

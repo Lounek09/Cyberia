@@ -53,7 +53,7 @@ namespace Cyberia.Cytrusaurus
             }
             catch (HttpRequestException e)
             {
-                Log.Error(e, "An error occurred while sending Get request to {url}", $"{BASE_URL}/{CYTRUS_FILE_NAME}");
+                Log.Error(e, "An error occurred while sending Get request to {CytrusUrl}", $"{BASE_URL}/{CYTRUS_FILE_NAME}");
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace Cyberia.Cytrusaurus
                 return;
             }
 
-            Log.Information("Cytrus update detected :\n{diff}", diff);
+            Log.Information("Cytrus update detected :\n{CytrusDiff}", diff);
             NewCytrusDetected?.Invoke(null, new NewCytrusDetectedEventArgs(Data, OldData, diff));
 
             if (File.Exists(CYTRUS_PATH))

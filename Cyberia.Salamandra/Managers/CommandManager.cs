@@ -58,7 +58,7 @@ namespace Cyberia.Salamandra.Managers
                     break;
                 default:
                     Log.Error(e.Exception,
-                        "An error occurred when {userName} ({userId}) used the {commandName} command",
+                        "An error occurred when {UserName} ({UserId}) used the {CommandName} command",
                         e.Context.User.Username,
                         e.Context.User.Id,
                         e.Context.CommandName);

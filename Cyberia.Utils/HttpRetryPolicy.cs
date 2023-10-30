@@ -25,7 +25,7 @@ namespace Cyberia.Utils
                 {
                     if (retryCount < _maxRetries)
                     {
-                        Log.Warning("The request failed with status {statusCode}. Retrying in {retryInterval}ms.", response.StatusCode, retryInterval.TotalMilliseconds);
+                        Log.Warning("The request failed with status {HttpStatusCode}. Retrying in {RetryInterval}ms.", response.StatusCode, retryInterval.TotalMilliseconds);
                         await Task.Delay(retryInterval);
                         return await ExecuteAsync(operation, retryCount + 1);
                     }
@@ -39,7 +39,7 @@ namespace Cyberia.Utils
             {
                 if (retryCount < _maxRetries)
                 {
-                    Log.Warning("The request timed out. Retrying in {retryInterval}ms.", retryInterval.TotalMilliseconds);
+                    Log.Warning("The request timed out. Retrying in {RetryInterval}ms.", retryInterval.TotalMilliseconds);
                     await Task.Delay(retryInterval);
                     return await ExecuteAsync(operation, retryCount + 1);
                 }
@@ -50,7 +50,7 @@ namespace Cyberia.Utils
             {
                 if (retryCount < _maxRetries)
                 {
-                    Log.Warning("Connection reset by peer. Retrying in {retryInterval}ms.", retryInterval.TotalMilliseconds);
+                    Log.Warning("Connection reset by peer. Retrying in {RetryInterval}ms.", retryInterval.TotalMilliseconds);
                     await Task.Delay(retryInterval);
                     return await ExecuteAsync(operation, retryCount + 1);
                 }

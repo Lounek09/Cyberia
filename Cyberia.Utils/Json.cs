@@ -21,7 +21,7 @@ namespace Cyberia.Utils
             }
             catch (Exception e) when (e is JsonException or NotSupportedException or InvalidOperationException)
             {
-                Log.Error(e, "Failed to deserialize JSON");
+                Log.Error(e, "Failed to deserialize the JSON");
             }
 
             return new();
@@ -37,7 +37,7 @@ namespace Cyberia.Utils
             }
             catch (Exception e) when (e is FileNotFoundException or DirectoryNotFoundException)
             {
-                Log.Error(e, "File not found: {filePath}", filePath);
+                Log.Error(e, "File {FilePath} not found", filePath);
             }
 
             return new();

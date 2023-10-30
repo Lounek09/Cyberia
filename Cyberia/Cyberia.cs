@@ -50,19 +50,19 @@ namespace Cyberia
 
                 if (config.EnableCheckLang)
                 {
-                    Log.Information("Waching {type} Langs each {interval}", LangType.Official, config.CheckLangInterval);
+                    Log.Information("Waching {LangType} Langs each {Interval}", LangType.Official, config.CheckLangInterval);
                     LangsWatcher.Watch(LangType.Official, TimeSpan.FromSeconds(20), config.CheckLangInterval);
                 }
 
                 if (config.EnableCheckBetaLang)
                 {
-                    Log.Information("Waching {type} Langs each {interval}", LangType.Beta, config.CheckBetaLangInterval);
+                    Log.Information("Waching {LangType} Langs each {Interval}", LangType.Beta, config.CheckBetaLangInterval);
                     LangsWatcher.Watch(LangType.Beta, TimeSpan.FromSeconds(140), config.CheckBetaLangInterval);
                 }
 
                 if (config.EnableCheckTemporisLang)
                 {
-                    Log.Information("Waching {type} Langs each {interval}", LangType.Temporis, config.CheckTemporisLangInterval);
+                    Log.Information("Waching {LangType} Langs each {Interval}", LangType.Temporis, config.CheckTemporisLangInterval);
                     LangsWatcher.Watch(LangType.Temporis, TimeSpan.FromSeconds(260), config.CheckCytrusInterval);
                 }
 

@@ -22,7 +22,7 @@
             string? effectAreaName = Resources.ResourceManager.GetString($"EffectArea.{Id}");
             if (effectAreaName is null)
             {
-                Log.Warning("Unknown EffectArea {id}", Id);
+                Log.Warning("Unknown EffectArea {EffectAreaId}", Id);
                 return $"{GetSize()} {PatternDecoder.Description(Resources.Unknown_Data, Id)}";
             }
 

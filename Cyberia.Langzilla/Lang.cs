@@ -129,7 +129,7 @@ namespace Cyberia.Langzilla
             }
             catch (HttpRequestException e)
             {
-                Log.Error(e, "An error occurred while sending Get request to {url}}", fileUrl);
+                Log.Error(e, "An error occurred while sending Get request to {Url}", fileUrl);
             }
         }
 
@@ -146,7 +146,7 @@ namespace Cyberia.Langzilla
 
             if (!Flare.TryExtractSwf(filePath, out string flareOutputFilePath))
             {
-                Log.Error("Error when decompiling {filePath}", filePath);
+                Log.Error("Error when decompiling {FilePath}", filePath);
                 return;
             }
 

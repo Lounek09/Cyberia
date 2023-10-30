@@ -55,11 +55,11 @@ namespace Cyberia.Api.Parser
 
         public static bool Launch()
         {
-            foreach (string langToParse in _langsToParse)
+            foreach (string langName in _langsToParse)
             {
-                if (!TryParse(langToParse))
+                if (!TryParse(langName))
                 {
-                    Log.Error("An error occurred while parsing {langToParse} lang", langToParse);
+                    Log.Error("An error occurred while parsing {LangName} lang", langName);
                     return false;
                 }
             }
@@ -80,18 +80,18 @@ namespace Cyberia.Api.Parser
             Lang? lang = langsData.GetLangByName(langName);
             if (lang is null)
             {
-                Log.Error("The lang {langName} doesn't exist", langName);
+                Log.Error("The lang {LangName} doesn't exist", langName);
                 return false;
             }
 
             string filePath = lang.GetCurrentDecompiledFilePath();
             if (!File.Exists(filePath))
             {
-                Log.Error("The lang {langName} has never been decompiled", langName);
+                Log.Error("The lang {LangName} has never been decompiled", langName);
                 return false;
             }
 
-            Log.Debug("Start parsing {langName} lang", langName);
+            Log.Debug("Start parsing {LangName} lang", langName);
 
             string[] lines = File.ReadAllLines(filePath);
             string json = ParseLines(lines);
@@ -102,7 +102,7 @@ namespace Cyberia.Api.Parser
             }
             catch (Exception e)
             {
-                Log.Error(e, "The generated json is not valid for {lang} lang", langName);
+                Log.Error(e, "The generated json is not valid for {LangName} lang", langName);
                 return false;
             }
 
