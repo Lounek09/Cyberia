@@ -34,7 +34,7 @@ namespace Cyberia.Langzilla
 
         public static void Watch(LangType type, TimeSpan dueTime, TimeSpan interval)
         {
-            foreach (Language language in Enum.GetValues<Language>())
+            foreach (LangLanguage language in Enum.GetValues<LangLanguage>())
             {
                 Timer timer = new(async _ => await CheckAsync(type, language), null, dueTime, interval);
 
@@ -53,17 +53,19 @@ namespace Cyberia.Langzilla
             };
         }
 
-        public static async Task CheckAsync(LangType type, Language language, bool force = false)
+        public static async Task CheckAsync(LangType type, LangLanguage language, bool force = false)
         {
             CheckLangStarted?.Invoke(null, new CheckLangStartedEventArgs(type, language));
 
-            LangsData data = GetLangsByType(type).GetLangsByLanguage(language);
-            List<Lang> updatedLangs = await data.FetchLangsAsync(force);
+            LangsType langsType = GetLangsByType(type);
+            LangDataCollection langsData = langsType.GetLangsByLanguage(language);
 
-            CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(type, language, updatedLangs));
+            List<LangData> updatedLangsData = await langsData.FetchLangsAsync(force);
+
+            CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(type, language, updatedLangsData));
         }
 
-        internal static string GetOutputDirectoryPath(LangType type, Language language)
+        internal static string GetOutputDirectoryPath(LangType type, LangLanguage language)
         {
             return Path.Join(OUTPUT_PATH, type.ToString().ToLower(), language.ToString().ToLower());
         }
@@ -82,9 +84,9 @@ namespace Cyberia.Langzilla
     public sealed class CheckLangStartedEventArgs : EventArgs
     {
         public LangType Type { get; init; }
-        public Language Language { get; init; }
+        public LangLanguage Language { get; init; }
 
-        public CheckLangStartedEventArgs(LangType type, Language language)
+        public CheckLangStartedEventArgs(LangType type, LangLanguage language)
         {
             Type = type;
             Language = language;
@@ -94,14 +96,14 @@ namespace Cyberia.Langzilla
     public sealed class CheckLangFinishedEventArgs : EventArgs
     {
         public LangType Type { get; init; }
-        public Language Language { get; init; }
-        public List<Lang> UpdatedLangs { get; init; }
+        public LangLanguage Language { get; init; }
+        public List<LangData> UpdatedLangsData { get; init; }
 
-        public CheckLangFinishedEventArgs(LangType type, Language language, List<Lang> updatedLangs)
+        public CheckLangFinishedEventArgs(LangType type, LangLanguage language, List<LangData> updatedLangsData)
         {
             Type = type;
             Language = language;
-            UpdatedLangs = updatedLangs;
+            UpdatedLangsData = updatedLangsData;
         }
     }
 }

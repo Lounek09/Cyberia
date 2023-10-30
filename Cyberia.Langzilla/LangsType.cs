@@ -5,37 +5,37 @@ namespace Cyberia.Langzilla
     public sealed class LangsType
     {
         public LangType Type { get; init; }
-        public LangsData French { get; init; }
-        public LangsData English { get; init; }
-        public LangsData Spanish { get; init; }
-        public LangsData German { get; init; }
-        public LangsData Italian { get; init; }
-        public LangsData Netherlands { get; init; }
-        public LangsData Portuguese { get; init; }
+        public LangDataCollection French { get; init; }
+        public LangDataCollection English { get; init; }
+        public LangDataCollection Spanish { get; init; }
+        public LangDataCollection German { get; init; }
+        public LangDataCollection Italian { get; init; }
+        public LangDataCollection Netherlands { get; init; }
+        public LangDataCollection Portuguese { get; init; }
 
         public LangsType(LangType type)
         {
             Type = type;
-            French = LangsData.Load(type, Language.FR);
-            English = LangsData.Load(type, Language.EN);
-            Spanish = LangsData.Load(type, Language.ES);
-            German = LangsData.Load(type, Language.DE);
-            Italian = LangsData.Load(type, Language.IT);
-            Netherlands = LangsData.Load(type, Language.NL);
-            Portuguese = LangsData.Load(type, Language.PT);
+            French = LangDataCollection.Load(type, LangLanguage.FR);
+            English = LangDataCollection.Load(type, LangLanguage.EN);
+            Spanish = LangDataCollection.Load(type, LangLanguage.ES);
+            German = LangDataCollection.Load(type, LangLanguage.DE);
+            Italian = LangDataCollection.Load(type, LangLanguage.IT);
+            Netherlands = LangDataCollection.Load(type, LangLanguage.NL);
+            Portuguese = LangDataCollection.Load(type, LangLanguage.PT);
         }
 
-        public LangsData GetLangsByLanguage(Language language)
+        public LangDataCollection GetLangsByLanguage(LangLanguage language)
         {
             return language switch
             {
-                Language.FR => French,
-                Language.EN => English,
-                Language.ES => Spanish,
-                Language.DE => German,
-                Language.IT => Italian,
-                Language.NL => Netherlands,
-                Language.PT => Portuguese,
+                LangLanguage.FR => French,
+                LangLanguage.EN => English,
+                LangLanguage.ES => Spanish,
+                LangLanguage.DE => German,
+                LangLanguage.IT => Italian,
+                LangLanguage.NL => Netherlands,
+                LangLanguage.PT => Portuguese,
                 _ => throw new NotImplementedException()
             };
         }

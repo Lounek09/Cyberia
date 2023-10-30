@@ -10,7 +10,7 @@ namespace Cyberia.Salamandra.Commands.Data
         public Task<IEnumerable<DiscordApplicationCommandOptionChoice>> Provider()
         {
             List<DiscordApplicationCommandOptionChoice> choices = new();
-            foreach (Language language in Enum.GetValues<Language>())
+            foreach (LangLanguage language in Enum.GetValues<LangLanguage>())
             {
                 choices.Add(new(language.ToString(), language.ToString()));
             }

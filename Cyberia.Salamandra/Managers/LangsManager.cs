@@ -10,7 +10,7 @@ namespace Cyberia.Salamandra.Managers
     {
         public static async void OnCheckLangFinished(object? _, CheckLangFinishedEventArgs e)
         {
-            if (e.UpdatedLangs.Count == 0)
+            if (e.UpdatedLangsData.Count == 0)
             {
                 return;
             }
@@ -23,11 +23,11 @@ namespace Cyberia.Salamandra.Managers
 
             DiscordThreadChannel thread = await CreateThreadAsync(forum, e.Type, e.Language);
 
-            foreach (Lang updatedLang in e.UpdatedLangs)
+            foreach (LangData updatedLangData in e.UpdatedLangsData)
             {
                 Task delay = Task.Delay(1000);
 
-                await SendLangMessageAsync(thread, updatedLang);
+                await SendLangMessageAsync(thread, updatedLangData);
 
                 await delay;
             }
@@ -59,7 +59,7 @@ namespace Cyberia.Salamandra.Managers
             return null;
         }
 
-        private static async Task<DiscordThreadChannel> CreateThreadAsync(DiscordForumChannel forum, LangType type, Language language)
+        private static async Task<DiscordThreadChannel> CreateThreadAsync(DiscordForumChannel forum, LangType type, LangLanguage language)
         {
             DateTime now = DateTime.Now;
 
@@ -89,19 +89,19 @@ namespace Cyberia.Salamandra.Managers
             return forum.AvailableTags.FirstOrDefault(x => x.Name.Equals(name));
         }
 
-        private static async Task<DiscordMessage> SendLangMessageAsync(DiscordThreadChannel thread, Lang lang)
+        private static async Task<DiscordMessage> SendLangMessageAsync(DiscordThreadChannel thread, LangData langData)
         {
             DiscordMessageBuilder message = new DiscordMessageBuilder()
-                    .WithContent($"{(lang.IsNew ? $"{Formatter.Bold("New")} lang" : "Lang")} {Formatter.Bold(lang.Name)} version {Formatter.Bold(lang.Version.ToString())}");
+                    .WithContent($"{(langData.New ? $"{Formatter.Bold("New")} lang" : "Lang")} {Formatter.Bold(langData.Name)} version {Formatter.Bold(langData.Version.ToString())}");
 
-            string diffFilePath = lang.GetDiffFilePath();
+            string diffFilePath = langData.GetDiffFilePath();
             if (!File.Exists(diffFilePath))
             {
                 return await thread.SendMessageAsync(message);
             }
 
             using FileStream fileStream = File.OpenRead(diffFilePath);
-            return await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", fileStream));
+            return await thread.SendMessageAsync(message.AddFile($"{langData.Name}.as", fileStream));
         }
     }
 }

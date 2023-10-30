@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Langzilla.Enums
 {
-    public enum Language
+    public enum LangLanguage
     {
         FR,
         EN,

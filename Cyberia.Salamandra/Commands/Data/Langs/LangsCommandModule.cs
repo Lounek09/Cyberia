@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Parser;
+﻿using Cyberia.Api;
+using Cyberia.Api.Parser;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 
@@ -31,7 +32,7 @@ namespace Cyberia.Salamandra.Commands.Data
             if (languageStr is null)
             {
                 await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} dans toutes les langues...");
-                foreach (Language language in Enum.GetValues<Language>())
+                foreach (LangLanguage language in Enum.GetValues<LangLanguage>())
                 {
                     await LangsWatcher.CheckAsync(type, language, force);
                 }
@@ -40,7 +41,7 @@ namespace Cyberia.Salamandra.Commands.Data
             }
             else
             {
-                Language language = Enum.Parse<Language>(languageStr);
+                LangLanguage language = Enum.Parse<LangLanguage>(languageStr);
 
                 await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)}...");
                 await LangsWatcher.CheckAsync(type, language, force);
@@ -59,7 +60,7 @@ namespace Cyberia.Salamandra.Commands.Data
             string? languageStr = null)
         {
             LangType type = typeStr is null ? LangType.Official : Enum.Parse<LangType>(typeStr);
-            Language language = languageStr is null ? Language.FR : Enum.Parse<Language>(languageStr);
+            LangLanguage language = languageStr is null ? LangLanguage.FR : Enum.Parse<LangLanguage>(languageStr);
 
             await ctx.CreateResponseAsync(await new LangsMessageBuilder(type, language).GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
@@ -77,17 +78,17 @@ namespace Cyberia.Salamandra.Commands.Data
             string name)
         {
             LangType type = Enum.Parse<LangType>(typeStr);
-            Language language = Enum.Parse<Language>(languageStr);
+            LangLanguage language = Enum.Parse<LangLanguage>(languageStr);
 
-            Lang? lang = LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangByName(name);
-            if (lang is null)
+            LangData? langData = LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangByName(name);
+            if (langData is null)
             {
                 await ctx.CreateResponseAsync("Ce lang n'existe pas ou n'a jamais été décompilé");
                 return;
             }
 
-            using FileStream fileStream = File.OpenRead(lang.GetCurrentDecompiledFilePath());
-            await ctx.CreateResponseAsync(new DiscordInteractionResponseBuilder().AddFile($"{Path.GetFileNameWithoutExtension(lang.GetFileName())}.as", fileStream));
+            using FileStream fileStream = File.OpenRead(langData.GetCurrentDecompiledFilePath());
+            await ctx.CreateResponseAsync(new DiscordInteractionResponseBuilder().AddFile($"{Path.GetFileNameWithoutExtension(langData.GetFileName())}.as", fileStream));
         }
 
         [SlashCommand("diff", "[Owner] Lance un diff des langs entre différents types")]
@@ -113,30 +114,30 @@ namespace Cyberia.Salamandra.Commands.Data
 
             LangType type = Enum.Parse<LangType>(typeStr);
             LangType typeModel = Enum.Parse<LangType>(typeModelStr);
-            Language[] languages = languageStr is null ? Enum.GetValues<Language>() : new Language[] { Enum.Parse<Language>(languageStr) };
+            LangLanguage[] languages = languageStr is null ? Enum.GetValues<LangLanguage>() : new LangLanguage[] { Enum.Parse<LangLanguage>(languageStr) };
 
             List<Task> tasks = new();
-            foreach (Language language in languages)
+            foreach (LangLanguage language in languages)
             {
                 tasks.Add(Task.Run(async () =>
                 {
                     DiscordThreadChannel thread = await ctx.Channel.CreateThreadAsync($"Diff entre {type} et {typeModel} en {language}", AutoArchiveDuration.Hour, ChannelType.PublicThread);
 
-                    LangsData data = LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language);
-                    LangsData dataModel = LangsWatcher.GetLangsByType(typeModel).GetLangsByLanguage(language);
+                    LangDataCollection langDataCollection = LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language);
+                    LangDataCollection langDataCollectionModel = LangsWatcher.GetLangsByType(typeModel).GetLangsByLanguage(language);
 
-                    foreach (Lang lang in data.Langs)
+                    foreach (LangData langData in langDataCollection)
                     {
                         Task rateLimit = Task.Delay(1000);
 
-                        Lang? langModel = dataModel.GetLangByName(lang.Name);
+                        LangData? langDataModel = langDataCollectionModel.GetLangByName(langData.Name);
 
                         DiscordMessageBuilder message = new()
                         {
-                            Content = $"Lang {lang.Name}{(langModel is null ? $", non présent dans les langs {typeModel}" : "")}"
+                            Content = $"Lang {langData.Name}{(langDataModel is null ? $", non présent dans les langs {typeModel}" : "")}"
                         };
 
-                        string diff = langModel is null ? "" : lang.GenerateDiff(langModel);
+                        string diff = langDataModel is null ? "" : langData.GenerateDiff(langDataModel);
                         if (string.IsNullOrEmpty(diff))
                         {
                             message.Content += $"\n{Formatter.BlockCode("Aucune différence")}";
@@ -145,7 +146,7 @@ namespace Cyberia.Salamandra.Commands.Data
                         else
                         {
                             using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
-                            await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", stream));
+                            await thread.SendMessageAsync(message.AddFile($"{langData.Name}.as", stream));
                         }
 
                         await rateLimit;
@@ -162,7 +163,8 @@ namespace Cyberia.Salamandra.Commands.Data
         {
             await ctx.DeferAsync();
 
-            bool success = LangParser.Launch();
+            LangType type = DofusApi.Config.Temporis ? LangType.Temporis : LangType.Official;
+            bool success = LangParser.Launch(type, LangLanguage.FR);
 
             string content = success ? "Les langs ont été parsées avec succès" : "Une erreur est survenue, veuillez consulter les logs";
             await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(content));

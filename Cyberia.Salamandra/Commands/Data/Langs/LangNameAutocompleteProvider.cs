@@ -31,11 +31,11 @@ namespace Cyberia.Salamandra.Commands.Data
             HashSet<DiscordAutoCompleteChoice> choices = new();
 
             LangType type = Enum.Parse<LangType>(typeStr);
-            Language language = Enum.Parse<Language>(languageStr);
+            LangLanguage language = Enum.Parse<LangLanguage>(languageStr);
 
-            foreach (Lang lang in LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangsByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+            foreach (LangData langData in LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangsByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
             {
-                choices.Add(new(lang.Name, lang.Name));
+                choices.Add(new(langData.Name, langData.Name));
             }
 
             return Task.FromResult(choices.AsEnumerable());

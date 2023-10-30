@@ -1,4 +1,5 @@
 ﻿using Cyberia.Langzilla;
+using Cyberia.Langzilla.Enums;
 
 using System.Text;
 using System.Text.Json;
@@ -11,41 +12,11 @@ namespace Cyberia.Api.Parser
     {
         private const string KEY_VALUE_SEPARATOR = " = ";
 
-        private static readonly string[] _langsToParse = new string[]
+        private static readonly string[] _ignoredLangs = new string[]
         {
-            "alignment",
-            "audio",
-            "classes",
-            "crafts",
-            "dialog",
-            "emotes",
-            "fightChallenge",
-            "guilds",
-            "hints",
-            "houses",
-            "interactiveobjects",
-            "items",
-            "itemsets",
-            "itemstats",
-            "jobs",
-            "kb",
-            "maps",
-            "monsters",
-            "names",
-            "npc",
-            "pvp",
-            "quests",
-            "ranks",
-            "rides",
-            "scripts",
-            "servers",
-            "skills",
-            "speakingitems",
-            "spells",
-            "states",
-            "timezones",
-            "titles",
-            "ttg"
+            "dungeons",
+            "effects",
+            "lang"
         };
         private static readonly string[] _ignoredLines = new string[]
         {
@@ -53,13 +24,21 @@ namespace Cyberia.Api.Parser
             "new Array();"
         };
 
-        public static bool Launch()
+        public static bool Launch(LangType type, LangLanguage language)
         {
-            foreach (string langName in _langsToParse)
+            LangsType langsType = LangsWatcher.GetLangsByType(type);
+            LangDataCollection langDataCollection = langsType.GetLangsByLanguage(language);
+
+            foreach (LangData langData in langDataCollection)
             {
-                if (!TryParse(langName))
+                if (_ignoredLangs.Contains(langData.Name))
                 {
-                    Log.Error("An error occurred while parsing {LangName} lang", langName);
+                    continue;
+                }
+
+                if (!TryParseLangData(langData))
+                {
+                    Log.Error("An error occurred while parsing {LangName} lang", langData.Name);
                     return false;
                 }
             }
@@ -73,25 +52,16 @@ namespace Cyberia.Api.Parser
         [GeneratedRegex(@"(?<!\\)'")]
         private static partial Regex EscapedQuoteRegex();
 
-        private static bool TryParse(string langName)
+        private static bool TryParseLangData(LangData langData)
         {
-            LangsData langsData = DofusApi.Config.Temporis ? LangsWatcher.Temporis.French : LangsWatcher.Official.French;
-
-            Lang? lang = langsData.GetLangByName(langName);
-            if (lang is null)
-            {
-                Log.Error("The lang {LangName} doesn't exist", langName);
-                return false;
-            }
-
-            string filePath = lang.GetCurrentDecompiledFilePath();
+            string filePath = langData.GetCurrentDecompiledFilePath();
             if (!File.Exists(filePath))
             {
-                Log.Error("The lang {LangName} has never been decompiled", langName);
+                Log.Error("The lang {LangName} has never been decompiled", langData.Name);
                 return false;
             }
 
-            Log.Debug("Start parsing {LangName} lang", langName);
+            Log.Debug("Start parsing {LangName} lang", langData.Name);
 
             string[] lines = File.ReadAllLines(filePath);
             string json = ParseLines(lines);
@@ -102,17 +72,18 @@ namespace Cyberia.Api.Parser
             }
             catch (Exception e)
             {
-                Log.Error(e, "The generated json is not valid for {LangName} lang", langName);
+                Log.Error(e, "The JSON generated from {LangName} lang is not valid", langData.Name);
                 return false;
             }
 
-            File.WriteAllText($"{DofusApi.OUTPUT_PATH}/{langName}.json", json);
+            File.WriteAllText(Path.Join(DofusApi.OUTPUT_PATH, $"{langData.Name}.json"), json);
             return true;
         }
 
         private static string ParseLines(string[] lines)
         {
-            StringBuilder json = new();
+            StringBuilder json = new('{');
+
             string lastLineName = "";
             bool lastLineHasId = false;
 
@@ -137,7 +108,7 @@ namespace Cyberia.Api.Parser
                 {
                     if (!string.IsNullOrEmpty(lastLineName))
                     {
-                        json.Remove(json.Length - 1, 1);
+                        json.Length--;
                         if (lastLineHasId)
                         {
                             json.Append(']');
@@ -146,7 +117,9 @@ namespace Cyberia.Api.Parser
                         json.Append(',');
                     }
 
-                    json.AppendFormat("\"{0}\":", currentLineName);
+                    json.Append('"');
+                    json.Append(currentLineName);
+                    json.Append("\":");
                     if (currentLineHasId)
                     {
                         json.Append('[');
@@ -156,13 +129,11 @@ namespace Cyberia.Api.Parser
                     lastLineHasId = currentLineHasId;
                 }
 
-                if (key.Groups["intId"].Success)
+                if (currentLineHasId)
                 {
-                    json.AppendFormat("{{\"id\":{0},", key.Groups["intId"].Value);
-                }
-                else if (key.Groups["stringId"].Success)
-                {
-                    json.AppendFormat("{{\"id\":\"{0}\",", key.Groups["stringId"].Value);
+                    json.Append("{\"id\":");
+                    json.Append(key.Groups["intId"].Success ? key.Groups["intId"].Value : key.Groups["stringId"].Value);
+                    json.Append(',');
                 }
 
                 string value = lineSplit[1].Replace("' + '\"' + '", @"\""");
@@ -177,7 +148,9 @@ namespace Cyberia.Api.Parser
                     }
                     else
                     {
-                        json.AppendFormat("\"v\":{0}}}", value[..^1]);
+                        json.Append("{\"v\":");
+                        json.Append(value[..^1]);
+                        json.Append('}');
                     }
                 }
                 else
@@ -190,14 +163,16 @@ namespace Cyberia.Api.Parser
 
             if (json.Length > 0)
             {
-                json.Remove(json.Length - 1, 1);
+                json.Length--;
                 if (lastLineHasId)
                 {
                     json.Append(']');
                 }
             }
 
-            return "{" + json.ToString() + "}";
+            json.Append('}');
+
+            return json.ToString();
         }
     }
 }

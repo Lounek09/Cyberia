@@ -1,23 +1,34 @@
 ﻿using Cyberia.Langzilla.Enums;
 
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Langzilla
 {
-    public sealed class Lang
+    public sealed class LangData
     {
+        [JsonPropertyName("name")]
         public string Name { get; init; }
-        public int Version { get; init; }
-        public LangType Type { get; init; }
-        public Language Language { get; init; }
-        public bool IsNew { get; init; }
 
-        public Lang()
+        [JsonPropertyName("version")]
+        public int Version { get; init; }
+
+        [JsonPropertyName("type")]
+        public LangType Type { get; init; }
+
+        [JsonPropertyName("language")]
+        public LangLanguage Language { get; init; }
+
+        [JsonPropertyName("new")]
+        public bool New { get; init; }
+
+        [JsonConstructor]
+        public LangData()
         {
             Name = string.Empty;
         }
 
-        internal Lang(string name, int version, LangType type, Language language)
+        internal LangData(string name, int version, LangType type, LangLanguage language)
         {
             Name = name;
             Version = version;
@@ -25,7 +36,7 @@ namespace Cyberia.Langzilla
             Language = language;
 
             string directoryPath = GetDirectoryPath();
-            IsNew = !Directory.Exists(directoryPath);
+            New = !Directory.Exists(directoryPath);
             Directory.CreateDirectory(directoryPath);
         }
 
@@ -64,7 +75,7 @@ namespace Cyberia.Langzilla
             return Path.Join(GetDirectoryPath(), "diff.as");
         }
 
-        public string GenerateDiff(Lang lang)
+        public string GenerateDiff(LangData langData)
         {
             string currentDecompiledFilePath = GetCurrentDecompiledFilePath();
             if (!File.Exists(currentDecompiledFilePath))
@@ -73,7 +84,7 @@ namespace Cyberia.Langzilla
             }
             string[] currentLines = File.ReadAllLines(currentDecompiledFilePath);
 
-            string modelDecompiledFilePath = lang == this ? GetOldDecompiledFilePath() : lang.GetCurrentDecompiledFilePath();
+            string modelDecompiledFilePath = langData == this ? GetOldDecompiledFilePath() : langData.GetCurrentDecompiledFilePath();
             if (!File.Exists(modelDecompiledFilePath))
             {
                 return string.Join('\n', currentLines.Select(x => $"+ {x}"));

@@ -1,36 +1,50 @@
 ﻿using Cyberia.Langzilla.Enums;
 
+using System.Collections;
+using System.Text.Json.Serialization;
+
 namespace Cyberia.Langzilla
 {
-    public sealed class LangsData
+    public sealed class LangDataCollection : IEnumerable<LangData>
     {
-        public const string DATA_FILE_NAME = "data.json";
+        private const string DATA_FILE_NAME = "data.json";
 
+        [JsonPropertyName("type")]
         public LangType Type { get; init; }
-        public Language Language { get; init; }
-        public long LastModified { get; set; }
-        public List<Lang> Langs { get; init; }
 
-        public LangsData() //Used for deserialization
+        [JsonPropertyName("language")]
+        public LangLanguage Language { get; init; }
+
+        [JsonPropertyName("lastChange")]
+        public long LastChange { get; internal set; }
+
+        [JsonPropertyName("langs")]
+        public List<LangData> LangsData { get; init; }
+
+        [JsonIgnore]
+        public int Count => LangsData.Count;
+
+        [JsonConstructor]
+        public LangDataCollection()
         {
-            Langs = new();
+            LangsData = new();
         }
 
-        internal LangsData(LangType type, Language language)
+        internal LangDataCollection(LangType type, LangLanguage language)
         {
             Type = type;
             Language = language;
-            Langs = new();
+            LangsData = new();
 
             Directory.CreateDirectory(LangsWatcher.GetOutputDirectoryPath(type, language));
         }
 
-        public static LangsData Load(LangType type, Language language)
+        public static LangDataCollection Load(LangType type, LangLanguage language)
         {
             string dataFilePath = Path.Join(LangsWatcher.GetOutputDirectoryPath(type, language), DATA_FILE_NAME);
             if (File.Exists(dataFilePath))
             {
-                return Json.LoadFromFile<LangsData>(dataFilePath);
+                return Json.LoadFromFile<LangDataCollection>(dataFilePath);
             }
 
             return new(type, language);
@@ -51,22 +65,32 @@ namespace Cyberia.Langzilla
             return Path.Join(LangsWatcher.GetOutputDirectoryPath(Type, Language), GetVersionFileName());
         }
 
-        public DateTime GetDateTimeSinceLastModified()
+        public DateTime GetDateTimeSinceLastChange()
         {
-            return DateTimeOffset.FromUnixTimeMilliseconds(LastModified).DateTime;
+            return DateTimeOffset.FromUnixTimeMilliseconds(LastChange).DateTime;
         }
 
-        public Lang? GetLangByName(string name)
+        public LangData? GetLangByName(string name)
         {
-            return Langs.Find(x => x.Name.Equals(name));
+            return LangsData.Find(x => x.Name.Equals(name));
         }
 
-        public List<Lang> GetLangsByName(string name)
+        public List<LangData> GetLangsByName(string name)
         {
-            return Langs.FindAll(x => x.Name.NormalizeCustom().Contains(name.NormalizeCustom()));
+            return LangsData.FindAll(x => x.Name.NormalizeCustom().Contains(name.NormalizeCustom()));
         }
 
-        internal async Task<List<Lang>> FetchLangsAsync(bool force)
+        public IEnumerator<LangData> GetEnumerator()
+        {
+            return LangsData.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        internal async Task<List<LangData>> FetchLangsAsync(bool force)
         {
             string versionFile = await FetchVersionFileAsync(force);
             if (string.IsNullOrEmpty(versionFile))
@@ -87,11 +111,11 @@ namespace Cyberia.Langzilla
                 response.EnsureSuccessStatusCode();
 
                 long lastModifiedHeader = response.Content.Headers.LastModified!.Value.ToUnixTimeMilliseconds();
-                bool isMoreRecent = lastModifiedHeader > LastModified;
+                bool isMoreRecent = lastModifiedHeader > LastChange;
 
                 if (isMoreRecent)
                 {
-                    LastModified = lastModifiedHeader;
+                    LastChange = lastModifiedHeader;
                 }
 
                 if (isMoreRecent || force)
@@ -112,30 +136,30 @@ namespace Cyberia.Langzilla
             return string.Empty;
         }
 
-        private async Task<List<Lang>> ProcessLangsAsync(string versionFileContent)
+        private async Task<List<LangData>> ProcessLangsAsync(string versionFileContent)
         {
-            List<Lang> updatedLangs = new();
+            List<LangData> updatedLangs = new();
 
             string[] langInfoArray = versionFileContent[3..].Split("|", StringSplitOptions.RemoveEmptyEntries);
             foreach (string langInfo in langInfoArray)
             {
                 string[] langParameters = langInfo.Split(',');
 
-                Lang lang = new(langParameters[0], int.Parse(langParameters[2]), Type, Language);
-                if (!File.Exists(lang.GetFilePath()))
+                LangData langData = new(langParameters[0], int.Parse(langParameters[2]), Type, Language);
+                if (!File.Exists(langData.GetFilePath()))
                 {
-                    await lang.DownloadExtractAndDiffAsync();
+                    await langData.DownloadExtractAndDiffAsync();
 
-                    updatedLangs.Add(lang);
+                    updatedLangs.Add(langData);
 
-                    int index = Langs.FindIndex(x => x.Name.Equals(lang.Name));
+                    int index = LangsData.FindIndex(x => x.Name.Equals(langData.Name));
                     if (index == -1)
                     {
-                        Langs.Add(lang);
+                        LangsData.Add(langData);
                     }
                     else
                     {
-                        Langs[index] = lang;
+                        LangsData[index] = langData;
                     }
                 }
             }

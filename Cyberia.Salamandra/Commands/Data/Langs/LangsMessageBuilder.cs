@@ -15,14 +15,14 @@ namespace Cyberia.Salamandra.Commands.Data
         public const int PACKET_VERSION = 1;
 
         private readonly LangType _type;
-        private readonly Language _language;
-        private readonly LangsData _langsData;
+        private readonly LangLanguage _language;
+        private readonly LangDataCollection _langDataCollection;
 
-        public LangsMessageBuilder(LangType type, Language language)
+        public LangsMessageBuilder(LangType type, LangLanguage language)
         {
             _type = type;
             _language = language;
-            _langsData = LangsWatcher.GetLangsByType(_type).GetLangsByLanguage(_language);
+            _langDataCollection = LangsWatcher.GetLangsByType(_type).GetLangsByLanguage(_language);
         }
 
         public static LangsMessageBuilder? Create(int version, string[] parameters)
@@ -30,7 +30,7 @@ namespace Cyberia.Salamandra.Commands.Data
             if (version == PACKET_VERSION &&
                 parameters.Length > 1 &&
                 Enum.TryParse(parameters[0], out LangType langType) &&
-                Enum.TryParse(parameters[1], out Language language))
+                Enum.TryParse(parameters[1], out LangLanguage language))
             {
                 return new LangsMessageBuilder(langType, language);
             }
@@ -38,7 +38,7 @@ namespace Cyberia.Salamandra.Commands.Data
             return null;
         }
 
-        public static string GetPacket(LangType langType, Language language)
+        public static string GetPacket(LangType langType, LangLanguage language)
         {
             return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, langType, language);
         }
@@ -68,17 +68,16 @@ namespace Cyberia.Salamandra.Commands.Data
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Langs")
                 .WithTitle($"Langs {_type} en {_language}");
 
-
-            if (_langsData.Langs.Count > 0)
+            if (_langDataCollection.Count > 0)
             {
                 StringBuilder content = new();
 
-                content.AppendFormat("Dernière modification le : {0}+00:00\n", _langsData.GetDateTimeSinceLastModified().ToString("dd/MM/yyyy HH:mm"));
-                content.AppendLine(Formatter.MaskedUrl(Formatter.Bold(_langsData.GetVersionFileName()), new Uri(_langsData.GetVersionFileUrl())));
+                content.AppendFormat("Dernière modification le : {0}+00:00\n", _langDataCollection.GetDateTimeSinceLastChange().ToString("dd/MM/yyyy HH:mm"));
+                content.AppendLine(Formatter.MaskedUrl(Formatter.Bold(_langDataCollection.GetVersionFileName()), new Uri(_langDataCollection.GetVersionFileUrl())));
 
-                foreach (Lang lang in _langsData.Langs)
+                foreach (LangData langData in _langDataCollection)
                 {
-                    content.AppendLine($"- {Formatter.MaskedUrl(lang.Name, new Uri(lang.GetFileUrl()))} {Formatter.InlineCode(lang.Version.ToString())}");
+                    content.AppendLine($"- {Formatter.MaskedUrl(langData.Name, new Uri(langData.GetFileUrl()))} {Formatter.InlineCode(langData.Version.ToString())}");
                 }
 
                 embed.WithDescription(content.ToString());
@@ -108,7 +107,7 @@ namespace Cyberia.Salamandra.Commands.Data
         {
             HashSet<DiscordSelectComponentOption> options = new();
 
-            Language[] languages = Enum.GetValues<Language>();
+            LangLanguage[] languages = Enum.GetValues<LangLanguage>();
             for (int i = 0; i < languages.Length && i < 25; i++)
             {
                 options.Add(new(languages[i].ToString(), GetPacket(_type, languages[i]), isDefault: (int)_language == i));
