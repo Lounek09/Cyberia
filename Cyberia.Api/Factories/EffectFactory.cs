@@ -90,7 +90,8 @@ namespace Cyberia.Api.Factories
             { 2137, AddStateEffect.Create },
             { 2138, ModifySpellEffect.Create },
             { 2143, TeleportMonsterEffect.Create },
-            { 2144, SummonMonsterInFightEffect.Create }
+            { 2144, SummonMonsterInFightEffect.Create },
+            { 2150, GiveOneItemEffect.Create }
         };
 
         public static IEffect GetEffect(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
