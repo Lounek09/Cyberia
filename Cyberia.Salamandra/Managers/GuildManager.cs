@@ -10,7 +10,7 @@ namespace Cyberia.Salamandra.Managers
             await MessageManager.SendLogMessage($"""
                 [NEW] {Formatter.Bold(e.Guild.Name)} ({e.Guild.Id})
                 créé le : {e.Guild.CreationTimestamp:dd/MM/yyyy hh:mm}
-                Propriétaire : {Formatter.Sanitize(e.Guild.Owner.Username)} ({e.Guild.Owner.Mention})"
+                Propriétaire : {Formatter.Sanitize(e.Guild.Owner.Username)} ({e.Guild.Owner.Mention})
                 """);
         }
 

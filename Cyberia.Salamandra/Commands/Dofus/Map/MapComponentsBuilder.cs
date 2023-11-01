@@ -31,7 +31,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         public static DiscordSelectComponent MapsSelectBuilder(int uniqueIndex, List<MapData> mapsData, bool disable = false)
         {
-            IEnumerable<DiscordSelectComponentOption> options = mapsData.Select(x => new DiscordSelectComponentOption($"{x.GetCoordinate()} ({x.Id}) {(x.IsHouse() ? Emojis.HOUSE : "")}", MapMessageBuilder.GetPacket(x.Id), x.GetMapAreaName().WithMaxLength(50)));
+            IEnumerable<DiscordSelectComponentOption> options = mapsData.Select(x => new DiscordSelectComponentOption($"{x.GetCoordinate()} ({x.Id})", MapMessageBuilder.GetPacket(x.Id), x.GetMapAreaName().WithMaxLength(50)));
 
             return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une map pour l'afficher", options, disable);
         }
