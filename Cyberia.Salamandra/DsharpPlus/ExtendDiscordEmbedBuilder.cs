@@ -42,33 +42,7 @@ namespace Cyberia.Salamandra.DsharpPlus
 
         public static DiscordEmbedBuilder AddEffectFields(this DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool inline = false)
         {
-            List<string> effectsParse = new();
-
-            foreach (IEffect effect in effects)
-            {
-                string emoji = effect switch
-                {
-                    AddStateEffect addStateEffect => Emojis.State(addStateEffect.StateId),
-                    RemoveStateEffect removeStateEffect => Emojis.State(removeStateEffect.StateId),
-                    _ => Emojis.Effect(effect.EffectId)
-                };
-
-                string effectDescription = effect.GetDescription().ToString(x => Formatter.Bold(Formatter.Sanitize(x)));
-
-                string areaInfo = effect.EffectArea.Size == EffectAreaManager.DefaultArea.Size ? "" : $" - {Emojis.Area(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
-
-                string effectParse = $"{emoji} {effectDescription}{areaInfo}";
-
-                if (effect.Criteria.Count > 0)
-                {
-                    List<string> criteriaParse = GetCriteriaParse(effect.Criteria);
-                    effectParse += $" {Formatter.InlineCode(string.Join(' ', criteriaParse))}";
-                }
-
-                effectsParse.Add(effectParse);
-            }
-
-            return embed.AddFields(name, effectsParse, inline);
+            return embed.AddFields(name, GetEffectsParse(effects, x => Formatter.Bold(Formatter.Sanitize(x))), inline);
         }
 
         public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, CriteriaCollection criteria, bool inline = false)
@@ -224,6 +198,48 @@ namespace Cyberia.Salamandra.DsharpPlus
             }
 
             return embed.AddField("Familier :", builder.ToString(), inline);
+        }
+
+        private static List<string> GetEffectsParse(IEnumerable<IEffect> effects, Func<string, string>? parametersDecorator = null)
+        {
+            List<string> effectsParse = new();
+
+            foreach (IEffect effect in effects)
+            {
+                if (effect is DisplayEffectsFromItemEffect displayEffectsFromItemEffect)
+                {
+                    ItemStatsData? itemStatsData = displayEffectsFromItemEffect.GetItemData()?.GetItemStatsData();
+                    if (itemStatsData is not null)
+                    {
+                        effectsParse.AddRange(GetEffectsParse(itemStatsData.Effects));
+                    }
+
+                    continue;
+                }
+
+                string emoji = effect switch
+                {
+                    AddStateEffect addStateEffect => Emojis.State(addStateEffect.StateId),
+                    RemoveStateEffect removeStateEffect => Emojis.State(removeStateEffect.StateId),
+                    _ => Emojis.Effect(effect.EffectId)
+                };
+
+                string effectDescription = parametersDecorator is null ? effect.GetDescription() : effect.GetDescription().ToString(parametersDecorator);
+
+                string areaInfo = effect.EffectArea.Size == EffectAreaManager.DefaultArea.Size ? "" : $" - {Emojis.Area(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
+
+                string effectParse = $"{emoji} {effectDescription}{areaInfo}";
+
+                if (effect.Criteria.Count > 0)
+                {
+                    List<string> criteriaParse = GetCriteriaParse(effect.Criteria);
+                    effectParse += $" {Formatter.InlineCode(string.Join(' ', criteriaParse))}";
+                }
+
+                effectsParse.Add(effectParse);
+            }
+
+            return effectsParse;
         }
 
         private static List<string> GetCriteriaParse(CriteriaCollection criteria, Func<string, string>? parametersDecorator = null)

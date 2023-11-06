@@ -193,7 +193,7 @@ namespace Cyberia.Api.Data
             return DofusApi.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeId);
         }
 
-        public ItemStatsData? GetItemStatData()
+        public ItemStatsData? GetItemStatsData()
         {
             return DofusApi.Datacenter.ItemsStatsData.GetItemStatDataById(Id);
         }
@@ -229,7 +229,7 @@ namespace Cyberia.Api.Data
         public bool Tradeable()
         {
             ItemTypeData? itemTypeData = GetItemTypeData();
-            ItemStatsData? itemStatsData = GetItemStatData();
+            ItemStatsData? itemStatsData = GetItemStatsData();
 
             bool isQuestItem = itemTypeData is not null && itemTypeData.ItemSuperTypeId == ItemSuperTypeData.SUPER_TYPE_QUEST;
             bool isLinkedToAccount = itemStatsData is not null && itemStatsData.Effects.OfType<ExchangeableEffect>().Any(x => x.IsLinkedToAccount());

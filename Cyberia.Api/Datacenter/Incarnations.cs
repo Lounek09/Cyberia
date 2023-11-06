@@ -64,7 +64,7 @@ namespace Cyberia.Api.Data
             ItemData? itemData = GetItemData();
             if (itemData is not null)
             {
-                ItemStatsData? itemStatsData = itemData.GetItemStatData();
+                ItemStatsData? itemStatsData = itemData.GetItemStatsData();
                 if (itemStatsData is not null)
                 {
                     List<IEffect> effects = itemStatsData.Effects.Where(x => x is not ExchangeableEffect).ToList();

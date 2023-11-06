@@ -1,6 +1,5 @@
 ﻿using Cyberia.Langzilla.Enums;
 
-using System.Collections;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Langzilla

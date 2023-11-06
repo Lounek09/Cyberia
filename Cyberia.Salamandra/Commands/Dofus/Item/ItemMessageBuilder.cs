@@ -29,7 +29,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             _itemData = itemData;
             _itemTypeData = itemData.GetItemTypeData();
             _itemSetData = itemData.GetItemSetData();
-            _itemStatsData = itemData.GetItemStatData();
+            _itemStatsData = itemData.GetItemStatsData();
             _petData = _itemData.ItemTypeId == ItemTypeData.TYPE_PET ? DofusApi.Datacenter.PetsData.GetPetDataByItemId(_itemData.Id) : null;
             _craftData = itemData.GetCraftData();
             _craftQte = craftQte;

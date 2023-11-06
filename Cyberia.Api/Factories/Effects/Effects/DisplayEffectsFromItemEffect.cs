@@ -1,21 +1,20 @@
 ﻿using Cyberia.Api.Data;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
-using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects
 {
-    public sealed record GiveOneItemEffect : Effect, IEffect<GiveOneItemEffect>
+    public sealed record DisplayEffectsFromItemEffect : Effect, IEffect<DisplayEffectsFromItemEffect>
     {
         public int ItemId { get; init; }
 
-        private GiveOneItemEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId) :
+        private DisplayEffectsFromItemEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId) :
             base(effectId, duration, probability, criteria, effectArea)
         {
             ItemId = itemId;
         }
 
-        public static GiveOneItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+        public static DisplayEffectsFromItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
         {
             return new(effectId, duration, probability, criteria, effectArea, parameters.Param3); ;
         }
