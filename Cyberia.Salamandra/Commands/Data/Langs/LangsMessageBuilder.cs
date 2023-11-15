@@ -68,14 +68,14 @@ namespace Cyberia.Salamandra.Commands.Data
             DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Langs")
                 .WithTitle($"Langs {_type} en {_language}");
 
-            if (_langDataCollection.Count > 0)
+            if (_langDataCollection.Items.Count > 0)
             {
                 StringBuilder content = new();
 
                 content.AppendFormat("Dernière modification le : {0}+00:00\n", _langDataCollection.GetDateTimeSinceLastChange().ToString("dd/MM/yyyy HH:mm"));
                 content.AppendLine(Formatter.MaskedUrl(Formatter.Bold(_langDataCollection.GetVersionFileName()), new Uri(_langDataCollection.GetVersionFileUrl())));
 
-                foreach (LangData langData in _langDataCollection)
+                foreach (LangData langData in _langDataCollection.Items)
                 {
                     content.AppendLine($"- {Formatter.MaskedUrl(langData.Name, new Uri(langData.GetFileUrl()))} {Formatter.InlineCode(langData.Version.ToString())}");
                 }

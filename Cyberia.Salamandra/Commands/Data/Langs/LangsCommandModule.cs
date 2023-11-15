@@ -126,7 +126,7 @@ namespace Cyberia.Salamandra.Commands.Data
                     LangDataCollection langDataCollection = LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language);
                     LangDataCollection langDataCollectionModel = LangsWatcher.GetLangsByType(typeModel).GetLangsByLanguage(language);
 
-                    foreach (LangData langData in langDataCollection)
+                    foreach (LangData langData in langDataCollection.Items)
                     {
                         Task rateLimit = Task.Delay(1000);
 

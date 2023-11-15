@@ -1,6 +1,5 @@
 ﻿using Cyberia.Langzilla.Enums;
 
-using System.Collections;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Langzilla
@@ -19,22 +18,18 @@ namespace Cyberia.Langzilla
         public long LastChange { get; set; }
 
         [JsonPropertyName("langs")]
-        public List<LangData> LangsData { get; init; }
+        public List<LangData> Items { get; init; }
 
-        [JsonIgnore]
-        public int Count => LangsData.Count;
-
-        [JsonConstructor]
         public LangDataCollection()
         {
-            LangsData = [];
+            Items = [];
         }
 
         internal LangDataCollection(LangType type, LangLanguage language)
         {
             Type = type;
             Language = language;
-            LangsData = [];
+            Items = [];
 
             Directory.CreateDirectory(LangsWatcher.GetOutputDirectoryPath(type, language));
         }
@@ -72,17 +67,12 @@ namespace Cyberia.Langzilla
 
         public LangData? GetLangByName(string name)
         {
-            return LangsData.Find(x => x.Name.Equals(name));
+            return Items.Find(x => x.Name.Equals(name));
         }
 
         public List<LangData> GetLangsByName(string name)
         {
-            return LangsData.FindAll(x => x.Name.NormalizeCustom().Contains(name.NormalizeCustom()));
-        }
-
-        public IEnumerator<LangData> GetEnumerator()
-        {
-            return LangsData.GetEnumerator();
+            return Items.FindAll(x => x.Name.NormalizeCustom().Contains(name.NormalizeCustom()));
         }
 
         internal async Task<List<LangData>> FetchLangsAsync(bool force)
@@ -147,14 +137,14 @@ namespace Cyberia.Langzilla
 
                     updatedLangsData.Add(langData);
 
-                    int index = LangsData.FindIndex(x => x.Name.Equals(langData.Name));
+                    int index = Items.FindIndex(x => x.Name.Equals(langData.Name));
                     if (index == -1)
                     {
-                        LangsData.Add(langData);
+                        Items.Add(langData);
                     }
                     else
                     {
-                        LangsData[index] = langData;
+                        Items[index] = langData;
                     }
                 }
             }
