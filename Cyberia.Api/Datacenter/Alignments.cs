@@ -50,7 +50,7 @@ namespace Cyberia.Api.Data
 
         public AlignmentJoinData()
         {
-            Values = new();
+            Values = [];
         }
 
         public bool CanJoin(int targetAlignmentId)
@@ -69,7 +69,7 @@ namespace Cyberia.Api.Data
 
         public AlignmentAttackData()
         {
-            Values = new();
+            Values = [];
         }
 
         public bool CanAttack(int targetAlignmentId)
@@ -110,7 +110,7 @@ namespace Cyberia.Api.Data
 
         public AlignmentViewPvpGainData()
         {
-            Values = new();
+            Values = [];
         }
 
         public bool CanViewPvpGain(int targetAlignmentId)
@@ -207,7 +207,7 @@ namespace Cyberia.Api.Data
         {
             Name = string.Empty;
             Description = string.Empty;
-            AlignmentFeatsParameters = new();
+            AlignmentFeatsParameters = [];
         }
 
         public AlignmentOrderData? GetAlignementOrderData()
@@ -249,15 +249,15 @@ namespace Cyberia.Api.Data
 
         public AlignmentsData()
         {
-            Alignments = new();
-            AlignmentsJoin = new();
-            AlignmentsAttack = new();
-            AlignmentOrders = new();
-            AlignmentsViewPvpGain = new();
-            AlignmentFeats = new();
-            AlignmentFeatEffects = new();
-            AlignmentBalance = new();
-            AlignmentSpecializations = new();
+            Alignments = [];
+            AlignmentsJoin = [];
+            AlignmentsAttack = [];
+            AlignmentOrders = [];
+            AlignmentsViewPvpGain = [];
+            AlignmentFeats = [];
+            AlignmentFeatEffects = [];
+            AlignmentBalance = [];
+            AlignmentSpecializations = [];
         }
 
         internal static AlignmentsData Build()

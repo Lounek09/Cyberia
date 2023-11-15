@@ -28,7 +28,7 @@ namespace Cyberia.Salamandra.Commands.Data
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
             }
 
-            HashSet<DiscordAutoCompleteChoice> choices = new();
+            HashSet<DiscordAutoCompleteChoice> choices = [];
 
             LangType type = Enum.Parse<LangType>(typeStr);
             LangLanguage language = Enum.Parse<LangLanguage>(languageStr);

@@ -36,7 +36,7 @@ namespace Cyberia.Api.Data
 
         public JobsData()
         {
-            Jobs = new();
+            Jobs = [];
         }
 
         internal static JobsData Build()

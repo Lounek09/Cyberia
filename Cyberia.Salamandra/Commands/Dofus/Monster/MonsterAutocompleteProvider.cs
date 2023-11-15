@@ -16,7 +16,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
             }
 
-            List<DiscordAutoCompleteChoice> choices = new();
+            List<DiscordAutoCompleteChoice> choices = [];
 
             foreach (MonsterData monsterData in DofusApi.Datacenter.MonstersData.GetMonstersDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
             {

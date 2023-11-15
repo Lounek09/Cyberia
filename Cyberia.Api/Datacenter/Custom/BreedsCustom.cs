@@ -26,7 +26,7 @@ namespace Cyberia.Api.Data.Custom
 
         public BreedsCustomData()
         {
-            Breeds = new();
+            Breeds = [];
         }
     }
 }

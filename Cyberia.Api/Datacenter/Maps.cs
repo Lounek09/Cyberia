@@ -41,7 +41,7 @@ namespace Cyberia.Api.Data
         {
             Placement1 = string.Empty;
             Placement2 = string.Empty;
-            Parameters = new();
+            Parameters = [];
             MaxPlayerPerFight = 16;
             MaxPlayerPerTeam = 8;
         }
@@ -146,8 +146,8 @@ namespace Cyberia.Api.Data
         public MapSubAreaData()
         {
             Name = string.Empty;
-            FightAudioMusicId = new();
-            NearMapSubAreasId = new();
+            FightAudioMusicId = [];
+            NearMapSubAreasId = [];
         }
 
         public MapAreaData? GetMapAreaData()
@@ -196,10 +196,10 @@ namespace Cyberia.Api.Data
 
         public MapsData()
         {
-            Maps = new();
-            MapSuperAreas = new();
-            MapAreas = new();
-            MapSubAreas = new();
+            Maps = [];
+            MapSuperAreas = [];
+            MapAreas = [];
+            MapSubAreas = [];
         }
 
         internal static MapsData Build()

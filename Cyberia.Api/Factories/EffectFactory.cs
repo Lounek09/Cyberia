@@ -137,7 +137,7 @@ namespace Cyberia.Api.Factories
                 string param4 = args.Length > 4 ? args[4] : "";
                 EffectParameters parameters = new(param1, param2, param3, param4);
 
-                yield return GetEffect(id, parameters, 0, 0, new(), EffectAreaManager.DefaultArea);
+                yield return GetEffect(id, parameters, 0, 0, [], EffectAreaManager.DefaultArea);
             }
         }
     }

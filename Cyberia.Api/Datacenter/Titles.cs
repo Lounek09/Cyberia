@@ -31,7 +31,7 @@ namespace Cyberia.Api.Data
 
         public TitlesData()
         {
-            Titles = new();
+            Titles = [];
         }
 
         internal static TitlesData Build()

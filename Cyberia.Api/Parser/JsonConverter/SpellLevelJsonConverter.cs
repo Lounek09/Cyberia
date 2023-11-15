@@ -24,8 +24,8 @@ namespace Cyberia.Api.Parser.JsonConverter
                 throw new JsonException($"Invalid JSON format: expected an array of 21 values, but got a length of {elements?.Length}.");
             }
 
-            JsonElement[] effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0].GetRawText(), options) ?? Array.Empty<JsonElement>();
-            JsonElement[] criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1].GetRawText(), options) ?? Array.Empty<JsonElement>();
+            JsonElement[] effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0].GetRawText(), options) ?? [];
+            JsonElement[] criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1].GetRawText(), options) ?? [];
             List<EffectArea> effectAreas = EffectAreaManager.GetEffectAreas(elements[15].ToString()).ToList();
 
             List<IEffect> effectParse = EffectFactory.GetEffectsParseFromSpell(effects, effectAreas).ToList();
@@ -49,8 +49,8 @@ namespace Cyberia.Api.Parser.JsonConverter
                 LaunchCountByTurn = elements[12].GetInt32(),
                 LaunchCountByPlayerByTurn = elements[13].GetInt32(),
                 DelayBetweenLaunch = elements[14].GetInt32(),
-                RequiredStatesId = JsonSerializer.Deserialize<List<int>>(elements[16].GetRawText(), options) ?? new(),
-                ForbiddenStatesId = JsonSerializer.Deserialize<List<int>>(elements[17].GetRawText(), options) ?? new(),
+                RequiredStatesId = JsonSerializer.Deserialize<List<int>>(elements[16].GetRawText(), options) ?? [],
+                ForbiddenStatesId = JsonSerializer.Deserialize<List<int>>(elements[17].GetRawText(), options) ?? [],
                 NeededLevel = elements[18].GetInt32(),
                 CricalFailureEndTheTurn = elements[19].GetBoolean(),
                 Id = elements[20].GetInt32()

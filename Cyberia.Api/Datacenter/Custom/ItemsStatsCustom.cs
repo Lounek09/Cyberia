@@ -16,7 +16,7 @@ namespace Cyberia.Api.Data
 
         public ItemStatsCustomData()
         {
-            Effects = new();
+            Effects = [];
         }
 
         public ItemStatsData ToItemStatsData()
@@ -37,7 +37,7 @@ namespace Cyberia.Api.Data
 
         public ItemsStatsCustomData()
         {
-            ItemsStatsCustom = new();
+            ItemsStatsCustom = [];
         }
     }
 }

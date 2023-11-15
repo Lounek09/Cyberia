@@ -30,9 +30,9 @@ namespace Cyberia.Api.Data
 
         public SpellIconData()
         {
-            PrintColors = new();
-            FrameColors = new();
-            BackgroundColors = new();
+            PrintColors = [];
+            FrameColors = [];
+            BackgroundColors = [];
         }
     }
 
@@ -84,10 +84,10 @@ namespace Cyberia.Api.Data
 
         public SpellLevelData()
         {
-            Effects = new();
-            CriticalEffects = new();
-            RequiredStatesId = new();
-            ForbiddenStatesId = new();
+            Effects = [];
+            CriticalEffects = [];
+            RequiredStatesId = [];
+            ForbiddenStatesId = [];
         }
 
         public SpellData? GetSpellData()
@@ -113,7 +113,7 @@ namespace Cyberia.Api.Data
                 }
             }
 
-            return new();
+            return [];
         }
 
         public List<IEffect> GetGlyphEffects()
@@ -134,7 +134,7 @@ namespace Cyberia.Api.Data
                 }
             }
 
-            return new();
+            return [];
         }
 
         public IEnumerable<StateData> GetRequiredStatesData()
@@ -297,7 +297,7 @@ namespace Cyberia.Api.Data
 
         public SpellsData()
         {
-            Spells = new();
+            Spells = [];
         }
 
         internal static SpellsData Build()

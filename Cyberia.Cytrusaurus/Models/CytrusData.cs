@@ -22,8 +22,8 @@ namespace Cyberia.Cytrusaurus.Models
         public Game()
         {
             Name = string.Empty;
-            Assets = new();
-            Platforms = new();
+            Assets = [];
+            Platforms = [];
         }
 
         public Dictionary<string, string> GetReleasesFromPlatform(string platform)
@@ -56,7 +56,7 @@ namespace Cyberia.Cytrusaurus.Models
         public CytrusData()
         {
             Name = string.Empty;
-            Games = new();
+            Games = [];
         }
 
         public static string GetGameManifestUrl(string game, string platform, string release, string version)

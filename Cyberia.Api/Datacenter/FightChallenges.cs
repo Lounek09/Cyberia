@@ -32,7 +32,7 @@ namespace Cyberia.Api.Data
 
         public FightChallengesData()
         {
-            FightChallenges = new();
+            FightChallenges = [];
         }
 
         internal static FightChallengesData Build()

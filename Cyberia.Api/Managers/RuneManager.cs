@@ -75,7 +75,7 @@ namespace Cyberia.Api.Managers
 
         public static double[] GetTotalRunesByStatAmontExtractable(this RuneData runeData, double amountExtractable)
         {
-            double[] runesAmont = { 0, 0, 0 };
+            double[] runesAmont = [ 0, 0, 0 ];
 
             double amontBeforeRa = amountExtractable;
             double transitionalRaRate = runeData.GetStatAmountExtractableToObtain(RuneType.RA);

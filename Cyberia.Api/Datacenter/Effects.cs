@@ -42,7 +42,7 @@ namespace Cyberia.Api.Data
 
         public EffectsData()
         {
-            Effects = new();
+            Effects = [];
         }
 
         internal static EffectsData Build()

@@ -21,7 +21,7 @@ namespace Cyberia.Api.Data.Custom
 
         public QuestCustomData()
         {
-            QuestStepsId = new();
+            QuestStepsId = [];
         }
     }
 
@@ -41,7 +41,7 @@ namespace Cyberia.Api.Data.Custom
 
         public QuestStepCustomData()
         {
-            QuestObjectivesId = new();
+            QuestObjectivesId = [];
         }
     }
 
@@ -55,8 +55,8 @@ namespace Cyberia.Api.Data.Custom
 
         public QuestsCustomData()
         {
-            QuestsCustom = new();
-            QuestStepsCustom = new();
+            QuestsCustom = [];
+            QuestStepsCustom = [];
         }
     }
 }

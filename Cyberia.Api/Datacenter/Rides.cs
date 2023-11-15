@@ -66,8 +66,8 @@ namespace Cyberia.Api.Data
 
         public RidesData()
         {
-            Rides = new();
-            RideAbilities = new();
+            Rides = [];
+            RideAbilities = [];
         }
 
         internal static RidesData Build()

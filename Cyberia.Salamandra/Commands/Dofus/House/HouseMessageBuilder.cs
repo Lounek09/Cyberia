@@ -80,7 +80,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         private DiscordSelectComponent HouseMapsSelectBuilder()
         {
-            List<DiscordSelectComponentOption> options = new();
+            List<DiscordSelectComponentOption> options = [];
 
             if (_outdoorMapData is not null)
             {

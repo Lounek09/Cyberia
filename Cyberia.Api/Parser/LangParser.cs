@@ -12,17 +12,8 @@ namespace Cyberia.Api.Parser
     {
         private const string KEY_VALUE_SEPARATOR = " = ";
 
-        private static readonly string[] _ignoredLangs = new string[]
-        {
-            "dungeons",
-            "effects",
-            "lang"
-        };
-        private static readonly string[] _ignoredLines = new string[]
-        {
-            "new Object();",
-            "new Array();"
-        };
+        private static readonly string[] _ignoredLangs = ["dungeons", "effects", "lang"];
+        private static readonly string[] _ignoredLines = ["new Object();", "new Array();"];
 
         public static bool Launch(LangType type, LangLanguage language)
         {

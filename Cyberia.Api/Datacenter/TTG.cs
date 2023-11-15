@@ -103,9 +103,9 @@ namespace Cyberia.Api.Data
 
         public TTGData()
         {
-            TTGCards = new();
-            TTGEntities = new();
-            TTGFamilies = new();
+            TTGCards = [];
+            TTGEntities = [];
+            TTGFamilies = [];
         }
 
         internal static TTGData Build()

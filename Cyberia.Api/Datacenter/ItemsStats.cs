@@ -16,7 +16,7 @@ namespace Cyberia.Api.Data
 
         public ItemStatsData()
         {
-            Effects = new();
+            Effects = [];
         }
     }
 
@@ -29,7 +29,7 @@ namespace Cyberia.Api.Data
 
         public ItemsStatsData()
         {
-            ItemsStats = new();
+            ItemsStats = [];
         }
 
         internal static ItemsStatsData Build()

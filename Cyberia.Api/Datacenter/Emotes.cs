@@ -29,7 +29,7 @@ namespace Cyberia.Api.Data
 
         public EmotesData()
         {
-            Emotes = new();
+            Emotes = [];
         }
 
         internal static EmotesData Build()

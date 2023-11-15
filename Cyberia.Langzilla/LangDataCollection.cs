@@ -1,5 +1,6 @@
 ﻿using Cyberia.Langzilla.Enums;
 
+using System.Collections;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Langzilla
@@ -26,14 +27,14 @@ namespace Cyberia.Langzilla
         [JsonConstructor]
         public LangDataCollection()
         {
-            LangsData = new();
+            LangsData = [];
         }
 
         internal LangDataCollection(LangType type, LangLanguage language)
         {
             Type = type;
             Language = language;
-            LangsData = new();
+            LangsData = [];
 
             Directory.CreateDirectory(LangsWatcher.GetOutputDirectoryPath(type, language));
         }
@@ -89,7 +90,7 @@ namespace Cyberia.Langzilla
             string versionFile = await FetchVersionFileAsync(force);
             if (string.IsNullOrEmpty(versionFile))
             {
-                return new();
+                return [];
             }
 
             return await ProcessLangsAsync(versionFile);
@@ -132,7 +133,7 @@ namespace Cyberia.Langzilla
 
         private async Task<List<LangData>> ProcessLangsAsync(string versionFileContent)
         {
-            List<LangData> updatedLangsData = new();
+            List<LangData> updatedLangsData = [];
 
             string[] langInfos = versionFileContent[3..].Split("|", StringSplitOptions.RemoveEmptyEntries);
             foreach (string langInfo in langInfos)

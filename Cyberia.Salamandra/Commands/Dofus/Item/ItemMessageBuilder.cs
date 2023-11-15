@@ -155,7 +155,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         private List<DiscordButtonComponent> ButtonsBuilder()
         {
-            List<DiscordButtonComponent> buttons = new();
+            List<DiscordButtonComponent> buttons = [];
 
             if (_itemSetData is not null)
             {

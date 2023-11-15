@@ -113,10 +113,10 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         private List<DiscordButtonComponent> ButtonsBuilder()
         {
-            List<DiscordButtonComponent> buttons = new()
-            {
+            List<DiscordButtonComponent> buttons =
+            [
                 new(ButtonStyle.Primary, GetPacket(_craftData.Id, _qte, !_recursive), $"{(_recursive ? "Masquer" : "Afficher")} les sous crafts", !_craftData.HasSubCraft())
-            };
+            ];
 
             if (_itemData is not null)
             {

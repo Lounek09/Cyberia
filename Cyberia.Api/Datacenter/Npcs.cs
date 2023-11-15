@@ -30,7 +30,7 @@ namespace Cyberia.Api.Data
         public NpcData()
         {
             Name = string.Empty;
-            NpcActionsId = new();
+            NpcActionsId = [];
         }
 
         public IEnumerable<NpcActionData> GetNpcActionsData()
@@ -58,8 +58,8 @@ namespace Cyberia.Api.Data
 
         public NpcsData()
         {
-            NpcActions = new();
-            Npcs = new();
+            NpcActions = [];
+            Npcs = [];
         }
 
         internal static NpcsData Build()

@@ -10,7 +10,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
     {
         public Task<IEnumerable<DiscordApplicationCommandOptionChoice>> Provider()
         {
-            List<DiscordApplicationCommandOptionChoice> choices = new();
+            List<DiscordApplicationCommandOptionChoice> choices = [];
 
             foreach (BreedData breedData in DofusApi.Datacenter.BreedsData.Breeds)
             {

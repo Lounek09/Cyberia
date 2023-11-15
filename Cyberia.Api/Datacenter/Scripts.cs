@@ -25,7 +25,7 @@ namespace Cyberia.Api.Data
 
         public ScriptsData()
         {
-            ScriptDialogs = new();
+            ScriptDialogs = [];
         }
 
         internal static ScriptsData Build()

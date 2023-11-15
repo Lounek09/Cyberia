@@ -66,7 +66,7 @@ namespace Cyberia.Api.Data
 
         public MonsterGradeData()
         {
-            Resistances = new();
+            Resistances = [];
         }
 
         public int GetNeutralResistance()
@@ -251,9 +251,9 @@ namespace Cyberia.Api.Data
 
         public MonstersData()
         {
-            MonsterSuperRaces = new();
-            MonsterRaces = new();
-            Monsters = new();
+            MonsterSuperRaces = [];
+            MonsterRaces = [];
+            Monsters = [];
         }
 
         internal static MonstersData Build()

@@ -42,8 +42,8 @@ namespace Cyberia.Api.Data
 
         public DialogsData()
         {
-            DialogQuestions = new();
-            DialogAnswers = new();
+            DialogQuestions = [];
+            DialogAnswers = [];
         }
 
         internal static DialogsData Build()

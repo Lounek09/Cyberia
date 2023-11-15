@@ -86,7 +86,7 @@ namespace Cyberia.Salamandra.Managers
 
             string header = decomposedPacket[0];
             int version = int.Parse(decomposedPacket[1]);
-            string[] parameters = decomposedPacket.Length > 2 ? decomposedPacket[2..] : Array.Empty<string>();
+            string[] parameters = decomposedPacket.Length > 2 ? decomposedPacket[2..] : [];
 
             if (!_factory.TryGetValue(header, out Func<int, string[], ICustomMessageBuilder?>? builder))
             {

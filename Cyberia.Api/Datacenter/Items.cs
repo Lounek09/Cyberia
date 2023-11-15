@@ -47,7 +47,7 @@ namespace Cyberia.Api.Data
 
         public ItemSuperTypeSlotData()
         {
-            SlotsId = new();
+            SlotsId = [];
         }
     }
 
@@ -173,7 +173,7 @@ namespace Cyberia.Api.Data
             Name = string.Empty;
             NormalizedName = string.Empty;
             Description = string.Empty;
-            Criteria = new();
+            Criteria = [];
         }
 
         public async Task<string> GetImagePath()
@@ -203,8 +203,8 @@ namespace Cyberia.Api.Data
             ItemTypeData? itemTypeData = GetItemTypeData();
             if (itemTypeData is not null)
             {
-                int[] enhanceableSuperTypes = { 1, 2, 3, 4, 5, 10, 11 };
-                int[] nonEnhanceableWeaponTypes = { 20, 21, 22, 102, 114 };
+                int[] enhanceableSuperTypes = [ 1, 2, 3, 4, 5, 10, 11 ];
+                int[] nonEnhanceableWeaponTypes = [ 20, 21, 22, 102, 114 ];
                 return enhanceableSuperTypes.Contains(itemTypeData.ItemSuperTypeId) && !nonEnhanceableWeaponTypes.Contains(itemTypeData.Id) && Enhanceable;
             }
 
@@ -265,11 +265,11 @@ namespace Cyberia.Api.Data
 
         public ItemsData()
         {
-            ItemUnicStrings = new();
-            ItemSuperTypes = new();
-            ItemSuperTypeSlots = new();
-            ItemTypes = new();
-            Items = new();
+            ItemUnicStrings = [];
+            ItemSuperTypes = [];
+            ItemSuperTypeSlots = [];
+            ItemTypes = [];
+            Items = [];
         }
 
         internal static ItemsData Build()

@@ -93,9 +93,9 @@ namespace Cyberia.Api.Data
 
         public HousesData()
         {
-            Houses = new();
-            HouseMaps = new();
-            HousesIndoorSkillsId = new();
+            Houses = [];
+            HouseMaps = [];
+            HousesIndoorSkillsId = [];
         }
 
         internal static HousesData Build()
@@ -131,7 +131,7 @@ namespace Cyberia.Api.Data
 
         public List<HouseData> GetHousesDataByCoordinate(int x, int y)
         {
-            List<HouseData> housesData = new();
+            List<HouseData> housesData = [];
 
             foreach (HouseData houseData in Houses)
             {
@@ -147,7 +147,7 @@ namespace Cyberia.Api.Data
 
         public List<HouseData> GetHousesDataByMapSubAreaId(int id)
         {
-            List<HouseData> housesData = new();
+            List<HouseData> housesData = [];
 
             foreach (HouseData houseData in Houses)
             {
@@ -163,7 +163,7 @@ namespace Cyberia.Api.Data
 
         public List<HouseData> GetHousesDataByMapAreaId(int id)
         {
-            List<HouseData> housesData = new();
+            List<HouseData> housesData = [];
 
             foreach (HouseData houseData in Houses)
             {

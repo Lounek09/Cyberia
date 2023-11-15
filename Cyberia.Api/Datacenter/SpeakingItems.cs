@@ -40,7 +40,7 @@ namespace Cyberia.Api.Data
 
         public SpeakingItemsData()
         {
-            SpeakingItems = new();
+            SpeakingItems = [];
         }
 
         internal static SpeakingItemsData Build()

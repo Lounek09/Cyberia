@@ -33,7 +33,7 @@ namespace Cyberia.Salamandra.Commands.Data
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
             }
 
-            List<DiscordAutoCompleteChoice> choices = new();
+            List<DiscordAutoCompleteChoice> choices = [];
 
             string? version = CytrusWatcher.Data.Games[game].GetVersionFromPlatformAndRelease(platform, release);
             if (!string.IsNullOrEmpty(version))

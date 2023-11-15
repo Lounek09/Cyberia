@@ -91,7 +91,7 @@ namespace Cyberia.Langzilla
             }
             string[] modelLines = File.ReadAllLines(modelDecompiledFilePath);
 
-            List<(int Index, string Row)> diff = new();
+            List<(int Index, string Row)> diff = [];
 
             int index = 0;
             Dictionary<int, string> currentRows = currentLines.ToDictionary(x => index++);
@@ -161,7 +161,7 @@ namespace Cyberia.Langzilla
                 return;
             }
 
-            List<string> content = new();
+            List<string> content = [];
             foreach (string line in File.ReadAllLines(flareOutputFilePath, Encoding.UTF8).Skip(7).SkipLast(3))
             {
                 string temp = line.Trim();

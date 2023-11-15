@@ -55,7 +55,7 @@ namespace Cyberia.Api.Data
         {
             Name = string.Empty;
             Description = string.Empty;
-            KeyWords = new();
+            KeyWords = [];
         }
 
         public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryData()
@@ -133,10 +133,10 @@ namespace Cyberia.Api.Data
 
         public KnowledgeBookData()
         {
-            KnowledgeBookCatagories = new();
-            KnowledgeBookArticles = new();
-            KnowledgeBookTips = new();
-            KnowledgeBookTriggers = new();
+            KnowledgeBookCatagories = [];
+            KnowledgeBookArticles = [];
+            KnowledgeBookTips = [];
+            KnowledgeBookTriggers = [];
         }
 
         internal static KnowledgeBookData Build()

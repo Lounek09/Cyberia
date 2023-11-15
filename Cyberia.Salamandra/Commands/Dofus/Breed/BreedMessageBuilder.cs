@@ -89,7 +89,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         private List<DiscordButtonComponent> ButtonsBuilder()
         {
-            List<DiscordButtonComponent> buttons = new();
+            List<DiscordButtonComponent> buttons = [];
 
             if (_specialSpellData is not null)
             {

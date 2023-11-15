@@ -77,11 +77,10 @@ namespace Cyberia.Salamandra.Commands
 
         private List<DiscordButtonComponent> PaginationButtonsBuilder()
         {
-            return new()
-            {
+            return [
                 new(ButtonStyle.Primary, $"{PreviousPacketBuilder()}{InteractionManager.PACKET_PARAMETER_SEPARATOR}P", "Précédent", _totalPage == 1),
                 new(ButtonStyle.Primary, $"{NextPacketBuilder()}{InteractionManager.PACKET_PARAMETER_SEPARATOR}N", "Suivant", _totalPage == 1)
-            };
+            ];
         }
     }
 }

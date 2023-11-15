@@ -42,8 +42,8 @@ namespace Cyberia.Api.Data
 
         public TaxCollectorNamesData()
         {
-            TaxCollectorLastNames = new();
-            TaxCollectorFirstNames = new();
+            TaxCollectorLastNames = [];
+            TaxCollectorFirstNames = [];
         }
 
         internal static TaxCollectorNamesData Build()
@@ -61,7 +61,7 @@ namespace Cyberia.Api.Data
                 return (TaxCollectorFirstNames[firstNameIndex].Name + " " + TaxCollectorLastNames[lastNameIndex].Name).Replace("[wip] ", "");
             }
 
-            return "";
+            return string.Empty;
         }
     }
 }

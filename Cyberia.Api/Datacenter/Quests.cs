@@ -26,7 +26,7 @@ namespace Cyberia.Api.Data
         public QuestData()
         {
             Name = string.Empty;
-            QuestStepsId = new();
+            QuestStepsId = [];
         }
 
         public IEnumerable<QuestStepData> GetQuestStepsData()
@@ -58,10 +58,10 @@ namespace Cyberia.Api.Data
 
         public QuestStepRewardsData()
         {
-            ItemsIdQuantities = new();
-            EmotesId = new();
-            JobsId = new();
-            SpellsId = new();
+            ItemsIdQuantities = [];
+            EmotesId = [];
+            JobsId = [];
+            SpellsId = [];
         }
 
         public IEnumerable<ItemData> GetItemsData()
@@ -78,7 +78,7 @@ namespace Cyberia.Api.Data
 
         public Dictionary<ItemData, int> GetItemsDataQuantities()
         {
-            Dictionary<ItemData, int> itemsDataQuantities = new();
+            Dictionary<ItemData, int> itemsDataQuantities = [];
 
             foreach (KeyValuePair<int, int> pair in ItemsIdQuantities)
             {
@@ -157,8 +157,8 @@ namespace Cyberia.Api.Data
             Name = string.Empty;
             Description = string.Empty;
             RewardsData = new();
-            QuestObjectivesId = new();
-            QuestObjectives = new();
+            QuestObjectivesId = [];
+            QuestObjectives = [];
         }
 
         public bool HasReward()
@@ -197,7 +197,7 @@ namespace Cyberia.Api.Data
 
         public QuestObjectiveData()
         {
-            Parameters = new();
+            Parameters = [];
         }
 
         public QuestObjectiveTypeData? GetQuestObjectiveTypeData()
@@ -243,10 +243,10 @@ namespace Cyberia.Api.Data
 
         public QuestsData()
         {
-            Quests = new();
-            QuestSteps = new();
-            QuestObjectives = new();
-            QuestObjectiveTypes = new();
+            Quests = [];
+            QuestSteps = [];
+            QuestObjectives = [];
+            QuestObjectiveTypes = [];
         }
 
         internal static QuestsData Build()
@@ -279,7 +279,7 @@ namespace Cyberia.Api.Data
 
             foreach (QuestStepData questStepData in data.QuestSteps)
             {
-                List<QuestObjectiveData> questObjectivesData = new();
+                List<QuestObjectiveData> questObjectivesData = [];
                 foreach (int questObjectiveId in questStepData.QuestObjectivesId)
                 {
                     QuestObjectiveData? questObjectiveData = data.GetQuestObjectiveDataById(questObjectiveId);

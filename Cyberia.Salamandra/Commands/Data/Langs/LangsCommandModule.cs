@@ -114,9 +114,9 @@ namespace Cyberia.Salamandra.Commands.Data
 
             LangType type = Enum.Parse<LangType>(typeStr);
             LangType typeModel = Enum.Parse<LangType>(typeModelStr);
-            LangLanguage[] languages = languageStr is null ? Enum.GetValues<LangLanguage>() : new LangLanguage[] { Enum.Parse<LangLanguage>(languageStr) };
+            LangLanguage[] languages = languageStr is null ? Enum.GetValues<LangLanguage>() : [Enum.Parse<LangLanguage>(languageStr)];
 
-            List<Task> tasks = new();
+            List<Task> tasks = [];
             foreach (LangLanguage language in languages)
             {
                 tasks.Add(Task.Run(async () =>

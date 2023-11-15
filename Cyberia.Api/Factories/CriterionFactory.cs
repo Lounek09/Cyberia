@@ -98,7 +98,7 @@ namespace Cyberia.Api.Factories
 
         public static CriteriaCollection GetCriteria(string value)
         {
-            CriteriaCollection criteria = new();
+            CriteriaCollection criteria = [];
 
             int index = 0;
             while (index < value.Length)

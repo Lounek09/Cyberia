@@ -115,8 +115,8 @@ namespace Cyberia.Api.Data
 
         public AudioEnvironmentData()
         {
-            BackgroundAudioEffectIds = new();
-            NoiseAudioEffectIds = new();
+            BackgroundAudioEffectIds = [];
+            NoiseAudioEffectIds = [];
         }
     }
 
@@ -144,12 +144,12 @@ namespace Cyberia.Api.Data
 
         public AudioData()
         {
-            AudioMusicsContent = new();
-            AudioMusics = new();
-            AudioEffectsContent = new();
-            AudioEffects = new();
-            AudioEnvironmentsContent = new();
-            AudioEnvironments = new();
+            AudioMusicsContent = [];
+            AudioMusics = [];
+            AudioEffectsContent = [];
+            AudioEffects = [];
+            AudioEnvironmentsContent = [];
+            AudioEnvironments = [];
         }
 
         internal static AudioData Build()

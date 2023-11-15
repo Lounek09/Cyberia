@@ -15,7 +15,7 @@ namespace Cyberia.Utils
 
         public async Task<HttpResponseMessage> ExecuteAsync(Func<Task<HttpResponseMessage>> operation, int retryCount = 0)
         {
-            TimeSpan retryInterval = _retryInterval * Math.Pow(2, retryCount) + TimeSpan.FromMilliseconds(Random.Shared.Next(1000));
+            TimeSpan curentRetryInterval = _retryInterval * Math.Pow(2, retryCount) + TimeSpan.FromMilliseconds(Random.Shared.Next(1000));
 
             try
             {
@@ -25,8 +25,8 @@ namespace Cyberia.Utils
                 {
                     if (retryCount < _maxRetries)
                     {
-                        Log.Warning("The request failed with status {HttpStatusCode}. Retrying in {RetryInterval}ms.", response.StatusCode, retryInterval.TotalMilliseconds);
-                        await Task.Delay(retryInterval);
+                        Log.Warning("The request failed with status {HttpStatusCode}. Retrying in {RetryInterval}ms.", response.StatusCode, curentRetryInterval.TotalMilliseconds);
+                        await Task.Delay(curentRetryInterval);
                         return await ExecuteAsync(operation, retryCount + 1);
                     }
 
@@ -39,8 +39,8 @@ namespace Cyberia.Utils
             {
                 if (retryCount < _maxRetries)
                 {
-                    Log.Warning("The request timed out. Retrying in {RetryInterval}ms.", retryInterval.TotalMilliseconds);
-                    await Task.Delay(retryInterval);
+                    Log.Warning("The request timed out. Retrying in {RetryInterval}ms.", curentRetryInterval.TotalMilliseconds);
+                    await Task.Delay(curentRetryInterval);
                     return await ExecuteAsync(operation, retryCount + 1);
                 }
 
@@ -50,8 +50,8 @@ namespace Cyberia.Utils
             {
                 if (retryCount < _maxRetries)
                 {
-                    Log.Warning("Connection reset by peer. Retrying in {RetryInterval}ms.", retryInterval.TotalMilliseconds);
-                    await Task.Delay(retryInterval);
+                    Log.Warning("Connection reset by peer. Retrying in {RetryInterval}ms.", curentRetryInterval.TotalMilliseconds);
+                    await Task.Delay(curentRetryInterval);
                     return await ExecuteAsync(operation, retryCount + 1);
                 }
 

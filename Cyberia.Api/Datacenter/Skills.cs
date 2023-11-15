@@ -32,7 +32,7 @@ namespace Cyberia.Api.Data
         {
             Description = string.Empty;
             Criterion = string.Empty;
-            CraftsId = new();
+            CraftsId = [];
         }
 
         public JobData? GetJobData()
@@ -77,7 +77,7 @@ namespace Cyberia.Api.Data
 
         public SkillsData()
         {
-            Skills = new();
+            Skills = [];
         }
 
         internal static SkillsData Build()

@@ -92,7 +92,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
         private DiscordSelectComponent Select1Builder()
         {
-            HashSet<DiscordSelectComponentOption> options = new();
+            HashSet<DiscordSelectComponentOption> options = [];
 
             LangType[] types = Enum.GetValues<LangType>();
             for (int i = 0; i < types.Length && i < 25; i++)
@@ -105,7 +105,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
         private DiscordSelectComponent Select2Builder()
         {
-            HashSet<DiscordSelectComponentOption> options = new();
+            HashSet<DiscordSelectComponentOption> options = [];
 
             LangLanguage[] languages = Enum.GetValues<LangLanguage>();
             for (int i = 0; i < languages.Length && i < 25; i++)

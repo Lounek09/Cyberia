@@ -71,7 +71,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         private List<DiscordButtonComponent> ButtonsBuilder()
         {
-            List<DiscordButtonComponent> components = new();
+            List<DiscordButtonComponent> components = [];
 
             List<MapData> mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord);
             if (mapsData.Count > 1)

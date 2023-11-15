@@ -5,15 +5,15 @@ namespace Cyberia.Api.Factories.Criteria
 {
     public sealed record CriteriaCollection : ICriteriaElement, ICollection<ICriteriaElement>
     {
-        private readonly ICollection<ICriteriaElement> _items;
+        private readonly Collection<ICriteriaElement> _items;
 
         public int Count => _items.Count;
 
-        public bool IsReadOnly => _items.IsReadOnly;
+        public bool IsReadOnly => throw new NotImplementedException();
 
         public CriteriaCollection()
         {
-            _items = new Collection<ICriteriaElement>();
+            _items = [];
         }
 
         public void Add(ICriteriaElement item)

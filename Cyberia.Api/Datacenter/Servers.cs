@@ -39,7 +39,7 @@ namespace Cyberia.Api.Data
             Name = string.Empty;
             Description = string.Empty;
             Language = string.Empty;
-            RealLanguages = new();
+            RealLanguages = [];
         }
 
         public ServerPopulationData? GetServerPopulationData()
@@ -106,7 +106,7 @@ namespace Cyberia.Api.Data
         public ServerCommunityData()
         {
             Name = string.Empty;
-            Countries = new();
+            Countries = [];
         }
     }
 
@@ -167,12 +167,12 @@ namespace Cyberia.Api.Data
 
         public ServersData()
         {
-            Servers = new();
-            ServerPopulations = new();
-            ServerPopulationsWeight = new();
-            ServerCommunities = new();
-            DefaultServerSpecificTexts = new();
-            ServerSpecificTexts = new();
+            Servers = [];
+            ServerPopulations = [];
+            ServerPopulationsWeight = [];
+            ServerCommunities = [];
+            DefaultServerSpecificTexts = [];
+            ServerSpecificTexts = [];
         }
 
         internal static ServersData Build()

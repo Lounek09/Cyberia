@@ -6,7 +6,7 @@
         {
             bool success = false;
 
-            HashSet<TKey> keysToRemove = new();
+            HashSet<TKey> keysToRemove = [];
             foreach (KeyValuePair<TKey, TValue> item in source)
             {
                 if (item.Value is not null && item.Value.Equals(value))

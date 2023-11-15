@@ -26,7 +26,7 @@ namespace Cyberia.Api.Data.Custom
 
         public MonstersCustomData()
         {
-            MonstersCustom = new();
+            MonstersCustom = [];
         }
     }
 }

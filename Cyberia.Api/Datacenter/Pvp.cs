@@ -32,8 +32,8 @@ namespace Cyberia.Api.Data
 
         public PvpData()
         {
-            HonnorPointThresholds = new();
-            PvpGrades = new();
+            HonnorPointThresholds = [];
+            PvpGrades = [];
         }
 
         internal static PvpData Build()

@@ -27,7 +27,7 @@ namespace Cyberia.Salamandra.Commands.Data
                 return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
             }
 
-            HashSet<DiscordAutoCompleteChoice> choices = new();
+            HashSet<DiscordAutoCompleteChoice> choices = [];
 
             foreach (KeyValuePair<string, string> release in CytrusWatcher.Data.Games[game].GetReleasesFromPlatform(platform))
             {

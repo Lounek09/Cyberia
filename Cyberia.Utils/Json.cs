@@ -102,7 +102,7 @@ namespace Cyberia.Utils
                     IEnumerable<JsonNode?>? removedValues = modelArray.Except(currentArray);
                     IEnumerable<JsonNode?>? addedValues = currentArray.Except(modelArray);
 
-                    JsonArray tempArray = new();
+                    JsonArray tempArray = [];
                     foreach (JsonNode? node in removedValues)
                     {
                         if (node is not null)
@@ -112,7 +112,7 @@ namespace Cyberia.Utils
                     }
                     result["-"] = tempArray;
 
-                    tempArray = new();
+                    tempArray = [];
                     foreach (JsonNode? node in addedValues)
                     {
                         if (node is not null)
@@ -158,7 +158,7 @@ namespace Cyberia.Utils
         {
             if (value is JsonObject jsonObject)
             {
-                HashSet<string> fieldsFound = new();
+                HashSet<string> fieldsFound = [];
                 foreach (KeyValuePair<string, JsonNode?> child in jsonObject)
                 {
                     if (fields.Any(x => x.Equals(child.Key)))

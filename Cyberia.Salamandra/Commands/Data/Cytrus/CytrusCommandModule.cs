@@ -32,7 +32,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
             foreach (KeyValuePair<string, Game> game in CytrusWatcher.Data.Games.OrderBy(x => x.Value.Order))
             {
-                List<string> content = new();
+                List<string> content = [];
 
                 foreach (KeyValuePair<string, Dictionary<string, string>> platform in game.Value.Platforms)
                 {
@@ -40,7 +40,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
                     foreach (KeyValuePair<string, string> release in game.Value.GetReleasesFromPlatform(platform.Key))
                     {
-                        content.Add($" - {release.Key.Capitalize()} : {Formatter.InlineCode(release.Value)}");
+                        content.Add($"- {release.Key.Capitalize()} : {Formatter.InlineCode(release.Value)}");
                     }
                 }
 

@@ -21,8 +21,8 @@ namespace Cyberia.Api.Data
         public ItemSetData()
         {
             Name = string.Empty;
-            ItemsId = new();
-            Effects = new();
+            ItemsId = [];
+            Effects = [];
         }
 
         public IEnumerable<ItemData> GetItemsData()
@@ -46,7 +46,7 @@ namespace Cyberia.Api.Data
         {
             int index = nbItem - 2;
 
-            return Effects.Count > index && index >= 0 ? Effects[index] : new();
+            return Effects.Count > index && index >= 0 ? Effects[index] : [];
         }
 
         public BreedData? GetBreedData()
@@ -64,7 +64,7 @@ namespace Cyberia.Api.Data
 
         public ItemSetsData()
         {
-            ItemSets = new();
+            ItemSets = [];
         }
 
         internal static ItemSetsData Build()

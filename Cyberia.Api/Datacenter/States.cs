@@ -33,7 +33,7 @@ namespace Cyberia.Api.Data
 
         public StatesData()
         {
-            States = new();
+            States = [];
         }
 
         internal static StatesData Build()

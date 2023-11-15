@@ -26,8 +26,8 @@ namespace Cyberia.Api.Data
         public IncarnationData()
         {
             Name = string.Empty;
-            SpellsId = new();
-            EffectsFromLeveling = new();
+            SpellsId = [];
+            EffectsFromLeveling = [];
         }
 
         public async Task<string> GetImgPath()
@@ -87,7 +87,7 @@ namespace Cyberia.Api.Data
 
         public IncarnationsData()
         {
-            Incarnations = new();
+            Incarnations = [];
         }
 
         internal static IncarnationsData Build()

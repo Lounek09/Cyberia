@@ -36,7 +36,7 @@ namespace Cyberia.Api.Data
 
         public RanksData()
         {
-            GuildRanks = new();
+            GuildRanks = [];
         }
     }
 }

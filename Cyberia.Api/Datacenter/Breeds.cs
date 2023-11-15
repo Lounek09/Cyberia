@@ -68,16 +68,16 @@ namespace Cyberia.Api.Data
             LongName = string.Empty;
             Description = string.Empty;
             ShortDescription = string.Empty;
-            SpellsId = new();
+            SpellsId = [];
             TemporisPassiveName = string.Empty;
             TemporisPassiveDescription = string.Empty;
-            CloseCombatInfos = new();
-            StrengthBoostCost = new();
-            VitalityBoostCost = new();
-            WisdomBoostCost = new();
-            LuckBoostCost = new();
-            AgilityBoostCost = new();
-            IntelligenceBoostCost = new();
+            CloseCombatInfos = [];
+            StrengthBoostCost = [];
+            VitalityBoostCost = [];
+            WisdomBoostCost = [];
+            LuckBoostCost = [];
+            AgilityBoostCost = [];
+            IntelligenceBoostCost = [];
         }
 
         public string GetIconImagePath()
@@ -187,7 +187,7 @@ namespace Cyberia.Api.Data
 
         public BreedsData()
         {
-            Breeds = new();
+            Breeds = [];
         }
 
         internal static BreedsData Build()

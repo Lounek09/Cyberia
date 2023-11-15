@@ -7,7 +7,7 @@ namespace Cyberia.Api.Parser.JsonConverter
     {
         public override Dictionary<TKey, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            Dictionary<TKey, TValue> dict = new();
+            Dictionary<TKey, TValue> dict = [];
             JsonElement element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
 
             if (element.ValueKind is not JsonValueKind.Array)

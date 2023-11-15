@@ -36,11 +36,11 @@ namespace Cyberia.Api.Data
 
         public GuildData()
         {
-            BoostCostWeight = new();
-            BoostCostProspecting = new();
-            BoostCostTaxCollector = new();
-            BoostCostWisdom = new();
-            BoostCostSpell = new();
+            BoostCostWeight = [];
+            BoostCostProspecting = [];
+            BoostCostTaxCollector = [];
+            BoostCostWisdom = [];
+            BoostCostSpell = [];
         }
     }
 

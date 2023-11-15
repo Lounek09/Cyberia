@@ -10,7 +10,7 @@ namespace Cyberia.Salamandra.Commands.Data
     {
         public Task<IEnumerable<DiscordApplicationCommandOptionChoice>> Provider()
         {
-            HashSet<DiscordApplicationCommandOptionChoice> choices = new();
+            HashSet<DiscordApplicationCommandOptionChoice> choices = [];
 
             foreach (KeyValuePair<string, Game> game in CytrusWatcher.Data.Games)
             {

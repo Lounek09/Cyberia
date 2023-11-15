@@ -147,7 +147,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         private DiscordSelectComponent Select1Builder()
         {
-            List<DiscordSelectComponentOption> options = new();
+            List<DiscordSelectComponentOption> options = [];
 
             for (int i = 0; i < _questStepsData.Count && i < 25; i++)
             {
@@ -159,7 +159,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         private DiscordSelectComponent Select2Builder()
         {
-            List<DiscordSelectComponentOption> options = new();
+            List<DiscordSelectComponentOption> options = [];
 
             for (int i = 25; i < _questStepsData.Count; i++)
             {

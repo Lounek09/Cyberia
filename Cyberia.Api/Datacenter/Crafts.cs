@@ -15,7 +15,7 @@ namespace Cyberia.Api.Data
 
         public CraftData()
         {
-            Ingredients = new();
+            Ingredients = [];
         }
 
         public ItemData? GetItemData()
@@ -39,7 +39,7 @@ namespace Cyberia.Api.Data
 
         public Dictionary<int, int> GetIngredients(int qte)
         {
-            Dictionary<int, int> ingredients = new();
+            Dictionary<int, int> ingredients = [];
 
             foreach (KeyValuePair<int, int> ingredient in Ingredients)
             {
@@ -57,7 +57,7 @@ namespace Cyberia.Api.Data
 
         public Dictionary<int, int> GetRecursiveIngredients(int qte, Dictionary<int, int>? ingredients = null, CraftData? craftData = null)
         {
-            ingredients ??= new();
+            ingredients ??= [];
             craftData ??= this;
 
             foreach (KeyValuePair<int, int> ingredient in craftData.GetIngredients(qte))
@@ -146,7 +146,7 @@ namespace Cyberia.Api.Data
 
         public CraftsData()
         {
-            Crafts = new();
+            Crafts = [];
         }
 
         internal static CraftsData Build()
@@ -161,7 +161,7 @@ namespace Cyberia.Api.Data
 
         public List<CraftData> GetCraftsDataByItemName(string itemName)
         {
-            List<CraftData> craftsData = new();
+            List<CraftData> craftsData = [];
 
             string[] itemNames = itemName.NormalizeCustom().Split(' ');
             foreach (CraftData craftData in Crafts)

@@ -96,7 +96,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         private List<DiscordButtonComponent> Buttons1Builder()
         {
-            List<DiscordButtonComponent> components = new();
+            List<DiscordButtonComponent> components = [];
 
             for (int i = 2; i < _itemSetData.ItemsId.Count + 1 && i < 7; i++)
             {
@@ -108,7 +108,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         private List<DiscordButtonComponent> Buttons2Builder()
         {
-            List<DiscordButtonComponent> components = new();
+            List<DiscordButtonComponent> components = [];
 
             for (int i = 7; i < _itemSetData.ItemsId.Count + 1 && i < 10; i++)
             {

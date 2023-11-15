@@ -53,7 +53,7 @@ namespace Cyberia.Salamandra.DsharpPlus
 
         public static DiscordEmbedBuilder AddQuestObjectiveFields(this DiscordEmbedBuilder embed, IEnumerable<IQuestObjective> questObjectives, bool inline = false)
         {
-            List<string> questObjectivesParse = new();
+            List<string> questObjectivesParse = [];
 
             foreach (IQuestObjective questObjective in questObjectives)
             {
@@ -66,7 +66,7 @@ namespace Cyberia.Salamandra.DsharpPlus
 
         public static DiscordEmbedBuilder WithCraftDescription(this DiscordEmbedBuilder embed, CraftData craftData, int qte, bool recursive)
         {
-            List<string> result = new();
+            List<string> result = [];
 
             Dictionary<int, int> ingredients = recursive ? craftData.GetRecursiveIngredients(qte) : craftData.GetIngredients(qte);
             foreach (KeyValuePair<int, int> ingredient in ingredients)
@@ -91,7 +91,7 @@ namespace Cyberia.Salamandra.DsharpPlus
 
         public static DiscordEmbedBuilder AddCraftField(this DiscordEmbedBuilder embed, CraftData craftData, int qte, bool inline = false)
         {
-            List<string> result = new();
+            List<string> result = [];
 
             foreach (KeyValuePair<int, int> ingredient in craftData.GetIngredients(qte))
             {
@@ -244,7 +244,7 @@ namespace Cyberia.Salamandra.DsharpPlus
 
         private static List<string> GetCriteriaParse(CriteriaCollection criteria, Func<string, string>? parametersDecorator = null)
         {
-            List<string> criteriaParse = new() { "" };
+            List<string> criteriaParse = [ "" ];
 
             foreach (ICriteriaElement element in criteria)
             {

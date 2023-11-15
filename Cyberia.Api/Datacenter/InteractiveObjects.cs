@@ -33,7 +33,7 @@ namespace Cyberia.Api.Data
         public InteractiveObjectData()
         {
             Name = string.Empty;
-            SkillsId = new();
+            SkillsId = [];
         }
 
         public IEnumerable<SkillData> GetSkillsData()
@@ -61,8 +61,8 @@ namespace Cyberia.Api.Data
 
         public InteractiveObjectsData()
         {
-            InteractiveObjectsGfx = new();
-            InteractiveObjects = new();
+            InteractiveObjectsGfx = [];
+            InteractiveObjects = [];
         }
 
         internal static InteractiveObjectsData Build()

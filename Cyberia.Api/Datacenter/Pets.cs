@@ -23,9 +23,9 @@ namespace Cyberia.Api.Data
 
         public PetFoodsData()
         {
-            ItemsId = new();
-            ItemTypesId = new();
-            MonstersIdQuantities = new();
+            ItemsId = [];
+            ItemTypesId = [];
+            MonstersIdQuantities = [];
         }
 
         public IEnumerable<ItemData> GetItemsData()
@@ -66,7 +66,7 @@ namespace Cyberia.Api.Data
 
         public Dictionary<MonsterData, int> GetMonstersDataQuantities()
         {
-            Dictionary<MonsterData, int> MonstersDataQuantities = new();
+            Dictionary<MonsterData, int> MonstersDataQuantities = [];
 
             foreach (KeyValuePair<int, int> pair in MonstersIdQuantities)
             {
@@ -97,7 +97,7 @@ namespace Cyberia.Api.Data
 
         public PetData()
         {
-            Foods = new();
+            Foods = [];
         }
 
         public ItemData? GetItemData()
@@ -115,7 +115,7 @@ namespace Cyberia.Api.Data
 
         public PetsData()
         {
-            Pets = new();
+            Pets = [];
         }
 
         internal static PetsData Build()

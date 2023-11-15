@@ -23,7 +23,7 @@ namespace Cyberia.Api.Data
 
         public TimeZonesData()
         {
-            StartDayOfMonths = new();
+            StartDayOfMonths = [];
         }
 
         internal static TimeZonesData Build()

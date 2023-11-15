@@ -41,7 +41,7 @@ namespace Cyberia.Api.Data
 
         public RunesData()
         {
-            Runes = new();
+            Runes = [];
         }
 
         internal static RunesData Build()

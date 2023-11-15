@@ -15,7 +15,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 
         public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, List<CraftData> craftsData, int qte = 1, bool disable = false)
         {
-            List<DiscordSelectComponentOption> options = new();
+            List<DiscordSelectComponentOption> options = [];
 
             foreach (CraftData craftData in craftsData)
             {

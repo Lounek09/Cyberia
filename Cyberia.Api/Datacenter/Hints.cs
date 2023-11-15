@@ -52,8 +52,8 @@ namespace Cyberia.Api.Data
 
         public HintsData()
         {
-            HintsCategories = new();
-            Hints = new();
+            HintsCategories = [];
+            Hints = [];
         }
 
         internal static HintsData Build()

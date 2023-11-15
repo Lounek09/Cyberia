@@ -32,7 +32,7 @@ namespace Cyberia.Api.Data.Custom
 
         public HousesCustomData()
         {
-            HousesCustom = new();
+            HousesCustom = [];
         }
     }
 }

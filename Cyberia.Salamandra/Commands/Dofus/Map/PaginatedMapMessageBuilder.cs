@@ -36,7 +36,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[1], out int selectedPageIndex) &&
                 Enum.TryParse(parameters[2], true, out MapSearchCategory searchCategory))
             {
-                List<MapData> mapsData = new();
+                List<MapData> mapsData = [];
                 string search = "";
                 switch (searchCategory)
                 {
