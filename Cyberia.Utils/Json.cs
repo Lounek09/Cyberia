@@ -55,72 +55,74 @@ namespace Cyberia.Utils
 
         public static JsonNode Diff(this JsonNode current, JsonNode model)
         {
-            JsonNode result = JsonNode.Parse("{}")!;
+            JsonObject result = new();
 
-            if (!current.ToString().Equals(model.ToString()))
+            if (JsonNode.DeepEquals(current, model))
             {
-                if (current is JsonObject currentObject && model is JsonObject modelObject)
+                return result;
+            }
+
+            if (current is JsonObject currentObject && model is JsonObject modelObject)
+            {
+                IEnumerable<string> removedKeys = modelObject.Select(x => x.Key).Except(currentObject.Select(x => x.Key));
+                foreach (string key in removedKeys)
                 {
-                    IEnumerable<string> removedKeys = modelObject.Select(x => x.Key).Except(currentObject.Select(x => x.Key));
-                    foreach (string key in removedKeys)
+                    result[key] = new JsonObject
                     {
-                        result[key] = new JsonObject
-                        {
-                            ["-"] = model[key]!.Deserialize<JsonNode>()
-                        };
-                    }
+                        ["-"] = model[key]!.DeepClone()
+                    };
+                }
 
-                    IEnumerable<string> addedKeys = currentObject.Select(x => x.Key).Except(modelObject.Select(x => x.Key));
-                    foreach (string key in addedKeys)
+                IEnumerable<string> addedKeys = currentObject.Select(x => x.Key).Except(modelObject.Select(x => x.Key));
+                foreach (string key in addedKeys)
+                {
+                    result[key] = new JsonObject
                     {
-                        result[key] = new JsonObject
-                        {
-                            ["+"] = current[key]!.Deserialize<JsonNode>()
-                        };
-                    }
+                        ["+"] = current[key]!.DeepClone()
+                    };
+                }
 
-                    IEnumerable<string> unchangedKeys = currentObject.Where(x => x.Value is not null && x.Value.ToString().Equals(model[x.Key])).Select(x => x.Key);
-                    IEnumerable<string> potentiallyModifiedKeys = currentObject.Select(c => c.Key).Except(addedKeys).Except(unchangedKeys);
-                    foreach (string key in potentiallyModifiedKeys)
+                IEnumerable<string> unchangedKeys = currentObject.Where(x => JsonNode.DeepEquals(x.Value, model[x.Key])).Select(x => x.Key);
+                IEnumerable<string> potentiallyModifiedKeys = currentObject.Select(x => x.Key).Except(addedKeys).Except(unchangedKeys);
+                foreach (string key in potentiallyModifiedKeys)
+                {
+                    JsonNode resultChild = current[key]!.Diff(model[key]!);
+
+                    if (resultChild.AsObject().Count > 0)
                     {
-                        JsonNode resultChild = current[key]!.Diff(model[key]!);
-
-                        if (resultChild.AsObject().Count > 0)
-                        {
-                            result[key] = resultChild;
-                        }
+                        result[key] = resultChild;
                     }
                 }
-                else if (current is JsonArray currentArray && model is JsonArray modelArray)
-                {
-                    IEnumerable<JsonNode?>? removedValues = modelArray.Except(currentArray);
-                    IEnumerable<JsonNode?>? addedValues = currentArray.Except(modelArray);
+            }
+            else if (current is JsonArray currentArray && model is JsonArray modelArray)
+            {
+                IEnumerable<JsonNode?> removedValues = modelArray.Except(currentArray);
+                IEnumerable<JsonNode?> addedValues = currentArray.Except(modelArray);
 
-                    JsonArray tempArray = [];
-                    foreach (JsonNode? node in removedValues)
-                    {
-                        if (node is not null)
-                        {
-                            tempArray.Add(node.Deserialize<JsonNode>());
-                        }
-                    }
-                    result["-"] = tempArray;
-
-                    tempArray = [];
-                    foreach (JsonNode? node in addedValues)
-                    {
-                        if (node is not null)
-                        {
-                            tempArray.Add(node.Deserialize<JsonNode>());
-                        }
-                    }
-                    result["+"] = tempArray;
-                }
-                else
+                JsonArray tempArray = [];
+                foreach (JsonNode? node in removedValues)
                 {
-                    result["-"] = model.Deserialize<JsonNode>();
-                    result["+"] = current.Deserialize<JsonNode>();
+                    if (node is not null)
+                    {
+                        tempArray.Add(node.DeepClone());
+                    }
                 }
+                result["-"] = tempArray;
+
+                tempArray = [];
+                foreach (JsonNode? node in addedValues)
+                {
+                    if (node is not null)
+                    {
+                        tempArray.Add(node.DeepClone());
+                    }
+                }
+                result["+"] = tempArray;
+            }
+            else
+            {
+                result["-"] = model.DeepClone();
+                result["+"] = current.DeepClone();
             }
 
             return result;
