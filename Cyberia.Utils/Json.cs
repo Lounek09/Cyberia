@@ -7,7 +7,7 @@ namespace Cyberia.Utils
 {
     public static class Json
     {
-        private static readonly JsonSerializerOptions _options = new()
+        private static readonly JsonSerializerOptions _indentOptions = new()
         {
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = true
@@ -17,7 +17,7 @@ namespace Cyberia.Utils
         {
             try
             {
-                return JsonSerializer.Deserialize<T>(json)!;
+                return JsonSerializer.Deserialize<T>(json) ?? new();
             }
             catch (Exception e) when (e is JsonException or NotSupportedException or InvalidOperationException)
             {
@@ -43,20 +43,14 @@ namespace Cyberia.Utils
             return new();
         }
 
-        public static void Save(object obj, string filePath)
+        public static void Save(object obj, string filePath, JsonSerializerOptions? options = null)
         {
-            string json = JsonSerializer.Serialize(obj, _options);
+            string json = JsonSerializer.Serialize(obj, options);
 
             using FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.Write);
             using StreamWriter streamWriter = new(fileStream, Encoding.UTF8);
 
             streamWriter.Write(json);
-        }
-
-        public static string Indent(string json)
-        {
-            JsonDocument document = JsonDocument.Parse(json);
-            return JsonSerializer.Serialize(document, _options);
         }
 
         public static JsonNode Diff(this JsonNode current, JsonNode model)
@@ -139,53 +133,19 @@ namespace Cyberia.Utils
 
             if (currentNode is null || modelNode is null)
             {
-                return "";
+                return string.Empty;
             }
 
             JsonNode resultNode = currentNode.Diff(modelNode);
 
-            string result = resultNode.ToJsonString(_options);
+            string result = resultNode.ToJsonString(_indentOptions);
 
             if (result.Equals("{}"))
             {
-                return "";
+                return string.Empty;
             }
 
             return result;
-        }
-
-        public static void RemoveFieldsRecursively(this JsonNode value, params string[] fields)
-        {
-            if (value is JsonObject jsonObject)
-            {
-                HashSet<string> fieldsFound = [];
-                foreach (KeyValuePair<string, JsonNode?> child in jsonObject)
-                {
-                    if (fields.Any(x => x.Equals(child.Key)))
-                    {
-                        fieldsFound.Add(child.Key);
-                    }
-                    else if (child.Value is JsonObject or JsonArray)
-                    {
-                        child.Value.RemoveFieldsRecursively(fields);
-                    }
-                }
-
-                foreach (string field in fieldsFound)
-                {
-                    jsonObject.Remove(field);
-                }
-            }
-            else if (value is JsonArray jsonArray)
-            {
-                foreach (JsonNode? child in jsonArray)
-                {
-                    if (child is JsonObject or JsonArray)
-                    {
-                        child.RemoveFieldsRecursively(fields);
-                    }
-                }
-            }
         }
     }
 }
