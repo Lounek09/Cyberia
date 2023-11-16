@@ -3,42 +3,21 @@ using System.Collections.ObjectModel;
 
 namespace Cyberia.Api.Factories.Criteria
 {
-    public sealed record CriteriaCollection : ICriteriaElement, ICollection<ICriteriaElement>
+    public sealed record CriteriaCollection : ICriteriaElement, IReadOnlyCollection<ICriteriaElement>
     {
-        private readonly Collection<ICriteriaElement> _items;
-
+        public ReadOnlyCollection<ICriteriaElement> Items => _items.AsReadOnly();
         public int Count => _items.Count;
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        private readonly List<ICriteriaElement> _items;
 
         public CriteriaCollection()
         {
             _items = [];
         }
 
-        public void Add(ICriteriaElement item)
+        public CriteriaCollection(List<ICriteriaElement> items)
         {
-            _items.Add(item);
-        }
-
-        public void Clear()
-        {
-            _items.Clear();
-        }
-
-        public bool Contains(ICriteriaElement item)
-        {
-            return _items.Contains(item);
-        }
-
-        public void CopyTo(ICriteriaElement[] array, int arrayIndex)
-        {
-            _items.CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(ICriteriaElement item)
-        {
-            return _items.Remove(item);
+            _items = items;
         }
 
         public IEnumerator<ICriteriaElement> GetEnumerator()

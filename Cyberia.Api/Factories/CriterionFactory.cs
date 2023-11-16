@@ -7,6 +7,8 @@ using Cyberia.Api.Factories.Criteria.PlayerCriteria;
 using Cyberia.Api.Factories.Criteria.QuestCriteria;
 using Cyberia.Api.Factories.Criteria.ServerCriteria;
 
+using System.Collections.ObjectModel;
+
 namespace Cyberia.Api.Factories
 {
     public static class CriterionFactory
@@ -98,7 +100,7 @@ namespace Cyberia.Api.Factories
 
         public static CriteriaCollection GetCriteria(string value)
         {
-            CriteriaCollection criteria = [];
+            List<ICriteriaElement> criteria = [];
 
             int index = 0;
             while (index < value.Length)
@@ -120,7 +122,7 @@ namespace Cyberia.Api.Factories
                         ICriteriaElement? criterion = GetCriterion(token);
                         if (criterion is null)
                         {
-                            return criteria;
+                            return new CriteriaCollection(criteria);
                         }
 
                         criteria.Add(criterion);
@@ -130,7 +132,7 @@ namespace Cyberia.Api.Factories
                 index++;
             }
 
-            return criteria;
+            return new CriteriaCollection(criteria);
         }
 
         private static (string, int) ExtractToken(string value, int startIndex, params char[] endChars)
