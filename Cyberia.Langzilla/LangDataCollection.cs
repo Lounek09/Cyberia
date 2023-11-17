@@ -1,35 +1,40 @@
 ﻿using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.JsonConverters;
 
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Langzilla
 {
-    public sealed class LangDataCollection
+    [JsonConverter(typeof(LangDataCollectionConverter))]
+    public sealed class LangDataCollection : IReadOnlyCollection<LangData>
     {
         private const string DATA_FILE_NAME = "data.json";
 
-        [JsonPropertyName("type")]
-        public LangType Type { get; init; }
+        public LangType Type { get; internal set; }
 
-        [JsonPropertyName("language")]
-        public LangLanguage Language { get; init; }
+        public LangLanguage Language { get; internal set; }
 
-        [JsonPropertyName("lastChange")]
         public long LastChange { get; set; }
 
-        [JsonPropertyName("langs")]
-        public List<LangData> Items { get; init; }
+        public ReadOnlyCollection<LangData> Items => ItemsCore.AsReadOnly();
+
+        public int Count => ItemsCore.Count;
+
+        internal List<LangData> ItemsCore { private get; set; }
 
         public LangDataCollection()
         {
-            Items = [];
+            ItemsCore = [];
         }
 
         internal LangDataCollection(LangType type, LangLanguage language)
         {
             Type = type;
             Language = language;
-            Items = [];
+            ItemsCore = [];
 
             Directory.CreateDirectory(LangsWatcher.GetOutputDirectoryPath(type, language));
         }
@@ -37,12 +42,13 @@ namespace Cyberia.Langzilla
         public static LangDataCollection Load(LangType type, LangLanguage language)
         {
             string dataFilePath = Path.Join(LangsWatcher.GetOutputDirectoryPath(type, language), DATA_FILE_NAME);
-            if (File.Exists(dataFilePath))
+            if (!File.Exists(dataFilePath))
             {
-                return Json.LoadFromFile<LangDataCollection>(dataFilePath);
+                return new LangDataCollection(type, language);
             }
 
-            return new(type, language);
+            string json = File.ReadAllText(dataFilePath);
+            return JsonSerializer.Deserialize<LangDataCollection>(json) ?? new(type, language);
         }
 
         public string GetVersionFileName()
@@ -67,12 +73,22 @@ namespace Cyberia.Langzilla
 
         public LangData? GetLangByName(string name)
         {
-            return Items.Find(x => x.Name.Equals(name));
+            return ItemsCore.Find(x => x.Name.Equals(name));
         }
 
         public List<LangData> GetLangsByName(string name)
         {
-            return Items.FindAll(x => x.Name.NormalizeCustom().Contains(name.NormalizeCustom()));
+            return ItemsCore.FindAll(x => x.Name.NormalizeCustom().Contains(name.NormalizeCustom()));
+        }
+
+        public IEnumerator<LangData> GetEnumerator()
+        {
+            return ItemsCore.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         internal async Task<List<LangData>> FetchLangsAsync(bool force)
@@ -137,14 +153,14 @@ namespace Cyberia.Langzilla
 
                     updatedLangsData.Add(langData);
 
-                    int index = Items.FindIndex(x => x.Name.Equals(langData.Name));
+                    int index = ItemsCore.FindIndex(x => x.Name.Equals(langData.Name));
                     if (index == -1)
                     {
-                        Items.Add(langData);
+                        ItemsCore.Add(langData);
                     }
                     else
                     {
-                        Items[index] = langData;
+                        ItemsCore[index] = langData;
                     }
                 }
             }

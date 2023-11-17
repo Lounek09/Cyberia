@@ -20,7 +20,7 @@ namespace Cyberia.Api.Parser
             LangsType langsType = LangsWatcher.GetLangsByType(type);
             LangDataCollection langDataCollection = langsType.GetLangsByLanguage(language);
 
-            foreach (LangData langData in langDataCollection.Items)
+            foreach (LangData langData in langDataCollection)
             {
                 if (_ignoredLangs.Contains(langData.Name))
                 {
