@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Managers;
-using Cyberia.Api.Parser.JsonConverter;
 
 using System.Text.Json.Serialization;
 
@@ -68,7 +68,7 @@ namespace Cyberia.Api.Data
         public int ItemSuperTypeId { get; init; }
 
         [JsonPropertyName("z")]
-        [JsonConverter(typeof(EffectAreaJsonConverter))]
+        [JsonConverter(typeof(EffectAreaConverter))]
         public EffectArea EffectArea { get; init; }
 
         [JsonConstructor]
@@ -147,11 +147,11 @@ namespace Cyberia.Api.Data
         public bool TwoHanded { get; init; }
 
         [JsonPropertyName("e")]
-        [JsonConverter(typeof(ItemWeaponDataJsonConverter))]
+        [JsonConverter(typeof(ItemWeaponDataConverter))]
         public ItemWeaponData? WeaponData { get; init; }
 
         [JsonPropertyName("c")]
-        [JsonConverter(typeof(CriteriaCollectionJsonConverter))]
+        [JsonConverter(typeof(CriteriaCollectionConverter))]
         public CriteriaCollection Criteria { get; init; }
 
         [JsonPropertyName("s")]

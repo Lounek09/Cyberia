@@ -3,9 +3,9 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Parser.JsonConverter
+namespace Cyberia.Api.JsonConverters
 {
-    public sealed class QuestStepRewardsDataJsonConverter : JsonConverter<QuestStepRewardsData>
+    public sealed class QuestStepRewardsDataConverter : JsonConverter<QuestStepRewardsData>
     {
         public override QuestStepRewardsData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

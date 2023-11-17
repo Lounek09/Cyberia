@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Parser.JsonConverter;
+using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;
 
@@ -11,7 +11,7 @@ namespace Cyberia.Api.Data.Custom
         public int Id { get; init; }
 
         [JsonPropertyName("e")]
-        [JsonConverter(typeof(ItemEffectListListJsonConverter))]
+        [JsonConverter(typeof(ItemEffectListListConverter))]
         public List<List<IEffect>> Effects { get; init; }
 
         [JsonConstructor]

@@ -4,9 +4,9 @@ using Cyberia.Api.Factories.Effects;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Parser.JsonConverter
+namespace Cyberia.Api.JsonConverters
 {
-    public sealed class ItemEffectJsonConverter : JsonConverter<IEffect>
+    public sealed class ItemEffectConverter : JsonConverter<IEffect>
     {
         public override IEffect Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

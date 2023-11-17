@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data.Custom;
 using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.QuestObjectives;
-using Cyberia.Api.Parser.JsonConverter;
+using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;
 
@@ -146,7 +146,7 @@ namespace Cyberia.Api.Data
         public string Description { get; init; }
 
         [JsonPropertyName("r")]
-        [JsonConverter(typeof(QuestStepRewardsDataJsonConverter))]
+        [JsonConverter(typeof(QuestStepRewardsDataConverter))]
         public QuestStepRewardsData RewardsData { get; init; }
 
         [JsonIgnore]
@@ -196,7 +196,7 @@ namespace Cyberia.Api.Data
         public int QuestObjectiveTypeId { get; init; }
 
         [JsonPropertyName("p")]
-        [JsonConverter(typeof(StringListJsonConverter))]
+        [JsonConverter(typeof(StringListConverter))]
         public List<string> Parameters { get; init; }
 
         [JsonPropertyName("x")]

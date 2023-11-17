@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace Cyberia.Api.Data
+﻿namespace Cyberia.Api.Data
 {
     public sealed class Datacenter
     {

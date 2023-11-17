@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Parser.JsonConverter;
+using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;
 
@@ -8,7 +8,7 @@ namespace Cyberia.Api.Data
     public class PetFoodsData
     {
         [JsonPropertyName("e")]
-        [JsonConverter(typeof(ItemEffectJsonConverter))]
+        [JsonConverter(typeof(ItemEffectConverter))]
         public IEffect? Effect { get; init; }
 
         [JsonPropertyName("i")]
@@ -18,7 +18,7 @@ namespace Cyberia.Api.Data
         public List<int> ItemTypesId { get; init; }
 
         [JsonPropertyName("m")]
-        [JsonConverter(typeof(DictionaryJsonConverter<int, int>))]
+        [JsonConverter(typeof(DictionaryConverter<int, int>))]
         public Dictionary<int, int> MonstersIdQuantities { get; init; }
 
         [JsonConstructor]

@@ -7,8 +7,6 @@ using Cyberia.Api.Factories.Criteria.PlayerCriteria;
 using Cyberia.Api.Factories.Criteria.QuestCriteria;
 using Cyberia.Api.Factories.Criteria.ServerCriteria;
 
-using System.Collections.ObjectModel;
-
 namespace Cyberia.Api.Factories
 {
     public static class CriterionFactory

@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Parser.JsonConverter;
+﻿using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;
 
@@ -10,7 +10,7 @@ namespace Cyberia.Api.Data
         public int Id { get; init; }
 
         [JsonPropertyName("v")]
-        [JsonConverter(typeof(DictionaryJsonConverter<int, int>))]
+        [JsonConverter(typeof(DictionaryConverter<int, int>))]
         public Dictionary<int, int> Ingredients { get; init; }
 
         [JsonConstructor]

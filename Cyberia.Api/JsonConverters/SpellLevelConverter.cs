@@ -7,9 +7,9 @@ using Cyberia.Api.Values;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Parser.JsonConverter
+namespace Cyberia.Api.JsonConverters
 {
-    public sealed class SpellLevelJsonConverter : JsonConverter<SpellLevelData>
+    public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
     {
         public override SpellLevelData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

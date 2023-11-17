@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Parser.JsonConverter;
+﻿using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;
 
@@ -18,7 +18,7 @@ namespace Cyberia.Api.Data
         public int YearLess { get; set; }
 
         [JsonPropertyName("T.m")]
-        [JsonConverter(typeof(DictionaryJsonConverter<int, string>))]
+        [JsonConverter(typeof(DictionaryConverter<int, string>))]
         public Dictionary<int, string> StartDayOfMonths { get; set; }
 
         [JsonConstructor]

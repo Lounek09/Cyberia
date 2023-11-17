@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Parser.JsonConverter;
+using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Values;
 
 using System.Text.Json.Serialization;
@@ -196,27 +196,27 @@ namespace Cyberia.Api.Data
         public SpellCategory SpellCategory { get; init; }
 
         [JsonPropertyName("l1")]
-        [JsonConverter(typeof(SpellLevelJsonConverter))]
+        [JsonConverter(typeof(SpellLevelConverter))]
         public SpellLevelData? SpellLevelData1 { get; init; }
 
         [JsonPropertyName("l2")]
-        [JsonConverter(typeof(SpellLevelJsonConverter))]
+        [JsonConverter(typeof(SpellLevelConverter))]
         public SpellLevelData? SpellLevelData2 { get; init; }
 
         [JsonPropertyName("l3")]
-        [JsonConverter(typeof(SpellLevelJsonConverter))]
+        [JsonConverter(typeof(SpellLevelConverter))]
         public SpellLevelData? SpellLevelData3 { get; init; }
 
         [JsonPropertyName("l4")]
-        [JsonConverter(typeof(SpellLevelJsonConverter))]
+        [JsonConverter(typeof(SpellLevelConverter))]
         public SpellLevelData? SpellLevelData4 { get; init; }
 
         [JsonPropertyName("l5")]
-        [JsonConverter(typeof(SpellLevelJsonConverter))]
+        [JsonConverter(typeof(SpellLevelConverter))]
         public SpellLevelData? SpellLevelData5 { get; init; }
 
         [JsonPropertyName("l6")]
-        [JsonConverter(typeof(SpellLevelJsonConverter))]
+        [JsonConverter(typeof(SpellLevelConverter))]
         public SpellLevelData? SpellLevelData6 { get; init; }
 
         [JsonConstructor]

@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Parser.JsonConverter;
+using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;
 
@@ -20,7 +20,7 @@ namespace Cyberia.Api.Data
         public List<int> SpellsId { get; init; }
 
         [JsonPropertyName("e")]
-        [JsonConverter(typeof(ItemEffectListJsonConverter))]
+        [JsonConverter(typeof(ItemEffectListConverter))]
         public List<IEffect> EffectsFromLeveling { get; init; }
 
         [JsonConstructor]
