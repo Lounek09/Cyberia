@@ -8,7 +8,7 @@
         Description GetDescription();
     }
 
-    public interface ICriterion<T> : ICriterion where T : ICriterion<T>
+    public interface ICriterion<T> : ICriterion
     {
         static abstract T? Create(string id, char @operator, params string[] parameters);
     }

@@ -17,7 +17,7 @@ namespace Cyberia.Api.Factories.Effects
         Description GetDescription();
     }
 
-    public interface IEffect<T> : IEffect where T : IEffect<T>
+    public interface IEffect<T> : IEffect
     {
         static abstract T Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea);
     }

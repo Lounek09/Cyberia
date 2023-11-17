@@ -9,7 +9,7 @@ namespace Cyberia.Api.Factories.QuestObjectives
         Description GetDescription();
     }
 
-    public interface IQuestObjective<T> : IQuestObjective where T : IQuestObjective<T>
+    public interface IQuestObjective<T> : IQuestObjective
     {
         static abstract T? Create(QuestObjectiveData questObjectiveData);
     }
