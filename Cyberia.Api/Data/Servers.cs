@@ -172,7 +172,7 @@ namespace Cyberia.Api.Data
         public List<ServerSpecificTextData> ServerSpecificTexts { get; init; }
 
         [JsonConstructor]
-        public ServersData()
+        internal ServersData()
         {
             Servers = [];
             ServerPopulations = [];
@@ -184,7 +184,7 @@ namespace Cyberia.Api.Data
 
         internal static ServersData Load()
         {
-            return Json.LoadFromFile<ServersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<ServersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public ServerData? GetServerDataById(int id)

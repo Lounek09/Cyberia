@@ -38,7 +38,7 @@ namespace Cyberia.Salamandra.Commands.Data
                 {
                     content.Add(Formatter.Underline($"{platform.Key.Capitalize()} :"));
 
-                    foreach (KeyValuePair<string, string> release in game.Value.GetReleasesFromPlatform(platform.Key))
+                    foreach (KeyValuePair<string, string> release in game.Value.GetReleasesByPlatform(platform.Key))
                     {
                         content.Add($"- {release.Key.Capitalize()} : {Formatter.InlineCode(release.Value)}");
                     }

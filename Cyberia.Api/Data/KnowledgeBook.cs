@@ -136,7 +136,7 @@ namespace Cyberia.Api.Data
         public List<KnowledgeBookTriggerData> KnowledgeBookTriggers { get; init; }
 
         [JsonConstructor]
-        public KnowledgeBookData()
+        internal KnowledgeBookData()
         {
             KnowledgeBookCatagories = [];
             KnowledgeBookArticles = [];
@@ -146,7 +146,7 @@ namespace Cyberia.Api.Data
 
         internal static KnowledgeBookData Load()
         {
-            return Json.LoadFromFile<KnowledgeBookData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<KnowledgeBookData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryDataById(int id)

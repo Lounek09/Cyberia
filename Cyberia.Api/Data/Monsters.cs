@@ -256,7 +256,7 @@ namespace Cyberia.Api.Data
         public List<MonsterData> Monsters { get; init; }
 
         [JsonConstructor]
-        public MonstersData()
+        internal MonstersData()
         {
             MonsterSuperRaces = [];
             MonsterRaces = [];
@@ -265,8 +265,8 @@ namespace Cyberia.Api.Data
 
         internal static MonstersData Load()
         {
-            MonstersData data = Json.LoadFromFile<MonstersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-            MonstersCustomData customData = Json.LoadFromFile<MonstersCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+            MonstersData data = Datacenter.LoadDataFromFile<MonstersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            MonstersCustomData customData = Datacenter.LoadDataFromFile<MonstersCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
             foreach (MonsterCustomData monsterCustomData in customData.MonstersCustom)
             {

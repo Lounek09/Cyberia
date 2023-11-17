@@ -29,7 +29,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
             HashSet<DiscordAutoCompleteChoice> choices = [];
 
-            foreach (KeyValuePair<string, string> release in CytrusWatcher.Data.Games[game].GetReleasesFromPlatform(platform))
+            foreach (KeyValuePair<string, string> release in CytrusWatcher.Data.Games[game].GetReleasesByPlatform(platform))
             {
                 choices.Add(new(release.Key.Capitalize(), release.Key));
             }

@@ -59,7 +59,7 @@ namespace Cyberia.Api.Data
         public List<NpcData> Npcs { get; init; }
 
         [JsonConstructor]
-        public NpcsData()
+        internal NpcsData()
         {
             NpcActions = [];
             Npcs = [];
@@ -67,7 +67,7 @@ namespace Cyberia.Api.Data
 
         internal static NpcsData Load()
         {
-            return Json.LoadFromFile<NpcsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<NpcsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public NpcActionData? GetNpcActionDataById(int id)

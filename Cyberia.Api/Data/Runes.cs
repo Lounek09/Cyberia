@@ -41,14 +41,14 @@ namespace Cyberia.Api.Data
         public List<RuneData> Runes { get; init; }
 
         [JsonConstructor]
-        public RunesData()
+        internal RunesData()
         {
             Runes = [];
         }
 
         internal static RunesData Load()
         {
-            return Json.LoadFromFile<RunesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<RunesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public RuneData? GetRuneDataById(int id)

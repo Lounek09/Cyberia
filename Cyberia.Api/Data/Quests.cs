@@ -254,7 +254,7 @@ namespace Cyberia.Api.Data
         public List<QuestObjectiveTypeData> QuestObjectiveTypes { get; init; }
 
         [JsonConstructor]
-        public QuestsData()
+        internal QuestsData()
         {
             Quests = [];
             QuestSteps = [];
@@ -264,8 +264,8 @@ namespace Cyberia.Api.Data
 
         internal static QuestsData Load()
         {
-            QuestsData data = Json.LoadFromFile<QuestsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-            QuestsCustomData dataCustom = Json.LoadFromFile<QuestsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+            QuestsData data = Datacenter.LoadDataFromFile<QuestsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            QuestsCustomData dataCustom = Datacenter.LoadDataFromFile<QuestsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
             foreach (QuestCustomData questCustomData in dataCustom.QuestsCustom)
             {

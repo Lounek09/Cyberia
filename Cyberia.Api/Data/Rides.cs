@@ -67,7 +67,7 @@ namespace Cyberia.Api.Data
         public List<RideAbilityData> RideAbilities { get; init; }
 
         [JsonConstructor]
-        public RidesData()
+        internal RidesData()
         {
             Rides = [];
             RideAbilities = [];
@@ -75,7 +75,7 @@ namespace Cyberia.Api.Data
 
         internal static RidesData Load()
         {
-            return Json.LoadFromFile<RidesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<RidesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public RideData? GetRideDataById(int id)

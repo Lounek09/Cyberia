@@ -199,7 +199,7 @@ namespace Cyberia.Api.Data
         public List<MapSubAreaData> MapSubAreas { get; init; }
 
         [JsonConstructor]
-        public MapsData()
+        internal MapsData()
         {
             Maps = [];
             MapSuperAreas = [];
@@ -209,7 +209,7 @@ namespace Cyberia.Api.Data
 
         internal static MapsData Load()
         {
-            return Json.LoadFromFile<MapsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<MapsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public MapData? GetMapDataById(int id)

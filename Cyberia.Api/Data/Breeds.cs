@@ -189,15 +189,15 @@ namespace Cyberia.Api.Data
         public List<BreedData> Breeds { get; init; }
 
         [JsonConstructor]
-        public BreedsData()
+        internal BreedsData()
         {
             Breeds = [];
         }
 
         internal static BreedsData Load()
         {
-            BreedsData data = Json.LoadFromFile<BreedsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-            BreedsCustomData customData = Json.LoadFromFile<BreedsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+            BreedsData data = Datacenter.LoadDataFromFile<BreedsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            BreedsCustomData customData = Datacenter.LoadDataFromFile<BreedsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
             foreach (BreedCustomData breedCustomData in customData.Breeds)
             {

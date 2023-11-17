@@ -35,7 +35,7 @@ namespace Cyberia.Salamandra.Commands.Data
 
             List<DiscordAutoCompleteChoice> choices = [];
 
-            string? version = CytrusWatcher.Data.Games[game].GetVersionFromPlatformAndRelease(platform, release);
+            string? version = CytrusWatcher.Data.Games[game].GetVersionByPlatformAndRelease(platform, release);
             if (!string.IsNullOrEmpty(version))
             {
                 choices.Add(new(version, version));

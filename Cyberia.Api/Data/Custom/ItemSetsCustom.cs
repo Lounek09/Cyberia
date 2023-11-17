@@ -27,7 +27,7 @@ namespace Cyberia.Api.Data.Custom
         public List<ItemSetCustomData> ItemSetsCustom { get; init; }
 
         [JsonConstructor]
-        public ItemSetsCustomData()
+        internal ItemSetsCustomData()
         {
             ItemSetsCustom = [];
         }

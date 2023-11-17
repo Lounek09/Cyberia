@@ -77,14 +77,14 @@ namespace Cyberia.Api.Data
         public List<SkillData> Skills { get; init; }
 
         [JsonConstructor]
-        public SkillsData()
+        internal SkillsData()
         {
             Skills = [];
         }
 
         internal static SkillsData Load()
         {
-            return Json.LoadFromFile<SkillsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<SkillsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public SkillData? GetSkillDataById(int id)

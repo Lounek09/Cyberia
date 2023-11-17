@@ -25,8 +25,8 @@ namespace Cyberia.Cytrusaurus
         {
             Directory.CreateDirectory(OUTPUT_PATH);
 
-            Data = File.Exists(CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(CYTRUS_PATH) : new();
-            OldData = File.Exists(OLD_CYTRUS_PATH) ? Json.LoadFromFile<CytrusData>(OLD_CYTRUS_PATH) : new();
+            Data = CytrusData.LoadFromFile(CYTRUS_PATH);
+            OldData = CytrusData.LoadFromFile(OLD_CYTRUS_PATH);
             HttpClient = new()
             {
                 BaseAddress = new Uri(BASE_URL)
@@ -43,7 +43,7 @@ namespace Cyberia.Cytrusaurus
 
         public static async Task CheckAsync()
         {
-            string cytrus = string.Empty;
+            string cytrus = "{}";
             try
             {
                 using HttpResponseMessage response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(CYTRUS_FILE_NAME));
@@ -57,16 +57,12 @@ namespace Cyberia.Cytrusaurus
                 return;
             }
 
-            string lastCytrus = "{}";
-            if (File.Exists(CYTRUS_PATH))
-            {
-                lastCytrus = File.ReadAllText(CYTRUS_PATH);
-            }
+            string oldCytrus = File.Exists(CYTRUS_PATH) ? File.ReadAllText(CYTRUS_PATH) : "{}";
 
             OldData = Data;
-            Data = Json.Load<CytrusData>(cytrus);
+            Data = CytrusData.Load(cytrus);
 
-            string diff = Json.Diff(cytrus, lastCytrus);
+            string diff = Json.Diff(cytrus, oldCytrus);
             if (string.IsNullOrEmpty(diff))
             {
                 return;

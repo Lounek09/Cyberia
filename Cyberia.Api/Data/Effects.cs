@@ -42,14 +42,14 @@ namespace Cyberia.Api.Data
         public List<EffectData> Effects { get; init; }
 
         [JsonConstructor]
-        public EffectsData()
+        internal EffectsData()
         {
             Effects = [];
         }
 
         internal static EffectsData Load()
         {
-            return Json.LoadFromFile<EffectsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<EffectsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public EffectData? GetEffectDataById(int id)

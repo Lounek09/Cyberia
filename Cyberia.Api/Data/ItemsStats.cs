@@ -29,15 +29,15 @@ namespace Cyberia.Api.Data
         public List<ItemStatsData> ItemsStats { get; init; }
 
         [JsonConstructor]
-        public ItemsStatsData()
+        internal ItemsStatsData()
         {
             ItemsStats = [];
         }
 
         internal static ItemsStatsData Load()
         {
-            ItemsStatsData data = Json.LoadFromFile<ItemsStatsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-            ItemsStatsCustomData customData = Json.LoadFromFile<ItemsStatsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+            ItemsStatsData data = Datacenter.LoadDataFromFile<ItemsStatsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            ItemsStatsCustomData customData = Datacenter.LoadDataFromFile<ItemsStatsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
             foreach (ItemStatsCustomData itemStatsCustomData in customData.ItemsStatsCustom)
             {

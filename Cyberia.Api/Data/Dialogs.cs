@@ -43,7 +43,7 @@ namespace Cyberia.Api.Data
         public List<DialogAnswerData> DialogAnswers { get; init; }
 
         [JsonConstructor]
-        public DialogsData()
+        internal DialogsData()
         {
             DialogQuestions = [];
             DialogAnswers = [];
@@ -51,7 +51,7 @@ namespace Cyberia.Api.Data
 
         internal static DialogsData Load()
         {
-            return Json.LoadFromFile<DialogsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<DialogsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public DialogQuestionData? GetDialogQuestionDataById(int od)

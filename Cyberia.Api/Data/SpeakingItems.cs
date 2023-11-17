@@ -40,14 +40,14 @@ namespace Cyberia.Api.Data
         //TODO: SIT in SpeakingItems lang
 
         [JsonConstructor]
-        public SpeakingItemsData()
+        internal SpeakingItemsData()
         {
             SpeakingItems = [];
         }
 
         internal static SpeakingItemsData Load()
         {
-            return Json.LoadFromFile<SpeakingItemsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<SpeakingItemsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

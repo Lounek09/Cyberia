@@ -13,46 +13,6 @@ namespace Cyberia.Utils
             WriteIndented = true
         };
 
-        public static T Load<T>(string json) where T : new()
-        {
-            try
-            {
-                return JsonSerializer.Deserialize<T>(json) ?? new();
-            }
-            catch (Exception e) when (e is JsonException or NotSupportedException or InvalidOperationException)
-            {
-                Log.Error(e, "Failed to deserialize the JSON");
-            }
-
-            return new();
-        }
-
-        public static T LoadFromFile<T>(string filePath) where T : new()
-        {
-            try
-            {
-                string json = File.ReadAllText(filePath);
-
-                return Load<T>(json);
-            }
-            catch (Exception e) when (e is FileNotFoundException or DirectoryNotFoundException)
-            {
-                Log.Error(e, "File {FilePath} not found", filePath);
-            }
-
-            return new();
-        }
-
-        public static void Save(object obj, string filePath, JsonSerializerOptions? options = null)
-        {
-            string json = JsonSerializer.Serialize(obj, options);
-
-            using FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.Write);
-            using StreamWriter streamWriter = new(fileStream, Encoding.UTF8);
-
-            streamWriter.Write(json);
-        }
-
         public static JsonNode Diff(this JsonNode current, JsonNode model)
         {
             JsonObject result = new();
@@ -130,8 +90,23 @@ namespace Cyberia.Utils
 
         public static string Diff(string current, string model)
         {
-            JsonNode? currentNode = JsonNode.Parse(current);
-            JsonNode? modelNode = JsonNode.Parse(model);
+            if (current.Equals(model))
+            {
+                return string.Empty;
+            }
+
+            JsonNode? currentNode;
+            JsonNode? modelNode;
+            try
+            {
+                currentNode = JsonNode.Parse(current);
+                modelNode = JsonNode.Parse(model);
+            }
+            catch (JsonException e)
+            {
+                Log.Error(e, "Failed to parse the given JSON to diff");
+                return string.Empty;
+            }
 
             if (currentNode is null || modelNode is null)
             {
@@ -139,7 +114,6 @@ namespace Cyberia.Utils
             }
 
             JsonNode resultNode = currentNode.Diff(modelNode);
-
             string result = resultNode.ToJsonString(_indentOptions);
 
             if (result.Equals("{}"))

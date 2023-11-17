@@ -116,14 +116,14 @@ namespace Cyberia.Api.Data
         public List<PetData> Pets { get; init; }
 
         [JsonConstructor]
-        public PetsData()
+        internal PetsData()
         {
             Pets = [];
         }
 
         internal static PetsData Load()
         {
-            return Json.LoadFromFile<PetsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<PetsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public PetData? GetPetDataByItemId(int id)

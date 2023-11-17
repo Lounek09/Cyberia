@@ -25,14 +25,14 @@ namespace Cyberia.Api.Data
         public List<ScriptDialogData> ScriptDialogs { get; init; }
 
         [JsonConstructor]
-        public ScriptsData()
+        internal ScriptsData()
         {
             ScriptDialogs = [];
         }
 
         internal static ScriptsData Load()
         {
-            return Json.LoadFromFile<ScriptsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<ScriptsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

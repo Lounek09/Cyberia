@@ -31,14 +31,14 @@ namespace Cyberia.Api.Data
         public List<GuildRankData> GuildRanks { get; init; }
 
         [JsonConstructor]
-        public RanksData()
+        internal RanksData()
         {
             GuildRanks = [];
         }
 
         internal static RanksData Load()
         {
-            return Json.LoadFromFile<RanksData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<RanksData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

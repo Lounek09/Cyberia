@@ -30,11 +30,11 @@ namespace Cyberia.Langzilla
             ItemsCore = [];
         }
 
-        internal LangDataCollection(LangType type, LangLanguage language)
+        internal LangDataCollection(LangType type, LangLanguage language) :
+            this()
         {
             Type = type;
             Language = language;
-            ItemsCore = [];
 
             Directory.CreateDirectory(LangsWatcher.GetOutputDirectoryPath(type, language));
         }
@@ -171,7 +171,10 @@ namespace Cyberia.Langzilla
 
         private void Save()
         {
-            Json.Save(this, Path.Join(LangsWatcher.GetOutputDirectoryPath(Type, Language), DATA_FILE_NAME));
+            string filePath = Path.Join(LangsWatcher.GetOutputDirectoryPath(Type, Language), DATA_FILE_NAME);
+            string json = JsonSerializer.Serialize(this);
+
+            File.WriteAllText(filePath, json);
         }
     }
 }

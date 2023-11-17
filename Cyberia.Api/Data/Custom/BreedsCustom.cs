@@ -26,7 +26,7 @@ namespace Cyberia.Api.Data.Custom
         public List<BreedCustomData> Breeds { get; init; }
 
         [JsonConstructor]
-        public BreedsCustomData()
+        internal BreedsCustomData()
         {
             Breeds = [];
         }

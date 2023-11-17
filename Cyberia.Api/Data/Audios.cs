@@ -149,7 +149,7 @@ namespace Cyberia.Api.Data
         public List<AudioEnvironmentData> AudioEnvironments { get; init; }
 
         [JsonConstructor]
-        public AudioData()
+        internal AudioData()
         {
             AudioMusicsContent = [];
             AudioMusics = [];
@@ -161,7 +161,7 @@ namespace Cyberia.Api.Data
 
         internal static AudioData Load()
         {
-            return Json.LoadFromFile<AudioData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<AudioData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public AudioMusicData? GetAudioMusicDataById(int id)

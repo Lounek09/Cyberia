@@ -53,7 +53,7 @@ namespace Cyberia.Api.Data
         public List<HintData> Hints { get; init; }
 
         [JsonConstructor]
-        public HintsData()
+        internal HintsData()
         {
             HintsCategories = [];
             Hints = [];
@@ -61,7 +61,7 @@ namespace Cyberia.Api.Data
 
         internal static HintsData Load()
         {
-            return Json.LoadFromFile<HintsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<HintsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

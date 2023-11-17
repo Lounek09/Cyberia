@@ -43,7 +43,7 @@ namespace Cyberia.Api.Data
         public List<TaxCollectorFirstNameData> TaxCollectorFirstNames { get; init; }
 
         [JsonConstructor]
-        public TaxCollectorNamesData()
+        internal TaxCollectorNamesData()
         {
             TaxCollectorLastNames = [];
             TaxCollectorFirstNames = [];
@@ -51,7 +51,7 @@ namespace Cyberia.Api.Data
 
         internal static TaxCollectorNamesData Load()
         {
-            return Json.LoadFromFile<TaxCollectorNamesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<TaxCollectorNamesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public string GetRandomTaxCollectorName()

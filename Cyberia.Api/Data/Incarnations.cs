@@ -87,14 +87,14 @@ namespace Cyberia.Api.Data
         public List<IncarnationData> Incarnations { get; init; }
 
         [JsonConstructor]
-        public IncarnationsData()
+        internal IncarnationsData()
         {
             Incarnations = [];
         }
 
         internal static IncarnationsData Load()
         {
-            return Json.LoadFromFile<IncarnationsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<IncarnationsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public IncarnationData? GetIncarnationDataByItemId(int id)

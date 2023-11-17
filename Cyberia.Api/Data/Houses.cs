@@ -98,7 +98,7 @@ namespace Cyberia.Api.Data
         public List<int> HousesIndoorSkillsId { get; init; }
 
         [JsonConstructor]
-        public HousesData()
+        internal HousesData()
         {
             Houses = [];
             HouseMaps = [];
@@ -107,8 +107,8 @@ namespace Cyberia.Api.Data
 
         internal static HousesData Load()
         {
-            HousesData data = Json.LoadFromFile<HousesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-            HousesCustomData customData = Json.LoadFromFile<HousesCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+            HousesData data = Datacenter.LoadDataFromFile<HousesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            HousesCustomData customData = Datacenter.LoadDataFromFile<HousesCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
             foreach (HouseCustomData houseCustomData in customData.HousesCustom)
             {

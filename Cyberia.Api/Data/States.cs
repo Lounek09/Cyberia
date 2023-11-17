@@ -33,14 +33,14 @@ namespace Cyberia.Api.Data
         public List<StateData> States { get; init; }
 
         [JsonConstructor]
-        public StatesData()
+        internal StatesData()
         {
             States = [];
         }
 
         internal static StatesData Load()
         {
-            return Json.LoadFromFile<StatesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<StatesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public StateData? GetStateDataById(int id)

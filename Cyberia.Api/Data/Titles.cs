@@ -31,14 +31,14 @@ namespace Cyberia.Api.Data
         public List<TitleData> Titles { get; init; }
 
         [JsonConstructor]
-        public TitlesData()
+        internal TitlesData()
         {
             Titles = [];
         }
 
         internal static TitlesData Load()
         {
-            return Json.LoadFromFile<TitlesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<TitlesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public TitleData? GetTitleDataById(int id)

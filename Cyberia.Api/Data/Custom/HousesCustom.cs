@@ -32,7 +32,7 @@ namespace Cyberia.Api.Data.Custom
         public List<HouseCustomData> HousesCustom { get; init; }
 
         [JsonConstructor]
-        public HousesCustomData()
+        internal HousesCustomData()
         {
             HousesCustom = [];
         }

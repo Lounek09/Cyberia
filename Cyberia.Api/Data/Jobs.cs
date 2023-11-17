@@ -36,14 +36,14 @@ namespace Cyberia.Api.Data
         public List<JobData> Jobs { get; init; }
 
         [JsonConstructor]
-        public JobsData()
+        internal JobsData()
         {
             Jobs = [];
         }
 
         internal static JobsData Load()
         {
-            return Json.LoadFromFile<JobsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<JobsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public JobData? GetJobDataById(int id)

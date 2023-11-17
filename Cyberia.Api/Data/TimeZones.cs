@@ -22,14 +22,14 @@ namespace Cyberia.Api.Data
         public Dictionary<int, string> StartDayOfMonths { get; set; }
 
         [JsonConstructor]
-        public TimeZonesData()
+        internal TimeZonesData()
         {
             StartDayOfMonths = [];
         }
 
         internal static TimeZonesData Load()
         {
-            return Json.LoadFromFile<TimeZonesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<TimeZonesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public string GetMonth(int dayOfYear)

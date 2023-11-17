@@ -56,7 +56,7 @@ namespace Cyberia.Api.Data.Custom
         public List<QuestStepCustomData> QuestStepsCustom { get; init; }
 
         [JsonConstructor]
-        public QuestsCustomData()
+        internal QuestsCustomData()
         {
             QuestsCustom = [];
             QuestStepsCustom = [];

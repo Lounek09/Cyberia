@@ -62,7 +62,7 @@ namespace Cyberia.Api.Data
         public List<InteractiveObjectData> InteractiveObjects { get; init; }
 
         [JsonConstructor]
-        public InteractiveObjectsData()
+        internal InteractiveObjectsData()
         {
             InteractiveObjectsGfx = [];
             InteractiveObjects = [];
@@ -70,7 +70,7 @@ namespace Cyberia.Api.Data
 
         internal static InteractiveObjectsData Load()
         {
-            return Json.LoadFromFile<InteractiveObjectsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<InteractiveObjectsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public InteractiveObjectData? GetInteractiveObjectDataById(int id)

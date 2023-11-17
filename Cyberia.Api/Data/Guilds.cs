@@ -53,14 +53,14 @@ namespace Cyberia.Api.Data
         public GuildData Guild { get; init; }
 
         [JsonConstructor]
-        public GuildsData()
+        internal GuildsData()
         {
             Guild = new();
         }
 
         internal static GuildsData Load()
         {
-            return Json.LoadFromFile<GuildsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<GuildsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

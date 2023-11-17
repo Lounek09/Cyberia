@@ -29,14 +29,14 @@ namespace Cyberia.Api.Data
         public List<EmoteData> Emotes { get; init; }
 
         [JsonConstructor]
-        public EmotesData()
+        internal EmotesData()
         {
             Emotes = [];
         }
 
         internal static EmotesData Load()
         {
-            return Json.LoadFromFile<EmotesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<EmotesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public EmoteData? GetEmoteById(int id)

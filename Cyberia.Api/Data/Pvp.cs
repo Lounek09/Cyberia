@@ -32,7 +32,7 @@ namespace Cyberia.Api.Data
         public List<List<PvpGradeData>> PvpGrades { get; init; }
 
         [JsonConstructor]
-        public PvpData()
+        internal PvpData()
         {
             HonnorPointThresholds = [];
             PvpGrades = [];
@@ -40,7 +40,7 @@ namespace Cyberia.Api.Data
 
         internal static PvpData Load()
         {
-            return Json.LoadFromFile<PvpData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<PvpData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

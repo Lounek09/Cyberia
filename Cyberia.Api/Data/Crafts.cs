@@ -146,14 +146,14 @@ namespace Cyberia.Api.Data
         public List<CraftData> Crafts { get; init; }
 
         [JsonConstructor]
-        public CraftsData()
+        internal CraftsData()
         {
             Crafts = [];
         }
 
         internal static CraftsData Load()
         {
-            return Json.LoadFromFile<CraftsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<CraftsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public CraftData? GetCraftDataById(int id)

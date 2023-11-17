@@ -269,7 +269,7 @@ namespace Cyberia.Api.Data
         public List<ItemData> Items { get; init; }
 
         [JsonConstructor]
-        public ItemsData()
+        internal ItemsData()
         {
             ItemUnicStrings = [];
             ItemSuperTypes = [];
@@ -278,9 +278,9 @@ namespace Cyberia.Api.Data
             Items = [];
         }
 
-        public static ItemsData Load()
+        internal static ItemsData Load()
         {
-            return Json.LoadFromFile<ItemsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<ItemsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public ItemTypeData? GetItemTypeDataById(int id)

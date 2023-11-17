@@ -1,4 +1,7 @@
-﻿namespace Cyberia.Api.Data
+﻿using System.Reflection;
+using System.Text.Json;
+
+namespace Cyberia.Api.Data
 {
     public sealed class Datacenter
     {
@@ -79,6 +82,31 @@
             TimeZonesData = TimeZonesData.Load();
             TitlesData = TitlesData.Load();
             TTGData = TTGData.Load();
+        }
+
+        internal static T LoadDataFromFile<T>(string filePath)
+        {
+            ConstructorInfo? constructor = typeof(T).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.EmptyTypes) ??
+                throw new EntryPointNotFoundException($"Non public parameter-less constructor for {typeof(T).Name} not found");
+
+            if (!File.Exists(filePath))
+            {
+                Log.Warning("File {FilePath} not found to initialize {TypeName}", filePath, typeof(T).Name);
+                return (T)constructor.Invoke(null);
+            }
+
+            string json = File.ReadAllText(filePath);
+
+            try
+            {
+                return JsonSerializer.Deserialize<T>(json) ?? (T)constructor.Invoke(null);
+            }
+            catch (Exception e) when (e is JsonException or NotSupportedException or InvalidOperationException)
+            {
+                Log.Error(e, "Failed to deserialize the JSON located at {FilePath} to initialize {TypeName}", filePath, typeof(T).Name);
+            }
+
+            return (T)constructor.Invoke(null);
         }
     }
 }

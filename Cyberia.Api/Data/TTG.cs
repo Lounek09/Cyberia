@@ -105,7 +105,7 @@ namespace Cyberia.Api.Data
         public List<TTGFamilyData> TTGFamilies { get; set; }
 
         [JsonConstructor]
-        public TTGData()
+        internal TTGData()
         {
             TTGCards = [];
             TTGEntities = [];
@@ -114,7 +114,7 @@ namespace Cyberia.Api.Data
 
         internal static TTGData Load()
         {
-            return Json.LoadFromFile<TTGData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<TTGData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public TTGCardData? GetTTGCardDataById(int id)

@@ -298,14 +298,14 @@ namespace Cyberia.Api.Data
         public List<SpellData> Spells { get; init; }
 
         [JsonConstructor]
-        public SpellsData()
+        internal SpellsData()
         {
             Spells = [];
         }
 
         internal static SpellsData Load()
         {
-            return Json.LoadFromFile<SpellsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<SpellsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public SpellData? GetSpellDataById(int id)

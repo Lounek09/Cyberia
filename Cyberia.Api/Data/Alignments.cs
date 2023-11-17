@@ -257,7 +257,7 @@ namespace Cyberia.Api.Data
         public List<AlignmentSpecializationData> AlignmentSpecializations { get; init; }
 
         [JsonConstructor]
-        public AlignmentsData()
+        internal AlignmentsData()
         {
             Alignments = [];
             AlignmentsJoin = [];
@@ -272,7 +272,7 @@ namespace Cyberia.Api.Data
 
         internal static AlignmentsData Load()
         {
-            return Json.LoadFromFile<AlignmentsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<AlignmentsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public AlignmentData? GetAlignmentDataById(int id)

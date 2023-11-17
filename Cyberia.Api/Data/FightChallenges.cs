@@ -32,14 +32,14 @@ namespace Cyberia.Api.Data
         public List<FightChallengeData> FightChallenges { get; init; }
 
         [JsonConstructor]
-        public FightChallengesData()
+        internal FightChallengesData()
         {
             FightChallenges = [];
         }
 
         internal static FightChallengesData Load()
         {
-            return Json.LoadFromFile<FightChallengesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<FightChallengesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
     }
 }

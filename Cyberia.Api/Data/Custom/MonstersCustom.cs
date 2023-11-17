@@ -26,7 +26,7 @@ namespace Cyberia.Api.Data.Custom
         public List<MonsterCustomData> MonstersCustom { get; init; }
 
         [JsonConstructor]
-        public MonstersCustomData()
+        internal MonstersCustomData()
         {
             MonstersCustom = [];
         }
