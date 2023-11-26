@@ -45,7 +45,13 @@ namespace Cyberia.Api.Data
 
         public int GetLevel()
         {
-            return GetItemsData().Max(x => x.Level);
+            IEnumerable<ItemData> itemsData = GetItemsData();
+            if (itemsData.Any())
+            {
+                return itemsData.Max(x => x.Level);
+            }
+
+            return 1;
         }
 
         public IEnumerable<IEffect> GetEffects(int nbItem)
