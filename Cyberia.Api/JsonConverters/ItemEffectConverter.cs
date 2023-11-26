@@ -10,15 +10,8 @@ namespace Cyberia.Api.JsonConverters
     {
         public override IEffect Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            JsonElement element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
-            List<IEffect> effects = EffectFactory.GetEffectsParseFromItem(element.GetString() ?? "").ToList();
-
-            if (effects.Count == 0)
-            {
-                throw new JsonException("Invalid JSON format: unable to parse item effect");
-            }
-
-            return effects[0];
+            IEnumerable<IEffect> effects = EffectFactory.GetEffectsParseFromItem(reader.GetString() ?? string.Empty);
+            return effects.First();
         }
 
         public override void Write(Utf8JsonWriter writer, IEffect values, JsonSerializerOptions options)

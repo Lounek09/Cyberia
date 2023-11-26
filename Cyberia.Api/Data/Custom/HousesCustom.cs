@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Data.Custom
 {
-    internal sealed class HouseCustomData
+    internal sealed class HouseCustomData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -26,7 +26,7 @@ namespace Cyberia.Api.Data.Custom
         }
     }
 
-    internal sealed class HousesCustomData
+    internal sealed class HousesCustomData : IDofusData
     {
         [JsonPropertyName("CH.h")]
         public List<HouseCustomData> HousesCustom { get; init; }

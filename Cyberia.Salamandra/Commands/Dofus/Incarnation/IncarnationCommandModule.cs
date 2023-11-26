@@ -26,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<IncarnationData> incarnationsData = DofusApi.Datacenter.IncarnationsData.GetIncarnationsDataByName(value);
+                List<IncarnationData> incarnationsData = DofusApi.Datacenter.IncarnationsData.GetIncarnationsDataByName(value).ToList();
                 if (incarnationsData.Count == 1)
                 {
                     response = await new IncarnationMessageBuilder(incarnationsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

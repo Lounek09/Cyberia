@@ -29,7 +29,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 int.TryParse(parameters[1], out int selectedPageIndex) &&
                 int.TryParse(parameters[3], out int qte))
             {
-                List<CraftData> craftsData = DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(parameters[2]);
+                List<CraftData> craftsData = DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(parameters[2]).ToList();
                 if (craftsData.Count > 0)
                 {
                     return new(craftsData, parameters[2], qte, selectedPageIndex);

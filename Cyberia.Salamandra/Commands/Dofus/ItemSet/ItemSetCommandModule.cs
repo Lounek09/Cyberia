@@ -26,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<ItemSetData> itemSetsData = DofusApi.Datacenter.ItemSetsData.GetItemSetsDataByName(value);
+                List<ItemSetData> itemSetsData = DofusApi.Datacenter.ItemSetsData.GetItemSetsDataByName(value).ToList();
                 if (itemSetsData.Count == 1)
                 {
                     response = await new ItemSetMessageBuilder(itemSetsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

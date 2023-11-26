@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class TTGCardData
+    public sealed class TTGCardData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -36,7 +39,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class TTGEntityData
+    public sealed class TTGEntityData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -65,19 +68,19 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class TTGFamilyData
+    public sealed class TTGFamilyData : IDofusData<int>
     {
         [JsonPropertyName("id")]
-        public int Id { get; set; }
+        public int Id { get; init; }
 
         [JsonPropertyName("i")]
-        public int Index { get; set; }
+        public int Index { get; init; }
 
         [JsonPropertyName("o")]
-        public int ItemId { get; set; }
+        public int ItemId { get; init; }
 
         [JsonPropertyName("n")]
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         [JsonConstructor]
         internal TTGFamilyData()
@@ -91,25 +94,28 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class TTGData
+    public sealed class TTGData : IDofusData
     {
         private const string FILE_NAME = "ttg.json";
 
         [JsonPropertyName("TTG.c")]
-        public List<TTGCardData> TTGCards { get; set; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGCardData>))]
+        public FrozenDictionary<int, TTGCardData> TTGCards { get; set; }
 
         [JsonPropertyName("TTG.e")]
-        public List<TTGEntityData> TTGEntities { get; set; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGEntityData>))]
+        public FrozenDictionary<int, TTGEntityData> TTGEntities { get; set; }
 
         [JsonPropertyName("TTG.f")]
-        public List<TTGFamilyData> TTGFamilies { get; set; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGFamilyData>))]
+        public FrozenDictionary<int, TTGFamilyData> TTGFamilies { get; set; }
 
         [JsonConstructor]
         internal TTGData()
         {
-            TTGCards = [];
-            TTGEntities = [];
-            TTGFamilies = [];
+            TTGCards = FrozenDictionary<int, TTGCardData>.Empty;
+            TTGEntities = FrozenDictionary<int, TTGEntityData>.Empty;
+            TTGFamilies = FrozenDictionary<int, TTGFamilyData>.Empty;
         }
 
         internal static TTGData Load()
@@ -119,12 +125,14 @@ namespace Cyberia.Api.Data
 
         public TTGCardData? GetTTGCardDataById(int id)
         {
-            return TTGCards.Find(x => x.Id == id);
+            TTGCards.TryGetValue(id, out TTGCardData? ttgCardData);
+            return ttgCardData;
         }
 
         public TTGEntityData? GetTTGEntityDataById(int id)
         {
-            return TTGEntities.Find(x => x.Id == id);
+            TTGEntities.TryGetValue(id, out TTGEntityData? ttgEntityData);
+            return ttgEntityData;
         }
 
         public string GetTTGEntityNameById(int id)
@@ -136,7 +144,8 @@ namespace Cyberia.Api.Data
 
         public TTGFamilyData? GetTTGFamilyDataById(int id)
         {
-            return TTGFamilies.Find(x => x.Id == id);
+            TTGFamilies.TryGetValue(id, out TTGFamilyData? ttgFamilyData);
+            return ttgFamilyData;
         }
 
         public string GetTTGFamilyNameById(int id)

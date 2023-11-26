@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class RuneData
+    public sealed class RuneData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -33,17 +36,18 @@ namespace Cyberia.Api.Data
             return PatternDecoder.Description(Resources.Rune, Name);
         }
     }
-    public sealed class RunesData
+    public sealed class RunesData : IDofusData
     {
         private const string FILE_NAME = "runes.json";
 
         [JsonPropertyName("RU")]
-        public List<RuneData> Runes { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, RuneData>))]
+        public FrozenDictionary<int, RuneData> Runes { get; init; }
 
         [JsonConstructor]
         internal RunesData()
         {
-            Runes = [];
+            Runes = FrozenDictionary<int, RuneData>.Empty;
         }
 
         internal static RunesData Load()
@@ -53,23 +57,24 @@ namespace Cyberia.Api.Data
 
         public RuneData? GetRuneDataById(int id)
         {
-            return Runes.Find(x => x.Id == id);
+            Runes.TryGetValue(id, out RuneData? runeData);
+            return runeData;
         }
 
         public RuneData? GetRuneDataByName(string name)
         {
-            return Runes.Find(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
+            return Runes.Values.FirstOrDefault(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
         }
 
-        public List<RuneData> GetRunesDataByName(string name)
+        public IEnumerable<RuneData> GetRunesDataByName(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return Runes.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
+            return Runes.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetAllRuneName()
         {
-            return string.Join(", ", Runes.Select(x => x.Name));
+            return string.Join(", ", Runes.Values.Select(x => x.Name));
         }
     }
 }

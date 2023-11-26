@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class PvpGradeData
+    public sealed class PvpGradeData : IDofusData
     {
         [JsonPropertyName("nc")]
         public string ShortName { get; init; }
@@ -18,24 +21,26 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class PvpData
+    public sealed class PvpData : IDofusData
     {
         private const string FILE_NAME = "pvp.json";
 
         [JsonPropertyName("PP.hp")]
-        public List<int> HonnorPointThresholds { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> HonnorPointThresholds { get; init; }
 
         [JsonPropertyName("PP.maxdp")]
         public int MaxDishonourPoint { get; init; }
 
         [JsonPropertyName("PP.grds")]
-        public List<List<PvpGradeData>> PvpGrades { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<IEnumerable<PvpGradeData>>))]
+        public ReadOnlyCollection<IEnumerable<PvpGradeData>> PvpGrades { get; init; }
 
         [JsonConstructor]
         internal PvpData()
         {
-            HonnorPointThresholds = [];
-            PvpGrades = [];
+            HonnorPointThresholds = ReadOnlyCollection<int>.Empty;
+            PvpGrades = ReadOnlyCollection<IEnumerable<PvpGradeData>>.Empty;
         }
 
         internal static PvpData Load()

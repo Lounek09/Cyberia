@@ -1,11 +1,13 @@
 ﻿using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
 
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class IncarnationData
+    public sealed class IncarnationData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -17,18 +19,23 @@ namespace Cyberia.Api.Data
         public int GfxId { get; init; }
 
         [JsonPropertyName("s")]
-        public List<int> SpellsId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> SpellsId { get; init; }
 
         [JsonPropertyName("e")]
+        [JsonInclude]
         [JsonConverter(typeof(ItemEffectListConverter))]
-        public List<IEffect> EffectsFromLeveling { get; init; }
+        private List<IEffect> _effectsFromLeveling;
+
+        [JsonIgnore]
+        public ReadOnlyCollection<IEffect> EffectsFromLeveling => _effectsFromLeveling.AsReadOnly();
 
         [JsonConstructor]
         internal IncarnationData()
         {
             Name = string.Empty;
-            SpellsId = [];
-            EffectsFromLeveling = [];
+            SpellsId = ReadOnlyCollection<int>.Empty;
+            _effectsFromLeveling = [];
         }
 
         public async Task<string> GetImgPath()
@@ -60,7 +67,7 @@ namespace Cyberia.Api.Data
             }
         }
 
-        public List<IEffect> GetEffects()
+        public ReadOnlyCollection<IEffect> GetEffects()
         {
             ItemData? itemData = GetItemData();
             if (itemData is not null)
@@ -69,9 +76,9 @@ namespace Cyberia.Api.Data
                 if (itemStatsData is not null)
                 {
                     List<IEffect> effects = itemStatsData.Effects.Where(x => x is not ExchangeableEffect).ToList();
-                    effects.AddRange(EffectsFromLeveling);
+                    effects.AddRange(_effectsFromLeveling);
 
-                    return effects;
+                    return effects.AsReadOnly();
                 }
             }
 
@@ -79,17 +86,18 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class IncarnationsData
+    public sealed class IncarnationsData : IDofusData
     {
         private const string FILE_NAME = "incarnation.json";
 
         [JsonPropertyName("INCA")]
-        public List<IncarnationData> Incarnations { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, IncarnationData>))]
+        public FrozenDictionary<int, IncarnationData> Incarnations { get; init; }
 
         [JsonConstructor]
         internal IncarnationsData()
         {
-            Incarnations = [];
+            Incarnations = FrozenDictionary<int, IncarnationData>.Empty;
         }
 
         internal static IncarnationsData Load()
@@ -99,13 +107,14 @@ namespace Cyberia.Api.Data
 
         public IncarnationData? GetIncarnationDataByItemId(int id)
         {
-            return Incarnations.Find(x => x.Id == id);
+            Incarnations.TryGetValue(id, out IncarnationData? incarnationData);
+            return incarnationData;
         }
 
-        public List<IncarnationData> GetIncarnationsDataByName(string name)
+        public IEnumerable<IncarnationData> GetIncarnationsDataByName(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return Incarnations.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
+            return Incarnations.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
         }
     }
 }

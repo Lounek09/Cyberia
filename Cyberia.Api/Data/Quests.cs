@@ -3,11 +3,13 @@ using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.QuestObjectives;
 using Cyberia.Api.JsonConverters;
 
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class QuestData
+    public sealed class QuestData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -25,13 +27,13 @@ namespace Cyberia.Api.Data
         public bool HasDungeon { get; internal set; }
 
         [JsonIgnore]
-        public List<int> QuestStepsId { get; internal set; }
+        public ReadOnlyCollection<int> QuestStepsId { get; internal set; }
 
         [JsonConstructor]
         internal QuestData()
         {
             Name = string.Empty;
-            QuestStepsId = [];
+            QuestStepsId = ReadOnlyCollection<int>.Empty;
         }
 
         public IEnumerable<QuestStepData> GetQuestStepsData()
@@ -47,26 +49,26 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class QuestStepRewardsData
+    public sealed class QuestStepRewardsData : IDofusData
     {
         public int Experience { get; init; }
 
         public int Kamas { get; init; }
 
-        public Dictionary<int, int> ItemsIdQuantities { get; init; }
+        public ReadOnlyDictionary<int, int> ItemsIdQuantities { get; init; }
 
-        public List<int> EmotesId { get; init; }
+        public ReadOnlyCollection<int> EmotesId { get; init; }
 
-        public List<int> JobsId { get; init; }
+        public ReadOnlyCollection<int> JobsId { get; init; }
 
-        public List<int> SpellsId { get; init; }
+        public ReadOnlyCollection<int> SpellsId { get; init; }
 
         internal QuestStepRewardsData()
         {
-            ItemsIdQuantities = [];
-            EmotesId = [];
-            JobsId = [];
-            SpellsId = [];
+            ItemsIdQuantities = ReadOnlyDictionary<int, int>.Empty;
+            EmotesId = ReadOnlyCollection<int>.Empty;
+            JobsId = ReadOnlyCollection<int>.Empty;
+            SpellsId = ReadOnlyCollection<int>.Empty;
         }
 
         public IEnumerable<ItemData> GetItemsData()
@@ -81,7 +83,7 @@ namespace Cyberia.Api.Data
             }
         }
 
-        public Dictionary<ItemData, int> GetItemsDataQuantities()
+        public ReadOnlyDictionary<ItemData, int> GetItemsDataQuantities()
         {
             Dictionary<ItemData, int> itemsDataQuantities = [];
 
@@ -94,7 +96,7 @@ namespace Cyberia.Api.Data
                 }
             }
 
-            return itemsDataQuantities;
+            return itemsDataQuantities.AsReadOnly();
         }
 
         public IEnumerable<EmoteData> GetEmotesData()
@@ -134,7 +136,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class QuestStepData
+    public sealed class QuestStepData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -156,10 +158,10 @@ namespace Cyberia.Api.Data
         public int OptimalLevel { get; internal set; }
 
         [JsonIgnore]
-        public List<int> QuestObjectivesId { get; internal set; }
+        public ReadOnlyCollection<int> QuestObjectivesId { get; internal set; }
 
         [JsonIgnore]
-        public List<IQuestObjective> QuestObjectives { get; internal set; }
+        public ReadOnlyCollection<IQuestObjective> QuestObjectives { get; internal set; }
 
         [JsonConstructor]
         internal QuestStepData()
@@ -167,8 +169,8 @@ namespace Cyberia.Api.Data
             Name = string.Empty;
             Description = string.Empty;
             RewardsData = new();
-            QuestObjectivesId = [];
-            QuestObjectives = [];
+            QuestObjectivesId = ReadOnlyCollection<int>.Empty;
+            QuestObjectives = ReadOnlyCollection<IQuestObjective>.Empty;
         }
 
         public bool HasReward()
@@ -187,7 +189,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class QuestObjectiveData
+    public sealed class QuestObjectiveData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -196,8 +198,8 @@ namespace Cyberia.Api.Data
         public int QuestObjectiveTypeId { get; init; }
 
         [JsonPropertyName("p")]
-        [JsonConverter(typeof(StringListConverter))]
-        public List<string> Parameters { get; init; }
+        [JsonConverter(typeof(ReadOnlyToStringCollectionConverter))]
+        public ReadOnlyCollection<string> Parameters { get; init; }
 
         [JsonPropertyName("x")]
         public int? XCoord { get; init; }
@@ -208,7 +210,7 @@ namespace Cyberia.Api.Data
         [JsonConstructor]
         internal QuestObjectiveData()
         {
-            Parameters = [];
+            Parameters = ReadOnlyCollection<string>.Empty;
         }
 
         public QuestObjectiveTypeData? GetQuestObjectiveTypeData()
@@ -222,7 +224,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class QuestObjectiveTypeData
+    public sealed class QuestObjectiveTypeData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -237,29 +239,33 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class QuestsData
+    public sealed class QuestsData : IDofusData
     {
         private const string FILE_NAME = "quests.json";
 
         [JsonPropertyName("Q.q")]
-        public List<QuestData> Quests { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, QuestData>))]
+        public FrozenDictionary<int, QuestData> Quests { get; init; }
 
         [JsonPropertyName("Q.s")]
-        public List<QuestStepData> QuestSteps { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, QuestStepData>))]
+        public FrozenDictionary<int, QuestStepData> QuestSteps { get; init; }
 
         [JsonPropertyName("Q.o")]
-        public List<QuestObjectiveData> QuestObjectives { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, QuestObjectiveData>))]
+        public FrozenDictionary<int, QuestObjectiveData> QuestObjectives { get; init; }
 
         [JsonPropertyName("Q.t")]
-        public List<QuestObjectiveTypeData> QuestObjectiveTypes { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, QuestObjectiveTypeData>))]
+        public FrozenDictionary<int, QuestObjectiveTypeData> QuestObjectiveTypes { get; init; }
 
         [JsonConstructor]
         internal QuestsData()
         {
-            Quests = [];
-            QuestSteps = [];
-            QuestObjectives = [];
-            QuestObjectiveTypes = [];
+            Quests = FrozenDictionary<int, QuestData>.Empty;
+            QuestSteps = FrozenDictionary<int, QuestStepData>.Empty;
+            QuestObjectives = FrozenDictionary<int, QuestObjectiveData>.Empty;
+            QuestObjectiveTypes = FrozenDictionary<int, QuestObjectiveTypeData>.Empty;
         }
 
         internal static QuestsData Load()
@@ -275,7 +281,7 @@ namespace Cyberia.Api.Data
                     questData.Repeatable = questCustomData.Repeatable;
                     questData.Account = questCustomData.Account;
                     questData.HasDungeon = questCustomData.HasDungeon;
-                    questData.QuestStepsId = questCustomData.QuestStepsId;
+                    questData.QuestStepsId = questCustomData.QuestStepsId.AsReadOnly();
                 }
             }
 
@@ -286,11 +292,11 @@ namespace Cyberia.Api.Data
                 {
                     questStepData.DialogQuestionId = questStepCustomData.DialogQuestionId;
                     questStepData.OptimalLevel = questStepCustomData.OptimalLevel;
-                    questStepData.QuestObjectivesId = questStepCustomData.QuestObjectivesId;
+                    questStepData.QuestObjectivesId = questStepCustomData.QuestObjectivesId.AsReadOnly();
                 }
             }
 
-            foreach (QuestStepData questStepData in data.QuestSteps)
+            foreach (QuestStepData questStepData in data.QuestSteps.Values)
             {
                 List<QuestObjectiveData> questObjectivesData = [];
                 foreach (int questObjectiveId in questStepData.QuestObjectivesId)
@@ -302,7 +308,7 @@ namespace Cyberia.Api.Data
                     }
                 }
 
-                questStepData.QuestObjectives = QuestObjectiveFactory.GetQuestObjectives(questObjectivesData).ToList();
+                questStepData.QuestObjectives = QuestObjectiveFactory.GetQuestObjectives(questObjectivesData).ToList().AsReadOnly();
             }
 
             return data;
@@ -310,18 +316,14 @@ namespace Cyberia.Api.Data
 
         public QuestData? GetQuestDataById(int id)
         {
-            return Quests.Find(x => x.Id == id);
+            Quests.TryGetValue(id, out QuestData? questData);
+            return questData;
         }
 
-        public QuestData? GetQuestDataByName(string name)
-        {
-            return Quests.Find(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
-        }
-
-        public List<QuestData> GetQuestsDataByName(string name)
+        public IEnumerable<QuestData> GetQuestsDataByName(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return Quests.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
+            return Quests.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetQuestNameById(int id)
@@ -333,7 +335,8 @@ namespace Cyberia.Api.Data
 
         public QuestStepData? GetQuestStepDataById(int id)
         {
-            return QuestSteps.Find(x => x.Id == id);
+            QuestSteps.TryGetValue(id, out QuestStepData? questStepData);
+            return questStepData;
         }
 
         public string GetQuestStepNameById(int id)
@@ -345,7 +348,8 @@ namespace Cyberia.Api.Data
 
         public QuestObjectiveData? GetQuestObjectiveDataById(int id)
         {
-            return QuestObjectives.Find(x => x.Id == id);
+            QuestObjectives.TryGetValue(id, out QuestObjectiveData? questObjectiveData);
+            return questObjectiveData;
         }
 
         public Description GetQuestObjectiveDescriptionById(int id)
@@ -357,7 +361,8 @@ namespace Cyberia.Api.Data
 
         public QuestObjectiveTypeData? GetQuestObjectiveTypeDataById(int id)
         {
-            return QuestObjectiveTypes.Find(x => x.Id == id);
+            QuestObjectiveTypes.TryGetValue(id, out QuestObjectiveTypeData? questObjectiveTypeData);
+            return questObjectiveTypeData;
         }
     }
 }

@@ -1,8 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class ServerData
+    public sealed class ServerData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -32,7 +36,8 @@ namespace Cyberia.Api.Data
         public long Date { get; init; }
 
         [JsonPropertyName("rlng")]
-        public List<string> RealLanguages { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<string>))]
+        public ReadOnlyCollection<string> RealLanguages { get; init; }
 
         [JsonConstructor]
         internal ServerData()
@@ -40,17 +45,12 @@ namespace Cyberia.Api.Data
             Name = string.Empty;
             Description = string.Empty;
             Language = string.Empty;
-            RealLanguages = [];
+            RealLanguages = ReadOnlyCollection<string>.Empty;
         }
 
         public ServerPopulationData? GetServerPopulationData()
         {
             return DofusApi.Datacenter.ServersData.GetServerPopulationDataById(ServerPopulationId);
-        }
-
-        public ServerPopulationWeightData? GetServerPopulationWeightData()
-        {
-            return DofusApi.Datacenter.ServersData.GetServerPopulationWeightDataById(ServerPopulationId);
         }
 
         public ServerCommunityData? GetServerCommunityData()
@@ -59,13 +59,16 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class ServerPopulationData
+    public sealed class ServerPopulationData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
 
         [JsonPropertyName("v")]
         public string Name { get; init; }
+
+        [JsonIgnore]
+        public int Weight { get; internal set; }
 
         [JsonConstructor]
         internal ServerPopulationData()
@@ -74,7 +77,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class ServerPopulationWeightData
+    internal sealed class ServerPopulationWeightData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -89,7 +92,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class ServerCommunityData
+    public sealed class ServerCommunityData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -101,20 +104,22 @@ namespace Cyberia.Api.Data
         public bool Visible { get; init; }
 
         [JsonPropertyName("i")]
-        public int Id2 { get; init; }
+        [JsonInclude]
+        internal int Id2 { get; init; }
 
         [JsonPropertyName("c")]
-        public List<string> Countries { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<string>))]
+        public ReadOnlyCollection<string> Countries { get; init; }
 
         [JsonConstructor]
         internal ServerCommunityData()
         {
             Name = string.Empty;
-            Countries = [];
+            Countries = ReadOnlyCollection<string>.Empty;
         }
     }
 
-    public sealed class DefaultServerSpecificTextData
+    public sealed class DefaultServerSpecificTextData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -133,7 +138,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class ServerSpecificTextData
+    public sealed class ServerSpecificTextData : IDofusData<string>
     {
         [JsonPropertyName("id")]
         public string Id { get; init; }
@@ -149,47 +154,65 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class ServersData
+    public sealed class ServersData : IDofusData
     {
         private const string FILE_NAME = "servers.json";
 
         [JsonPropertyName("SR")]
-        public List<ServerData> Servers { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ServerData>))]
+        public FrozenDictionary<int, ServerData> Servers { get; init; }
 
         [JsonPropertyName("SRP")]
-        public List<ServerPopulationData> ServerPopulations { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ServerPopulationData>))]
+        public FrozenDictionary<int, ServerPopulationData> ServerPopulations { get; init; }
 
         [JsonPropertyName("SRPW")]
-        public List<ServerPopulationWeightData> ServerPopulationsWeight { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ServerPopulationWeightData>))]
+        internal FrozenDictionary<int, ServerPopulationWeightData> ServerPopulationsWeight { get; init; }
 
         [JsonPropertyName("SRC")]
-        public List<ServerCommunityData> ServerCommunities { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ServerCommunityData>))]
+        public FrozenDictionary<int, ServerCommunityData> ServerCommunities { get; init; }
 
         [JsonPropertyName("SRVT")]
-        public List<DefaultServerSpecificTextData> DefaultServerSpecificTexts { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, DefaultServerSpecificTextData>))]
+        public FrozenDictionary<int, DefaultServerSpecificTextData> DefaultServerSpecificTexts { get; init; }
 
         [JsonPropertyName("SRVC")]
-        public List<ServerSpecificTextData> ServerSpecificTexts { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<string, ServerSpecificTextData>))]
+        public FrozenDictionary<string, ServerSpecificTextData> ServerSpecificTexts { get; init; }
 
         [JsonConstructor]
         internal ServersData()
         {
-            Servers = [];
-            ServerPopulations = [];
-            ServerPopulationsWeight = [];
-            ServerCommunities = [];
-            DefaultServerSpecificTexts = [];
-            ServerSpecificTexts = [];
+            Servers = FrozenDictionary<int, ServerData>.Empty;
+            ServerPopulations = FrozenDictionary<int, ServerPopulationData>.Empty;
+            ServerPopulationsWeight = FrozenDictionary<int, ServerPopulationWeightData>.Empty;
+            ServerCommunities = FrozenDictionary<int, ServerCommunityData>.Empty;
+            DefaultServerSpecificTexts = FrozenDictionary<int, DefaultServerSpecificTextData>.Empty;
+            ServerSpecificTexts = FrozenDictionary<string, ServerSpecificTextData>.Empty;
         }
 
         internal static ServersData Load()
         {
-            return Datacenter.LoadDataFromFile<ServersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            ServersData data = Datacenter.LoadDataFromFile<ServersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+
+            foreach (ServerPopulationData serverPopulationData in data.ServerPopulations.Values)
+            {
+                ServerPopulationWeightData? serverPopulationWeightData = data.GetServerPopulationWeightDataById(serverPopulationData.Id);
+                if (serverPopulationWeightData is not null)
+                {
+                    serverPopulationData.Weight = serverPopulationWeightData.Weight;
+                }
+            }
+
+            return data;
         }
 
         public ServerData? GetServerDataById(int id)
         {
-            return Servers.Find(x => x.Id == id);
+            Servers.TryGetValue(id, out ServerData? serverData);
+            return serverData;
         }
 
         public string GetServerNameById(int id)
@@ -201,17 +224,20 @@ namespace Cyberia.Api.Data
 
         public ServerPopulationData? GetServerPopulationDataById(int id)
         {
-            return ServerPopulations.Find(x => x.Id == id);
+            ServerPopulations.TryGetValue(id, out ServerPopulationData? serverPopulationData);
+            return serverPopulationData;
         }
 
-        public ServerPopulationWeightData? GetServerPopulationWeightDataById(int id)
+        internal ServerPopulationWeightData? GetServerPopulationWeightDataById(int id)
         {
-            return ServerPopulationsWeight.Find(x => x.Id == id);
+            ServerPopulationsWeight.TryGetValue(id, out ServerPopulationWeightData? serverPopulationWeightData);
+            return serverPopulationWeightData;
         }
 
         public ServerCommunityData? GetServerCommunityDataById(int id)
         {
-            return ServerCommunities.Find(x => x.Id == id);
+            ServerCommunities.TryGetValue(id, out ServerCommunityData? serverCommunityData);
+            return serverCommunityData;
         }
 
     }

@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class FightChallengeData
+    public sealed class FightChallengeData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -24,22 +27,29 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class FightChallengesData
+    public sealed class FightChallengesData : IDofusData
     {
         private const string FILE_NAME = "fightChallenge.json";
 
         [JsonPropertyName("FC")]
-        public List<FightChallengeData> FightChallenges { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, FightChallengeData>))]
+        public FrozenDictionary<int, FightChallengeData> FightChallenges { get; init; }
 
         [JsonConstructor]
         internal FightChallengesData()
         {
-            FightChallenges = [];
+            FightChallenges = FrozenDictionary<int, FightChallengeData>.Empty;
         }
 
         internal static FightChallengesData Load()
         {
             return Datacenter.LoadDataFromFile<FightChallengesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        }
+
+        public FightChallengeData? GetFightChallenge(int id)
+        {
+            FightChallenges.TryGetValue(id, out FightChallengeData? fightChallenge);
+            return fightChallenge;
         }
     }
 }

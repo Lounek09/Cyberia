@@ -2,8 +2,9 @@
 
 namespace Cyberia.Api.Data
 {
-    public sealed class GuildData
+    public sealed class GuildData : IDofusData
     {
+        //TODO: Properly implement GuildData
         [JsonPropertyName("w")]
         public List<List<int>> BoostCostWeight { get; set; }
 
@@ -45,7 +46,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class GuildsData
+    public sealed class GuildsData : IDofusData
     {
         private const string FILE_NAME = "guilds.json";
 

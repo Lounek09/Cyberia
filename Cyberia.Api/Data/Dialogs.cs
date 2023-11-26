@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class DialogQuestionData
+    public sealed class DialogQuestionData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -17,7 +20,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class DialogAnswerData
+    public sealed class DialogAnswerData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -32,21 +35,23 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class DialogsData
+    public sealed class DialogsData : IDofusData
     {
         private const string FILE_NAME = "dialog.json";
 
         [JsonPropertyName("D.q")]
-        public List<DialogQuestionData> DialogQuestions { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, DialogQuestionData>))]
+        public FrozenDictionary<int, DialogQuestionData> DialogQuestions { get; init; }
 
         [JsonPropertyName("D.a")]
-        public List<DialogAnswerData> DialogAnswers { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, DialogAnswerData>))]
+        public FrozenDictionary<int, DialogAnswerData> DialogAnswers { get; init; }
 
         [JsonConstructor]
         internal DialogsData()
         {
-            DialogQuestions = [];
-            DialogAnswers = [];
+            DialogQuestions = FrozenDictionary<int, DialogQuestionData>.Empty;
+            DialogAnswers = FrozenDictionary<int, DialogAnswerData>.Empty;
         }
 
         internal static DialogsData Load()
@@ -54,14 +59,16 @@ namespace Cyberia.Api.Data
             return Datacenter.LoadDataFromFile<DialogsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
-        public DialogQuestionData? GetDialogQuestionDataById(int od)
+        public DialogQuestionData? GetDialogQuestionDataById(int id)
         {
-            return DialogQuestions.Find(x => x.Id == od);
+            DialogQuestions.TryGetValue(id, out DialogQuestionData? dialogQuestionData);
+            return dialogQuestionData;
         }
 
         public DialogAnswerData? GetDialogAnswerDataById(int id)
         {
-            return DialogAnswers.Find(x => x.Id == id);
+            DialogAnswers.TryGetValue(id, out DialogAnswerData? dialogAnswerData);
+            return dialogAnswerData;
         }
     }
 }

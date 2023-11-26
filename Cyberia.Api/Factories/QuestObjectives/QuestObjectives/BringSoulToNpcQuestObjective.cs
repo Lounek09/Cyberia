@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Data;
 
+using System.Collections.ObjectModel;
+
 namespace Cyberia.Api.Factories.QuestObjectives
 {
     public sealed record BringSoulToNpcQuestObjective : QuestObjective, IQuestObjective<BringSoulToNpcQuestObjective>
@@ -18,7 +20,7 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public static BringSoulToNpcQuestObjective? Create(QuestObjectiveData questObjectiveData)
         {
-            List<string> parameters = questObjectiveData.Parameters;
+            ReadOnlyCollection<string> parameters = questObjectiveData.Parameters;
             if (parameters.Count > 2 && int.TryParse(parameters[0], out int npcId) && int.TryParse(parameters[1], out int monsterId) && int.TryParse(parameters[2], out int quantity))
             {
                 return new(questObjectiveData, npcId, monsterId, quantity);

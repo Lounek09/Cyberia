@@ -25,3 +25,7 @@ csharp_style_prefer_primary_constructors = false
 
 # IDE0305: Simplify collection initialization
 dotnet_style_prefer_collection_expression = false
+
+[Cyberia.Api/Data/*.cs]
+# IDE0044: Add readonly modifier
+dotnet_style_readonly_field = false

@@ -1,37 +1,44 @@
 ﻿using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
 
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class ItemStatsData
+    public sealed class ItemStatsData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
 
         [JsonPropertyName("v")]
         [JsonConverter(typeof(ItemEffectListConverter))]
-        public List<IEffect> Effects { get; init; }
+        [JsonInclude]
+        internal List<IEffect> EffectsCore { get; init; }
+
+        [JsonIgnore]
+        public ReadOnlyCollection<IEffect> Effects => EffectsCore.AsReadOnly();
 
         [JsonConstructor]
         internal ItemStatsData()
         {
-            Effects = [];
+            EffectsCore = [];
         }
     }
 
-    public sealed class ItemsStatsData
+    public sealed class ItemsStatsData : IDofusData
     {
         private const string FILE_NAME = "itemstats.json";
 
         [JsonPropertyName("ISTA")]
-        public List<ItemStatsData> ItemsStats { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemStatsData>))]
+        public FrozenDictionary<int, ItemStatsData> ItemsStats { get; internal set; }
 
         [JsonConstructor]
         internal ItemsStatsData()
         {
-            ItemsStats = [];
+            ItemsStats = FrozenDictionary<int, ItemStatsData>.Empty;
         }
 
         internal static ItemsStatsData Load()
@@ -39,24 +46,27 @@ namespace Cyberia.Api.Data
             ItemsStatsData data = Datacenter.LoadDataFromFile<ItemsStatsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
             ItemsStatsCustomData customData = Datacenter.LoadDataFromFile<ItemsStatsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
+            Dictionary<int, ItemStatsData> tempItemsStats = data.ItemsStats.ToDictionary();
             foreach (ItemStatsCustomData itemStatsCustomData in customData.ItemsStatsCustom)
             {
                 ItemStatsData? itemStatsData = data.GetItemStatDataById(itemStatsCustomData.Id);
                 if (itemStatsData is not null)
                 {
-                    itemStatsData.Effects.AddRange(itemStatsCustomData.Effects);
+                    itemStatsData.EffectsCore.AddRange(itemStatsCustomData.Effects);
                     continue;
                 }
 
-                data.ItemsStats.Add(itemStatsCustomData.ToItemStatsData());
+                tempItemsStats.Add(itemStatsCustomData.Id, itemStatsCustomData.ToItemStatsData());
             }
 
+            data.ItemsStats = tempItemsStats.ToFrozenDictionary();
             return data;
         }
 
         public ItemStatsData? GetItemStatDataById(int id)
         {
-            return ItemsStats.Find(x => x.Id == id);
+            ItemsStats.TryGetValue(id, out ItemStatsData? itemStatsData);
+            return itemStatsData;
         }
     }
 }

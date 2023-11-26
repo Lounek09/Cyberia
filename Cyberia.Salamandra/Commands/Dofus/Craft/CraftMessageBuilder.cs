@@ -76,13 +76,13 @@ namespace Cyberia.Salamandra.Commands.Dofus
                     .WithThumbnail(await _itemData.GetImagePath());
             }
 
-            int weight = _recursive ? _craftData.GetRecursiveWeight() : _craftData.GetWeight();
+            int weight = _recursive ? _craftData.GetWeightWithSubCraft() : _craftData.GetWeight();
             embed.AddField("Poids :", $"{Formatter.Bold(weight.ToStringThousandSeparator())} pod{(weight > 1 ? "s" : "")} par craft" + (_qte > 1 ? $", {Formatter.Bold((weight * _qte).ToStringThousandSeparator())} au total" : ""));
 
-            string time = $"{Formatter.Bold((_recursive ? _craftData.GetRecursiveTimeForMultipleCraft(1) : _craftData.GetTimeForMultipleCraft(1)).ToString(@"mm\mss\sfff"))} par craft";
+            string time = $"{Formatter.Bold((_recursive ? _craftData.GetTimePerCraftWithSubCraft(1) : _craftData.GetTimePerCraft(1)).ToString(@"mm\mss\sfff"))} par craft";
             if (_qte > 1)
             {
-                TimeSpan totalTime = _recursive ? _craftData.GetRecursiveTimeForMultipleCraft(_qte) : _craftData.GetTimeForMultipleCraft(_qte);
+                TimeSpan totalTime = _recursive ? _craftData.GetTimePerCraftWithSubCraft(_qte) : _craftData.GetTimePerCraft(_qte);
                 string format = (totalTime.TotalDays < 1 ? "" : @"%d\d") + (totalTime.TotalHours < 1 ? "" : @"hh\h") + @"mm\mss\sfff";
                 time += $"\n{Formatter.Bold(totalTime.ToString(format))} au total";
             }

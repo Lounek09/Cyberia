@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class EffectData
+    public sealed class EffectData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -34,17 +37,18 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class EffectsData
+    public sealed class EffectsData : IDofusData
     {
         private const string FILE_NAME = "effects.json";
 
         [JsonPropertyName("E")]
-        public List<EffectData> Effects { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, EffectData>))]
+        public FrozenDictionary<int, EffectData> Effects { get; init; }
 
         [JsonConstructor]
         internal EffectsData()
         {
-            Effects = [];
+            Effects = FrozenDictionary<int, EffectData>.Empty;
         }
 
         internal static EffectsData Load()
@@ -54,7 +58,8 @@ namespace Cyberia.Api.Data
 
         public EffectData? GetEffectDataById(int id)
         {
-            return Effects.Find(x => x.Id == id);
+            Effects.TryGetValue(id, out EffectData? effectData);
+            return effectData;
         }
     }
 }

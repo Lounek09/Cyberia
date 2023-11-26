@@ -15,20 +15,19 @@ namespace Cyberia.Salamandra.Commands.Admin
             [Option("stats", "Stats de l'item")]
                 string value)
         {
-            List<IEffect> effects = EffectFactory.GetEffectsParseFromItem(value).ToList();
+            IEnumerable<IEffect> effects = EffectFactory.GetEffectsParseFromItem(value);
 
-            if (effects.Count > 0)
+            if (effects.Any())
             {
                 DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Inventaire")
                     .WithTitle("Item stats parser")
                     .AddEffectFields("Effets :", effects);
 
                 await ctx.CreateResponseAsync(embed);
+                return;
             }
-            else
-            {
-                await ctx.CreateResponseAsync("Valeur incorrect !");
-            }
+
+            await ctx.CreateResponseAsync("Valeur incorrect !");
         }
     }
 }

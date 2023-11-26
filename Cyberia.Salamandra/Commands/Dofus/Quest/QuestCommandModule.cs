@@ -26,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<QuestData> questsData = DofusApi.Datacenter.QuestsData.GetQuestsDataByName(value);
+                List<QuestData> questsData = DofusApi.Datacenter.QuestsData.GetQuestsDataByName(value).ToList();
                 if (questsData.Count == 1)
                 {
                     response = await new QuestMessageBuilder(questsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

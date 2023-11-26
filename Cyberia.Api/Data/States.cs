@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class StateData
+    public sealed class StateData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -11,7 +14,8 @@ namespace Cyberia.Api.Data
         public string Name { get; init; }
 
         [JsonPropertyName("p")]
-        public int P { get; init; }
+        [JsonInclude]
+        internal int P { get; init; }
 
         [JsonConstructor]
         internal StateData()
@@ -25,17 +29,18 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class StatesData
+    public sealed class StatesData : IDofusData
     {
         private const string FILE_NAME = "states.json";
 
         [JsonPropertyName("ST")]
-        public List<StateData> States { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, StateData>))]
+        public FrozenDictionary<int, StateData> States { get; init; }
 
         [JsonConstructor]
         internal StatesData()
         {
-            States = [];
+            States = FrozenDictionary<int, StateData>.Empty;
         }
 
         internal static StatesData Load()
@@ -45,7 +50,8 @@ namespace Cyberia.Api.Data
 
         public StateData? GetStateDataById(int id)
         {
-            return States.Find(x => x.Id == id);
+            States.TryGetValue(id, out StateData? stateData);
+            return stateData;
         }
 
         public string GetStateNameById(int id)

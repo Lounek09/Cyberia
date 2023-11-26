@@ -8,6 +8,8 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
+using System.Collections.ObjectModel;
+
 namespace Cyberia.Salamandra.Commands.Dofus
 {
     public sealed class SpellMessageBuilder : ICustomMessageBuilder
@@ -107,10 +109,10 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 }
                 else
                 {
-                    List<IEffect> effects = _spellLevelData.Effects;
-                    List<IEffect> trapEffects = _spellLevelData.GetTrapEffects();
-                    List<IEffect> glyphEffects = _spellLevelData.GetGlyphEffects();
-                    List<IEffect> criticalEffects = _spellLevelData.CriticalEffects;
+                    ReadOnlyCollection<IEffect> effects = _spellLevelData.Effects;
+                    ReadOnlyCollection<IEffect> trapEffects = _spellLevelData.GetTrapEffects();
+                    ReadOnlyCollection<IEffect> glyphEffects = _spellLevelData.GetGlyphEffects();
+                    ReadOnlyCollection<IEffect> criticalEffects = _spellLevelData.CriticalEffects;
 
                     if (effects.Count == 0 && trapEffects.Count == 0 && glyphEffects.Count == 0 && criticalEffects.Count == 0)
                     {

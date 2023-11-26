@@ -85,8 +85,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 embed.AddField("Items :", string.Join('\n', _itemsData.Select(x => $"- Niv.{x.Level} {Formatter.Bold(x.Name)}")));
             }
 
-            List<IEffect> effects = _itemSetData.GetEffects(_nbItemSelected);
-            if (effects.Count > 0)
+            IEnumerable<IEffect> effects = _itemSetData.GetEffects(_nbItemSelected);
+            if (effects.Any())
             {
                 embed.AddEffectFields("Effets :", effects);
             }

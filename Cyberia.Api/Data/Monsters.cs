@@ -1,10 +1,13 @@
 ﻿using Cyberia.Api.Data.Custom;
+using Cyberia.Api.JsonConverters;
 
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class MonsterSuperRaceData
+    public sealed class MonsterSuperRaceData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -14,7 +17,8 @@ namespace Cyberia.Api.Data
 
         [JsonPropertyName("s")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
-        public int MonsterSuperRaceId { get; init; }
+        [JsonInclude]
+        internal int MonsterSuperRaceId { get; init; }
 
         [JsonConstructor]
         internal MonsterSuperRaceData()
@@ -23,7 +27,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class MonsterRaceData
+    public sealed class MonsterRaceData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -49,13 +53,14 @@ namespace Cyberia.Api.Data
 
 
 
-    public sealed class MonsterGradeData
+    public sealed class MonsterGradeData : IDofusData
     {
         [JsonPropertyName("l")]
         public int Level { get; init; }
 
         [JsonPropertyName("r")]
-        public List<int> Resistances { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> Resistances { get; init; }
 
         [JsonPropertyName("lp")]
         public int? LifePoint { get; init; }
@@ -69,7 +74,7 @@ namespace Cyberia.Api.Data
         [JsonConstructor]
         internal MonsterGradeData()
         {
-            Resistances = [];
+            Resistances = ReadOnlyCollection<int>.Empty;
         }
 
         public int GetNeutralResistance()
@@ -108,7 +113,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class MonsterData
+    public sealed class MonsterData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -242,25 +247,28 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class MonstersData
+    public sealed class MonstersData : IDofusData
     {
         private const string FILE_NAME = "monsters.json";
 
         [JsonPropertyName("MSR")]
-        public List<MonsterSuperRaceData> MonsterSuperRaces { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MonsterSuperRaceData>))]
+        public FrozenDictionary<int, MonsterSuperRaceData> MonsterSuperRaces { get; init; }
 
         [JsonPropertyName("MR")]
-        public List<MonsterRaceData> MonsterRaces { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MonsterRaceData>))]
+        public FrozenDictionary<int, MonsterRaceData> MonsterRaces { get; init; }
 
         [JsonPropertyName("M")]
-        public List<MonsterData> Monsters { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MonsterData>))]
+        public FrozenDictionary<int, MonsterData> Monsters { get; init; }
 
         [JsonConstructor]
         internal MonstersData()
         {
-            MonsterSuperRaces = [];
-            MonsterRaces = [];
-            Monsters = [];
+            MonsterSuperRaces = FrozenDictionary<int, MonsterSuperRaceData>.Empty;
+            MonsterRaces = FrozenDictionary<int, MonsterRaceData>.Empty;
+            Monsters = FrozenDictionary<int, MonsterData>.Empty;
         }
 
         internal static MonstersData Load()
@@ -283,7 +291,8 @@ namespace Cyberia.Api.Data
 
         public MonsterSuperRaceData? GetMonsterSuperRaceDataById(int id)
         {
-            return MonsterSuperRaces.Find(x => x.Id == id);
+            MonsterSuperRaces.TryGetValue(id, out MonsterSuperRaceData? monsterSuperRaceData);
+            return monsterSuperRaceData;
         }
 
         public string GetMonsterSuperRaceNameById(int id)
@@ -295,7 +304,8 @@ namespace Cyberia.Api.Data
 
         public MonsterRaceData? GetMonsterRaceDataById(int id)
         {
-            return MonsterRaces.Find(x => x.Id == id);
+            MonsterRaces.TryGetValue(id, out MonsterRaceData? monsterRaceData);
+            return monsterRaceData;
         }
 
         public string GetMonsterRaceNameById(int id)
@@ -307,18 +317,14 @@ namespace Cyberia.Api.Data
 
         public MonsterData? GetMonsterDataById(int id)
         {
-            return Monsters.Find(x => x.Id == id);
+            Monsters.TryGetValue(id, out MonsterData? monsterData);
+            return monsterData;
         }
 
-        public MonsterData? GetMonsterDataByName(string name)
-        {
-            return Monsters.Find(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
-        }
-
-        public List<MonsterData> GetMonstersDataByName(string name)
+        public IEnumerable<MonsterData> GetMonstersDataByName(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return Monsters.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
+            return Monsters.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetMonsterNameById(int id)

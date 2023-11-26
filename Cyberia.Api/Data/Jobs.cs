@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class JobData
+    public sealed class JobData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -11,7 +14,7 @@ namespace Cyberia.Api.Data
         public string Name { get; init; }
 
         [JsonPropertyName("s")]
-        public int SpecializationOfJobId { get; init; }
+        public int JobSpecializationId { get; init; }
 
         [JsonPropertyName("g")]
         public int GfxId { get; init; }
@@ -24,21 +27,22 @@ namespace Cyberia.Api.Data
 
         public JobData? GetJobDataSpecialization()
         {
-            return DofusApi.Datacenter.JobsData.GetJobDataById(SpecializationOfJobId);
+            return DofusApi.Datacenter.JobsData.GetJobDataById(JobSpecializationId);
         }
     }
 
-    public sealed class JobsData
+    public sealed class JobsData : IDofusData
     {
         private const string FILE_NAME = "jobs.json";
 
         [JsonPropertyName("J")]
-        public List<JobData> Jobs { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, JobData>))]
+        public FrozenDictionary<int, JobData> Jobs { get; init; }
 
         [JsonConstructor]
         internal JobsData()
         {
-            Jobs = [];
+            Jobs = FrozenDictionary<int, JobData>.Empty;
         }
 
         internal static JobsData Load()
@@ -48,7 +52,8 @@ namespace Cyberia.Api.Data
 
         public JobData? GetJobDataById(int id)
         {
-            return Jobs.Find(x => x.Id == id);
+            Jobs.TryGetValue(id, out JobData? jobData);
+            return jobData;
         }
 
         public string GetJobNameById(int id)

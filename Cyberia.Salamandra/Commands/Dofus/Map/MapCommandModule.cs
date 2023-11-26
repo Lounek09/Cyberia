@@ -39,7 +39,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Minimum(-666), Maximum(666)]
             long yCoord)
         {
-            List<MapData> mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate((int)xCoord, (int)yCoord);
+            List<MapData> mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate((int)xCoord, (int)yCoord).ToList();
 
             if (mapsData.Count == 0)
             {
@@ -75,7 +75,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<MapData> mapsData = mapSubAreaData.GetMapsData();
+                List<MapData> mapsData = mapSubAreaData.GetMapsData().ToList();
 
                 if (mapsData.Count == 0)
                 {
@@ -108,7 +108,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<MapData> mapsData = mapAreaData.GetMapsData();
+                List<MapData> mapsData = mapAreaData.GetMapsData().ToList();
 
                 if (mapsData.Count == 0)
                 {

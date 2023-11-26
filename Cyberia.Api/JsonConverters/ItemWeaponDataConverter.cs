@@ -9,16 +9,7 @@ namespace Cyberia.Api.JsonConverters
     {
         public override ItemWeaponData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType is not JsonTokenType.StartArray)
-            {
-                throw new JsonException("Invalid JSON format: expected an array.");
-            }
-
-            JsonElement[]? elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options);
-            if (elements is null || elements.Length != 8)
-            {
-                throw new JsonException($"Invalid JSON format: expected an array of 8 values, but got a length of {elements?.Length}.");
-            }
+            JsonElement[] elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
             return new ItemWeaponData
             {

@@ -45,21 +45,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
                             int.TryParse(parameters[3], out int xCoord) &&
                             int.TryParse(parameters[4], out int yCoord))
                         {
-                            mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(xCoord, yCoord);
+                            mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(xCoord, yCoord).ToList();
                             search = $"{parameters[3]}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{parameters[4]}";
                         }
                         break;
                     case MapSearchCategory.MapSubArea:
                         if (int.TryParse(parameters[3], out int mapSubAreaId))
                         {
-                            mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByMapSubAreaId(mapSubAreaId);
+                            mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByMapSubAreaId(mapSubAreaId).ToList();
                             search = parameters[3];
                         }
                         break;
                     case MapSearchCategory.MapArea:
                         if (int.TryParse(parameters[3], out int mapAreaId))
                         {
-                            mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByMapAreaId(mapAreaId);
+                            mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByMapAreaId(mapAreaId).ToList();
                             search = parameters[3];
                         }
                         break;

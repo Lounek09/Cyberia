@@ -26,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<MonsterData> monstersData = DofusApi.Datacenter.MonstersData.GetMonstersDataByName(value);
+                List<MonsterData> monstersData = DofusApi.Datacenter.MonstersData.GetMonstersDataByName(value).ToList();
                 if (monstersData.Count == 1)
                 {
                     response = await new MonsterMessageBuilder(monstersData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

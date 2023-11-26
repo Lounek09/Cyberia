@@ -1,10 +1,13 @@
 ﻿using Cyberia.Api.Data.Custom;
+using Cyberia.Api.JsonConverters;
 
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class HouseData
+    public sealed class HouseData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -55,14 +58,14 @@ namespace Cyberia.Api.Data
         {
             MapData? mapData = GetOutdoorMapData();
 
-            return mapData is null ? "" : mapData.GetCoordinate();
+            return mapData is null ? "[x, x]" : mapData.GetCoordinate();
         }
     }
 
-    public sealed class HouseMapData
+    public sealed class HouseMapData : IDofusData<int>
     {
         [JsonPropertyName("id")]
-        public int MapId { get; init; }
+        public int Id { get; init; }
 
         [JsonPropertyName("v")]
         public int HouseId { get; init; }
@@ -75,7 +78,7 @@ namespace Cyberia.Api.Data
 
         public MapData? GetMapData()
         {
-            return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
+            return DofusApi.Datacenter.MapsData.GetMapDataById(Id);
         }
 
         public HouseData? GetHouseData()
@@ -84,25 +87,28 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class HousesData
+    public sealed class HousesData : IDofusData
     {
         private const string FILE_NAME = "houses.json";
 
         [JsonPropertyName("H.h")]
-        public List<HouseData> Houses { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, HouseData>))]
+        public FrozenDictionary<int, HouseData> Houses { get; init; }
 
         [JsonPropertyName("H.m")]
-        public List<HouseMapData> HouseMaps { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, HouseMapData>))]
+        public FrozenDictionary<int, HouseMapData> HouseMaps { get; init; }
 
         [JsonPropertyName("H.ids")]
-        public List<int> HousesIndoorSkillsId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> HousesIndoorSkillsId { get; init; }
 
         [JsonConstructor]
         internal HousesData()
         {
-            Houses = [];
-            HouseMaps = [];
-            HousesIndoorSkillsId = [];
+            Houses = FrozenDictionary<int, HouseData>.Empty;
+            HouseMaps = FrozenDictionary<int, HouseMapData>.Empty;
+            HousesIndoorSkillsId = ReadOnlyCollection<int>.Empty;
         }
 
         internal static HousesData Load()
@@ -127,71 +133,74 @@ namespace Cyberia.Api.Data
 
         public HouseData? GetHouseDataById(int id)
         {
-            return Houses.Find(x => x.Id == id);
+            Houses.TryGetValue(id, out HouseData? houseData);
+            return houseData;
         }
 
-        public List<HouseData> GetHousesDataByName(string name)
+        public IEnumerable<HouseData> GetHousesDataByName(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return Houses.FindAll(h => names.All(h.Name.NormalizeCustom().Contains)).OrderBy(h => h.Id).ToList();
+            return Houses.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains))
+                .OrderBy(x => x.Id);
         }
 
-        public List<HouseData> GetHousesDataByCoordinate(int x, int y)
+        public IEnumerable<HouseData> GetHousesDataByCoordinate(int x, int y)
         {
-            List<HouseData> housesData = [];
-
-            foreach (HouseData houseData in Houses)
+            foreach (HouseData houseData in Houses.Values)
             {
                 MapData? map = houseData.GetOutdoorMapData();
                 if (map is not null && map.XCoord == x && map.YCoord == y)
                 {
-                    housesData.Add(houseData);
+                    yield return houseData;
                 }
             }
-
-            return housesData;
         }
 
-        public List<HouseData> GetHousesDataByMapSubAreaId(int id)
+        public IEnumerable<HouseData> GetHousesDataByMapSubAreaId(int id)
         {
-            List<HouseData> housesData = [];
-
-            foreach (HouseData houseData in Houses)
+            foreach (HouseData houseData in Houses.Values)
             {
                 MapData? map = houseData.GetOutdoorMapData();
                 if (map is not null && map.GetMapSubAreaData()?.Id == id)
                 {
-                    housesData.Add(houseData);
+                    yield return houseData;
                 }
             }
-
-            return housesData;
         }
 
-        public List<HouseData> GetHousesDataByMapAreaId(int id)
+        public IEnumerable<HouseData> GetHousesDataByMapAreaId(int id)
         {
-            List<HouseData> housesData = [];
-
-            foreach (HouseData houseData in Houses)
+            foreach (HouseData houseData in Houses.Values)
             {
                 MapData? map = houseData.GetOutdoorMapData();
                 if (map is not null && map.GetMapSubAreaData()?.GetMapAreaData()?.Id == id)
                 {
-                    housesData.Add(houseData);
+                    yield return houseData;
                 }
             }
-
-            return housesData;
         }
 
-        public List<HouseMapData> GetHouseMapsDataByHouseId(int id)
+        internal HouseMapData? GetHouseMapDataById(int id)
         {
-            return HouseMaps.FindAll(x => x.HouseId == id);
+            HouseMaps.TryGetValue(id, out HouseMapData? houseMapData);
+            return houseMapData;
         }
 
-        public HouseMapData? GetHouseMapDataByMapId(int id)
+        internal IEnumerable<HouseMapData> GetHouseMapsDataByHouseId(int id)
         {
-            return HouseMaps.Find(x => x.MapId == id);
+            return HouseMaps.Values.Where(x => x.HouseId == id);
+        }
+
+        public IEnumerable<SkillData> GetHousesIndoorsSkill()
+        {
+            foreach (int id in HousesIndoorSkillsId)
+            {
+                SkillData? skillData = DofusApi.Datacenter.SkillsData.GetSkillDataById(id);
+                if (skillData is not null)
+                {
+                    yield return skillData;
+                }
+            }
         }
     }
 }

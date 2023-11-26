@@ -1,14 +1,18 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class InteractiveObjectGfxData
+    internal sealed class InteractiveObjectGfxData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int GfxId { get; init; }
 
         [JsonPropertyName("v")]
-        public int InteractiveObjectId { get; init; }
+        public int Id { get; init; }
 
         [JsonConstructor]
         internal InteractiveObjectGfxData()
@@ -17,7 +21,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class InteractiveObjectData
+    public sealed class InteractiveObjectData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -29,13 +33,17 @@ namespace Cyberia.Api.Data
         public int Type { get; init; }
 
         [JsonPropertyName("sk")]
-        public List<int> SkillsId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> SkillsId { get; init; }
+
+        [JsonIgnore]
+        public int GfxId { get; internal set; }
 
         [JsonConstructor]
         internal InteractiveObjectData()
         {
             Name = string.Empty;
-            SkillsId = [];
+            SkillsId = ReadOnlyCollection<int>.Empty;
         }
 
         public IEnumerable<SkillData> GetSkillsData()
@@ -51,31 +59,51 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class InteractiveObjectsData
+    public sealed class InteractiveObjectsData : IDofusData
     {
         private const string FILE_NAME = "interactiveobjects.json";
 
         [JsonPropertyName("IO.g")]
-        public List<InteractiveObjectGfxData> InteractiveObjectsGfx { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, InteractiveObjectGfxData>))]
+        internal FrozenDictionary<int, InteractiveObjectGfxData> InteractiveObjectsGfx { get; init; }
 
         [JsonPropertyName("IO.d")]
-        public List<InteractiveObjectData> InteractiveObjects { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, InteractiveObjectData>))]
+        public FrozenDictionary<int, InteractiveObjectData> InteractiveObjects { get; init; }
 
         [JsonConstructor]
         internal InteractiveObjectsData()
         {
-            InteractiveObjectsGfx = [];
-            InteractiveObjects = [];
+            InteractiveObjectsGfx = FrozenDictionary<int, InteractiveObjectGfxData>.Empty;
+            InteractiveObjects = FrozenDictionary<int, InteractiveObjectData>.Empty;
         }
 
         internal static InteractiveObjectsData Load()
         {
-            return Datacenter.LoadDataFromFile<InteractiveObjectsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            InteractiveObjectsData data = Datacenter.LoadDataFromFile<InteractiveObjectsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+
+            foreach (InteractiveObjectData interactiveObjectData in data.InteractiveObjects.Values)
+            {
+                InteractiveObjectGfxData? interactiveObjectGfxData = data.GetInteractiveObjectGfxDataById(interactiveObjectData.GfxId);
+                if (interactiveObjectGfxData is not null)
+                {
+                    interactiveObjectData.GfxId = interactiveObjectGfxData.GfxId;
+                }
+            }
+
+            return data;
+        }
+
+        internal InteractiveObjectGfxData? GetInteractiveObjectGfxDataById(int id)
+        {
+            InteractiveObjectsGfx.TryGetValue(id, out InteractiveObjectGfxData? interactiveObjectGfxData);
+            return interactiveObjectGfxData;
         }
 
         public InteractiveObjectData? GetInteractiveObjectDataById(int id)
         {
-            return InteractiveObjects.Find(x => x.Id == id);
+            InteractiveObjects.TryGetValue(id, out InteractiveObjectData? interactiveObjectData);
+            return interactiveObjectData;
         }
     }
 }

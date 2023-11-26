@@ -6,6 +6,7 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus
@@ -111,7 +112,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                         rewards.AppendFormat("{0} {1}\n", _questStepData.RewardsData.Kamas.ToStringThousandSeparator(), Emojis.KAMAS);
                     }
 
-                    Dictionary<ItemData, int> itemsReward = _questStepData.RewardsData.GetItemsDataQuantities();
+                    ReadOnlyDictionary<ItemData, int> itemsReward = _questStepData.RewardsData.GetItemsDataQuantities();
                     if (itemsReward.Count > 0)
                     {
                         rewards.AppendLine(string.Join(", ", itemsReward.Select(x => $"{Formatter.Bold(x.Value.ToString())}x {x.Key.Name}")));

@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Data;
 
+using System.Collections.ObjectModel;
+
 namespace Cyberia.Api.Factories.QuestObjectives
 {
     public sealed record DuelSpecificPlayerQuestObjective : QuestObjective, IQuestObjective<DuelSpecificPlayerQuestObjective>
@@ -14,7 +16,7 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public static DuelSpecificPlayerQuestObjective? Create(QuestObjectiveData questObjectiveData)
         {
-            List<string> parameters = questObjectiveData.Parameters;
+            ReadOnlyCollection<string> parameters = questObjectiveData.Parameters;
             if (parameters.Count > 0)
             {
                 return new(questObjectiveData, parameters[0]);

@@ -8,6 +8,7 @@ using Cyberia.Api.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Cyberia.Salamandra.DsharpPlus
@@ -68,15 +69,15 @@ namespace Cyberia.Salamandra.DsharpPlus
         {
             List<string> result = [];
 
-            Dictionary<int, int> ingredients = recursive ? craftData.GetRecursiveIngredients(qte) : craftData.GetIngredients(qte);
-            foreach (KeyValuePair<int, int> ingredient in ingredients)
+            ReadOnlyDictionary<ItemData, int> ingredients = recursive ? craftData.GetIngredientsWithSubCraft(qte) : craftData.GetIngredients(qte);
+            foreach (KeyValuePair<ItemData, int> ingredient in ingredients)
             {
                 string quantity = Formatter.Bold(ingredient.Value.ToStringThousandSeparator());
-                string itemName = Formatter.Sanitize(DofusApi.Datacenter.ItemsData.GetItemNameById(ingredient.Key));
+                string itemName = Formatter.Sanitize(ingredient.Key.Name);
 
                 if (!recursive)
                 {
-                    CraftData? subCraftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
+                    CraftData? subCraftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(ingredient.Key.Id);
                     if (subCraftData is not null)
                     {
                         itemName = Formatter.Bold(itemName);
@@ -93,10 +94,10 @@ namespace Cyberia.Salamandra.DsharpPlus
         {
             List<string> result = [];
 
-            foreach (KeyValuePair<int, int> ingredient in craftData.GetIngredients(qte))
+            foreach (KeyValuePair<ItemData, int> ingredient in craftData.GetIngredients(qte))
             {
                 string quantity = Formatter.Bold(ingredient.Value.ToStringThousandSeparator());
-                string itemName = Formatter.Sanitize(DofusApi.Datacenter.ItemsData.GetItemNameById(ingredient.Key));
+                string itemName = Formatter.Sanitize(ingredient.Key.Name);
 
                 result.Add($"{quantity}x {itemName}");
             }

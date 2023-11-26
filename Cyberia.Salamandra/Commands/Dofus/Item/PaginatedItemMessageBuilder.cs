@@ -26,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<ItemData> itemsData = DofusApi.Datacenter.ItemsData.GetItemsDataByName(parameters[2]);
+                List<ItemData> itemsData = DofusApi.Datacenter.ItemsData.GetItemsData(parameters[2]).ToList();
                 if (itemsData.Count > 0)
                 {
                     return new(itemsData, parameters[2], selectedPageIndex);

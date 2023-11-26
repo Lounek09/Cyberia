@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Data;
 
+using System.Collections.ObjectModel;
+
 namespace Cyberia.Api.Factories.QuestObjectives
 {
     public sealed record MultiFightMonsterQuestObjective : QuestObjective, IQuestObjective<MultiFightMonsterQuestObjective>
@@ -16,7 +18,7 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public static MultiFightMonsterQuestObjective? Create(QuestObjectiveData questObjectiveData)
         {
-            List<string> parameters = questObjectiveData.Parameters;
+            ReadOnlyCollection<string> parameters = questObjectiveData.Parameters;
             if (parameters.Count > 1 && int.TryParse(parameters[0], out int monsterId) && int.TryParse(parameters[1], out int quantity))
             {
                 return new(questObjectiveData, monsterId, quantity);

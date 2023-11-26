@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class RideData
+    public sealed class RideData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -33,7 +36,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class RideAbilityData
+    public sealed class RideAbilityData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -45,7 +48,8 @@ namespace Cyberia.Api.Data
         public string Description { get; init; }
 
         [JsonPropertyName("e")]
-        public string E { get; init; }
+        [JsonInclude]
+        internal string E { get; init; }
 
         [JsonConstructor]
         internal RideAbilityData()
@@ -56,21 +60,23 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class RidesData
+    public sealed class RidesData : IDofusData
     {
         private const string FILE_NAME = "rides.json";
 
         [JsonPropertyName("RI")]
-        public List<RideData> Rides { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, RideData>))]
+        public FrozenDictionary<int, RideData> Rides { get; init; }
 
         [JsonPropertyName("RIA")]
-        public List<RideAbilityData> RideAbilities { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, RideAbilityData>))]
+        public FrozenDictionary<int, RideAbilityData> RideAbilities { get; init; }
 
         [JsonConstructor]
         internal RidesData()
         {
-            Rides = [];
-            RideAbilities = [];
+            Rides = FrozenDictionary<int, RideData>.Empty;
+            RideAbilities = FrozenDictionary<int, RideAbilityData>.Empty;
         }
 
         internal static RidesData Load()
@@ -80,7 +86,8 @@ namespace Cyberia.Api.Data
 
         public RideData? GetRideDataById(int id)
         {
-            return Rides.Find(x => x.Id == id);
+            Rides.TryGetValue(id, out RideData? rideData);
+            return rideData;
         }
 
         public string GetRideNameById(int id)
@@ -92,7 +99,8 @@ namespace Cyberia.Api.Data
 
         public RideAbilityData? GetRideAbilityDataById(int id)
         {
-            return RideAbilities.Find(x => x.Id == id);
+            RideAbilities.TryGetValue(id, out RideAbilityData? rideAbilityData);
+            return rideAbilityData;
         }
 
         public string GetRideAbilityNameById(int id)

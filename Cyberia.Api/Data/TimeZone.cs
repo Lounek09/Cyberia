@@ -1,10 +1,11 @@
 ﻿using Cyberia.Api.JsonConverters;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class TimeZonesData
+    public sealed class TimeZoneData : IDofusData
     {
         private const string FILE_NAME = "timezones.json";
 
@@ -18,18 +19,18 @@ namespace Cyberia.Api.Data
         public int YearLess { get; set; }
 
         [JsonPropertyName("T.m")]
-        [JsonConverter(typeof(DictionaryConverter<int, string>))]
-        public Dictionary<int, string> StartDayOfMonths { get; set; }
+        [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, string>))]
+        public ReadOnlyDictionary<int, string> StartDayOfMonths { get; set; }
 
         [JsonConstructor]
-        internal TimeZonesData()
+        internal TimeZoneData()
         {
-            StartDayOfMonths = [];
+            StartDayOfMonths = ReadOnlyDictionary<int, string>.Empty;
         }
 
-        internal static TimeZonesData Load()
+        internal static TimeZoneData Load()
         {
-            return Datacenter.LoadDataFromFile<TimeZonesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            return Datacenter.LoadDataFromFile<TimeZoneData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         }
 
         public string GetMonth(int dayOfYear)

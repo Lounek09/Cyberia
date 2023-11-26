@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Data;
 
+using System.Collections.ObjectModel;
+
 namespace Cyberia.Api.Factories.QuestObjectives
 {
     public sealed record GoToNpcQuestObjective : QuestObjective, IQuestObjective<GoToNpcQuestObjective>
@@ -14,7 +16,7 @@ namespace Cyberia.Api.Factories.QuestObjectives
 
         public static GoToNpcQuestObjective? Create(QuestObjectiveData questObjectiveData)
         {
-            List<string> parameters = questObjectiveData.Parameters;
+            ReadOnlyCollection<string> parameters = questObjectiveData.Parameters;
             if (parameters.Count > 0 && int.TryParse(parameters[0], out int npcId))
             {
                 return new(questObjectiveData, npcId);

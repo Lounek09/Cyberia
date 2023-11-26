@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class TaxCollectorLastNameData
+    public sealed class TaxCollectorLastNameData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -17,7 +20,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class TaxCollectorFirstNameData
+    public sealed class TaxCollectorFirstNameData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -32,21 +35,23 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class TaxCollectorNamesData
+    public sealed class TaxCollectorNamesData : IDofusData
     {
         private const string FILE_NAME = "names.json";
 
         [JsonPropertyName("NF.n")]
-        public List<TaxCollectorLastNameData> TaxCollectorLastNames { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TaxCollectorLastNameData>))]
+        public FrozenDictionary<int, TaxCollectorLastNameData> TaxCollectorLastNames { get; init; }
 
         [JsonPropertyName("NF.f")]
-        public List<TaxCollectorFirstNameData> TaxCollectorFirstNames { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TaxCollectorFirstNameData>))]
+        public FrozenDictionary<int, TaxCollectorFirstNameData> TaxCollectorFirstNames { get; init; }
 
         [JsonConstructor]
         internal TaxCollectorNamesData()
         {
-            TaxCollectorLastNames = [];
-            TaxCollectorFirstNames = [];
+            TaxCollectorLastNames = FrozenDictionary<int, TaxCollectorLastNameData>.Empty;
+            TaxCollectorFirstNames = FrozenDictionary<int, TaxCollectorFirstNameData>.Empty;
         }
 
         internal static TaxCollectorNamesData Load()

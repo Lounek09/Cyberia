@@ -104,7 +104,7 @@ namespace Cyberia.Api.Factories
             return UntranslatedEffect.Create(effectId, parameters, duration, probability, criteria, effectArea);
         }
 
-        public static IEnumerable<IEffect> GetEffectsParseFromSpell(JsonElement[] effects, List<EffectArea> effectAreas)
+        public static IEnumerable<IEffect> GetEffectsParseFromSpell(JsonElement[] effects, IReadOnlyList<EffectArea> effectAreas)
         {
             for (int i = 0; i < effects.Length; i++)
             {

@@ -3,11 +3,13 @@ using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Managers;
 
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class ItemUnicStringData
+    public sealed class ItemUnicStringData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -22,7 +24,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class ItemSuperTypeData
+    public sealed class ItemSuperTypeData : IDofusData<int>
     {
         public const int SUPER_TYPE_QUEST = 14;
 
@@ -30,31 +32,36 @@ namespace Cyberia.Api.Data
         public int Id { get; init; }
 
         [JsonPropertyName("v")]
-        public bool V { get; init; }
+        [JsonInclude]
+        internal bool V { get; init; }
+
+        [JsonIgnore]
+        public ReadOnlyCollection<int> SlotsId { get; internal set; }
 
         [JsonConstructor]
         internal ItemSuperTypeData()
         {
-
+            SlotsId = ReadOnlyCollection<int>.Empty;
         }
     }
 
-    public sealed class ItemSuperTypeSlotData
+    internal sealed class ItemSuperTypeSlotData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
 
         [JsonPropertyName("v")]
-        public List<int> SlotsId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> SlotsId { get; init; }
 
         [JsonConstructor]
         internal ItemSuperTypeSlotData()
         {
-            SlotsId = [];
+            SlotsId = ReadOnlyCollection<int>.Empty;
         }
     }
 
-    public sealed class ItemTypeData
+    public sealed class ItemTypeData : IDofusData<int>
     {
         public const int TYPE_PET = 18;
 
@@ -78,7 +85,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class ItemWeaponData
+    public sealed class ItemWeaponData : IDofusData
     {
         public int CriticalBonus { get; init; }
 
@@ -102,7 +109,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class ItemData
+    public sealed class ItemData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -249,43 +256,72 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class ItemsData
+    public sealed class ItemsData : IDofusData
     {
         private const string FILE_NAME = "items.json";
 
         [JsonPropertyName("I.us")]
-        public List<ItemUnicStringData> ItemUnicStrings { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemUnicStringData>))]
+        public FrozenDictionary<int, ItemUnicStringData> ItemUnicStrings { get; init; }
 
         [JsonPropertyName("I.st")]
-        public List<ItemSuperTypeData> ItemSuperTypes { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemSuperTypeData>))]
+        public FrozenDictionary<int, ItemSuperTypeData> ItemSuperTypes { get; init; }
 
         [JsonPropertyName("I.ss")]
-        public List<ItemSuperTypeSlotData> ItemSuperTypeSlots { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemSuperTypeSlotData>))]
+        internal FrozenDictionary<int, ItemSuperTypeSlotData> ItemSuperTypeSlots { get; init; }
 
         [JsonPropertyName("I.t")]
-        public List<ItemTypeData> ItemTypes { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemTypeData>))]
+        public FrozenDictionary<int, ItemTypeData> ItemTypes { get; init; }
 
         [JsonPropertyName("I.u")]
-        public List<ItemData> Items { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemData>))]
+        public FrozenDictionary<int, ItemData> Items { get; init; }
 
         [JsonConstructor]
         internal ItemsData()
         {
-            ItemUnicStrings = [];
-            ItemSuperTypes = [];
-            ItemSuperTypeSlots = [];
-            ItemTypes = [];
-            Items = [];
+            ItemUnicStrings = FrozenDictionary<int, ItemUnicStringData>.Empty;
+            ItemSuperTypes = FrozenDictionary<int, ItemSuperTypeData>.Empty;
+            ItemSuperTypeSlots = FrozenDictionary<int, ItemSuperTypeSlotData>.Empty;
+            ItemTypes = FrozenDictionary<int, ItemTypeData>.Empty;
+            Items = FrozenDictionary<int, ItemData>.Empty;
         }
 
         internal static ItemsData Load()
         {
-            return Datacenter.LoadDataFromFile<ItemsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            ItemsData data = Datacenter.LoadDataFromFile<ItemsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+
+            foreach (ItemSuperTypeSlotData itemSuperTypeSlotData in data.ItemSuperTypeSlots.Values)
+            {
+                ItemSuperTypeData? itemSuperTypeData = data.GetItemSuperTypeDataById(itemSuperTypeSlotData.Id);
+                if (itemSuperTypeData is not null)
+                {
+                    itemSuperTypeData.SlotsId = itemSuperTypeSlotData.SlotsId;
+                }
+            }
+
+            return data;
+        }
+
+        public ItemSuperTypeData? GetItemSuperTypeDataById(int id)
+        {
+            ItemSuperTypes.TryGetValue(id, out ItemSuperTypeData? itemSuperTypeData);
+            return itemSuperTypeData;
+        }
+
+        internal ItemSuperTypeSlotData? GetItemSuperTypeSlotDataById(int id)
+        {
+            ItemSuperTypeSlots.TryGetValue(id, out ItemSuperTypeSlotData? itemSuperTypeSlotData);
+            return itemSuperTypeSlotData;
         }
 
         public ItemTypeData? GetItemTypeDataById(int id)
         {
-            return ItemTypes.Find(x => x.Id == id);
+            ItemTypes.TryGetValue(id, out ItemTypeData? itemTypeData);
+            return itemTypeData;
         }
 
         public string GetItemTypeNameById(int id)
@@ -297,18 +333,14 @@ namespace Cyberia.Api.Data
 
         public ItemData? GetItemDataById(int id)
         {
-            return Items.Find(x => x.Id == id);
+            Items.TryGetValue(id, out ItemData? itemData);
+            return itemData;
         }
 
-        public ItemData? GetItemDataByName(string name)
-        {
-            return Items.Find(x => x.NormalizedName.Equals(name.NormalizeCustom()));
-        }
-
-        public List<ItemData> GetItemsDataByName(string name)
+        public IEnumerable<ItemData> GetItemsData(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return Items.FindAll(x => names.All(x.NormalizedName.Contains));
+            return Items.Values.Where(x => names.All(x.NormalizedName.Contains));
         }
 
         public string GetItemNameById(int id)

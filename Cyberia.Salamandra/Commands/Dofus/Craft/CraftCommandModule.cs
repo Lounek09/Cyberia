@@ -29,7 +29,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<CraftData> craftsData = DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value);
+                List<CraftData> craftsData = DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value).ToList();
                 if (craftsData.Count == 1)
                 {
                     response = await new CraftMessageBuilder(craftsData[0], (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();

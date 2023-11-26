@@ -13,29 +13,19 @@ namespace Cyberia.Api.JsonConverters
     {
         public override SpellLevelData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType is not JsonTokenType.StartArray)
-            {
-                throw new JsonException("Invalid JSON format: expected an array.");
-            }
-
-            JsonElement[]? elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options);
-            if (elements is null || elements.Length != 21)
-            {
-                throw new JsonException($"Invalid JSON format: expected an array of 21 values, but got a length of {elements?.Length}.");
-            }
+            JsonElement[] elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
             JsonElement[] effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0].GetRawText(), options) ?? [];
             JsonElement[] criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1].GetRawText(), options) ?? [];
             List<EffectArea> effectAreas = EffectAreaManager.GetEffectAreas(elements[15].ToString()).ToList();
-
             List<IEffect> effectParse = EffectFactory.GetEffectsParseFromSpell(effects, effectAreas).ToList();
             effectAreas.RemoveRange(0, effectParse.Count);
             List<IEffect> criticalEffectParse = EffectFactory.GetEffectsParseFromSpell(criticalEffects, effectAreas).ToList();
 
             return new SpellLevelData
             {
-                Effects = effectParse,
-                CriticalEffects = criticalEffectParse,
+                Effects = effectParse.AsReadOnly(),
+                CriticalEffects = criticalEffectParse.AsReadOnly(),
                 ActionPointCost = elements[2].GetInt32(),
                 MinRange = elements[3].GetInt32(),
                 MaxRange = elements[4].GetInt32(),
@@ -49,8 +39,8 @@ namespace Cyberia.Api.JsonConverters
                 LaunchCountByTurn = elements[12].GetInt32(),
                 LaunchCountByPlayerByTurn = elements[13].GetInt32(),
                 DelayBetweenLaunch = elements[14].GetInt32(),
-                RequiredStatesId = JsonSerializer.Deserialize<List<int>>(elements[16].GetRawText(), options) ?? [],
-                ForbiddenStatesId = JsonSerializer.Deserialize<List<int>>(elements[17].GetRawText(), options) ?? [],
+                RequiredStatesId = (JsonSerializer.Deserialize<List<int>>(elements[16].GetRawText(), options) ?? []).AsReadOnly(),
+                ForbiddenStatesId = (JsonSerializer.Deserialize<List<int>>(elements[17].GetRawText(), options) ?? []).AsReadOnly(),
                 NeededLevel = elements[18].GetInt32(),
                 CricalFailureEndTheTurn = elements[19].GetBoolean(),
                 Id = elements[20].GetInt32()

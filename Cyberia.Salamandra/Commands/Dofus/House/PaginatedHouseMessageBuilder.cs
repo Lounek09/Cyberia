@@ -42,7 +42,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 switch (searchCategory)
                 {
                     case HouseSearchCategory.Name:
-                        housesData = DofusApi.Datacenter.HousesData.GetHousesDataByName(parameters[3]);
+                        housesData = DofusApi.Datacenter.HousesData.GetHousesDataByName(parameters[3]).ToList();
                         search = parameters[3];
                         break;
                     case HouseSearchCategory.Coordinate:
@@ -50,21 +50,21 @@ namespace Cyberia.Salamandra.Commands.Dofus
                             int.TryParse(parameters[3], out int xCoord) &&
                             int.TryParse(parameters[4], out int yCoord))
                         {
-                            housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate(xCoord, yCoord);
+                            housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate(xCoord, yCoord).ToList();
                             search = $"{parameters[3]}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{parameters[4]}";
                         }
                         break;
                     case HouseSearchCategory.MapSubArea:
                         if (int.TryParse(parameters[3], out int mapSubAreaId))
                         {
-                            housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapSubAreaId(mapSubAreaId);
+                            housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapSubAreaId(mapSubAreaId).ToList();
                             search = parameters[3];
                         }
                         break;
                     case HouseSearchCategory.MapArea:
                         if (int.TryParse(parameters[3], out int mapAreaId))
                         {
-                            housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapAreaId(mapAreaId);
+                            housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapAreaId(mapAreaId).ToList();
                             search = parameters[3];
                         }
                         break;

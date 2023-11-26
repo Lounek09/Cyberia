@@ -1,11 +1,14 @@
 ﻿using Cyberia.Api.Data.Custom;
+using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Values;
 
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class BreedData
+    public sealed class BreedData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -29,7 +32,8 @@ namespace Cyberia.Api.Data
         public bool Diabolical { get; init; }
 
         [JsonPropertyName("s")]
-        public List<int> SpellsId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> SpellsId { get; init; }
 
         [JsonPropertyName("pt")]
         public string TemporisPassiveName { get; init; }
@@ -38,25 +42,33 @@ namespace Cyberia.Api.Data
         public string TemporisPassiveDescription { get; init; }
 
         [JsonPropertyName("cc")]
-        public List<object> CloseCombatInfos { get; init; }
+        [JsonInclude]
+        //TODO: Create a class and a JsonConverter for CloseCombatInfos in BreedData
+        internal List<object> CloseCombatInfos { get; init; }
 
         [JsonPropertyName("b10")]
-        public List<List<int>> StrengthBoostCost { get; init; }
+        [JsonInclude]
+        internal List<List<int>> StrengthBoostCost { get; init; }
 
         [JsonPropertyName("b11")]
-        public List<List<int>> VitalityBoostCost { get; init; }
+        [JsonInclude]
+        internal List<List<int>> VitalityBoostCost { get; init; }
 
         [JsonPropertyName("b12")]
-        public List<List<int>> WisdomBoostCost { get; init; }
+        [JsonInclude]
+        internal List<List<int>> WisdomBoostCost { get; init; }
 
         [JsonPropertyName("b13")]
-        public List<List<int>> LuckBoostCost { get; init; }
+        [JsonInclude]
+        internal List<List<int>> ChanceBoostCost { get; init; }
 
         [JsonPropertyName("b14")]
-        public List<List<int>> AgilityBoostCost { get; init; }
+        [JsonInclude]
+        internal List<List<int>> AgilityBoostCost { get; init; }
 
         [JsonPropertyName("b15")]
-        public List<List<int>> IntelligenceBoostCost { get; init; }
+        [JsonInclude]
+        internal List<List<int>> IntelligenceBoostCost { get; init; }
 
         [JsonIgnore]
         public int SpecialSpellId { get; internal set; }
@@ -71,14 +83,14 @@ namespace Cyberia.Api.Data
             LongName = string.Empty;
             Description = string.Empty;
             ShortDescription = string.Empty;
-            SpellsId = [];
+            SpellsId = ReadOnlyCollection<int>.Empty;
             TemporisPassiveName = string.Empty;
             TemporisPassiveDescription = string.Empty;
             CloseCombatInfos = [];
             StrengthBoostCost = [];
             VitalityBoostCost = [];
             WisdomBoostCost = [];
-            LuckBoostCost = [];
+            ChanceBoostCost = [];
             AgilityBoostCost = [];
             IntelligenceBoostCost = [];
         }
@@ -138,7 +150,7 @@ namespace Cyberia.Api.Data
                 tab[l[1], 3] = "|" + l[0].ToString().PadLeft(4) + " ";
             }
 
-            foreach (List<int> l in LuckBoostCost)
+            foreach (List<int> l in ChanceBoostCost)
             {
                 tab[l[1], 4] = "|" + l[0].ToString().PadLeft(4) + " ";
             }
@@ -181,17 +193,18 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class BreedsData
+    public sealed class BreedsData : IDofusData
     {
         private const string FILE_NAME = "classes.json";
 
         [JsonPropertyName("G")]
-        public List<BreedData> Breeds { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, BreedData>))]
+        public FrozenDictionary<int, BreedData> Breeds { get; init; }
 
         [JsonConstructor]
         internal BreedsData()
         {
-            Breeds = [];
+            Breeds = FrozenDictionary<int, BreedData>.Empty;
         }
 
         internal static BreedsData Load()
@@ -214,18 +227,19 @@ namespace Cyberia.Api.Data
 
         public BreedData? GetBreedDataById(int id)
         {
-            return Breeds.Find(x => x.Id == id);
+            Breeds.TryGetValue(id, out BreedData? breedData);
+            return breedData;
         }
 
         public BreedData? GetBreedDataByName(string name)
         {
-            return Breeds.Find(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
+            return Breeds.Values.FirstOrDefault(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
         }
 
-        public List<BreedData> GetBreedsDataByName(string name)
+        public IEnumerable<BreedData> GetBreedsDataByName(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return Breeds.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
+            return Breeds.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetBreedNameById(int id)

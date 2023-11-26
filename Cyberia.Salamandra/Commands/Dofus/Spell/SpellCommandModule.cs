@@ -26,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<SpellData> spellsData = DofusApi.Datacenter.SpellsData.GetSpellsDataByName(value);
+                List<SpellData> spellsData = DofusApi.Datacenter.SpellsData.GetSpellsDataByName(value).ToList();
                 if (spellsData.Count == 1)
                 {
                     response = await new SpellMessageBuilder(spellsData[0], spellsData[0].GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();

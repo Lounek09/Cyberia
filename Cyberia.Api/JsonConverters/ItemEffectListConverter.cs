@@ -10,8 +10,7 @@ namespace Cyberia.Api.JsonConverters
     {
         public override List<IEffect> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            JsonElement element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
-            return EffectFactory.GetEffectsParseFromItem(element.GetString() ?? "").ToList();
+            return EffectFactory.GetEffectsParseFromItem(reader.GetString() ?? "").ToList();
         }
 
         public override void Write(Utf8JsonWriter writer, List<IEffect> values, JsonSerializerOptions options)

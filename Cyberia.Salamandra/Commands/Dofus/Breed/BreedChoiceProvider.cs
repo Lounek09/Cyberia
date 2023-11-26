@@ -12,7 +12,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
         {
             List<DiscordApplicationCommandOptionChoice> choices = [];
 
-            foreach (BreedData breedData in DofusApi.Datacenter.BreedsData.Breeds)
+            foreach (BreedData breedData in DofusApi.Datacenter.BreedsData.Breeds.Values)
             {
                 choices.Add(new(breedData.Name, breedData.Name));
             }

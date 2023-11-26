@@ -1,8 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class NpcActionData
+    public sealed class NpcActionData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -17,7 +21,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class NpcData
+    public sealed class NpcData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -26,13 +30,14 @@ namespace Cyberia.Api.Data
         public string Name { get; init; }
 
         [JsonPropertyName("a")]
-        public List<int> NpcActionsId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> NpcActionsId { get; init; }
 
         [JsonConstructor]
         internal NpcData()
         {
             Name = string.Empty;
-            NpcActionsId = [];
+            NpcActionsId = ReadOnlyCollection<int>.Empty;
         }
 
         public IEnumerable<NpcActionData> GetNpcActionsData()
@@ -48,21 +53,23 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class NpcsData
+    public sealed class NpcsData : IDofusData
     {
         private const string FILE_NAME = "npc.json";
 
         [JsonPropertyName("N.a")]
-        public List<NpcActionData> NpcActions { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, NpcActionData>))]
+        public FrozenDictionary<int, NpcActionData> NpcActions { get; init; }
 
         [JsonPropertyName("N.d")]
-        public List<NpcData> Npcs { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, NpcData>))]
+        public FrozenDictionary<int, NpcData> Npcs { get; init; }
 
         [JsonConstructor]
         internal NpcsData()
         {
-            NpcActions = [];
-            Npcs = [];
+            NpcActions = FrozenDictionary<int, NpcActionData>.Empty;
+            Npcs = FrozenDictionary<int, NpcData>.Empty;
         }
 
         internal static NpcsData Load()
@@ -72,12 +79,14 @@ namespace Cyberia.Api.Data
 
         public NpcActionData? GetNpcActionDataById(int id)
         {
-            return NpcActions.Find(x => x.Id == id);
+            NpcActions.TryGetValue(id, out NpcActionData? npcActionData);
+            return npcActionData;
         }
 
         public NpcData? GetNpcDataById(int id)
         {
-            return Npcs.Find(x => x.Id == id);
+            Npcs.TryGetValue(id, out NpcData? npcData);
+            return npcData;
         }
 
         public string GetNpcNameById(int id)

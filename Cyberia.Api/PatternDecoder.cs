@@ -4,43 +4,44 @@ namespace Cyberia.Api
 {
     public static class PatternDecoder
     {
-        public static readonly char[] HASH = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                                               'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                                               '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_' ];
+        public static readonly char[] HASH =
+        [
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_'
+        ];
 
         public static string Ip(string value)
         {
-            if (value.Length == 11)
-            {
-                string ipCrypt = value[..8];
-                string portCrypt = value[8..];
-
-                string ip = "";
-                int d1, d2;
-                for (int i = 0; i < ipCrypt.Length; i++)
-                {
-                    d1 = ipCrypt[i] - 48;
-                    i++;
-                    d2 = ipCrypt[i] - 48;
-                    ip += (d1 & 15) << 4 | d2 & 15;
-                    if (i < ipCrypt.Length - 1)
-                    {
-                        ip += ".";
-                    }
-                }
-
-                double port = 0;
-                for (int i = 0; i < portCrypt.Length; i++)
-                {
-                    port += Math.Pow(64, 2 - i) * Base64(portCrypt[i]);
-                }
-
-                return $"{ip}:{port}";
-            }
-            else
+            if (value.Length != 11)
             {
                 throw new ArgumentException("L'ip encodée doit faire 11 caractères");
             }
+
+            string ipCrypt = value[..8];
+            string portCrypt = value[8..];
+
+            string ip = "";
+            int d1, d2;
+            for (int i = 0; i < ipCrypt.Length; i++)
+            {
+                d1 = ipCrypt[i] - 48;
+                i++;
+                d2 = ipCrypt[i] - 48;
+                ip += (d1 & 15) << 4 | d2 & 15;
+                if (i < ipCrypt.Length - 1)
+                {
+                    ip += ".";
+                }
+            }
+
+            double port = 0;
+            for (int i = 0; i < portCrypt.Length; i++)
+            {
+                port += Math.Pow(64, 2 - i) * Base64(portCrypt[i]);
+            }
+
+            return $"{ip}:{port}";
         }
 
         public static int Base64(char value)

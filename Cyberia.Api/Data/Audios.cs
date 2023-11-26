@@ -1,14 +1,18 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class AudioMusicContentData
+    internal sealed class AudioMusicContentData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public string Name { get; init; }
 
         [JsonPropertyName("v")]
-        public int AudioMusicId { get; init; }
+        public int Id { get; init; }
 
         [JsonConstructor]
         internal AudioMusicContentData()
@@ -17,7 +21,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class AudioMusicData
+    public sealed class AudioMusicData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -37,20 +41,24 @@ namespace Cyberia.Api.Data
         [JsonPropertyName("o")]
         public int Offset { get; init; }
 
+        [JsonIgnore]
+        public string Name { get; internal set; }
+
         [JsonConstructor]
         internal AudioMusicData()
         {
             FileName = string.Empty;
+            Name = string.Empty;
         }
     }
 
-    public sealed class AudioEffectContentData
+    internal sealed class AudioEffectContentData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public string Name { get; init; }
 
         [JsonPropertyName("v")]
-        public int AudioEffectId { get; init; }
+        public int Id { get; init; }
 
         [JsonConstructor]
         internal AudioEffectContentData()
@@ -59,7 +67,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class AudioEffectData
+    public sealed class AudioEffectData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -79,20 +87,24 @@ namespace Cyberia.Api.Data
         [JsonPropertyName("o")]
         public int Offset { get; init; }
 
+        [JsonIgnore]
+        public string Name { get; internal set; }
+
         [JsonConstructor]
         internal AudioEffectData()
         {
             FileName = string.Empty;
+            Name = string.Empty;
         }
     }
 
-    public sealed class AudioEnvironmentContentData
+    internal sealed class AudioEnvironmentContentData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public string Name { get; init; }
 
         [JsonPropertyName("v")]
-        public int AudioEnvironmentId { get; init; }
+        public int Id { get; init; }
 
         [JsonConstructor]
         internal AudioEnvironmentContentData()
@@ -101,13 +113,14 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class AudioEnvironmentData
+    public sealed class AudioEnvironmentData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
 
         [JsonPropertyName("bg")]
-        public List<int> BackgroundAudioEffectIds { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> BackgroundAudioEffectIds { get; init; }
 
         [JsonPropertyName("mind")]
         public int MinNoiseDelay { get; init; }
@@ -116,57 +129,140 @@ namespace Cyberia.Api.Data
         public int MaxNoiseDelay { get; init; }
 
         [JsonPropertyName("n")]
-        public List<int> NoiseAudioEffectIds { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> NoiseAudioEffectIds { get; init; }
+
+        [JsonIgnore]
+        public string Name { get; internal set; }
 
         [JsonConstructor]
         internal AudioEnvironmentData()
         {
-            BackgroundAudioEffectIds = [];
-            NoiseAudioEffectIds = [];
+            BackgroundAudioEffectIds = ReadOnlyCollection<int>.Empty;
+            NoiseAudioEffectIds = ReadOnlyCollection<int>.Empty;
+            Name = string.Empty;
+        }
+
+        public IEnumerable<AudioEffectData> GetBackgroundAudioEffectsData()
+        {
+            foreach (int id in BackgroundAudioEffectIds)
+            {
+                AudioEffectData? audioEffectData = DofusApi.Datacenter.AudiosData.GetAudioEffectDataById(id);
+                if (audioEffectData is not null)
+                {
+                    yield return audioEffectData;
+                }
+            }
+        }
+
+        public IEnumerable<AudioEffectData> GetNoiseAudioEffectsData()
+        {
+            foreach (int id in NoiseAudioEffectIds)
+            {
+                AudioEffectData? audioEffectData = DofusApi.Datacenter.AudiosData.GetAudioEffectDataById(id);
+                if (audioEffectData is not null)
+                {
+                    yield return audioEffectData;
+                }
+            }
         }
     }
 
-    public sealed class AudioData
+    public sealed class AudioData : IDofusData
     {
         private const string FILE_NAME = "audio.json";
 
         [JsonPropertyName("AUMC")]
-        public List<AudioMusicContentData> AudioMusicsContent { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AudioMusicContentData>))]
+        internal FrozenDictionary<int, AudioMusicContentData> AudioMusicsContent { get; init; }
 
         [JsonPropertyName("AUM")]
-        public List<AudioMusicData> AudioMusics { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AudioMusicData>))]
+        public FrozenDictionary<int, AudioMusicData> AudioMusics { get; init; }
 
         [JsonPropertyName("AUEC")]
-        public List<AudioEffectContentData> AudioEffectsContent { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AudioEffectContentData>))]
+        internal FrozenDictionary<int, AudioEffectContentData> AudioEffectsContent { get; init; }
 
         [JsonPropertyName("AUE")]
-        public List<AudioEffectData> AudioEffects { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AudioEffectData>))]
+        public FrozenDictionary<int, AudioEffectData> AudioEffects { get; init; }
 
         [JsonPropertyName("AUAC")]
-        public List<AudioEnvironmentContentData> AudioEnvironmentsContent { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AudioEnvironmentContentData>))]
+        internal FrozenDictionary<int, AudioEnvironmentContentData> AudioEnvironmentsContent { get; init; }
 
         [JsonPropertyName("AUA")]
-        public List<AudioEnvironmentData> AudioEnvironments { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AudioEnvironmentData>))]
+        public FrozenDictionary<int, AudioEnvironmentData> AudioEnvironments { get; init; }
 
         [JsonConstructor]
         internal AudioData()
         {
-            AudioMusicsContent = [];
-            AudioMusics = [];
-            AudioEffectsContent = [];
-            AudioEffects = [];
-            AudioEnvironmentsContent = [];
-            AudioEnvironments = [];
+            AudioMusicsContent = FrozenDictionary<int, AudioMusicContentData>.Empty;
+            AudioMusics = FrozenDictionary<int, AudioMusicData>.Empty;
+            AudioEffectsContent = FrozenDictionary<int, AudioEffectContentData>.Empty;
+            AudioEffects = FrozenDictionary<int, AudioEffectData>.Empty;
+            AudioEnvironmentsContent = FrozenDictionary<int, AudioEnvironmentContentData>.Empty;
+            AudioEnvironments = FrozenDictionary<int, AudioEnvironmentData>.Empty;
         }
 
         internal static AudioData Load()
         {
-            return Datacenter.LoadDataFromFile<AudioData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+            AudioData data = Datacenter.LoadDataFromFile<AudioData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+
+            foreach (AudioMusicData audioMusicData in data.AudioMusics.Values)
+            {
+                audioMusicData.Name = data.GetAudioMusicNameById(audioMusicData.Id);
+            }
+
+            foreach (AudioEffectData audioEffectData in data.AudioEffects.Values)
+            {
+                audioEffectData.Name = data.GetAudioEffectNameById(audioEffectData.Id);
+            }
+
+            foreach (AudioEnvironmentData audioEnvironmentData in data.AudioEnvironments.Values)
+            {
+                audioEnvironmentData.Name = data.GetAudioEnvironmentNameById(audioEnvironmentData.Id);
+            }
+
+            return data;
         }
 
         public AudioMusicData? GetAudioMusicDataById(int id)
         {
-            return AudioMusics.Find(x => x.Id == id);
+            AudioMusics.TryGetValue(id, out AudioMusicData? audioMusicData);
+            return audioMusicData;
+        }
+
+        public string GetAudioMusicNameById(int id)
+        {
+            AudioMusicsContent.TryGetValue(id, out AudioMusicContentData? audioMusicContentData);
+            return audioMusicContentData?.Name ?? PatternDecoder.Description(Resources.Unknown_Data, id);
+        }
+
+        public AudioEffectData? GetAudioEffectDataById(int id)
+        {
+            AudioEffects.TryGetValue(id, out AudioEffectData? audioEffectData);
+            return audioEffectData;
+        }
+
+        public string GetAudioEffectNameById(int id)
+        {
+            AudioEffectsContent.TryGetValue(id, out AudioEffectContentData? audioEffectContentData);
+            return audioEffectContentData?.Name ?? PatternDecoder.Description(Resources.Unknown_Data, id);
+        }
+
+        public AudioEnvironmentData? GetAudioEnvironmentDataById(int id)
+        {
+            AudioEnvironments.TryGetValue(id, out AudioEnvironmentData? audioEnvironmentData);
+            return audioEnvironmentData;
+        }
+
+        public string GetAudioEnvironmentNameById(int id)
+        {
+            AudioEnvironmentsContent.TryGetValue(id, out AudioEnvironmentContentData? audioEnvironmentContentData);
+            return audioEnvironmentContentData?.Name ?? PatternDecoder.Description(Resources.Unknown_Data, id);
         }
     }
 }

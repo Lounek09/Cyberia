@@ -80,8 +80,8 @@ namespace Cyberia.Salamandra.Commands.Dofus
                     .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true)
                     .AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
 
-                List<IEffect> effects = _incarnationData.GetEffects();
-                if (effects.Count > 0)
+                IEnumerable<IEffect> effects = _incarnationData.GetEffects();
+                if (effects.Any())
                 {
                     embed.AddEffectFields("Effets :", effects);
                 }

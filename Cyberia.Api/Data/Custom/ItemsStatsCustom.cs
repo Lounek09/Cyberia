@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    internal sealed class ItemStatsCustomData
+    internal sealed class ItemStatsCustomData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -25,12 +25,12 @@ namespace Cyberia.Api.Data
             return new()
             {
                 Id = Id,
-                Effects = Effects
+                EffectsCore = Effects
             };
         }
     }
 
-    internal sealed class ItemsStatsCustomData
+    internal sealed class ItemsStatsCustomData : IDofusData
     {
 
         [JsonPropertyName("CISTA")]

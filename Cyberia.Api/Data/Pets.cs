@@ -1,32 +1,36 @@
 ﻿using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
 
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public class PetFoodsData
+    public class PetFoodsData : IDofusData
     {
         [JsonPropertyName("e")]
         [JsonConverter(typeof(ItemEffectConverter))]
         public IEffect? Effect { get; init; }
 
         [JsonPropertyName("i")]
-        public List<int> ItemsId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> ItemsId { get; init; }
 
         [JsonPropertyName("it")]
-        public List<int> ItemTypesId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> ItemTypesId { get; init; }
 
         [JsonPropertyName("m")]
-        [JsonConverter(typeof(DictionaryConverter<int, int>))]
-        public Dictionary<int, int> MonstersIdQuantities { get; init; }
+        [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, int>))]
+        public ReadOnlyDictionary<int, int> MonstersIdQuantities { get; init; }
 
         [JsonConstructor]
         internal PetFoodsData()
         {
-            ItemsId = [];
-            ItemTypesId = [];
-            MonstersIdQuantities = [];
+            ItemsId = ReadOnlyCollection<int>.Empty;
+            ItemTypesId = ReadOnlyCollection<int>.Empty;
+            MonstersIdQuantities = ReadOnlyDictionary<int, int>.Empty;
         }
 
         public IEnumerable<ItemData> GetItemsData()
@@ -65,7 +69,7 @@ namespace Cyberia.Api.Data
             }
         }
 
-        public Dictionary<MonsterData, int> GetMonstersDataQuantities()
+        public ReadOnlyDictionary<MonsterData, int> GetMonstersDataQuantities()
         {
             Dictionary<MonsterData, int> MonstersDataQuantities = [];
 
@@ -78,11 +82,11 @@ namespace Cyberia.Api.Data
                 }
             }
 
-            return MonstersDataQuantities;
+            return MonstersDataQuantities.AsReadOnly();
         }
     }
 
-    public class PetData
+    public class PetData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -94,12 +98,13 @@ namespace Cyberia.Api.Data
         public TimeSpan? MaxFoodInterval { get; init; }
 
         [JsonPropertyName("f")]
-        public List<PetFoodsData> Foods { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<PetFoodsData>))]
+        public ReadOnlyCollection<PetFoodsData> Foods { get; init; }
 
         [JsonConstructor]
         internal PetData()
         {
-            Foods = [];
+            Foods = ReadOnlyCollection<PetFoodsData>.Empty;
         }
 
         public ItemData? GetItemData()
@@ -108,17 +113,18 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public class PetsData
+    public class PetsData : IDofusData
     {
         private const string FILE_NAME = "pets.json";
 
         [JsonPropertyName("PET")]
-        public List<PetData> Pets { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, PetData>))]
+        public FrozenDictionary<int, PetData> Pets { get; init; }
 
         [JsonConstructor]
         internal PetsData()
         {
-            Pets = [];
+            Pets = FrozenDictionary<int, PetData>.Empty;
         }
 
         internal static PetsData Load()
@@ -128,7 +134,8 @@ namespace Cyberia.Api.Data
 
         public PetData? GetPetDataByItemId(int id)
         {
-            return Pets.Find(x => x.Id == id);
+            Pets.TryGetValue(id, out PetData? petData);
+            return petData;
         }
     }
 }

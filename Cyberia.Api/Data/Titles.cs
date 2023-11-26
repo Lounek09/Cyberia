@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class TitleData
+    public sealed class TitleData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -23,17 +26,18 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class TitlesData
+    public sealed class TitlesData : IDofusData
     {
         private const string FILE_NAME = "titles.json";
 
         [JsonPropertyName("PT")]
-        public List<TitleData> Titles { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TitleData>))]
+        public FrozenDictionary<int, TitleData> Titles { get; init; }
 
         [JsonConstructor]
         internal TitlesData()
         {
-            Titles = [];
+            Titles = FrozenDictionary<int, TitleData>.Empty;
         }
 
         internal static TitlesData Load()
@@ -43,7 +47,8 @@ namespace Cyberia.Api.Data
 
         public TitleData? GetTitleDataById(int id)
         {
-            return Titles.Find(x => x.Id == id);
+            Titles.TryGetValue(id, out TitleData? titleData);
+            return titleData;
         }
 
         public string GetTitleNameById(int id)

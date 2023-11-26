@@ -2,11 +2,13 @@
 using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Values;
 
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class SpellIconData
+    public sealed class SpellIconData : IDofusData
     {
         public const int INDEX_REMASTERED = 0;
         public const int INDEX_CONTRAST = 1;
@@ -17,33 +19,36 @@ namespace Cyberia.Api.Data
         public int UpGfxId { get; init; }
 
         [JsonPropertyName("pc")]
-        public List<int> PrintColors { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> PrintColors { get; init; }
 
         [JsonPropertyName("b")]
         public int BackgroundGfxId { get; init; }
 
         [JsonPropertyName("fc")]
-        public List<int> FrameColors { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> FrameColors { get; init; }
 
         [JsonPropertyName("bc")]
-        public List<int> BackgroundColors { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> BackgroundColors { get; init; }
 
         [JsonConstructor]
         internal SpellIconData()
         {
-            PrintColors = [];
-            FrameColors = [];
-            BackgroundColors = [];
+            PrintColors = ReadOnlyCollection<int>.Empty;
+            FrameColors = ReadOnlyCollection<int>.Empty;
+            BackgroundColors = ReadOnlyCollection<int>.Empty;
         }
     }
 
-    public sealed class SpellLevelData
+    public sealed class SpellLevelData : IDofusData<int>
     {
         public int Id { get; init; }
 
-        public List<IEffect> Effects { get; init; }
+        public ReadOnlyCollection<IEffect> Effects { get; init; }
 
-        public List<IEffect> CriticalEffects { get; init; }
+        public ReadOnlyCollection<IEffect> CriticalEffects { get; init; }
 
         public int ActionPointCost { get; init; }
 
@@ -71,9 +76,9 @@ namespace Cyberia.Api.Data
 
         public int DelayBetweenLaunch { get; init; }
 
-        public List<int> RequiredStatesId { get; init; }
+        public ReadOnlyCollection<int> RequiredStatesId { get; init; }
 
-        public List<int> ForbiddenStatesId { get; init; }
+        public ReadOnlyCollection<int> ForbiddenStatesId { get; init; }
 
         public int NeededLevel { get; init; }
 
@@ -85,10 +90,10 @@ namespace Cyberia.Api.Data
 
         internal SpellLevelData()
         {
-            Effects = [];
-            CriticalEffects = [];
-            RequiredStatesId = [];
-            ForbiddenStatesId = [];
+            Effects = ReadOnlyCollection<IEffect>.Empty;
+            CriticalEffects = ReadOnlyCollection<IEffect>.Empty;
+            RequiredStatesId = ReadOnlyCollection<int>.Empty;
+            ForbiddenStatesId = ReadOnlyCollection<int>.Empty;
         }
 
         public SpellData? GetSpellData()
@@ -96,7 +101,7 @@ namespace Cyberia.Api.Data
             return DofusApi.Datacenter.SpellsData.GetSpellDataById(SpellId);
         }
 
-        public List<IEffect> GetTrapEffects()
+        public ReadOnlyCollection<IEffect> GetTrapEffects()
         {
             foreach (IEffect effect in Effects)
             {
@@ -114,10 +119,10 @@ namespace Cyberia.Api.Data
                 }
             }
 
-            return [];
+            return ReadOnlyCollection<IEffect>.Empty;
         }
 
-        public List<IEffect> GetGlyphEffects()
+        public ReadOnlyCollection<IEffect> GetGlyphEffects()
         {
             foreach (IEffect effect in Effects)
             {
@@ -135,7 +140,7 @@ namespace Cyberia.Api.Data
                 }
             }
 
-            return [];
+            return ReadOnlyCollection<IEffect>.Empty;
         }
 
         public IEnumerable<StateData> GetRequiredStatesData()
@@ -163,7 +168,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class SpellData
+    public sealed class SpellData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -241,7 +246,8 @@ namespace Cyberia.Api.Data
 
         public BreedData? GetBreedData()
         {
-            return DofusApi.Datacenter.BreedsData.GetBreedDataById(BreedId) ?? DofusApi.Datacenter.BreedsData.Breeds.Find(x => x.SpecialSpellId == Id);
+            return DofusApi.Datacenter.BreedsData.GetBreedDataById(BreedId) ??
+                DofusApi.Datacenter.BreedsData.Breeds.Values.FirstOrDefault(x => x.SpecialSpellId == Id);
         }
 
         public SpellLevelData? GetSpellLevelData(int level = 1)
@@ -278,7 +284,7 @@ namespace Cyberia.Api.Data
 
         public IncarnationData? GetIncarnationData()
         {
-            foreach (IncarnationData incarnation in DofusApi.Datacenter.IncarnationsData.Incarnations)
+            foreach (IncarnationData incarnation in DofusApi.Datacenter.IncarnationsData.Incarnations.Values)
             {
                 if (incarnation.SpellsId.Contains(Id))
                 {
@@ -290,17 +296,18 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class SpellsData
+    public sealed class SpellsData : IDofusData
     {
         private const string FILE_NAME = "spells.json";
 
         [JsonPropertyName("S")]
-        public List<SpellData> Spells { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SpellData>))]
+        public FrozenDictionary<int, SpellData> Spells { get; init; }
 
         [JsonConstructor]
         internal SpellsData()
         {
-            Spells = [];
+            Spells = FrozenDictionary<int, SpellData>.Empty;
         }
 
         internal static SpellsData Load()
@@ -310,18 +317,14 @@ namespace Cyberia.Api.Data
 
         public SpellData? GetSpellDataById(int id)
         {
-            return Spells.Find(x => x.Id == id);
+            Spells.TryGetValue(id, out SpellData? spellData);
+            return spellData;
         }
 
-        public SpellData? GetSpellDataByName(string name)
-        {
-            return Spells.Find(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
-        }
-
-        public List<SpellData> GetSpellsDataByName(string name)
+        public IEnumerable<SpellData> GetSpellsDataByName(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return Spells.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
+            return Spells.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetSpellNameById(int id)
@@ -333,7 +336,7 @@ namespace Cyberia.Api.Data
 
         public SpellLevelData? GetSpellLevelDataById(int id)
         {
-            foreach (SpellData spellData in Spells)
+            foreach (SpellData spellData in Spells.Values)
             {
                 for (int i = 1; i <= 6; i++)
                 {

@@ -26,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<SpellData> spellsData = DofusApi.Datacenter.SpellsData.GetSpellsDataByName(parameters[2]);
+                List<SpellData> spellsData = DofusApi.Datacenter.SpellsData.GetSpellsDataByName(parameters[2]).ToList();
                 if (spellsData.Count > 0)
                 {
                     return new(spellsData, parameters[2], selectedPageIndex);

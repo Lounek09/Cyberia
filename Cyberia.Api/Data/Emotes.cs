@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class EmoteData
+    public sealed class EmoteData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -21,17 +24,18 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class EmotesData
+    public sealed class EmotesData : IDofusData
     {
         private const string FILE_NAME = "emotes.json";
 
         [JsonPropertyName("EM")]
-        public List<EmoteData> Emotes { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, EmoteData>))]
+        public FrozenDictionary<int, EmoteData> Emotes { get; init; }
 
         [JsonConstructor]
         internal EmotesData()
         {
-            Emotes = [];
+            Emotes = FrozenDictionary<int, EmoteData>.Empty;
         }
 
         internal static EmotesData Load()
@@ -41,7 +45,8 @@ namespace Cyberia.Api.Data
 
         public EmoteData? GetEmoteById(int id)
         {
-            return Emotes.Find(x => x.Id == id);
+            Emotes.TryGetValue(id, out EmoteData? emoteData);
+            return emoteData;
         }
 
         public string GetEmoteNameById(int id)

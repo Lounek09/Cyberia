@@ -1,8 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class MapData
+    public sealed class MapData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -75,7 +79,7 @@ namespace Cyberia.Api.Data
 
         public HouseData? GetHouseData()
         {
-            HouseMapData? houseMapData = DofusApi.Datacenter.HousesData.GetHouseMapDataByMapId(Id);
+            HouseMapData? houseMapData = DofusApi.Datacenter.HousesData.GetHouseMapDataById(Id);
 
             return houseMapData?.GetHouseData();
         }
@@ -86,7 +90,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class MapSuperAreaData
+    public sealed class MapSuperAreaData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -101,7 +105,7 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class MapAreaData
+    public sealed class MapAreaData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -123,13 +127,13 @@ namespace Cyberia.Api.Data
             return DofusApi.Datacenter.MapsData.GetMapSuperAreaDataById(MapSuperAreaId);
         }
 
-        public List<MapData> GetMapsData()
+        public IEnumerable<MapData> GetMapsData()
         {
             return DofusApi.Datacenter.MapsData.GetMapsDataByMapAreaId(Id);
         }
     }
 
-    public sealed class MapSubAreaData
+    public sealed class MapSubAreaData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -141,17 +145,19 @@ namespace Cyberia.Api.Data
         public int MapAreaId { get; init; }
 
         [JsonPropertyName("m")]
-        public List<int?> FightAudioMusicId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int?>))]
+        public ReadOnlyCollection<int?> FightAudioMusicId { get; init; }
 
         [JsonPropertyName("v")]
-        public List<int> NearMapSubAreasId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> NearMapSubAreasId { get; init; }
 
         [JsonConstructor]
         internal MapSubAreaData()
         {
             Name = string.Empty;
-            FightAudioMusicId = [];
-            NearMapSubAreasId = [];
+            FightAudioMusicId = ReadOnlyCollection<int?>.Empty;
+            NearMapSubAreasId = ReadOnlyCollection<int>.Empty;
         }
 
         public MapAreaData? GetMapAreaData()
@@ -176,35 +182,39 @@ namespace Cyberia.Api.Data
             return FightAudioMusicId[0] is null ? null : DofusApi.Datacenter.AudiosData.GetAudioMusicDataById(FightAudioMusicId[0]!.Value);
         }
 
-        public List<MapData> GetMapsData()
+        public IEnumerable<MapData> GetMapsData()
         {
             return DofusApi.Datacenter.MapsData.GetMapsDataByMapSubAreaId(Id);
         }
     }
 
-    public sealed class MapsData
+    public sealed class MapsData : IDofusData
     {
         private const string FILE_NAME = "maps.json";
 
         [JsonPropertyName("MA.m")]
-        public List<MapData> Maps { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapData>))]
+        public FrozenDictionary<int, MapData> Maps { get; init; }
 
         [JsonPropertyName("MA.sua")]
-        public List<MapSuperAreaData> MapSuperAreas { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapSuperAreaData>))]
+        public FrozenDictionary<int, MapSuperAreaData> MapSuperAreas { get; init; }
 
         [JsonPropertyName("MA.a")]
-        public List<MapAreaData> MapAreas { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapAreaData>))]
+        public FrozenDictionary<int, MapAreaData> MapAreas { get; init; }
 
         [JsonPropertyName("MA.sa")]
-        public List<MapSubAreaData> MapSubAreas { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapSubAreaData>))]
+        public FrozenDictionary<int, MapSubAreaData> MapSubAreas { get; init; }
 
         [JsonConstructor]
         internal MapsData()
         {
-            Maps = [];
-            MapSuperAreas = [];
-            MapAreas = [];
-            MapSubAreas = [];
+            Maps = FrozenDictionary<int, MapData>.Empty;
+            MapSuperAreas = FrozenDictionary<int, MapSuperAreaData>.Empty;
+            MapAreas = FrozenDictionary<int, MapAreaData>.Empty;
+            MapSubAreas = FrozenDictionary<int, MapSubAreaData>.Empty;
         }
 
         internal static MapsData Load()
@@ -214,27 +224,29 @@ namespace Cyberia.Api.Data
 
         public MapData? GetMapDataById(int id)
         {
-            return Maps.Find(x => x.Id == id);
+            Maps.TryGetValue(id, out MapData? mapData);
+            return mapData;
         }
 
-        public List<MapData> GetMapsDataByCoordinate(int xCoord, int yCoord)
+        public IEnumerable<MapData> GetMapsDataByCoordinate(int xCoord, int yCoord)
         {
-            return Maps.FindAll(x => x.XCoord == xCoord && x.YCoord == yCoord);
+            return Maps.Values.Where(x => x.XCoord == xCoord && x.YCoord == yCoord);
         }
 
-        public List<MapData> GetMapsDataByMapAreaId(int id)
+        public IEnumerable<MapData> GetMapsDataByMapAreaId(int id)
         {
-            return Maps.FindAll(x => x.GetMapSubAreaData()?.GetMapAreaData()?.Id == id);
+            return Maps.Values.Where(x => x.GetMapSubAreaData()?.GetMapAreaData()?.Id == id);
         }
 
-        public List<MapData> GetMapsDataByMapSubAreaId(int id)
+        public IEnumerable<MapData> GetMapsDataByMapSubAreaId(int id)
         {
-            return Maps.FindAll(x => x.GetMapSubAreaData()?.Id == id);
+            return Maps.Values.Where(x => x.GetMapSubAreaData()?.Id == id);
         }
 
         public MapSuperAreaData? GetMapSuperAreaDataById(int id)
         {
-            return MapSuperAreas.Find(x => x.Id == id);
+            MapSuperAreas.TryGetValue(id, out MapSuperAreaData? mapSuperAreaData);
+            return mapSuperAreaData;
         }
 
         public string GetMapSuperAreaNameById(int id)
@@ -246,13 +258,14 @@ namespace Cyberia.Api.Data
 
         public MapAreaData? GetMapAreaDataById(int id)
         {
-            return MapAreas.Find(x => x.Id == id);
+            MapAreas.TryGetValue(id, out MapAreaData? mapAreaData);
+            return mapAreaData;
         }
 
-        public List<MapAreaData> GetMapAreasDataByName(string name)
+        public IEnumerable<MapAreaData> GetMapAreasDataByName(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return MapAreas.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
+            return MapAreas.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetMapAreaNameById(int id)
@@ -264,13 +277,14 @@ namespace Cyberia.Api.Data
 
         public MapSubAreaData? GetMapSubAreaDataById(int id)
         {
-            return MapSubAreas.Find(x => x.Id == id);
+            MapSubAreas.TryGetValue(id, out MapSubAreaData? mapSubAreaData);
+            return mapSubAreaData;
         }
 
-        public List<MapSubAreaData> GetMapSubAreasDataByName(string name)
+        public IEnumerable<MapSubAreaData> GetMapSubAreasDataByName(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return MapSubAreas.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
+            return MapSubAreas.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
         }
 
         public string GetMapSubAreaNameById(int id)

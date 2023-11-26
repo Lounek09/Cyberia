@@ -1,8 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class SkillData
+    public sealed class SkillData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -23,7 +27,8 @@ namespace Cyberia.Api.Data
         public int ItemTypeIdForgemagus { get; init; }
 
         [JsonPropertyName("cl")]
-        public List<int> CraftsId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> CraftsId { get; init; }
 
         [JsonPropertyName("i")]
         public int HarvestedItemId { get; init; }
@@ -33,7 +38,7 @@ namespace Cyberia.Api.Data
         {
             Description = string.Empty;
             Criterion = string.Empty;
-            CraftsId = [];
+            CraftsId = ReadOnlyCollection<int>.Empty;
         }
 
         public JobData? GetJobData()
@@ -69,17 +74,18 @@ namespace Cyberia.Api.Data
         }
     }
 
-    public sealed class SkillsData
+    public sealed class SkillsData : IDofusData
     {
         private const string FILE_NAME = "skills.json";
 
         [JsonPropertyName("SK")]
-        public List<SkillData> Skills { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SkillData>))]
+        public FrozenDictionary<int, SkillData> Skills { get; init; }
 
         [JsonConstructor]
         internal SkillsData()
         {
-            Skills = [];
+            Skills = FrozenDictionary<int, SkillData>.Empty;
         }
 
         internal static SkillsData Load()
@@ -89,7 +95,8 @@ namespace Cyberia.Api.Data
 
         public SkillData? GetSkillDataById(int id)
         {
-            return Skills.Find(x => x.Id == id);
+            Skills.TryGetValue(id, out SkillData? skillData);
+            return skillData;
         }
     }
 }

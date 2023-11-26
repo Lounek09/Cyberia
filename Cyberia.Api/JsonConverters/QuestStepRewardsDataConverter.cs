@@ -9,16 +9,7 @@ namespace Cyberia.Api.JsonConverters
     {
         public override QuestStepRewardsData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType is not JsonTokenType.StartArray)
-            {
-                throw new JsonException("Invalid JSON format: expected an array.");
-            }
-
-            JsonElement[]? elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options);
-            if (elements is null || elements.Length != 6)
-            {
-                throw new JsonException($"Invalid JSON format: expected an array of 6 values, but got a length of {elements?.Length}.");
-            }
+            JsonElement[] elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
             return new QuestStepRewardsData
             {
@@ -26,10 +17,11 @@ namespace Cyberia.Api.JsonConverters
                 Kamas = elements[1].ValueKind is JsonValueKind.Null ? 0 : elements[1].GetInt32(),
                 ItemsIdQuantities = (JsonSerializer.Deserialize<List<List<int>>>(elements[2].GetRawText(), options) ?? [])
                     .GroupBy(x => x[0])
-                    .ToDictionary(x => x.Key, x => x.Sum(y => y[1])),
-                EmotesId = JsonSerializer.Deserialize<List<int>>(elements[3].GetRawText(), options) ?? [],
-                JobsId = JsonSerializer.Deserialize<List<int>>(elements[4].GetRawText(), options) ?? [],
-                SpellsId = JsonSerializer.Deserialize<List<int>>(elements[5].GetRawText(), options) ?? []
+                    .ToDictionary(x => x.Key, x => x.Sum(y => y[1]))
+                    .AsReadOnly(),
+                EmotesId = (JsonSerializer.Deserialize<List<int>>(elements[3].GetRawText(), options) ?? []).AsReadOnly(),
+                JobsId = (JsonSerializer.Deserialize<List<int>>(elements[4].GetRawText(), options) ?? []).AsReadOnly(),
+                SpellsId = (JsonSerializer.Deserialize<List<int>>(elements[5].GetRawText(), options) ?? []).AsReadOnly()
             };
         }
 
@@ -62,13 +54,17 @@ namespace Cyberia.Api.JsonConverters
             else
             {
                 writer.WriteStartArray();
+
                 foreach (KeyValuePair<int, int> pair in value.ItemsIdQuantities)
                 {
                     writer.WriteStartArray();
+
                     writer.WriteNumberValue(pair.Key);
                     writer.WriteNumberValue(pair.Value);
+
                     writer.WriteEndArray();
                 }
+
                 writer.WriteEndArray();
             }
 
@@ -79,6 +75,7 @@ namespace Cyberia.Api.JsonConverters
             else
             {
                 writer.WriteStartArray();
+
                 foreach (int emoteId in value.EmotesId)
                 {
                     writer.WriteNumberValue(emoteId);
@@ -94,6 +91,7 @@ namespace Cyberia.Api.JsonConverters
             else
             {
                 writer.WriteStartArray();
+
                 foreach (int jobId in value.JobsId)
                 {
                     writer.WriteNumberValue(jobId);
@@ -109,6 +107,7 @@ namespace Cyberia.Api.JsonConverters
             else
             {
                 writer.WriteStartArray();
+
                 foreach (int spellId in value.SpellsId)
                 {
                     writer.WriteNumberValue(spellId);

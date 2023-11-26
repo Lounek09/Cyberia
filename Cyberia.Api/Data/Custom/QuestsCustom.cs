@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Data.Custom
 {
-    internal sealed class QuestCustomData
+    internal sealed class QuestCustomData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -26,7 +26,7 @@ namespace Cyberia.Api.Data.Custom
         }
     }
 
-    internal sealed class QuestStepCustomData
+    internal sealed class QuestStepCustomData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -47,7 +47,7 @@ namespace Cyberia.Api.Data.Custom
         }
     }
 
-    internal sealed class QuestsCustomData
+    internal sealed class QuestsCustomData : IDofusData
     {
         [JsonPropertyName("CQ.q")]
         public List<QuestCustomData> QuestsCustom { get; init; }

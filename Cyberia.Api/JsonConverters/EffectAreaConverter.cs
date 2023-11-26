@@ -9,8 +9,7 @@ namespace Cyberia.Api.JsonConverters
     {
         public override EffectArea Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            JsonElement element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
-            return EffectAreaManager.GetEffectArea(element.GetString() ?? "");
+            return EffectAreaManager.GetEffectArea(reader.GetString() ?? string.Empty);
         }
 
         public override void Write(Utf8JsonWriter writer, EffectArea values, JsonSerializerOptions options)

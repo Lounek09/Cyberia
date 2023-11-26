@@ -26,7 +26,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
                 parameters.Length > 2 &&
                 int.TryParse(parameters[1], out int selectedPageIndex))
             {
-                List<MapAreaData> mapAreasData = DofusApi.Datacenter.MapsData.GetMapAreasDataByName(parameters[2]);
+                List<MapAreaData> mapAreasData = DofusApi.Datacenter.MapsData.GetMapAreasDataByName(parameters[2]).ToList();
                 if (mapAreasData.Count > 0)
                 {
                     return new(mapAreasData, parameters[2], selectedPageIndex);

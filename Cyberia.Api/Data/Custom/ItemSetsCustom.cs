@@ -5,14 +5,14 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Custom
 {
-    internal sealed class ItemSetCustomData
+    internal sealed class ItemSetCustomData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
 
         [JsonPropertyName("e")]
-        [JsonConverter(typeof(ItemEffectListListConverter))]
-        public List<List<IEffect>> Effects { get; init; }
+        [JsonConverter(typeof(ItemEffectsListConverter))]
+        public List<IEnumerable<IEffect>> Effects { get; init; }
 
         [JsonConstructor]
         internal ItemSetCustomData()
@@ -21,7 +21,7 @@ namespace Cyberia.Api.Data.Custom
         }
     }
 
-    internal sealed class ItemSetsCustomData
+    internal sealed class ItemSetsCustomData : IDofusData
     {
         [JsonPropertyName("CIS")]
         public List<ItemSetCustomData> ItemSetsCustom { get; init; }

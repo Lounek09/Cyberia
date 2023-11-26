@@ -29,7 +29,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<HouseData> housesData = DofusApi.Datacenter.HousesData.GetHousesDataByName(value);
+                List<HouseData> housesData = DofusApi.Datacenter.HousesData.GetHousesDataByName(value).ToList();
                 if (housesData.Count == 1)
                 {
                     response = await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -54,7 +54,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             [Minimum(-666), Maximum(666)]
             long yCoord)
         {
-            List<HouseData> housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate((int)xCoord, (int)yCoord);
+            List<HouseData> housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate((int)xCoord, (int)yCoord).ToList();
 
             if (housesData.Count == 0)
             {
@@ -90,7 +90,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<HouseData> housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapSubAreaId(id);
+                List<HouseData> housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapSubAreaId(id).ToList();
 
                 if (housesData.Count == 0)
                 {
@@ -127,7 +127,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
             }
             else
             {
-                List<HouseData> housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapAreaId(id);
+                List<HouseData> housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapAreaId(id).ToList();
 
                 if (housesData.Count == 0)
                 {

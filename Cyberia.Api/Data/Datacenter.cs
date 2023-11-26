@@ -39,7 +39,7 @@ namespace Cyberia.Api.Data
         public SpellsData SpellsData { get; init; }
         public StatesData StatesData { get; init; }
         public TaxCollectorNamesData TaxCollectorNamesData { get; init; }
-        public TimeZonesData TimeZonesData { get; init; }
+        public TimeZoneData TimeZonesData { get; init; }
         public TitlesData TitlesData { get; init; }
         public TTGData TTGData { get; init; }
 
@@ -79,7 +79,7 @@ namespace Cyberia.Api.Data
             SpellsData = SpellsData.Load();
             StatesData = StatesData.Load();
             TaxCollectorNamesData = TaxCollectorNamesData.Load();
-            TimeZonesData = TimeZonesData.Load();
+            TimeZonesData = TimeZoneData.Load();
             TitlesData = TitlesData.Load();
             TTGData = TTGData.Load();
         }
@@ -101,7 +101,7 @@ namespace Cyberia.Api.Data
             {
                 return JsonSerializer.Deserialize<T>(json) ?? (T)constructor.Invoke(null);
             }
-            catch (Exception e) when (e is JsonException or NotSupportedException or InvalidOperationException)
+            catch (Exception e)
             {
                 Log.Error(e, "Failed to deserialize the JSON located at {FilePath} to initialize {TypeName}", filePath, typeof(T).Name);
             }

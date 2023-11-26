@@ -1,11 +1,14 @@
 ﻿using Cyberia.Api.Data.Custom;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.JsonConverters;
 
+using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data
 {
-    public sealed class ItemSetData
+    public sealed class ItemSetData : IDofusData<int>
     {
         [JsonPropertyName("id")]
         public int Id { get; init; }
@@ -14,17 +17,18 @@ namespace Cyberia.Api.Data
         public string Name { get; init; }
 
         [JsonPropertyName("i")]
-        public List<int> ItemsId { get; init; }
+        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+        public ReadOnlyCollection<int> ItemsId { get; init; }
 
         [JsonIgnore]
-        public List<List<IEffect>> Effects { get; internal set; }
+        public ReadOnlyCollection<IEnumerable<IEffect>> Effects { get; internal set; }
 
         [JsonConstructor]
         internal ItemSetData()
         {
             Name = string.Empty;
-            ItemsId = [];
-            Effects = [];
+            ItemsId = ReadOnlyCollection<int>.Empty;
+            Effects = ReadOnlyCollection<IEnumerable<IEffect>>.Empty;
         }
 
         public IEnumerable<ItemData> GetItemsData()
@@ -44,7 +48,7 @@ namespace Cyberia.Api.Data
             return GetItemsData().Max(x => x.Level);
         }
 
-        public List<IEffect> GetEffects(int nbItem)
+        public IEnumerable<IEffect> GetEffects(int nbItem)
         {
             int index = nbItem - 2;
 
@@ -53,21 +57,22 @@ namespace Cyberia.Api.Data
 
         public BreedData? GetBreedData()
         {
-            return DofusApi.Datacenter.BreedsData.Breeds.Find(x => x.ItemSetId == Id);
+            return DofusApi.Datacenter.BreedsData.Breeds.Values.FirstOrDefault(x => x.ItemSetId == Id);
         }
     }
 
-    public sealed class ItemSetsData
+    public sealed class ItemSetsData : IDofusData
     {
         private const string FILE_NAME = "itemsets.json";
 
         [JsonPropertyName("IS")]
-        public List<ItemSetData> ItemSets { get; init; }
+        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemSetData>))]
+        public FrozenDictionary<int, ItemSetData> ItemSets { get; init; }
 
         [JsonConstructor]
         internal ItemSetsData()
         {
-            ItemSets = [];
+            ItemSets = FrozenDictionary<int, ItemSetData>.Empty;
         }
 
         internal static ItemSetsData Load()
@@ -80,7 +85,7 @@ namespace Cyberia.Api.Data
                 ItemSetData? itemSetData = data.GetItemSetDataById(itemSetCustomData.Id);
                 if (itemSetData is not null)
                 {
-                    itemSetData.Effects = itemSetCustomData.Effects;
+                    itemSetData.Effects = itemSetCustomData.Effects.AsReadOnly();
                 }
             }
 
@@ -89,7 +94,8 @@ namespace Cyberia.Api.Data
 
         public ItemSetData? GetItemSetDataById(int id)
         {
-            return ItemSets.Find(x => x.Id == id);
+            ItemSets.TryGetValue(id, out ItemSetData? itemSetData);
+            return itemSetData;
         }
 
         public string GetItemSetNameById(int id)
@@ -99,15 +105,10 @@ namespace Cyberia.Api.Data
             return itemSetData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : itemSetData.Name;
         }
 
-        public ItemSetData? GetItemSetByName(string name)
-        {
-            return ItemSets.Find(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
-        }
-
-        public List<ItemSetData> GetItemSetsDataByName(string name)
+        public IEnumerable<ItemSetData> GetItemSetsDataByName(string name)
         {
             string[] names = name.NormalizeCustom().Split(' ');
-            return ItemSets.FindAll(x => names.All(x.Name.NormalizeCustom().Contains));
+            return ItemSets.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
         }
     }
 }
