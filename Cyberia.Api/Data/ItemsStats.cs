@@ -33,6 +33,7 @@ namespace Cyberia.Api.Data
 
         [JsonPropertyName("ISTA")]
         [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemStatsData>))]
+        [JsonInclude]
         public FrozenDictionary<int, ItemStatsData> ItemsStats { get; internal set; }
 
         [JsonConstructor]
