@@ -32,13 +32,16 @@ namespace Cyberia.Api.Data
         private const string FILE_NAME = "itemstats.json";
 
         [JsonPropertyName("ISTA")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemStatsData>))]
         [JsonInclude]
+        internal List<ItemStatsData> ItemsStatsCore { get; init; }
+
+        [JsonIgnore]
         public FrozenDictionary<int, ItemStatsData> ItemsStats { get; internal set; }
 
         [JsonConstructor]
         internal ItemsStatsData()
         {
+            ItemsStatsCore = [];
             ItemsStats = FrozenDictionary<int, ItemStatsData>.Empty;
         }
 
@@ -47,20 +50,19 @@ namespace Cyberia.Api.Data
             ItemsStatsData data = Datacenter.LoadDataFromFile<ItemsStatsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
             ItemsStatsCustomData customData = Datacenter.LoadDataFromFile<ItemsStatsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
-            Dictionary<int, ItemStatsData> tempItemsStats = data.ItemsStats.ToDictionary();
             foreach (ItemStatsCustomData itemStatsCustomData in customData.ItemsStatsCustom)
             {
-                ItemStatsData? itemStatsData = data.GetItemStatDataById(itemStatsCustomData.Id);
+                ItemStatsData? itemStatsData = data.ItemsStatsCore.Find(x => x.Id == itemStatsCustomData.Id);
                 if (itemStatsData is not null)
                 {
                     itemStatsData.EffectsCore.AddRange(itemStatsCustomData.Effects);
                     continue;
                 }
 
-                tempItemsStats.Add(itemStatsCustomData.Id, itemStatsCustomData.ToItemStatsData());
+                data.ItemsStatsCore.Add(itemStatsCustomData.ToItemStatsData());
             }
 
-            data.ItemsStats = tempItemsStats.ToFrozenDictionary();
+            data.ItemsStats = data.ItemsStatsCore.GroupBy(x => x.Id).ToFrozenDictionary(x => x.Key, x => x.ElementAt(0));
             return data;
         }
 
