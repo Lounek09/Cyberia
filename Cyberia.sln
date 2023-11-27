@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{096057BB-3D5F-4B1F-A4CB-95630A0E2375}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.git-blame-ignore-revs = .git-blame-ignore-revs
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		LICENSE = LICENSE
