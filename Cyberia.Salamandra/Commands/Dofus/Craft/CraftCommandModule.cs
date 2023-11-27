@@ -8,7 +8,7 @@ namespace Cyberia.Salamandra.Commands.Dofus
 {
     public sealed class CraftCommandModule : ApplicationCommandModule
     {
-        [SlashCommand("craft", "Permet de calculer les ressources nécéssaire pour craft un objet")]
+        [SlashCommand("craft", "Permet de calculer les ressources nécessaires pour craft un objet")]
         public async Task Command(InteractionContext ctx,
             [Option("quantite", "Quantité à craft")]
             [Minimum(1), Maximum(99999)]
