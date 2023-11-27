@@ -1,9 +1,8 @@
-﻿namespace Cyberia.Api.Values
+﻿namespace Cyberia.Api.Values;
+
+public enum GuildTeleportation
 {
-    public enum GuildTeleportation
-    {
-        None,
-        House,
-        Enclosure
-    }
+    None,
+    House,
+    Enclosure
 }

@@ -1,22 +1,21 @@
-﻿namespace Cyberia.Api.Factories.Criteria
+﻿namespace Cyberia.Api.Factories.Criteria;
+
+public sealed record CriteriaLogicalOperator : ICriteriaElement
 {
-    public sealed record CriteriaLogicalOperator : ICriteriaElement
+    public char Operator { get; init; }
+
+    internal CriteriaLogicalOperator(char @operator)
     {
-        public char Operator { get; init; }
+        Operator = @operator;
+    }
 
-        internal CriteriaLogicalOperator(char @operator)
+    public string GetDescription()
+    {
+        return Operator switch
         {
-            Operator = @operator;
-        }
-
-        public string GetDescription()
-        {
-            return Operator switch
-            {
-                '&' => Resources.Criterion_And,
-                '|' => Resources.Criterion_Or,
-                _ => Operator.ToString()
-            };
-        }
+            '&' => Resources.Criterion_And,
+            '|' => Resources.Criterion_Or,
+            _ => Operator.ToString()
+        };
     }
 }

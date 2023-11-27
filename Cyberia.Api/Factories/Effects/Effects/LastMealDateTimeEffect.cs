@@ -1,26 +1,25 @@
 ﻿using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 
-namespace Cyberia.Api.Factories.Effects
+namespace Cyberia.Api.Factories.Effects;
+
+public sealed record LastMealDateTimeEffect : Effect, IEffect<LastMealDateTimeEffect>
 {
-    public sealed record LastMealDateTimeEffect : Effect, IEffect<LastMealDateTimeEffect>
+    public DateTime DateTime { get; init; }
+
+    private LastMealDateTimeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, DateTime dateTime)
+        : base(effectId, duration, probability, criteria, effectArea)
     {
-        public DateTime DateTime { get; init; }
+        DateTime = dateTime;
+    }
 
-        private LastMealDateTimeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, DateTime dateTime) :
-            base(effectId, duration, probability, criteria, effectArea)
-        {
-            DateTime = dateTime;
-        }
+    public static LastMealDateTimeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    {
+        return new(effectId, duration, probability, criteria, effectArea, DateManager.GetDateTimeFromEffectParameters(parameters));
+    }
 
-        public static LastMealDateTimeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        {
-            return new(effectId, duration, probability, criteria, effectArea, DateManager.GetDateTimeFromEffectParameters(parameters));
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(DateTime.ToString("dd/MM/yyy HH:mm"));
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(DateTime.ToString("dd/MM/yyy HH:mm"));
     }
 }

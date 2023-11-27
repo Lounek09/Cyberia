@@ -1,24 +1,23 @@
-﻿namespace Cyberia.Api.Values
+﻿namespace Cyberia.Api.Values;
+
+public enum SpellCategory
 {
-    public enum SpellCategory
-    {
-        None,
-        Breed,
-        Elementary,
-        Summon,
-        WeaponSkill,
-        Special,
-        Perceptor,
-        Fairywork,
-        Unknown_8,
-        Unknown_9,
-        TemporisBreed,
-        TemporisCommon,
-        TemporisRare,
-        TemporisEpic,
-        TemporisLegendary,
-        TemporisTriggeredSpell,
-        TemporisMonster,
-        Event
-    }
+    None,
+    Breed,
+    Elementary,
+    Summon,
+    WeaponSkill,
+    Special,
+    Perceptor,
+    Fairywork,
+    Unknown_8,
+    Unknown_9,
+    TemporisBreed,
+    TemporisCommon,
+    TemporisRare,
+    TemporisEpic,
+    TemporisLegendary,
+    TemporisTriggeredSpell,
+    TemporisMonster,
+    Event
 }

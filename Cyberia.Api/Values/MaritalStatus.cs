@@ -1,8 +1,7 @@
-﻿namespace Cyberia.Api.Values
+﻿namespace Cyberia.Api.Values;
+
+public enum MaritalStatus
 {
-    public enum MaritalStatus
-    {
-        Single,
-        Married
-    }
+    Single,
+    Married
 }

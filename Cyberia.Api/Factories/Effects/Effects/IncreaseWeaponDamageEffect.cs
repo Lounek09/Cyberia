@@ -2,35 +2,34 @@
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 
-namespace Cyberia.Api.Factories.Effects
+namespace Cyberia.Api.Factories.Effects;
+
+public sealed record IncreaseWeaponDamageEffect : Effect, IEffect<IncreaseWeaponDamageEffect>
 {
-    public sealed record IncreaseWeaponDamageEffect : Effect, IEffect<IncreaseWeaponDamageEffect>
+    public int ItemTypeId { get; init; }
+    public int Value { get; init; }
+
+    private IncreaseWeaponDamageEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId, int value)
+        : base(effectId, duration, probability, criteria, effectArea)
     {
-        public int ItemTypeId { get; init; }
-        public int Value { get; init; }
+        ItemTypeId = itemTypeId;
+        Value = value;
+    }
 
-        private IncreaseWeaponDamageEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId, int value) :
-            base(effectId, duration, probability, criteria, effectArea)
-        {
-            ItemTypeId = itemTypeId;
-            Value = value;
-        }
+    public static IncreaseWeaponDamageEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    {
+        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param2);
+    }
 
-        public static IncreaseWeaponDamageEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        {
-            return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param2);
-        }
+    public ItemTypeData? GetItemTypeData()
+    {
+        return DofusApi.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeId);
+    }
 
-        public ItemTypeData? GetItemTypeData()
-        {
-            return DofusApi.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeId);
-        }
+    public Description GetDescription()
+    {
+        var itemTypeName = DofusApi.Datacenter.ItemsData.GetItemTypeNameById(ItemTypeId);
 
-        public Description GetDescription()
-        {
-            string itemTypeName = DofusApi.Datacenter.ItemsData.GetItemTypeNameById(ItemTypeId);
-
-            return GetDescription(itemTypeName, Value);
-        }
+        return GetDescription(itemTypeName, Value);
     }
 }

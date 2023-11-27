@@ -1,9 +1,8 @@
-﻿namespace Cyberia.Langzilla.Enums
+﻿namespace Cyberia.Langzilla.Enums;
+
+public enum LangType
 {
-    public enum LangType
-    {
-        Official,
-        Beta,
-        Temporis
-    }
+    Official,
+    Beta,
+    Temporis
 }

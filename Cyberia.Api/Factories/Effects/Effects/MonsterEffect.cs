@@ -2,35 +2,34 @@
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 
-namespace Cyberia.Api.Factories.Effects
+namespace Cyberia.Api.Factories.Effects;
+
+public sealed record MonsterKillCounterEffect : Effect, IEffect<MonsterKillCounterEffect>
 {
-    public sealed record MonsterKillCounterEffect : Effect, IEffect<MonsterKillCounterEffect>
+    public int MonsterId { get; init; }
+    public int Count { get; init; }
+
+    private MonsterKillCounterEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int count)
+        : base(effectId, duration, probability, criteria, effectArea)
     {
-        public int MonsterId { get; init; }
-        public int Count { get; init; }
+        MonsterId = monsterId;
+        Count = count;
+    }
 
-        private MonsterKillCounterEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int count) :
-            base(effectId, duration, probability, criteria, effectArea)
-        {
-            MonsterId = monsterId;
-            Count = count;
-        }
+    public static MonsterKillCounterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    {
+        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param3);
+    }
 
-        public static MonsterKillCounterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        {
-            return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param3);
-        }
+    public MonsterData? GetMonsterData()
+    {
+        return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
+    }
 
-        public MonsterData? GetMonsterData()
-        {
-            return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
-        }
+    public Description GetDescription()
+    {
+        var monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
 
-        public Description GetDescription()
-        {
-            string monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
-
-            return GetDescription(monsterName, null, Count);
-        }
+        return GetDescription(monsterName, null, Count);
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace Cyberia.Api.Values
+﻿namespace Cyberia.Api.Values;
+
+public enum Corpulence
 {
-    public enum Corpulence
-    {
-        Skinny,
-        Satisfied,
-        Obese
-    }
+    Skinny,
+    Satisfied,
+    Obese
 }

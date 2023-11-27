@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
+
+public sealed record CurrentActionPointCriterion : Criterion, ICriterion<CurrentActionPointCriterion>
 {
-    public sealed record CurrentActionPointCriterion : Criterion, ICriterion<CurrentActionPointCriterion>
+    public int ActionPoint { get; init; }
+
+    private CurrentActionPointCriterion(string id, char @operator, int actionPoint)
+        : base(id, @operator)
     {
-        public int ActionPoint { get; init; }
+        ActionPoint = actionPoint;
+    }
 
-        private CurrentActionPointCriterion(string id, char @operator, int actionPoint) :
-            base(id, @operator)
+    public static CurrentActionPointCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var actionPoint))
         {
-            ActionPoint = actionPoint;
+            return new(id, @operator, actionPoint);
         }
 
-        public static CurrentActionPointCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int actionPoint))
-            {
-                return new(id, @operator, actionPoint);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.CurrentActionPoint.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.CurrentActionPoint.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(ActionPoint);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(ActionPoint);
     }
 }

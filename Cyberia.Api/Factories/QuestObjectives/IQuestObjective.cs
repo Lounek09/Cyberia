@@ -1,16 +1,15 @@
 ﻿using Cyberia.Api.Data;
 
-namespace Cyberia.Api.Factories.QuestObjectives
+namespace Cyberia.Api.Factories.QuestObjectives;
+
+public interface IQuestObjective
 {
-    public interface IQuestObjective
-    {
-        QuestObjectiveData QuestObjectiveData { get; init; }
+    QuestObjectiveData QuestObjectiveData { get; init; }
 
-        Description GetDescription();
-    }
+    Description GetDescription();
+}
 
-    public interface IQuestObjective<T> : IQuestObjective
-    {
-        static abstract T? Create(QuestObjectiveData questObjectiveData);
-    }
+public interface IQuestObjective<T> : IQuestObjective
+{
+    static abstract T? Create(QuestObjectiveData questObjectiveData);
 }

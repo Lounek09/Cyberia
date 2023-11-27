@@ -1,42 +1,41 @@
 ﻿using Cyberia.Api.Data;
 
-namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record AlignmentSpecializationCriterion : Criterion, ICriterion<AlignmentSpecializationCriterion>
 {
-    public sealed record AlignmentSpecializationCriterion : Criterion, ICriterion<AlignmentSpecializationCriterion>
+    public int AlignmentSpecializationId { get; init; }
+
+    private AlignmentSpecializationCriterion(string id, char @operator, int alignmentSpecializationId)
+        : base(id, @operator)
     {
-        public int AlignmentSpecializationId { get; init; }
+        AlignmentSpecializationId = alignmentSpecializationId;
+    }
 
-        private AlignmentSpecializationCriterion(string id, char @operator, int alignmentSpecializationId) :
-            base(id, @operator)
+    public static AlignmentSpecializationCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var alignmentSpecializationId))
         {
-            AlignmentSpecializationId = alignmentSpecializationId;
+            return new(id, @operator, alignmentSpecializationId);
         }
 
-        public static AlignmentSpecializationCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int alignmentSpecializationId))
-            {
-                return new(id, @operator, alignmentSpecializationId);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public AlignmentSpecializationData? GetAlignmentSpecializationData()
+    {
+        return DofusApi.Datacenter.AlignmentsData.GetAlignmentSpecializationDataById(AlignmentSpecializationId);
+    }
 
-        public AlignmentSpecializationData? GetAlignmentSpecializationData()
-        {
-            return DofusApi.Datacenter.AlignmentsData.GetAlignmentSpecializationDataById(AlignmentSpecializationId);
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.AlignmentSpecialization.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.AlignmentSpecialization.{GetOperatorDescriptionName()}";
-        }
+    public Description GetDescription()
+    {
+        var alignmentSpecializationName = DofusApi.Datacenter.AlignmentsData.GetAlignmentSpecializationNameById(AlignmentSpecializationId);
 
-        public Description GetDescription()
-        {
-            string alignmentSpecializationName = DofusApi.Datacenter.AlignmentsData.GetAlignmentSpecializationNameById(AlignmentSpecializationId);
-
-            return GetDescription(alignmentSpecializationName);
-        }
+        return GetDescription(alignmentSpecializationName);
     }
 }

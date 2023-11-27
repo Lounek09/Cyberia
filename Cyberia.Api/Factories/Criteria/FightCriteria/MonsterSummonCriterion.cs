@@ -1,42 +1,41 @@
 ﻿using Cyberia.Api.Data;
 
-namespace Cyberia.Api.Factories.Criteria.FightCriteria
+namespace Cyberia.Api.Factories.Criteria.FightCriteria;
+
+public sealed record MonsterSummonCriterion : Criterion, ICriterion<MonsterSummonCriterion>
 {
-    public sealed record MonsterSummonCriterion : Criterion, ICriterion<MonsterSummonCriterion>
+    public int MonsterId { get; init; }
+
+    public MonsterSummonCriterion(string id, char @operator, int monsterId)
+        : base(id, @operator)
     {
-        public int MonsterId { get; init; }
+        MonsterId = monsterId;
+    }
 
-        public MonsterSummonCriterion(string id, char @operator, int monsterId) :
-            base(id, @operator)
+    public MonsterData? GetMonsterData()
+    {
+        return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
+    }
+
+    public static MonsterSummonCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var monsterId))
         {
-            MonsterId = monsterId;
+            return new(id, @operator, monsterId);
         }
 
-        public MonsterData? GetMonsterData()
-        {
-            return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
-        }
+        return null;
+    }
 
-        public static MonsterSummonCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int monsterId))
-            {
-                return new(id, @operator, monsterId);
-            }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.MonsterSummon.{GetOperatorDescriptionName()}";
+    }
 
-            return null;
-        }
+    public Description GetDescription()
+    {
+        var monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.MonsterSummon.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            string monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
-
-            return GetDescription(monsterName);
-        }
+        return GetDescription(monsterName);
     }
 }

@@ -1,29 +1,27 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus
+namespace Cyberia.Salamandra.Commands.Dofus;
+
+public sealed class RuneAutocompleteProvider : AutocompleteProvider
 {
-    public sealed class RuneAutocompleteProvider : AutocompleteProvider
+    public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
     {
-        public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
+        var value = ctx.OptionValue.ToString();
+        if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
         {
-            string? value = ctx.OptionValue.ToString();
-            if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
-            {
-                return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
-            }
-
-            List<DiscordAutoCompleteChoice> choices = [];
-
-            foreach (RuneData runeData in DofusApi.Datacenter.RunesData.GetRunesDataByName(ctx.OptionValue.ToString()!).Take(MAX_AUTOCOMPLETE_CHOICE))
-            {
-                choices.Add(new(runeData.Name, runeData.Name));
-            }
-
-            return Task.FromResult(choices.AsEnumerable());
+            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
         }
+
+        List<DiscordAutoCompleteChoice> choices = [];
+
+        foreach (var runeData in DofusApi.Datacenter.RunesData.GetRunesDataByName(ctx.OptionValue.ToString()!).Take(MAX_AUTOCOMPLETE_CHOICE))
+        {
+            choices.Add(new(runeData.Name, runeData.Name));
+        }
+
+        return Task.FromResult(choices.AsEnumerable());
     }
 }

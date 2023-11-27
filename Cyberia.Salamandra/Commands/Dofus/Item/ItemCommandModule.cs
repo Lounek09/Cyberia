@@ -1,44 +1,42 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus
+namespace Cyberia.Salamandra.Commands.Dofus;
+
+public sealed class ItemCommandModule : ApplicationCommandModule
 {
-    public sealed class ItemCommandModule : ApplicationCommandModule
+    [SlashCommand("item", "Retourne les informations d'un item à partir de son nom")]
+    public async Task Command(InteractionContext ctx,
+        [Option("nom", "Nom de l'item", true)]
+        [Autocomplete(typeof(ItemAutocompleteProvider))]
+        string value)
     {
-        [SlashCommand("item", "Retourne les informations d'un item à partir de son nom")]
-        public async Task Command(InteractionContext ctx,
-            [Option("nom", "Nom de l'item", true)]
-            [Autocomplete(typeof(ItemAutocompleteProvider))]
-            string value)
+        DiscordInteractionResponseBuilder? response = null;
+
+        if (int.TryParse(value, out var id))
         {
-            DiscordInteractionResponseBuilder? response = null;
-
-            if (int.TryParse(value, out int id))
+            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(id);
+            if (itemData is not null)
             {
-                ItemData? itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(id);
-                if (itemData is not null)
-                {
-                    response = await new ItemMessageBuilder(itemData).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                }
+                response = await new ItemMessageBuilder(itemData).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
-            else
-            {
-                List<ItemData> itemsData = DofusApi.Datacenter.ItemsData.GetItemsData(value).ToList();
-                if (itemsData.Count == 1)
-                {
-                    response = await new ItemMessageBuilder(itemsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                }
-                else if (itemsData.Count > 1)
-                {
-                    response = await new PaginatedItemMessageBuilder(itemsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                }
-            }
-
-            response ??= new DiscordInteractionResponseBuilder().WithContent("Item introuvable");
-            await ctx.CreateResponseAsync(response);
         }
+        else
+        {
+            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsData(value).ToList();
+            if (itemsData.Count == 1)
+            {
+                response = await new ItemMessageBuilder(itemsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+            else if (itemsData.Count > 1)
+            {
+                response = await new PaginatedItemMessageBuilder(itemsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+        }
+
+        response ??= new DiscordInteractionResponseBuilder().WithContent("Item introuvable");
+        await ctx.CreateResponseAsync(response);
     }
 }

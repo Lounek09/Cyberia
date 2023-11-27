@@ -1,50 +1,47 @@
 ﻿using Cyberia.Api.Data;
 
-using System.Collections.ObjectModel;
+namespace Cyberia.Api.Factories.QuestObjectives;
 
-namespace Cyberia.Api.Factories.QuestObjectives
+public sealed record BringItemToNpcQuestObjective : QuestObjective, IQuestObjective<BringItemToNpcQuestObjective>
 {
-    public sealed record BringItemToNpcQuestObjective : QuestObjective, IQuestObjective<BringItemToNpcQuestObjective>
+    public int NpcId { get; init; }
+    public int ItemId { get; init; }
+    public int Quantity { get; init; }
+
+    private BringItemToNpcQuestObjective(QuestObjectiveData questObjectiveData, int npcId, int itemId, int quantity)
+        : base(questObjectiveData)
     {
-        public int NpcId { get; init; }
-        public int ItemId { get; init; }
-        public int Quantity { get; init; }
+        NpcId = npcId;
+        ItemId = itemId;
+        Quantity = quantity;
+    }
 
-        private BringItemToNpcQuestObjective(QuestObjectiveData questObjectiveData, int npcId, int itemId, int quantity) :
-            base(questObjectiveData)
+    public static BringItemToNpcQuestObjective? Create(QuestObjectiveData questObjectiveData)
+    {
+        var parameters = questObjectiveData.Parameters;
+        if (parameters.Count > 2 && int.TryParse(parameters[0], out var npcId) && int.TryParse(parameters[1], out var itemId) && int.TryParse(parameters[2], out var quantity))
         {
-            NpcId = npcId;
-            ItemId = itemId;
-            Quantity = quantity;
+            return new(questObjectiveData, npcId, itemId, quantity);
         }
 
-        public static BringItemToNpcQuestObjective? Create(QuestObjectiveData questObjectiveData)
-        {
-            ReadOnlyCollection<string> parameters = questObjectiveData.Parameters;
-            if (parameters.Count > 2 && int.TryParse(parameters[0], out int npcId) && int.TryParse(parameters[1], out int itemId) && int.TryParse(parameters[2], out int quantity))
-            {
-                return new(questObjectiveData, npcId, itemId, quantity);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public NpcData? GetNpcData()
+    {
+        return DofusApi.Datacenter.NpcsData.GetNpcDataById(NpcId);
+    }
 
-        public NpcData? GetNpcData()
-        {
-            return DofusApi.Datacenter.NpcsData.GetNpcDataById(NpcId);
-        }
+    public ItemData? GetItemData()
+    {
+        return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
+    }
 
-        public ItemData? GetItemData()
-        {
-            return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
-        }
+    public Description GetDescription()
+    {
+        var npcName = DofusApi.Datacenter.NpcsData.GetNpcNameById(NpcId);
+        var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
 
-        public Description GetDescription()
-        {
-            string npcName = DofusApi.Datacenter.NpcsData.GetNpcNameById(NpcId);
-            string itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
-
-            return GetDescription(npcName, itemName, Quantity);
-        }
+        return GetDescription(npcName, itemName, Quantity);
     }
 }

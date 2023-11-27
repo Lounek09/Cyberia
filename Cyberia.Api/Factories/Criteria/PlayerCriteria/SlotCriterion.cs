@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record SlotCriterion : Criterion, ICriterion<SlotCriterion>
 {
-    public sealed record SlotCriterion : Criterion, ICriterion<SlotCriterion>
+    public int SlotId { get; init; }
+
+    private SlotCriterion(string id, char @operator, int slotId)
+        : base(id, @operator)
     {
-        public int SlotId { get; init; }
+        SlotId = slotId;
+    }
 
-        private SlotCriterion(string id, char @operator, int slotId) :
-            base(id, @operator)
+    public static SlotCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var slotId))
         {
-            SlotId = slotId;
+            return new(id, @operator, slotId);
         }
 
-        public static SlotCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int slotId))
-            {
-                return new(id, @operator, slotId);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.Slot.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.Slot.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(SlotId);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(SlotId);
     }
 }

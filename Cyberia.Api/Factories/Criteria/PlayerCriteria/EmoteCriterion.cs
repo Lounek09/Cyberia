@@ -1,42 +1,41 @@
 ﻿using Cyberia.Api.Data;
 
-namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record EmoteCriterion : Criterion, ICriterion<EmoteCriterion>
 {
-    public sealed record EmoteCriterion : Criterion, ICriterion<EmoteCriterion>
+    public int EmoteId { get; init; }
+
+    public EmoteCriterion(string id, char @operator, int emoteId)
+        : base(id, @operator)
     {
-        public int EmoteId { get; init; }
+        EmoteId = emoteId;
+    }
 
-        public EmoteCriterion(string id, char @operator, int emoteId) :
-            base(id, @operator)
+    public static EmoteCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var emoteId))
         {
-            EmoteId = emoteId;
+            return new(id, @operator, emoteId);
         }
 
-        public static EmoteCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int emoteId))
-            {
-                return new(id, @operator, emoteId);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public EmoteData? GetEmoteData()
+    {
+        return DofusApi.Datacenter.EmotesData.GetEmoteById(EmoteId);
+    }
 
-        public EmoteData? GetEmoteData()
-        {
-            return DofusApi.Datacenter.EmotesData.GetEmoteById(EmoteId);
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.Emote.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.Emote.{GetOperatorDescriptionName()}";
-        }
+    public Description GetDescription()
+    {
+        var emoteName = DofusApi.Datacenter.EmotesData.GetEmoteNameById(EmoteId);
 
-        public Description GetDescription()
-        {
-            string emoteName = DofusApi.Datacenter.EmotesData.GetEmoteNameById(EmoteId);
-
-            return GetDescription(emoteName);
-        }
+        return GetDescription(emoteName);
     }
 }

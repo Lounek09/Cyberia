@@ -6,48 +6,47 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra
+namespace Cyberia.Salamandra;
+
+public static class Bot
 {
-    public static class Bot
+    public const string OUTPUT_PATH = "bot";
+
+    public static BotConfig Config { get; private set; } = default!;
+    public static DiscordClient Client { get; private set; } = default!;
+    public static SlashCommandsExtension SlashCommands { get; private set; } = default!;
+
+    public static void Initialize(BotConfig config)
     {
-        public const string OUTPUT_PATH = "bot";
+        Directory.CreateDirectory(OUTPUT_PATH);
 
-        public static BotConfig Config { get; private set; } = default!;
-        public static DiscordClient Client { get; private set; } = default!;
-        public static SlashCommandsExtension SlashCommands { get; private set; } = default!;
+        Config = config;
 
-        public static void Initialize(BotConfig config)
+        Client = new(new DiscordConfiguration()
         {
-            Directory.CreateDirectory(OUTPUT_PATH);
+            Token = Config.Token,
+            TokenType = TokenType.Bot,
+            AutoReconnect = true,
+            LogTimestampFormat = "yyyy/MM/dd HH:mm:ss:ffff"
+        });
+        Client.GuildCreated += GuildManager.OnGuildCreated;
+        Client.GuildDeleted += GuildManager.OnGuildDeleted;
+        Client.MessageCreated += MessageManager.OnMessageCreated;
+        Client.ComponentInteractionCreated += InteractionManager.OnComponentInteractionCreated;
 
-            Config = config;
+        SlashCommands = Client.UseSlashCommands();
+        SlashCommands.SlashCommandErrored += CommandManager.OnSlashCommandErrored;
 
-            Client = new(new DiscordConfiguration()
-            {
-                Token = Config.Token,
-                TokenType = TokenType.Bot,
-                AutoReconnect = true,
-                LogTimestampFormat = "yyyy/MM/dd HH:mm:ss:ffff"
-            });
-            Client.GuildCreated += GuildManager.OnGuildCreated;
-            Client.GuildDeleted += GuildManager.OnGuildDeleted;
-            Client.MessageCreated += MessageManager.OnMessageCreated;
-            Client.ComponentInteractionCreated += InteractionManager.OnComponentInteractionCreated;
+        CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
 
-            SlashCommands = Client.UseSlashCommands();
-            SlashCommands.SlashCommandErrored += CommandManager.OnSlashCommandErrored;
+        LangsWatcher.CheckLangFinished += LangsManager.OnCheckLangFinished;
+    }
 
-            CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
+    public static async Task Launch()
+    {
+        CommandManager.RegisterCommands();
 
-            LangsWatcher.CheckLangFinished += LangsManager.OnCheckLangFinished;
-        }
-
-        public static async Task Launch()
-        {
-            CommandManager.RegisterCommands();
-
-            DiscordActivity activity = new("Dofus Retro", ActivityType.Playing);
-            await Client.ConnectAsync(activity);
-        }
+        DiscordActivity activity = new("Dofus Retro", ActivityType.Playing);
+        await Client.ConnectAsync(activity);
     }
 }

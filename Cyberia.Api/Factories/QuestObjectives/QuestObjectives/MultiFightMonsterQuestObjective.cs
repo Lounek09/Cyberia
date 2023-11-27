@@ -1,42 +1,39 @@
 ﻿using Cyberia.Api.Data;
 
-using System.Collections.ObjectModel;
+namespace Cyberia.Api.Factories.QuestObjectives;
 
-namespace Cyberia.Api.Factories.QuestObjectives
+public sealed record MultiFightMonsterQuestObjective : QuestObjective, IQuestObjective<MultiFightMonsterQuestObjective>
 {
-    public sealed record MultiFightMonsterQuestObjective : QuestObjective, IQuestObjective<MultiFightMonsterQuestObjective>
+    public int MonsterId { get; init; }
+    public int Quantity { get; init; }
+
+    private MultiFightMonsterQuestObjective(QuestObjectiveData questObjectiveData, int monsterId, int quantity)
+        : base(questObjectiveData)
     {
-        public int MonsterId { get; init; }
-        public int Quantity { get; init; }
+        MonsterId = monsterId;
+        Quantity = quantity;
+    }
 
-        private MultiFightMonsterQuestObjective(QuestObjectiveData questObjectiveData, int monsterId, int quantity) :
-            base(questObjectiveData)
+    public static MultiFightMonsterQuestObjective? Create(QuestObjectiveData questObjectiveData)
+    {
+        var parameters = questObjectiveData.Parameters;
+        if (parameters.Count > 1 && int.TryParse(parameters[0], out var monsterId) && int.TryParse(parameters[1], out var quantity))
         {
-            MonsterId = monsterId;
-            Quantity = quantity;
+            return new(questObjectiveData, monsterId, quantity);
         }
 
-        public static MultiFightMonsterQuestObjective? Create(QuestObjectiveData questObjectiveData)
-        {
-            ReadOnlyCollection<string> parameters = questObjectiveData.Parameters;
-            if (parameters.Count > 1 && int.TryParse(parameters[0], out int monsterId) && int.TryParse(parameters[1], out int quantity))
-            {
-                return new(questObjectiveData, monsterId, quantity);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public MonsterData? GetMonsterData()
+    {
+        return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
+    }
 
-        public MonsterData? GetMonsterData()
-        {
-            return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
-        }
+    public Description GetDescription()
+    {
+        var monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
 
-        public Description GetDescription()
-        {
-            string monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
-
-            return GetDescription(monsterName, Quantity);
-        }
+        return GetDescription(monsterName, Quantity);
     }
 }

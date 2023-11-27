@@ -10,166 +10,165 @@ using Google.FlatBuffers;
 using System.Text;
 using System.Text.Json;
 
-namespace Cyberia.Salamandra.Managers
+namespace Cyberia.Salamandra.Managers;
+
+public static class CytrusManager
 {
-    public static class CytrusManager
+    public static async void OnNewCytrusDetected(object? sender, NewCytrusDetectedEventArgs e)
     {
-        public static async void OnNewCytrusDetected(object? sender, NewCytrusDetectedEventArgs e)
+        await SendCytrusDiffAsync(e);
+        await SendCytrusManifestDiffAsync(e);
+    }
+
+    public static async Task SendCytrusManifestDiffMessageAsync(this DiscordChannel channel, string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
+    {
+        HttpClient httpClient = new();
+        DiscordMessageBuilder message = new();
+
+        var url1 = CytrusData.GetGameManifestUrl(game, platform, oldRelease, oldVersion);
+        Manifest client1;
+        try
         {
-            await SendCytrusDiffAsync(e);
-            await SendCytrusManifestDiffAsync(e);
+            var metafile = await httpClient.GetByteArrayAsync(url1);
+            ByteBuffer buffer = new(metafile);
+            client1 = Manifest.GetRootAsManifest(buffer);
+        }
+        catch (HttpRequestException)
+        {
+            await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
+            return;
         }
 
-        public static async Task SendCytrusManifestDiffMessageAsync(this DiscordChannel channel, string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
+        var url2 = CytrusData.GetGameManifestUrl(game, platform, newRelease, newVersion);
+        Manifest client2;
+        try
         {
-            HttpClient httpClient = new();
-            DiscordMessageBuilder message = new();
+            var metafile = await httpClient.GetByteArrayAsync(url2);
+            ByteBuffer buffer = new(metafile);
+            client2 = Manifest.GetRootAsManifest(buffer);
+        }
+        catch (HttpRequestException)
+        {
+            await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
+            return;
+        }
 
-            string url1 = CytrusData.GetGameManifestUrl(game, platform, oldRelease, oldVersion);
-            Manifest client1;
-            try
+        var diff = client2.Diff(client1);
+
+        var mainContent = $"""
+             Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform)}
+             {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
+             """;
+
+        if (mainContent.Length + diff.Length < 2000)
+        {
+            await channel.SendMessage(message.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
+        }
+        else
+        {
+            using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
+            await channel.SendMessage(message.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
+        }
+    }
+
+    private static async Task<DiscordChannel?> GetCytrusChannel()
+    {
+        var id = Bot.Config.CytrusChannelId;
+        if (id == 0)
+        {
+            return null;
+        }
+
+        try
+        {
+            return await Bot.Client.GetChannelAsync(id);
+        }
+        catch
+        {
+            Log.Error("Unknown cytrus channel {ChannelId}", id);
+            return null;
+        }
+    }
+
+    private static async Task<DiscordChannel?> GetCytrusManifestChannel()
+    {
+        var id = Bot.Config.CytrusManifestChannelId;
+        if (id == 0)
+        {
+            return null;
+        }
+
+        try
+        {
+            return await Bot.Client.GetChannelAsync(id);
+        }
+        catch
+        {
+            Log.Error("Unknown cytrus manifest channel {ChannelId}", id);
+            return null;
+        }
+    }
+
+    private static async Task SendCytrusDiffAsync(NewCytrusDetectedEventArgs e)
+    {
+        var channel = await GetCytrusChannel();
+        if (channel is null)
+        {
+            return;
+        }
+
+        await channel.SendMessageAsync(new DiscordMessageBuilder().WithContent(Formatter.BlockCode(e.Diff, "json")));
+    }
+
+    private static async Task SendCytrusManifestDiffAsync(NewCytrusDetectedEventArgs e)
+    {
+        var channel = await GetCytrusManifestChannel();
+        if (channel is null)
+        {
+            return;
+        }
+
+        var document = JsonDocument.Parse(e.Diff);
+        var root = document.RootElement;
+
+        if (!root.TryGetProperty("games", out var games))
+        {
+            return;
+        }
+
+        foreach (var game in games.EnumerateObject())
+        {
+            if (!game.Value.TryGetProperty("platforms", out var platforms))
             {
-                byte[] metafile = await httpClient.GetByteArrayAsync(url1);
-                ByteBuffer buffer = new(metafile);
-                client1 = Manifest.GetRootAsManifest(buffer);
-            }
-            catch (HttpRequestException)
-            {
-                await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
                 return;
             }
 
-            string url2 = CytrusData.GetGameManifestUrl(game, platform, newRelease, newVersion);
-            Manifest client2;
-            try
-            {
-                byte[] metafile = await httpClient.GetByteArrayAsync(url2);
-                ByteBuffer buffer = new(metafile);
-                client2 = Manifest.GetRootAsManifest(buffer);
-            }
-            catch (HttpRequestException)
-            {
-                await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
-                return;
-            }
-
-            string diff = client2.Diff(client1);
-
-            string mainContent = $"""
-                 Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform)}
-                 {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
-                 """;
-
-            if (mainContent.Length + diff.Length < 2000)
-            {
-                await channel.SendMessage(message.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
-            }
-            else
-            {
-                using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
-                await channel.SendMessage(message.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
-            }
-        }
-
-        private static async Task<DiscordChannel?> GetCytrusChannel()
-        {
-            ulong id = Bot.Config.CytrusChannelId;
-            if (id == 0)
-            {
-                return null;
-            }
-
-            try
-            {
-                return await Bot.Client.GetChannelAsync(id);
-            }
-            catch
-            {
-                Log.Error("Unknown cytrus channel {ChannelId}", id);
-                return null;
-            }
-        }
-
-        private static async Task<DiscordChannel?> GetCytrusManifestChannel()
-        {
-            ulong id = Bot.Config.CytrusManifestChannelId;
-            if (id == 0)
-            {
-                return null;
-            }
-
-            try
-            {
-                return await Bot.Client.GetChannelAsync(id);
-            }
-            catch
-            {
-                Log.Error("Unknown cytrus manifest channel {ChannelId}", id);
-                return null;
-            }
-        }
-
-        private static async Task SendCytrusDiffAsync(NewCytrusDetectedEventArgs e)
-        {
-            DiscordChannel? channel = await GetCytrusChannel();
-            if (channel is null)
+            if (!platforms.TryGetProperty("windows", out var platform))
             {
                 return;
             }
 
-            await channel.SendMessageAsync(new DiscordMessageBuilder().WithContent(Formatter.BlockCode(e.Diff, "json")));
-        }
-
-        private static async Task SendCytrusManifestDiffAsync(NewCytrusDetectedEventArgs e)
-        {
-            DiscordChannel? channel = await GetCytrusManifestChannel();
-            if (channel is null)
+            foreach (var release in platform.EnumerateObject())
             {
-                return;
-            }
-
-            JsonDocument document = JsonDocument.Parse(e.Diff);
-            JsonElement root = document.RootElement;
-
-            if (!root.TryGetProperty("games", out JsonElement games))
-            {
-                return;
-            }
-
-            foreach (JsonProperty game in games.EnumerateObject())
-            {
-                if (!game.Value.TryGetProperty("platforms", out JsonElement platforms))
+                if (!release.Value.TryGetProperty("-", out var minus))
                 {
                     return;
                 }
 
-                if (!platforms.TryGetProperty("windows", out JsonElement platform))
+                if (!release.Value.TryGetProperty("+", out var plus))
                 {
                     return;
                 }
 
-                foreach (JsonProperty release in platform.EnumerateObject())
+                var oldVersion = minus.GetString();
+                var newVersion = plus.GetString();
+
+                if (string.IsNullOrEmpty(oldVersion) || string.IsNullOrEmpty(newVersion))
                 {
-                    if (!release.Value.TryGetProperty("-", out JsonElement minus))
-                    {
-                        return;
-                    }
-
-                    if (!release.Value.TryGetProperty("+", out JsonElement plus))
-                    {
-                        return;
-                    }
-
-                    string? oldVersion = minus.GetString();
-                    string? newVersion = plus.GetString();
-
-                    if (string.IsNullOrEmpty(oldVersion) || string.IsNullOrEmpty(newVersion))
-                    {
-                        return;
-                    }
-
-                    await channel.SendCytrusManifestDiffMessageAsync(game.Name, "windows", release.Name, oldVersion, release.Name, newVersion);
+                    return;
                 }
+
+                await channel.SendCytrusManifestDiffMessageAsync(game.Name, "windows", release.Name, oldVersion, release.Name, newVersion);
             }
         }
     }

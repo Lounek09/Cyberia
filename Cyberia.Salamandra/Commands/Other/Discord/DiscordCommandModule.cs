@@ -1,13 +1,12 @@
 ﻿using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Other
+namespace Cyberia.Salamandra.Commands.Other;
+
+public sealed class DiscordCommandModule : ApplicationCommandModule
 {
-    public sealed class DiscordCommandModule : ApplicationCommandModule
+    [SlashCommand("discord", "Lien d'invitation du serveur Discord de support")]
+    public async Task Command(InteractionContext ctx)
     {
-        [SlashCommand("discord", "Lien d'invitation du serveur Discord de support")]
-        public async Task Command(InteractionContext ctx)
-        {
-            await ctx.CreateResponseAsync(Bot.Config.DiscordGuildInviteUrl, true);
-        }
+        await ctx.CreateResponseAsync(Bot.Config.DiscordGuildInviteUrl, true);
     }
 }

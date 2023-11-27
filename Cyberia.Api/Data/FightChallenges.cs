@@ -3,53 +3,52 @@
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class FightChallengeData : IDofusData<int>
 {
-    public sealed class FightChallengeData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("d")]
+    public string Description { get; init; }
+
+    [JsonPropertyName("g")]
+    public int GfxId { get; init; }
+
+    [JsonConstructor]
+    internal FightChallengeData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        Name = string.Empty;
+        Description = string.Empty;
+    }
+}
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+public sealed class FightChallengesData : IDofusData
+{
+    private const string FILE_NAME = "fightChallenge.json";
 
-        [JsonPropertyName("d")]
-        public string Description { get; init; }
+    [JsonPropertyName("FC")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, FightChallengeData>))]
+    public FrozenDictionary<int, FightChallengeData> FightChallenges { get; init; }
 
-        [JsonPropertyName("g")]
-        public int GfxId { get; init; }
-
-        [JsonConstructor]
-        internal FightChallengeData()
-        {
-            Name = string.Empty;
-            Description = string.Empty;
-        }
+    [JsonConstructor]
+    internal FightChallengesData()
+    {
+        FightChallenges = FrozenDictionary<int, FightChallengeData>.Empty;
     }
 
-    public sealed class FightChallengesData : IDofusData
+    internal static FightChallengesData Load()
     {
-        private const string FILE_NAME = "fightChallenge.json";
+        return Datacenter.LoadDataFromFile<FightChallengesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        [JsonPropertyName("FC")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, FightChallengeData>))]
-        public FrozenDictionary<int, FightChallengeData> FightChallenges { get; init; }
-
-        [JsonConstructor]
-        internal FightChallengesData()
-        {
-            FightChallenges = FrozenDictionary<int, FightChallengeData>.Empty;
-        }
-
-        internal static FightChallengesData Load()
-        {
-            return Datacenter.LoadDataFromFile<FightChallengesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
-
-        public FightChallengeData? GetFightChallenge(int id)
-        {
-            FightChallenges.TryGetValue(id, out FightChallengeData? fightChallenge);
-            return fightChallenge;
-        }
+    public FightChallengeData? GetFightChallenge(int id)
+    {
+        FightChallenges.TryGetValue(id, out var fightChallenge);
+        return fightChallenge;
     }
 }

@@ -1,35 +1,34 @@
 ﻿using Cyberia.Api.Values;
 
-namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record MaritalStatusCriterion : Criterion, ICriterion<MaritalStatusCriterion>
 {
-    public sealed record MaritalStatusCriterion : Criterion, ICriterion<MaritalStatusCriterion>
+    public MaritalStatus MaritalStatus { get; init; }
+
+    private MaritalStatusCriterion(string id, char @operator, MaritalStatus maritalStatus)
+        : base(id, @operator)
     {
-        public MaritalStatus MaritalStatus { get; init; }
+        MaritalStatus = maritalStatus;
+    }
 
-        private MaritalStatusCriterion(string id, char @operator, MaritalStatus maritalStatus) :
-            base(id, @operator)
+    public static MaritalStatusCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && Enum.TryParse(parameters[0], out MaritalStatus maritalStatus))
         {
-            MaritalStatus = maritalStatus;
+            return new(id, @operator, maritalStatus);
         }
 
-        public static MaritalStatusCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && Enum.TryParse(parameters[0], out MaritalStatus maritalStatus))
-            {
-                return new(id, @operator, maritalStatus);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.MaritalStatus.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.MaritalStatus.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(MaritalStatus.GetDescription());
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(MaritalStatus.GetDescription());
     }
 }

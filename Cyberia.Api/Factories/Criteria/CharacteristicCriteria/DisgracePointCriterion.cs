@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
+
+public sealed record DisgracePointCriterion : Criterion, ICriterion<DisgracePointCriterion>
 {
-    public sealed record DisgracePointCriterion : Criterion, ICriterion<DisgracePointCriterion>
+    public int DisgracePoint { get; init; }
+
+    private DisgracePointCriterion(string id, char @operator, int disgracePoint)
+        : base(id, @operator)
     {
-        public int DisgracePoint { get; init; }
+        DisgracePoint = disgracePoint;
+    }
 
-        private DisgracePointCriterion(string id, char @operator, int disgracePoint) :
-            base(id, @operator)
+    public static DisgracePointCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var disgracePoint))
         {
-            DisgracePoint = disgracePoint;
+            return new(id, @operator, disgracePoint);
         }
 
-        public static DisgracePointCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int disgracePoint))
-            {
-                return new(id, @operator, disgracePoint);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.DisgracePoint.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.DisgracePoint.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(DisgracePoint);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(DisgracePoint);
     }
 }

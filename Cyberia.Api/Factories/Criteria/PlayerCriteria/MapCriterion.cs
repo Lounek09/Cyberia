@@ -1,44 +1,43 @@
 ﻿using Cyberia.Api.Data;
 
-namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record MapCriterion : Criterion, ICriterion<MapCriterion>
 {
-    public sealed record MapCriterion : Criterion, ICriterion<MapCriterion>
+    public int MapId { get; init; }
+
+    private MapCriterion(string id, char @operator, int mapId)
+        : base(id, @operator)
     {
-        public int MapId { get; init; }
+        MapId = mapId;
+    }
 
-        private MapCriterion(string id, char @operator, int mapId) :
-            base(id, @operator)
+    public static MapCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var mapId))
         {
-            MapId = mapId;
+            return new(id, @operator, mapId);
         }
 
-        public static MapCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int mapId))
-            {
-                return new(id, @operator, mapId);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public MapData? GetMapData()
+    {
+        return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
+    }
 
-        public MapData? GetMapData()
-        {
-            return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.Map.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.Map.{GetOperatorDescriptionName()}";
-        }
+    public Description GetDescription()
+    {
+        var map = GetMapData();
+        var mapAreaSubAreaName = map is null ? PatternDecoder.Description(Resources.Unknown_Data, MapId) : map.GetMapAreaName();
+        var coordinate = map is null ? "[x, x]" : map.GetCoordinate();
 
-        public Description GetDescription()
-        {
-            MapData? map = GetMapData();
-            string mapAreaSubAreaName = map is null ? PatternDecoder.Description(Resources.Unknown_Data, MapId) : map.GetMapAreaName();
-            string coordinate = map is null ? "[x, x]" : map.GetCoordinate();
-
-            return GetDescription(coordinate, mapAreaSubAreaName);
-        }
+        return GetDescription(coordinate, mapAreaSubAreaName);
     }
 }

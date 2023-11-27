@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
+
+public sealed record ChanceCriterion : Criterion, ICriterion<ChanceCriterion>
 {
-    public sealed record ChanceCriterion : Criterion, ICriterion<ChanceCriterion>
+    public int Chance { get; init; }
+
+    private ChanceCriterion(string id, char @operator, int chance)
+        : base(id, @operator)
     {
-        public int Chance { get; init; }
+        Chance = chance;
+    }
 
-        private ChanceCriterion(string id, char @operator, int chance) :
-            base(id, @operator)
+    public static ChanceCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var chance))
         {
-            Chance = chance;
+            return new(id, @operator, chance);
         }
 
-        public static ChanceCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int chance))
-            {
-                return new(id, @operator, chance);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.Chance.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.Chance.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(Chance);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(Chance);
     }
 }

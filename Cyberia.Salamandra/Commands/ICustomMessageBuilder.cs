@@ -1,9 +1,8 @@
 ﻿using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands
+namespace Cyberia.Salamandra.Commands;
+
+public interface ICustomMessageBuilder
 {
-    public interface ICustomMessageBuilder
-    {
-        Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new();
-    }
+    Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new();
 }

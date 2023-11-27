@@ -1,44 +1,42 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus
+namespace Cyberia.Salamandra.Commands.Dofus;
+
+public sealed class IncarnationCommandModule : ApplicationCommandModule
 {
-    public sealed class IncarnationCommandModule : ApplicationCommandModule
+    [SlashCommand("incarnation", "Retourne les informations d'une incarnation à partir de son nom")]
+    public async Task Command(InteractionContext ctx,
+        [Option("nom", "Nom de l'incarnation", true)]
+        [Autocomplete(typeof(IncarnationAutocompleteProvider))]
+        string value)
     {
-        [SlashCommand("incarnation", "Retourne les informations d'une incarnation à partir de son nom")]
-        public async Task Command(InteractionContext ctx,
-            [Option("nom", "Nom de l'incarnation", true)]
-            [Autocomplete(typeof(IncarnationAutocompleteProvider))]
-            string value)
+        DiscordInteractionResponseBuilder? response = null;
+
+        if (int.TryParse(value, out var id))
         {
-            DiscordInteractionResponseBuilder? response = null;
-
-            if (int.TryParse(value, out int id))
+            var incarnationData = DofusApi.Datacenter.IncarnationsData.GetIncarnationDataByItemId(id);
+            if (incarnationData is not null)
             {
-                IncarnationData? incarnationData = DofusApi.Datacenter.IncarnationsData.GetIncarnationDataByItemId(id);
-                if (incarnationData is not null)
-                {
-                    response = await new IncarnationMessageBuilder(incarnationData).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                }
+                response = await new IncarnationMessageBuilder(incarnationData).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
-            else
-            {
-                List<IncarnationData> incarnationsData = DofusApi.Datacenter.IncarnationsData.GetIncarnationsDataByName(value).ToList();
-                if (incarnationsData.Count == 1)
-                {
-                    response = await new IncarnationMessageBuilder(incarnationsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                }
-                else if (incarnationsData.Count > 1)
-                {
-                    response = await new PaginatedIncarnationMessageBuilder(incarnationsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                }
-            }
-
-            response ??= new DiscordInteractionResponseBuilder().WithContent("Incarnation introuvable");
-            await ctx.CreateResponseAsync(response);
         }
+        else
+        {
+            var incarnationsData = DofusApi.Datacenter.IncarnationsData.GetIncarnationsDataByName(value).ToList();
+            if (incarnationsData.Count == 1)
+            {
+                response = await new IncarnationMessageBuilder(incarnationsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+            else if (incarnationsData.Count > 1)
+            {
+                response = await new PaginatedIncarnationMessageBuilder(incarnationsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+        }
+
+        response ??= new DiscordInteractionResponseBuilder().WithContent("Incarnation introuvable");
+        await ctx.CreateResponseAsync(response);
     }
 }

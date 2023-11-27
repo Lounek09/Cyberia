@@ -4,96 +4,95 @@ using System.Collections.Frozen;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class NpcActionData : IDofusData<int>
 {
-    public sealed class NpcActionData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("v")]
+    public string Name { get; init; }
+
+    [JsonConstructor]
+    internal NpcActionData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        Name = string.Empty;
+    }
+}
 
-        [JsonPropertyName("v")]
-        public string Name { get; init; }
+public sealed class NpcData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonConstructor]
-        internal NpcActionData()
-        {
-            Name = string.Empty;
-        }
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("a")]
+    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+    public ReadOnlyCollection<int> NpcActionsId { get; init; }
+
+    [JsonConstructor]
+    internal NpcData()
+    {
+        Name = string.Empty;
+        NpcActionsId = ReadOnlyCollection<int>.Empty;
     }
 
-    public sealed class NpcData : IDofusData<int>
+    public IEnumerable<NpcActionData> GetNpcActionsData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
-
-        [JsonPropertyName("a")]
-        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-        public ReadOnlyCollection<int> NpcActionsId { get; init; }
-
-        [JsonConstructor]
-        internal NpcData()
+        foreach (var npcActionId in NpcActionsId)
         {
-            Name = string.Empty;
-            NpcActionsId = ReadOnlyCollection<int>.Empty;
-        }
-
-        public IEnumerable<NpcActionData> GetNpcActionsData()
-        {
-            foreach (int npcActionId in NpcActionsId)
+            var npcActionData = DofusApi.Datacenter.NpcsData.GetNpcActionDataById(npcActionId);
+            if (npcActionData is not null)
             {
-                NpcActionData? npcActionData = DofusApi.Datacenter.NpcsData.GetNpcActionDataById(npcActionId);
-                if (npcActionData is not null)
-                {
-                    yield return npcActionData;
-                }
+                yield return npcActionData;
             }
         }
     }
+}
 
-    public sealed class NpcsData : IDofusData
+public sealed class NpcsData : IDofusData
+{
+    private const string FILE_NAME = "npc.json";
+
+    [JsonPropertyName("N.a")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, NpcActionData>))]
+    public FrozenDictionary<int, NpcActionData> NpcActions { get; init; }
+
+    [JsonPropertyName("N.d")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, NpcData>))]
+    public FrozenDictionary<int, NpcData> Npcs { get; init; }
+
+    [JsonConstructor]
+    internal NpcsData()
     {
-        private const string FILE_NAME = "npc.json";
+        NpcActions = FrozenDictionary<int, NpcActionData>.Empty;
+        Npcs = FrozenDictionary<int, NpcData>.Empty;
+    }
 
-        [JsonPropertyName("N.a")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, NpcActionData>))]
-        public FrozenDictionary<int, NpcActionData> NpcActions { get; init; }
+    internal static NpcsData Load()
+    {
+        return Datacenter.LoadDataFromFile<NpcsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        [JsonPropertyName("N.d")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, NpcData>))]
-        public FrozenDictionary<int, NpcData> Npcs { get; init; }
+    public NpcActionData? GetNpcActionDataById(int id)
+    {
+        NpcActions.TryGetValue(id, out var npcActionData);
+        return npcActionData;
+    }
 
-        [JsonConstructor]
-        internal NpcsData()
-        {
-            NpcActions = FrozenDictionary<int, NpcActionData>.Empty;
-            Npcs = FrozenDictionary<int, NpcData>.Empty;
-        }
+    public NpcData? GetNpcDataById(int id)
+    {
+        Npcs.TryGetValue(id, out var npcData);
+        return npcData;
+    }
 
-        internal static NpcsData Load()
-        {
-            return Datacenter.LoadDataFromFile<NpcsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
+    public string GetNpcNameById(int id)
+    {
+        var npc = GetNpcDataById(id);
 
-        public NpcActionData? GetNpcActionDataById(int id)
-        {
-            NpcActions.TryGetValue(id, out NpcActionData? npcActionData);
-            return npcActionData;
-        }
-
-        public NpcData? GetNpcDataById(int id)
-        {
-            Npcs.TryGetValue(id, out NpcData? npcData);
-            return npcData;
-        }
-
-        public string GetNpcNameById(int id)
-        {
-            NpcData? npc = GetNpcDataById(id);
-
-            return npc is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : npc.Name;
-        }
+        return npc is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : npc.Name;
     }
 }

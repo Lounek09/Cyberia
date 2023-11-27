@@ -1,34 +1,33 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data.Custom
+namespace Cyberia.Api.Data.Custom;
+
+internal sealed class MonsterCustomData : IDofusData<int>
 {
-    internal sealed class MonsterCustomData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("bs")]
+    public bool BreedSummon { get; init; }
+
+    [JsonPropertyName("t")]
+    public string TrelloUrl { get; init; }
+
+    [JsonConstructor]
+    internal MonsterCustomData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("bs")]
-        public bool BreedSummon { get; init; }
-
-        [JsonPropertyName("t")]
-        public string TrelloUrl { get; init; }
-
-        [JsonConstructor]
-        internal MonsterCustomData()
-        {
-            TrelloUrl = string.Empty;
-        }
+        TrelloUrl = string.Empty;
     }
+}
 
-    internal sealed class MonstersCustomData : IDofusData
+internal sealed class MonstersCustomData : IDofusData
+{
+    [JsonPropertyName("CM")]
+    public List<MonsterCustomData> MonstersCustom { get; init; }
+
+    [JsonConstructor]
+    internal MonstersCustomData()
     {
-        [JsonPropertyName("CM")]
-        public List<MonsterCustomData> MonstersCustom { get; init; }
-
-        [JsonConstructor]
-        internal MonstersCustomData()
-        {
-            MonstersCustom = [];
-        }
+        MonstersCustom = [];
     }
 }

@@ -1,42 +1,41 @@
 ﻿using Cyberia.Api.Data;
 
-namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record ItemCriterion : Criterion, ICriterion<ItemCriterion>
 {
-    public sealed record ItemCriterion : Criterion, ICriterion<ItemCriterion>
+    public int ItemId { get; init; }
+
+    private ItemCriterion(string id, char @operator, int emoteId)
+        : base(id, @operator)
     {
-        public int ItemId { get; init; }
+        ItemId = emoteId;
+    }
 
-        private ItemCriterion(string id, char @operator, int emoteId) :
-            base(id, @operator)
+    public static ItemCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var itemId))
         {
-            ItemId = emoteId;
+            return new(id, @operator, itemId);
         }
 
-        public static ItemCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int itemId))
-            {
-                return new(id, @operator, itemId);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public ItemData? GetItemData()
+    {
+        return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
+    }
 
-        public ItemData? GetItemData()
-        {
-            return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.Item.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.Item.{GetOperatorDescriptionName()}";
-        }
+    public Description GetDescription()
+    {
+        var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
 
-        public Description GetDescription()
-        {
-            string itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
-
-            return GetDescription(itemName);
-        }
+        return GetDescription(itemName);
     }
 }

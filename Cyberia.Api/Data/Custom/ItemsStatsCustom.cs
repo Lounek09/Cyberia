@@ -3,43 +3,42 @@ using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+internal sealed class ItemStatsCustomData : IDofusData<int>
 {
-    internal sealed class ItemStatsCustomData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("v")]
+    [JsonConverter(typeof(ItemEffectListConverter))]
+    public List<IEffect> Effects { get; init; }
+
+    [JsonConstructor]
+    internal ItemStatsCustomData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("v")]
-        [JsonConverter(typeof(ItemEffectListConverter))]
-        public List<IEffect> Effects { get; init; }
-
-        [JsonConstructor]
-        internal ItemStatsCustomData()
-        {
-            Effects = [];
-        }
-
-        public ItemStatsData ToItemStatsData()
-        {
-            return new()
-            {
-                Id = Id,
-                EffectsCore = Effects
-            };
-        }
+        Effects = [];
     }
 
-    internal sealed class ItemsStatsCustomData : IDofusData
+    public ItemStatsData ToItemStatsData()
     {
-
-        [JsonPropertyName("CISTA")]
-        public List<ItemStatsCustomData> ItemsStatsCustom { get; init; }
-
-        [JsonConstructor]
-        internal ItemsStatsCustomData()
+        return new()
         {
-            ItemsStatsCustom = [];
-        }
+            Id = Id,
+            EffectsCore = Effects
+        };
+    }
+}
+
+internal sealed class ItemsStatsCustomData : IDofusData
+{
+
+    [JsonPropertyName("CISTA")]
+    public List<ItemStatsCustomData> ItemsStatsCustom { get; init; }
+
+    [JsonConstructor]
+    internal ItemsStatsCustomData()
+    {
+        ItemsStatsCustom = [];
     }
 }

@@ -1,33 +1,30 @@
 ﻿using Cyberia.Api.Factories;
-using Cyberia.Api.Factories.Effects;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Admin
+namespace Cyberia.Salamandra.Commands.Admin;
+
+public sealed class ParseCommandModule : ApplicationCommandModule
 {
-    public sealed class ParseCommandModule : ApplicationCommandModule
+    [SlashCommand("parse", "Parse les stats d'un item")]
+    public async Task ItemParserCommand(InteractionContext ctx,
+        [Option("stats", "Stats de l'item")]
+            string value)
     {
-        [SlashCommand("parse", "Parse les stats d'un item")]
-        public async Task ItemParserCommand(InteractionContext ctx,
-            [Option("stats", "Stats de l'item")]
-                string value)
+        var effects = EffectFactory.GetEffectsParseFromItem(value);
+
+        if (effects.Any())
         {
-            IEnumerable<IEffect> effects = EffectFactory.GetEffectsParseFromItem(value);
+            var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Inventaire")
+                .WithTitle("Item stats parser")
+                .AddEffectFields("Effets :", effects);
 
-            if (effects.Any())
-            {
-                DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Inventaire")
-                    .WithTitle("Item stats parser")
-                    .AddEffectFields("Effets :", effects);
-
-                await ctx.CreateResponseAsync(embed);
-                return;
-            }
-
-            await ctx.CreateResponseAsync("Valeur incorrect !");
+            await ctx.CreateResponseAsync(embed);
+            return;
         }
+
+        await ctx.CreateResponseAsync("Valeur incorrect !");
     }
 }

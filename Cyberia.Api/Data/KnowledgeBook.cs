@@ -3,176 +3,175 @@
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class KnowledgeBookCatagoryData : IDofusData<int>
 {
-    public sealed class KnowledgeBookCatagoryData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("o")]
+    public int Order { get; init; }
+
+    [JsonPropertyName("i")]
+    public int Index { get; init; }
+
+    [JsonPropertyName("ep")]
+    public int Episode { get; init; }
+
+    [JsonConstructor]
+    internal KnowledgeBookCatagoryData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        Name = string.Empty;
+    }
+}
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+public sealed class KnowledgeBookArticleData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonPropertyName("o")]
-        public int Order { get; init; }
+    [JsonPropertyName("c")]
+    public int KnowledgeBookCatagoryId { get; init; }
 
-        [JsonPropertyName("i")]
-        public int Index { get; init; }
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
 
-        [JsonPropertyName("ep")]
-        public int Episode { get; init; }
+    [JsonPropertyName("o")]
+    public int Order { get; init; }
 
-        [JsonConstructor]
-        internal KnowledgeBookCatagoryData()
-        {
-            Name = string.Empty;
-        }
+    [JsonPropertyName("a")]
+    public string Description { get; init; }
+
+    [JsonPropertyName("k")]
+    public List<string> KeyWords { get; init; }
+
+    [JsonPropertyName("i")]
+    public int Index { get; init; }
+
+    [JsonPropertyName("ep")]
+    public int Episode { get; init; }
+
+    [JsonConstructor]
+    internal KnowledgeBookArticleData()
+    {
+        Name = string.Empty;
+        Description = string.Empty;
+        KeyWords = [];
     }
 
-    public sealed class KnowledgeBookArticleData : IDofusData<int>
+    public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookCatagoryDataById(KnowledgeBookCatagoryId);
+    }
+}
 
-        [JsonPropertyName("c")]
-        public int KnowledgeBookCatagoryId { get; init; }
+public sealed class KnowledgeBookTipData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+    [JsonPropertyName("i")]
+    public int Index { get; init; }
 
-        [JsonPropertyName("o")]
-        public int Order { get; init; }
+    [JsonPropertyName("c")]
+    public string Description { get; init; }
 
-        [JsonPropertyName("a")]
-        public string Description { get; init; }
+    [JsonPropertyName("l")]
+    public int KnowledgeBookArticleId { get; init; }
 
-        [JsonPropertyName("k")]
-        public List<string> KeyWords { get; init; }
-
-        [JsonPropertyName("i")]
-        public int Index { get; init; }
-
-        [JsonPropertyName("ep")]
-        public int Episode { get; init; }
-
-        [JsonConstructor]
-        internal KnowledgeBookArticleData()
-        {
-            Name = string.Empty;
-            Description = string.Empty;
-            KeyWords = [];
-        }
-
-        public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryData()
-        {
-            return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookCatagoryDataById(KnowledgeBookCatagoryId);
-        }
+    [JsonConstructor]
+    internal KnowledgeBookTipData()
+    {
+        Description = string.Empty;
     }
 
-    public sealed class KnowledgeBookTipData : IDofusData<int>
+    public KnowledgeBookArticleData? GetKnowledgeBookArticleData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookArticleDataById(KnowledgeBookArticleId);
+    }
+}
 
-        [JsonPropertyName("i")]
-        public int Index { get; init; }
+public sealed class KnowledgeBookTriggerData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonPropertyName("c")]
-        public string Description { get; init; }
+    [JsonPropertyName("t")]
+    public int Type { get; init; }
 
-        [JsonPropertyName("l")]
-        public int KnowledgeBookArticleId { get; init; }
+    [JsonPropertyName("v")]
+    [JsonInclude]
+    //TODO: JsonConverter for Values in KnowledgeBookTrigger
+    internal object Values { get; init; }
 
-        [JsonConstructor]
-        internal KnowledgeBookTipData()
-        {
-            Description = string.Empty;
-        }
+    [JsonPropertyName("d")]
+    public int KnowledgeBookTipId { get; init; }
 
-        public KnowledgeBookArticleData? GetKnowledgeBookArticleData()
-        {
-            return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookArticleDataById(KnowledgeBookArticleId);
-        }
+    [JsonConstructor]
+    internal KnowledgeBookTriggerData()
+    {
+        Values = new();
     }
 
-    public sealed class KnowledgeBookTriggerData : IDofusData<int>
+    public KnowledgeBookTipData? GetKnowledgeBookTipData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookTipDataById(KnowledgeBookTipId);
+    }
+}
 
-        [JsonPropertyName("t")]
-        public int Type { get; init; }
+public sealed class KnowledgeBookData
+{
+    private const string FILE_NAME = "kb.json";
 
-        [JsonPropertyName("v")]
-        [JsonInclude]
-        //TODO: JsonConverter for Values in KnowledgeBookTrigger
-        internal object Values { get; init; }
+    [JsonPropertyName("KBC")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, KnowledgeBookCatagoryData>))]
+    public FrozenDictionary<int, KnowledgeBookCatagoryData> KnowledgeBookCatagories { get; init; }
 
-        [JsonPropertyName("d")]
-        public int KnowledgeBookTipId { get; init; }
+    [JsonPropertyName("KBA")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, KnowledgeBookArticleData>))]
+    public FrozenDictionary<int, KnowledgeBookArticleData> KnowledgeBookArticles { get; init; }
 
-        [JsonConstructor]
-        internal KnowledgeBookTriggerData()
-        {
-            Values = new();
-        }
+    [JsonPropertyName("KBT")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, KnowledgeBookTipData>))]
+    public FrozenDictionary<int, KnowledgeBookTipData> KnowledgeBookTips { get; init; }
 
-        public KnowledgeBookTipData? GetKnowledgeBookTipData()
-        {
-            return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookTipDataById(KnowledgeBookTipId);
-        }
+    [JsonPropertyName("KBD")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, KnowledgeBookTriggerData>))]
+    public FrozenDictionary<int, KnowledgeBookTriggerData> KnowledgeBookTriggers { get; init; }
+
+    [JsonConstructor]
+    internal KnowledgeBookData()
+    {
+        KnowledgeBookCatagories = FrozenDictionary<int, KnowledgeBookCatagoryData>.Empty;
+        KnowledgeBookArticles = FrozenDictionary<int, KnowledgeBookArticleData>.Empty;
+        KnowledgeBookTips = FrozenDictionary<int, KnowledgeBookTipData>.Empty;
+        KnowledgeBookTriggers = FrozenDictionary<int, KnowledgeBookTriggerData>.Empty;
     }
 
-    public sealed class KnowledgeBookData
+    internal static KnowledgeBookData Load()
     {
-        private const string FILE_NAME = "kb.json";
+        return Datacenter.LoadDataFromFile<KnowledgeBookData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        [JsonPropertyName("KBC")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, KnowledgeBookCatagoryData>))]
-        public FrozenDictionary<int, KnowledgeBookCatagoryData> KnowledgeBookCatagories { get; init; }
+    public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryDataById(int id)
+    {
+        KnowledgeBookCatagories.TryGetValue(id, out var knowledgeBookCatagoryData);
+        return knowledgeBookCatagoryData;
+    }
 
-        [JsonPropertyName("KBA")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, KnowledgeBookArticleData>))]
-        public FrozenDictionary<int, KnowledgeBookArticleData> KnowledgeBookArticles { get; init; }
+    public KnowledgeBookArticleData? GetKnowledgeBookArticleDataById(int id)
+    {
+        KnowledgeBookArticles.TryGetValue(id, out var knowledgeBookArticleData);
+        return knowledgeBookArticleData;
+    }
 
-        [JsonPropertyName("KBT")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, KnowledgeBookTipData>))]
-        public FrozenDictionary<int, KnowledgeBookTipData> KnowledgeBookTips { get; init; }
-
-        [JsonPropertyName("KBD")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, KnowledgeBookTriggerData>))]
-        public FrozenDictionary<int, KnowledgeBookTriggerData> KnowledgeBookTriggers { get; init; }
-
-        [JsonConstructor]
-        internal KnowledgeBookData()
-        {
-            KnowledgeBookCatagories = FrozenDictionary<int, KnowledgeBookCatagoryData>.Empty;
-            KnowledgeBookArticles = FrozenDictionary<int, KnowledgeBookArticleData>.Empty;
-            KnowledgeBookTips = FrozenDictionary<int, KnowledgeBookTipData>.Empty;
-            KnowledgeBookTriggers = FrozenDictionary<int, KnowledgeBookTriggerData>.Empty;
-        }
-
-        internal static KnowledgeBookData Load()
-        {
-            return Datacenter.LoadDataFromFile<KnowledgeBookData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
-
-        public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryDataById(int id)
-        {
-            KnowledgeBookCatagories.TryGetValue(id, out KnowledgeBookCatagoryData? knowledgeBookCatagoryData);
-            return knowledgeBookCatagoryData;
-        }
-
-        public KnowledgeBookArticleData? GetKnowledgeBookArticleDataById(int id)
-        {
-            KnowledgeBookArticles.TryGetValue(id, out KnowledgeBookArticleData? knowledgeBookArticleData);
-            return knowledgeBookArticleData;
-        }
-
-        public KnowledgeBookTipData? GetKnowledgeBookTipDataById(int id)
-        {
-            KnowledgeBookTips.TryGetValue(id, out KnowledgeBookTipData? knowledgeBookTipData);
-            return knowledgeBookTipData;
-        }
+    public KnowledgeBookTipData? GetKnowledgeBookTipDataById(int id)
+    {
+        KnowledgeBookTips.TryGetValue(id, out var knowledgeBookTipData);
+        return knowledgeBookTipData;
     }
 }

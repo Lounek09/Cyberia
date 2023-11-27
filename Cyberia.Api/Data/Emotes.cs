@@ -3,57 +3,56 @@
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class EmoteData : IDofusData<int>
 {
-    public sealed class EmoteData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("s")]
+    public string Shortcut { get; init; }
+
+    [JsonConstructor]
+    internal EmoteData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        Name = string.Empty;
+        Shortcut = string.Empty;
+    }
+}
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+public sealed class EmotesData : IDofusData
+{
+    private const string FILE_NAME = "emotes.json";
 
-        [JsonPropertyName("s")]
-        public string Shortcut { get; init; }
+    [JsonPropertyName("EM")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, EmoteData>))]
+    public FrozenDictionary<int, EmoteData> Emotes { get; init; }
 
-        [JsonConstructor]
-        internal EmoteData()
-        {
-            Name = string.Empty;
-            Shortcut = string.Empty;
-        }
+    [JsonConstructor]
+    internal EmotesData()
+    {
+        Emotes = FrozenDictionary<int, EmoteData>.Empty;
     }
 
-    public sealed class EmotesData : IDofusData
+    internal static EmotesData Load()
     {
-        private const string FILE_NAME = "emotes.json";
+        return Datacenter.LoadDataFromFile<EmotesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        [JsonPropertyName("EM")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, EmoteData>))]
-        public FrozenDictionary<int, EmoteData> Emotes { get; init; }
+    public EmoteData? GetEmoteById(int id)
+    {
+        Emotes.TryGetValue(id, out var emoteData);
+        return emoteData;
+    }
 
-        [JsonConstructor]
-        internal EmotesData()
-        {
-            Emotes = FrozenDictionary<int, EmoteData>.Empty;
-        }
+    public string GetEmoteNameById(int id)
+    {
+        var emoteData = GetEmoteById(id);
 
-        internal static EmotesData Load()
-        {
-            return Datacenter.LoadDataFromFile<EmotesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
-
-        public EmoteData? GetEmoteById(int id)
-        {
-            Emotes.TryGetValue(id, out EmoteData? emoteData);
-            return emoteData;
-        }
-
-        public string GetEmoteNameById(int id)
-        {
-            EmoteData? emoteData = GetEmoteById(id);
-
-            return emoteData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : emoteData.Name;
-        }
+        return emoteData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : emoteData.Name;
     }
 }

@@ -1,33 +1,32 @@
 ﻿using Cyberia.Api.Factories;
 
-namespace Cyberia.Api.Managers
+namespace Cyberia.Api.Managers;
+
+public static class DateManager
 {
-    public static class DateManager
+    public static DateTime GetDateTimeFromEffectParameters(EffectParameters parameters)
     {
-        public static DateTime GetDateTimeFromEffectParameters(EffectParameters parameters)
+        if (parameters.Param1 == -1)
         {
-            if (parameters.Param1 == -1)
-            {
-                return DateTime.MaxValue;
-            }
-
-            int year = parameters.Param1;
-            int month = (int)Math.Floor(parameters.Param2 / 100D) + 1;
-            int day = parameters.Param2 - (month - 1) * 100;
-            int hour = (int)Math.Floor(parameters.Param3 / 100D);
-            int minute = parameters.Param3 - hour * 100;
-
-            return new DateTime(year, month, day, hour, minute, 0);
+            return DateTime.MaxValue;
         }
 
-        public static DateTime ToInGameDateTime(this DateTime dateTime)
-        {
-            return dateTime.AddYears(-DofusApi.Datacenter.TimeZonesData.YearLess);
-        }
+        var year = parameters.Param1;
+        var month = (int)Math.Floor(parameters.Param2 / 100D) + 1;
+        var day = parameters.Param2 - (month - 1) * 100;
+        var hour = (int)Math.Floor(parameters.Param3 / 100D);
+        var minute = parameters.Param3 - hour * 100;
 
-        public static string ToRolePlayString(this DateTime dateTime)
-        {
-            return $"{dateTime:dd} {DofusApi.Datacenter.TimeZonesData.GetMonth(dateTime.DayOfYear)} {dateTime:yyy}";
-        }
+        return new DateTime(year, month, day, hour, minute, 0);
+    }
+
+    public static DateTime ToInGameDateTime(this DateTime dateTime)
+    {
+        return dateTime.AddYears(-DofusApi.Datacenter.TimeZonesData.YearLess);
+    }
+
+    public static string ToRolePlayString(this DateTime dateTime)
+    {
+        return $"{dateTime:dd} {DofusApi.Datacenter.TimeZonesData.GetMonth(dateTime.DayOfYear)} {dateTime:yyy}";
     }
 }

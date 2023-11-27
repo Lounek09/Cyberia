@@ -2,33 +2,32 @@
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 
-namespace Cyberia.Api.Factories.Effects
+namespace Cyberia.Api.Factories.Effects;
+
+public sealed record DisplayTitleEffect : Effect, IEffect<DisplayTitleEffect>
 {
-    public sealed record DisplayTitleEffect : Effect, IEffect<DisplayTitleEffect>
+    public int TitleId { get; init; }
+
+    private DisplayTitleEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int titleId)
+        : base(effectId, duration, probability, criteria, effectArea)
     {
-        public int TitleId { get; init; }
+        TitleId = titleId;
+    }
 
-        private DisplayTitleEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int titleId) :
-            base(effectId, duration, probability, criteria, effectArea)
-        {
-            TitleId = titleId;
-        }
+    public static DisplayTitleEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    {
+        return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
+    }
 
-        public static DisplayTitleEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        {
-            return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
-        }
+    public TitleData? GetTitleData()
+    {
+        return DofusApi.Datacenter.TitlesData.GetTitleDataById(TitleId);
+    }
 
-        public TitleData? GetTitleData()
-        {
-            return DofusApi.Datacenter.TitlesData.GetTitleDataById(TitleId);
-        }
+    public Description GetDescription()
+    {
+        var titleName = DofusApi.Datacenter.TitlesData.GetTitleNameById(TitleId);
 
-        public Description GetDescription()
-        {
-            string titleName = DofusApi.Datacenter.TitlesData.GetTitleNameById(TitleId);
-
-            return GetDescription(null, null, titleName);
-        }
+        return GetDescription(null, null, titleName);
     }
 }

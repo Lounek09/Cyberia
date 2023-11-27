@@ -5,60 +5,59 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus
+namespace Cyberia.Salamandra.Commands.Dofus;
+
+public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<MapSubAreaData>
 {
-    public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<MapSubAreaData>
+    public const string PACKET_HEADER = "PMA.SA";
+    public const int PACKET_VERSION = 1;
+
+    private readonly string _search;
+
+    public PaginatedMapSubAreaMessageBuilder(List<MapSubAreaData> mapSubAreasData, string search, int selectedPageIndex = 0)
+        : base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs sous-zones trouvées :", mapSubAreasData, selectedPageIndex)
     {
-        public const string PACKET_HEADER = "PMA.SA";
-        public const int PACKET_VERSION = 1;
+        _search = search;
+    }
 
-        private readonly string _search;
-
-        public PaginatedMapSubAreaMessageBuilder(List<MapSubAreaData> mapSubAreasData, string search, int selectedPageIndex = 0) :
-            base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs sous-zones trouvées :", mapSubAreasData, selectedPageIndex)
+    public static PaginatedMapSubAreaMessageBuilder? Create(int version, string[] parameters)
+    {
+        if (version == PACKET_VERSION &&
+            parameters.Length > 2 &&
+            int.TryParse(parameters[1], out var selectedPageIndex))
         {
-            _search = search;
-        }
-
-        public static PaginatedMapSubAreaMessageBuilder? Create(int version, string[] parameters)
-        {
-            if (version == PACKET_VERSION &&
-                parameters.Length > 2 &&
-                int.TryParse(parameters[1], out int selectedPageIndex))
+            var mapSubAreasData = DofusApi.Datacenter.MapsData.GetMapSubAreasDataByName(parameters[2]).ToList();
+            if (mapSubAreasData.Count > 0)
             {
-                List<MapSubAreaData> mapSubAreasData = DofusApi.Datacenter.MapsData.GetMapSubAreasDataByName(parameters[2]).ToList();
-                if (mapSubAreasData.Count > 0)
-                {
-                    return new(mapSubAreasData, parameters[2], selectedPageIndex);
-                }
+                return new(mapSubAreasData, parameters[2], selectedPageIndex);
             }
-
-            return null;
         }
 
-        public static string GetPacket(string search, int selectedPageIndex = 0, PaginatedAction action = PaginatedAction.Nothing)
-        {
-            return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, (int)action, selectedPageIndex, search);
-        }
+        return null;
+    }
 
-        protected override IEnumerable<string> GetContent()
-        {
-            return _data.Select(x => $"- {Formatter.Bold(x.Name)} ({x.Id})");
-        }
+    public static string GetPacket(string search, int selectedPageIndex = 0, PaginatedAction action = PaginatedAction.Nothing)
+    {
+        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, (int)action, selectedPageIndex, search);
+    }
 
-        protected override DiscordSelectComponent SelectBuilder()
-        {
-            return MapComponentsBuilder.MapSubAreasSelectBuilder(0, _data);
-        }
+    protected override IEnumerable<string> GetContent()
+    {
+        return _data.Select(x => $"- {Formatter.Bold(x.Name)} ({x.Id})");
+    }
 
-        protected override string PreviousPacketBuilder()
-        {
-            return GetPacket(_search, PreviousPageIndex());
-        }
+    protected override DiscordSelectComponent SelectBuilder()
+    {
+        return MapComponentsBuilder.MapSubAreasSelectBuilder(0, _data);
+    }
 
-        protected override string NextPacketBuilder()
-        {
-            return GetPacket(_search, NextPageIndex());
-        }
+    protected override string PreviousPacketBuilder()
+    {
+        return GetPacket(_search, PreviousPageIndex());
+    }
+
+    protected override string NextPacketBuilder()
+    {
+        return GetPacket(_search, NextPageIndex());
     }
 }

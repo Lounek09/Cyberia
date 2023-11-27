@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.ServerCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.ServerCriteria;
+
+public sealed record ServerContentCriterion : Criterion, ICriterion<ServerContentCriterion>
 {
-    public sealed record ServerContentCriterion : Criterion, ICriterion<ServerContentCriterion>
+    public int Number { get; init; }
+
+    private ServerContentCriterion(string id, char @operator, int number)
+        : base(id, @operator)
     {
-        public int Number { get; init; }
+        Number = number;
+    }
 
-        private ServerContentCriterion(string id, char @operator, int number) :
-            base(id, @operator)
+    public static ServerContentCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var number))
         {
-            Number = number;
+            return new(id, @operator, number);
         }
 
-        public static ServerContentCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int number))
-            {
-                return new(id, @operator, number);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.ServerContent.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.ServerContent.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(Number);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(Number);
     }
 }

@@ -1,33 +1,30 @@
 ﻿using Cyberia.Api.Data;
 
-using System.Collections.ObjectModel;
+namespace Cyberia.Api.Factories.QuestObjectives;
 
-namespace Cyberia.Api.Factories.QuestObjectives
+public sealed record DuelSpecificPlayerQuestObjective : QuestObjective, IQuestObjective<DuelSpecificPlayerQuestObjective>
 {
-    public sealed record DuelSpecificPlayerQuestObjective : QuestObjective, IQuestObjective<DuelSpecificPlayerQuestObjective>
+    public string SpecificPlayer { get; init; }
+
+    private DuelSpecificPlayerQuestObjective(QuestObjectiveData questObjectiveData, string specificPlayer)
+        : base(questObjectiveData)
     {
-        public string SpecificPlayer { get; init; }
+        SpecificPlayer = specificPlayer;
+    }
 
-        private DuelSpecificPlayerQuestObjective(QuestObjectiveData questObjectiveData, string specificPlayer) :
-            base(questObjectiveData)
+    public static DuelSpecificPlayerQuestObjective? Create(QuestObjectiveData questObjectiveData)
+    {
+        var parameters = questObjectiveData.Parameters;
+        if (parameters.Count > 0)
         {
-            SpecificPlayer = specificPlayer;
+            return new(questObjectiveData, parameters[0]);
         }
 
-        public static DuelSpecificPlayerQuestObjective? Create(QuestObjectiveData questObjectiveData)
-        {
-            ReadOnlyCollection<string> parameters = questObjectiveData.Parameters;
-            if (parameters.Count > 0)
-            {
-                return new(questObjectiveData, parameters[0]);
-            }
+        return null;
+    }
 
-            return null;
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(SpecificPlayer);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(SpecificPlayer);
     }
 }

@@ -1,13 +1,12 @@
-﻿namespace Cyberia.Langzilla.Enums
+﻿namespace Cyberia.Langzilla.Enums;
+
+public enum LangLanguage
 {
-    public enum LangLanguage
-    {
-        FR,
-        EN,
-        ES,
-        DE,
-        IT,
-        NL,
-        PT
-    }
+    FR,
+    EN,
+    ES,
+    DE,
+    IT,
+    NL,
+    PT
 }

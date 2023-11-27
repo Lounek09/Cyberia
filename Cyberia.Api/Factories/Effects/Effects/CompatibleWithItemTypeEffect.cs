@@ -2,33 +2,32 @@
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 
-namespace Cyberia.Api.Factories.Effects
+namespace Cyberia.Api.Factories.Effects;
+
+public sealed record CompatibleWithItemTypeEffect : Effect, IEffect<CompatibleWithItemTypeEffect>
 {
-    public sealed record CompatibleWithItemTypeEffect : Effect, IEffect<CompatibleWithItemTypeEffect>
+    public int ItemTypeId { get; init; }
+
+    private CompatibleWithItemTypeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId)
+        : base(effectId, duration, probability, criteria, effectArea)
     {
-        public int ItemTypeId { get; init; }
+        ItemTypeId = itemTypeId;
+    }
 
-        private CompatibleWithItemTypeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId) :
-            base(effectId, duration, probability, criteria, effectArea)
-        {
-            ItemTypeId = itemTypeId;
-        }
+    public static CompatibleWithItemTypeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    {
+        return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
+    }
 
-        public static CompatibleWithItemTypeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        {
-            return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
-        }
+    public ItemTypeData? GetItemTypeData()
+    {
+        return DofusApi.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeId);
+    }
 
-        public ItemTypeData? GetItemTypeData()
-        {
-            return DofusApi.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeId);
-        }
+    public Description GetDescription()
+    {
+        var itemTypeName = DofusApi.Datacenter.ItemsData.GetItemTypeNameById(ItemTypeId);
 
-        public Description GetDescription()
-        {
-            string itemTypeName = DofusApi.Datacenter.ItemsData.GetItemTypeNameById(ItemTypeId);
-
-            return GetDescription(null, null, itemTypeName);
-        }
+        return GetDescription(null, null, itemTypeName);
     }
 }

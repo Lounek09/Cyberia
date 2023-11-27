@@ -1,10 +1,9 @@
-﻿namespace Cyberia.Api.Values
+﻿namespace Cyberia.Api.Values;
+
+public enum SpellOrigin
 {
-    public enum SpellOrigin
-    {
-        None,
-        Drop,
-        Craft,
-        Unknown
-    }
+    None,
+    Drop,
+    Craft,
+    Unknown
 }

@@ -3,62 +3,61 @@
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class StateData : IDofusData<int>
 {
-    public sealed class StateData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("p")]
+    [JsonInclude]
+    internal int P { get; init; }
+
+    [JsonConstructor]
+    internal StateData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
-
-        [JsonPropertyName("p")]
-        [JsonInclude]
-        internal int P { get; init; }
-
-        [JsonConstructor]
-        internal StateData()
-        {
-            Name = string.Empty;
-        }
-
-        public string GetImagePath()
-        {
-            return $"{DofusApi.Config.CdnUrl}/images/states/{Id}.png";
-        }
+        Name = string.Empty;
     }
 
-    public sealed class StatesData : IDofusData
+    public string GetImagePath()
     {
-        private const string FILE_NAME = "states.json";
+        return $"{DofusApi.Config.CdnUrl}/images/states/{Id}.png";
+    }
+}
 
-        [JsonPropertyName("ST")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, StateData>))]
-        public FrozenDictionary<int, StateData> States { get; init; }
+public sealed class StatesData : IDofusData
+{
+    private const string FILE_NAME = "states.json";
 
-        [JsonConstructor]
-        internal StatesData()
-        {
-            States = FrozenDictionary<int, StateData>.Empty;
-        }
+    [JsonPropertyName("ST")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, StateData>))]
+    public FrozenDictionary<int, StateData> States { get; init; }
 
-        internal static StatesData Load()
-        {
-            return Datacenter.LoadDataFromFile<StatesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
+    [JsonConstructor]
+    internal StatesData()
+    {
+        States = FrozenDictionary<int, StateData>.Empty;
+    }
 
-        public StateData? GetStateDataById(int id)
-        {
-            States.TryGetValue(id, out StateData? stateData);
-            return stateData;
-        }
+    internal static StatesData Load()
+    {
+        return Datacenter.LoadDataFromFile<StatesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        public string GetStateNameById(int id)
-        {
-            StateData? stateData = GetStateDataById(id);
+    public StateData? GetStateDataById(int id)
+    {
+        States.TryGetValue(id, out var stateData);
+        return stateData;
+    }
 
-            return stateData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : stateData.Name;
-        }
+    public string GetStateNameById(int id)
+    {
+        var stateData = GetStateDataById(id);
+
+        return stateData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : stateData.Name;
     }
 }

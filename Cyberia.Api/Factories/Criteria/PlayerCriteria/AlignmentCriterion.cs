@@ -1,42 +1,41 @@
 ﻿using Cyberia.Api.Data;
 
-namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record AlignmentCriterion : Criterion, ICriterion<AlignmentCriterion>
 {
-    public sealed record AlignmentCriterion : Criterion, ICriterion<AlignmentCriterion>
+    public int AlignmentId { get; init; }
+
+    private AlignmentCriterion(string id, char @operator, int alignmentId)
+        : base(id, @operator)
     {
-        public int AlignmentId { get; init; }
+        AlignmentId = alignmentId;
+    }
 
-        private AlignmentCriterion(string id, char @operator, int alignmentId) :
-            base(id, @operator)
+    public static AlignmentCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var alignmentId))
         {
-            AlignmentId = alignmentId;
+            return new(id, @operator, alignmentId);
         }
 
-        public static AlignmentCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int alignmentId))
-            {
-                return new(id, @operator, alignmentId);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public AlignmentData? GetAlignmentData()
+    {
+        return DofusApi.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
+    }
 
-        public AlignmentData? GetAlignmentData()
-        {
-            return DofusApi.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.Alignment.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.Alignment.{GetOperatorDescriptionName()}";
-        }
+    public Description GetDescription()
+    {
+        var alignmentName = DofusApi.Datacenter.AlignmentsData.GetAlignmentNameById(AlignmentId);
 
-        public Description GetDescription()
-        {
-            string alignmentName = DofusApi.Datacenter.AlignmentsData.GetAlignmentNameById(AlignmentId);
-
-            return GetDescription(alignmentName);
-        }
+        return GetDescription(alignmentName);
     }
 }

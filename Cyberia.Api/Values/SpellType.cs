@@ -1,16 +1,15 @@
-﻿namespace Cyberia.Api.Values
+﻿namespace Cyberia.Api.Values;
+
+public enum SpellType
 {
-    public enum SpellType
-    {
-        None,
-        Chance,
-        Agility,
-        Intelligence,
-        Strength,
-        Neutral,
-        MultiElement,
-        Utility,
-        Summon,
-        Heal
-    }
+    None,
+    Chance,
+    Agility,
+    Intelligence,
+    Strength,
+    Neutral,
+    MultiElement,
+    Utility,
+    Summon,
+    Heal
 }

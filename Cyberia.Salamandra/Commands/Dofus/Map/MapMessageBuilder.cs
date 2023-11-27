@@ -4,97 +4,96 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus
+namespace Cyberia.Salamandra.Commands.Dofus;
+
+public sealed class MapMessageBuilder : ICustomMessageBuilder
 {
-    public sealed class MapMessageBuilder : ICustomMessageBuilder
+    public const string PACKET_HEADER = "MA";
+    public const int PACKET_VERSION = 1;
+
+    private readonly MapData _mapData;
+    private readonly MapSubAreaData? _mapSubAreaData;
+    private readonly MapAreaData? _mapAreaData;
+    private readonly HouseData? _houseData;
+
+    public MapMessageBuilder(MapData mapData)
     {
-        public const string PACKET_HEADER = "MA";
-        public const int PACKET_VERSION = 1;
+        _mapData = mapData;
+        _mapSubAreaData = _mapData.GetMapSubAreaData();
+        _mapAreaData = _mapSubAreaData?.GetMapAreaData();
+        _houseData = _mapData.GetHouseData();
+    }
 
-        private readonly MapData _mapData;
-        private readonly MapSubAreaData? _mapSubAreaData;
-        private readonly MapAreaData? _mapAreaData;
-        private readonly HouseData? _houseData;
-
-        public MapMessageBuilder(MapData mapData)
+    public static MapMessageBuilder? Create(int version, string[] parameters)
+    {
+        if (version == PACKET_VERSION &&
+            parameters.Length > 0 &&
+            int.TryParse(parameters[0], out var mapId))
         {
-            _mapData = mapData;
-            _mapSubAreaData = _mapData.GetMapSubAreaData();
-            _mapAreaData = _mapSubAreaData?.GetMapAreaData();
-            _houseData = _mapData.GetHouseData();
+            var mapData = DofusApi.Datacenter.MapsData.GetMapDataById(mapId);
+            if (mapData is not null)
+            {
+                return new(mapData);
+            }
         }
 
-        public static MapMessageBuilder? Create(int version, string[] parameters)
-        {
-            if (version == PACKET_VERSION &&
-                parameters.Length > 0 &&
-                int.TryParse(parameters[0], out int mapId))
-            {
-                MapData? mapData = DofusApi.Datacenter.MapsData.GetMapDataById(mapId);
-                if (mapData is not null)
-                {
-                    return new(mapData);
-                }
-            }
+        return null;
+    }
 
-            return null;
+    public static string GetPacket(int mapId)
+    {
+        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, mapId);
+    }
+
+    public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
+    {
+        var message = new T()
+            .AddEmbed(await EmbedBuilder());
+
+        var components = ButtonsBuilder();
+        if (components.Count > 0)
+        {
+            message.AddComponents(components);
         }
 
-        public static string GetPacket(int mapId)
+        return (T)message;
+    }
+
+    private Task<DiscordEmbedBuilder> EmbedBuilder()
+    {
+        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Map, "Carte du monde")
+            .WithTitle($"{_mapData.GetCoordinate()} ({_mapData.Id})")
+            .WithDescription(_mapData.GetMapAreaName())
+            .WithImageUrl(_mapData.GetImagePath());
+
+        return Task.FromResult(embed);
+    }
+
+    private List<DiscordButtonComponent> ButtonsBuilder()
+    {
+        List<DiscordButtonComponent> components = [];
+
+        var mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord).ToList();
+        if (mapsData.Count > 1)
         {
-            return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, mapId);
+            components.Add(MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_mapData));
         }
 
-        public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
+        if (_mapSubAreaData is not null)
         {
-            IDiscordMessageBuilder message = new T()
-                .AddEmbed(await EmbedBuilder());
-
-            List<DiscordButtonComponent> components = ButtonsBuilder();
-            if (components.Count > 0)
-            {
-                message.AddComponents(components);
-            }
-
-            return (T)message;
+            components.Add(MapComponentsBuilder.PaginatedMapMapSubAreaButtonBuilder(_mapSubAreaData));
         }
 
-        private Task<DiscordEmbedBuilder> EmbedBuilder()
+        if (_mapAreaData is not null)
         {
-            DiscordEmbedBuilder embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Map, "Carte du monde")
-                .WithTitle($"{_mapData.GetCoordinate()} ({_mapData.Id})")
-                .WithDescription(_mapData.GetMapAreaName())
-                .WithImageUrl(_mapData.GetImagePath());
-
-            return Task.FromResult(embed);
+            components.Add(MapComponentsBuilder.PaginatedMapMapAreaButtonBuilder(_mapAreaData));
         }
 
-        private List<DiscordButtonComponent> ButtonsBuilder()
+        if (_houseData is not null)
         {
-            List<DiscordButtonComponent> components = [];
-
-            List<MapData> mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord).ToList();
-            if (mapsData.Count > 1)
-            {
-                components.Add(MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_mapData));
-            }
-
-            if (_mapSubAreaData is not null)
-            {
-                components.Add(MapComponentsBuilder.PaginatedMapMapSubAreaButtonBuilder(_mapSubAreaData));
-            }
-
-            if (_mapAreaData is not null)
-            {
-                components.Add(MapComponentsBuilder.PaginatedMapMapAreaButtonBuilder(_mapAreaData));
-            }
-
-            if (_houseData is not null)
-            {
-                components.Add(HouseComponentsBuilder.HouseButtonBuilder(_houseData));
-            }
-
-            return components;
+            components.Add(HouseComponentsBuilder.HouseButtonBuilder(_houseData));
         }
+
+        return components;
     }
 }

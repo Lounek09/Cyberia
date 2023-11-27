@@ -3,47 +3,46 @@
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class TimeZoneData : IDofusData
 {
-    public sealed class TimeZoneData : IDofusData
+    private const string FILE_NAME = "timezones.json";
+
+    [JsonPropertyName("T.mspd")]
+    public int MilisecondPerDay { get; set; }
+
+    [JsonPropertyName("T.hpd")]
+    public int HourPerDay { get; set; }
+
+    [JsonPropertyName("T.z")]
+    public int YearLess { get; set; }
+
+    [JsonPropertyName("T.m")]
+    [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, string>))]
+    public ReadOnlyDictionary<int, string> StartDayOfMonths { get; set; }
+
+    [JsonConstructor]
+    internal TimeZoneData()
     {
-        private const string FILE_NAME = "timezones.json";
+        StartDayOfMonths = ReadOnlyDictionary<int, string>.Empty;
+    }
 
-        [JsonPropertyName("T.mspd")]
-        public int MilisecondPerDay { get; set; }
+    internal static TimeZoneData Load()
+    {
+        return Datacenter.LoadDataFromFile<TimeZoneData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        [JsonPropertyName("T.hpd")]
-        public int HourPerDay { get; set; }
-
-        [JsonPropertyName("T.z")]
-        public int YearLess { get; set; }
-
-        [JsonPropertyName("T.m")]
-        [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, string>))]
-        public ReadOnlyDictionary<int, string> StartDayOfMonths { get; set; }
-
-        [JsonConstructor]
-        internal TimeZoneData()
+    public string GetMonth(int dayOfYear)
+    {
+        foreach (var pair in Enumerable.Reverse(StartDayOfMonths))
         {
-            StartDayOfMonths = ReadOnlyDictionary<int, string>.Empty;
-        }
-
-        internal static TimeZoneData Load()
-        {
-            return Datacenter.LoadDataFromFile<TimeZoneData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
-
-        public string GetMonth(int dayOfYear)
-        {
-            foreach (KeyValuePair<int, string> pair in Enumerable.Reverse(StartDayOfMonths))
+            if (dayOfYear > pair.Key)
             {
-                if (dayOfYear > pair.Key)
-                {
-                    return pair.Value;
-                }
+                return pair.Value;
             }
-
-            return "";
         }
+
+        return "";
     }
 }

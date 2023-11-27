@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record FreeWeightCriterion : Criterion, ICriterion<FreeWeightCriterion>
 {
-    public sealed record FreeWeightCriterion : Criterion, ICriterion<FreeWeightCriterion>
+    public int Weight { get; init; }
+
+    private FreeWeightCriterion(string id, char @operator, int weight)
+        : base(id, @operator)
     {
-        public int Weight { get; init; }
+        Weight = weight;
+    }
 
-        private FreeWeightCriterion(string id, char @operator, int weight) :
-            base(id, @operator)
+    public static FreeWeightCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var weight))
         {
-            Weight = weight;
+            return new(id, @operator, weight);
         }
 
-        public static FreeWeightCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int weight))
-            {
-                return new(id, @operator, weight);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.FreeWeight.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.FreeWeight.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(Weight);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(Weight);
     }
 }

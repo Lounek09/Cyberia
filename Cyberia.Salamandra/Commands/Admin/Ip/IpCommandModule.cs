@@ -2,23 +2,22 @@
 
 using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Admin
+namespace Cyberia.Salamandra.Commands.Admin;
+
+public sealed class IpCommandModule : ApplicationCommandModule
 {
-    public sealed class IpCommandModule : ApplicationCommandModule
+    [SlashCommand("ip", "Décode les ips envoyées via les paquets")]
+    public async Task Command(InteractionContext ctx,
+        [Option("ip", "Ip encodée")]
+        string value)
     {
-        [SlashCommand("ip", "Décode les ips envoyées via les paquets")]
-        public async Task Command(InteractionContext ctx,
-            [Option("ip", "Ip encodée")]
-            string value)
+        try
         {
-            try
-            {
-                await ctx.CreateResponseAsync(PatternDecoder.Ip(value));
-            }
-            catch (ArgumentException e)
-            {
-                await ctx.CreateResponseAsync(e.Message);
-            }
+            await ctx.CreateResponseAsync(PatternDecoder.Ip(value));
+        }
+        catch (ArgumentException e)
+        {
+            await ctx.CreateResponseAsync(e.Message);
         }
     }
 }

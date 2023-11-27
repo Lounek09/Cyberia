@@ -1,11 +1,10 @@
-﻿namespace Cyberia.Api.Values
+﻿namespace Cyberia.Api.Values;
+
+public enum CardCombination
 {
-    public enum CardCombination
-    {
-        None,
-        Pair,
-        TwoPair,
-        ThreeOfAKind,
-        FourOfAKind
-    }
+    None,
+    Pair,
+    TwoPair,
+    ThreeOfAKind,
+    FourOfAKind
 }

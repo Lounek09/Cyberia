@@ -3,52 +3,51 @@
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class GuildRankData : IDofusData<int>
 {
-    public sealed class GuildRankData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("o")]
+    public int Order { get; init; }
+
+    [JsonPropertyName("i")]
+    public int Index { get; init; }
+
+    [JsonConstructor]
+    internal GuildRankData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        Name = string.Empty;
+    }
+}
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+public sealed class RanksData : IDofusData
+{
+    private const string FILE_NAME = "ranks.json";
 
-        [JsonPropertyName("o")]
-        public int Order { get; init; }
+    [JsonPropertyName("R")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, GuildRankData>))]
+    public FrozenDictionary<int, GuildRankData> GuildRanks { get; init; }
 
-        [JsonPropertyName("i")]
-        public int Index { get; init; }
-
-        [JsonConstructor]
-        internal GuildRankData()
-        {
-            Name = string.Empty;
-        }
+    [JsonConstructor]
+    internal RanksData()
+    {
+        GuildRanks = FrozenDictionary<int, GuildRankData>.Empty;
     }
 
-    public sealed class RanksData : IDofusData
+    internal static RanksData Load()
     {
-        private const string FILE_NAME = "ranks.json";
+        return Datacenter.LoadDataFromFile<RanksData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        [JsonPropertyName("R")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, GuildRankData>))]
-        public FrozenDictionary<int, GuildRankData> GuildRanks { get; init; }
-
-        [JsonConstructor]
-        internal RanksData()
-        {
-            GuildRanks = FrozenDictionary<int, GuildRankData>.Empty;
-        }
-
-        internal static RanksData Load()
-        {
-            return Datacenter.LoadDataFromFile<RanksData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
-
-        public GuildRankData? GetGuildRank(int id)
-        {
-            GuildRanks.TryGetValue(id, out GuildRankData? rank);
-            return rank;
-        }
+    public GuildRankData? GetGuildRank(int id)
+    {
+        GuildRanks.TryGetValue(id, out var rank);
+        return rank;
     }
 }

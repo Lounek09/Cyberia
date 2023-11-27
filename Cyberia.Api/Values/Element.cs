@@ -1,11 +1,10 @@
-﻿namespace Cyberia.Api.Values
+﻿namespace Cyberia.Api.Values;
+
+public enum Element
 {
-    public enum Element
-    {
-        Neutral,
-        Strength,
-        Intelligence,
-        Chance,
-        Agility
-    }
+    Neutral,
+    Strength,
+    Intelligence,
+    Chance,
+    Agility
 }

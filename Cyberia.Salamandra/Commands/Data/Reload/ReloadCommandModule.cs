@@ -4,19 +4,18 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
 
-namespace Cyberia.Salamandra.Commands.Data
+namespace Cyberia.Salamandra.Commands.Data;
+
+public sealed class ReloadCommandModule : ApplicationCommandModule
 {
-    public sealed class ReloadCommandModule : ApplicationCommandModule
+    [SlashCommand("reload", "[Owner] Recharge les données de Salamandra")]
+    [SlashRequireOwner]
+    public async Task Command(InteractionContext ctx)
     {
-        [SlashCommand("reload", "[Owner] Recharge les données de Salamandra")]
-        [SlashRequireOwner]
-        public async Task Command(InteractionContext ctx)
-        {
-            await ctx.DeferAsync();
+        await ctx.DeferAsync();
 
-            DofusApi.Reload();
+        DofusApi.Reload();
 
-            await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Api reload !"));
-        }
+        await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Api reload !"));
     }
 }

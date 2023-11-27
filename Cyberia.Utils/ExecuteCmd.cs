@@ -1,46 +1,45 @@
 ﻿using System.Diagnostics;
 
-namespace Cyberia.Utils
+namespace Cyberia.Utils;
+
+public static class ExecuteCmd
 {
-    public static class ExecuteCmd
+    public static bool ExecuteCommand(string command, string args)
     {
-        public static bool ExecuteCommand(string command, string args)
+        try
         {
-            try
+            using Process process = new()
             {
-                using Process process = new()
+                StartInfo = new ProcessStartInfo(command, args)
                 {
-                    StartInfo = new ProcessStartInfo(command, args)
-                    {
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    }
-                };
-
-                process.Start();
-
-                string message = process.StandardOutput.ReadToEnd();
-                if (!string.IsNullOrEmpty(message))
-                {
-                    Log.Information(message);
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
                 }
+            };
 
-                string error = process.StandardError.ReadToEnd();
-                if (!string.IsNullOrEmpty(error))
-                {
-                    Log.Error(error);
-                    return false;
-                }
+            process.Start();
 
-                return true;
+            var message = process.StandardOutput.ReadToEnd();
+            if (!string.IsNullOrEmpty(message))
+            {
+                Log.Information(message);
             }
-            catch (Exception)
+
+            var error = process.StandardError.ReadToEnd();
+            if (!string.IsNullOrEmpty(error))
             {
-                Log.Error("An error occurred while executing {CommandName} with {CommandArguments} arguments", command, args);
+                Log.Error(error);
                 return false;
             }
+
+            return true;
+        }
+        catch (Exception)
+        {
+            Log.Error("An error occurred while executing {CommandName} with {CommandArguments} arguments", command, args);
+            return false;
         }
     }
 }

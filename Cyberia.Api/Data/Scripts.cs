@@ -3,46 +3,45 @@
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class ScriptDialogData : IDofusData<int>
 {
-    public sealed class ScriptDialogData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("v")]
+    public string Message { get; init; }
+
+    [JsonConstructor]
+    internal ScriptDialogData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        Message = string.Empty;
+    }
+}
 
-        [JsonPropertyName("v")]
-        public string Message { get; init; }
+public sealed class ScriptsData : IDofusData
+{
+    private const string FILE_NAME = "scripts.json";
 
-        [JsonConstructor]
-        internal ScriptDialogData()
-        {
-            Message = string.Empty;
-        }
+    [JsonPropertyName("SCR")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ScriptDialogData>))]
+    public FrozenDictionary<int, ScriptDialogData> ScriptDialogs { get; init; }
+
+    [JsonConstructor]
+    internal ScriptsData()
+    {
+        ScriptDialogs = FrozenDictionary<int, ScriptDialogData>.Empty;
     }
 
-    public sealed class ScriptsData : IDofusData
+    internal static ScriptsData Load()
     {
-        private const string FILE_NAME = "scripts.json";
+        return Datacenter.LoadDataFromFile<ScriptsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        [JsonPropertyName("SCR")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ScriptDialogData>))]
-        public FrozenDictionary<int, ScriptDialogData> ScriptDialogs { get; init; }
-
-        [JsonConstructor]
-        internal ScriptsData()
-        {
-            ScriptDialogs = FrozenDictionary<int, ScriptDialogData>.Empty;
-        }
-
-        internal static ScriptsData Load()
-        {
-            return Datacenter.LoadDataFromFile<ScriptsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
-
-        public ScriptDialogData? GetScriptDialog(int id)
-        {
-            ScriptDialogs.TryGetValue(id, out ScriptDialogData? scriptDialog);
-            return scriptDialog;
-        }
+    public ScriptDialogData? GetScriptDialog(int id)
+    {
+        ScriptDialogs.TryGetValue(id, out var scriptDialog);
+        return scriptDialog;
     }
 }

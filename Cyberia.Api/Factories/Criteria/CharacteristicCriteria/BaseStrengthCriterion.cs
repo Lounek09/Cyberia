@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
+
+public sealed record BaseStrengthCriterion : Criterion, ICriterion<BaseStrengthCriterion>
 {
-    public sealed record BaseStrengthCriterion : Criterion, ICriterion<BaseStrengthCriterion>
+    public int Strength { get; init; }
+
+    private BaseStrengthCriterion(string id, char @operator, int strength)
+        : base(id, @operator)
     {
-        public int Strength { get; init; }
+        Strength = strength;
+    }
 
-        private BaseStrengthCriterion(string id, char @operator, int strength) :
-            base(id, @operator)
+    public static BaseStrengthCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var strength))
         {
-            Strength = strength;
+            return new(id, @operator, strength);
         }
 
-        public static BaseStrengthCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int strength))
-            {
-                return new(id, @operator, strength);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.BaseStrength.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.BaseStrength.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(Strength);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(Strength);
     }
 }

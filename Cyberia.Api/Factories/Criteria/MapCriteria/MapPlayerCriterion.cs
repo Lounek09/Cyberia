@@ -1,46 +1,45 @@
 ﻿using Cyberia.Api.Data;
 
-namespace Cyberia.Api.Factories.Criteria.MapCriteria
+namespace Cyberia.Api.Factories.Criteria.MapCriteria;
+
+public sealed record MapPlayerCriterion : Criterion, ICriterion<MapPlayerCriterion>
 {
-    public sealed record MapPlayerCriterion : Criterion, ICriterion<MapPlayerCriterion>
+    public int MapId { get; init; }
+    public int MaxPlayers { get; init; }
+
+    private MapPlayerCriterion(string id, char @operator, int mapId, int maxPlayers)
+        : base(id, @operator)
     {
-        public int MapId { get; init; }
-        public int MaxPlayers { get; init; }
+        MapId = mapId;
+        MaxPlayers = maxPlayers;
+    }
 
-        private MapPlayerCriterion(string id, char @operator, int mapId, int maxPlayers) :
-            base(id, @operator)
+    public static MapPlayerCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 1 && int.TryParse(parameters[0], out var mapId) && int.TryParse(parameters[1], out var maxPlayers))
         {
-            MapId = mapId;
-            MaxPlayers = maxPlayers;
+            return new(id, @operator, mapId, maxPlayers);
         }
 
-        public static MapPlayerCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 1 && int.TryParse(parameters[0], out int mapId) && int.TryParse(parameters[1], out int maxPlayers))
-            {
-                return new(id, @operator, mapId, maxPlayers);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public MapData? GetMapData()
+    {
+        return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
+    }
 
-        public MapData? GetMapData()
-        {
-            return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.MapPlayer.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.MapPlayer.{GetOperatorDescriptionName()}";
-        }
+    public Description GetDescription()
+    {
+        var map = GetMapData();
+        var mapAreaSubAreaName = map is null ? PatternDecoder.Description(Resources.Unknown_Data, MapId) : map.GetMapAreaName();
+        var coordinate = map is null ? "[x, x]" : map.GetCoordinate();
 
-        public Description GetDescription()
-        {
-            MapData? map = GetMapData();
-            string mapAreaSubAreaName = map is null ? PatternDecoder.Description(Resources.Unknown_Data, MapId) : map.GetMapAreaName();
-            string coordinate = map is null ? "[x, x]" : map.GetCoordinate();
-
-            return GetDescription(coordinate, mapAreaSubAreaName, MaxPlayers);
-        }
+        return GetDescription(coordinate, mapAreaSubAreaName, MaxPlayers);
     }
 }

@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
+
+public sealed record PercentVitalityCriterion : Criterion, ICriterion<PercentVitalityCriterion>
 {
-    public sealed record PercentVitalityCriterion : Criterion, ICriterion<PercentVitalityCriterion>
+    public int PercentVitality { get; init; }
+
+    private PercentVitalityCriterion(string id, char @operator, int percentVitality)
+        : base(id, @operator)
     {
-        public int PercentVitality { get; init; }
+        PercentVitality = percentVitality;
+    }
 
-        private PercentVitalityCriterion(string id, char @operator, int percentVitality) :
-            base(id, @operator)
+    public static PercentVitalityCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var percentVitality))
         {
-            PercentVitality = percentVitality;
+            return new(id, @operator, percentVitality);
         }
 
-        public static PercentVitalityCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int percentVitality))
-            {
-                return new(id, @operator, percentVitality);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.PercentVitality.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.PercentVitality.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(PercentVitality);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(PercentVitality);
     }
 }

@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
+
+public sealed record BaseWisdomCriterion : Criterion, ICriterion<BaseWisdomCriterion>
 {
-    public sealed record BaseWisdomCriterion : Criterion, ICriterion<BaseWisdomCriterion>
+    public int Wisdom { get; init; }
+
+    private BaseWisdomCriterion(string id, char @operator, int wisdom)
+        : base(id, @operator)
     {
-        public int Wisdom { get; init; }
+        Wisdom = wisdom;
+    }
 
-        private BaseWisdomCriterion(string id, char @operator, int wisdom) :
-            base(id, @operator)
+    public static BaseWisdomCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var wisdom))
         {
-            Wisdom = wisdom;
+            return new(id, @operator, wisdom);
         }
 
-        public static BaseWisdomCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int wisdom))
-            {
-                return new(id, @operator, wisdom);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.BaseWisdom.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.BaseWisdom.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(Wisdom);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(Wisdom);
     }
 }

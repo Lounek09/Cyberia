@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
+
+public sealed record AgilityCriterion : Criterion, ICriterion<AgilityCriterion>
 {
-    public sealed record AgilityCriterion : Criterion, ICriterion<AgilityCriterion>
+    public int Agility { get; init; }
+
+    private AgilityCriterion(string id, char @operator, int agility)
+        : base(id, @operator)
     {
-        public int Agility { get; init; }
+        Agility = agility;
+    }
 
-        private AgilityCriterion(string id, char @operator, int agility) :
-            base(id, @operator)
+    public static AgilityCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var agility))
         {
-            Agility = agility;
+            return new(id, @operator, agility);
         }
 
-        public static AgilityCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int agility))
-            {
-                return new(id, @operator, agility);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.Agility.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.Agility.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(Agility);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(Agility);
     }
 }

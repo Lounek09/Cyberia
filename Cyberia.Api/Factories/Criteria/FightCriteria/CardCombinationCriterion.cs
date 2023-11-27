@@ -1,35 +1,34 @@
 ﻿using Cyberia.Api.Values;
 
-namespace Cyberia.Api.Factories.Criteria.FightCriteria
+namespace Cyberia.Api.Factories.Criteria.FightCriteria;
+
+public sealed record CardCombinationCriterion : Criterion, ICriterion<CardCombinationCriterion>
 {
-    public sealed record CardCombinationCriterion : Criterion, ICriterion<CardCombinationCriterion>
+    public CardCombination CardCombination { get; init; }
+
+    private CardCombinationCriterion(string id, char @operator, CardCombination cardCombination)
+        : base(id, @operator)
     {
-        public CardCombination CardCombination { get; init; }
+        CardCombination = cardCombination;
+    }
 
-        private CardCombinationCriterion(string id, char @operator, CardCombination cardCombination) :
-            base(id, @operator)
+    public static CardCombinationCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && Enum.TryParse(parameters[0], out CardCombination cardCombination))
         {
-            CardCombination = cardCombination;
+            return new(id, @operator, cardCombination);
         }
 
-        public static CardCombinationCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && Enum.TryParse(parameters[0], out CardCombination cardCombination))
-            {
-                return new(id, @operator, cardCombination);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.CardCombination.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.CardCombination.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(CardCombination.GetDescription());
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(CardCombination.GetDescription());
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace Cyberia.Salamandra
+﻿namespace Cyberia.Salamandra;
+
+internal static class Constant
 {
-    internal static class Constant
-    {
-        public const string ZERO_WIDTH_SPACE = "\u200b";
-    }
+    public const string ZERO_WIDTH_SPACE = "\u200b";
 }

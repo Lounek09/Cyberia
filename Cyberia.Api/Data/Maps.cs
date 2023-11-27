@@ -4,294 +4,293 @@ using System.Collections.Frozen;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class MapData : IDofusData<int>
 {
-    public sealed class MapData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("x")]
+    public int XCoord { get; init; }
+
+    [JsonPropertyName("y")]
+    public int YCoord { get; init; }
+
+    [JsonPropertyName("sa")]
+    public int MapSubAreaId { get; init; }
+
+    [JsonPropertyName("p1")]
+    public string Placement1 { get; init; }
+
+    [JsonPropertyName("p2")]
+    public string Placement2 { get; init; }
+
+    [JsonPropertyName("p")]
+    public List<List<object>> Parameters { get; init; }
+
+    [JsonPropertyName("d")]
+    public int DungeonId { get; init; }
+
+    [JsonPropertyName("c")]
+    public int MaxPlayerPerFight { get; init; }
+
+    [JsonPropertyName("t")]
+    public int MaxPlayerPerTeam { get; init; }
+
+    [JsonPropertyName("ep")]
+    public int Episode { get; init; }
+
+    [JsonConstructor]
+    internal MapData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("x")]
-        public int XCoord { get; init; }
-
-        [JsonPropertyName("y")]
-        public int YCoord { get; init; }
-
-        [JsonPropertyName("sa")]
-        public int MapSubAreaId { get; init; }
-
-        [JsonPropertyName("p1")]
-        public string Placement1 { get; init; }
-
-        [JsonPropertyName("p2")]
-        public string Placement2 { get; init; }
-
-        [JsonPropertyName("p")]
-        public List<List<object>> Parameters { get; init; }
-
-        [JsonPropertyName("d")]
-        public int DungeonId { get; init; }
-
-        [JsonPropertyName("c")]
-        public int MaxPlayerPerFight { get; init; }
-
-        [JsonPropertyName("t")]
-        public int MaxPlayerPerTeam { get; init; }
-
-        [JsonPropertyName("ep")]
-        public int Episode { get; init; }
-
-        [JsonConstructor]
-        internal MapData()
-        {
-            Placement1 = string.Empty;
-            Placement2 = string.Empty;
-            Parameters = [];
-            MaxPlayerPerFight = 16;
-            MaxPlayerPerTeam = 8;
-        }
-
-        public string GetCoordinate()
-        {
-            return $"[{XCoord}, {YCoord}]";
-        }
-
-        public string GetImagePath()
-        {
-            return $"{DofusApi.Config.CdnUrl}/images/maps/{Id}.jpg";
-        }
-
-        public MapSubAreaData? GetMapSubAreaData()
-        {
-            return DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
-        }
-
-        public string GetMapAreaName()
-        {
-            MapSubAreaData? mapSubAreaData = GetMapSubAreaData();
-            string mapSubAreaName = mapSubAreaData is null ? $"{nameof(MapSubAreaData)} {PatternDecoder.Description(Resources.Unknown_Data, MapSubAreaId)}" : mapSubAreaData.Name.TrimStart("//");
-
-            MapAreaData? mapAreaData = mapSubAreaData?.GetMapAreaData();
-            string mapAreaName = mapAreaData is null ? $"{nameof(MapAreaData)} {PatternDecoder.Description(Resources.Unknown_Data, mapSubAreaData?.MapAreaId ?? 0)}" : mapAreaData.Name;
-
-            return mapAreaName + (mapAreaName.Equals(mapSubAreaName) ? "" : $" ({mapSubAreaName})");
-        }
-
-        public HouseData? GetHouseData()
-        {
-            HouseMapData? houseMapData = DofusApi.Datacenter.HousesData.GetHouseMapDataById(Id);
-
-            return houseMapData?.GetHouseData();
-        }
-
-        public bool IsHouse()
-        {
-            return GetHouseData() is not null;
-        }
+        Placement1 = string.Empty;
+        Placement2 = string.Empty;
+        Parameters = [];
+        MaxPlayerPerFight = 16;
+        MaxPlayerPerTeam = 8;
     }
 
-    public sealed class MapSuperAreaData : IDofusData<int>
+    public string GetCoordinate()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("v")]
-        public string Name { get; init; }
-
-        [JsonConstructor]
-        internal MapSuperAreaData()
-        {
-            Name = string.Empty;
-        }
+        return $"[{XCoord}, {YCoord}]";
     }
 
-    public sealed class MapAreaData : IDofusData<int>
+    public string GetImagePath()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
-
-        [JsonPropertyName("sua")]
-        public int MapSuperAreaId { get; init; }
-
-        [JsonConstructor]
-        internal MapAreaData()
-        {
-            Name = string.Empty;
-        }
-
-        public MapSuperAreaData? GetMapSuperAreaData()
-        {
-            return DofusApi.Datacenter.MapsData.GetMapSuperAreaDataById(MapSuperAreaId);
-        }
-
-        public IEnumerable<MapData> GetMapsData()
-        {
-            return DofusApi.Datacenter.MapsData.GetMapsDataByMapAreaId(Id);
-        }
+        return $"{DofusApi.Config.CdnUrl}/images/maps/{Id}.jpg";
     }
 
-    public sealed class MapSubAreaData : IDofusData<int>
+    public MapSubAreaData? GetMapSubAreaData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        return DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
+    }
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+    public string GetMapAreaName()
+    {
+        var mapSubAreaData = GetMapSubAreaData();
+        var mapSubAreaName = mapSubAreaData is null ? $"{nameof(MapSubAreaData)} {PatternDecoder.Description(Resources.Unknown_Data, MapSubAreaId)}" : mapSubAreaData.Name.TrimStart("//");
 
-        [JsonPropertyName("a")]
-        public int MapAreaId { get; init; }
+        var mapAreaData = mapSubAreaData?.GetMapAreaData();
+        var mapAreaName = mapAreaData is null ? $"{nameof(MapAreaData)} {PatternDecoder.Description(Resources.Unknown_Data, mapSubAreaData?.MapAreaId ?? 0)}" : mapAreaData.Name;
 
-        [JsonPropertyName("m")]
-        [JsonConverter(typeof(ReadOnlyCollectionConverter<int?>))]
-        public ReadOnlyCollection<int?> FightAudioMusicId { get; init; }
+        return mapAreaName + (mapAreaName.Equals(mapSubAreaName) ? "" : $" ({mapSubAreaName})");
+    }
 
-        [JsonPropertyName("v")]
-        [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-        public ReadOnlyCollection<int> NearMapSubAreasId { get; init; }
+    public HouseData? GetHouseData()
+    {
+        var houseMapData = DofusApi.Datacenter.HousesData.GetHouseMapDataById(Id);
 
-        [JsonConstructor]
-        internal MapSubAreaData()
+        return houseMapData?.GetHouseData();
+    }
+
+    public bool IsHouse()
+    {
+        return GetHouseData() is not null;
+    }
+}
+
+public sealed class MapSuperAreaData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("v")]
+    public string Name { get; init; }
+
+    [JsonConstructor]
+    internal MapSuperAreaData()
+    {
+        Name = string.Empty;
+    }
+}
+
+public sealed class MapAreaData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("sua")]
+    public int MapSuperAreaId { get; init; }
+
+    [JsonConstructor]
+    internal MapAreaData()
+    {
+        Name = string.Empty;
+    }
+
+    public MapSuperAreaData? GetMapSuperAreaData()
+    {
+        return DofusApi.Datacenter.MapsData.GetMapSuperAreaDataById(MapSuperAreaId);
+    }
+
+    public IEnumerable<MapData> GetMapsData()
+    {
+        return DofusApi.Datacenter.MapsData.GetMapsDataByMapAreaId(Id);
+    }
+}
+
+public sealed class MapSubAreaData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("a")]
+    public int MapAreaId { get; init; }
+
+    [JsonPropertyName("m")]
+    [JsonConverter(typeof(ReadOnlyCollectionConverter<int?>))]
+    public ReadOnlyCollection<int?> FightAudioMusicId { get; init; }
+
+    [JsonPropertyName("v")]
+    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
+    public ReadOnlyCollection<int> NearMapSubAreasId { get; init; }
+
+    [JsonConstructor]
+    internal MapSubAreaData()
+    {
+        Name = string.Empty;
+        FightAudioMusicId = ReadOnlyCollection<int?>.Empty;
+        NearMapSubAreasId = ReadOnlyCollection<int>.Empty;
+    }
+
+    public MapAreaData? GetMapAreaData()
+    {
+        return DofusApi.Datacenter.MapsData.GetMapAreaDataById(MapAreaId);
+    }
+
+    public IEnumerable<MapSubAreaData> GetNearMapSubAreasData()
+    {
+        foreach (var mapSubAreaId in NearMapSubAreasId)
         {
-            Name = string.Empty;
-            FightAudioMusicId = ReadOnlyCollection<int?>.Empty;
-            NearMapSubAreasId = ReadOnlyCollection<int>.Empty;
-        }
-
-        public MapAreaData? GetMapAreaData()
-        {
-            return DofusApi.Datacenter.MapsData.GetMapAreaDataById(MapAreaId);
-        }
-
-        public IEnumerable<MapSubAreaData> GetNearMapSubAreasData()
-        {
-            foreach (int mapSubAreaId in NearMapSubAreasId)
+            var mapSubAreaData = DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(mapSubAreaId);
+            if (mapSubAreaData is not null)
             {
-                MapSubAreaData? mapSubAreaData = DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(mapSubAreaId);
-                if (mapSubAreaData is not null)
-                {
-                    yield return mapSubAreaData;
-                }
+                yield return mapSubAreaData;
             }
         }
-
-        public AudioMusicData? GetFightAudioMusicData()
-        {
-            return FightAudioMusicId[0] is null ? null : DofusApi.Datacenter.AudiosData.GetAudioMusicDataById(FightAudioMusicId[0]!.Value);
-        }
-
-        public IEnumerable<MapData> GetMapsData()
-        {
-            return DofusApi.Datacenter.MapsData.GetMapsDataByMapSubAreaId(Id);
-        }
     }
 
-    public sealed class MapsData : IDofusData
+    public AudioMusicData? GetFightAudioMusicData()
     {
-        private const string FILE_NAME = "maps.json";
+        return FightAudioMusicId[0] is null ? null : DofusApi.Datacenter.AudiosData.GetAudioMusicDataById(FightAudioMusicId[0]!.Value);
+    }
 
-        [JsonPropertyName("MA.m")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapData>))]
-        public FrozenDictionary<int, MapData> Maps { get; init; }
+    public IEnumerable<MapData> GetMapsData()
+    {
+        return DofusApi.Datacenter.MapsData.GetMapsDataByMapSubAreaId(Id);
+    }
+}
 
-        [JsonPropertyName("MA.sua")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapSuperAreaData>))]
-        public FrozenDictionary<int, MapSuperAreaData> MapSuperAreas { get; init; }
+public sealed class MapsData : IDofusData
+{
+    private const string FILE_NAME = "maps.json";
 
-        [JsonPropertyName("MA.a")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapAreaData>))]
-        public FrozenDictionary<int, MapAreaData> MapAreas { get; init; }
+    [JsonPropertyName("MA.m")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapData>))]
+    public FrozenDictionary<int, MapData> Maps { get; init; }
 
-        [JsonPropertyName("MA.sa")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapSubAreaData>))]
-        public FrozenDictionary<int, MapSubAreaData> MapSubAreas { get; init; }
+    [JsonPropertyName("MA.sua")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapSuperAreaData>))]
+    public FrozenDictionary<int, MapSuperAreaData> MapSuperAreas { get; init; }
 
-        [JsonConstructor]
-        internal MapsData()
-        {
-            Maps = FrozenDictionary<int, MapData>.Empty;
-            MapSuperAreas = FrozenDictionary<int, MapSuperAreaData>.Empty;
-            MapAreas = FrozenDictionary<int, MapAreaData>.Empty;
-            MapSubAreas = FrozenDictionary<int, MapSubAreaData>.Empty;
-        }
+    [JsonPropertyName("MA.a")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapAreaData>))]
+    public FrozenDictionary<int, MapAreaData> MapAreas { get; init; }
 
-        internal static MapsData Load()
-        {
-            return Datacenter.LoadDataFromFile<MapsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
+    [JsonPropertyName("MA.sa")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapSubAreaData>))]
+    public FrozenDictionary<int, MapSubAreaData> MapSubAreas { get; init; }
 
-        public MapData? GetMapDataById(int id)
-        {
-            Maps.TryGetValue(id, out MapData? mapData);
-            return mapData;
-        }
+    [JsonConstructor]
+    internal MapsData()
+    {
+        Maps = FrozenDictionary<int, MapData>.Empty;
+        MapSuperAreas = FrozenDictionary<int, MapSuperAreaData>.Empty;
+        MapAreas = FrozenDictionary<int, MapAreaData>.Empty;
+        MapSubAreas = FrozenDictionary<int, MapSubAreaData>.Empty;
+    }
 
-        public IEnumerable<MapData> GetMapsDataByCoordinate(int xCoord, int yCoord)
-        {
-            return Maps.Values.Where(x => x.XCoord == xCoord && x.YCoord == yCoord);
-        }
+    internal static MapsData Load()
+    {
+        return Datacenter.LoadDataFromFile<MapsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        public IEnumerable<MapData> GetMapsDataByMapAreaId(int id)
-        {
-            return Maps.Values.Where(x => x.GetMapSubAreaData()?.GetMapAreaData()?.Id == id);
-        }
+    public MapData? GetMapDataById(int id)
+    {
+        Maps.TryGetValue(id, out var mapData);
+        return mapData;
+    }
 
-        public IEnumerable<MapData> GetMapsDataByMapSubAreaId(int id)
-        {
-            return Maps.Values.Where(x => x.GetMapSubAreaData()?.Id == id);
-        }
+    public IEnumerable<MapData> GetMapsDataByCoordinate(int xCoord, int yCoord)
+    {
+        return Maps.Values.Where(x => x.XCoord == xCoord && x.YCoord == yCoord);
+    }
 
-        public MapSuperAreaData? GetMapSuperAreaDataById(int id)
-        {
-            MapSuperAreas.TryGetValue(id, out MapSuperAreaData? mapSuperAreaData);
-            return mapSuperAreaData;
-        }
+    public IEnumerable<MapData> GetMapsDataByMapAreaId(int id)
+    {
+        return Maps.Values.Where(x => x.GetMapSubAreaData()?.GetMapAreaData()?.Id == id);
+    }
 
-        public string GetMapSuperAreaNameById(int id)
-        {
-            MapSuperAreaData? mapSuperAreaData = GetMapSuperAreaDataById(id);
+    public IEnumerable<MapData> GetMapsDataByMapSubAreaId(int id)
+    {
+        return Maps.Values.Where(x => x.GetMapSubAreaData()?.Id == id);
+    }
 
-            return mapSuperAreaData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : mapSuperAreaData.Name;
-        }
+    public MapSuperAreaData? GetMapSuperAreaDataById(int id)
+    {
+        MapSuperAreas.TryGetValue(id, out var mapSuperAreaData);
+        return mapSuperAreaData;
+    }
 
-        public MapAreaData? GetMapAreaDataById(int id)
-        {
-            MapAreas.TryGetValue(id, out MapAreaData? mapAreaData);
-            return mapAreaData;
-        }
+    public string GetMapSuperAreaNameById(int id)
+    {
+        var mapSuperAreaData = GetMapSuperAreaDataById(id);
 
-        public IEnumerable<MapAreaData> GetMapAreasDataByName(string name)
-        {
-            string[] names = name.NormalizeCustom().Split(' ');
-            return MapAreas.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
-        }
+        return mapSuperAreaData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : mapSuperAreaData.Name;
+    }
 
-        public string GetMapAreaNameById(int id)
-        {
-            MapAreaData? mapAreaData = GetMapAreaDataById(id);
+    public MapAreaData? GetMapAreaDataById(int id)
+    {
+        MapAreas.TryGetValue(id, out var mapAreaData);
+        return mapAreaData;
+    }
 
-            return mapAreaData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : mapAreaData.Name;
-        }
+    public IEnumerable<MapAreaData> GetMapAreasDataByName(string name)
+    {
+        var names = name.NormalizeCustom().Split(' ');
+        return MapAreas.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+    }
 
-        public MapSubAreaData? GetMapSubAreaDataById(int id)
-        {
-            MapSubAreas.TryGetValue(id, out MapSubAreaData? mapSubAreaData);
-            return mapSubAreaData;
-        }
+    public string GetMapAreaNameById(int id)
+    {
+        var mapAreaData = GetMapAreaDataById(id);
 
-        public IEnumerable<MapSubAreaData> GetMapSubAreasDataByName(string name)
-        {
-            string[] names = name.NormalizeCustom().Split(' ');
-            return MapSubAreas.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
-        }
+        return mapAreaData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : mapAreaData.Name;
+    }
 
-        public string GetMapSubAreaNameById(int id)
-        {
-            MapSubAreaData? mapSubAreaData = GetMapSubAreaDataById(id);
+    public MapSubAreaData? GetMapSubAreaDataById(int id)
+    {
+        MapSubAreas.TryGetValue(id, out var mapSubAreaData);
+        return mapSubAreaData;
+    }
 
-            return mapSubAreaData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : mapSubAreaData.Name.TrimStart("//");
-        }
+    public IEnumerable<MapSubAreaData> GetMapSubAreasDataByName(string name)
+    {
+        var names = name.NormalizeCustom().Split(' ');
+        return MapSubAreas.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+    }
+
+    public string GetMapSubAreaNameById(int id)
+    {
+        var mapSubAreaData = GetMapSubAreaDataById(id);
+
+        return mapSubAreaData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : mapSubAreaData.Name.TrimStart("//");
     }
 }

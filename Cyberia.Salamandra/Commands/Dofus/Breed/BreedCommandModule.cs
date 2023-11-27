@@ -1,29 +1,27 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus
-{
-    public sealed class BreedCommandModule : ApplicationCommandModule
-    {
-        [SlashCommand("classe", "Retourne les informations d'une classe à partir de son nom")]
-        public async Task Command(InteractionContext ctx,
-            [Option("nom", "Nom de la classe")]
-            [ChoiceProvider(typeof(BreedChoiceProvider))]
-            string breedName)
-        {
-            BreedData? breedData = DofusApi.Datacenter.BreedsData.GetBreedDataByName(breedName);
+namespace Cyberia.Salamandra.Commands.Dofus;
 
-            if (breedData is null)
-            {
-                await ctx.CreateResponseAsync("Classe introuvable");
-            }
-            else
-            {
-                await ctx.CreateResponseAsync(await new BreedMessageBuilder(breedData).GetMessageAsync<DiscordInteractionResponseBuilder>());
-            }
+public sealed class BreedCommandModule : ApplicationCommandModule
+{
+    [SlashCommand("classe", "Retourne les informations d'une classe à partir de son nom")]
+    public async Task Command(InteractionContext ctx,
+        [Option("nom", "Nom de la classe")]
+        [ChoiceProvider(typeof(BreedChoiceProvider))]
+        string breedName)
+    {
+        var breedData = DofusApi.Datacenter.BreedsData.GetBreedDataByName(breedName);
+
+        if (breedData is null)
+        {
+            await ctx.CreateResponseAsync("Classe introuvable");
+        }
+        else
+        {
+            await ctx.CreateResponseAsync(await new BreedMessageBuilder(breedData).GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
     }
 }

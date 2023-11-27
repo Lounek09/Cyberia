@@ -1,56 +1,55 @@
-﻿namespace Cyberia.Api
+﻿namespace Cyberia.Api;
+
+public static class Formulas
 {
-    public static class Formulas
+    public static int GetCriticalRate(int nbCrit, int targetCrit, int agility)
     {
-        public static int GetCriticalRate(int nbCrit, int targetCrit, int agility)
+        try
         {
-            try
-            {
-                double withoutAgility = targetCrit - nbCrit;
-                double withAgility = Math.Floor((targetCrit - nbCrit) * 2.9901 / Math.Log(agility + 12));
-                return Convert.ToInt32(Math.Max(2, Math.Min(withoutAgility, withAgility)));
-            }
-            catch (OverflowException)
-            {
-                return -1;
-            }
+            double withoutAgility = targetCrit - nbCrit;
+            var withAgility = Math.Floor((targetCrit - nbCrit) * 2.9901 / Math.Log(agility + 12));
+            return Convert.ToInt32(Math.Max(2, Math.Min(withoutAgility, withAgility)));
         }
-
-        public static int GetAgilityForHalfCriticalRate(int nbCrit, int targetCrit)
+        catch (OverflowException)
         {
-            try
-            {
-                double agility = Math.Exp((targetCrit - nbCrit) * 2.9901 / 3) - 12;
-
-                return Convert.ToInt32(agility);
-            }
-            catch (OverflowException)
-            {
-                return -1;
-            }
+            return -1;
         }
+    }
 
-        public static double GetEscapePercent(int agility, int foeAgility)
+    public static int GetAgilityForHalfCriticalRate(int nbCrit, int targetCrit)
+    {
+        try
         {
-            double escapePercent = 300 * ((double)agility + 25) / ((double)agility + foeAgility + 50) - 100;
-            return Math.Max(0, Math.Min(100, Math.Round(escapePercent, 2)));
+            var agility = Math.Exp((targetCrit - nbCrit) * 2.9901 / 3) - 12;
+
+            return Convert.ToInt32(agility);
         }
-
-        public static int GetAgilityToEscapeForSure(int foeAgility)
+        catch (OverflowException)
         {
-            return 25 + 2 * foeAgility;
+            return -1;
         }
+    }
 
-        public static TimeSpan GetTimePerCraft(int qte, int nbSlot)
+    public static double GetEscapePercent(int agility, int foeAgility)
+    {
+        var escapePercent = 300 * ((double)agility + 25) / ((double)agility + foeAgility + 50) - 100;
+        return Math.Max(0, Math.Min(100, Math.Round(escapePercent, 2)));
+    }
+
+    public static int GetAgilityToEscapeForSure(int foeAgility)
+    {
+        return 25 + 2 * foeAgility;
+    }
+
+    public static TimeSpan GetTimePerCraft(int qte, int nbSlot)
+    {
+        try
         {
-            try
-            {
-                return TimeSpan.FromSeconds((1 + (nbSlot - 1) * 0.15) * qte);
-            }
-            catch
-            {
-                return TimeSpan.Zero;
-            }
+            return TimeSpan.FromSeconds((1 + (nbSlot - 1) * 0.15) * qte);
+        }
+        catch
+        {
+            return TimeSpan.Zero;
         }
     }
 }

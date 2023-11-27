@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
+
+public sealed record MovementPointCriterion : Criterion, ICriterion<MovementPointCriterion>
 {
-    public sealed record MovementPointCriterion : Criterion, ICriterion<MovementPointCriterion>
+    public int MovementPoint { get; init; }
+
+    private MovementPointCriterion(string id, char @operator, int movementPoint)
+        : base(id, @operator)
     {
-        public int MovementPoint { get; init; }
+        MovementPoint = movementPoint;
+    }
 
-        private MovementPointCriterion(string id, char @operator, int movementPoint) :
-            base(id, @operator)
+    public static MovementPointCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var movementPoint))
         {
-            MovementPoint = movementPoint;
+            return new(id, @operator, movementPoint);
         }
 
-        public static MovementPointCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int movementPoint))
-            {
-                return new(id, @operator, movementPoint);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.MovementPoint.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.MovementPoint.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(MovementPoint);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(MovementPoint);
     }
 }

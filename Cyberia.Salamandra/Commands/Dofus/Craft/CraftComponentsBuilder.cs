@@ -4,29 +4,28 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus
+namespace Cyberia.Salamandra.Commands.Dofus;
+
+public static class CraftComponentsBuilder
 {
-    public static class CraftComponentsBuilder
+    public static DiscordButtonComponent CraftButtonBuilder(CraftData craftData, int qte = 1, bool disable = false)
     {
-        public static DiscordButtonComponent CraftButtonBuilder(CraftData craftData, int qte = 1, bool disable = false)
-        {
-            return new(ButtonStyle.Success, CraftMessageBuilder.GetPacket(craftData.Id, qte), "Craft", disable);
-        }
+        return new(ButtonStyle.Success, CraftMessageBuilder.GetPacket(craftData.Id, qte), "Craft", disable);
+    }
 
-        public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, List<CraftData> craftsData, int qte = 1, bool disable = false)
-        {
-            List<DiscordSelectComponentOption> options = [];
+    public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, List<CraftData> craftsData, int qte = 1, bool disable = false)
+    {
+        List<DiscordSelectComponentOption> options = [];
 
-            foreach (CraftData craftData in craftsData)
+        foreach (var craftData in craftsData)
+        {
+            var itemData = craftData.GetItemData();
+            if (itemData is not null)
             {
-                ItemData? itemData = craftData.GetItemData();
-                if (itemData is not null)
-                {
-                    options.Add(new(itemData.Name.WithMaxLength(100), CraftMessageBuilder.GetPacket(craftData.Id, qte), craftData.Id.ToString()));
-                }
+                options.Add(new(itemData.Name.WithMaxLength(100), CraftMessageBuilder.GetPacket(craftData.Id, qte), craftData.Id.ToString()));
             }
-
-            return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne un item pour calculer son craft", options, disable);
         }
+
+        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne un item pour calculer son craft", options, disable);
     }
 }

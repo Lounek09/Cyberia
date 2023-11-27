@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record PlayerRightsCriterion : Criterion, ICriterion<PlayerRightsCriterion>
 {
-    public sealed record PlayerRightsCriterion : Criterion, ICriterion<PlayerRightsCriterion>
+    public int RightsLevel { get; init; }
+
+    private PlayerRightsCriterion(string id, char @operator, int rightsLevel)
+        : base(id, @operator)
     {
-        public int RightsLevel { get; init; }
+        RightsLevel = rightsLevel;
+    }
 
-        private PlayerRightsCriterion(string id, char @operator, int rightsLevel) :
-            base(id, @operator)
+    public static PlayerRightsCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var rightsLevel))
         {
-            RightsLevel = rightsLevel;
+            return new(id, @operator, rightsLevel);
         }
 
-        public static PlayerRightsCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int rightsLevel))
-            {
-                return new(id, @operator, rightsLevel);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.PlayerRights.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.PlayerRights.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(RightsLevel);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(RightsLevel);
     }
 }

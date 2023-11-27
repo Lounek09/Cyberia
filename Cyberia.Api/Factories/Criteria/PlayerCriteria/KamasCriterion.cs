@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record KamasCriterion : Criterion, ICriterion<KamasCriterion>
 {
-    public sealed record KamasCriterion : Criterion, ICriterion<KamasCriterion>
+    public int Kamas { get; init; }
+
+    private KamasCriterion(string id, char @operator, int kamas)
+        : base(id, @operator)
     {
-        public int Kamas { get; init; }
+        Kamas = kamas;
+    }
 
-        private KamasCriterion(string id, char @operator, int kamas) :
-            base(id, @operator)
+    public static KamasCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var kamasId))
         {
-            Kamas = kamas;
+            return new(id, @operator, kamasId);
         }
 
-        public static KamasCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int kamasId))
-            {
-                return new(id, @operator, kamasId);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.Kamas.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.Kamas.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(Kamas);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(Kamas);
     }
 }

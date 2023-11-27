@@ -2,33 +2,32 @@
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 
-namespace Cyberia.Api.Factories.Effects
+namespace Cyberia.Api.Factories.Effects;
+
+public sealed record MonsterSuperRaceEffect : Effect, IEffect<MonsterSuperRaceEffect>
 {
-    public sealed record MonsterSuperRaceEffect : Effect, IEffect<MonsterSuperRaceEffect>
+    public int MonsterSuperRaceId { get; init; }
+
+    private MonsterSuperRaceEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterSuperRaceId)
+        : base(effectId, duration, probability, criteria, effectArea)
     {
-        public int MonsterSuperRaceId { get; init; }
+        MonsterSuperRaceId = monsterSuperRaceId;
+    }
 
-        private MonsterSuperRaceEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterSuperRaceId) :
-            base(effectId, duration, probability, criteria, effectArea)
-        {
-            MonsterSuperRaceId = monsterSuperRaceId;
-        }
+    public static MonsterSuperRaceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    {
+        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1);
+    }
 
-        public static MonsterSuperRaceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        {
-            return new(effectId, duration, probability, criteria, effectArea, parameters.Param1);
-        }
+    public MonsterSuperRaceData? GetMonsterSuperRaceData()
+    {
+        return DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceDataById(MonsterSuperRaceId);
+    }
 
-        public MonsterSuperRaceData? GetMonsterSuperRaceData()
-        {
-            return DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceDataById(MonsterSuperRaceId);
-        }
+    public Description GetDescription()
+    {
+        var monsterSuperRace = DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceNameById(MonsterSuperRaceId);
 
-        public Description GetDescription()
-        {
-            string monsterSuperRace = DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceNameById(MonsterSuperRaceId);
-
-            return GetDescription(monsterSuperRace);
-        }
+        return GetDescription(monsterSuperRace);
     }
 }

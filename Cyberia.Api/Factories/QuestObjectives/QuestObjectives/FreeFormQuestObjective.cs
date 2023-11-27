@@ -1,33 +1,30 @@
 ﻿using Cyberia.Api.Data;
 
-using System.Collections.ObjectModel;
+namespace Cyberia.Api.Factories.QuestObjectives;
 
-namespace Cyberia.Api.Factories.QuestObjectives
+public sealed record FreeFormQuestObjective : QuestObjective, IQuestObjective<FreeFormQuestObjective>
 {
-    public sealed record FreeFormQuestObjective : QuestObjective, IQuestObjective<FreeFormQuestObjective>
+    public string Description { get; init; }
+
+    private FreeFormQuestObjective(QuestObjectiveData questObjectiveData, string description)
+        : base(questObjectiveData)
     {
-        public string Description { get; init; }
+        Description = description;
+    }
 
-        private FreeFormQuestObjective(QuestObjectiveData questObjectiveData, string description) :
-            base(questObjectiveData)
+    public static FreeFormQuestObjective? Create(QuestObjectiveData questObjectiveData)
+    {
+        var parameters = questObjectiveData.Parameters;
+        if (parameters.Count > 0)
         {
-            Description = description;
+            return new(questObjectiveData, parameters[0]);
         }
 
-        public static FreeFormQuestObjective? Create(QuestObjectiveData questObjectiveData)
-        {
-            ReadOnlyCollection<string> parameters = questObjectiveData.Parameters;
-            if (parameters.Count > 0)
-            {
-                return new(questObjectiveData, parameters[0]);
-            }
+        return null;
+    }
 
-            return null;
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(Description);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(Description);
     }
 }

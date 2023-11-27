@@ -4,361 +4,360 @@ using System.Collections.Frozen;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class AlignmentData : IDofusData<int>
 {
-    public sealed class AlignmentData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("c")]
+    public bool CanConquest { get; init; }
+
+    [JsonConstructor]
+    internal AlignmentData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
-
-        [JsonPropertyName("c")]
-        public bool CanConquest { get; init; }
-
-        [JsonConstructor]
-        internal AlignmentData()
-        {
-            Name = string.Empty;
-        }
-
-        public bool CanJoin(int alignmentId)
-        {
-            AlignmentJoinData? alignmentJoinData = DofusApi.Datacenter.AlignmentsData.GetAlignmentJoinDataById(Id);
-
-            return alignmentJoinData is not null && alignmentJoinData.CanJoin(alignmentId);
-        }
-
-        public bool CanAttack(int alignmentId)
-        {
-            AlignmentAttackData? alignmentAttackData = DofusApi.Datacenter.AlignmentsData.GetAlignmentAttackDataById(Id);
-
-            return alignmentAttackData is not null && alignmentAttackData.CanAttack(alignmentId);
-        }
-
-        public bool CanViewPvpGain(int alignmentId)
-        {
-            AlignmentViewPvpGainData? alignmentViewPvpGainData = DofusApi.Datacenter.AlignmentsData.GetAlignmentViewPvpGainDataById(Id);
-
-            return alignmentViewPvpGainData is not null && alignmentViewPvpGainData.CanViewPvpGain(alignmentId);
-        }
+        Name = string.Empty;
     }
 
-    internal sealed class AlignmentJoinData : IDofusData<int>
+    public bool CanJoin(int alignmentId)
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        var alignmentJoinData = DofusApi.Datacenter.AlignmentsData.GetAlignmentJoinDataById(Id);
 
-        [JsonPropertyName("v")]
-        [JsonConverter(typeof(ReadOnlyCollectionConverter<bool>))]
-        public ReadOnlyCollection<bool> Values { get; init; }
-
-        [JsonConstructor]
-        internal AlignmentJoinData()
-        {
-            Values = ReadOnlyCollection<bool>.Empty;
-        }
-
-        public bool CanJoin(int targetAlignmentId)
-        {
-            return Values.Count >= targetAlignmentId && Values[targetAlignmentId];
-        }
+        return alignmentJoinData is not null && alignmentJoinData.CanJoin(alignmentId);
     }
 
-    internal sealed class AlignmentAttackData : IDofusData<int>
+    public bool CanAttack(int alignmentId)
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        var alignmentAttackData = DofusApi.Datacenter.AlignmentsData.GetAlignmentAttackDataById(Id);
 
-        [JsonPropertyName("v")]
-        [JsonConverter(typeof(ReadOnlyCollectionConverter<bool>))]
-        public ReadOnlyCollection<bool> Values { get; init; }
-
-        [JsonConstructor]
-        internal AlignmentAttackData()
-        {
-            Values = ReadOnlyCollection<bool>.Empty;
-        }
-
-        public bool CanAttack(int targetAlignmentId)
-        {
-            return Values.Count >= targetAlignmentId && Values[targetAlignmentId];
-        }
+        return alignmentAttackData is not null && alignmentAttackData.CanAttack(alignmentId);
     }
 
-    public sealed class AlignmentOrderData : IDofusData<int>
+    public bool CanViewPvpGain(int alignmentId)
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        var alignmentViewPvpGainData = DofusApi.Datacenter.AlignmentsData.GetAlignmentViewPvpGainDataById(Id);
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+        return alignmentViewPvpGainData is not null && alignmentViewPvpGainData.CanViewPvpGain(alignmentId);
+    }
+}
 
-        [JsonPropertyName("a")]
-        public int AlignmentId { get; init; }
+internal sealed class AlignmentJoinData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonConstructor]
-        internal AlignmentOrderData()
-        {
-            Name = string.Empty;
-        }
+    [JsonPropertyName("v")]
+    [JsonConverter(typeof(ReadOnlyCollectionConverter<bool>))]
+    public ReadOnlyCollection<bool> Values { get; init; }
 
-        public AlignmentData? GetAlignementData()
-        {
-            return DofusApi.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
-        }
+    [JsonConstructor]
+    internal AlignmentJoinData()
+    {
+        Values = ReadOnlyCollection<bool>.Empty;
     }
 
-    internal sealed class AlignmentViewPvpGainData : IDofusData<int>
+    public bool CanJoin(int targetAlignmentId)
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        return Values.Count >= targetAlignmentId && Values[targetAlignmentId];
+    }
+}
 
-        [JsonPropertyName("v")]
-        [JsonConverter(typeof(ReadOnlyCollectionConverter<bool>))]
-        public ReadOnlyCollection<bool> Values { get; init; }
+internal sealed class AlignmentAttackData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonConstructor]
-        internal AlignmentViewPvpGainData()
-        {
-            Values = ReadOnlyCollection<bool>.Empty;
-        }
+    [JsonPropertyName("v")]
+    [JsonConverter(typeof(ReadOnlyCollectionConverter<bool>))]
+    public ReadOnlyCollection<bool> Values { get; init; }
 
-        public bool CanViewPvpGain(int targetAlignmentId)
-        {
-            return Values.Count >= targetAlignmentId && Values[targetAlignmentId];
-        }
+    [JsonConstructor]
+    internal AlignmentAttackData()
+    {
+        Values = ReadOnlyCollection<bool>.Empty;
     }
 
-    public sealed class AlignmentFeatData : IDofusData<int>
+    public bool CanAttack(int targetAlignmentId)
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        return Values.Count >= targetAlignmentId && Values[targetAlignmentId];
+    }
+}
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+public sealed class AlignmentOrderData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonPropertyName("g")]
-        public int GfxId { get; init; }
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
 
-        [JsonPropertyName("e")]
-        public int AlignmentFeatEffectId { get; init; }
+    [JsonPropertyName("a")]
+    public int AlignmentId { get; init; }
 
-        [JsonConstructor]
-        internal AlignmentFeatData()
-        {
-            Name = string.Empty;
-        }
-
-        public AlignmentFeatEffectData? GetAlignmentFeatEffectData()
-        {
-            return DofusApi.Datacenter.AlignmentsData.GetAlignmentFeatEffectDataById(AlignmentFeatEffectId);
-        }
+    [JsonConstructor]
+    internal AlignmentOrderData()
+    {
+        Name = string.Empty;
     }
 
-    public sealed class AlignmentFeatEffectData : IDofusData<int>
+    public AlignmentData? GetAlignementData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        return DofusApi.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
+    }
+}
 
-        [JsonPropertyName("v")]
-        public string Description { get; init; }
+internal sealed class AlignmentViewPvpGainData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonConstructor]
-        internal AlignmentFeatEffectData()
-        {
-            Description = string.Empty;
-        }
+    [JsonPropertyName("v")]
+    [JsonConverter(typeof(ReadOnlyCollectionConverter<bool>))]
+    public ReadOnlyCollection<bool> Values { get; init; }
+
+    [JsonConstructor]
+    internal AlignmentViewPvpGainData()
+    {
+        Values = ReadOnlyCollection<bool>.Empty;
     }
 
-    public sealed class AlignmentBalanceData : IDofusData<int>
+    public bool CanViewPvpGain(int targetAlignmentId)
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        return Values.Count >= targetAlignmentId && Values[targetAlignmentId];
+    }
+}
 
-        [JsonPropertyName("s")]
-        public int Start { get; init; }
+public sealed class AlignmentFeatData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonPropertyName("e")]
-        public int End { get; init; }
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+    [JsonPropertyName("g")]
+    public int GfxId { get; init; }
 
-        [JsonPropertyName("d")]
-        public string Description { get; init; }
+    [JsonPropertyName("e")]
+    public int AlignmentFeatEffectId { get; init; }
 
-        [JsonConstructor]
-        internal AlignmentBalanceData()
-        {
-            Name = string.Empty;
-            Description = string.Empty;
-        }
+    [JsonConstructor]
+    internal AlignmentFeatData()
+    {
+        Name = string.Empty;
     }
 
-    public sealed class AlignmentSpecializationData : IDofusData<int>
+    public AlignmentFeatEffectData? GetAlignmentFeatEffectData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        return DofusApi.Datacenter.AlignmentsData.GetAlignmentFeatEffectDataById(AlignmentFeatEffectId);
+    }
+}
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+public sealed class AlignmentFeatEffectData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonPropertyName("d")]
-        public string Description { get; init; }
+    [JsonPropertyName("v")]
+    public string Description { get; init; }
 
-        [JsonPropertyName("o")]
-        public int AlignmentOrderId { get; init; }
+    [JsonConstructor]
+    internal AlignmentFeatEffectData()
+    {
+        Description = string.Empty;
+    }
+}
 
-        [JsonPropertyName("av")]
-        public int AlignmentLevelRequired { get; init; }
+public sealed class AlignmentBalanceData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonPropertyName("f")]
-        [JsonInclude]
-        //TODO: JsonConverter for AlignmentFeatsParameters in AlignmentSpecializationData
-        private List<List<object>> AlignmentFeatsParameters { get; init; }
+    [JsonPropertyName("s")]
+    public int Start { get; init; }
 
-        [JsonConstructor]
-        internal AlignmentSpecializationData()
-        {
-            Name = string.Empty;
-            Description = string.Empty;
-            AlignmentFeatsParameters = [];
-        }
+    [JsonPropertyName("e")]
+    public int End { get; init; }
 
-        public AlignmentOrderData? GetAlignementOrderData()
-        {
-            return DofusApi.Datacenter.AlignmentsData.GetAlignmentOrderDataById(AlignmentOrderId);
-        }
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("d")]
+    public string Description { get; init; }
+
+    [JsonConstructor]
+    internal AlignmentBalanceData()
+    {
+        Name = string.Empty;
+        Description = string.Empty;
+    }
+}
+
+public sealed class AlignmentSpecializationData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("d")]
+    public string Description { get; init; }
+
+    [JsonPropertyName("o")]
+    public int AlignmentOrderId { get; init; }
+
+    [JsonPropertyName("av")]
+    public int AlignmentLevelRequired { get; init; }
+
+    [JsonPropertyName("f")]
+    [JsonInclude]
+    //TODO: JsonConverter for AlignmentFeatsParameters in AlignmentSpecializationData
+    private List<List<object>> AlignmentFeatsParameters { get; init; }
+
+    [JsonConstructor]
+    internal AlignmentSpecializationData()
+    {
+        Name = string.Empty;
+        Description = string.Empty;
+        AlignmentFeatsParameters = [];
     }
 
-    public sealed class AlignmentsData : IDofusData
+    public AlignmentOrderData? GetAlignementOrderData()
     {
-        private const string FILE_NAME = "alignment.json";
+        return DofusApi.Datacenter.AlignmentsData.GetAlignmentOrderDataById(AlignmentOrderId);
+    }
+}
 
-        [JsonPropertyName("A.a")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentData>))]
-        public FrozenDictionary<int, AlignmentData> Alignments { get; init; }
+public sealed class AlignmentsData : IDofusData
+{
+    private const string FILE_NAME = "alignment.json";
 
-        [JsonPropertyName("A.jo")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentJoinData>))]
-        internal FrozenDictionary<int, AlignmentJoinData> AlignmentsJoin { get; init; }
+    [JsonPropertyName("A.a")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentData>))]
+    public FrozenDictionary<int, AlignmentData> Alignments { get; init; }
 
-        [JsonPropertyName("A.at")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentAttackData>))]
-        internal FrozenDictionary<int, AlignmentAttackData> AlignmentsAttack { get; init; }
+    [JsonPropertyName("A.jo")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentJoinData>))]
+    internal FrozenDictionary<int, AlignmentJoinData> AlignmentsJoin { get; init; }
 
-        [JsonPropertyName("A.o")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentOrderData>))]
-        public FrozenDictionary<int, AlignmentOrderData> AlignmentOrders { get; init; }
+    [JsonPropertyName("A.at")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentAttackData>))]
+    internal FrozenDictionary<int, AlignmentAttackData> AlignmentsAttack { get; init; }
 
-        [JsonPropertyName("A.g")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentViewPvpGainData>))]
-        internal FrozenDictionary<int, AlignmentViewPvpGainData> AlignmentsViewPvpGain { get; init; }
+    [JsonPropertyName("A.o")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentOrderData>))]
+    public FrozenDictionary<int, AlignmentOrderData> AlignmentOrders { get; init; }
 
-        [JsonPropertyName("A.f")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentFeatData>))]
-        public FrozenDictionary<int, AlignmentFeatData> AlignmentFeats { get; init; }
+    [JsonPropertyName("A.g")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentViewPvpGainData>))]
+    internal FrozenDictionary<int, AlignmentViewPvpGainData> AlignmentsViewPvpGain { get; init; }
 
-        [JsonPropertyName("A.fe")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentFeatEffectData>))]
-        public FrozenDictionary<int, AlignmentFeatEffectData> AlignmentFeatEffects { get; init; }
+    [JsonPropertyName("A.f")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentFeatData>))]
+    public FrozenDictionary<int, AlignmentFeatData> AlignmentFeats { get; init; }
 
-        [JsonPropertyName("A.b")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentBalanceData>))]
-        public FrozenDictionary<int, AlignmentBalanceData> AlignmentBalance { get; init; }
+    [JsonPropertyName("A.fe")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentFeatEffectData>))]
+    public FrozenDictionary<int, AlignmentFeatEffectData> AlignmentFeatEffects { get; init; }
 
-        [JsonPropertyName("A.s")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentSpecializationData>))]
-        public FrozenDictionary<int, AlignmentSpecializationData> AlignmentSpecializations { get; init; }
+    [JsonPropertyName("A.b")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentBalanceData>))]
+    public FrozenDictionary<int, AlignmentBalanceData> AlignmentBalance { get; init; }
 
-        [JsonConstructor]
-        internal AlignmentsData()
-        {
-            Alignments = FrozenDictionary<int, AlignmentData>.Empty;
-            AlignmentsJoin = FrozenDictionary<int, AlignmentJoinData>.Empty;
-            AlignmentsAttack = FrozenDictionary<int, AlignmentAttackData>.Empty;
-            AlignmentOrders = FrozenDictionary<int, AlignmentOrderData>.Empty;
-            AlignmentsViewPvpGain = FrozenDictionary<int, AlignmentViewPvpGainData>.Empty;
-            AlignmentFeats = FrozenDictionary<int, AlignmentFeatData>.Empty;
-            AlignmentFeatEffects = FrozenDictionary<int, AlignmentFeatEffectData>.Empty;
-            AlignmentBalance = FrozenDictionary<int, AlignmentBalanceData>.Empty;
-            AlignmentSpecializations = FrozenDictionary<int, AlignmentSpecializationData>.Empty;
-        }
+    [JsonPropertyName("A.s")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentSpecializationData>))]
+    public FrozenDictionary<int, AlignmentSpecializationData> AlignmentSpecializations { get; init; }
 
-        internal static AlignmentsData Load()
-        {
-            return Datacenter.LoadDataFromFile<AlignmentsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
+    [JsonConstructor]
+    internal AlignmentsData()
+    {
+        Alignments = FrozenDictionary<int, AlignmentData>.Empty;
+        AlignmentsJoin = FrozenDictionary<int, AlignmentJoinData>.Empty;
+        AlignmentsAttack = FrozenDictionary<int, AlignmentAttackData>.Empty;
+        AlignmentOrders = FrozenDictionary<int, AlignmentOrderData>.Empty;
+        AlignmentsViewPvpGain = FrozenDictionary<int, AlignmentViewPvpGainData>.Empty;
+        AlignmentFeats = FrozenDictionary<int, AlignmentFeatData>.Empty;
+        AlignmentFeatEffects = FrozenDictionary<int, AlignmentFeatEffectData>.Empty;
+        AlignmentBalance = FrozenDictionary<int, AlignmentBalanceData>.Empty;
+        AlignmentSpecializations = FrozenDictionary<int, AlignmentSpecializationData>.Empty;
+    }
 
-        public AlignmentData? GetAlignmentDataById(int id)
-        {
-            Alignments.TryGetValue(id, out AlignmentData? alignmentData);
-            return alignmentData;
-        }
+    internal static AlignmentsData Load()
+    {
+        return Datacenter.LoadDataFromFile<AlignmentsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        public string GetAlignmentNameById(int id)
-        {
-            AlignmentData? alignmentData = GetAlignmentDataById(id);
+    public AlignmentData? GetAlignmentDataById(int id)
+    {
+        Alignments.TryGetValue(id, out var alignmentData);
+        return alignmentData;
+    }
 
-            return alignmentData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentData.Name;
-        }
+    public string GetAlignmentNameById(int id)
+    {
+        var alignmentData = GetAlignmentDataById(id);
 
-        internal AlignmentJoinData? GetAlignmentJoinDataById(int id)
-        {
-            AlignmentsJoin.TryGetValue(id, out AlignmentJoinData? alignmentJoinData);
-            return alignmentJoinData;
-        }
+        return alignmentData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentData.Name;
+    }
 
-        internal AlignmentAttackData? GetAlignmentAttackDataById(int id)
-        {
-            AlignmentsAttack.TryGetValue(id, out AlignmentAttackData? alignmentAttackData);
-            return alignmentAttackData;
-        }
+    internal AlignmentJoinData? GetAlignmentJoinDataById(int id)
+    {
+        AlignmentsJoin.TryGetValue(id, out var alignmentJoinData);
+        return alignmentJoinData;
+    }
 
-        public AlignmentOrderData? GetAlignmentOrderDataById(int id)
-        {
-            AlignmentOrders.TryGetValue(id, out AlignmentOrderData? alignmentOrderData);
-            return alignmentOrderData;
-        }
+    internal AlignmentAttackData? GetAlignmentAttackDataById(int id)
+    {
+        AlignmentsAttack.TryGetValue(id, out var alignmentAttackData);
+        return alignmentAttackData;
+    }
 
-        internal AlignmentViewPvpGainData? GetAlignmentViewPvpGainDataById(int id)
-        {
-            AlignmentsViewPvpGain.TryGetValue(id, out AlignmentViewPvpGainData? alignmentViewPvpGainData);
-            return alignmentViewPvpGainData;
-        }
+    public AlignmentOrderData? GetAlignmentOrderDataById(int id)
+    {
+        AlignmentOrders.TryGetValue(id, out var alignmentOrderData);
+        return alignmentOrderData;
+    }
 
-        public AlignmentFeatData? GetAlignmentFeatDataById(int id)
-        {
-            AlignmentFeats.TryGetValue(id, out AlignmentFeatData? alignmentFeatData);
-            return alignmentFeatData;
-        }
+    internal AlignmentViewPvpGainData? GetAlignmentViewPvpGainDataById(int id)
+    {
+        AlignmentsViewPvpGain.TryGetValue(id, out var alignmentViewPvpGainData);
+        return alignmentViewPvpGainData;
+    }
 
-        public string GetAlignmentFeatNameById(int id)
-        {
-            AlignmentFeatData? alignmentFeatData = GetAlignmentFeatDataById(id);
+    public AlignmentFeatData? GetAlignmentFeatDataById(int id)
+    {
+        AlignmentFeats.TryGetValue(id, out var alignmentFeatData);
+        return alignmentFeatData;
+    }
 
-            return alignmentFeatData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentFeatData.Name;
-        }
+    public string GetAlignmentFeatNameById(int id)
+    {
+        var alignmentFeatData = GetAlignmentFeatDataById(id);
 
-        public AlignmentFeatEffectData? GetAlignmentFeatEffectDataById(int id)
-        {
-            AlignmentFeatEffects.TryGetValue(id, out AlignmentFeatEffectData? alignmentFeatEffectData);
-            return alignmentFeatEffectData;
-        }
+        return alignmentFeatData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentFeatData.Name;
+    }
 
-        public AlignmentSpecializationData? GetAlignmentSpecializationDataById(int id)
-        {
-            AlignmentSpecializations.TryGetValue(id, out AlignmentSpecializationData? alignmentSpecializationData);
-            return alignmentSpecializationData;
-        }
+    public AlignmentFeatEffectData? GetAlignmentFeatEffectDataById(int id)
+    {
+        AlignmentFeatEffects.TryGetValue(id, out var alignmentFeatEffectData);
+        return alignmentFeatEffectData;
+    }
 
-        public string GetAlignmentSpecializationNameById(int id)
-        {
-            AlignmentSpecializationData? alignmentSpecializationData = GetAlignmentSpecializationDataById(id);
+    public AlignmentSpecializationData? GetAlignmentSpecializationDataById(int id)
+    {
+        AlignmentSpecializations.TryGetValue(id, out var alignmentSpecializationData);
+        return alignmentSpecializationData;
+    }
 
-            return alignmentSpecializationData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentSpecializationData.Name;
-        }
+    public string GetAlignmentSpecializationNameById(int id)
+    {
+        var alignmentSpecializationData = GetAlignmentSpecializationDataById(id);
+
+        return alignmentSpecializationData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentSpecializationData.Name;
     }
 }

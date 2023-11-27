@@ -1,42 +1,41 @@
 ﻿using Cyberia.Api.Data;
 
-namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record BreedCriterion : Criterion, ICriterion<BreedCriterion>
 {
-    public sealed record BreedCriterion : Criterion, ICriterion<BreedCriterion>
+    public int BreedId { get; init; }
+
+    public BreedCriterion(string id, char @operator, int breedId)
+        : base(id, @operator)
     {
-        public int BreedId { get; init; }
+        BreedId = breedId;
+    }
 
-        public BreedCriterion(string id, char @operator, int breedId) :
-            base(id, @operator)
+    public static BreedCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var breedId))
         {
-            BreedId = breedId;
+            return new(id, @operator, breedId);
         }
 
-        public static BreedCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int breedId))
-            {
-                return new(id, @operator, breedId);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public BreedData? GetBreedData()
+    {
+        return DofusApi.Datacenter.BreedsData.GetBreedDataById(BreedId);
+    }
 
-        public BreedData? GetBreedData()
-        {
-            return DofusApi.Datacenter.BreedsData.GetBreedDataById(BreedId);
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.Breed.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.Breed.{GetOperatorDescriptionName()}";
-        }
+    public Description GetDescription()
+    {
+        var breedName = DofusApi.Datacenter.BreedsData.GetBreedNameById(BreedId);
 
-        public Description GetDescription()
-        {
-            string breedName = DofusApi.Datacenter.BreedsData.GetBreedNameById(BreedId);
-
-            return GetDescription(breedName);
-        }
+        return GetDescription(breedName);
     }
 }

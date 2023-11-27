@@ -1,9 +1,8 @@
-﻿namespace Cyberia.Api.Values
+﻿namespace Cyberia.Api.Values;
+
+public enum GiveItemTarget
 {
-    public enum GiveItemTarget
-    {
-        TargetCheckTarget,
-        CasterCheckCaster,
-        CasterCheckTarget
-    }
+    TargetCheckTarget,
+    CasterCheckCaster,
+    CasterCheckTarget
 }

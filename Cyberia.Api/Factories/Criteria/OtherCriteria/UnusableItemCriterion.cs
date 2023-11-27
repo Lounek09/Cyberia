@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.OtherCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.OtherCriteria;
+
+public sealed record UnusableItemCriterion : Criterion, ICriterion<UnusableItemCriterion>
 {
-    public sealed record UnusableItemCriterion : Criterion, ICriterion<UnusableItemCriterion>
+    public string Value { get; init; }
+
+    private UnusableItemCriterion(string id, char @operator, string value)
+        : base(id, @operator)
     {
-        public string Value { get; init; }
+        Value = value;
+    }
 
-        private UnusableItemCriterion(string id, char @operator, string value) :
-            base(id, @operator)
+    public static UnusableItemCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0)
         {
-            Value = value;
+            return new(id, @operator, parameters[0]);
         }
 
-        public static UnusableItemCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0)
-            {
-                return new(id, @operator, parameters[0]);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.UnusableItem.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.UnusableItem.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return base.GetDescription();
-        }
+    public Description GetDescription()
+    {
+        return base.GetDescription();
     }
 }

@@ -4,86 +4,85 @@ using System.Collections.Frozen;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class HintCategoryData : IDofusData<int>
 {
-    public sealed class HintCategoryData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("c")]
+    public string Color { get; init; }
+
+    [JsonConstructor]
+    internal HintCategoryData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        Name = string.Empty;
+        Color = string.Empty;
+    }
+}
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+public sealed class HintData : IDofusData
+{
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
 
-        [JsonPropertyName("c")]
-        public string Color { get; init; }
+    [JsonPropertyName("c")]
+    public int HintCategoryId { get; init; }
 
-        [JsonConstructor]
-        internal HintCategoryData()
-        {
-            Name = string.Empty;
-            Color = string.Empty;
-        }
+    [JsonPropertyName("g")]
+    public int GfxId { get; init; }
+
+    [JsonPropertyName("m")]
+    public int MapId { get; init; }
+
+    [JsonConstructor]
+    internal HintData()
+    {
+        Name = string.Empty;
     }
 
-    public sealed class HintData : IDofusData
+    public HintCategoryData? GetHintCategory()
     {
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
-
-        [JsonPropertyName("c")]
-        public int HintCategoryId { get; init; }
-
-        [JsonPropertyName("g")]
-        public int GfxId { get; init; }
-
-        [JsonPropertyName("m")]
-        public int MapId { get; init; }
-
-        [JsonConstructor]
-        internal HintData()
-        {
-            Name = string.Empty;
-        }
-
-        public HintCategoryData? GetHintCategory()
-        {
-            return DofusApi.Datacenter.HintsData.GetHintCategory(HintCategoryId);
-        }
-
-        public MapData? GetMap()
-        {
-            return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
-        }
+        return DofusApi.Datacenter.HintsData.GetHintCategory(HintCategoryId);
     }
 
-    public sealed class HintsData : IDofusData
+    public MapData? GetMap()
     {
-        private const string FILE_NAME = "hints.json";
+        return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
+    }
+}
 
-        [JsonPropertyName("HIC")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, HintCategoryData>))]
-        public FrozenDictionary<int, HintCategoryData> HintCategories { get; init; }
+public sealed class HintsData : IDofusData
+{
+    private const string FILE_NAME = "hints.json";
 
-        [JsonPropertyName("HI")]
-        [JsonConverter(typeof(ReadOnlyCollectionConverter<HintData>))]
-        public ReadOnlyCollection<HintData> Hints { get; init; }
+    [JsonPropertyName("HIC")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, HintCategoryData>))]
+    public FrozenDictionary<int, HintCategoryData> HintCategories { get; init; }
 
-        [JsonConstructor]
-        internal HintsData()
-        {
-            HintCategories = FrozenDictionary<int, HintCategoryData>.Empty;
-            Hints = ReadOnlyCollection<HintData>.Empty;
-        }
+    [JsonPropertyName("HI")]
+    [JsonConverter(typeof(ReadOnlyCollectionConverter<HintData>))]
+    public ReadOnlyCollection<HintData> Hints { get; init; }
 
-        internal static HintsData Load()
-        {
-            return Datacenter.LoadDataFromFile<HintsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
+    [JsonConstructor]
+    internal HintsData()
+    {
+        HintCategories = FrozenDictionary<int, HintCategoryData>.Empty;
+        Hints = ReadOnlyCollection<HintData>.Empty;
+    }
 
-        public HintCategoryData? GetHintCategory(int id)
-        {
-            HintCategories.TryGetValue(id, out HintCategoryData? hintsCategory);
-            return hintsCategory;
-        }
+    internal static HintsData Load()
+    {
+        return Datacenter.LoadDataFromFile<HintsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
+
+    public HintCategoryData? GetHintCategory(int id)
+    {
+        HintCategories.TryGetValue(id, out var hintsCategory);
+        return hintsCategory;
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace Cyberia.Api.Values
+﻿namespace Cyberia.Api.Values;
+
+public enum Gender
 {
-    public enum Gender
-    {
-        Male,
-        Female
-    }
+    Male,
+    Female
 }

@@ -3,64 +3,63 @@
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class JobData : IDofusData<int>
 {
-    public sealed class JobData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonPropertyName("s")]
+    public int JobSpecializationId { get; init; }
+
+    [JsonPropertyName("g")]
+    public int GfxId { get; init; }
+
+    [JsonConstructor]
+    internal JobData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
-
-        [JsonPropertyName("s")]
-        public int JobSpecializationId { get; init; }
-
-        [JsonPropertyName("g")]
-        public int GfxId { get; init; }
-
-        [JsonConstructor]
-        internal JobData()
-        {
-            Name = string.Empty;
-        }
-
-        public JobData? GetJobDataSpecialization()
-        {
-            return DofusApi.Datacenter.JobsData.GetJobDataById(JobSpecializationId);
-        }
+        Name = string.Empty;
     }
 
-    public sealed class JobsData : IDofusData
+    public JobData? GetJobDataSpecialization()
     {
-        private const string FILE_NAME = "jobs.json";
+        return DofusApi.Datacenter.JobsData.GetJobDataById(JobSpecializationId);
+    }
+}
 
-        [JsonPropertyName("J")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, JobData>))]
-        public FrozenDictionary<int, JobData> Jobs { get; init; }
+public sealed class JobsData : IDofusData
+{
+    private const string FILE_NAME = "jobs.json";
 
-        [JsonConstructor]
-        internal JobsData()
-        {
-            Jobs = FrozenDictionary<int, JobData>.Empty;
-        }
+    [JsonPropertyName("J")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, JobData>))]
+    public FrozenDictionary<int, JobData> Jobs { get; init; }
 
-        internal static JobsData Load()
-        {
-            return Datacenter.LoadDataFromFile<JobsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
+    [JsonConstructor]
+    internal JobsData()
+    {
+        Jobs = FrozenDictionary<int, JobData>.Empty;
+    }
 
-        public JobData? GetJobDataById(int id)
-        {
-            Jobs.TryGetValue(id, out JobData? jobData);
-            return jobData;
-        }
+    internal static JobsData Load()
+    {
+        return Datacenter.LoadDataFromFile<JobsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
 
-        public string GetJobNameById(int id)
-        {
-            JobData? jobData = GetJobDataById(id);
+    public JobData? GetJobDataById(int id)
+    {
+        Jobs.TryGetValue(id, out var jobData);
+        return jobData;
+    }
 
-            return jobData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : jobData.Name;
-        }
+    public string GetJobNameById(int id)
+    {
+        var jobData = GetJobDataById(id);
+
+        return jobData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : jobData.Name;
     }
 }

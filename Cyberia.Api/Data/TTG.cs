@@ -3,156 +3,155 @@
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data
+namespace Cyberia.Api.Data;
+
+public sealed class TTGCardData : IDofusData<int>
 {
-    public sealed class TTGCardData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("i")]
+    public int Index { get; init; }
+
+    [JsonPropertyName("o")]
+    public int ItemId { get; init; }
+
+    [JsonPropertyName("e")]
+    public int TTGEntityId { get; init; }
+
+    [JsonPropertyName("v")]
+    public int Variant { get; init; }
+
+    [JsonConstructor]
+    internal TTGCardData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
 
-        [JsonPropertyName("i")]
-        public int Index { get; init; }
-
-        [JsonPropertyName("o")]
-        public int ItemId { get; init; }
-
-        [JsonPropertyName("e")]
-        public int TTGEntityId { get; init; }
-
-        [JsonPropertyName("v")]
-        public int Variant { get; init; }
-
-        [JsonConstructor]
-        internal TTGCardData()
-        {
-
-        }
-
-        public ItemData? GetItemData()
-        {
-            return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
-        }
-
-        public TTGEntityData? GetTTGEntityData()
-        {
-            return DofusApi.Datacenter.TTGData.GetTTGEntityDataById(ItemId);
-        }
     }
 
-    public sealed class TTGEntityData : IDofusData<int>
+    public ItemData? GetItemData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("i")]
-        public int Index { get; init; }
-
-        [JsonPropertyName("a")]
-        public int Rarity { get; init; }
-
-        [JsonPropertyName("f")]
-        public int TTGFamilyId { get; init; }
-
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
-
-        [JsonConstructor]
-        internal TTGEntityData()
-        {
-            Name = string.Empty;
-        }
-
-        public TTGFamilyData? GetTTGFamilyData()
-        {
-            return DofusApi.Datacenter.TTGData.GetTTGFamilyDataById(TTGFamilyId);
-        }
+        return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
     }
 
-    public sealed class TTGFamilyData : IDofusData<int>
+    public TTGEntityData? GetTTGEntityData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
+        return DofusApi.Datacenter.TTGData.GetTTGEntityDataById(ItemId);
+    }
+}
 
-        [JsonPropertyName("i")]
-        public int Index { get; init; }
+public sealed class TTGEntityData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonPropertyName("o")]
-        public int ItemId { get; init; }
+    [JsonPropertyName("i")]
+    public int Index { get; init; }
 
-        [JsonPropertyName("n")]
-        public string Name { get; init; }
+    [JsonPropertyName("a")]
+    public int Rarity { get; init; }
 
-        [JsonConstructor]
-        internal TTGFamilyData()
-        {
-            Name = string.Empty;
-        }
+    [JsonPropertyName("f")]
+    public int TTGFamilyId { get; init; }
 
-        public ItemData? GetItemData()
-        {
-            return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
-        }
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
+
+    [JsonConstructor]
+    internal TTGEntityData()
+    {
+        Name = string.Empty;
     }
 
-    public sealed class TTGData : IDofusData
+    public TTGFamilyData? GetTTGFamilyData()
     {
-        private const string FILE_NAME = "ttg.json";
+        return DofusApi.Datacenter.TTGData.GetTTGFamilyDataById(TTGFamilyId);
+    }
+}
 
-        [JsonPropertyName("TTG.c")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGCardData>))]
-        public FrozenDictionary<int, TTGCardData> TTGCards { get; set; }
+public sealed class TTGFamilyData : IDofusData<int>
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
 
-        [JsonPropertyName("TTG.e")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGEntityData>))]
-        public FrozenDictionary<int, TTGEntityData> TTGEntities { get; set; }
+    [JsonPropertyName("i")]
+    public int Index { get; init; }
 
-        [JsonPropertyName("TTG.f")]
-        [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGFamilyData>))]
-        public FrozenDictionary<int, TTGFamilyData> TTGFamilies { get; set; }
+    [JsonPropertyName("o")]
+    public int ItemId { get; init; }
 
-        [JsonConstructor]
-        internal TTGData()
-        {
-            TTGCards = FrozenDictionary<int, TTGCardData>.Empty;
-            TTGEntities = FrozenDictionary<int, TTGEntityData>.Empty;
-            TTGFamilies = FrozenDictionary<int, TTGFamilyData>.Empty;
-        }
+    [JsonPropertyName("n")]
+    public string Name { get; init; }
 
-        internal static TTGData Load()
-        {
-            return Datacenter.LoadDataFromFile<TTGData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        }
+    [JsonConstructor]
+    internal TTGFamilyData()
+    {
+        Name = string.Empty;
+    }
 
-        public TTGCardData? GetTTGCardDataById(int id)
-        {
-            TTGCards.TryGetValue(id, out TTGCardData? ttgCardData);
-            return ttgCardData;
-        }
+    public ItemData? GetItemData()
+    {
+        return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
+    }
+}
 
-        public TTGEntityData? GetTTGEntityDataById(int id)
-        {
-            TTGEntities.TryGetValue(id, out TTGEntityData? ttgEntityData);
-            return ttgEntityData;
-        }
+public sealed class TTGData : IDofusData
+{
+    private const string FILE_NAME = "ttg.json";
 
-        public string GetTTGEntityNameById(int id)
-        {
-            TTGEntityData? ttgEntityData = GetTTGEntityDataById(id);
+    [JsonPropertyName("TTG.c")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGCardData>))]
+    public FrozenDictionary<int, TTGCardData> TTGCards { get; set; }
 
-            return ttgEntityData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : ttgEntityData.Name;
-        }
+    [JsonPropertyName("TTG.e")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGEntityData>))]
+    public FrozenDictionary<int, TTGEntityData> TTGEntities { get; set; }
 
-        public TTGFamilyData? GetTTGFamilyDataById(int id)
-        {
-            TTGFamilies.TryGetValue(id, out TTGFamilyData? ttgFamilyData);
-            return ttgFamilyData;
-        }
+    [JsonPropertyName("TTG.f")]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGFamilyData>))]
+    public FrozenDictionary<int, TTGFamilyData> TTGFamilies { get; set; }
 
-        public string GetTTGFamilyNameById(int id)
-        {
-            TTGFamilyData? ttgFamilyData = GetTTGFamilyDataById(id);
+    [JsonConstructor]
+    internal TTGData()
+    {
+        TTGCards = FrozenDictionary<int, TTGCardData>.Empty;
+        TTGEntities = FrozenDictionary<int, TTGEntityData>.Empty;
+        TTGFamilies = FrozenDictionary<int, TTGFamilyData>.Empty;
+    }
 
-            return ttgFamilyData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : ttgFamilyData.Name;
-        }
+    internal static TTGData Load()
+    {
+        return Datacenter.LoadDataFromFile<TTGData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+    }
+
+    public TTGCardData? GetTTGCardDataById(int id)
+    {
+        TTGCards.TryGetValue(id, out var ttgCardData);
+        return ttgCardData;
+    }
+
+    public TTGEntityData? GetTTGEntityDataById(int id)
+    {
+        TTGEntities.TryGetValue(id, out var ttgEntityData);
+        return ttgEntityData;
+    }
+
+    public string GetTTGEntityNameById(int id)
+    {
+        var ttgEntityData = GetTTGEntityDataById(id);
+
+        return ttgEntityData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : ttgEntityData.Name;
+    }
+
+    public TTGFamilyData? GetTTGFamilyDataById(int id)
+    {
+        TTGFamilies.TryGetValue(id, out var ttgFamilyData);
+        return ttgFamilyData;
+    }
+
+    public string GetTTGFamilyNameById(int id)
+    {
+        var ttgFamilyData = GetTTGFamilyDataById(id);
+
+        return ttgFamilyData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : ttgFamilyData.Name;
     }
 }

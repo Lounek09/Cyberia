@@ -3,20 +3,19 @@
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Data
+namespace Cyberia.Salamandra.Commands.Data;
+
+public sealed class LangTypeChoiceProvider : IChoiceProvider
 {
-    public sealed class LangTypeChoiceProvider : IChoiceProvider
+    public Task<IEnumerable<DiscordApplicationCommandOptionChoice>> Provider()
     {
-        public Task<IEnumerable<DiscordApplicationCommandOptionChoice>> Provider()
+        List<DiscordApplicationCommandOptionChoice> choices = [];
+
+        foreach (var type in Enum.GetValues<LangType>())
         {
-            List<DiscordApplicationCommandOptionChoice> choices = [];
-
-            foreach (LangType type in Enum.GetValues<LangType>())
-            {
-                choices.Add(new(type.ToString(), type.ToString()));
-            }
-
-            return Task.FromResult(choices.AsEnumerable());
+            choices.Add(new(type.ToString(), type.ToString()));
         }
+
+        return Task.FromResult(choices.AsEnumerable());
     }
 }

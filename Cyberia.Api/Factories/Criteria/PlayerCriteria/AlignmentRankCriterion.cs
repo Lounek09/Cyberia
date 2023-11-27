@@ -1,33 +1,32 @@
-﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria
+﻿namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
+
+public sealed record AlignmentRankCriterion : Criterion, ICriterion<AlignmentRankCriterion>
 {
-    public sealed record AlignmentRankCriterion : Criterion, ICriterion<AlignmentRankCriterion>
+    public int Rank { get; init; }
+
+    private AlignmentRankCriterion(string id, char @operator, int rank)
+        : base(id, @operator)
     {
-        public int Rank { get; init; }
+        Rank = rank;
+    }
 
-        private AlignmentRankCriterion(string id, char @operator, int rank) :
-            base(id, @operator)
+    public static AlignmentRankCriterion? Create(string id, char @operator, params string[] parameters)
+    {
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var rank))
         {
-            Rank = rank;
+            return new(id, @operator, rank);
         }
 
-        public static AlignmentRankCriterion? Create(string id, char @operator, params string[] parameters)
-        {
-            if (parameters.Length > 0 && int.TryParse(parameters[0], out int rank))
-            {
-                return new(id, @operator, rank);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    protected override string GetDescriptionName()
+    {
+        return $"Criterion.AlignmentRank.{GetOperatorDescriptionName()}";
+    }
 
-        protected override string GetDescriptionName()
-        {
-            return $"Criterion.AlignmentRank.{GetOperatorDescriptionName()}";
-        }
-
-        public Description GetDescription()
-        {
-            return GetDescription(Rank);
-        }
+    public Description GetDescription()
+    {
+        return GetDescription(Rank);
     }
 }

@@ -2,134 +2,133 @@
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
-namespace Cyberia.Salamandra.Managers
+namespace Cyberia.Salamandra.Managers;
+
+public static class MessageManager
 {
-    public static class MessageManager
+    private static readonly Dictionary<string, string> _hiddenCommands = new()
     {
-        private static readonly Dictionary<string, string> _hiddenCommands = new()
-        {
-            { "tppttp", "onTotProut.mp3" },
-            { "fppffp", "onFranckyPassion.mp3" },
-            { "wizz", "onWizz.mp3" },
-            { "hncabot", "onBelge.mp3" },
-            { "foot2rue", "onFoot2Rue.mp4" },
-            { "monkeychan", "onMonkeyChan.mp4" }
-        };
+        { "tppttp", "onTotProut.mp3" },
+        { "fppffp", "onFranckyPassion.mp3" },
+        { "wizz", "onWizz.mp3" },
+        { "hncabot", "onBelge.mp3" },
+        { "foot2rue", "onFoot2Rue.mp4" },
+        { "monkeychan", "onMonkeyChan.mp4" }
+    };
 
-        public static async Task OnMessageCreated(DiscordClient _, MessageCreateEventArgs e)
+    public static async Task OnMessageCreated(DiscordClient _, MessageCreateEventArgs e)
+    {
+        foreach (var hiddenCommand in _hiddenCommands)
         {
-            foreach (KeyValuePair<string, string> hiddenCommand in _hiddenCommands)
+            if (e.Message.Content.EndsWith(hiddenCommand.Key))
             {
-                if (e.Message.Content.EndsWith(hiddenCommand.Key))
-                {
-                    await DeleteMessage(e.Message);
-                    await SendFile(e.Channel, $"{Bot.OUTPUT_PATH}/{hiddenCommand.Value}");
-                }
+                await DeleteMessage(e.Message);
+                await SendFile(e.Channel, $"{Bot.OUTPUT_PATH}/{hiddenCommand.Value}");
             }
         }
+    }
 
-        public static async Task SendMessage(this DiscordChannel channel, DiscordMessageBuilder message)
+    public static async Task SendMessage(this DiscordChannel channel, DiscordMessageBuilder message)
+    {
+        var permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
+
+        if (!permissions.HasPermission(Permissions.AccessChannels))
         {
-            Permissions permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
-
-            if (!permissions.HasPermission(Permissions.AccessChannels))
-            {
-                Log.Error("No permission to access to this channel {ChannelId}", channel.Id);
-                return;
-            }
-
-            if (!permissions.HasPermission(Permissions.SendMessages))
-            {
-                Log.Error("No permission to send message in this channel {ChannelId}", channel.Id);
-                return;
-            }
-
-            if (message.Files.Count > 0 && !permissions.HasPermission(Permissions.AttachFiles))
-            {
-                Log.Error("No permission to attach files in this channel {ChannelId}", channel.Id);
-                return;
-            }
-
-            await channel.SendMessageAsync(message);
+            Log.Error("No permission to access to this channel {ChannelId}", channel.Id);
+            return;
         }
 
-        public static async Task SendFile(this DiscordChannel channel, string filePath)
+        if (!permissions.HasPermission(Permissions.SendMessages))
         {
-            using FileStream fileStream = File.OpenRead(filePath);
-
-            await channel.SendMessage(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
+            Log.Error("No permission to send message in this channel {ChannelId}", channel.Id);
+            return;
         }
 
-        public static async Task SendLogMessage(string content)
+        if (message.Files.Count > 0 && !permissions.HasPermission(Permissions.AttachFiles))
         {
-            DiscordChannel? logChannel = await GetLogChannel();
-
-            if (logChannel is null)
-            {
-                Log.Error("Unknown log channel {ChannelId}", Bot.Config.LogChannelId);
-                return;
-            }
-
-            await logChannel.SendMessage(new DiscordMessageBuilder().WithContent(content));
+            Log.Error("No permission to attach files in this channel {ChannelId}", channel.Id);
+            return;
         }
 
-        public static async Task SendCommandErrorMessage(DiscordEmbed embed)
+        await channel.SendMessageAsync(message);
+    }
+
+    public static async Task SendFile(this DiscordChannel channel, string filePath)
+    {
+        using var fileStream = File.OpenRead(filePath);
+
+        await channel.SendMessage(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
+    }
+
+    public static async Task SendLogMessage(string content)
+    {
+        var logChannel = await GetLogChannel();
+
+        if (logChannel is null)
         {
-            DiscordChannel? commandErrorChannel = await GetCommandErrorChannel();
-
-            if (commandErrorChannel is null)
-            {
-                Log.Error("Unknown command error channel {ChannelId}", Bot.Config.LogChannelId);
-                return;
-            }
-
-            await commandErrorChannel.SendMessage(new DiscordMessageBuilder().AddEmbed(embed));
+            Log.Error("Unknown log channel {ChannelId}", Bot.Config.LogChannelId);
+            return;
         }
 
-        public static async Task DeleteMessage(this DiscordMessage message)
+        await logChannel.SendMessage(new DiscordMessageBuilder().WithContent(content));
+    }
+
+    public static async Task SendCommandErrorMessage(DiscordEmbed embed)
+    {
+        var commandErrorChannel = await GetCommandErrorChannel();
+
+        if (commandErrorChannel is null)
         {
-            DiscordChannel channel = message.Channel;
-            Permissions permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
-
-            if (!permissions.HasPermission(Permissions.AccessChannels))
-            {
-                Log.Error("No permission to access to this channel {ChannelId}", channel.Id);
-                return;
-            }
-
-            if (message.Author.Id != Bot.Client.CurrentUser.Id && !permissions.HasPermission(Permissions.ManageMessages))
-            {
-                Log.Error("No permission to delete this message {MessageId}", message.Id);
-                return;
-            }
-
-            await message.DeleteAsync();
+            Log.Error("Unknown command error channel {ChannelId}", Bot.Config.LogChannelId);
+            return;
         }
 
-        private static async Task<DiscordChannel?> GetLogChannel()
+        await commandErrorChannel.SendMessage(new DiscordMessageBuilder().AddEmbed(embed));
+    }
+
+    public static async Task DeleteMessage(this DiscordMessage message)
+    {
+        var channel = message.Channel;
+        var permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
+
+        if (!permissions.HasPermission(Permissions.AccessChannels))
         {
-            try
-            {
-                return await Bot.Client.GetChannelAsync(Bot.Config.LogChannelId);
-            }
-            catch
-            {
-                Log.Error("Unknown log channel ({ChannelId})", Bot.Config.LogChannelId);
-                return null;
-            }
+            Log.Error("No permission to access to this channel {ChannelId}", channel.Id);
+            return;
         }
 
-        private static async Task<DiscordChannel?> GetCommandErrorChannel()
+        if (message.Author.Id != Bot.Client.CurrentUser.Id && !permissions.HasPermission(Permissions.ManageMessages))
         {
-            try
-            {
-                return await Bot.Client.GetChannelAsync(Bot.Config.CommandErrorChannelId);
-            }
-            catch
-            {
-                Log.Error("Unknown command error channel ({ChannelId})", Bot.Config.CommandErrorChannelId);
-                return null;
-            }
+            Log.Error("No permission to delete this message {MessageId}", message.Id);
+            return;
+        }
+
+        await message.DeleteAsync();
+    }
+
+    private static async Task<DiscordChannel?> GetLogChannel()
+    {
+        try
+        {
+            return await Bot.Client.GetChannelAsync(Bot.Config.LogChannelId);
+        }
+        catch
+        {
+            Log.Error("Unknown log channel ({ChannelId})", Bot.Config.LogChannelId);
+            return null;
+        }
+    }
+
+    private static async Task<DiscordChannel?> GetCommandErrorChannel()
+    {
+        try
+        {
+            return await Bot.Client.GetChannelAsync(Bot.Config.CommandErrorChannelId);
+        }
+        catch
+        {
+            Log.Error("Unknown command error channel ({ChannelId})", Bot.Config.CommandErrorChannelId);
+            return null;
         }
     }
 }

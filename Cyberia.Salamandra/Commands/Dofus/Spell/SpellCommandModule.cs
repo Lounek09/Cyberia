@@ -1,44 +1,42 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus
+namespace Cyberia.Salamandra.Commands.Dofus;
+
+public sealed class SpellCommandModule : ApplicationCommandModule
 {
-    public sealed class SpellCommandModule : ApplicationCommandModule
+    [SlashCommand("sort", "Retourne les informations d'un sort à partir de son nom")]
+    public async Task Command(InteractionContext ctx,
+        [Option("nom", "Nom du sort", true)]
+        [Autocomplete(typeof(SpellAutocompleteProvider))]
+        string value)
     {
-        [SlashCommand("sort", "Retourne les informations d'un sort à partir de son nom")]
-        public async Task Command(InteractionContext ctx,
-            [Option("nom", "Nom du sort", true)]
-            [Autocomplete(typeof(SpellAutocompleteProvider))]
-            string value)
+        DiscordInteractionResponseBuilder? response = null;
+
+        if (int.TryParse(value, out var id))
         {
-            DiscordInteractionResponseBuilder? response = null;
-
-            if (int.TryParse(value, out int id))
+            var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(id);
+            if (spellData is not null)
             {
-                SpellData? spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(id);
-                if (spellData is not null)
-                {
-                    response = await new SpellMessageBuilder(spellData, spellData.GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                }
+                response = await new SpellMessageBuilder(spellData, spellData.GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
-            else
-            {
-                List<SpellData> spellsData = DofusApi.Datacenter.SpellsData.GetSpellsDataByName(value).ToList();
-                if (spellsData.Count == 1)
-                {
-                    response = await new SpellMessageBuilder(spellsData[0], spellsData[0].GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                }
-                else if (spellsData.Count > 1)
-                {
-                    response = await new PaginatedSpellMessageBuilder(spellsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
-                }
-            }
-
-            response ??= new DiscordInteractionResponseBuilder().WithContent("Sort introuvable");
-            await ctx.CreateResponseAsync(response);
         }
+        else
+        {
+            var spellsData = DofusApi.Datacenter.SpellsData.GetSpellsDataByName(value).ToList();
+            if (spellsData.Count == 1)
+            {
+                response = await new SpellMessageBuilder(spellsData[0], spellsData[0].GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+            else if (spellsData.Count > 1)
+            {
+                response = await new PaginatedSpellMessageBuilder(spellsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+        }
+
+        response ??= new DiscordInteractionResponseBuilder().WithContent("Sort introuvable");
+        await ctx.CreateResponseAsync(response);
     }
 }

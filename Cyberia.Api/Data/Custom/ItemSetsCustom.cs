@@ -3,33 +3,32 @@ using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data.Custom
+namespace Cyberia.Api.Data.Custom;
+
+internal sealed class ItemSetCustomData : IDofusData<int>
 {
-    internal sealed class ItemSetCustomData : IDofusData<int>
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("e")]
+    [JsonConverter(typeof(ItemEffectsListConverter))]
+    public List<IEnumerable<IEffect>> Effects { get; init; }
+
+    [JsonConstructor]
+    internal ItemSetCustomData()
     {
-        [JsonPropertyName("id")]
-        public int Id { get; init; }
-
-        [JsonPropertyName("e")]
-        [JsonConverter(typeof(ItemEffectsListConverter))]
-        public List<IEnumerable<IEffect>> Effects { get; init; }
-
-        [JsonConstructor]
-        internal ItemSetCustomData()
-        {
-            Effects = [];
-        }
+        Effects = [];
     }
+}
 
-    internal sealed class ItemSetsCustomData : IDofusData
+internal sealed class ItemSetsCustomData : IDofusData
+{
+    [JsonPropertyName("CIS")]
+    public List<ItemSetCustomData> ItemSetsCustom { get; init; }
+
+    [JsonConstructor]
+    internal ItemSetsCustomData()
     {
-        [JsonPropertyName("CIS")]
-        public List<ItemSetCustomData> ItemSetsCustom { get; init; }
-
-        [JsonConstructor]
-        internal ItemSetsCustomData()
-        {
-            ItemSetsCustom = [];
-        }
+        ItemSetsCustom = [];
     }
 }

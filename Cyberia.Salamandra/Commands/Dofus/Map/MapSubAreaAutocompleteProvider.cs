@@ -1,29 +1,27 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus
+namespace Cyberia.Salamandra.Commands.Dofus;
+
+public sealed class MapSubAreaAutocompleteProvider : AutocompleteProvider
 {
-    public sealed class MapSubAreaAutocompleteProvider : AutocompleteProvider
+    public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
     {
-        public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
+        var value = ctx.OptionValue.ToString();
+        if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
         {
-            string? value = ctx.OptionValue.ToString();
-            if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
-            {
-                return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
-            }
-
-            List<DiscordAutoCompleteChoice> choices = [];
-
-            foreach (MapSubAreaData mapSubAreaData in DofusApi.Datacenter.MapsData.GetMapSubAreasDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
-            {
-                choices.Add(new($"{mapSubAreaData.Name.WithMaxLength(90)} ({mapSubAreaData.Id})", mapSubAreaData.Id.ToString()));
-            }
-
-            return Task.FromResult(choices.AsEnumerable());
+            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
         }
+
+        List<DiscordAutoCompleteChoice> choices = [];
+
+        foreach (var mapSubAreaData in DofusApi.Datacenter.MapsData.GetMapSubAreasDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+        {
+            choices.Add(new($"{mapSubAreaData.Name.WithMaxLength(90)} ({mapSubAreaData.Id})", mapSubAreaData.Id.ToString()));
+        }
+
+        return Task.FromResult(choices.AsEnumerable());
     }
 }

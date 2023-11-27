@@ -1,40 +1,37 @@
 ﻿using Cyberia.Api.Data;
 
-using System.Collections.ObjectModel;
+namespace Cyberia.Api.Factories.QuestObjectives;
 
-namespace Cyberia.Api.Factories.QuestObjectives
+public record class DiscoverMapSubAreaQuestObjective : QuestObjective, IQuestObjective<DiscoverMapSubAreaQuestObjective>
 {
-    public record class DiscoverMapSubAreaQuestObjective : QuestObjective, IQuestObjective<DiscoverMapSubAreaQuestObjective>
+    public int MapSubAreaId { get; init; }
+
+    private DiscoverMapSubAreaQuestObjective(QuestObjectiveData questObjectiveData, int mapSubAreaId)
+        : base(questObjectiveData)
     {
-        public int MapSubAreaId { get; init; }
+        MapSubAreaId = mapSubAreaId;
+    }
 
-        private DiscoverMapSubAreaQuestObjective(QuestObjectiveData questObjectiveData, int mapSubAreaId) :
-            base(questObjectiveData)
+    public static DiscoverMapSubAreaQuestObjective? Create(QuestObjectiveData questObjectiveData)
+    {
+        var parameters = questObjectiveData.Parameters;
+        if (parameters.Count > 0 && int.TryParse(parameters[0], out var mapSubAreaId))
         {
-            MapSubAreaId = mapSubAreaId;
+            return new(questObjectiveData, mapSubAreaId);
         }
 
-        public static DiscoverMapSubAreaQuestObjective? Create(QuestObjectiveData questObjectiveData)
-        {
-            ReadOnlyCollection<string> parameters = questObjectiveData.Parameters;
-            if (parameters.Count > 0 && int.TryParse(parameters[0], out int mapSubAreaId))
-            {
-                return new(questObjectiveData, mapSubAreaId);
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public MapSubAreaData? GetMapSubAreaData()
+    {
+        return DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
+    }
 
-        public MapSubAreaData? GetMapSubAreaData()
-        {
-            return DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
-        }
+    public Description GetDescription()
+    {
+        var mapSubAreaName = DofusApi.Datacenter.MapsData.GetMapSubAreaNameById(MapSubAreaId);
 
-        public Description GetDescription()
-        {
-            string mapSubAreaName = DofusApi.Datacenter.MapsData.GetMapSubAreaNameById(MapSubAreaId);
-
-            return GetDescription(mapSubAreaName);
-        }
+        return GetDescription(mapSubAreaName);
     }
 }
