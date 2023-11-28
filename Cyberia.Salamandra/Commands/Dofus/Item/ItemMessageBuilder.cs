@@ -79,7 +79,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Items")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, "Items")
             .WithTitle($"{Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
             .WithDescription(string.IsNullOrEmpty(_itemData.Description) ? "" : Formatter.Italic(_itemData.Description))
             .WithThumbnail(await _itemData.GetImagePath())

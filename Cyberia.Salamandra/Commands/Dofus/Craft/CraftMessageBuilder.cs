@@ -68,7 +68,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Jobs, "Calculateur de crafts")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Jobs, "Calculateur de crafts")
             .WithCraftDescription(_craftData, _qte, _recursive);
 
         if (_itemData is not null)

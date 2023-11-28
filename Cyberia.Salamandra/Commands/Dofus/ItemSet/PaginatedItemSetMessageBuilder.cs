@@ -15,7 +15,7 @@ public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<Ite
     private readonly string _search;
 
     public PaginatedItemSetMessageBuilder(List<ItemSetData> itemSetsData, string search, int selectedPageIndex = 0)
-        : base(DofusEmbedCategory.Inventory, "Items", "Plusieurs panoplies trouvées :", itemSetsData, selectedPageIndex)
+        : base(EmbedCategory.Inventory, "Items", "Plusieurs panoplies trouvées :", itemSetsData, selectedPageIndex)
     {
         _search = search;
     }

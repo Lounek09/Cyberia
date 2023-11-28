@@ -23,7 +23,7 @@ public sealed class CytrusCommandModule : ApplicationCommandModule
     [SlashCommand("show", "Affiche les informations du cytrus actuellement en ligne")]
     public async Task ShowCytrusCommand(InteractionContext ctx)
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Cytrus");
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus");
 
         embed.AddField("Name", CytrusWatcher.Data.Name.Capitalize(), true);
         embed.AddField("Version", CytrusWatcher.Data.Version.ToString(), true);

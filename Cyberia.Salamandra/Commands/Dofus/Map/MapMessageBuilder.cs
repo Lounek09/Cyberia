@@ -62,7 +62,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Map, "Carte du monde")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Map, "Carte du monde")
             .WithTitle($"{_mapData.GetCoordinate()} ({_mapData.Id})")
             .WithDescription(_mapData.GetMapAreaName())
             .WithImageUrl(_mapData.GetImagePath());

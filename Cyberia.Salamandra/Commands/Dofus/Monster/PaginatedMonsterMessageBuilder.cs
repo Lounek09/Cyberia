@@ -15,7 +15,7 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
     private readonly string _search;
 
     public PaginatedMonsterMessageBuilder(List<MonsterData> monstersData, string search, int selectedPageIndex = 0)
-        : base(DofusEmbedCategory.Bestiary, "Bestiaire", "Plusieurs monstres trouvés :", monstersData, selectedPageIndex)
+        : base(EmbedCategory.Bestiary, "Bestiaire", "Plusieurs monstres trouvés :", monstersData, selectedPageIndex)
     {
         _search = search;
     }

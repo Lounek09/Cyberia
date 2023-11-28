@@ -75,7 +75,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Quests, "Livre de quêtes")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Quests, "Livre de quêtes")
             .WithTitle($"{_questData.Name} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.DUNGEON : "")}");
 
         if (_questStepData is not null)

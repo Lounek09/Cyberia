@@ -15,7 +15,7 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
     private readonly string _search;
 
     public PaginatedQuestMessageBuilder(List<QuestData> questsData, string search, int selectedPageIndex = 0)
-        : base(DofusEmbedCategory.Quests, "Livre de quêtes", "Plusieurs quêtes trouvées :", questsData, selectedPageIndex)
+        : base(EmbedCategory.Quests, "Livre de quêtes", "Plusieurs quêtes trouvées :", questsData, selectedPageIndex)
     {
         _search = search
             ;

@@ -7,7 +7,7 @@ namespace Cyberia.Salamandra.Managers;
 
 public static class EmbedManager
 {
-    public static DiscordEmbedBuilder BuildDofusEmbed(DofusEmbedCategory category, string authorText)
+    public static DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText)
     {
         var embed = new DiscordEmbedBuilder()
             .WithColor(new DiscordColor(Bot.Config.EmbedColor))
@@ -16,31 +16,31 @@ public static class EmbedManager
         var iconUrl = $"{DofusApi.Config.CdnUrl}/images/embed_categories";
         switch (category)
         {
-            case DofusEmbedCategory.Bestiary:
+            case EmbedCategory.Bestiary:
                 iconUrl = $"{iconUrl}/category_bestiary.png";
                 break;
-            case DofusEmbedCategory.Breeds:
+            case EmbedCategory.Breeds:
                 iconUrl = $"{iconUrl}/category_breeds.png";
                 break;
-            case DofusEmbedCategory.Houses:
+            case EmbedCategory.Houses:
                 iconUrl = $"{iconUrl}/category_houses.png";
                 break;
-            case DofusEmbedCategory.Inventory:
+            case EmbedCategory.Inventory:
                 iconUrl = $"{iconUrl}/category_inventory.png";
                 break;
-            case DofusEmbedCategory.Jobs:
+            case EmbedCategory.Jobs:
                 iconUrl = $"{iconUrl}/category_jobs.png";
                 break;
-            case DofusEmbedCategory.Map:
+            case EmbedCategory.Map:
                 iconUrl = $"{iconUrl}/category_map.png";
                 break;
-            case DofusEmbedCategory.Quests:
+            case EmbedCategory.Quests:
                 iconUrl = $"{iconUrl}/category_quests.png";
                 break;
-            case DofusEmbedCategory.Spells:
+            case EmbedCategory.Spells:
                 iconUrl = $"{iconUrl}/category_spells.png";
                 break;
-            case DofusEmbedCategory.Tools:
+            case EmbedCategory.Tools:
                 iconUrl = $"{iconUrl}/category_tools.png";
                 break;
             default:
@@ -51,8 +51,9 @@ public static class EmbedManager
     }
 }
 
-public enum DofusEmbedCategory
+public enum EmbedCategory
 {
+    None,
     Bestiary,
     Breeds,
     Houses,

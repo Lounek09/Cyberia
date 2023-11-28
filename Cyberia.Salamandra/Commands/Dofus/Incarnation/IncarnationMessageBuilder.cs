@@ -72,7 +72,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Incarnations")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, "Incarnations")
             .WithTitle($"{_incarnationData.Name} ({_incarnationData.Id})")
             .WithImageUrl(await _incarnationData.GetImgPath());
 

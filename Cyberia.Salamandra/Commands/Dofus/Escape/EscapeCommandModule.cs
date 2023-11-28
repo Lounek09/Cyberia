@@ -20,7 +20,7 @@ public sealed class EscapeCommandModule : ApplicationCommandModule
         var escapePercent = Formulas.GetEscapePercent((int)agility, (int)foeAgility);
         var agilityToEscapeForSure = Formulas.GetAgilityToEscapeForSure((int)foeAgility);
 
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Calculateur de % de fuite")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de % de fuite")
             .WithDescription($"""
                 Avec {Formatter.Bold(agility.ToString())}agi tu auras {Formatter.Bold(escapePercent.ToString())}% de chance de fuir contre {Formatter.Bold(foeAgility.ToString())}agi
                 Pour fuir à 100% il te faudra au minimum {Formatter.Bold(agilityToEscapeForSure.ToString())}agi !

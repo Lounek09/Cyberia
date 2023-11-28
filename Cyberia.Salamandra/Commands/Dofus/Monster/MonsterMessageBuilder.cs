@@ -76,7 +76,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Bestiary, "Bestiaire")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Bestiary, "Bestiaire")
             .WithTitle($"{_monsterData.Name} ({_monsterData.Id}) - Grade " + _selectedGrade)
             .WithThumbnail(await _monsterData.GetImagePath());
 

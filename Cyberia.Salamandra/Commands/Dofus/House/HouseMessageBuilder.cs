@@ -63,7 +63,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Houses, "Agence immobilière")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Houses, "Agence immobilière")
             .WithTitle($"{_houseData.Name}{(string.IsNullOrEmpty(_houseData.GetCoordinate()) ? "" : $" {_houseData.GetCoordinate()}")} ({_houseData.Id})")
             .WithDescription(string.IsNullOrEmpty(_houseData.Description) ? "" : Formatter.Italic(_houseData.Description))
             .AddField("Pièce :", _houseData.RoomNumber == 0 ? "?" : _houseData.RoomNumber.ToString(), true)

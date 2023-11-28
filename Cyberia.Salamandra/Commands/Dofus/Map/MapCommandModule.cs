@@ -8,7 +8,7 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
-[SlashCommandGroup("map", "Retourne les informations de la map appelée")]
+[SlashCommandGroup("map", "Retourne les informations d'une map")]
 public sealed class MapCommandModule : ApplicationCommandModule
 {
     [SlashCommand("id", "Retourne les informations d'une map à partir de son id")]

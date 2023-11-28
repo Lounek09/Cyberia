@@ -36,7 +36,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
             return;
         }
 
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Calculateur d'obtention de runes")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur d'obtention de runes")
             .WithTitle(runeData.GetFullName());
 
         if (statAmount == 1)

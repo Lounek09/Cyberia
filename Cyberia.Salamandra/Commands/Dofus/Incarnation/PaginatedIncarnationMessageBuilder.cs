@@ -15,7 +15,7 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
     private readonly string _search;
 
     public PaginatedIncarnationMessageBuilder(List<IncarnationData> incarnationsData, string search, int selectedPageIndex = 0)
-        : base(DofusEmbedCategory.Inventory, "Incarnations", "Plusieurs incarnations trouvés :", incarnationsData, selectedPageIndex)
+        : base(EmbedCategory.Inventory, "Incarnations", "Plusieurs incarnations trouvés :", incarnationsData, selectedPageIndex)
     {
         _search = search;
     }

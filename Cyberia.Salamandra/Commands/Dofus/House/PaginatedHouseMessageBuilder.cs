@@ -24,7 +24,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
     private readonly string _search;
 
     public PaginatedHouseMessageBuilder(List<HouseData> housesData, HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(DofusEmbedCategory.Houses, "Agence immobilière", "Plusieurs maisons trouvées :", housesData, selectedPageIndex)
+        : base(EmbedCategory.Houses, "Agence immobilière", "Plusieurs maisons trouvées :", housesData, selectedPageIndex)
     {
         _searchCategory = searchCategory;
         _search = search;

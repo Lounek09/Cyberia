@@ -77,7 +77,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Panoplies")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, "Panoplies")
             .WithTitle($"{_itemSetData.Name} ({_itemSetData.Id})")
             .AddField("Niveau :", _itemSetData.GetLevel().ToString());
 

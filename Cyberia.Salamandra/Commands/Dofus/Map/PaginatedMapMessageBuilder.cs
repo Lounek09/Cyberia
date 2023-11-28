@@ -23,7 +23,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
     private readonly string _search;
 
     public PaginatedMapMessageBuilder(List<MapData> mapsData, MapSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs maps trouvées :", mapsData.OrderBy(x => x.Id).ToList(), selectedPageIndex)
+        : base(EmbedCategory.Map, "Carte du monde", "Plusieurs maps trouvées :", mapsData.OrderBy(x => x.Id).ToList(), selectedPageIndex)
     {
         _searchCategory = searchCategory;
         _search = search;

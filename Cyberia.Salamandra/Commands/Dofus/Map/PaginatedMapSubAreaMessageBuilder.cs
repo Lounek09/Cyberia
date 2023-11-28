@@ -15,7 +15,7 @@ public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<
     private readonly string _search;
 
     public PaginatedMapSubAreaMessageBuilder(List<MapSubAreaData> mapSubAreasData, string search, int selectedPageIndex = 0)
-        : base(DofusEmbedCategory.Map, "Carte du monde", "Plusieurs sous-zones trouvées :", mapSubAreasData, selectedPageIndex)
+        : base(EmbedCategory.Map, "Carte du monde", "Plusieurs sous-zones trouvées :", mapSubAreasData, selectedPageIndex)
     {
         _search = search;
     }

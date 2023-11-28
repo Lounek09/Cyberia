@@ -16,7 +16,7 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
     private readonly int _qte;
 
     public PaginatedCraftMessageBuilder(List<CraftData> craftsData, string search, int qte = 1, int selectedPageIndex = 0)
-        : base(DofusEmbedCategory.Jobs, "Calculateur de crafts", "Plusieurs crafts trouvés :", craftsData, selectedPageIndex)
+        : base(EmbedCategory.Jobs, "Calculateur de crafts", "Plusieurs crafts trouvés :", craftsData, selectedPageIndex)
     {
         _search = search;
         _qte = qte;

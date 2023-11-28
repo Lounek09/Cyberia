@@ -75,7 +75,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Spells, "Livre de sorts")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Spells, "Livre de sorts")
             .WithTitle($"{_spellData.Name} ({_spellData.Id}) - Rang {_selectedLevel}")
             .WithDescription(string.IsNullOrEmpty(_spellData.Description) ? "" : Formatter.Italic(_spellData.Description.Trim()))
             .WithThumbnail(await _spellData.GetImagePath());

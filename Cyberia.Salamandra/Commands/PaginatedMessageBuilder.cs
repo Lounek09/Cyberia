@@ -16,7 +16,7 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
 {
     private const int ROW_PER_PAGE = 25;
 
-    private readonly DofusEmbedCategory _category;
+    private readonly EmbedCategory _category;
     private readonly string _authorText;
     private readonly string _title;
 
@@ -24,7 +24,7 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
     protected readonly int _totalPage;
     protected readonly List<T> _data;
 
-    public PaginatedMessageBuilder(DofusEmbedCategory category, string authorText, string title, List<T> data, int selectedPageIndex)
+    public PaginatedMessageBuilder(EmbedCategory category, string authorText, string title, List<T> data, int selectedPageIndex)
     {
         _category = category;
         _authorText = authorText;
@@ -67,7 +67,7 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(_category, _authorText)
+        var embed = EmbedManager.CreateEmbedBuilder(_category, _authorText)
             .WithTitle(_title)
             .WithDescription(string.Join('\n', GetContent()))
             .AddField(Constant.ZERO_WIDTH_SPACE, $"Page {_selectedPageIndex + 1}/{_totalPage}");

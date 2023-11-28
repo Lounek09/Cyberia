@@ -25,7 +25,7 @@ public sealed class CritCommandModule : ApplicationCommandModule
 
         if (rate > -1)
         {
-            var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Calculateur de coups critiques")
+            var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de coups critiques")
                 .WithDescription($"Tu seras {Formatter.Bold($"1/{rate}")} au {Formatter.Bold($"1/{target}")} avec {Formatter.Bold(number.ToString())}crit et {Formatter.Bold(agility.ToString())}agi");
 
             if (rate != 2 && agilityNeeded > -1)

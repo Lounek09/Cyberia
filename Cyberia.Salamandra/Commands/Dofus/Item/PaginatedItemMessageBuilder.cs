@@ -15,7 +15,7 @@ public sealed class PaginatedItemMessageBuilder : PaginatedMessageBuilder<ItemDa
     private readonly string _search;
 
     public PaginatedItemMessageBuilder(List<ItemData> itemsData, string search, int selectedPageIndex = 0)
-        : base(DofusEmbedCategory.Inventory, "Items", "Plusieurs objets trouvés :", itemsData, selectedPageIndex)
+        : base(EmbedCategory.Inventory, "Items", "Plusieurs objets trouvés :", itemsData, selectedPageIndex)
     {
         _search = search;
     }

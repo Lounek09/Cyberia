@@ -8,7 +8,7 @@ using DSharpPlus.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
-[SlashCommandGroup("maison", "Retourne les informations des maisons")]
+[SlashCommandGroup("maison", "Retourne les informations d'une maison")]
 public sealed class HouseCommandModule : ApplicationCommandModule
 {
     [SlashCommand("nom", "Retourne les informations d'une maison à partir de son nom")]

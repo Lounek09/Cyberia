@@ -65,7 +65,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Tools, "Langs")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Langs")
             .WithTitle($"Langs {_type} en {_language}");
 
         if (_langDataCollection.Count > 0)

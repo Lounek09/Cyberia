@@ -15,7 +15,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
     private readonly string _search;
 
     public PaginatedSpellMessageBuilder(List<SpellData> spellsData, string search, int selectedPageIndex = 0)
-        : base(DofusEmbedCategory.Spells, "Livre de sorts", "Plusieurs sorts trouvés :", spellsData, selectedPageIndex)
+        : base(EmbedCategory.Spells, "Livre de sorts", "Plusieurs sorts trouvés :", spellsData, selectedPageIndex)
     {
         _search = search;
     }

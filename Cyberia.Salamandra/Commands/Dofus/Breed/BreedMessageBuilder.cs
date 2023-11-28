@@ -69,7 +69,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Breeds, "Classes")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Breeds, "Classes")
             .WithTitle($"{_breedData.LongName} ({_breedData.Id})")
             .WithDescription(Formatter.Italic(_breedData.Description))
             .WithThumbnail(_breedData.GetIconImagePath())

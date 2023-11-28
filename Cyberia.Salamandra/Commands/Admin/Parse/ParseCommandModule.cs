@@ -17,7 +17,7 @@ public sealed class ParseCommandModule : ApplicationCommandModule
 
         if (effects.Any())
         {
-            var embed = EmbedManager.BuildDofusEmbed(DofusEmbedCategory.Inventory, "Inventaire")
+            var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, "Inventaire")
                 .WithTitle("Item stats parser")
                 .AddEffectFields("Effets :", effects);
 
