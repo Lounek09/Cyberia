@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Monsters;
 
 namespace Cyberia.Api.Factories.Criteria.FightCriteria;
 

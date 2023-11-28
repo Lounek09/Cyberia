@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Incarnations;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

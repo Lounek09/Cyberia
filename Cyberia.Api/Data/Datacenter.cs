@@ -5,83 +5,83 @@ namespace Cyberia.Api.Data;
 
 public sealed class Datacenter
 {
-    public AlignmentsData AlignmentsData { get; init; }
-    public AudioData AudiosData { get; init; }
-    public BreedsData BreedsData { get; init; }
-    public CraftsData CraftsData { get; init; }
-    public DialogsData DialogsData { get; init; }
-    public EffectsData EffectsData { get; init; }
-    public EmotesData EmotesData { get; init; }
-    public FightChallengesData FightChallengesData { get; init; }
-    public GuildsData GuildsData { get; init; }
-    public HintsData HintsData { get; init; }
-    public HousesData HousesData { get; init; }
-    public IncarnationsData IncarnationsData { get; init; }
-    public InteractiveObjectsData InteractiveObjectsData { get; init; }
-    public ItemsData ItemsData { get; init; }
-    public ItemSetsData ItemSetsData { get; init; }
-    public ItemsStatsData ItemsStatsData { get; init; }
-    public JobsData JobsData { get; init; }
-    public KnowledgeBookData KnowledgeBookData { get; init; }
-    public MapsData MapsData { get; init; }
-    public MonstersData MonstersData { get; init; }
-    public NpcsData NpcsData { get; init; }
-    public PetsData PetsData { get; init; }
-    public PvpData PvpData { get; init; }
-    public QuestsData QuestsData { get; init; }
-    public RanksData RanksData { get; init; }
-    public RidesData RidesData { get; init; }
-    public RunesData RunesData { get; init; }
-    public ScriptsData ScriptsData { get; init; }
-    public ServersData ServersData { get; init; }
-    public SkillsData SkillsData { get; init; }
-    public SpeakingItemsData SpeakingItemsData { get; init; }
-    public SpellsData SpellsData { get; init; }
-    public StatesData StatesData { get; init; }
-    public TaxCollectorNamesData TaxCollectorNamesData { get; init; }
-    public TimeZoneData TimeZonesData { get; init; }
-    public TitlesData TitlesData { get; init; }
-    public TTGData TTGData { get; init; }
+    public Aligments.AlignmentsData AlignmentsData { get; init; }
+    public Audios.AudiosData AudiosData { get; init; }
+    public Breeds.BreedsData BreedsData { get; init; }
+    public Crafts.CraftsData CraftsData { get; init; }
+    public Dialogs.DialogsData DialogsData { get; init; }
+    public Effects.EffectsData EffectsData { get; init; }
+    public Emotes.EmotesData EmotesData { get; init; }
+    public FightChallenges.FightChallengesData FightChallengesData { get; init; }
+    public Guilds.GuildsData GuildsData { get; init; }
+    public Hints.HintsData HintsData { get; init; }
+    public Houses.HousesData HousesData { get; init; }
+    public Incarnations.IncarnationsData IncarnationsData { get; init; }
+    public InteractiveObjects.InteractiveObjectsData InteractiveObjectsData { get; init; }
+    public Items.ItemsData ItemsData { get; init; }
+    public ItemSets.ItemSetsData ItemSetsData { get; init; }
+    public ItemStats.ItemsStatsData ItemsStatsData { get; init; }
+    public Jobs.JobsData JobsData { get; init; }
+    public KnowledgeBook.KnowledgeBookData KnowledgeBookData { get; init; }
+    public Maps.MapsData MapsData { get; init; }
+    public Monsters.MonstersData MonstersData { get; init; }
+    public Npcs.NpcsData NpcsData { get; init; }
+    public Pets.PetsData PetsData { get; init; }
+    public Pvp.PvpData PvpData { get; init; }
+    public Quests.QuestsData QuestsData { get; init; }
+    public Ranks.RanksData RanksData { get; init; }
+    public Rides.RidesData RidesData { get; init; }
+    public Runes.RunesData RunesData { get; init; }
+    public Scripts.ScriptsData ScriptsData { get; init; }
+    public Servers.ServersData ServersData { get; init; }
+    public Skills.SkillsData SkillsData { get; init; }
+    public SpeakingItems.SpeakingItemsData SpeakingItemsData { get; init; }
+    public Spells.SpellsData SpellsData { get; init; }
+    public States.StatesData StatesData { get; init; }
+    public Names.TaxCollectorNamesData TaxCollectorNamesData { get; init; }
+    public TimeZone.TimeZoneData TimeZonesData { get; init; }
+    public Titles.TitlesData TitlesData { get; init; }
+    public TTG.TTGData TTGData { get; init; }
 
     public Datacenter()
     {
-        AlignmentsData = AlignmentsData.Load();
-        AudiosData = AudioData.Load();
-        BreedsData = BreedsData.Load();
-        CraftsData = CraftsData.Load();
-        DialogsData = DialogsData.Load();
-        EffectsData = EffectsData.Load();
-        EmotesData = EmotesData.Load();
-        FightChallengesData = FightChallengesData.Load();
-        GuildsData = GuildsData.Load();
-        HintsData = HintsData.Load();
-        HousesData = HousesData.Load();
-        IncarnationsData = IncarnationsData.Load();
-        InteractiveObjectsData = InteractiveObjectsData.Load();
-        ItemsData = ItemsData.Load();
-        ItemSetsData = ItemSetsData.Load();
-        ItemsStatsData = ItemsStatsData.Load();
-        JobsData = JobsData.Load();
-        KnowledgeBookData = KnowledgeBookData.Load();
-        MapsData = MapsData.Load();
-        MonstersData = MonstersData.Load();
-        NpcsData = NpcsData.Load();
-        PetsData = PetsData.Load();
-        PvpData = PvpData.Load();
-        QuestsData = QuestsData.Load();
-        RanksData = RanksData.Load();
-        RidesData = RidesData.Load();
-        RunesData = RunesData.Load();
-        ScriptsData = ScriptsData.Load();
-        ServersData = ServersData.Load();
-        SkillsData = SkillsData.Load();
-        SpeakingItemsData = SpeakingItemsData.Load();
-        SpellsData = SpellsData.Load();
-        StatesData = StatesData.Load();
-        TaxCollectorNamesData = TaxCollectorNamesData.Load();
-        TimeZonesData = TimeZoneData.Load();
-        TitlesData = TitlesData.Load();
-        TTGData = TTGData.Load();
+        AlignmentsData = Aligments.AlignmentsData.Load();
+        AudiosData = Audios.AudiosData.Load();
+        BreedsData = Breeds.BreedsData.Load();
+        CraftsData = Crafts.CraftsData.Load();
+        DialogsData = Dialogs.DialogsData.Load();
+        EffectsData = Effects.EffectsData.Load();
+        EmotesData = Emotes.EmotesData.Load();
+        FightChallengesData = FightChallenges.FightChallengesData.Load();
+        GuildsData = Guilds.GuildsData.Load();
+        HintsData = Hints.HintsData.Load();
+        HousesData = Houses.HousesData.Load();
+        IncarnationsData = Incarnations.IncarnationsData.Load();
+        InteractiveObjectsData = InteractiveObjects.InteractiveObjectsData.Load();
+        ItemsData = Items.ItemsData.Load();
+        ItemSetsData = ItemSets.ItemSetsData.Load();
+        ItemsStatsData = ItemStats.ItemsStatsData.Load();
+        JobsData = Jobs.JobsData.Load();
+        KnowledgeBookData = KnowledgeBook.KnowledgeBookData.Load();
+        MapsData = Maps.MapsData.Load();
+        MonstersData = Monsters.MonstersData.Load();
+        NpcsData = Npcs.NpcsData.Load();
+        PetsData = Pets.PetsData.Load();
+        PvpData = Pvp.PvpData.Load();
+        QuestsData = Quests.QuestsData.Load();
+        RanksData = Ranks.RanksData.Load();
+        RidesData = Rides.RidesData.Load();
+        RunesData = Runes.RunesData.Load();
+        ScriptsData = Scripts.ScriptsData.Load();
+        ServersData = Servers.ServersData.Load();
+        SkillsData = Skills.SkillsData.Load();
+        SpeakingItemsData = SpeakingItems.SpeakingItemsData.Load();
+        SpellsData = Spells.SpellsData.Load();
+        StatesData = States.StatesData.Load();
+        TaxCollectorNamesData = Names.TaxCollectorNamesData.Load();
+        TimeZonesData = TimeZone.TimeZoneData.Load();
+        TitlesData = Titles.TitlesData.Load();
+        TTGData = TTG.TTGData.Load();
     }
 
     internal static T LoadDataFromFile<T>(string filePath)

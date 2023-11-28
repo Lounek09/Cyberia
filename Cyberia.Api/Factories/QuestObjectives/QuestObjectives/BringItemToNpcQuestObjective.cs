@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Items;
+using Cyberia.Api.Data.Npcs;
+using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 

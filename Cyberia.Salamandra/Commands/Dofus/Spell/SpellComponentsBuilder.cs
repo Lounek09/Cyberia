@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Values;
 using Cyberia.Salamandra.Managers;
 

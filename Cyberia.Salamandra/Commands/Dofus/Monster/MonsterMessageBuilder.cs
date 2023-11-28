@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+using Cyberia.Api.Data.Aligments;
+using Cyberia.Api.Data.Monsters;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

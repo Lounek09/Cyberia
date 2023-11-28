@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Quests;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

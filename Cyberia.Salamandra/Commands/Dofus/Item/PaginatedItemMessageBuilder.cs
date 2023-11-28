@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+using Cyberia.Api.Data.Items;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

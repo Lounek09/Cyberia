@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Breeds;
 
 namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
 

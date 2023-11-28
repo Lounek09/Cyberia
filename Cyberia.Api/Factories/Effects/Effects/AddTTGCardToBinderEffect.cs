@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.TTG;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 

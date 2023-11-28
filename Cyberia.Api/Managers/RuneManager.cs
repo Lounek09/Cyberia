@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Runes;
 
 namespace Cyberia.Api.Managers;
 

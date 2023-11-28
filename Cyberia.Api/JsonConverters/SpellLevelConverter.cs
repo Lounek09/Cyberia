@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories;
 using Cyberia.Api.Managers;
 using Cyberia.Api.Values;

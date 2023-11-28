@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+using Cyberia.Api.Data.Runes;
 using Cyberia.Api.Managers;
 using Cyberia.Salamandra.Managers;
 

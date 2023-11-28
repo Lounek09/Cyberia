@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Maps;
 
 namespace Cyberia.Api.Factories.Criteria.MapCriteria;
 

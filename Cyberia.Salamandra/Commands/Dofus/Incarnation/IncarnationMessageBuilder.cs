@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+using Cyberia.Api.Data.Incarnations;
+using Cyberia.Api.Data.Items;
+using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
@@ -26,6 +28,8 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
         _itemTypeData = _itemData?.GetItemTypeData();
         _spellsData = incarnationData.GetSpellsData().ToList();
     }
+
+    public ItemTypeData? ItemTypeData => _itemTypeData;
 
     public static IncarnationMessageBuilder? Create(int version, string[] parameters)
     {
@@ -88,7 +92,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
             if (_itemData.WeaponData is not null)
             {
-                embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, _itemTypeData);
+                embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, ItemTypeData);
             }
         }
         else

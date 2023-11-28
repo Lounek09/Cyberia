@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Quests;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;

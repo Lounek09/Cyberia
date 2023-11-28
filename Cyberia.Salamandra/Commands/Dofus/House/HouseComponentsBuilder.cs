@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Houses;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

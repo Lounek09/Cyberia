@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 

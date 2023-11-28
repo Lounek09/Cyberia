@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data.Jobs;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 
