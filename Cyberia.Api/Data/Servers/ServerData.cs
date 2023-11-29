@@ -35,8 +35,7 @@ public sealed class ServerData : IDofusData<int>
     public long Date { get; init; }
 
     [JsonPropertyName("rlng")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<string>))]
-    public ReadOnlyCollection<string> RealLanguages { get; init; }
+    public IReadOnlyList<string> RealLanguages { get; init; }
 
     [JsonConstructor]
     internal ServerData()
@@ -44,7 +43,7 @@ public sealed class ServerData : IDofusData<int>
         Name = string.Empty;
         Description = string.Empty;
         Language = string.Empty;
-        RealLanguages = ReadOnlyCollection<string>.Empty;
+        RealLanguages = [];
     }
 
     public ServerPopulationData? GetServerPopulationData()

@@ -6,7 +6,7 @@ internal sealed class ItemsStatsCustomData : IDofusData
 {
 
     [JsonPropertyName("CISTA")]
-    public List<ItemStatsCustomData> ItemsStatsCustom { get; init; }
+    public IReadOnlyList<ItemStatsCustomData> ItemsStatsCustom { get; init; }
 
     [JsonConstructor]
     internal ItemsStatsCustomData()

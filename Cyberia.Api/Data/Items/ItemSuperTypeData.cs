@@ -15,11 +15,11 @@ public sealed class ItemSuperTypeData : IDofusData<int>
     internal bool V { get; init; }
 
     [JsonIgnore]
-    public ReadOnlyCollection<int> SlotsId { get; internal set; }
+    public IReadOnlyList<int> SlotsId { get; internal set; }
 
     [JsonConstructor]
     internal ItemSuperTypeData()
     {
-        SlotsId = ReadOnlyCollection<int>.Empty;
+        SlotsId = [];
     }
 }

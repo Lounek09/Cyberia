@@ -18,13 +18,12 @@ public class PetData : IDofusData<int>
     public TimeSpan? MaxFoodInterval { get; init; }
 
     [JsonPropertyName("f")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<PetFoodsData>))]
-    public ReadOnlyCollection<PetFoodsData> Foods { get; init; }
+    public IReadOnlyList<PetFoodsData> Foods { get; init; }
 
     [JsonConstructor]
     internal PetData()
     {
-        Foods = ReadOnlyCollection<PetFoodsData>.Empty;
+        Foods = [];
     }
 
     public ItemData? GetItemData()

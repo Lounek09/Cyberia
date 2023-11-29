@@ -11,13 +11,12 @@ internal sealed class AlignmentAttackData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<bool>))]
-    public ReadOnlyCollection<bool> Values { get; init; }
+    public IReadOnlyList<bool> Values { get; init; }
 
     [JsonConstructor]
     internal AlignmentAttackData()
     {
-        Values = ReadOnlyCollection<bool>.Empty;
+        Values = [];
     }
 
     public bool CanAttack(int targetAlignmentId)

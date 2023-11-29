@@ -19,13 +19,13 @@ public sealed class TimeZoneData : IDofusData
     public int YearLess { get; set; }
 
     [JsonPropertyName("T.m")]
-    [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, string>))]
-    public ReadOnlyDictionary<int, string> StartDayOfMonths { get; set; }
+    [JsonConverter(typeof(DictionaryFromArrayConverter<int, string>))]
+    public IReadOnlyDictionary<int, string> StartDayOfMonths { get; set; }
 
     [JsonConstructor]
     internal TimeZoneData()
     {
-        StartDayOfMonths = ReadOnlyDictionary<int, string>.Empty;
+        StartDayOfMonths = new Dictionary<int, string>();
     }
 
     internal static TimeZoneData Load()

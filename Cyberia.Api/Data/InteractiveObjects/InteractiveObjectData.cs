@@ -18,8 +18,7 @@ public sealed class InteractiveObjectData : IDofusData<int>
     public int Type { get; init; }
 
     [JsonPropertyName("sk")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> SkillsId { get; init; }
+    public IReadOnlyList<int> SkillsId { get; init; }
 
     [JsonIgnore]
     public int GfxId { get; internal set; }
@@ -28,7 +27,7 @@ public sealed class InteractiveObjectData : IDofusData<int>
     internal InteractiveObjectData()
     {
         Name = string.Empty;
-        SkillsId = ReadOnlyCollection<int>.Empty;
+        SkillsId = [];
     }
 
     public IEnumerable<SkillData> GetSkillsData()

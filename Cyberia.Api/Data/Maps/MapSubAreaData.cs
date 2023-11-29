@@ -18,19 +18,17 @@ public sealed class MapSubAreaData : IDofusData<int>
     public int MapAreaId { get; init; }
 
     [JsonPropertyName("m")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int?>))]
-    public ReadOnlyCollection<int?> FightAudioMusicId { get; init; }
+    public IReadOnlyList<int?> FightAudioMusicId { get; init; }
 
     [JsonPropertyName("v")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> NearMapSubAreasId { get; init; }
+    public IReadOnlyList<int> NearMapSubAreasId { get; init; }
 
     [JsonConstructor]
     internal MapSubAreaData()
     {
         Name = string.Empty;
-        FightAudioMusicId = ReadOnlyCollection<int?>.Empty;
-        NearMapSubAreasId = ReadOnlyCollection<int>.Empty;
+        FightAudioMusicId = [];
+        NearMapSubAreasId = [];
     }
 
     public MapAreaData? GetMapAreaData()

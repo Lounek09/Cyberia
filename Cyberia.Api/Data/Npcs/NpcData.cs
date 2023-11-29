@@ -14,14 +14,13 @@ public sealed class NpcData : IDofusData<int>
     public string Name { get; init; }
 
     [JsonPropertyName("a")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> NpcActionsId { get; init; }
+    public IReadOnlyList<int> NpcActionsId { get; init; }
 
     [JsonConstructor]
     internal NpcData()
     {
         Name = string.Empty;
-        NpcActionsId = ReadOnlyCollection<int>.Empty;
+        NpcActionsId = [];
     }
 
     public IEnumerable<NpcActionData> GetNpcActionsData()

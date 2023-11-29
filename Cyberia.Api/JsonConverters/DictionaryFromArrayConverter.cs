@@ -4,20 +4,19 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class ReadOnlyDictionaryFromArrayConverter<TKey, TValue> : JsonConverter<ReadOnlyDictionary<TKey, TValue>>
+public sealed class DictionaryFromArrayConverter<TKey, TValue> : JsonConverter<IReadOnlyDictionary<TKey, TValue>>
     where TKey : notnull
 {
-    public override ReadOnlyDictionary<TKey, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IReadOnlyDictionary<TKey, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
         return elements.ToDictionary(
             x => JsonSerializer.Deserialize<TKey>(x[0].GetRawText(), options)!,
-            x => JsonSerializer.Deserialize<TValue>(x[1].GetRawText(), options)!)
-            .AsReadOnly();
+            x => JsonSerializer.Deserialize<TValue>(x[1].GetRawText(), options)!);
     }
 
-    public override void Write(Utf8JsonWriter writer, ReadOnlyDictionary<TKey, TValue> value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, IReadOnlyDictionary<TKey, TValue> value, JsonSerializerOptions options)
     {
         writer.WriteStartArray();
 

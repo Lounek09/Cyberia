@@ -16,25 +16,22 @@ public sealed class SpellIconData : IDofusData
     public int UpGfxId { get; init; }
 
     [JsonPropertyName("pc")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> PrintColors { get; init; }
+    public IReadOnlyList<int> PrintColors { get; init; }
 
     [JsonPropertyName("b")]
     public int BackgroundGfxId { get; init; }
 
     [JsonPropertyName("fc")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> FrameColors { get; init; }
+    public IReadOnlyList<int> FrameColors { get; init; }
 
     [JsonPropertyName("bc")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> BackgroundColors { get; init; }
+    public IReadOnlyList<int> BackgroundColors { get; init; }
 
     [JsonConstructor]
     internal SpellIconData()
     {
-        PrintColors = ReadOnlyCollection<int>.Empty;
-        FrameColors = ReadOnlyCollection<int>.Empty;
-        BackgroundColors = ReadOnlyCollection<int>.Empty;
+        PrintColors = [];
+        FrameColors = [];
+        BackgroundColors = [];
     }
 }

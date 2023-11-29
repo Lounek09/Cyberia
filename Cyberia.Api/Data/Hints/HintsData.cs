@@ -15,14 +15,13 @@ public sealed class HintsData : IDofusData
     public FrozenDictionary<int, HintCategoryData> HintCategories { get; init; }
 
     [JsonPropertyName("HI")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<HintData>))]
-    public ReadOnlyCollection<HintData> Hints { get; init; }
+    public IReadOnlyList<HintData> Hints { get; init; }
 
     [JsonConstructor]
     internal HintsData()
     {
         HintCategories = FrozenDictionary<int, HintCategoryData>.Empty;
-        Hints = ReadOnlyCollection<HintData>.Empty;
+        Hints = [];
     }
 
     internal static HintsData Load()

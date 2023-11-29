@@ -20,23 +20,18 @@ public sealed class IncarnationData : IDofusData<int>
     public int GfxId { get; init; }
 
     [JsonPropertyName("s")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> SpellsId { get; init; }
+    public IReadOnlyList<int> SpellsId { get; init; }
 
     [JsonPropertyName("e")]
-    [JsonInclude]
     [JsonConverter(typeof(ItemEffectListConverter))]
-    private List<IEffect> _effectsFromLeveling;
-
-    [JsonIgnore]
-    public ReadOnlyCollection<IEffect> EffectsFromLeveling => _effectsFromLeveling.AsReadOnly();
+    private IReadOnlyList<IEffect> EffectsFromLeveling { get; init; }
 
     [JsonConstructor]
     internal IncarnationData()
     {
         Name = string.Empty;
-        SpellsId = ReadOnlyCollection<int>.Empty;
-        _effectsFromLeveling = [];
+        SpellsId = [];
+        EffectsFromLeveling = [];
     }
 
     public async Task<string> GetImgPath()
@@ -68,7 +63,7 @@ public sealed class IncarnationData : IDofusData<int>
         }
     }
 
-    public ReadOnlyCollection<IEffect> GetEffects()
+    public IReadOnlyList<IEffect> GetEffects()
     {
         var itemData = GetItemData();
         if (itemData is not null)
@@ -77,7 +72,7 @@ public sealed class IncarnationData : IDofusData<int>
             if (itemStatsData is not null)
             {
                 var effects = itemStatsData.Effects.Where(x => x is not ExchangeableEffect).ToList();
-                effects.AddRange(_effectsFromLeveling);
+                effects.AddRange(EffectsFromLeveling);
 
                 return effects.AsReadOnly();
             }

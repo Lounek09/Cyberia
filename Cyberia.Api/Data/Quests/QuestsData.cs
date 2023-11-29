@@ -49,7 +49,7 @@ public sealed class QuestsData : IDofusData
                 questData.Repeatable = questCustomData.Repeatable;
                 questData.Account = questCustomData.Account;
                 questData.HasDungeon = questCustomData.HasDungeon;
-                questData.QuestStepsId = questCustomData.QuestStepsId.AsReadOnly();
+                questData.QuestStepsId = questCustomData.QuestStepsId;
             }
         }
 
@@ -60,7 +60,7 @@ public sealed class QuestsData : IDofusData
             {
                 questStepData.DialogQuestionId = questStepCustomData.DialogQuestionId;
                 questStepData.OptimalLevel = questStepCustomData.OptimalLevel;
-                questStepData.QuestObjectivesId = questStepCustomData.QuestObjectivesId.AsReadOnly();
+                questStepData.QuestObjectivesId = questStepCustomData.QuestObjectivesId;
             }
         }
 

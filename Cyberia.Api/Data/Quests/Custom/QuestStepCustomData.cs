@@ -14,7 +14,7 @@ internal sealed class QuestStepCustomData : IDofusData<int>
     public int OptimalLevel { get; init; }
 
     [JsonPropertyName("o")]
-    public List<int> QuestObjectivesId { get; init; }
+    public IReadOnlyList<int> QuestObjectivesId { get; init; }
 
     [JsonConstructor]
     internal QuestStepCustomData()

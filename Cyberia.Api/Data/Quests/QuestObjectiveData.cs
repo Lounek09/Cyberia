@@ -14,8 +14,8 @@ public sealed class QuestObjectiveData : IDofusData<int>
     public int QuestObjectiveTypeId { get; init; }
 
     [JsonPropertyName("p")]
-    [JsonConverter(typeof(ReadOnlyToStringCollectionConverter))]
-    public ReadOnlyCollection<string> Parameters { get; init; }
+    [JsonConverter(typeof(ToStringListConverter))]
+    public IReadOnlyList<string> Parameters { get; init; }
 
     [JsonPropertyName("x")]
     public int? XCoord { get; init; }
@@ -26,7 +26,7 @@ public sealed class QuestObjectiveData : IDofusData<int>
     [JsonConstructor]
     internal QuestObjectiveData()
     {
-        Parameters = ReadOnlyCollection<string>.Empty;
+        Parameters = [];
     }
 
     public QuestObjectiveTypeData? GetQuestObjectiveTypeData()

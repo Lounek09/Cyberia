@@ -12,13 +12,13 @@ public sealed class CraftData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, int>))]
-    public ReadOnlyDictionary<int, int> Ingredients { get; init; }
+    [JsonConverter(typeof(DictionaryFromArrayConverter<int, int>))]
+    public IReadOnlyDictionary<int, int> Ingredients { get; init; }
 
     [JsonConstructor]
     internal CraftData()
     {
-        Ingredients = ReadOnlyDictionary<int, int>.Empty;
+        Ingredients = new Dictionary<int, int>();
     }
 
     public ItemData? GetItemData()

@@ -30,7 +30,7 @@ public sealed class ItemSetsData : IDofusData
             var itemSetData = data.GetItemSetDataById(itemSetCustomData.Id);
             if (itemSetData is not null)
             {
-                itemSetData.Effects = itemSetCustomData.Effects.AsReadOnly();
+                itemSetData.Effects = itemSetCustomData.Effects;
             }
         }
 

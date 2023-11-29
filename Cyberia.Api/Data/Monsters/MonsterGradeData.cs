@@ -11,8 +11,7 @@ public sealed class MonsterGradeData : IDofusData
     public int Level { get; init; }
 
     [JsonPropertyName("r")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> Resistances { get; init; }
+    public IReadOnlyList<int> Resistances { get; init; }
 
     [JsonPropertyName("lp")]
     public int? LifePoint { get; init; }
@@ -26,7 +25,7 @@ public sealed class MonsterGradeData : IDofusData
     [JsonConstructor]
     internal MonsterGradeData()
     {
-        Resistances = ReadOnlyCollection<int>.Empty;
+        Resistances = [];
     }
 
     public int GetNeutralResistance()

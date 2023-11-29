@@ -10,21 +10,19 @@ public sealed class PvpData : IDofusData
     private const string FILE_NAME = "pvp.json";
 
     [JsonPropertyName("PP.hp")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> HonnorPointThresholds { get; init; }
+    public IReadOnlyList<int> HonnorPointThresholds { get; init; }
 
     [JsonPropertyName("PP.maxdp")]
     public int MaxDishonourPoint { get; init; }
 
     [JsonPropertyName("PP.grds")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<IEnumerable<PvpGradeData>>))]
-    public ReadOnlyCollection<IEnumerable<PvpGradeData>> PvpGrades { get; init; }
+    public IReadOnlyList<IEnumerable<PvpGradeData>> PvpGrades { get; init; }
 
     [JsonConstructor]
     internal PvpData()
     {
-        HonnorPointThresholds = ReadOnlyCollection<int>.Empty;
-        PvpGrades = ReadOnlyCollection<IEnumerable<PvpGradeData>>.Empty;
+        HonnorPointThresholds = [];
+        PvpGrades = [];
     }
 
     internal static PvpData Load()

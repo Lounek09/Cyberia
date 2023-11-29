@@ -21,13 +21,13 @@ public sealed class QuestData : IDofusData<int>
     public bool HasDungeon { get; internal set; }
 
     [JsonIgnore]
-    public ReadOnlyCollection<int> QuestStepsId { get; internal set; }
+    public IReadOnlyList<int> QuestStepsId { get; internal set; }
 
     [JsonConstructor]
     internal QuestData()
     {
         Name = string.Empty;
-        QuestStepsId = ReadOnlyCollection<int>.Empty;
+        QuestStepsId = [];
     }
 
     public IEnumerable<QuestStepData> GetQuestStepsData()

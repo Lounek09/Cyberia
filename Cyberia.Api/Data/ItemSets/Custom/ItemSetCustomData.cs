@@ -12,7 +12,7 @@ internal sealed class ItemSetCustomData : IDofusData<int>
 
     [JsonPropertyName("e")]
     [JsonConverter(typeof(ItemEffectsListConverter))]
-    public List<IEnumerable<IEffect>> Effects { get; init; }
+    public IReadOnlyList<IReadOnlyList<IEffect>> Effects { get; init; }
 
     [JsonConstructor]
     internal ItemSetCustomData()

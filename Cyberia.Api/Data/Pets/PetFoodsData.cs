@@ -15,23 +15,21 @@ public class PetFoodsData : IDofusData
     public IEffect? Effect { get; init; }
 
     [JsonPropertyName("i")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> ItemsId { get; init; }
+    public IReadOnlyList<int> ItemsId { get; init; }
 
     [JsonPropertyName("it")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> ItemTypesId { get; init; }
+    public IReadOnlyList<int> ItemTypesId { get; init; }
 
     [JsonPropertyName("m")]
-    [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, int>))]
-    public ReadOnlyDictionary<int, int> MonstersIdQuantities { get; init; }
+    [JsonConverter(typeof(DictionaryFromArrayConverter<int, int>))]
+    public IReadOnlyDictionary<int, int> MonstersIdQuantities { get; init; }
 
     [JsonConstructor]
     internal PetFoodsData()
     {
-        ItemsId = ReadOnlyCollection<int>.Empty;
-        ItemTypesId = ReadOnlyCollection<int>.Empty;
-        MonstersIdQuantities = ReadOnlyDictionary<int, int>.Empty;
+        ItemsId = [];
+        ItemTypesId = [];
+        MonstersIdQuantities = new Dictionary<int, int>();
     }
 
     public IEnumerable<ItemData> GetItemsData()

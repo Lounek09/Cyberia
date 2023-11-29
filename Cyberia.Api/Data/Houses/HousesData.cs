@@ -21,15 +21,14 @@ public sealed class HousesData : IDofusData
     public FrozenDictionary<int, HouseMapData> HouseMaps { get; init; }
 
     [JsonPropertyName("H.ids")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> HousesIndoorSkillsId { get; init; }
+    public IReadOnlyList<int> HousesIndoorSkillsId { get; init; }
 
     [JsonConstructor]
     internal HousesData()
     {
         Houses = FrozenDictionary<int, HouseData>.Empty;
         HouseMaps = FrozenDictionary<int, HouseMapData>.Empty;
-        HousesIndoorSkillsId = ReadOnlyCollection<int>.Empty;
+        HousesIndoorSkillsId = [];
     }
 
     internal static HousesData Load()

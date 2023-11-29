@@ -29,10 +29,10 @@ public sealed class QuestStepData : IDofusData<int>
     public int OptimalLevel { get; internal set; }
 
     [JsonIgnore]
-    public ReadOnlyCollection<int> QuestObjectivesId { get; internal set; }
+    public IReadOnlyList<int> QuestObjectivesId { get; internal set; }
 
     [JsonIgnore]
-    public ReadOnlyCollection<IQuestObjective> QuestObjectives { get; internal set; }
+    public IReadOnlyList<IQuestObjective> QuestObjectives { get; internal set; }
 
     [JsonConstructor]
     internal QuestStepData()
@@ -40,8 +40,8 @@ public sealed class QuestStepData : IDofusData<int>
         Name = string.Empty;
         Description = string.Empty;
         RewardsData = new();
-        QuestObjectivesId = ReadOnlyCollection<int>.Empty;
-        QuestObjectives = ReadOnlyCollection<IQuestObjective>.Empty;
+        QuestObjectivesId = [];
+        QuestObjectives = [];
     }
 
     public bool HasReward()

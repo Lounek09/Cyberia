@@ -30,8 +30,7 @@ public sealed class SkillData : IDofusData<int>
     public int ItemTypeIdForgemagus { get; init; }
 
     [JsonPropertyName("cl")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> CraftsId { get; init; }
+    public IReadOnlyList<int> CraftsId { get; init; }
 
     [JsonPropertyName("i")]
     public int HarvestedItemId { get; init; }
@@ -41,7 +40,7 @@ public sealed class SkillData : IDofusData<int>
     {
         Description = string.Empty;
         Criterion = string.Empty;
-        CraftsId = ReadOnlyCollection<int>.Empty;
+        CraftsId = [];
     }
 
     public JobData? GetJobData()

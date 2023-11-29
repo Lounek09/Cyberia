@@ -17,18 +17,17 @@ public sealed class ItemSetData : IDofusData<int>
     public string Name { get; init; }
 
     [JsonPropertyName("i")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> ItemsId { get; init; }
+    public IReadOnlyList<int> ItemsId { get; init; }
 
     [JsonIgnore]
-    public ReadOnlyCollection<IEnumerable<IEffect>> Effects { get; internal set; }
+    public IReadOnlyList<IReadOnlyList<IEffect>> Effects { get; internal set; }
 
     [JsonConstructor]
     internal ItemSetData()
     {
         Name = string.Empty;
-        ItemsId = ReadOnlyCollection<int>.Empty;
-        Effects = ReadOnlyCollection<IEnumerable<IEffect>>.Empty;
+        ItemsId = [];
+        Effects = [];
     }
 
     public IEnumerable<ItemData> GetItemsData()

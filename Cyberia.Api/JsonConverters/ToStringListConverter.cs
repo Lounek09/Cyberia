@@ -4,15 +4,15 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class ReadOnlyToStringCollectionConverter : JsonConverter<ReadOnlyCollection<string>>
+public sealed class ToStringListConverter : JsonConverter<IReadOnlyList<string>>
 {
-    public override ReadOnlyCollection<string> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IReadOnlyList<string> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
-        return elements.Select(x => x.ToString()).ToList().AsReadOnly();
+        return elements.Select(x => x.ToString()).ToList();
     }
 
-    public override void Write(Utf8JsonWriter writer, ReadOnlyCollection<string> values, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, IReadOnlyList<string> values, JsonSerializerOptions options)
     {
         writer.WriteStartArray();
 

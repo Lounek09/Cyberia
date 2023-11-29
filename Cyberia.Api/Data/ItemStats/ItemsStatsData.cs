@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api.Data.ItemStats.Custom;
+using Cyberia.Api.Factories.Effects;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -33,7 +34,7 @@ public sealed class ItemsStatsData : IDofusData
             var itemStatsData = data.ItemsStatsCore.Find(x => x.Id == itemStatsCustomData.Id);
             if (itemStatsData is not null)
             {
-                itemStatsData.EffectsCore.AddRange(itemStatsCustomData.Effects);
+                ((List<IEffect>)itemStatsData.Effects).AddRange(itemStatsCustomData.Effects);
                 continue;
             }
 

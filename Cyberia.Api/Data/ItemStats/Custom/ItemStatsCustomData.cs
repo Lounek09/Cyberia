@@ -12,7 +12,7 @@ internal sealed class ItemStatsCustomData : IDofusData<int>
 
     [JsonPropertyName("v")]
     [JsonConverter(typeof(ItemEffectListConverter))]
-    public List<IEffect> Effects { get; init; }
+    public IReadOnlyList<IEffect> Effects { get; init; }
 
     [JsonConstructor]
     internal ItemStatsCustomData()
@@ -25,7 +25,7 @@ internal sealed class ItemStatsCustomData : IDofusData<int>
         return new()
         {
             Id = Id,
-            EffectsCore = Effects
+            Effects = Effects
         };
     }
 }

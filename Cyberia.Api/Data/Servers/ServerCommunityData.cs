@@ -21,13 +21,12 @@ public sealed class ServerCommunityData : IDofusData<int>
     internal int Id2 { get; init; }
 
     [JsonPropertyName("c")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<string>))]
-    public ReadOnlyCollection<string> Countries { get; init; }
+    public IReadOnlyList<string> Countries { get; init; }
 
     [JsonConstructor]
     internal ServerCommunityData()
     {
         Name = string.Empty;
-        Countries = ReadOnlyCollection<string>.Empty;
+        Countries = [];
     }
 }

@@ -11,8 +11,7 @@ public sealed class AudioEnvironmentData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("bg")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> BackgroundAudioEffectIds { get; init; }
+    public IReadOnlyList<int> BackgroundAudioEffectIds { get; init; }
 
     [JsonPropertyName("mind")]
     public int MinNoiseDelay { get; init; }
@@ -21,8 +20,7 @@ public sealed class AudioEnvironmentData : IDofusData<int>
     public int MaxNoiseDelay { get; init; }
 
     [JsonPropertyName("n")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> NoiseAudioEffectIds { get; init; }
+    public IReadOnlyList<int> NoiseAudioEffectIds { get; init; }
 
     [JsonIgnore]
     public string Name { get; internal set; }
@@ -30,8 +28,8 @@ public sealed class AudioEnvironmentData : IDofusData<int>
     [JsonConstructor]
     internal AudioEnvironmentData()
     {
-        BackgroundAudioEffectIds = ReadOnlyCollection<int>.Empty;
-        NoiseAudioEffectIds = ReadOnlyCollection<int>.Empty;
+        BackgroundAudioEffectIds = [];
+        NoiseAudioEffectIds = [];
         Name = string.Empty;
     }
 

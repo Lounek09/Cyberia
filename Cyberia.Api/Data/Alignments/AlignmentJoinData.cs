@@ -11,13 +11,12 @@ internal sealed class AlignmentJoinData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<bool>))]
-    public ReadOnlyCollection<bool> Values { get; init; }
+    public IReadOnlyList<bool> Values { get; init; }
 
     [JsonConstructor]
     internal AlignmentJoinData()
     {
-        Values = ReadOnlyCollection<bool>.Empty;
+        Values = [];
     }
 
     public bool CanJoin(int targetAlignmentId)

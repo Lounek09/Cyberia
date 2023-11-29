@@ -32,8 +32,7 @@ public sealed class BreedData : IDofusData<int>
     public bool Diabolical { get; init; }
 
     [JsonPropertyName("s")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<int>))]
-    public ReadOnlyCollection<int> SpellsId { get; init; }
+    public IReadOnlyList<int> SpellsId { get; init; }
 
     [JsonPropertyName("pt")]
     public string TemporisPassiveName { get; init; }
@@ -83,7 +82,7 @@ public sealed class BreedData : IDofusData<int>
         LongName = string.Empty;
         Description = string.Empty;
         ShortDescription = string.Empty;
-        SpellsId = ReadOnlyCollection<int>.Empty;
+        SpellsId = [];
         TemporisPassiveName = string.Empty;
         TemporisPassiveDescription = string.Empty;
         CloseCombatInfos = [];

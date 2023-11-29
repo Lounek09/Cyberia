@@ -11,13 +11,12 @@ internal sealed class AlignmentViewPvpGainData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    [JsonConverter(typeof(ReadOnlyCollectionConverter<bool>))]
-    public ReadOnlyCollection<bool> Values { get; init; }
+    public IReadOnlyList<bool> Values { get; init; }
 
     [JsonConstructor]
     internal AlignmentViewPvpGainData()
     {
-        Values = ReadOnlyCollection<bool>.Empty;
+        Values = [];
     }
 
     public bool CanViewPvpGain(int targetAlignmentId)

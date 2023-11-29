@@ -6,14 +6,14 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class ItemEffectListConverter : JsonConverter<List<IEffect>>
+public sealed class ItemEffectListConverter : JsonConverter<IReadOnlyList<IEffect>>
 {
-    public override List<IEffect> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IReadOnlyList<IEffect> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         return EffectFactory.GetEffectsParseFromItem(reader.GetString() ?? "").ToList();
     }
 
-    public override void Write(Utf8JsonWriter writer, List<IEffect> values, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, IReadOnlyList<IEffect> values, JsonSerializerOptions options)
     {
         throw new NotImplementedException();
     }
