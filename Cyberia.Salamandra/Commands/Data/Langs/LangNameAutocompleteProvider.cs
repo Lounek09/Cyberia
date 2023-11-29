@@ -28,7 +28,7 @@ public sealed class LangNameAutocompleteProvider : AutocompleteProvider
             return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
         }
 
-        HashSet<DiscordAutoCompleteChoice> choices = [];
+        List<DiscordAutoCompleteChoice> choices = [];
 
         var type = Enum.Parse<LangType>(typeStr);
         var language = Enum.Parse<LangLanguage>(languageStr);

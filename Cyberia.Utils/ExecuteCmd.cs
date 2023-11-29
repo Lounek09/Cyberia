@@ -8,7 +8,7 @@ public static class ExecuteCmd
     {
         try
         {
-            using Process process = new()
+            using var process = new Process()
             {
                 StartInfo = new ProcessStartInfo(command, args)
                 {

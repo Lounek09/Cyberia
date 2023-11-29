@@ -92,7 +92,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
 
     private DiscordSelectComponent Select1Builder()
     {
-        HashSet<DiscordSelectComponentOption> options = [];
+        List<DiscordSelectComponentOption> options = [];
 
         var types = Enum.GetValues<LangType>();
         for (var i = 0; i < types.Length && i < 25; i++)
@@ -105,7 +105,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
 
     private DiscordSelectComponent Select2Builder()
     {
-        HashSet<DiscordSelectComponentOption> options = [];
+        List<DiscordSelectComponentOption> options = [];
 
         var languages = Enum.GetValues<LangLanguage>();
         for (var i = 0; i < languages.Length && i < 25; i++)

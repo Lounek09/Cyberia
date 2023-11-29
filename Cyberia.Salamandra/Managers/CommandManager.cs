@@ -38,7 +38,7 @@ public static class CommandManager
             case NullReferenceException:
                 Log.Error(e.Exception, "Slash commands failed to register on startup");
 
-                DiscordEmbedBuilder embed = new()
+                var embed = new DiscordEmbedBuilder()
                 {
                     Title = "Slash commands failed to register on startup",
                     Description = $"""
@@ -69,7 +69,7 @@ public static class CommandManager
                         .ToArray());
                 }
 
-                embed = new()
+                embed = new DiscordEmbedBuilder()
                 {
                     Title = "An error occurred when executing a slash command",
                     Description = $"""

@@ -22,15 +22,15 @@ public static class CytrusManager
 
     public static async Task SendCytrusManifestDiffMessageAsync(this DiscordChannel channel, string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
     {
-        HttpClient httpClient = new();
-        DiscordMessageBuilder message = new();
+        var httpClient = new HttpClient();
+        var message = new DiscordMessageBuilder();
 
         var url1 = CytrusData.GetGameManifestUrl(game, platform, oldRelease, oldVersion);
         Manifest client1;
         try
         {
             var metafile = await httpClient.GetByteArrayAsync(url1);
-            ByteBuffer buffer = new(metafile);
+            var buffer = new ByteBuffer(metafile);
             client1 = Manifest.GetRootAsManifest(buffer);
         }
         catch (HttpRequestException)
@@ -44,7 +44,7 @@ public static class CytrusManager
         try
         {
             var metafile = await httpClient.GetByteArrayAsync(url2);
-            ByteBuffer buffer = new(metafile);
+            var buffer = new ByteBuffer(metafile);
             client2 = Manifest.GetRootAsManifest(buffer);
         }
         catch (HttpRequestException)
@@ -66,7 +66,7 @@ public static class CytrusManager
         }
         else
         {
-            using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(diff));
             await channel.SendMessage(message.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
         }
     }

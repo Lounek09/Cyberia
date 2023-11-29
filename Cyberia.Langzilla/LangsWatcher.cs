@@ -36,7 +36,7 @@ public static class LangsWatcher
     {
         foreach (var language in Enum.GetValues<LangLanguage>())
         {
-            Timer timer = new(async _ => await CheckAsync(type, language), null, dueTime, interval);
+            var timer = new Timer(async _ => await CheckAsync(type, language), null, dueTime, interval);
 
             _timers.AddOrUpdate($"{type}_{language}", timer, (key, oldValue) => oldValue = timer);
         }
@@ -97,9 +97,9 @@ public sealed class CheckLangFinishedEventArgs : EventArgs
 {
     public LangType Type { get; init; }
     public LangLanguage Language { get; init; }
-    public List<LangData> UpdatedLangsData { get; init; }
+    public IReadOnlyCollection<LangData> UpdatedLangsData { get; init; }
 
-    public CheckLangFinishedEventArgs(LangType type, LangLanguage language, List<LangData> updatedLangsData)
+    public CheckLangFinishedEventArgs(LangType type, LangLanguage language, IReadOnlyCollection<LangData> updatedLangsData)
     {
         Type = type;
         Language = language;

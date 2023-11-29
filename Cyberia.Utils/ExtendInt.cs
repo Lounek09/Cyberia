@@ -6,7 +6,7 @@ public static class ExtendInt
 {
     public static string ToStringThousandSeparator(this int value)
     {
-        NumberFormatInfo numberFormatInfo = new()
+        var numberFormatInfo = new NumberFormatInfo()
         {
             NumberGroupSeparator = " "
         };

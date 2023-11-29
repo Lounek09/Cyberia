@@ -132,12 +132,12 @@ public sealed class LangsCommandModule : ApplicationCommandModule
 
                     var langDataModel = langDataCollectionModel.GetLangByName(langData.Name);
 
-                    DiscordMessageBuilder message = new()
+                    var message = new DiscordMessageBuilder()
                     {
-                        Content = $"Lang {langData.Name}{(langDataModel is null ? $", non présent dans les langs {typeModel}" : "")}"
+                        Content = $"Lang {langData.Name}{(langDataModel is null ? $", non présent dans les langs {typeModel}" : string.Empty)}"
                     };
 
-                    var diff = langDataModel is null ? "" : langData.GenerateDiff(langDataModel);
+                    var diff = langDataModel is null ? string.Empty : langData.GenerateDiff(langDataModel);
                     if (string.IsNullOrEmpty(diff))
                     {
                         message.Content += $"\n{Formatter.BlockCode("Aucune différence")}";
@@ -145,7 +145,7 @@ public sealed class LangsCommandModule : ApplicationCommandModule
                     }
                     else
                     {
-                        using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
+                        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(diff));
                         await thread.SendMessageAsync(message.AddFile($"{langData.Name}.as", stream));
                     }
 

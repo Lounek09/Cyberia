@@ -133,7 +133,7 @@ public sealed class LangData
             using var response = await LangsWatcher.HttpRetryPolicy.ExecuteAsync(() => LangsWatcher.HttpClient.GetAsync(fileUrl));
             response.EnsureSuccessStatusCode();
 
-            using FileStream fileStream = new(GetFilePath(), FileMode.Create);
+            using var fileStream = new FileStream(GetFilePath(), FileMode.Create);
             await response.Content.CopyToAsync(fileStream);
 
             return;

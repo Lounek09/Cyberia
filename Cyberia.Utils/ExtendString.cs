@@ -77,7 +77,7 @@ public static class ExtendString
 
     public static string NormalizeCustom(this string value)
     {
-        StringBuilder output = new();
+        var output = new StringBuilder();
 
         for (var pos = 0; pos < value.Length; pos++)
         {

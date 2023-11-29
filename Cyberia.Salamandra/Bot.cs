@@ -46,7 +46,7 @@ public static class Bot
     {
         CommandManager.RegisterCommands();
 
-        DiscordActivity activity = new("Dofus Retro", ActivityType.Playing);
+        var activity = new DiscordActivity("Dofus Retro", ActivityType.Playing);
         await Client.ConnectAsync(activity);
     }
 }

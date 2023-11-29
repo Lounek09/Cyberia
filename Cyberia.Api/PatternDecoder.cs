@@ -51,7 +51,7 @@ public static class PatternDecoder
 
     public static string Description(string value, params string[] parameters)
     {
-        StringBuilder result = new(value);
+        var result = new StringBuilder(value);
 
         for (var i = 0; i < parameters.Length; i++)
         {

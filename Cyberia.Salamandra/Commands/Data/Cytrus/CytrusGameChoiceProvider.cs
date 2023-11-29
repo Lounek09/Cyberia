@@ -9,7 +9,7 @@ public sealed class CytrusGameChoiceProvider : IChoiceProvider
 {
     public Task<IEnumerable<DiscordApplicationCommandOptionChoice>> Provider()
     {
-        HashSet<DiscordApplicationCommandOptionChoice> choices = [];
+        List<DiscordApplicationCommandOptionChoice> choices = [];
 
         foreach (var game in CytrusWatcher.Data.Games)
         {

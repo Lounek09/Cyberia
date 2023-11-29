@@ -30,7 +30,7 @@ internal static class Flare
             return Path.Join("flare", "flare32");
         }
 
-        PlatformNotSupportedException exception = new();
+        var exception = new PlatformNotSupportedException();
         Log.Fatal(exception, "Flare is only available in Windows or Linux (it's false but fuck mac)");
         throw exception;
     }

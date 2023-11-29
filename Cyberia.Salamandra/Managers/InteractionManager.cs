@@ -46,7 +46,7 @@ public static partial class InteractionManager
 
     public static string ComponentPacketBuilder(string header, int version, params object[] parameters)
     {
-        StringBuilder packet = new();
+        var packet = new StringBuilder();
 
         packet.Append(header);
         packet.Append(PACKET_PARAMETER_SEPARATOR);
@@ -73,7 +73,7 @@ public static partial class InteractionManager
             return;
         }
 
-        DiscordInteractionResponseBuilder response = new();
+        var response = new DiscordInteractionResponseBuilder();
 
         var decomposedPacket = (SelectComponentPacketRegex().IsMatch(e.Id) ? e.Values[0] : e.Id).Split(PACKET_PARAMETER_SEPARATOR);
 

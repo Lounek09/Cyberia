@@ -124,7 +124,9 @@ public sealed class QuestsData : IDofusData
     {
         var questObjectiveData = GetQuestObjectiveDataById(id);
 
-        return questObjectiveData is null ? new(Resources.Unknown_Data, id.ToString()) : QuestObjectiveFactory.GetQuestObjective(questObjectiveData).GetDescription();
+        return questObjectiveData is null
+            ? new Description(Resources.Unknown_Data, id.ToString())
+            : QuestObjectiveFactory.GetQuestObjective(questObjectiveData).GetDescription();
     }
 
     public QuestObjectiveTypeData? GetQuestObjectiveTypeDataById(int id)

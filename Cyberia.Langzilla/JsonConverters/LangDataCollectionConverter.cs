@@ -9,23 +9,13 @@ internal class LangDataCollectionConverter : JsonConverter<LangDataCollection>
 {
     public override LangDataCollection? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType is not JsonTokenType.StartObject)
-        {
-            throw new JsonException("Invalid JSON format: expected start object token.");
-        }
-
-        LangDataCollection langDataCollection = new();
+        LangDataCollection langDataCollection = [];
 
         while (reader.Read())
         {
             if (reader.TokenType is JsonTokenType.EndObject)
             {
                 break;
-            }
-
-            if (reader.TokenType is not JsonTokenType.PropertyName)
-            {
-                throw new JsonException("Invalid JSON format: expected property name token.");
             }
 
             var propertyName = reader.GetString();

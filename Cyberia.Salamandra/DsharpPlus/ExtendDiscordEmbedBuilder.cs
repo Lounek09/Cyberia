@@ -18,7 +18,7 @@ public static class ExtendDiscordEmbedBuilder
 {
     public static DiscordEmbedBuilder AddFields(this DiscordEmbedBuilder embed, string name, IEnumerable<string> rows, bool inline = false)
     {
-        StringBuilder builder = new();
+        var builder = new StringBuilder();
 
         foreach (var row in rows)
         {
@@ -108,7 +108,7 @@ public static class ExtendDiscordEmbedBuilder
 
     public static DiscordEmbedBuilder AddWeaponInfosField(this DiscordEmbedBuilder embed, ItemWeaponData itemWeaponData, bool twoHanded, ItemTypeData? itemTypeData, bool inline = false)
     {
-        StringBuilder builder = new();
+        var builder = new StringBuilder();
 
         var actionPointCost = Formatter.Bold(itemWeaponData.ActionPointCost.ToString());
         builder.AppendFormat("PA : {0}\n", actionPointCost);
@@ -160,7 +160,7 @@ public static class ExtendDiscordEmbedBuilder
 
     public static DiscordEmbedBuilder AddPetField(this DiscordEmbedBuilder embed, PetData petData, bool inline = false)
     {
-        StringBuilder builder = new();
+        var builder = new StringBuilder();
 
         if (petData.MinFoodInterval.HasValue && petData.MaxFoodInterval.HasValue)
         {

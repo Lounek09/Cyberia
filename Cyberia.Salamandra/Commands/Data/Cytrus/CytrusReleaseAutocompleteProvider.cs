@@ -27,7 +27,7 @@ public sealed class CytrusReleaseAutocompleteProvider : AutocompleteProvider
             return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
         }
 
-        HashSet<DiscordAutoCompleteChoice> choices = [];
+        List<DiscordAutoCompleteChoice> choices = [];
 
         foreach (var release in CytrusWatcher.Data.Games[game].GetReleasesByPlatform(platform))
         {

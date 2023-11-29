@@ -146,7 +146,7 @@ public sealed class LangDataCollection : IReadOnlyCollection<LangData>
         {
             var langParameters = langInfo.Split(',');
 
-            LangData langData = new(langParameters[0], int.Parse(langParameters[2]), Type, Language);
+            var langData = new LangData(langParameters[0], int.Parse(langParameters[2]), Type, Language);
             if (!File.Exists(langData.GetFilePath()))
             {
                 await langData.DownloadExtractAndDiffAsync();

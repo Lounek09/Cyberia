@@ -73,7 +73,7 @@ public static partial class LangParser
 
     private static string ParseLines(string[] lines)
     {
-        StringBuilder json = new();
+        var json = new StringBuilder();
         var lastLineName = "";
         var lastLineHasId = false;
 
