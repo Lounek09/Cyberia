@@ -74,7 +74,7 @@ public static class CommandManager
                     Title = "An error occurred when executing a slash command",
                     Description = $"""
                         An error occurred when {Formatter.Sanitize(e.Context.User.Username)} ({e.Context.User.Mention}) used the {Formatter.Bold(e.Context.CommandName)} command.
-                        {(args.Length > 0 ? $"\n{Formatter.Bold("Arguments :")}\n{args}\n" : "")}
+                        {(args.Length > 0 ? $"\n{Formatter.Bold("Arguments :")}\n{args}\n" : string.Empty)}
                         {Formatter.Bold($"{e.Exception.GetType().Name} :")}
                         {Formatter.BlockCode($"{e.Exception.Message}\n{e.Exception.StackTrace}".WithMaxLength(3000))}
                         """,

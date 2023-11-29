@@ -80,7 +80,7 @@ public sealed class LangData
         var currentDecompiledFilePath = GetCurrentDecompiledFilePath();
         if (!File.Exists(currentDecompiledFilePath))
         {
-            return "";
+            return string.Empty;
         }
         var currentLines = File.ReadAllLines(currentDecompiledFilePath);
 

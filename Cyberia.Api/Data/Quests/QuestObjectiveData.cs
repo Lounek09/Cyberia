@@ -36,6 +36,8 @@ public sealed class QuestObjectiveData : IDofusData<int>
 
     public string GetCoordinate()
     {
-        return XCoord.HasValue && YCoord.HasValue ? $"[{XCoord}, {YCoord}]" : "";
+        return XCoord.HasValue && YCoord.HasValue
+            ? $"[{XCoord}, {YCoord}]"
+            : string.Empty;
     }
 }

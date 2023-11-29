@@ -64,8 +64,8 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Houses, "Agence immobilière")
-            .WithTitle($"{_houseData.Name}{(string.IsNullOrEmpty(_houseData.GetCoordinate()) ? "" : $" {_houseData.GetCoordinate()}")} ({_houseData.Id})")
-            .WithDescription(string.IsNullOrEmpty(_houseData.Description) ? "" : Formatter.Italic(_houseData.Description))
+            .WithTitle($"{_houseData.Name}{(string.IsNullOrEmpty(_houseData.GetCoordinate()) ? string.Empty : $" {_houseData.GetCoordinate()}")} ({_houseData.Id})")
+            .WithDescription(string.IsNullOrEmpty(_houseData.Description) ? string.Empty : Formatter.Italic(_houseData.Description))
             .AddField("Pièce :", _houseData.RoomNumber == 0 ? "?" : _houseData.RoomNumber.ToString(), true)
             .AddField("Coffre :", _houseData.ChestNumber == 0 ? "?" : _houseData.ChestNumber.ToString(), true)
             .AddField("Prix :", _houseData.Price == 0 ? "?" : _houseData.Price.ToStringThousandSeparator(), true);

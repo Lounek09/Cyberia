@@ -8,7 +8,7 @@ public static class ExtendString
     {
         if (value.Length == 0)
         {
-            return "";
+            return string.Empty;
         }
 
         if (value.Length > 1)

@@ -72,7 +72,7 @@ public sealed class MapData : IDofusData<int>
         var mapAreaData = mapSubAreaData?.GetMapAreaData();
         var mapAreaName = mapAreaData is null ? $"{nameof(MapAreaData)} {PatternDecoder.Description(Resources.Unknown_Data, mapSubAreaData?.MapAreaId ?? 0)}" : mapAreaData.Name;
 
-        return mapAreaName + (mapAreaName.Equals(mapSubAreaName) ? "" : $" ({mapSubAreaName})");
+        return mapAreaName + (mapAreaName.Equals(mapSubAreaName) ? string.Empty : $" ({mapSubAreaName})");
     }
 
     public HouseData? GetHouseData()

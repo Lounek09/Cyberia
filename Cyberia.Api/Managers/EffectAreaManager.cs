@@ -16,7 +16,7 @@ public readonly record struct EffectArea(int Id, int Size)
     {
         if (Id == EffectAreaManager.DefaultArea.Id)
         {
-            return "";
+            return string.Empty;
         }
 
         var effectAreaName = Resources.ResourceManager.GetString($"EffectArea.{Id}");

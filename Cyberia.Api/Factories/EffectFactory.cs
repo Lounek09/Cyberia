@@ -114,11 +114,11 @@ public static class EffectFactory
             var param1 = effect[1].ValueKind is JsonValueKind.Null ? 0 : effect[1].GetInt32();
             var param2 = effect[2].ValueKind is JsonValueKind.Null ? 0 : effect[2].GetInt32();
             var param3 = effect[3].ValueKind is JsonValueKind.Null ? 0 : effect[3].GetInt32();
-            var param4 = effect.GetArrayLength() > 7 && effect[7].ValueKind is not JsonValueKind.Null ? effect[7].GetString() ?? "" : "";
+            var param4 = effect.GetArrayLength() > 7 && effect[7].ValueKind is not JsonValueKind.Null ? effect[7].GetString() ?? string.Empty : string.Empty;
             var parameters = new EffectParameters(param1, param2, param3, param4);
             var duration = effect[4].ValueKind == JsonValueKind.Null ? 0 : effect[4].GetInt32();
             var probability = effect[5].ValueKind == JsonValueKind.Null ? 0 : effect[5].GetInt32();
-            var criteria = CriterionFactory.GetCriteria(effect[6].GetString() ?? "");
+            var criteria = CriterionFactory.GetCriteria(effect[6].GetString() ?? string.Empty);
 
             yield return GetEffect(id, parameters, duration, probability, criteria, effectAreas[i]);
         }
@@ -134,7 +134,7 @@ public static class EffectFactory
             var param1 = args.Length > 1 && !string.IsNullOrEmpty(args[1]) ? args[1].StartsWith('-') ? int.Parse(args[1]) : int.Parse(args[1], NumberStyles.HexNumber) : 0;
             var param2 = args.Length > 2 && !string.IsNullOrEmpty(args[2]) ? args[1].StartsWith('-') ? int.Parse(args[2]) : int.Parse(args[2], NumberStyles.HexNumber) : 0;
             var param3 = args.Length > 3 && !string.IsNullOrEmpty(args[3]) ? args[1].StartsWith('-') ? int.Parse(args[3]) : int.Parse(args[3], NumberStyles.HexNumber) : 0;
-            var param4 = args.Length > 4 ? args[4] : "";
+            var param4 = args.Length > 4 ? args[4] : string.Empty;
             var parameters = new EffectParameters(param1, param2, param3, param4);
 
             yield return GetEffect(id, parameters, 0, 0, [], EffectAreaManager.DefaultArea);

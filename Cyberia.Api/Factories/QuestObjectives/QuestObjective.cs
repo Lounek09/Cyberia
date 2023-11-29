@@ -13,7 +13,7 @@ public abstract record QuestObjective(QuestObjectiveData QuestObjectiveData)
         {
             var coordinate = QuestObjectiveData.GetCoordinate();
 
-            return new(questObjectiveTypeData.Description + (string.IsNullOrEmpty(coordinate) ? "" : $" - {coordinate}"), strParameters);
+            return new(questObjectiveTypeData.Description + (string.IsNullOrEmpty(coordinate) ? string.Empty : $" - {coordinate}"), strParameters);
         }
 
         Log.Warning("Unknown {QuestObjectiveTypeData} {QuestObjectiveId} ({QuestObjectiveParameters})",

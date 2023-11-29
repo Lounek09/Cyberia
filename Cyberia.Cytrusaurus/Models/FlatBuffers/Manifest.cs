@@ -119,7 +119,7 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
                 foreach (KeyValuePair<int, List<string>> orderedFragmentDiff in diff.OrderBy(x => x.Key))
                 {
                     output.AddRange(orderedFragmentDiff.Value);
-                    output.Add("");
+                    output.Add(string.Empty);
                 }
 
                 return string.Join("\n", output);

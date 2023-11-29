@@ -74,7 +74,7 @@ public static partial class LangParser
     private static string ParseLines(string[] lines)
     {
         var json = new StringBuilder();
-        var lastLineName = "";
+        var lastLineName = string.Empty;
         var lastLineHasId = false;
 
         foreach (var line in lines)

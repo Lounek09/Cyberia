@@ -228,7 +228,7 @@ public static class ExtendDiscordEmbedBuilder
 
             var effectDescription = parametersDecorator is null ? effect.GetDescription() : effect.GetDescription().ToString(parametersDecorator);
 
-            var areaInfo = effect.EffectArea.Size == EffectAreaManager.DefaultArea.Size ? "" : $" - {Emojis.Area(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
+            var areaInfo = effect.EffectArea.Size == EffectAreaManager.DefaultArea.Size ? string.Empty : $" - {Emojis.Area(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
 
             var effectParse = $"{emoji} {effectDescription}{areaInfo}";
 
@@ -246,7 +246,7 @@ public static class ExtendDiscordEmbedBuilder
 
     private static List<string> GetCriteriaParse(CriteriaCollection criteria, Func<string, string>? parametersDecorator = null)
     {
-        List<string> criteriaParse = [""];
+        List<string> criteriaParse = [string.Empty];
 
         foreach (var element in criteria)
         {
@@ -265,11 +265,11 @@ public static class ExtendDiscordEmbedBuilder
                     }
 
                     criteriaParse[^1] += ")";
-                    criteriaParse.Add("");
+                    criteriaParse.Add(string.Empty);
                     break;
                 case ICriterion criterion:
                     criteriaParse[^1] += parametersDecorator is null ? criterion.GetDescription() : criterion.GetDescription().ToString(parametersDecorator);
-                    criteriaParse.Add("");
+                    criteriaParse.Add(string.Empty);
                     break;
             }
         }

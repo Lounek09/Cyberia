@@ -98,7 +98,7 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
 
                     if (!file.Value.GetHashArray().SequenceEqual(oldFile.GetHashArray()))
                     {
-                        diff.Add(new(file.Key, $"~ {file.Value.Name} {(oldFile.Size == file.Value.Size ? "" : $"({oldFile.Size} -> {file.Value.Size})")}"));
+                        diff.Add(new(file.Key, $"~ {file.Value.Name} {(oldFile.Size == file.Value.Size ? string.Empty : $"({oldFile.Size} -> {file.Value.Size})")}"));
                     }
 
                     processedKeys.Add(oldKey);

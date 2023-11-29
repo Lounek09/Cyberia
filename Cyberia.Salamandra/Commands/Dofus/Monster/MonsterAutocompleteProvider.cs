@@ -19,7 +19,7 @@ public sealed class MonsterAutocompleteProvider : AutocompleteProvider
 
         foreach (var monsterData in DofusApi.Datacenter.MonstersData.GetMonstersDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
         {
-            choices.Add(new($"{$"{monsterData.Name} {(monsterData.BreedSummon ? "(invocation)" : "")}".WithMaxLength(90)} ({monsterData.Id})", monsterData.Id.ToString()));
+            choices.Add(new($"{$"{monsterData.Name} {(monsterData.BreedSummon ? "(invocation)" : string.Empty)}".WithMaxLength(90)} ({monsterData.Id})", monsterData.Id.ToString()));
         }
 
         return Task.FromResult(choices.AsEnumerable());

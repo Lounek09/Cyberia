@@ -21,7 +21,7 @@ public static class PatternDecoder
         var ipCrypt = value[..8];
         var portCrypt = value[8..];
 
-        var ip = "";
+        var ip = string.Empty;
         int d1, d2;
         for (var i = 0; i < ipCrypt.Length; i++)
         {

@@ -43,7 +43,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {(x.GetNeededLevel() == 0 ? "" : $"Niv.{x.GetNeededLevel()}")} {Formatter.Bold(x.Name)} ({x.Id})");
+        return _data.Select(x => $"- {(x.GetNeededLevel() == 0 ? string.Empty : $"Niv.{x.GetNeededLevel()}")} {Formatter.Bold(x.Name)} ({x.Id})");
     }
 
     protected override DiscordSelectComponent SelectBuilder()

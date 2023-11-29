@@ -10,7 +10,7 @@ public sealed class ItemEffectListConverter : JsonConverter<IReadOnlyList<IEffec
 {
     public override IReadOnlyList<IEffect> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return EffectFactory.GetEffectsParseFromItem(reader.GetString() ?? "").ToList();
+        return EffectFactory.GetEffectsParseFromItem(reader.GetString() ?? string.Empty).ToList();
     }
 
     public override void Write(Utf8JsonWriter writer, IReadOnlyList<IEffect> values, JsonSerializerOptions options)

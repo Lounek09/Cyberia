@@ -36,7 +36,7 @@ public sealed class TaxCollectorNamesData : IDofusData
             var lastNameIndex = Random.Shared.Next(0, TaxCollectorLastNames.Count - 1);
             var firstNameIndex = Random.Shared.Next(0, TaxCollectorFirstNames.Count - 1);
 
-            return (TaxCollectorFirstNames[firstNameIndex].Name + " " + TaxCollectorLastNames[lastNameIndex].Name).Replace("[wip] ", "");
+            return (TaxCollectorFirstNames[firstNameIndex].Name + " " + TaxCollectorLastNames[lastNameIndex].Name).Replace("[wip] ", string.Empty);
         }
 
         return string.Empty;

@@ -48,7 +48,7 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
             var minLevel = monsterData.GetMinLevel();
             var maxLevel = monsterData.GetMaxLevel();
 
-            yield return $"- Niv.{minLevel}{(minLevel == maxLevel ? "" : $"-{maxLevel}")} {Formatter.Bold($"{monsterData.Name} {(monsterData.BreedSummon ? "(invocation)" : "")}")} ({monsterData.Id})";
+            yield return $"- Niv.{minLevel}{(minLevel == maxLevel ? string.Empty : $"-{maxLevel}")} {Formatter.Bold($"{monsterData.Name} {(monsterData.BreedSummon ? "(invocation)" : string.Empty)}")} ({monsterData.Id})";
         }
     }
 

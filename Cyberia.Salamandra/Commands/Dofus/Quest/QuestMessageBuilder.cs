@@ -76,11 +76,11 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Quests, "Livre de quêtes")
-            .WithTitle($"{_questData.Name} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.DUNGEON : "")}");
+            .WithTitle($"{_questData.Name} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.DUNGEON : string.Empty)}");
 
         if (_questStepData is not null)
         {
-            embed.WithDescription($"{Formatter.Bold(_questStepData.Name)}\n{(string.IsNullOrEmpty(_questStepData.Description) ? "" : Formatter.Italic(_questStepData.Description))}");
+            embed.WithDescription($"{Formatter.Bold(_questStepData.Name)}\n{(string.IsNullOrEmpty(_questStepData.Description) ? string.Empty : Formatter.Italic(_questStepData.Description))}");
 
             var optimalLevel = _questStepData.OptimalLevel;
             if (optimalLevel > 0)

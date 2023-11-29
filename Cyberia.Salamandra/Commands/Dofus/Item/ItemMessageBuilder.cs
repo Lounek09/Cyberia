@@ -81,7 +81,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, "Items")
             .WithTitle($"{Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
-            .WithDescription(string.IsNullOrEmpty(_itemData.Description) ? "" : Formatter.Italic(_itemData.Description))
+            .WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description))
             .WithThumbnail(await _itemData.GetImagePath())
             .AddField("Niveau :", _itemData.Level.ToString(), true)
             .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true);
@@ -117,7 +117,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         }
 
         StringBuilder miscellaneousBuilder = new();
-        miscellaneousBuilder.AppendFormat("{0} pod{1}", _itemData.Weight.ToStringThousandSeparator(), _itemData.Weight > 1 ? "s" : "");
+        miscellaneousBuilder.AppendFormat("{0} pod{1}", _itemData.Weight.ToStringThousandSeparator(), _itemData.Weight > 1 ? "s" : string.Empty);
         if (_itemData.Tradeable())
         {
             miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _itemData.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);

@@ -77,14 +77,14 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Spells, "Livre de sorts")
             .WithTitle($"{_spellData.Name} ({_spellData.Id}) - Rang {_selectedLevel}")
-            .WithDescription(string.IsNullOrEmpty(_spellData.Description) ? "" : Formatter.Italic(_spellData.Description.Trim()))
+            .WithDescription(string.IsNullOrEmpty(_spellData.Description) ? string.Empty : Formatter.Italic(_spellData.Description.Trim()))
             .WithThumbnail(await _spellData.GetImagePath());
 
         if (_spellLevelData is not null)
         {
             embed.AddField(Constant.ZERO_WIDTH_SPACE, $"Niveau requis : {Formatter.Bold(_spellLevelData.NeededLevel.ToString())}", true);
 
-            var range = $"{Formatter.Bold(_spellLevelData.MinRange.ToString())}{(_spellLevelData.MinRange == _spellLevelData.MaxRange ? "" : $" à {Formatter.Bold(_spellLevelData.MaxRange.ToString())}")} PO";
+            var range = $"{Formatter.Bold(_spellLevelData.MinRange.ToString())}{(_spellLevelData.MinRange == _spellLevelData.MaxRange ? string.Empty : $" à {Formatter.Bold(_spellLevelData.MaxRange.ToString())}")} PO";
             var apCost = $"{Formatter.Bold(_spellLevelData.ActionPointCost.ToString())} PA";
             embed.AddField(Constant.ZERO_WIDTH_SPACE, $"{range}\n{apCost}", true);
 
@@ -147,7 +147,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
                  Nb. de lancers par tour : {Formatter.Bold(_spellLevelData.LaunchCountByTurn == 0 ? "-" : _spellLevelData.LaunchCountByTurn.ToString())}
                  Nb. de lancers par tour par joueur : {Formatter.Bold(_spellLevelData.LaunchCountByPlayerByTurn == 0 ? "-" : _spellLevelData.LaunchCountByPlayerByTurn.ToString())}
                  Nb. de tours entre deux lancers : {Formatter.Bold(_spellLevelData.DelayBetweenLaunch == 0 ? "-" : _spellLevelData.DelayBetweenLaunch == 63 ? "inf." : _spellLevelData.DelayBetweenLaunch.ToString())}
-                 {(_spellData.GlobalInterval ? "Intervalle de relance global" : "")}
+                 {(_spellData.GlobalInterval ? "Intervalle de relance global" : string.Empty)}
                  """;
             embed.AddField("Autres caractéristiques : ", caracteristics, true);
 

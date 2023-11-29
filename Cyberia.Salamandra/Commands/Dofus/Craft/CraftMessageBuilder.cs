@@ -78,13 +78,13 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
         }
 
         var weight = _recursive ? _craftData.GetWeightWithSubCraft() : _craftData.GetWeight();
-        embed.AddField("Poids :", $"{Formatter.Bold(weight.ToStringThousandSeparator())} pod{(weight > 1 ? "s" : "")} par craft" + (_qte > 1 ? $", {Formatter.Bold((weight * _qte).ToStringThousandSeparator())} au total" : ""));
+        embed.AddField("Poids :", $"{Formatter.Bold(weight.ToStringThousandSeparator())} pod{(weight > 1 ? "s" : string.Empty)} par craft" + (_qte > 1 ? $", {Formatter.Bold((weight * _qte).ToStringThousandSeparator())} au total" : string.Empty));
 
         var time = $"{Formatter.Bold((_recursive ? _craftData.GetTimePerCraftWithSubCraft(1) : _craftData.GetTimePerCraft(1)).ToString(@"mm\mss\sfff"))} par craft";
         if (_qte > 1)
         {
             var totalTime = _recursive ? _craftData.GetTimePerCraftWithSubCraft(_qte) : _craftData.GetTimePerCraft(_qte);
-            var format = (totalTime.TotalDays < 1 ? "" : @"%d\d") + (totalTime.TotalHours < 1 ? "" : @"hh\h") + @"mm\mss\sfff";
+            var format = (totalTime.TotalDays < 1 ? string.Empty : @"%d\d") + (totalTime.TotalHours < 1 ? string.Empty : @"hh\h") + @"mm\mss\sfff";
             time += $"\n{Formatter.Bold(totalTime.ToString(format))} au total";
         }
         embed.AddField("Temps de craft approximatif:", time);

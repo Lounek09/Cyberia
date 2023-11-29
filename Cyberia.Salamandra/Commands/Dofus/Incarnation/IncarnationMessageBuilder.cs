@@ -78,7 +78,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
         if (_itemData is not null)
         {
-            embed.WithDescription(string.IsNullOrEmpty(_itemData.Description) ? "" : Formatter.Italic(_itemData.Description))
+            embed.WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description))
                 .WithThumbnail(await _itemData.GetImagePath())
                 .AddField("Niveau :", _itemData.Level.ToString(), true)
                 .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true)

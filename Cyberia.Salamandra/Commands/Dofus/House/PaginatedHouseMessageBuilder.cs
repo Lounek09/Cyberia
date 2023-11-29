@@ -38,7 +38,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
             Enum.TryParse(parameters[2], true, out HouseSearchCategory searchCategory))
         {
             List<HouseData> housesData = [];
-            var search = "";
+            var search = string.Empty;
             switch (searchCategory)
             {
                 case HouseSearchCategory.Name:
@@ -86,7 +86,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {Formatter.Bold(x.Name)}{(string.IsNullOrEmpty(x.GetCoordinate()) ? "" : $" {x.GetCoordinate()}")} ({x.Id})");
+        return _data.Select(x => $"- {Formatter.Bold(x.Name)}{(string.IsNullOrEmpty(x.GetCoordinate()) ? string.Empty : $" {x.GetCoordinate()}")} ({x.Id})");
     }
 
     protected override DiscordSelectComponent SelectBuilder()
