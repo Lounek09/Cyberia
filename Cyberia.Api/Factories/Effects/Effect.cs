@@ -32,16 +32,7 @@ public abstract record Effect(int EffectId, int Duration, int Probability, Crite
                 value += $" ({PatternDecoder.Description(Resources.Effect_Turn, Duration)})";
             }
 
-            return new(value, Array.ConvertAll(parameters, x =>
-            {
-                //Workaround before the translation of ALL effects
-                if (x is int i && i == 0)
-                {
-                    return string.Empty;
-                }
-
-                return x?.ToString() ?? string.Empty;
-            }));
+            return new(value, Array.ConvertAll(parameters, x => x?.ToString() ?? string.Empty));
         }
 
         Log.Information("Unknown {EffectData} {EffectId} ({EffectParameters})",
