@@ -1,7 +1,7 @@
 # Cyberia
 A Discord Bot for the MMORPG Dofus Retro made with [DSharpPlus](https://github.com/DSharpPlus/DSharpPlus)
 
-[![Build](https://github.com/Lounek09/Salamandra/actions/workflows/build-validation.yml/badge.svg)](https://github.com/Lounek09/Salamandra/actions/workflows/build-validation.yml)
+[![Build](https://github.com/Lounek09/Cyberia/actions/workflows/build-validation.yml/badge.svg)](https://github.com/Lounek09/Cyberia/actions/workflows/build-validation.yml)
 
 ## License
 Copyright (C) 2020-2023 Lounek
