@@ -14,7 +14,7 @@ public sealed class SearchCommandModule : ApplicationCommandModule
 {
     [SlashCommand("effect", "Search where the effect is used")]
     public async Task EffectSearchCommand(InteractionContext ctx,
-        [Option("Where", "Où chercher l'effet")]
+        [Option("Where", "Where to look for the effect")]
         [Choice("Item", "item")]
         [Choice("Spell", "spell")]
         string where,
@@ -83,7 +83,7 @@ public sealed class SearchCommandModule : ApplicationCommandModule
 
     [SlashCommand("criterion", "Search where the criterion is used")]
     public async Task CriterionSearchCommand(InteractionContext ctx,
-        [Option("Where", "Où chercher l'effet")]
+        [Option("Where", "Where to look for the criterion")]
         [Choice("Item", "item")]
         [Choice("Spell", "spell")]
         string where,
