@@ -148,7 +148,7 @@ public static class EffectFactory
             { 219, CharacterDeboostNeutralElementPercentEffect.Create },
             { 220, CharacterReflectorUnboostedEffect.Create },
             { 221, CharacterInventoryAddItemRandomNoCheckEffect.Create },
-            { 222, CharacterInventoryAddItemFromRandomDropEffect.Create }, //Check params and description
+            { 222, CharacterInventoryAddItemFromRandomDropEffect.Create },
             { 225, CharacterBoostTrapEffect.Create },
             { 226, CharacterBoostTrapPercentEffect.Create },
             { 228, CharacterDisplaySpellAnimation2Effect.Create },
