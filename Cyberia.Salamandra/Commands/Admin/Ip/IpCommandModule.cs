@@ -6,9 +6,9 @@ namespace Cyberia.Salamandra.Commands.Admin;
 
 public sealed class IpCommandModule : ApplicationCommandModule
 {
-    [SlashCommand("ip", "Décode les ips envoyées via les paquets")]
+    [SlashCommand("ip", "Decodes IPs sent via packets")]
     public async Task Command(InteractionContext ctx,
-        [Option("ip", "Ip encodée")]
+        [Option("ip", "Encoded IP")]
         string value)
     {
         try

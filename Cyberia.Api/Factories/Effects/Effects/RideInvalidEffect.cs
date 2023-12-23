@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record RideInvalidEffect : ParameterlessEffect, IEffect<RideInvalidEffect>
 {
-    private RideInvalidEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private RideInvalidEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+        : base(id, duration, probability, criteria, effectArea)
     {
 
     }

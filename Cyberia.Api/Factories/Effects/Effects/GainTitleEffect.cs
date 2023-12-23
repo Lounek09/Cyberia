@@ -9,8 +9,8 @@ public sealed record GainTitleEffect : Effect, IEffect<GainTitleEffect>
 {
     public int TitleId { get; init; }
 
-    private GainTitleEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int titleId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private GainTitleEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int titleId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         TitleId = titleId;
     }

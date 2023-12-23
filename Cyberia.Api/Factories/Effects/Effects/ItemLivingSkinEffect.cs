@@ -8,8 +8,8 @@ public sealed record ItemLivingSkinEffect : Effect, IEffect<ItemLivingSkinEffect
 {
     public int Number { get; init; }
 
-    private ItemLivingSkinEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int number)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemLivingSkinEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int number)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Number = number;
     }

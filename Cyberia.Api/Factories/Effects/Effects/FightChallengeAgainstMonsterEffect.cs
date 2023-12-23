@@ -9,8 +9,8 @@ public sealed record FightChallengeAgainstMonsterEffect : Effect, IEffect<FightC
 {
     public int MonsterId { get; init; }
 
-    private FightChallengeAgainstMonsterEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private FightChallengeAgainstMonsterEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
     }

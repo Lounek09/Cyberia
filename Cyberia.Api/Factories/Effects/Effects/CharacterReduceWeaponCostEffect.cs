@@ -8,8 +8,8 @@ public sealed record CharacterReduceWeaponCostEffect : Effect, IEffect<Character
 {
     public int ActionPointsReduced { get; init; }
 
-    private CharacterReduceWeaponCostEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int actionPointsReduced)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterReduceWeaponCostEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int actionPointsReduced)
+        : base(id, duration, probability, criteria, effectArea)
     {
         ActionPointsReduced = actionPointsReduced;
     }

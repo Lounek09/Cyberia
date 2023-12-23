@@ -8,8 +8,8 @@ public sealed record CharacterGainHonourEffect : Effect, IEffect<CharacterGainHo
 {
     public int Honour { get; init; }
 
-    private CharacterGainHonourEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int honour)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterGainHonourEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int honour)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Honour = honour;
     }

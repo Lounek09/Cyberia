@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record RideLowerLoveEffect : ParameterlessEffect, IEffect<RideLowerLoveEffect>
 {
-    private RideLowerLoveEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private RideLowerLoveEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+        : base(id, duration, probability, criteria, effectArea)
     {
 
     }

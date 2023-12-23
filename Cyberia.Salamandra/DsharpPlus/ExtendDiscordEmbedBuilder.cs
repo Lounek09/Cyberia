@@ -173,7 +173,7 @@ public static class ExtendDiscordEmbedBuilder
         {
             if (petFoodsData.Effect is not null)
             {
-                builder.AppendFormat("{0} {1} :\n", Emojis.Effect(petFoodsData.Effect.EffectId), Formatter.Bold(petFoodsData.Effect.GetDescription()));
+                builder.AppendFormat("{0} {1} :\n", Emojis.Effect(petFoodsData.Effect.Id), Formatter.Bold(petFoodsData.Effect.GetDescription()));
 
                 if (petFoodsData.ItemsId.Count > 0)
                 {
@@ -223,7 +223,7 @@ public static class ExtendDiscordEmbedBuilder
             {
                 FightSetStateEffect addStateEffect => Emojis.State(addStateEffect.StateId),
                 FightUnsetStateEffect removeStateEffect => Emojis.State(removeStateEffect.StateId),
-                _ => Emojis.Effect(effect.EffectId)
+                _ => Emojis.Effect(effect.Id)
             };
 
             var effectDescription = parametersDecorator is null ? effect.GetDescription() : effect.GetDescription().ToString(parametersDecorator);

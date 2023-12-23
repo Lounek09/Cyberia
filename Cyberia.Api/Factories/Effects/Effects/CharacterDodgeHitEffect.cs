@@ -9,8 +9,8 @@ public sealed record CharacterDodgeHitEffect : Effect, IEffect<CharacterDodgeHit
     public int DodgePercent { get; init; }
     public int CasePushed { get; init; }
 
-    private CharacterDodgeHitEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int dodgePercent, int casePushed)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterDodgeHitEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int dodgePercent, int casePushed)
+        : base(id, duration, probability, criteria, effectArea)
     {
         DodgePercent = dodgePercent;
         CasePushed = casePushed;

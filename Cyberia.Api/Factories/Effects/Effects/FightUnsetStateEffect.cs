@@ -9,8 +9,8 @@ public sealed record FightUnsetStateEffect : Effect, IEffect<FightUnsetStateEffe
 {
     public int StateId { get; init; }
 
-    private FightUnsetStateEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int stateId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private FightUnsetStateEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int stateId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         StateId = stateId;
     }

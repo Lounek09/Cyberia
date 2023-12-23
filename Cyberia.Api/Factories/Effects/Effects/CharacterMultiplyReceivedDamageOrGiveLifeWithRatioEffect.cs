@@ -10,8 +10,8 @@ public sealed record CharacterMultiplyReceivedDamageOrGiveLifeWithRatioEffect : 
     public int HealRatio { get; init; }
     public int DamageProbability { get; init; }
 
-    private CharacterMultiplyReceivedDamageOrGiveLifeWithRatioEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int damageRatio, int healRatio, int damageProbability)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterMultiplyReceivedDamageOrGiveLifeWithRatioEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int damageRatio, int healRatio, int damageProbability)
+        : base(id, duration, probability, criteria, effectArea)
     {
         DamageRatio = damageRatio;
         HealRatio = healRatio;

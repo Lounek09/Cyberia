@@ -6,15 +6,15 @@ namespace Cyberia.Api.Factories.Effects.Templates;
 
 public abstract record Effect
 {
-    public int EffectId { get; init; }
+    public int Id { get; init; }
     public int Duration { get; init; }
     public int Probability { get; init; }
     public CriteriaCollection Criteria { get; init; }
     public EffectArea EffectArea { get; init; }
 
-    protected Effect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    protected Effect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        EffectId = effectId;
+        Id = id;
         Duration = duration;
         Probability = probability;
         Criteria = criteria;
@@ -23,7 +23,7 @@ public abstract record Effect
 
     public EffectData? GetEffectData()
     {
-        return DofusApi.Datacenter.EffectsData.GetEffectDataById(EffectId);
+        return DofusApi.Datacenter.EffectsData.GetEffectDataById(Id);
     }
 
     protected Description GetDescription(params object?[] parameters)
@@ -52,9 +52,9 @@ public abstract record Effect
 
         Log.Information("Unknown {EffectData} {EffectId} ({EffectParameters})",
             nameof(EffectData),
-            EffectId,
+            Id,
             string.Join(", ", parameters));
 
-        return new(Resources.Effect_Unknown, EffectId.ToString(), string.Join(", ", parameters));
+        return new(Resources.Effect_Unknown, Id.ToString(), string.Join(", ", parameters));
     }
 }

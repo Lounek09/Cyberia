@@ -9,8 +9,8 @@ public sealed record ItemPetsShapeEffect : Effect, IEffect<ItemPetsShapeEffect>
 {
     public Corpulence Corpulence { get; init; }
 
-    private ItemPetsShapeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, Corpulence corpulence)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemPetsShapeEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, Corpulence corpulence)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Corpulence = corpulence;
     }

@@ -9,8 +9,8 @@ public sealed record CharacterReferencementEffect : Effect, IEffect<CharacterRef
 {
     public int JobId { get; init; }
 
-    private CharacterReferencementEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int jobId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterReferencementEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int jobId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         JobId = jobId;
     }

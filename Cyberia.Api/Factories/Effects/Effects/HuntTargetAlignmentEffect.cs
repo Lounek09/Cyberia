@@ -9,8 +9,8 @@ public sealed record HuntTargetAlignmentEffect : Effect, IEffect<HuntTargetAlign
 {
     public int AlignmentId { get; init; }
 
-    private HuntTargetAlignmentEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int alignmentId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private HuntTargetAlignmentEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int alignmentId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         AlignmentId = alignmentId;
     }

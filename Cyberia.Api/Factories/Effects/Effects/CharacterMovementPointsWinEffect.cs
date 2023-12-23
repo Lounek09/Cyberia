@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterMovementPointsWinEffect : MinMaxEffect, IEffect<CharacterMovementPointsWinEffect>
 {
-    private CharacterMovementPointsWinEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
-        : base(effectId, duration, probability, criteria, effectArea, min, max)
+    private CharacterMovementPointsWinEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
+        : base(id, duration, probability, criteria, effectArea, min, max)
     {
     
     }

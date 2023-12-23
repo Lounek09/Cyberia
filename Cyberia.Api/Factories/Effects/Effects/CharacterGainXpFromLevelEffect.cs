@@ -9,8 +9,8 @@ public sealed record CharacterGainXpFromLevelEffect : Effect, IEffect<CharacterG
     public int Level { get; init; }
     public int RemainingPercent { get; init; }
 
-    private CharacterGainXpFromLevelEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int level, int remainingPercent)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterGainXpFromLevelEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int level, int remainingPercent)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Level = level;
         RemainingPercent = remainingPercent;

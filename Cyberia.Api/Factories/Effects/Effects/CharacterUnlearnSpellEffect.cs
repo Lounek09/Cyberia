@@ -9,8 +9,8 @@ public sealed record CharacterUnlearnSpellEffect : Effect, IEffect<CharacterUnle
 {
     public int SpellId { get; init; }
 
-    private CharacterUnlearnSpellEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterUnlearnSpellEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         SpellId = spellId;
     }

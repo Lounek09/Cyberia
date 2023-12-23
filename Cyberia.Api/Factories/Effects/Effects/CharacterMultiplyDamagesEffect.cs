@@ -8,15 +8,15 @@ public sealed record CharacterMultiplyDamagesEffect : Effect, IEffect<CharacterM
 {
     public int Multiplier { get; init; }
 
-    private CharacterMultiplyDamagesEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int multiplier, int casePushed)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterMultiplyDamagesEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int multiplier)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Multiplier = multiplier;
     }
 
     public static CharacterMultiplyDamagesEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param2);
+        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1);
     }
 
     public Description GetDescription()

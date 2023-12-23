@@ -8,8 +8,8 @@ public sealed record HuntTargetRankEffect : Effect, IEffect<HuntTargetRankEffect
 {
     public int Rank { get; init; }
 
-    private HuntTargetRankEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rank)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private HuntTargetRankEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rank)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Rank = rank;
     }

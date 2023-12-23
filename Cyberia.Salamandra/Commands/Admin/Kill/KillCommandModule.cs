@@ -5,7 +5,7 @@ namespace Cyberia.Salamandra.Commands.Admin;
 
 public sealed class KillCommandModule : ApplicationCommandModule
 {
-    [SlashCommand("kill", "[Owner] Coupe Salamandra")]
+    [SlashCommand("kill", "[Owner] Kill Salamandra")]
     [SlashRequireOwner]
     public async Task Command(InteractionContext ctx)
     {

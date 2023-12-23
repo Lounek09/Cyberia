@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record FarmTempWithdrawItemEffect : ParameterlessEffect, IEffect<FarmTempWithdrawItemEffect>
 {
-    private FarmTempWithdrawItemEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private FarmTempWithdrawItemEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+        : base(id, duration, probability, criteria, effectArea)
     {
 
     }

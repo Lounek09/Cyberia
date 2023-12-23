@@ -8,8 +8,8 @@ public sealed record PetPowerBoostEffect : Effect, IEffect<PetPowerBoostEffect>
 {
     public int Power { get; init; }
 
-    private PetPowerBoostEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int power)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private PetPowerBoostEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int power)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Power = power;
     }

@@ -8,8 +8,8 @@ public sealed record UntranslatedEffect : Effect, IEffect<UntranslatedEffect>
 {
     EffectParameters Parameters { get; init; }
 
-    private UntranslatedEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, EffectParameters parameters)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private UntranslatedEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, EffectParameters parameters)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Parameters = parameters;
     }

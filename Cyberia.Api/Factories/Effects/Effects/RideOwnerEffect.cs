@@ -8,8 +8,8 @@ public sealed record RideOwnerEffect : Effect, IEffect<RideOwnerEffect>
 {
     public string Name { get; init; }
 
-    private RideOwnerEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private RideOwnerEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Name = name;
     }

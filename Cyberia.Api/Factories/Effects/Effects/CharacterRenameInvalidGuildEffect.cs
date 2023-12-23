@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterRenameInvalidGuildEffect : ParameterlessEffect, IEffect<CharacterRenameInvalidGuildEffect>
 {
-    private CharacterRenameInvalidGuildEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterRenameInvalidGuildEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+        : base(id, duration, probability, criteria, effectArea)
     {
 
     }

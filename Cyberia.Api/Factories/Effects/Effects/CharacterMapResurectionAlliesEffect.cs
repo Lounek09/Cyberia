@@ -8,8 +8,8 @@ public sealed record CharacterMapResurectionAlliesEffect : Effect, IEffect<Chara
 {
     public int Energy { get; init; }
 
-    private CharacterMapResurectionAlliesEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int energy)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterMapResurectionAlliesEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int energy)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Energy = energy;
     }

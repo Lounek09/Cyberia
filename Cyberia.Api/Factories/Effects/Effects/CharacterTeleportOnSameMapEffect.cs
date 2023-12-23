@@ -8,8 +8,8 @@ public sealed record CharacterTeleportOnSameMapEffect : Effect, IEffect<Characte
 {
     public int Distance { get; init; }
 
-    private CharacterTeleportOnSameMapEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int distance)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterTeleportOnSameMapEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int distance)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Distance = distance;
     }

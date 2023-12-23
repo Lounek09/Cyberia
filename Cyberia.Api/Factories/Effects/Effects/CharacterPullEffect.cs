@@ -8,8 +8,8 @@ public sealed record CharacterPullEffect : Effect, IEffect<CharacterPullEffect>
 {
     public int Distance { get; init; }
 
-    private CharacterPullEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int distance)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterPullEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int distance)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Distance = distance;
     }

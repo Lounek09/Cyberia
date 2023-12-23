@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterDeboostWaterElementResistEffect : MinMaxEffect, IEffect<CharacterDeboostWaterElementResistEffect>
 {
-    private CharacterDeboostWaterElementResistEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
-        : base(effectId, duration, probability, criteria, effectArea, min, max)
+    private CharacterDeboostWaterElementResistEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
+        : base(id, duration, probability, criteria, effectArea, min, max)
     {
     
     }

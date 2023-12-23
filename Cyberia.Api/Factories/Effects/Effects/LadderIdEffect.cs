@@ -10,8 +10,8 @@ public sealed record LadderIdEffect : Effect, IEffect<LadderIdEffect>
     public int MonsterId { get; init; }
     public int Count { get; init; }
 
-    private LadderIdEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int count)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private LadderIdEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int count)
+        : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
         Count = count;

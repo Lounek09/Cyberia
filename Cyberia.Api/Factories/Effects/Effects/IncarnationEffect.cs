@@ -8,8 +8,8 @@ public sealed record IncarnationEffect : Effect, IEffect<IncarnationEffect>
 {
     public int Level { get; init; }
 
-    private IncarnationEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int level)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private IncarnationEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int level)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Level = level;
     }

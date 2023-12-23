@@ -10,8 +10,8 @@ public sealed record LaunchSpellEffect : Effect, IEffect<LaunchSpellEffect>
     public int SpellId { get; init; }
     public int Rank { get; init; }
 
-    private LaunchSpellEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int rank)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private LaunchSpellEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int rank)
+        : base(id, duration, probability, criteria, effectArea)
     {
         SpellId = spellId;
         Rank = rank;

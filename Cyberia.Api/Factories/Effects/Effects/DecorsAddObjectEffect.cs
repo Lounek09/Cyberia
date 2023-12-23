@@ -8,8 +8,8 @@ public sealed record DecorsAddObjectEffect : Effect, IEffect<DecorsAddObjectEffe
 {
     public int GfxId { get; init; }
 
-    private DecorsAddObjectEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int gfxId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private DecorsAddObjectEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int gfxId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         GfxId = gfxId;
     }

@@ -9,8 +9,8 @@ public sealed record AddTTGCardToBinderEffect : Effect, IEffect<AddTTGCardToBind
 {
     public int TTGCardId { get; init; }
 
-    private AddTTGCardToBinderEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int ttgCardId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private AddTTGCardToBinderEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int ttgCardId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         TTGCardId = ttgCardId;
     }

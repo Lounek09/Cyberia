@@ -10,8 +10,8 @@ public sealed record CharacterInventoryAddItemRandomNoCheckEffect : Effect, IEff
     public int ItemId { get; init; }
     public int Qte { get; init; }
 
-    private CharacterInventoryAddItemRandomNoCheckEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId, int qte)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterInventoryAddItemRandomNoCheckEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId, int qte)
+        : base(id, duration, probability, criteria, effectArea)
     {
         ItemId = itemId;
         Qte = qte;

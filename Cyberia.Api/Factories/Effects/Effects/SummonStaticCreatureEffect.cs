@@ -10,8 +10,8 @@ public sealed record SummonStaticCreatureEffect : Effect, IEffect<SummonStaticCr
     public int MonsterId { get; init; }
     public int Grade { get; init; }
 
-    private SummonStaticCreatureEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int grade)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private SummonStaticCreatureEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int grade)
+        : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
         Grade = grade;

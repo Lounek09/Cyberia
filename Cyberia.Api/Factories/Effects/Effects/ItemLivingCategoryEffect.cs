@@ -9,8 +9,8 @@ public sealed record ItemLivingCategoryEffect : Effect, IEffect<ItemLivingCatego
 {
     public int ItemTypeId { get; init; }
 
-    private ItemLivingCategoryEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemLivingCategoryEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         ItemTypeId = itemTypeId;
     }

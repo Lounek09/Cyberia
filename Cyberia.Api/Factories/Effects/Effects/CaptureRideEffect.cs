@@ -8,8 +8,8 @@ public sealed record CaptureRideEffect : Effect, IEffect<CaptureRideEffect>
 {
     public int CapturePercent { get; init; }
 
-    private CaptureRideEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int capturePercent)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CaptureRideEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int capturePercent)
+        : base(id, duration, probability, criteria, effectArea)
     {
         CapturePercent = capturePercent;
     }

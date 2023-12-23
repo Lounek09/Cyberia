@@ -9,8 +9,8 @@ public sealed record CharacterLearnEmoteEffect : Effect, IEffect<CharacterLearnE
 {
     public int EmoteId { get; init; }
 
-    private CharacterLearnEmoteEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int emoteId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterLearnEmoteEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int emoteId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         EmoteId = emoteId;
     }

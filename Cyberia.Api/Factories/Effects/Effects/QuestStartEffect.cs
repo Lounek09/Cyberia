@@ -9,8 +9,8 @@ public sealed record QuestStartEffect : Effect, IEffect<QuestStartEffect>
 {
     public int QuestId { get; init; }
 
-    private QuestStartEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int questId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private QuestStartEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int questId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         QuestId = questId;
     }

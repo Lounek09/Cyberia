@@ -9,8 +9,8 @@ public sealed record ItemFragmentCompletionEffect : Effect, IEffect<ItemFragment
     public int ValueInt { get; init; }
     public int ValueDecimal { get; init; }
 
-    private ItemFragmentCompletionEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int valueInt, int valueDecimal)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemFragmentCompletionEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int valueInt, int valueDecimal)
+        : base(id, duration, probability, criteria, effectArea)
     {
         ValueInt = valueInt;
         ValueDecimal = valueDecimal;

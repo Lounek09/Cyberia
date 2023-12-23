@@ -9,8 +9,8 @@ public sealed record GotoGuildStructureEffect : Effect, IEffect<GotoGuildStructu
 {
     public GuildStructure GuildStructure { get; init; }
 
-    private GotoGuildStructureEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, GuildStructure guildStructure)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private GotoGuildStructureEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, GuildStructure guildStructure)
+        : base(id, duration, probability, criteria, effectArea)
     {
         GuildStructure = guildStructure;
     }

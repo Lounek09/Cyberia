@@ -10,8 +10,8 @@ public sealed record PetSetPowerBoostEffect : Effect, IEffect<PetSetPowerBoostEf
     public int StatsWeightBonus { get; init; }
     public int ItemId { get; init; }
 
-    private PetSetPowerBoostEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int statsWeightBonus, int itemId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private PetSetPowerBoostEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int statsWeightBonus, int itemId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         StatsWeightBonus = statsWeightBonus;
         ItemId = itemId;

@@ -8,8 +8,8 @@ public sealed record CharacterResurrectionEffect : Effect, IEffect<CharacterResu
 {
     public int Energy { get; init; }
 
-    private CharacterResurrectionEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int energy)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterResurrectionEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int energy)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Energy = energy;
     }

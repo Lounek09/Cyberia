@@ -12,8 +12,8 @@ public sealed record CharacterInventoryAddItemCheckEffect : Effect, IEffect<Char
     public int Qte { get; init; }
     public GiveItemTarget Target { get; init; }
 
-    private CharacterInventoryAddItemCheckEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId, int qte, GiveItemTarget giveItemTarget)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterInventoryAddItemCheckEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId, int qte, GiveItemTarget giveItemTarget)
+        : base(id, duration, probability, criteria, effectArea)
     {
         ItemId = itemId;
         Qte = qte;

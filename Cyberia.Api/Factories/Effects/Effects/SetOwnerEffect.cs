@@ -8,8 +8,8 @@ public sealed record SetOwnerEffect : Effect, IEffect<SetOwnerEffect>
 {
     public string Name { get; init; }
 
-    private SetOwnerEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private SetOwnerEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Name = name;
     }

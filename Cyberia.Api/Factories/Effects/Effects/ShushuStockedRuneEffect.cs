@@ -8,8 +8,8 @@ public sealed record ShushuStockedRuneEffect : Effect, IEffect<ShushuStockedRune
 {
     public int Amont { get; init; }
 
-    private ShushuStockedRuneEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int amont)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ShushuStockedRuneEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int amont)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Amont = amont;
     }

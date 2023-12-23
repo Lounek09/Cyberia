@@ -11,8 +11,8 @@ public sealed record CharacterSummonMonsterGroupEffect : Effect, IEffect<Charact
 {
     public List<int> MonstersId { get; init; }
 
-    private CharacterSummonMonsterGroupEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, List<int> monstersId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterSummonMonsterGroupEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, List<int> monstersId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         MonstersId = monstersId;
     }

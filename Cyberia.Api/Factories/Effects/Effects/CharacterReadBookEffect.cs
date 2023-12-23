@@ -8,8 +8,8 @@ public sealed record CharacterReadBookEffect : Effect, IEffect<CharacterReadBook
 {
     public int BookId { get; init; }
 
-    private CharacterReadBookEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int bookId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterReadBookEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int bookId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         BookId = bookId;
     }

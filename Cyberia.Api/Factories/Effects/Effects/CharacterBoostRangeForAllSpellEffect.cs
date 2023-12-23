@@ -8,8 +8,8 @@ public sealed record CharacterBoostRangeForAllSpellEffect : Effect, IEffect<Char
 {
     public int Range { get; init; }
 
-    private CharacterBoostRangeForAllSpellEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int range)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterBoostRangeForAllSpellEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int range)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Range = range;
     }

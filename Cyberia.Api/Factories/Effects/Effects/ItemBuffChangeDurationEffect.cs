@@ -8,8 +8,8 @@ public sealed record ItemBuffChangeDurationEffect : Effect, IEffect<ItemBuffChan
 {
     public int TurnDuration { get; init; }
 
-    private ItemBuffChangeDurationEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int turnDuration)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemBuffChangeDurationEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int turnDuration)
+        : base(id, duration, probability, criteria, effectArea)
     {
         TurnDuration = turnDuration;
     }

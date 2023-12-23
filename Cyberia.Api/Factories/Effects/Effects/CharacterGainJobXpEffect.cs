@@ -10,8 +10,8 @@ public sealed record CharacterGainJobXpEffect : Effect, IEffect<CharacterGainJob
     public int JobId { get; init; }
     public int XpAmount { get; init; }
 
-    private CharacterGainJobXpEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int jobId, int xpAmount)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterGainJobXpEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int jobId, int xpAmount)
+        : base(id, duration, probability, criteria, effectArea)
     {
         JobId = jobId;
         XpAmount = xpAmount;

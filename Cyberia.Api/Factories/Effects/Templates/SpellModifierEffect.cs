@@ -9,8 +9,8 @@ public abstract record SpellModifierEffect : Effect
     public int SpellId { get; init; }
     public int Value { get; init; }
 
-    protected SpellModifierEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int value)
-        : base(effectId, duration, probability, criteria, effectArea)
+    protected SpellModifierEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int value)
+        : base(id, duration, probability, criteria, effectArea)
     {
         SpellId = spellId;
         Value = value;

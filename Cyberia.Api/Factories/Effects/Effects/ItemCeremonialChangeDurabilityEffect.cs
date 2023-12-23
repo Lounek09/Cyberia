@@ -9,8 +9,8 @@ public sealed record ItemCeremonialChangeDurabilityEffect : Effect, IEffect<Item
     public int CurrentDurability { get; init; }
     public int MaxDurability { get; init; }
 
-    private ItemCeremonialChangeDurabilityEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int currentDurability, int maxDurability)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemCeremonialChangeDurabilityEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int currentDurability, int maxDurability)
+        : base(id, duration, probability, criteria, effectArea)
     {
         CurrentDurability = currentDurability;
         MaxDurability = maxDurability;

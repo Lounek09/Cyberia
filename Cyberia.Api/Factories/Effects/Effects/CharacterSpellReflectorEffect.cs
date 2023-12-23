@@ -8,8 +8,8 @@ public sealed record CharacterSpellReflectorEffect : Effect, IEffect<CharacterSp
 {
     public int Level { get; init; }
 
-    private CharacterSpellReflectorEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int level)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterSpellReflectorEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int level)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Level = level;
     }

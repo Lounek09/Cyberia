@@ -8,8 +8,8 @@ public sealed record HuntTargetLevelEffect : Effect, IEffect<HuntTargetLevelEffe
 {
     public int Level { get; init; }
 
-    private HuntTargetLevelEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int level)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private HuntTargetLevelEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int level)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Level = level;
     }

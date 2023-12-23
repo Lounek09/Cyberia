@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterDoubleReceivedDamageOrGiveLifeEffect : MinMaxEffect, IEffect<CharacterDoubleReceivedDamageOrGiveLifeEffect>
 {
-    private CharacterDoubleReceivedDamageOrGiveLifeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
-        : base(effectId, duration, probability, criteria, effectArea, min, max)
+    private CharacterDoubleReceivedDamageOrGiveLifeEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
+        : base(id, duration, probability, criteria, effectArea, min, max)
     {
     
     }

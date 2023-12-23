@@ -10,8 +10,8 @@ public sealed record RideCertificateValidityEffect : Effect, IEffect<RideCertifi
     public int Hours { get; init; }
     public int Minutes { get; init; }
 
-    private RideCertificateValidityEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int days, int hours, int minutes)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private RideCertificateValidityEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int days, int hours, int minutes)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Days = days;
         Hours = hours;

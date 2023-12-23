@@ -8,8 +8,8 @@ public sealed record SetCraftermageEffect : Effect, IEffect<SetCraftermageEffect
 {
     public string Name { get; init; }
 
-    private SetCraftermageEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private SetCraftermageEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Name = name;
     }

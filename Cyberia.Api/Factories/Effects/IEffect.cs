@@ -6,7 +6,7 @@ namespace Cyberia.Api.Factories.Effects;
 
 public interface IEffect
 {
-    int EffectId { get; init; }
+    int Id { get; init; }
     int Duration { get; init; }
     int Probability { get; init; }
     CriteriaCollection Criteria { get; init; }

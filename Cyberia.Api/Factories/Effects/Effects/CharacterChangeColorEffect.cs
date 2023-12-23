@@ -9,8 +9,8 @@ public sealed record CharacterChangeColorEffect : Effect, IEffect<CharacterChang
     public int Position { get; init; }
     public int Color { get; init; }
 
-    private CharacterChangeColorEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int position, int color)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterChangeColorEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int position, int color)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Position = position;
         Color = color;

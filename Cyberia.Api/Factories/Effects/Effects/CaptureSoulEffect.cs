@@ -9,8 +9,8 @@ public sealed record CaptureSoulEffect : Effect, IEffect<CaptureSoulEffect>
     public int CapturePercent { get; init; }
     public int Power { get; init; }
 
-    private CaptureSoulEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int capturePercent, int power)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CaptureSoulEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int capturePercent, int power)
+        : base(id, duration, probability, criteria, effectArea)
     {
         CapturePercent = capturePercent;
         Power = power;

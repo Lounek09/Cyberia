@@ -6,10 +6,10 @@ namespace Cyberia.Salamandra.Commands.Admin;
 
 public sealed class LeaveCommandModule : ApplicationCommandModule
 {
-    [SlashCommand("leave", "[Owner] Quitte un serveur via son id")]
+    [SlashCommand("leave", "[Owner] Leave a guild")]
     [SlashRequireOwner]
     public async Task LeaveCommand(InteractionContext ctx,
-        [Option("id", "Id du serveur discord")]
+        [Option("id", "Guild's id")]
         string guildId)
     {
         try
@@ -19,12 +19,12 @@ public sealed class LeaveCommandModule : ApplicationCommandModule
 
             if (guild.Id != ctx.Guild.Id)
             {
-                await ctx.CreateResponseAsync($"Bot kick du discord {Formatter.Bold(guild.Name)} ({guild.Id}) !");
+                await ctx.CreateResponseAsync($"Bot kick from the guild {Formatter.Bold(guild.Name)} ({guild.Id}) !");
             }
         }
         catch
         {
-            await ctx.CreateResponseAsync("Serveur introuvable");
+            await ctx.CreateResponseAsync("Guild not found");
         }
     }
 }

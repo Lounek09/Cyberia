@@ -9,8 +9,8 @@ public sealed record CharacterUnlearnJobEffect : Effect, IEffect<CharacterUnlear
 {
     public int JobId { get; init; }
 
-    private CharacterUnlearnJobEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int jobId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterUnlearnJobEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int jobId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         JobId = jobId;
     }

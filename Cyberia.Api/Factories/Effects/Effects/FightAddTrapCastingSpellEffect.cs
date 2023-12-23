@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record FightAddTrapCastingSpellEffect : TrapEffect, IEffect<FightAddTrapCastingSpellEffect>
 {
-    private FightAddTrapCastingSpellEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int level)
-        : base(effectId, duration, probability, criteria, effectArea, spellId, level)
+    private FightAddTrapCastingSpellEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int level)
+        : base(id, duration, probability, criteria, effectArea, spellId, level)
     {
 
     }

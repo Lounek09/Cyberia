@@ -8,8 +8,8 @@ public sealed record ItemChangeDurationEffect : Effect, IEffect<ItemChangeDurati
 {
     public DateTime DateTime { get; init; }
 
-    private ItemChangeDurationEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, DateTime dateTime)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemChangeDurationEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, DateTime dateTime)
+        : base(id, duration, probability, criteria, effectArea)
     {
         DateTime = dateTime;
     }

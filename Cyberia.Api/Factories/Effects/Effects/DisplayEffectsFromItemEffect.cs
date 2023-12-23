@@ -9,8 +9,8 @@ public sealed record DisplayEffectsFromItemEffect : Effect, IEffect<DisplayEffec
 {
     public int ItemId { get; init; }
 
-    private DisplayEffectsFromItemEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private DisplayEffectsFromItemEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         ItemId = itemId;
     }

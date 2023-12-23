@@ -10,8 +10,8 @@ public sealed record CharacterBoostOneWeaponDamagePercentEffect : Effect, IEffec
     public int ItemTypeId { get; init; }
     public int PercentDamage { get; init; }
 
-    private CharacterBoostOneWeaponDamagePercentEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId, int percentDamage)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterBoostOneWeaponDamagePercentEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId, int percentDamage)
+        : base(id, duration, probability, criteria, effectArea)
     {
         ItemTypeId = itemTypeId;
         PercentDamage = percentDamage;

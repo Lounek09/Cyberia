@@ -10,8 +10,8 @@ public sealed record SizeEffect : Effect, IEffect<SizeEffect>
     public int MaxSize { get; init; }
     public int ActualSize { get; init; }
 
-    private SizeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max, int actualSize)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private SizeEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max, int actualSize)
+        : base(id, duration, probability, criteria, effectArea)
     {
         MinSize = min;
         MaxSize = max;

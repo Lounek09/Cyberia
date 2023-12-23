@@ -9,8 +9,8 @@ public sealed record ItemLivingMoodEffect : Effect, IEffect<ItemLivingMoodEffect
 {
     public Corpulence Corpulence { get; init; }
 
-    private ItemLivingMoodEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, Corpulence corpulence)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemLivingMoodEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, Corpulence corpulence)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Corpulence = corpulence;
     }

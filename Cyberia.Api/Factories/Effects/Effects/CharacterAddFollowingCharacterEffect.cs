@@ -8,8 +8,8 @@ public sealed record CharacterAddFollowingCharacterEffect : Effect, IEffect<Char
 {
     public int SpriteId { get; init; }
 
-    private CharacterAddFollowingCharacterEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spriteId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterAddFollowingCharacterEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spriteId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         SpriteId = spriteId;
     }

@@ -9,8 +9,8 @@ public sealed record FightSetStateEffect : Effect, IEffect<FightSetStateEffect>
 {
     public int StateId { get; init; }
 
-    private FightSetStateEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int stateId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private FightSetStateEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int stateId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         StateId = stateId;
     }

@@ -9,8 +9,8 @@ public sealed record CharacterManaUseKillLifeFireEffect : Effect, IEffect<Charac
     public int ActionPoints { get; init; }
     public int Damage { get; init; }
 
-    private CharacterManaUseKillLifeFireEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int actionPoints, int damage)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterManaUseKillLifeFireEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int actionPoints, int damage)
+        : base(id, duration, probability, criteria, effectArea)
     {
         ActionPoints = actionPoints;
         Damage = damage;

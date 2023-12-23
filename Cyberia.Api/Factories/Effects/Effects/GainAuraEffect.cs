@@ -8,8 +8,8 @@ public sealed record GainAuraEffect : Effect, IEffect<GainAuraEffect>
 {
     public int AuraId { get; init; }
 
-    private GainAuraEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int auraId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private GainAuraEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int auraId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         AuraId = auraId;
     }

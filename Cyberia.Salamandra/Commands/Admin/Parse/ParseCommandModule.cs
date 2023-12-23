@@ -8,9 +8,9 @@ namespace Cyberia.Salamandra.Commands.Admin;
 
 public sealed class ParseCommandModule : ApplicationCommandModule
 {
-    [SlashCommand("parse", "Parse les stats d'un item")]
+    [SlashCommand("parse", "Parse an item's stats")]
     public async Task ItemParserCommand(InteractionContext ctx,
-        [Option("stats", "Stats de l'item")]
+        [Option("stats", "Item's stats")]
         string value)
     {
         var effects = EffectFactory.GetEffectsParseFromItem(value);
@@ -25,6 +25,6 @@ public sealed class ParseCommandModule : ApplicationCommandModule
             return;
         }
 
-        await ctx.CreateResponseAsync("Valeur incorrect !");
+        await ctx.CreateResponseAsync("Incorrect value");
     }
 }

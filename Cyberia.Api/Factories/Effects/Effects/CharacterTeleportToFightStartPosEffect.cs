@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterTeleportToFightStartPosEffect : ParameterlessEffect, IEffect<CharacterTeleportToFightStartPosEffect>
 {
-    private CharacterTeleportToFightStartPosEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterTeleportToFightStartPosEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+        : base(id, duration, probability, criteria, effectArea)
     {
 
     }

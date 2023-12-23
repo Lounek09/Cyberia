@@ -10,8 +10,8 @@ public sealed record GotoMapEffect : Effect, IEffect<GotoMapEffect>
     public int MapId { get; init; }
     public int Cell { get; init; }
 
-    private GotoMapEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int mapId, int cell)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private GotoMapEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int mapId, int cell)
+        : base(id, duration, probability, criteria, effectArea)
     {
         MapId = mapId;
         Cell = cell;

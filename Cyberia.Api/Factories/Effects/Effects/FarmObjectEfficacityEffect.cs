@@ -8,8 +8,8 @@ public sealed record FarmObjectEfficacityEffect : Effect, IEffect<FarmObjectEffi
 {
     public int Effectiveness { get; init; }
 
-    private FarmObjectEfficacityEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int effectiveness)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private FarmObjectEfficacityEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int effectiveness)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Effectiveness = effectiveness;
     }

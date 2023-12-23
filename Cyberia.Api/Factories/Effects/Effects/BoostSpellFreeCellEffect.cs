@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record BoostSpellFreeCellEffect : SpellModifierEffect, IEffect<BoostSpellFreeCellEffect>
 {
-    private BoostSpellFreeCellEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int value)
-        : base(effectId, duration, probability, criteria, effectArea, spellId, value)
+    private BoostSpellFreeCellEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int value)
+        : base(id, duration, probability, criteria, effectArea, spellId, value)
     {
     
     }

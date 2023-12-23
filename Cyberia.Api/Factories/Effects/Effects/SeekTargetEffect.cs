@@ -8,8 +8,8 @@ public sealed record SeekTargetEffect : Effect, IEffect<SeekTargetEffect>
 {
     public string Name { get; init; }
 
-    private SeekTargetEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private SeekTargetEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Name = name;
     }

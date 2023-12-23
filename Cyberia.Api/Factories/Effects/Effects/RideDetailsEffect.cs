@@ -9,8 +9,8 @@ public sealed record RideDetailsEffect : Effect, IEffect<RideDetailsEffect>
     public int ItemUuid { get; init; }
     public long UnknownId { get; init; } //Fuck long
 
-    private RideDetailsEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemUuid, long unknownId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private RideDetailsEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemUuid, long unknownId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         ItemUuid = itemUuid;
         UnknownId = unknownId;

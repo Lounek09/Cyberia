@@ -8,8 +8,8 @@ public sealed record PvpLadderEffect : Effect, IEffect<PvpLadderEffect>
 {
     public int Count { get; init; }
 
-    private PvpLadderEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int count)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private PvpLadderEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int count)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Count = count;
     }

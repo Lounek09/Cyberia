@@ -10,8 +10,8 @@ public sealed record TeleportCreatureOnSameMapEffect : Effect, IEffect<TeleportC
     public int MonsterId { get; init; }
     public int MaximumDistance { get; init; }
 
-    private TeleportCreatureOnSameMapEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int maximumDistance)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private TeleportCreatureOnSameMapEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int maximumDistance)
+        : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
         MaximumDistance = maximumDistance;

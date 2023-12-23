@@ -8,8 +8,8 @@ public sealed record MarkLegitOwnerEffect : Effect, IEffect<MarkLegitOwnerEffect
 {
     public string Name { get; init; }
 
-    private MarkLegitOwnerEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private MarkLegitOwnerEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Name = name;
     }

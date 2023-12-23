@@ -8,8 +8,8 @@ public sealed record CharacterLifeLostPercentReductorEffect : Effect, IEffect<Ch
 {
     public int PercentReductor { get; init; }
 
-    private CharacterLifeLostPercentReductorEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int percentModerator)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterLifeLostPercentReductorEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int percentModerator)
+        : base(id, duration, probability, criteria, effectArea)
     {
         PercentReductor = percentModerator;
     }

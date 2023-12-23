@@ -9,8 +9,8 @@ public sealed record LaunchSpellLevelEffect : Effect, IEffect<LaunchSpellLevelEf
 {
     public int SpellLevelId { get; init; }
 
-    private LaunchSpellLevelEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellLevelId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private LaunchSpellLevelEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellLevelId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         SpellLevelId = spellLevelId;
     }

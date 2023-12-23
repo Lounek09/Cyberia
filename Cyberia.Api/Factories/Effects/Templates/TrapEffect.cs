@@ -9,8 +9,8 @@ public abstract record TrapEffect : Effect
     public int SpellId { get; init; }
     public int Level { get; init; }
 
-    protected TrapEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int level)
-        : base(effectId, duration, probability, criteria, effectArea)
+    protected TrapEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int level)
+        : base(id, duration, probability, criteria, effectArea)
     {
         SpellId = spellId;
         Level = level;

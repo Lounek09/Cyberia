@@ -12,13 +12,13 @@ namespace Cyberia.Salamandra.Commands.Admin;
 [SlashCommandGroup("search", "Recherche")]
 public sealed class SearchCommandModule : ApplicationCommandModule
 {
-    [SlashCommand("effect", "Recherche où l'effet est utilisé")]
+    [SlashCommand("effect", "Search where the effect is used")]
     public async Task EffectSearchCommand(InteractionContext ctx,
         [Option("Where", "Où chercher l'effet")]
         [Choice("Item", "item")]
         [Choice("Spell", "spell")]
         string where,
-        [Option("Id", "Id de l'effet")]
+        [Option("Id", "Effect id")]
         [Minimum(-1), Maximum(9999)]
         long id)
     {
@@ -29,7 +29,9 @@ public sealed class SearchCommandModule : ApplicationCommandModule
             case "item":
                 foreach (var itemStats in DofusApi.Datacenter.ItemsStatsData.ItemsStats)
                 {
-                    if (itemStats.Value.Effects.Any(x => x.EffectId == id))
+                    var itemHasEffect = itemStats.Value.Effects.Any(x => x.Id == id);
+
+                    if (itemHasEffect)
                     {
                         var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemStats.Key);
                         if (itemData is not null)
@@ -48,7 +50,9 @@ public sealed class SearchCommandModule : ApplicationCommandModule
                 {
                     foreach (var spellLevelData in spells.Value.GetSpellLevelsData())
                     {
-                        if (spellLevelData.Effects.Any(x => x.EffectId == id))
+                        var spellHasEffect = spellLevelData.Effects.Any(x => x.Id == id);
+
+                        if (spellHasEffect)
                         {
                             var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spells.Key);
                             if (spellData is not null)
@@ -66,7 +70,7 @@ public sealed class SearchCommandModule : ApplicationCommandModule
                 }
                 break;
             default:
-                await ctx.CreateResponseAsync($"{Formatter.Bold(where)} inconnu.");
+                await ctx.CreateResponseAsync($"Unknown {Formatter.Bold(where)}");
                 return;
 
         }
@@ -77,13 +81,13 @@ public sealed class SearchCommandModule : ApplicationCommandModule
         await ctx.CreateResponseAsync(embed);
     }
 
-    [SlashCommand("criterion", "Recherche où le critère est utilisé")]
+    [SlashCommand("criterion", "Search where the criterion is used")]
     public async Task CriterionSearchCommand(InteractionContext ctx,
         [Option("Where", "Où chercher l'effet")]
         [Choice("Item", "item")]
         [Choice("Spell", "spell")]
         string where,
-        [Option("Id", "Id du criterion")]
+        [Option("Id", "Criterion id")]
         [MinimumLength(2), MaximumLength(2)]
         string id)
     {
@@ -137,7 +141,7 @@ public sealed class SearchCommandModule : ApplicationCommandModule
                 }
                 break;
             default:
-                await ctx.CreateResponseAsync($"{Formatter.Bold(where)} inconnu.");
+                await ctx.CreateResponseAsync($"Unknown {Formatter.Bold(where)}");
                 return;
 
         }

@@ -8,8 +8,8 @@ public sealed record ItemLivingLevelEffect : Effect, IEffect<ItemLivingLevelEffe
 {
     public int Experience { get; init; }
 
-    private ItemLivingLevelEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int experience)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemLivingLevelEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int experience)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Experience = experience;
     }

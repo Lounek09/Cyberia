@@ -9,8 +9,8 @@ public sealed record FakeAlignmentEffect : Effect, IEffect<FakeAlignmentEffect>
 {
     public int AlignmentId { get; init; }
 
-    private FakeAlignmentEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int alignmentId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private FakeAlignmentEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int alignmentId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         AlignmentId = alignmentId;
     }

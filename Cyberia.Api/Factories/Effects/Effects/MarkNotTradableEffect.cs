@@ -8,8 +8,8 @@ public sealed record MarkNotTradableEffect : Effect, IEffect<MarkNotTradableEffe
 {
     public DateTime DateTime { get; init; }
 
-    private MarkNotTradableEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, DateTime dateTime)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private MarkNotTradableEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, DateTime dateTime)
+        : base(id, duration, probability, criteria, effectArea)
     {
         DateTime = dateTime;
     }

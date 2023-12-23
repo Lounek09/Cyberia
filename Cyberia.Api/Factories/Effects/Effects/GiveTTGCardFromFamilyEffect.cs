@@ -9,8 +9,8 @@ public sealed record GiveTTGCardFromFamilyEffect : Effect, IEffect<GiveTTGCardFr
 {
     public int TTGFamilyId { get; init; }
 
-    private GiveTTGCardFromFamilyEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int ttgFamilyId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private GiveTTGCardFromFamilyEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int ttgFamilyId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         TTGFamilyId = ttgFamilyId;
     }

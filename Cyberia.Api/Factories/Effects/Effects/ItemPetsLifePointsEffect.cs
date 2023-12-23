@@ -8,8 +8,8 @@ public sealed record ItemPetsLifePointsEffect : Effect, IEffect<ItemPetsLifePoin
 {
     public int LifePoints { get; init; }
 
-    private ItemPetsLifePointsEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int lifePoints)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemPetsLifePointsEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int lifePoints)
+        : base(id, duration, probability, criteria, effectArea)
     {
         LifePoints = lifePoints;
     }

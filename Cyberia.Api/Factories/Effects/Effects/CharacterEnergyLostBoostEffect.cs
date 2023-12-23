@@ -8,8 +8,8 @@ public sealed record CharacterEnergyLossBoostEffect : Effect, IEffect<CharacterE
 {
     public int EnergyLoss { get; init; }
 
-    private CharacterEnergyLossBoostEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int energyLoss)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterEnergyLossBoostEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int energyLoss)
+        : base(id, duration, probability, criteria, effectArea)
     {
         EnergyLoss = energyLoss;
     }

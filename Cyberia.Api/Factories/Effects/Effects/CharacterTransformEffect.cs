@@ -9,8 +9,8 @@ public sealed record CharacterTransformEffect : Effect, IEffect<CharacterTransfo
 {
     public int MonsterId { get; init; }
 
-    private CharacterTransformEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterTransformEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
     }

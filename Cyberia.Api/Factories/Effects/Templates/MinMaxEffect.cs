@@ -8,8 +8,8 @@ public abstract record MinMaxEffect : Effect
     public int Min { get; init; }
     public int Max { get; init; }
 
-    protected MinMaxEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
-        : base(effectId, duration, probability, criteria, effectArea)
+    protected MinMaxEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Min = min;
         Max = max;

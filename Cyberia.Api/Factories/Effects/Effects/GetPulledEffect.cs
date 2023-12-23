@@ -8,8 +8,8 @@ public sealed record GetPulledEffect : Effect, IEffect<GetPulledEffect>
 {
     public int Distance { get; init; }
 
-    private GetPulledEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int distance)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private GetPulledEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int distance)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Distance = distance;
     }

@@ -8,8 +8,8 @@ public sealed record CreatedSinceEffect : Effect, IEffect<CreatedSinceEffect>
 {
     public int Days { get; init; }
 
-    private CreatedSinceEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int days)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CreatedSinceEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int days)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Days = days;
     }

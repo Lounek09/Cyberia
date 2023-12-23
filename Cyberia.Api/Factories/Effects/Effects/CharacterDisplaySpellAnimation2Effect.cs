@@ -8,8 +8,8 @@ public sealed record CharacterDisplaySpellAnimation2Effect : Effect, IEffect<Cha
 {
     public int GfxId { get; init; }
 
-    private CharacterDisplaySpellAnimation2Effect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int gfxId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterDisplaySpellAnimation2Effect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int gfxId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         GfxId = gfxId;
     }

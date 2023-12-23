@@ -9,8 +9,8 @@ public sealed record CharacterLearnSpellLevelEffect : Effect, IEffect<CharacterL
 {
     public int SpellLevelId { get; init; }
 
-    private CharacterLearnSpellLevelEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellLevelId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterLearnSpellLevelEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellLevelId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         SpellLevelId = spellLevelId;
     }

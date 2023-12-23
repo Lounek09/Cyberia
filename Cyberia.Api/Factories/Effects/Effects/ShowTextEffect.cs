@@ -8,8 +8,8 @@ public sealed record ShowTextEffect : Effect, IEffect<ShowTextEffect>
 {
     public string Value { get; init; }
 
-    private ShowTextEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string value)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ShowTextEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string value)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Value = value;
     }

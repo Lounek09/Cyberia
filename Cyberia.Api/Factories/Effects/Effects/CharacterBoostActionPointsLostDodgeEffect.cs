@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterBoostActionPointsLostDodgeEffect : MinMaxEffect, IEffect<CharacterBoostActionPointsLostDodgeEffect>
 {
-    private CharacterBoostActionPointsLostDodgeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
-        : base(effectId, duration, probability, criteria, effectArea, min, max)
+    private CharacterBoostActionPointsLostDodgeEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
+        : base(id, duration, probability, criteria, effectArea, min, max)
     {
     
     }

@@ -10,8 +10,8 @@ public sealed record AddMonsterToFightEffect : Effect, IEffect<AddMonsterToFight
     public int MonsterId { get; init; }
     public int Grade { get; init; }
 
-    private AddMonsterToFightEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int grade)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private AddMonsterToFightEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int grade)
+        : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
         Grade = grade;

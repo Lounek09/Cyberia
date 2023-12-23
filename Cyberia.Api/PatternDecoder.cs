@@ -15,7 +15,7 @@ public static class PatternDecoder
     {
         if (value.Length != 11)
         {
-            throw new ArgumentException("L'ip encodée doit faire 11 caractères");
+            throw new ArgumentException("The encoded IP must be 11 characters long");
         }
 
         var ipCrypt = value[..8];

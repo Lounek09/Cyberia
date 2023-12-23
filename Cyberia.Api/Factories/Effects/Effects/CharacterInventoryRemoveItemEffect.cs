@@ -9,8 +9,8 @@ public sealed record CharacterInventoryRemoveItemEffect : Effect, IEffect<Charac
 {
     public int ItemId { get; init; }
 
-    private CharacterInventoryRemoveItemEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterInventoryRemoveItemEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         ItemId = itemId;
     }

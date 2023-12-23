@@ -11,8 +11,8 @@ public sealed record CharacterGainRideEffect : Effect, IEffect<CharacterGainRide
     public int RideAbilityId { get; init; }
     public bool Infertile { get; init; }
 
-    private CharacterGainRideEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rideId, int rideAbilityId, bool infertile)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterGainRideEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rideId, int rideAbilityId, bool infertile)
+        : base(id, duration, probability, criteria, effectArea)
     {
         RideId = rideId;
         RideAbilityId = rideAbilityId;

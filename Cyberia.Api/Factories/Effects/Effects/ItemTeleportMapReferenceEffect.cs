@@ -6,8 +6,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record ItemTeleportMapReferenceEffect : ParameterlessEffect, IEffect<ItemTeleportMapReferenceEffect>
 {
-    private ItemTeleportMapReferenceEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private ItemTeleportMapReferenceEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+        : base(id, duration, probability, criteria, effectArea)
     {
 
     }

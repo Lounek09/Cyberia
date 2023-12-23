@@ -9,8 +9,8 @@ public sealed record RideGainAbilityEffect : Effect, IEffect<RideGainAbilityEffe
 {
     public int RideAbilityId { get; init; }
 
-    private RideGainAbilityEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rideAbilityId)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private RideGainAbilityEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rideAbilityId)
+        : base(id, duration, probability, criteria, effectArea)
     {
         RideAbilityId = rideAbilityId;
     }

@@ -8,8 +8,8 @@ public sealed record PetsLastMealEffect : Effect, IEffect<PetsLastMealEffect>
 {
     public DateTime DateTime { get; init; }
 
-    private PetsLastMealEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, DateTime dateTime)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private PetsLastMealEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, DateTime dateTime)
+        : base(id, duration, probability, criteria, effectArea)
     {
         DateTime = dateTime;
     }

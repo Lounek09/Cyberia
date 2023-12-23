@@ -11,8 +11,8 @@ public sealed record CharacterPunishmentEffect : Effect, IEffect<CharacterPunish
     public int MaxBoost { get; init; }
     public int Turn { get; init; }
 
-    private CharacterPunishmentEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int boostEffectId, int maxBoost, int turn)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private CharacterPunishmentEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int boostEffectId, int maxBoost, int turn)
+        : base(id, duration, probability, criteria, effectArea)
     {
         BoostEffectId = boostEffectId;
         MaxBoost = maxBoost;

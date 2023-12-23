@@ -8,8 +8,8 @@ public sealed record HuntTargetNameEffect : Effect, IEffect<HuntTargetNameEffect
 {
     public string Name { get; init; }
 
-    private HuntTargetNameEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private HuntTargetNameEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Name = name;
     }

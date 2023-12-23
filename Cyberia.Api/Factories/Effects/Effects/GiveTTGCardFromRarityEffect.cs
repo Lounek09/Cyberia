@@ -9,8 +9,8 @@ public sealed record GiveTTGCardFromRarityEffect : Effect, IEffect<GiveTTGCardFr
 {
     public TTGCardRarity Rarity { get; init; }
 
-    private GiveTTGCardFromRarityEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, TTGCardRarity rarity)
-        : base(effectId, duration, probability, criteria, effectArea)
+    private GiveTTGCardFromRarityEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, TTGCardRarity rarity)
+        : base(id, duration, probability, criteria, effectArea)
     {
         Rarity = rarity;
     }
