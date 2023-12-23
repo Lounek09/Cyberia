@@ -9,6 +9,7 @@ public static class AdminCommandsGroup
         Bot.SlashCommands.RegisterCommands<LeaveCommandModule>(guildId);
         Bot.SlashCommands.RegisterCommands<ParseCommandModule>(guildId);
         Bot.SlashCommands.RegisterCommands<RestartCommandModule>(guildId);
+        Bot.SlashCommands.RegisterCommands<SearchCommandModule>(guildId);
         Bot.SlashCommands.RegisterCommands<TestCommandModule>(guildId);
     }
 }

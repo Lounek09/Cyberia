@@ -364,7 +364,7 @@ public static class EffectFactory
             { 989, SeekTargetEffect.Create },
             { 990, ShowTextEffect.Create },
             { 994, RideInvalidEffect.Create },
-            { 995, RideDetailsEffect.Create }, //Check params and description
+            { 995, RideDetailsEffect.Create }, //Param2 = long, not supported
             { 996, RideOwnerEffect.Create },
             { 997, RideNameEffect.Create },
             { 998, RideCertificateValidityEffect.Create },

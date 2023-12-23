@@ -11,7 +11,7 @@ public sealed class ParseCommandModule : ApplicationCommandModule
     [SlashCommand("parse", "Parse les stats d'un item")]
     public async Task ItemParserCommand(InteractionContext ctx,
         [Option("stats", "Stats de l'item")]
-            string value)
+        string value)
     {
         var effects = EffectFactory.GetEffectsParseFromItem(value);
 
