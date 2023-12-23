@@ -1,9 +1,7 @@
 ﻿using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.Spells;
-using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Values;
 
-using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Breeds;

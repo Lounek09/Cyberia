@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Cyberia.Salamandra/Commands/Admin/Test/TestCommandModule.cs

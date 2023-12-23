@@ -21,7 +21,19 @@ public sealed class SpellsData : IDofusData
 
     internal static SpellsData Load()
     {
-        return Datacenter.LoadDataFromFile<SpellsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        var data = Datacenter.LoadDataFromFile<SpellsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+
+        foreach (var pair in data.Spells)
+        {
+            var i = 1;
+            foreach (var spellLevelData in pair.Value.GetSpellLevelsData())
+            {
+                spellLevelData.SpellData = pair.Value;
+                spellLevelData.Rank = i++;
+            }
+        }
+
+        return data;
     }
 
     public SpellData? GetSpellDataById(int id)
@@ -47,14 +59,8 @@ public sealed class SpellsData : IDofusData
     {
         foreach (var spellData in Spells.Values)
         {
-            for (var i = 1; i <= 6; i++)
+            foreach (var spellLevelData in spellData.GetSpellLevelsData())
             {
-                var spellLevelData = spellData.GetSpellLevelData(i);
-                if (spellLevelData is null)
-                {
-                    break;
-                }
-
                 if (spellLevelData.Id == id)
                 {
                     return spellLevelData;

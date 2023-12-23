@@ -1,9 +1,7 @@
 ﻿using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.JsonConverters;
 
-using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.ItemSets;
@@ -55,7 +53,7 @@ public sealed class ItemSetData : IDofusData<int>
 
     public IEnumerable<IEffect> GetEffects(int nbItem)
     {
-        var index = nbItem - 2;
+        var index = nbItem - 1;
 
         return Effects.Count > index && index >= 0 ? Effects[index] : [];
     }

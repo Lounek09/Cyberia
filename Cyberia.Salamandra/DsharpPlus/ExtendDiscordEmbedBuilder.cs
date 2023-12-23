@@ -221,8 +221,8 @@ public static class ExtendDiscordEmbedBuilder
 
             var emoji = effect switch
             {
-                AddStateEffect addStateEffect => Emojis.State(addStateEffect.StateId),
-                RemoveStateEffect removeStateEffect => Emojis.State(removeStateEffect.StateId),
+                FightSetStateEffect addStateEffect => Emojis.State(addStateEffect.StateId),
+                FightUnsetStateEffect removeStateEffect => Emojis.State(removeStateEffect.StateId),
                 _ => Emojis.Effect(effect.EffectId)
             };
 

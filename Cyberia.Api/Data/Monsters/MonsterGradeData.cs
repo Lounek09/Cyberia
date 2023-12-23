@@ -1,7 +1,4 @@
-﻿using Cyberia.Api.JsonConverters;
-
-using System.Collections.ObjectModel;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Monsters;
 
@@ -22,10 +19,17 @@ public sealed class MonsterGradeData : IDofusData
     [JsonPropertyName("mp")]
     public int? MovementPoint { get; init; }
 
+    [JsonIgnore]
+    public MonsterData MonsterData { get; internal set; }
+
+    [JsonIgnore]
+    public int Rank { get; internal set; }
+
     [JsonConstructor]
     internal MonsterGradeData()
     {
         Resistances = [];
+        MonsterData = new();
     }
 
     public int GetNeutralResistance()

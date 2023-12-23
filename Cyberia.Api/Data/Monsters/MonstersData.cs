@@ -35,6 +35,16 @@ public sealed class MonstersData : IDofusData
         var data = Datacenter.LoadDataFromFile<MonstersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
         var customData = Datacenter.LoadDataFromFile<MonstersCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
 
+        foreach (var pair in data.Monsters)
+        {
+            var i = 1;
+            foreach (var monsterGradeData in pair.Value.GetMonsterGradesData())
+            {
+                monsterGradeData.MonsterData = pair.Value;
+                monsterGradeData.Rank = i++;
+            }
+        }
+
         foreach (var monsterCustomData in customData.MonstersCustom)
         {
             var monsterData = data.GetMonsterDataById(monsterCustomData.Id);

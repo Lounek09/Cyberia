@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
@@ -26,14 +27,12 @@ public sealed record LaunchSpellLevelEffect : Effect, IEffect<LaunchSpellLevelEf
 
     public Description GetDescription()
     {
-        var spellLevel = GetSpellLevelData();
-        if (spellLevel is null)
+        var spellLevelData = GetSpellLevelData();
+        if (spellLevelData is null)
         {
             return GetDescription($"{nameof(SpellLevelData)} {PatternDecoder.Description(Resources.Unknown_Data, SpellLevelId)}", 0);
         }
 
-        var spellName = DofusApi.Datacenter.SpellsData.GetSpellNameById(spellLevel.SpellId);
-
-        return GetDescription(spellName, spellLevel.Level);
+        return GetDescription(spellLevelData.SpellData.Name, spellLevelData.Rank);
     }
 }

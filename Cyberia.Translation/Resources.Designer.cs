@@ -2221,29 +2221,29 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Téléporte devant un enclos de guilde.
+        ///   Looks up a localized string similar to Enclos.
         /// </summary>
-        public static string GuildTeleportation_Enclosure {
+        public static string GuildStructure_Enclosure {
             get {
-                return ResourceManager.GetString("GuildTeleportation.Enclosure", resourceCulture);
+                return ResourceManager.GetString("GuildStructure.Enclosure", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Téléporte dans une maison de guilde.
+        ///   Looks up a localized string similar to Maison.
         /// </summary>
-        public static string GuildTeleportation_House {
+        public static string GuildStructure_House {
             get {
-                return ResourceManager.GetString("GuildTeleportation.House", resourceCulture);
+                return ResourceManager.GetString("GuildStructure.House", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Téléporte nul part.
+        ///   Looks up a localized string similar to Structure inconnu.
         /// </summary>
-        public static string GuildTeleportation_None {
+        public static string GuildStructure_None {
             get {
-                return ResourceManager.GetString("GuildTeleportation.None", resourceCulture);
+                return ResourceManager.GetString("GuildStructure.None", resourceCulture);
             }
         }
         
@@ -2622,6 +2622,42 @@ namespace Cyberia.Translation {
         public static string SpellType_Utility {
             get {
                 return ResourceManager.GetString("SpellType.Utility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commune.
+        /// </summary>
+        public static string TTGCardRarity_Common {
+            get {
+                return ResourceManager.GetString("TTGCardRarity.Common", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Épique.
+        /// </summary>
+        public static string TTGCardRarity_Epic {
+            get {
+                return ResourceManager.GetString("TTGCardRarity.Epic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rare.
+        /// </summary>
+        public static string TTGCardRarity_Rare {
+            get {
+                return ResourceManager.GetString("TTGCardRarity.Rare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ultime.
+        /// </summary>
+        public static string TTGCardRarity_Ultimate {
+            get {
+                return ResourceManager.GetString("TTGCardRarity.Ultimate", resourceCulture);
             }
         }
         

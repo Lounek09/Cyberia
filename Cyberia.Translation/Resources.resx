@@ -837,14 +837,14 @@
   <data name="GiveItemTarget.TargetCheckTarget" xml:space="preserve">
     <value>Cible, check cible</value>
   </data>
-  <data name="GuildTeleportation.Enclosure" xml:space="preserve">
-    <value>Téléporte devant un enclos de guilde</value>
+  <data name="GuildStructure.Enclosure" xml:space="preserve">
+    <value>Enclos</value>
   </data>
-  <data name="GuildTeleportation.House" xml:space="preserve">
-    <value>Téléporte dans une maison de guilde</value>
+  <data name="GuildStructure.House" xml:space="preserve">
+    <value>Maison</value>
   </data>
-  <data name="GuildTeleportation.None" xml:space="preserve">
-    <value>Téléporte nul part</value>
+  <data name="GuildStructure.None" xml:space="preserve">
+    <value>Structure inconnu</value>
   </data>
   <data name="Infertile" xml:space="preserve">
     <value>Stérile</value>
@@ -971,6 +971,18 @@
   </data>
   <data name="SpellType.Utility" xml:space="preserve">
     <value>Utilitaire</value>
+  </data>
+  <data name="TTGCardRarity.Common" xml:space="preserve">
+    <value>Commune</value>
+  </data>
+  <data name="TTGCardRarity.Epic" xml:space="preserve">
+    <value>Épique</value>
+  </data>
+  <data name="TTGCardRarity.Rare" xml:space="preserve">
+    <value>Rare</value>
+  </data>
+  <data name="TTGCardRarity.Ultimate" xml:space="preserve">
+    <value>Ultime</value>
   </data>
   <data name="Unknown.Data" xml:space="preserve">
     <value>Inconnu (#1)</value>

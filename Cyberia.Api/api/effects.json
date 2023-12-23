@@ -57,8 +57,8 @@
       "o": ""
     },
     {
-      "id": 35,
-      "d": "Quête #3",
+      "id": 34,
+      "d": "Commence la quête #3",
       "c": 0,
       "o": ""
     },
@@ -160,7 +160,7 @@
     },
     {
       "id": 90,
-      "d": "Donne #1{~1~2 à }#2 % de sa vie",
+      "d": "Donne #1{~1~2 à }#2% de sa vie",
       "c": 0,
       "o": "",
       "j": true
@@ -657,28 +657,28 @@
     },
     {
       "id": 160,
-      "d": "+#1{~1~2 à }#2 % de chance d'esquiver les pertes de PA",
+      "d": "+#1{~1~2 à }#2% de chance d'esquiver les pertes de PA",
       "c": 27,
       "o": "+",
       "j": true
     },
     {
       "id": 161,
-      "d": "+#1{~1~2 à }#2 % de chance d'esquiver les pertes de PM",
+      "d": "+#1{~1~2 à }#2% de chance d'esquiver les pertes de PM",
       "c": 28,
       "o": "+",
       "j": true
     },
     {
       "id": 162,
-      "d": "-#1{~1~2 à }#2 % de chance d'esquiver les pertes de PA",
+      "d": "-#1{~1~2 à }#2% de chance d'esquiver les pertes de PA",
       "c": 27,
       "o": "-",
       "j": true
     },
     {
       "id": 163,
-      "d": "-#1{~1~2 à }#2 % de chance d'esquiver les pertes de PM",
+      "d": "-#1{~1~2 à }#2% de chance d'esquiver les pertes de PM",
       "c": 28,
       "o": "-",
       "j": true
@@ -704,7 +704,7 @@
     },
     {
       "id": 168,
-      "d": "-#1{~1~2 à -}#2 PA",
+      "d": "-#1{~1~2 à -}#2 PA inesquivable",
       "c": 1,
       "o": "-",
       "j": true
@@ -859,7 +859,7 @@
     },
     {
       "id": 194,
-      "d": "Gagner #1{~1~2 à }#2 kamas",
+      "d": "Gagne #1{~1~2 à }#2 kamas",
       "c": 0,
       "o": "+",
       "t": true,
@@ -874,7 +874,7 @@
     },
     {
       "id": 201,
-      "d": "Pose un objet au sol",
+      "d": "Pose un objet au sol (#3)",
       "c": 0,
       "o": ""
     },
@@ -892,7 +892,7 @@
     },
     {
       "id": 206,
-      "d": "Ressuscite la cible (+#3 points d'énergie)",
+      "d": "Ressuscite la cible avec #3 points d'énergie)",
       "c": 0,
       "o": "",
       "t": true
@@ -905,7 +905,7 @@
     },
     {
       "id": 210,
-      "d": "#1{~1~2 à }#2 % de résistance à la terre",
+      "d": "#1{~1~2 à }#2% de résistance à la terre",
       "c": 33,
       "o": "+",
       "t": true,
@@ -913,7 +913,7 @@
     },
     {
       "id": 211,
-      "d": "#1{~1~2 à }#2 % de résistance à l'eau",
+      "d": "#1{~1~2 à }#2% de résistance à l'eau",
       "c": 35,
       "o": "+",
       "t": true,
@@ -921,7 +921,7 @@
     },
     {
       "id": 212,
-      "d": "#1{~1~2 à }#2 % de résistance à l'air",
+      "d": "#1{~1~2 à }#2% de résistance à l'air",
       "c": 36,
       "o": "+",
       "t": true,
@@ -929,7 +929,7 @@
     },
     {
       "id": 213,
-      "d": "#1{~1~2 à }#2 % de résistance au feu",
+      "d": "#1{~1~2 à }#2% de résistance au feu",
       "c": 34,
       "o": "+",
       "t": true,
@@ -937,7 +937,7 @@
     },
     {
       "id": 214,
-      "d": "#1{~1~2 à }#2 % de résistance neutre",
+      "d": "#1{~1~2 à }#2% de résistance neutre",
       "c": 37,
       "o": "+",
       "t": true,
@@ -945,7 +945,7 @@
     },
     {
       "id": 215,
-      "d": "#1{~1~2 à }#2 % de faiblesse face à la terre",
+      "d": "#1{~1~2 à }#2% de faiblesse face à la terre",
       "c": 33,
       "o": "-",
       "t": true,
@@ -953,7 +953,7 @@
     },
     {
       "id": 216,
-      "d": "#1{~1~2 à }#2 % de faiblesse face à l'eau ",
+      "d": "#1{~1~2 à }#2% de faiblesse face à l'eau ",
       "c": 35,
       "o": "-",
       "t": true,
@@ -961,7 +961,7 @@
     },
     {
       "id": 217,
-      "d": "#1{~1~2 à }#2 % de faiblesse face à l'air",
+      "d": "#1{~1~2 à }#2% de faiblesse face à l'air",
       "c": 36,
       "o": "-",
       "t": true,
@@ -969,7 +969,7 @@
     },
     {
       "id": 218,
-      "d": "#1{~1~2 à }#2 % de faiblesse face au feu",
+      "d": "#1{~1~2 à }#2% de faiblesse face au feu",
       "c": 34,
       "o": "-",
       "t": true,
@@ -977,7 +977,7 @@
     },
     {
       "id": 219,
-      "d": "#1{~1~2 à }#2 % de faiblesse neutre",
+      "d": "#1{~1~2 à }#2% de faiblesse neutre",
       "c": 37,
       "o": "-",
       "t": true,
@@ -1135,7 +1135,7 @@
     },
     {
       "id": 250,
-      "d": "#1{~1~2 à }#2 % de res. terre face aux combattants ",
+      "d": "#1{~1~2 à }#2% de res. terre face aux combattants ",
       "c": 59,
       "o": "+",
       "t": true,
@@ -1143,7 +1143,7 @@
     },
     {
       "id": 251,
-      "d": "#1{~1~2 à }#2 % de res. eau face aux combattants",
+      "d": "#1{~1~2 à }#2% de res. eau face aux combattants",
       "c": 61,
       "o": "+",
       "t": true,
@@ -1151,7 +1151,7 @@
     },
     {
       "id": 252,
-      "d": "#1{~1~2 à }#2 % de res. air face aux combattants",
+      "d": "#1{~1~2 à }#2% de res. air face aux combattants",
       "c": 62,
       "o": "+",
       "t": true,
@@ -1159,7 +1159,7 @@
     },
     {
       "id": 253,
-      "d": "#1{~1~2 à }#2 % de res. feu face aux combattants",
+      "d": "#1{~1~2 à }#2% de res. feu face aux combattants",
       "c": 60,
       "o": "+",
       "t": true,
@@ -1167,7 +1167,7 @@
     },
     {
       "id": 254,
-      "d": "#1{~1~2 à }#2 % de res. neutre face aux combattants",
+      "d": "#1{~1~2 à }#2% de res. neutre face aux combattants",
       "c": 63,
       "o": "+",
       "t": true,
@@ -1175,7 +1175,7 @@
     },
     {
       "id": 255,
-      "d": "#1{~1~2 à }#2 % de faiblesse terre face aux combattants",
+      "d": "#1{~1~2 à }#2% de faiblesse terre face aux combattants",
       "c": 59,
       "o": "-",
       "t": true,
@@ -1183,7 +1183,7 @@
     },
     {
       "id": 256,
-      "d": "#1{~1~2 à }#2 % de faiblesse eau face aux combattants",
+      "d": "#1{~1~2 à }#2% de faiblesse eau face aux combattants",
       "c": 61,
       "o": "-",
       "t": true,
@@ -1191,7 +1191,7 @@
     },
     {
       "id": 257,
-      "d": "#1{~1~2 à }#2 % de faiblesse air face aux combattants",
+      "d": "#1{~1~2 à }#2% de faiblesse air face aux combattants",
       "c": 62,
       "o": "-",
       "t": true,
@@ -1199,7 +1199,7 @@
     },
     {
       "id": 258,
-      "d": "#1{~1~2 à }#2 % de faiblesse feu face aux combattants",
+      "d": "#1{~1~2 à }#2% de faiblesse feu face aux combattants",
       "c": 60,
       "o": "-",
       "t": true,
@@ -1207,7 +1207,7 @@
     },
     {
       "id": 259,
-      "d": "#1{~1~2 à }#2 % de faiblesse neutre face aux combattants",
+      "d": "#1{~1~2 à }#2% de faiblesse neutre face aux combattants",
       "c": 63,
       "o": "-",
       "t": true,
@@ -1338,6 +1338,13 @@
       "j": true
     },
     {
+      "id": 280,
+      "d": "Diminue la portée minimale du sort #1 de #3",
+      "c": 0,
+      "o": "+",
+      "t": true
+    },
+    {
       "id": 281,
       "d": "Augmente la portée du sort #1 de #3",
       "c": 0,
@@ -1434,15 +1441,39 @@
       "o": "-"
     },
     {
-      "id": 300,
-      "d": "Lance le sort #1 (level #2)",
-      "c": 29,
-      "o": "/"
+      "id": 295,
+      "d": "Augment la portée minimale du sort #1 de #3",
+      "c": 0,
+      "o": "-"
     },
     {
-      "id": 310,
-      "d": "Effet 310 inconnu (#1, #2, #3, #4)",
+      "id": 296,
+      "d": "Augmente le coût en PA du sort #1 de #3",
       "c": 0,
+      "o": "-"
+    },
+    {
+      "id": 297,
+      "d": "Désactive le lancer du sort #1 sur une case occupée",
+      "c": 0,
+      "o": "-"
+    },
+    {
+      "id": 298,
+      "d": "Désactive le lancer du sort #1 sur une case libre",
+      "c": 0,
+      "o": "-"
+    },
+    {
+      "id": 299,
+      "d": "Active le lancer du sort #1 sur une case libre",
+      "c": 0,
+      "o": "+"
+    },
+    {
+      "id": 300,
+      "d": "Lance #1 au rang #2",
+      "c": 29,
       "o": "/"
     },
     {
@@ -1454,7 +1485,7 @@
     },
     {
       "id": 333,
-      "d": "Change une couleur",
+      "d": "Change la couleur #1 par #2",
       "c": 38,
       "o": "",
       "t": true
@@ -1491,15 +1522,9 @@
     },
     {
       "id": 406,
-      "d": "[wip]Enlève les effets du sort %1",
+      "d": "Enlève les effets du sort #3",
       "c": 0,
       "o": ""
-    },
-    {
-      "id": 502,
-      "d": "Effet 502 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": "+"
     },
     {
       "id": 513,
@@ -1507,30 +1532,6 @@
       "c": 0,
       "o": "",
       "t": true
-    },
-    {
-      "id": 514,
-      "d": "Effet 514 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": "+"
-    },
-    {
-      "id": 515,
-      "d": "Effet 515 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": "+"
-    },
-    {
-      "id": 516,
-      "d": "Effet 516 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": "+"
-    },
-    {
-      "id": 517,
-      "d": "Effet 517 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": "+"
     },
     {
       "id": 521,
@@ -1567,7 +1568,7 @@
     },
     {
       "id": 604,
-      "d": "Apprend le sort #1 (level #2)",
+      "d": "Apprend le sort #1 au rang #2",
       "c": 0,
       "o": "",
       "t": true
@@ -1646,7 +1647,7 @@
     },
     {
       "id": 614,
-      "d": "+ #1 d'XP dans le métier #2",
+      "d": "+#1 d'XP dans le métier #2",
       "c": 0,
       "o": "+",
       "t": true
@@ -1701,14 +1702,8 @@
       "t": true
     },
     {
-      "id": 625,
-      "d": "Effet 625 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": "/"
-    },
-    {
       "id": 626,
-      "d": "Effet 626 inconnu (#1, #2, #3, #4)",
+      "d": "Réinitialise les caractéristiques",
       "c": 0,
       "o": "/"
     },
@@ -1727,10 +1722,11 @@
       "t": true
     },
     {
-      "id": 631,
-      "d": "Effet 631 inconnu (#1, #2, #3, #4)",
+      "id": 629,
+      "d": "Apprend le sort #3",
       "c": 0,
-      "o": ""
+      "o": "",
+      "t": true
     },
     {
       "id": 640,
@@ -1762,7 +1758,7 @@
     },
     {
       "id": 645,
-      "d": "Ressuscite les alliés présents sur la carte",
+      "d": "Ressuscite les alliés présents sur la carte avec #3 points d'énergie",
       "c": 0,
       "o": "+",
       "t": true
@@ -1795,12 +1791,6 @@
       "c": 0,
       "o": "/",
       "t": true
-    },
-    {
-      "id": 654,
-      "d": "Effet 654 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": "+"
     },
     {
       "id": 666,
@@ -1921,8 +1911,15 @@
       "o": ""
     },
     {
+      "id": 722,
+      "d": "Apprend temporairement le sort #3 au rang #2",
+      "c": 0,
+      "o": "",
+      "t": true
+    },
+    {
       "id": 723,
-      "d": "Effet 723 inconnu (#1, #2, #3, #4)",
+      "d": "Ajoute l'aura #3",
       "c": 0,
       "o": ""
     },
@@ -1949,20 +1946,20 @@
     },
     {
       "id": 731,
-      "d": "Agresse les joueurs de l'alignement ennemi automatiquement",
+      "d": "Agresse les joueurs de l'alignement ennemi automatiquement à une distance de #1 case(s) maximum",
       "c": 0,
       "o": "",
       "t": true
     },
     {
       "id": 740,
-      "d": "Poids maximum de fragments ajoutables : #3",
+      "d": "Poids maximum de fragments ajoutable : #3",
       "c": 0,
       "o": ""
     },
     {
       "id": 741,
-      "d": "Effet 741 inconnu (#1, #2, #3, #4)",
+      "d": "Poids total de fragments ajouté : #3",
       "c": 0,
       "o": ""
     },
@@ -2050,7 +2047,7 @@
     },
     {
       "id": 780,
-      "d": "Invoque le dernier allié mort avec #1{~1~2 à }#2 % de ses PDV",
+      "d": "Invoque le dernier allié mort avec #1{~1~2 à }#2% de ses PDV",
       "c": 0,
       "o": "+",
       "j": true
@@ -2081,7 +2078,7 @@
     },
     {
       "id": 785,
-      "d": "Effet 785 inconnu (#1, #2, #3, #4)",
+      "d": "Force le déplacement dans 4 directions",
       "c": 0,
       "o": "/",
       "t": true
@@ -2103,18 +2100,6 @@
       "d": "Châtiment de #2 sur #3 tour(s)",
       "c": 0,
       "o": "+"
-    },
-    {
-      "id": 789,
-      "d": "Effet 789 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": "/"
-    },
-    {
-      "id": 790,
-      "d": "Effet 790 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": ""
     },
     {
       "id": 791,
@@ -2187,29 +2172,11 @@
       "t": true
     },
     {
-      "id": 813,
-      "d": "Effet 813 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": "/"
-    },
-    {
       "id": 814,
       "d": "#1",
       "c": 0,
       "o": "/",
       "t": true
-    },
-    {
-      "id": 815,
-      "d": "Effet 815 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": ""
-    },
-    {
-      "id": 816,
-      "d": "Effet 816 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": "/"
     },
     {
       "id": 825,
@@ -2219,8 +2186,15 @@
       "t": true
     },
     {
+      "id": 826,
+      "d": "Téléporte",
+      "c": 0,
+      "o": "+",
+      "t": true
+    },
+    {
       "id": 830,
-      "d": "Ouvre l'interface de guilde puis #3",
+      "d": "Ouvre l'interface de guilde puis téléporte dans un/une #3",
       "c": 0,
       "o": ""
     },
@@ -2254,12 +2228,6 @@
       "c": 0,
       "o": "/",
       "t": true
-    },
-    {
-      "id": 857,
-      "d": "[NO_TRAD]",
-      "c": 0,
-      "o": ""
     },
     {
       "id": 905,
@@ -2464,7 +2432,7 @@
     },
     {
       "id": 984,
-      "d": "Effet 984 inconnu (#1, #2, #3, #4)",
+      "d": "Propriétaire légitime : #4",
       "c": 0,
       "o": "/"
     },
@@ -2553,7 +2521,7 @@
     },
     {
       "id": 2001,
-      "d": "Gagner #1{~1~2 à }#2 kamas",
+      "d": "Gagne #1{~1~2 à }#2 kamas",
       "c": 0,
       "o": "+",
       "t": true,
@@ -2618,14 +2586,14 @@
     },
     {
       "id": 2107,
-      "d": "Contient une carte Tragic The Gardening",
+      "d": "Contient une carte Tragic The Gardening (#3)",
       "c": 0,
       "o": "",
       "t": true
     },
     {
       "id": 2111,
-      "d": "Diminue de #1 le renvoi de dommages",
+      "d": "Diminue de #1{~1~2 à }#2 le renvoi de dommages",
       "c": 50,
       "o": "-",
       "t": true
@@ -2747,7 +2715,7 @@
     },
     {
       "id": 2135,
-      "d": "#1{~1~2 à -}#2 vol dans toutes les caractéristiques",
+      "d": "#1{~1~2 à }#2 vol dans toutes les caractéristiques",
       "c": 13,
       "o": "",
       "j": true

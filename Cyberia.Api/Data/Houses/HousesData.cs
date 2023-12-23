@@ -3,7 +3,6 @@ using Cyberia.Api.Data.Skills;
 using Cyberia.Api.JsonConverters;
 
 using System.Collections.Frozen;
-using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Houses;

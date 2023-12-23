@@ -113,6 +113,18 @@ public sealed class MonsterData : IDofusData<int>
         };
     }
 
+    public IEnumerable<MonsterGradeData> GetMonsterGradesData()
+    {
+        for (var i = 1; i <= 10; i++)
+        {
+            var monsterGradeData = GetMonsterGradeData(i);
+            if (monsterGradeData is not null)
+            {
+                yield return monsterGradeData;
+            }
+        }
+    }
+
     public int GetMaxGradeNumber()
     {
         for (var i = 10; i > 0; i--)

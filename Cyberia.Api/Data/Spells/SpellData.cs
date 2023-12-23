@@ -103,6 +103,18 @@ public sealed class SpellData : IDofusData<int>
         };
     }
 
+    public IEnumerable<SpellLevelData> GetSpellLevelsData()
+    {
+        for (var i = 1; i <= 6; i++)
+        {
+            var spellLevelData = GetSpellLevelData(i);
+            if (spellLevelData is not null)
+            {
+                yield return spellLevelData;
+            }
+        }
+    }
+
     public int GetMaxLevelNumber()
     {
         for (var i = 6; i > 0; i--)

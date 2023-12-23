@@ -20,7 +20,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
     private readonly List<ItemData> _itemsData;
     private readonly BreedData? _breedData;
 
-    public ItemSetMessageBuilder(ItemSetData itemSetData, int nbItemSelected = 2)
+    public ItemSetMessageBuilder(ItemSetData itemSetData, int nbItemSelected)
     {
         _itemSetData = itemSetData;
         _nbItemSelected = nbItemSelected;
@@ -99,7 +99,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
     {
         List<DiscordButtonComponent> components = [];
 
-        for (var i = 2; i < _itemSetData.ItemsId.Count + 1 && i < 7; i++)
+        for (var i = 1; i < _itemSetData.ItemsId.Count + 1 && i < 6; i++)
         {
             components.Add(new(ButtonStyle.Primary, GetPacket(_itemSetData.Id, i), $"{i}/{_itemSetData.ItemsId.Count}", _nbItemSelected == i));
         }
@@ -111,7 +111,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
     {
         List<DiscordButtonComponent> components = [];
 
-        for (var i = 7; i < _itemSetData.ItemsId.Count + 1 && i < 10; i++)
+        for (var i = 6; i < _itemSetData.ItemsId.Count + 1 && i < 10; i++)
         {
             components.Add(new(ButtonStyle.Primary, GetPacket(_itemSetData.Id, i), $"{i}/{_itemSetData.ItemsId.Count}", _nbItemSelected == i));
         }

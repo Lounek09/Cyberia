@@ -2,9 +2,7 @@
 using Cyberia.Api.Data.InteractiveObjects;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Jobs;
-using Cyberia.Api.JsonConverters;
 
-using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Skills;

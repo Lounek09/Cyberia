@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Values;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TTG;
 
@@ -11,7 +13,7 @@ public sealed class TTGEntityData : IDofusData<int>
     public int Index { get; init; }
 
     [JsonPropertyName("a")]
-    public int Rarity { get; init; }
+    public TTGCardRarity Rarity { get; init; }
 
     [JsonPropertyName("f")]
     public int TTGFamilyId { get; init; }

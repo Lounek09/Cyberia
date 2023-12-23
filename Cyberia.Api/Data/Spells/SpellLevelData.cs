@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.States;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.Values;
 
 using System.Collections.ObjectModel;
@@ -48,9 +49,9 @@ public sealed class SpellLevelData : IDofusData<int>
 
     public bool CricalFailureEndTheTurn { get; init; }
 
-    public int SpellId { get; internal set; }
+    public SpellData SpellData { get; internal set; }
 
-    public int Level { get; internal set; }
+    public int Rank { get; internal set; }
 
     internal SpellLevelData()
     {
@@ -58,23 +59,19 @@ public sealed class SpellLevelData : IDofusData<int>
         CriticalEffects = ReadOnlyCollection<IEffect>.Empty;
         RequiredStatesId = ReadOnlyCollection<int>.Empty;
         ForbiddenStatesId = ReadOnlyCollection<int>.Empty;
-    }
-
-    public SpellData? GetSpellData()
-    {
-        return DofusApi.Datacenter.SpellsData.GetSpellDataById(SpellId);
+        SpellData = new();
     }
 
     public ReadOnlyCollection<IEffect> GetTrapEffects()
     {
         foreach (var effect in Effects)
         {
-            if (effect is TrapSpellEffect trapSpellEffect)
+            if (effect is TrapEffect trapEffect)
             {
-                var trapSpellData = trapSpellEffect.GetSpellData();
+                var trapSpellData = trapEffect.GetSpellData();
                 if (trapSpellData is not null)
                 {
-                    var trapSpellLevelData = trapSpellData.GetSpellLevelData(trapSpellEffect.Level);
+                    var trapSpellLevelData = trapSpellData.GetSpellLevelData(trapEffect.Level);
                     if (trapSpellLevelData is not null)
                     {
                         return trapSpellLevelData.Effects;
@@ -90,12 +87,12 @@ public sealed class SpellLevelData : IDofusData<int>
     {
         foreach (var effect in Effects)
         {
-            if (effect is GlyphSpellEffect glyphSpellEffect)
+            if (effect is GlyphEffect glyphEffect)
             {
-                var glyphSpellData = glyphSpellEffect.GetSpellData();
+                var glyphSpellData = glyphEffect.GetSpellData();
                 if (glyphSpellData is not null)
                 {
-                    var glyphSpellLevelData = glyphSpellData.GetSpellLevelData(glyphSpellEffect.Level);
+                    var glyphSpellLevelData = glyphSpellData.GetSpellLevelData(glyphEffect.Level);
                     if (glyphSpellLevelData is not null)
                     {
                         return glyphSpellLevelData.Effects;

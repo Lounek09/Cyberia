@@ -3,7 +3,6 @@ using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
 
-using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Incarnations;
@@ -71,7 +70,7 @@ public sealed class IncarnationData : IDofusData<int>
             var itemStatsData = itemData.GetItemStatsData();
             if (itemStatsData is not null)
             {
-                var effects = itemStatsData.Effects.Where(x => x is not ExchangeableEffect).ToList();
+                var effects = itemStatsData.Effects.Where(x => x is not MarkNotTradableEffect).ToList();
                 effects.AddRange(EffectsFromLeveling);
 
                 return effects.AsReadOnly();

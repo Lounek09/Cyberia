@@ -144,8 +144,8 @@ public sealed class ItemData : IDofusData<int>
         var itemStatsData = GetItemStatsData();
 
         var isQuestItem = itemTypeData is not null && itemTypeData.ItemSuperTypeId == ItemSuperTypeData.SUPER_TYPE_QUEST;
-        var isLinkedToAccount = itemStatsData is not null && itemStatsData.Effects.OfType<ExchangeableEffect>().Any(x => x.IsLinkedToAccount());
-        var isUnbreakable = itemStatsData is not null && itemStatsData.Effects.OfType<UnbreakableEffect>().Any();
+        var isLinkedToAccount = itemStatsData is not null && itemStatsData.Effects.OfType<MarkNotTradableEffect>().Any(x => x.IsLinkedToAccount());
+        var isUnbreakable = itemStatsData is not null && itemStatsData.Effects.OfType<ItemUnbreakableEffect>().Any();
 
         return !isQuestItem && !Cursed && !isLinkedToAccount && !isUnbreakable;
     }
