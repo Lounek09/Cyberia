@@ -6,12 +6,12 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record ItemPetsLifePointsEffect : Effect, IEffect<ItemPetsLifePointsEffect>
 {
-    public int Value { get; init; }
+    public int LifePoints { get; init; }
 
-    private ItemPetsLifePointsEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int value)
+    private ItemPetsLifePointsEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int lifePoints)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Value = value;
+        LifePoints = lifePoints;
     }
 
     public static ItemPetsLifePointsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -21,6 +21,6 @@ public sealed record ItemPetsLifePointsEffect : Effect, IEffect<ItemPetsLifePoin
 
     public Description GetDescription()
     {
-        return GetDescription(null, null, Value);
+        return GetDescription(null, null, LifePoints);
     }
 }

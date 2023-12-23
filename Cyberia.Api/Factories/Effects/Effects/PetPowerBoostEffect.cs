@@ -6,12 +6,12 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record PetPowerBoostEffect : Effect, IEffect<PetPowerBoostEffect>
 {
-    public int Value { get; init; }
+    public int Power { get; init; }
 
-    private PetPowerBoostEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int value)
+    private PetPowerBoostEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int power)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Value = value;
+        Power = power;
     }
 
     public static PetPowerBoostEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -21,6 +21,6 @@ public sealed record PetPowerBoostEffect : Effect, IEffect<PetPowerBoostEffect>
 
     public Description GetDescription()
     {
-        return GetDescription(null, null, Value);
+        return GetDescription(null, null, Power);
     }
 }

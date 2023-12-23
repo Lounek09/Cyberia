@@ -6,12 +6,12 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record GetPulledEffect : Effect, IEffect<GetPulledEffect>
 {
-    public int Value { get; init; }
+    public int Distance { get; init; }
 
-    private GetPulledEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int value)
+    private GetPulledEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int distance)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Value = value;
+        Distance = distance;
     }
 
     public static GetPulledEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -21,6 +21,6 @@ public sealed record GetPulledEffect : Effect, IEffect<GetPulledEffect>
 
     public Description GetDescription()
     {
-        return GetDescription(Value);
+        return GetDescription(Distance);
     }
 }

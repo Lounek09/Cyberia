@@ -6,12 +6,12 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record ShushuStackRuneWeaponEffect : Effect, IEffect<ShushuStackRuneWeaponEffect>
 {
-    public int Value { get; init; }
+    public int Amont { get; init; }
 
-    private ShushuStackRuneWeaponEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int value)
+    private ShushuStackRuneWeaponEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int amont)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Value = value;
+        Amont = amont;
     }
 
     public static ShushuStackRuneWeaponEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -21,6 +21,6 @@ public sealed record ShushuStackRuneWeaponEffect : Effect, IEffect<ShushuStackRu
 
     public Description GetDescription()
     {
-        return GetDescription(Value);
+        return GetDescription(Amont);
     }
 }

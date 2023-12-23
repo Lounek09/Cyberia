@@ -6,12 +6,12 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record ItemBuffChangeDurationEffect : Effect, IEffect<ItemBuffChangeDurationEffect>
 {
-    public int Value { get; init; }
+    public int TurnDuration { get; init; }
 
-    private ItemBuffChangeDurationEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int value)
+    private ItemBuffChangeDurationEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int turnDuration)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Value = value;
+        TurnDuration = turnDuration;
     }
 
     public static ItemBuffChangeDurationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -21,6 +21,6 @@ public sealed record ItemBuffChangeDurationEffect : Effect, IEffect<ItemBuffChan
 
     public Description GetDescription()
     {
-        return GetDescription(null, null, Value);
+        return GetDescription(null, null, Duration);
     }
 }

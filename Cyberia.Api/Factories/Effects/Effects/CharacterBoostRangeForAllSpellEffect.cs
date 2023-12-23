@@ -6,12 +6,12 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterBoostRangeForAllSpellEffect : Effect, IEffect<CharacterBoostRangeForAllSpellEffect>
 {
-    public int Value { get; init; }
+    public int Range { get; init; }
 
-    private CharacterBoostRangeForAllSpellEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int value)
+    private CharacterBoostRangeForAllSpellEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int range)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Value = value;
+        Range = range;
     }
 
     public static CharacterBoostRangeForAllSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -21,6 +21,6 @@ public sealed record CharacterBoostRangeForAllSpellEffect : Effect, IEffect<Char
 
     public Description GetDescription()
     {
-        return GetDescription(null, null, Value);
+        return GetDescription(null, null, Range);
     }
 }

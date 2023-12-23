@@ -6,12 +6,12 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterReduceWeaponCostEffect : Effect, IEffect<CharacterReduceWeaponCostEffect>
 {
-    public int Value { get; init; }
+    public int ActionPointsReduced { get; init; }
 
-    private CharacterReduceWeaponCostEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int value)
+    private CharacterReduceWeaponCostEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int actionPointsReduced)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Value = value;
+        ActionPointsReduced = actionPointsReduced;
     }
 
     public static CharacterReduceWeaponCostEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -21,6 +21,6 @@ public sealed record CharacterReduceWeaponCostEffect : Effect, IEffect<Character
 
     public Description GetDescription()
     {
-        return GetDescription(null, null, Value);
+        return GetDescription(null, null, ActionPointsReduced);
     }
 }

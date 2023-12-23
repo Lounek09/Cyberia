@@ -6,16 +6,16 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record SizeEffect : Effect, IEffect<SizeEffect>
 {
-    public int Min { get; init; }
-    public int Max { get; init; }
-    public int Value { get; init; }
+    public int MinSize { get; init; }
+    public int MaxSize { get; init; }
+    public int ActualSize { get; init; }
 
-    private SizeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max, int value)
+    private SizeEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max, int actualSize)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Min = min;
-        Max = max;
-        Value = value;
+        MinSize = min;
+        MaxSize = max;
+        ActualSize = actualSize;
     }
 
     public static SizeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -25,6 +25,6 @@ public sealed record SizeEffect : Effect, IEffect<SizeEffect>
 
     public Description GetDescription()
     {
-        return GetDescription(Min, Max, Value);
+        return GetDescription(MinSize, MaxSize, ActualSize);
     }
 }

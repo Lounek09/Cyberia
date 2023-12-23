@@ -8,14 +8,14 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record CharacterPunishmentEffect : Effect, IEffect<CharacterPunishmentEffect>
 {
     public int BoostEffectId { get; init; }
-    public int Value { get; init; }
+    public int MaxBoost { get; init; }
     public int Turn { get; init; }
 
-    private CharacterPunishmentEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int boostEffectId, int value, int turn)
+    private CharacterPunishmentEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int boostEffectId, int maxBoost, int turn)
         : base(effectId, duration, probability, criteria, effectArea)
     {
         BoostEffectId = boostEffectId;
-        Value = value;
+        MaxBoost = maxBoost;
         Turn = turn;
     }
 
@@ -31,6 +31,6 @@ public sealed record CharacterPunishmentEffect : Effect, IEffect<CharacterPunish
 
     public Description GetDescription()
     {
-        return GetDescription(null, Value, Turn);
+        return GetDescription(null, MaxBoost, Turn);
     }
 }

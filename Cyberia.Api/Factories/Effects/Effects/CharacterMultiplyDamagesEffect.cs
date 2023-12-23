@@ -6,12 +6,12 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterMultiplyDamagesEffect : Effect, IEffect<CharacterMultiplyDamagesEffect>
 {
-    public int Value { get; init; }
+    public int Multiplier { get; init; }
 
-    private CharacterMultiplyDamagesEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int value, int casePushed)
+    private CharacterMultiplyDamagesEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int multiplier, int casePushed)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Value = value;
+        Multiplier = multiplier;
     }
 
     public static CharacterMultiplyDamagesEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -21,6 +21,6 @@ public sealed record CharacterMultiplyDamagesEffect : Effect, IEffect<CharacterM
 
     public Description GetDescription()
     {
-        return GetDescription(Value);
+        return GetDescription(Multiplier);
     }
 }

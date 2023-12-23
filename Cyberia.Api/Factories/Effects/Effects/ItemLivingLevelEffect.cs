@@ -6,12 +6,12 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record ItemLivingLevelEffect : Effect, IEffect<ItemLivingLevelEffect>
 {
-    public int Value { get; init; }
+    public int Experience { get; init; }
 
-    private ItemLivingLevelEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int value)
+    private ItemLivingLevelEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int experience)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Value = value;
+        Experience = experience;
     }
 
     public static ItemLivingLevelEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -21,6 +21,6 @@ public sealed record ItemLivingLevelEffect : Effect, IEffect<ItemLivingLevelEffe
 
     public Description GetDescription()
     {
-        return GetDescription(null, null, Value);
+        return GetDescription(null, null, Experience);
     }
 }

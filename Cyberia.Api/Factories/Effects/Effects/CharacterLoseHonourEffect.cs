@@ -6,12 +6,12 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterLoseHonourEffect : Effect, IEffect<CharacterLoseHonourEffect>
 {
-    public int Value { get; init; }
+    public int Honour { get; init; }
 
-    private CharacterLoseHonourEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int value)
+    private CharacterLoseHonourEffect(int effectId, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int honour)
         : base(effectId, duration, probability, criteria, effectArea)
     {
-        Value = value;
+        Honour = honour;
     }
 
     public static CharacterLoseHonourEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
@@ -21,6 +21,6 @@ public sealed record CharacterLoseHonourEffect : Effect, IEffect<CharacterLoseHo
 
     public Description GetDescription()
     {
-        return GetDescription(null, null, Value);
+        return GetDescription(null, null, Honour);
     }
 }
