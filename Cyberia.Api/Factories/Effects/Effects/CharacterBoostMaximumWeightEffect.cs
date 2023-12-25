@@ -4,12 +4,14 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostMaximumWeightEffect : MinMaxEffect, IEffect<CharacterBoostMaximumWeightEffect>
+public sealed record CharacterBoostMaximumWeightEffect : MinMaxEffect, IEffect<CharacterBoostMaximumWeightEffect>, IRuneGeneratorEffect
 {
+    public int RuneId { get; init; }
+
     private CharacterBoostMaximumWeightEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
-    
+        RuneId = 16;
     }
 
     public static CharacterBoostMaximumWeightEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)

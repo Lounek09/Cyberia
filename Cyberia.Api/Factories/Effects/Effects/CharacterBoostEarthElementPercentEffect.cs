@@ -4,12 +4,14 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostEarthElementPercentEffect : MinMaxEffect, IEffect<CharacterBoostEarthElementPercentEffect>
+public sealed record CharacterBoostEarthElementPercentEffect : MinMaxEffect, IEffect<CharacterBoostEarthElementPercentEffect>, IRuneGeneratorEffect
 {
+    public int RuneId { get; init; }
+
     private CharacterBoostEarthElementPercentEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
-    
+        RuneId = 28;
     }
 
     public static CharacterBoostEarthElementPercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)

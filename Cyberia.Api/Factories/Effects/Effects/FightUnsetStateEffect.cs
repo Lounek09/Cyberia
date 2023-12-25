@@ -5,30 +5,16 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record FightUnsetStateEffect : Effect, IEffect<FightUnsetStateEffect>
+public sealed record FightUnsetStateEffect : StateEffect, IEffect<FightUnsetStateEffect>
 {
-    public int StateId { get; init; }
-
     private FightUnsetStateEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int stateId)
-        : base(id, duration, probability, criteria, effectArea)
+        : base(id, duration, probability, criteria, effectArea, stateId)
     {
-        StateId = stateId;
+
     }
 
     public static FightUnsetStateEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
-    }
-
-    public StateData? GetStateData()
-    {
-        return DofusApi.Datacenter.StatesData.GetStateDataById(StateId);
-    }
-
-    public Description GetDescription()
-    {
-        var stateName = DofusApi.Datacenter.StatesData.GetStateNameById(StateId);
-
-        return GetDescription(null, null, stateName);
     }
 }

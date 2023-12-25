@@ -1,5 +1,4 @@
 ﻿using Cyberia.Api;
-using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
@@ -14,14 +13,8 @@ public sealed class TestCommandModule : ApplicationCommandModule
     [SlashRequireOwner]
     public async Task Command(InteractionContext _)
     {
-        var builder = new StringBuilder();
+        await Task.Delay(0);
 
-        builder.Append("Items:\n");
-        foreach (var itemStats in DofusApi.Datacenter.ItemsStatsData.ItemsStats)
-        {
-            await Task.Delay(0);
-
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

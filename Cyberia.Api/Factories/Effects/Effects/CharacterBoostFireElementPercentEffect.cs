@@ -4,12 +4,14 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostFireElementPercentEffect : MinMaxEffect, IEffect<CharacterBoostFireElementPercentEffect>
+public sealed record CharacterBoostFireElementPercentEffect : MinMaxEffect, IEffect<CharacterBoostFireElementPercentEffect>, IRuneGeneratorEffect
 {
+    public int RuneId { get; init; }
+
     private CharacterBoostFireElementPercentEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
-    
+        RuneId = 26;
     }
 
     public static CharacterBoostFireElementPercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)

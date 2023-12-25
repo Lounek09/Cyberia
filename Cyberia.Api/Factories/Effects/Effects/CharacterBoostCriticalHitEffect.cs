@@ -4,12 +4,14 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostCriticalHitEffect : MinMaxEffect, IEffect<CharacterBoostCriticalHitEffect>
+public sealed record CharacterBoostCriticalHitEffect : MinMaxEffect, IEffect<CharacterBoostCriticalHitEffect>, IRuneGeneratorEffect
 {
+    public int RuneId { get; init; }
+
     private CharacterBoostCriticalHitEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
-    
+        RuneId = 9;
     }
 
     public static CharacterBoostCriticalHitEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)

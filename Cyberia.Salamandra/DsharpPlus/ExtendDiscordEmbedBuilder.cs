@@ -4,6 +4,7 @@ using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.Factories.QuestObjectives;
 using Cyberia.Api.Managers;
 
@@ -221,8 +222,7 @@ public static class ExtendDiscordEmbedBuilder
 
             var emoji = effect switch
             {
-                FightSetStateEffect addStateEffect => Emojis.State(addStateEffect.StateId),
-                FightUnsetStateEffect removeStateEffect => Emojis.State(removeStateEffect.StateId),
+                StateEffect stateEffect => Emojis.State(stateEffect.StateId),
                 _ => Emojis.Effect(effect.Id)
             };
 

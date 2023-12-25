@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Admin;
 
-[SlashCommandGroup("search", "Recherche")]
+[SlashCommandGroup("search", "Search")]
 public sealed class SearchCommandModule : ApplicationCommandModule
 {
     [SlashCommand("effect", "Search where the effect is used")]
@@ -22,7 +22,7 @@ public sealed class SearchCommandModule : ApplicationCommandModule
         [Minimum(-1), Maximum(9999)]
         long id)
     {
-        var builder = new StringBuilder();
+        var description = new StringBuilder();
 
         switch (where)
         {
@@ -36,11 +36,11 @@ public sealed class SearchCommandModule : ApplicationCommandModule
                         var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemStats.Key);
                         if (itemData is not null)
                         {
-                            builder.Append("- ");
-                            builder.Append(itemData.Name);
-                            builder.Append(" (");
-                            builder.Append(itemData.Id);
-                            builder.Append(")\n");
+                            description.Append("- ");
+                            description.Append(itemData.Name);
+                            description.Append(" (");
+                            description.Append(itemData.Id);
+                            description.Append(")\n");
                         }
                     }
                 }
@@ -57,11 +57,11 @@ public sealed class SearchCommandModule : ApplicationCommandModule
                             var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spells.Key);
                             if (spellData is not null)
                             {
-                                builder.Append("- ");
-                                builder.Append(spellData.Name);
-                                builder.Append(" (");
-                                builder.Append(spellData.Id);
-                                builder.Append(")\n");
+                                description.Append("- ");
+                                description.Append(spellData.Name);
+                                description.Append(" (");
+                                description.Append(spellData.Id);
+                                description.Append(")\n");
 
                                 break;
                             }
@@ -76,7 +76,7 @@ public sealed class SearchCommandModule : ApplicationCommandModule
         }
 
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, $"Search effect {id} in {where}")
-            .WithDescription(builder.ToString().WithMaxLength(4000));
+            .WithDescription(description.ToString().WithMaxLength(4000));
 
         await ctx.CreateResponseAsync(embed);
     }
@@ -91,7 +91,7 @@ public sealed class SearchCommandModule : ApplicationCommandModule
         [MinimumLength(2), MaximumLength(2)]
         string id)
     {
-        var builder = new StringBuilder();
+        var description = new StringBuilder();
 
         switch (where)
         {
@@ -103,11 +103,11 @@ public sealed class SearchCommandModule : ApplicationCommandModule
 
                     if (itemHasCriterion)
                     {
-                        builder.Append("- ");
-                        builder.Append(items.Value.Name);
-                        builder.Append(" (");
-                        builder.Append(items.Key);
-                        builder.Append(")\n");
+                        description.Append("- ");
+                        description.Append(items.Value.Name);
+                        description.Append(" (");
+                        description.Append(items.Key);
+                        description.Append(")\n");
                     }
                 }
                 break;
@@ -128,11 +128,11 @@ public sealed class SearchCommandModule : ApplicationCommandModule
                             var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spells.Key);
                             if (spellData is not null)
                             {
-                                builder.Append("- ");
-                                builder.Append(spellData.Name);
-                                builder.Append(" (");
-                                builder.Append(spellData.Id);
-                                builder.Append(")\n");
+                                description.Append("- ");
+                                description.Append(spellData.Name);
+                                description.Append(" (");
+                                description.Append(spellData.Id);
+                                description.Append(")\n");
 
                                 break;
                             }
@@ -147,7 +147,7 @@ public sealed class SearchCommandModule : ApplicationCommandModule
         }
 
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, $"Search criterion {id} in {where}")
-            .WithDescription(builder.ToString().WithMaxLength(4000));
+            .WithDescription(description.ToString().WithMaxLength(4000));
 
         await ctx.CreateResponseAsync(embed);
     }

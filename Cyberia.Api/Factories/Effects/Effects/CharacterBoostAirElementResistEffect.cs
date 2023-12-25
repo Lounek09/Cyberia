@@ -4,12 +4,14 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostAirElementResistEffect : MinMaxEffect, IEffect<CharacterBoostAirElementResistEffect>
+public sealed record CharacterBoostAirElementResistEffect : MinMaxEffect, IEffect<CharacterBoostAirElementResistEffect>, IRuneGeneratorEffect
 {
+    public int RuneId { get; init; }
+
     private CharacterBoostAirElementResistEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
-    
+        RuneId = 22;
     }
 
     public static CharacterBoostAirElementResistEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)

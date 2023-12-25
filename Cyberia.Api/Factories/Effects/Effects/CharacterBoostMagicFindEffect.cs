@@ -4,12 +4,14 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostMagicFindEffect : MinMaxEffect, IEffect<CharacterBoostMagicFindEffect>
+public sealed record CharacterBoostMagicFindEffect : MinMaxEffect, IEffect<CharacterBoostMagicFindEffect>, IRuneGeneratorEffect
 {
+    public int RuneId { get; init; }
+
     private CharacterBoostMagicFindEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
-    
+        RuneId = 20;
     }
 
     public static CharacterBoostMagicFindEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)

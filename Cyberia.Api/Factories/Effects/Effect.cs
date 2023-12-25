@@ -2,7 +2,7 @@
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 
-namespace Cyberia.Api.Factories.Effects.Templates;
+namespace Cyberia.Api.Factories.Effects;
 
 public abstract record Effect
 {
