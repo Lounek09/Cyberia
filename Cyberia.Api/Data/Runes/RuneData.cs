@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Values;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Runes;
 
@@ -31,5 +33,16 @@ public sealed class RuneData : IDofusData<int>
     public string GetFullName()
     {
         return PatternDecoder.Description(Resources.Rune, Name);
+    }
+
+    public int GetPower(RuneType type)
+    {
+        return type switch
+        {
+            RuneType.BA => Power,
+            RuneType.PA => Power * 3 + (Id == 4 ? 1 : 0),
+            RuneType.RA => Power * 10,
+            _ => 0,
+        };
     }
 }

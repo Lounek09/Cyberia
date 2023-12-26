@@ -1,23 +1,64 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data.Runes;
 using Cyberia.Api.Managers;
+using Cyberia.Api.Values;
+using Cyberia.Cytrusaurus.Models.FlatBuffers;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+
+using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
+[SlashCommandGroup("rune", "Zizi")]
 public sealed class RuneCommandModule : ApplicationCommandModule
 {
-    [SlashCommand("rune", "Permet de calculer le nombre de rune obtenable d'une stat sur un item")]
-    public async Task Command(InteractionContext ctx,
+    [SlashCommand("item", "Permet de calculer le nombre de rune obtenable depuis un item")]
+    public async Task ItemCommand(InteractionContext ctx,
+        [Option("item", "Nom de l'item", true)]
+        [Autocomplete(typeof(ItemAutocompleteProvider))]
+        string value,
+        [Option("quantite", "Quantité d'item")]
+        [Minimum(1), Maximum(99999)]
+        long qte)
+    {
+        DiscordInteractionResponseBuilder? response = null;
+
+        if (int.TryParse(value, out var itemId))
+        {
+            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemId);
+            if (itemData is not null)
+            {
+                response = await new RuneItemMessageBuilder(itemData, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+        }
+        else
+        {
+            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsData(value).ToList();
+            if (itemsData.Count == 1)
+            {
+                response = await new RuneItemMessageBuilder(itemsData[0], (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+            else if (itemsData.Count > 1)
+            {
+                response = await new PaginatedRuneItemMessageBuilder(itemsData, value, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+            }
+        }
+
+        response ??= new DiscordInteractionResponseBuilder().WithContent("Item introuvable");
+        await ctx.CreateResponseAsync(response);
+    }
+
+    [SlashCommand("stat", "Permet de calculer le nombre de rune obtenable d'une stat sur un item")]
+    public async Task StatCommand(InteractionContext ctx,
         [Option("niveau", "Niveau de l'item")]
         [Minimum(1), Maximum(200)]
-        long itemLevel,
+        long itemLvllong,
         [Option("montant", "Montant de la stat")]
         [Minimum(1), Maximum(9999)]
-        long statAmount,
+        long statAmountlong,
         [Option("rune", "Nom de la rune", true)]
         [Autocomplete(typeof(RuneAutocompleteProvider))]
         string name)
@@ -29,54 +70,51 @@ public sealed class RuneCommandModule : ApplicationCommandModule
             return;
         }
 
-        var percentRuneExtractable = Math.Round(runeData.GetPercentStatExtractable((int)itemLevel, (int)statAmount), 2);
+        var itemLvl = (int)itemLvllong;
+        var statAmount = (int)statAmountlong;
+
+        var percentRuneExtractable = Math.Round(RuneManager.GetPercentStatExtractable(runeData, itemLvl, statAmount), 2);
         if (percentRuneExtractable == -1)
         {
             await ctx.CreateResponseAsync("Une erreur est survenue lors du calcul du % de statistique extractible");
             return;
         }
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur d'obtention de runes")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de runes")
             .WithTitle(runeData.GetFullName());
 
         if (statAmount == 1)
         {
-            embed.WithDescription($"{Emojis.BaRune(runeData.Id)} {Formatter.Bold(percentRuneExtractable.ToString())}% de chance sur un objet de niveau {Formatter.Bold(itemLevel.ToString())}");
+            embed.WithDescription($"{Emojis.BaRune(runeData.Id)} {Formatter.Bold(percentRuneExtractable.ToString())}% de chance sur un objet de niveau {Formatter.Bold(itemLvl.ToString())}");
         }
         else
         {
-            embed.WithDescription($"{Formatter.Bold(percentRuneExtractable.ToString())}% de puissance extractible sur un objet niveau {Formatter.Bold(itemLevel.ToString())} comprenant {Formatter.Bold(statAmount.ToString())} stats");
+            embed.WithDescription($"{Formatter.Bold(percentRuneExtractable.ToString())}% de puissance extractible sur un objet niveau {Formatter.Bold(itemLvl.ToString())} comprenant {Formatter.Bold(statAmount.ToString())} stats");
 
             if (!runeData.HasPa && !runeData.HasRa)
             {
-                var averageAmountStatExtractable = runeData.GetStatAmountExtractable((int)itemLevel, (int)statAmount, RuneManager.AVERAGE_MULTIPLICATOR);
-                var runesAmount = runeData.GetTotalRunesByStatAmontExtractable(averageAmountStatExtractable);
+                var runeBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AVERAGE_MULTIPLICATOR);
 
-                embed.AddField("Moy.", $"{Emojis.BaRune(runeData.Id)} {Formatter.Bold(runesAmount[0].ToString())}");
+                embed.AddField("Moy.", $"{Emojis.BaRune(runeData.Id)} {Formatter.Bold(runeBundle.BaAmount.ToString())}");
             }
             else
             {
-                var minAmountStatExtractable = runeData.GetStatAmountExtractable((int)itemLevel, (int)statAmount, RuneManager.MIN_MULTIPLICATOR);
-                var minRunesAmount = runeData.GetTotalRunesByStatAmontExtractable(minAmountStatExtractable);
+                var minRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.MIN_MULTIPLICATOR);
+                var averageRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AVERAGE_MULTIPLICATOR);
+                var maxRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.MAX_MULTIPLICATOR);
 
-                var averageAmountStatExtractable = runeData.GetStatAmountExtractable((int)itemLevel, (int)statAmount, RuneManager.AVERAGE_MULTIPLICATOR);
-                var averageRunesAmount = runeData.GetTotalRunesByStatAmontExtractable(averageAmountStatExtractable);
+                embed.AddField("Min.", GetRuneBundleTextFieldStatCommand(minRuneBundle), true);
+                embed.AddField("Moy.", GetRuneBundleTextFieldStatCommand(averageRuneBundle), true);
+                embed.AddField("Max.", GetRuneBundleTextFieldStatCommand(maxRuneBundle), true);
 
-                var maxAmountStatExtractable = runeData.GetStatAmountExtractable((int)itemLevel, (int)statAmount, RuneManager.MAX_MULTIPLICATOR);
-                var maxRunesAmount = runeData.GetTotalRunesByStatAmontExtractable(maxAmountStatExtractable);
-
-                embed.AddField("Min.", GetRunesAmountTextField(minRunesAmount, runeData), true);
-                embed.AddField("Moy.", GetRunesAmountTextField(averageRunesAmount, runeData), true);
-                embed.AddField("Max.", GetRunesAmountTextField(maxRunesAmount, runeData), true);
-
-                if (runeData.HasRa && maxRunesAmount[2] == 1 && minRunesAmount[2] == 0)
+                if (runeData.HasRa && maxRuneBundle.RaAmount == 1 && minRuneBundle.RaAmount == 0)
                 {
-                    var percentRaObtention = Math.Round(runeData.GetPercentToObtain(RuneType.RA, (int)itemLevel, (int)statAmount), 2);
+                    var percentRaObtention = Math.Round(RuneManager.GetPercentToObtainRune(runeData, RuneType.RA, itemLvl, statAmount), 2);
                     embed.AddField("Taux Ra :", $"{Emojis.RaRune(runeData.Id)} {Formatter.Bold(percentRaObtention.ToString())}%");
                 }
-                else if (runeData.HasPa && maxRunesAmount[1] == 1 && minRunesAmount[1] == 0)
+                else if (runeData.HasPa && maxRuneBundle.PaAmount == 1 && minRuneBundle.PaAmount == 0)
                 {
-                    var percentPaObtention = Math.Round(runeData.GetPercentToObtain(RuneType.PA, (int)itemLevel, (int)statAmount), 2);
+                    var percentPaObtention = Math.Round(RuneManager.GetPercentToObtainRune(runeData, RuneType.PA, itemLvl, statAmount), 2);
                     embed.AddField("Taux Pa :", $"{Emojis.PaRune(runeData.Id)} {Formatter.Bold(percentPaObtention.ToString())}%");
                 }
             }
@@ -87,20 +125,37 @@ public sealed class RuneCommandModule : ApplicationCommandModule
         await ctx.CreateResponseAsync(embed);
     }
 
-    private static string GetRunesAmountTextField(double[] runesAmount, RuneData rune)
+    private static string GetRuneBundleTextFieldStatCommand(RuneBundle runeBundle)
     {
-        var result = $"{Emojis.BaRune(rune.Id)} {Formatter.Bold(runesAmount[0].ToString())}";
+        var builder = new StringBuilder();
 
-        if (runesAmount[1] > 0)
+        builder.Append(Emojis.BaRune(runeBundle.RuneData.Id));
+        builder.Append(' ');
+        builder.Append(Formatter.Bold(runeBundle.BaAmount.ToStringThousandSeparator()));
+
+        if (runeBundle.RemainingBaPercent > 0)
         {
-            result += $"\n{Emojis.PaRune(rune.Id)} {Formatter.Bold(runesAmount[1].ToString())}";
+            builder.Append('+');
+            builder.Append(runeBundle.RemainingBaPercent);
+            builder.Append('%');
         }
 
-        if (runesAmount[2] > 0)
+        if (runeBundle.PaAmount > 0)
         {
-            result += $"\n{Emojis.RaRune(rune.Id)} {Formatter.Bold(runesAmount[2].ToString())}";
+            builder.Append('\n');
+            builder.Append(Emojis.PaRune(runeBundle.RuneData.Id));
+            builder.Append(' ');
+            builder.Append(Formatter.Bold(runeBundle.PaAmount.ToStringThousandSeparator()));
         }
 
-        return result;
+        if (runeBundle.RaAmount > 0)
+        {
+            builder.Append('\n');
+            builder.Append(Emojis.RaRune(runeBundle.RuneData.Id));
+            builder.Append(' ');
+            builder.Append(Formatter.Bold(runeBundle.RaAmount.ToStringThousandSeparator()));
+        }
+
+        return builder.ToString();
     }
 }

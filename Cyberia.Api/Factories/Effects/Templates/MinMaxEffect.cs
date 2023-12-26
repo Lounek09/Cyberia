@@ -15,6 +15,11 @@ public abstract record MinMaxEffect : Effect
         Max = max;
     }
 
+    public int GetRandomValue()
+    {
+        return Max < Min ? Min : Random.Shared.Next(Min, Max + 1);
+    }
+
     public Description GetDescription()
     {
         return GetDescription(Min, Max == 0 ? null : Max);

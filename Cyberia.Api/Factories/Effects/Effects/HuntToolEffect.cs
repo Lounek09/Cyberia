@@ -14,6 +14,11 @@ public sealed record HuntToolEffect : ParameterlessEffect, IEffect<HuntToolEffec
         RuneId = 31;
     }
 
+    public int GetRandomValue()
+    {
+        return 1;
+    }
+
     public static HuntToolEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea);

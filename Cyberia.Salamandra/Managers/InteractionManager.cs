@@ -37,6 +37,8 @@ public static partial class InteractionManager
         { PaginatedMonsterMessageBuilder.PACKET_HEADER, PaginatedMonsterMessageBuilder.Create },
         { QuestMessageBuilder.PACKET_HEADER, QuestMessageBuilder.Create },
         { PaginatedQuestMessageBuilder.PACKET_HEADER, PaginatedQuestMessageBuilder.Create },
+        { RuneItemMessageBuilder.PACKET_HEADER, RuneItemMessageBuilder.Create },
+        { PaginatedRuneItemMessageBuilder.PACKET_HEADER, PaginatedRuneItemMessageBuilder.Create },
         { SpellMessageBuilder.PACKET_HEADER, SpellMessageBuilder.Create },
         { PaginatedSpellMessageBuilder.PACKET_HEADER, PaginatedSpellMessageBuilder.Create }
     };

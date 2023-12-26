@@ -94,8 +94,9 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     private List<DiscordButtonComponent> LessButtonsBuilder()
     {
-        return new List<DiscordButtonComponent>(3)
+        return new List<DiscordButtonComponent>(4)
         {
+            new(ButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 1000, _recursive), "-1000", (_qte - 1000) < 1),
             new(ButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 100, _recursive), "-100", (_qte - 100) < 1),
             new(ButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 10, _recursive), "-10", (_qte - 10) < 1),
             new(ButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 1, _recursive), "-1", (_qte - 1) < 1)
@@ -104,8 +105,9 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     private List<DiscordButtonComponent> MoreButtonsBuilder()
     {
-        return new List<DiscordButtonComponent>(3)
+        return new List<DiscordButtonComponent>(4)
         {
+            new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1000, _recursive), "+1000"),
             new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 100, _recursive), "+100"),
             new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 10, _recursive), "+10"),
             new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1, _recursive), "+1")

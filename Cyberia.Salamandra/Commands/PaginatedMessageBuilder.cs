@@ -7,7 +7,7 @@ namespace Cyberia.Salamandra.Commands;
 
 public enum PaginatedAction
 {
-    Nothing,
+    None,
     Previous,
     Next
 }

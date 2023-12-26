@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api.Data.Monsters;
 using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.Managers;
 
 using System.Globalization;

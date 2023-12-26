@@ -1,9 +1,5 @@
-﻿using Cyberia.Api;
-
-using DSharpPlus.SlashCommands;
+﻿using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
-
-using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Admin;
 

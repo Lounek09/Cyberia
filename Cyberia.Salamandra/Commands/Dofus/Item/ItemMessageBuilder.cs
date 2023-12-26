@@ -26,10 +26,10 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
     private readonly ItemStatsData? _itemStatsData;
     private readonly PetData? _petData;
     private readonly CraftData? _craftData;
-    private readonly int _craftQte;
     private readonly IncarnationData? _incarnationData;
+    private readonly int _qte;
 
-    public ItemMessageBuilder(ItemData itemData, int craftQte = 1)
+    public ItemMessageBuilder(ItemData itemData, int qte = 1)
     {
         _itemData = itemData;
         _itemTypeData = itemData.GetItemTypeData();
@@ -37,8 +37,8 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         _itemStatsData = itemData.GetItemStatsData();
         _petData = _itemData.ItemTypeId == ItemTypeData.TYPE_PET ? DofusApi.Datacenter.PetsData.GetPetDataByItemId(_itemData.Id) : null;
         _craftData = itemData.GetCraftData();
-        _craftQte = craftQte;
         _incarnationData = _itemData.IsWeapon() ? DofusApi.Datacenter.IncarnationsData.GetIncarnationDataByItemId(_itemData.Id) : null;
+        _qte = qte;
     }
 
     public static ItemMessageBuilder? Create(int version, string[] parameters)
@@ -46,12 +46,12 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         if (version == PACKET_VERSION &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var itemId) &&
-            int.TryParse(parameters[1], out var craftQte))
+            int.TryParse(parameters[1], out var qte))
         {
             var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                return new(itemData, craftQte);
+                return new(itemData, qte);
             }
         }
 
@@ -113,7 +113,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
         if (_craftData is not null)
         {
-            embed.AddCraftField(_craftData, _craftQte);
+            embed.AddCraftField(_craftData, _qte);
         }
 
         StringBuilder miscellaneousBuilder = new();
@@ -167,14 +167,19 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData));
         }
 
-        if (_craftData is not null)
-        {
-            buttons.Add(CraftComponentsBuilder.CraftButtonBuilder(_craftData, _craftQte));
-        }
-
         if (_incarnationData is not null)
         {
             buttons.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData));
+        }
+
+        if (_craftData is not null)
+        {
+            buttons.Add(CraftComponentsBuilder.CraftButtonBuilder(_craftData, _qte));
+        }
+
+        if (_itemStatsData is not null)
+        {
+            buttons.Add(RuneComponentsBuilder.RuneItemButtonBuilder(_itemData, _qte));
         }
 
         return buttons;

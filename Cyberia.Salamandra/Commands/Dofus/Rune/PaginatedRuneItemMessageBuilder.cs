@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Data.Crafts;
+using Cyberia.Api.Data.Items;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -7,32 +7,32 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
-public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<CraftData>
+public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<ItemData>
 {
-    public const string PACKET_HEADER = "PC";
+    public const string PACKET_HEADER = "PR";
     public const int PACKET_VERSION = 1;
 
     private readonly string _search;
     private readonly int _qte;
 
-    public PaginatedCraftMessageBuilder(List<CraftData> craftsData, string search, int qte = 1, int selectedPageIndex = 0)
-        : base(EmbedCategory.Jobs, "Calculateur de crafts", "Plusieurs crafts trouvés :", craftsData, selectedPageIndex)
+    public PaginatedRuneItemMessageBuilder(List<ItemData> itemsData, string search, int qte = 1, int selectedPageIndex = 0)
+        : base(EmbedCategory.Inventory, "Items", "Plusieurs objets trouvés :", itemsData, selectedPageIndex)
     {
         _search = search;
         _qte = qte;
     }
 
-    public static PaginatedCraftMessageBuilder? Create(int version, string[] parameters)
+    public static PaginatedRuneItemMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PACKET_VERSION &&
             parameters.Length > 3 &&
             int.TryParse(parameters[1], out var selectedPageIndex) &&
             int.TryParse(parameters[3], out var qte))
         {
-            var craftsData = DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(parameters[2]).ToList();
-            if (craftsData.Count > 0)
+            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsData(parameters[2]).ToList();
+            if (itemsData.Count > 0)
             {
-                return new(craftsData, parameters[2], qte, selectedPageIndex);
+                return new(itemsData, parameters[2], qte, selectedPageIndex);
             }
         }
 
@@ -46,19 +46,12 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
 
     protected override IEnumerable<string> GetContent()
     {
-        foreach (var craftData in _data)
-        {
-            var itemData = craftData.GetItemData();
-            if (itemData is not null)
-            {
-                yield return $"- Niv.{itemData.Level} {Formatter.Bold(Formatter.Sanitize(itemData.Name))} ({craftData.Id})";
-            }
-        }
+        return _data.Select(x => $"- Niv.{x.Level} {Formatter.Bold(Formatter.Sanitize(x.Name))} ({x.Id})");
     }
 
     protected override DiscordSelectComponent SelectBuilder()
     {
-        return CraftComponentsBuilder.CraftsSelectBuilder(0, _data, _qte);
+        return RuneComponentsBuilder.ItemsSelectBuilder(0, _data, _qte);
     }
 
     protected override string PreviousPacketBuilder()
