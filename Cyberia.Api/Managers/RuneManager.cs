@@ -107,19 +107,21 @@ public static class RuneManager
             {
                 var bundle = GetRuneBundleFromStat(runeData, itemData.Level, effect.GetRandomValue(), multiplicator);
 
+                if (Random.Shared.Next(100) < bundle.RemainingBaPercent)
+                {
+                    bundle.BaAmount++;
+                }
+
+                bundle.RemainingBaPercent = 0;
+
                 if (bundles.TryGetValue(runeData.Id, out var value))
                 {
-                    if (value.RemainingBaPercent + bundle.RemainingBaPercent >= 100)
+                    bundles[runeData.Id] = value with
                     {
-                        bundle.BaAmount++;
-                        bundle.RemainingBaPercent -= 100;
-                    }
-
-                    bundles[runeData.Id] = new RuneBundle(runeData,
-                        value.BaAmount + bundle.BaAmount,
-                        value.PaAmount + bundle.PaAmount,
-                        value.RaAmount + bundle.RaAmount,
-                        value.RemainingBaPercent + bundle.RemainingBaPercent);
+                        BaAmount = value.BaAmount + bundle.BaAmount,
+                        PaAmount = value.PaAmount + bundle.PaAmount,
+                        RaAmount = value.RaAmount + bundle.RaAmount,
+                    };
                 }
                 else
                 {

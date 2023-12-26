@@ -74,13 +74,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
                 continue;
             }
 
-            var baAmount = runeBundle.BaAmount;
-            if (Random.Shared.Next(100) < runeBundle.RemainingBaPercent)
-            {
-                baAmount++;
-            }
-
-            description.Append(Formatter.Bold(baAmount.ToStringThousandSeparator()));
+            description.Append(Formatter.Bold(runeBundle.BaAmount.ToStringThousandSeparator()));
             description.Append(' ');
             description.Append(Emojis.BaRune(runeBundle.RuneData.Id));
 
