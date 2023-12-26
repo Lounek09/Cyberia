@@ -45,7 +45,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
         return null;
     }
 
-    public static string GetPacket(int itemSetId, int nbItemSelected = 2)
+    public static string GetPacket(int itemSetId, int nbItemSelected)
     {
         return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, itemSetId, nbItemSelected);
     }
@@ -99,7 +99,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
     {
         List<DiscordButtonComponent> components = [];
 
-        for (var i = 1; i < _itemSetData.ItemsId.Count + 1 && i < 6; i++)
+        for (var i = 1; i < _itemSetData.Effects.Count + 1 && i < 6; i++)
         {
             components.Add(new(ButtonStyle.Primary, GetPacket(_itemSetData.Id, i), $"{i}/{_itemSetData.ItemsId.Count}", _nbItemSelected == i));
         }
@@ -111,7 +111,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
     {
         List<DiscordButtonComponent> components = [];
 
-        for (var i = 6; i < _itemSetData.ItemsId.Count + 1 && i < 10; i++)
+        for (var i = 6; i < _itemSetData.Effects.Count + 1 && i < 10; i++)
         {
             components.Add(new(ButtonStyle.Primary, GetPacket(_itemSetData.Id, i), $"{i}/{_itemSetData.ItemsId.Count}", _nbItemSelected == i));
         }
