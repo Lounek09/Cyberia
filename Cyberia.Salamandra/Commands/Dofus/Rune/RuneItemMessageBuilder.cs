@@ -14,6 +14,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 {
     public const string PACKET_HEADER = "R";
     public const int PACKET_VERSION = 1;
+    public const int MAX_QTE = 9999;
 
     private readonly ItemData _itemData;
     private readonly int _qte;
@@ -120,10 +121,10 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
     {
         return new List<DiscordButtonComponent>(4)
         {
-            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1000), "+1000"),
-            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 100), "+100"),
-            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 10), "+10"),
-            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1), "+1")
+            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1000), "+1000", _qte + 1000 > MAX_QTE),
+            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 100), "+100", _qte + 100 > MAX_QTE),
+            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 10), "+10", _qte + 10 > MAX_QTE),
+            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1), "+1", _qte + 1 > MAX_QTE)
         };
     }
 

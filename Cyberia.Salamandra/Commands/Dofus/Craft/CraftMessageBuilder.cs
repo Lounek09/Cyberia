@@ -13,6 +13,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 {
     public const string PACKET_HEADER = "CR";
     public const int PACKET_VERSION = 1;
+    public const int MAX_QTE = 99999;
 
     private readonly CraftData _craftData;
     private readonly ItemData? _itemData;
@@ -107,10 +108,10 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
     {
         return new List<DiscordButtonComponent>(4)
         {
-            new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1000, _recursive), "+1000"),
-            new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 100, _recursive), "+100"),
-            new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 10, _recursive), "+10"),
-            new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1, _recursive), "+1")
+            new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1000, _recursive), "+1000", _qte + 1000 > MAX_QTE),
+            new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 100, _recursive), "+100", _qte + 100 > MAX_QTE),
+            new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 10, _recursive), "+10", _qte + 10 > MAX_QTE),
+            new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1, _recursive), "+1", _qte + 1 > MAX_QTE)
         };
     }
 

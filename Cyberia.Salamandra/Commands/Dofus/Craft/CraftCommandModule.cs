@@ -10,7 +10,7 @@ public sealed class CraftCommandModule : ApplicationCommandModule
     [SlashCommand("craft", "Permet de calculer les ressources nécessaires pour craft un objet")]
     public async Task Command(InteractionContext ctx,
         [Option("quantite", "Quantité à craft")]
-        [Minimum(1), Maximum(99999)]
+        [Minimum(1), Maximum(CraftMessageBuilder.MAX_QTE)]
         long qte,
         [Option("nom", "Nom de l'item à craft", true)]
         [Autocomplete(typeof(CraftAutocompleteProvider))]
