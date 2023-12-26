@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Managers;
 using Cyberia.Api.Values;
-using Cyberia.Cytrusaurus.Models.FlatBuffers;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -12,7 +11,7 @@ using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
-[SlashCommandGroup("rune", "Zizi")]
+[SlashCommandGroup("rune", "Permet de calculer les runes obtenues lors d'un brisage")]
 public sealed class RuneCommandModule : ApplicationCommandModule
 {
     [SlashCommand("item", "Permet de calculer le nombre de rune obtenable depuis un item")]

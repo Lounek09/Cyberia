@@ -125,7 +125,7 @@ namespace Cyberia.Cytrusaurus.Models.FlatBuffers
                 return string.Join("\n", output);
             }
 
-            return "Aucune diff�rence";
+            return "Aucune différence";
         }
     }
 }
