@@ -214,7 +214,7 @@ public static class ExtendDiscordEmbedBuilder
                 var itemStatsData = displayEffectsFromItemEffect.GetItemData()?.GetItemStatsData();
                 if (itemStatsData is not null)
                 {
-                    effectsParse.AddRange(GetEffectsParse(itemStatsData.Effects));
+                    effectsParse.AddRange(GetEffectsParse(itemStatsData.Effects, parametersDecorator));
                 }
 
                 continue;
