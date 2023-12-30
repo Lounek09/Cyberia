@@ -68,11 +68,6 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
         foreach (var runeBundle in RuneManager.GetRuneBundlesFromItem(_itemData, _qte))
         {
-            if (runeBundle.BaAmount == 0 && runeBundle.RemainingBaPercent == 0)
-            {
-                continue;
-            }
-
             description.Append(Formatter.Bold(runeBundle.BaAmount.ToStringThousandSeparator()));
             description.Append(' ');
             description.Append(Emojis.BaRune(runeBundle.RuneData.Id));
