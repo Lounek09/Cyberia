@@ -11,7 +11,7 @@ public static class RuneComponentsBuilder
 {
     public static DiscordButtonComponent RuneItemButtonBuilder(ItemData itemData, int qte = 1, bool disable = false)
     {
-        return new(ButtonStyle.Success, RuneItemMessageBuilder.GetPacket(itemData.Id, qte), "Calculateur de rune", disable);
+        return new(ButtonStyle.Success, RuneItemMessageBuilder.GetPacket(itemData.Id, qte), "Calculateur de runes", disable);
     }
 
     public static DiscordSelectComponent ItemsSelectBuilder(int index, List<ItemData> itemsData, int qte, bool disable = false)
