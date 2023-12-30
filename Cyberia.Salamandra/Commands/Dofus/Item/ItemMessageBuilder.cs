@@ -5,6 +5,7 @@ using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.ItemStats;
 using Cyberia.Api.Data.Pets;
+using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
@@ -177,7 +178,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             buttons.Add(CraftComponentsBuilder.CraftButtonBuilder(_craftData, _qte));
         }
 
-        if (_itemStatsData is not null)
+        if (_itemStatsData is not null && _itemStatsData.Effects.OfType<IRuneGeneratorEffect>().Any())
         {
             buttons.Add(RuneComponentsBuilder.RuneItemButtonBuilder(_itemData, _qte));
         }
