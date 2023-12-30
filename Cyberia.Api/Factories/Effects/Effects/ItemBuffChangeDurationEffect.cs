@@ -20,6 +20,6 @@ public sealed record ItemBuffChangeDurationEffect : Effect, IEffect<ItemBuffChan
 
     public Description GetDescription()
     {
-        return GetDescription(null, null, Duration);
+        return GetDescription(null, null, TurnDuration);
     }
 }
