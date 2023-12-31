@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data.Aligments;
+namespace Cyberia.Api.Data.Alignments;
 
 public sealed class AlignmentFeatEffectData : IDofusData<int>
 {

@@ -5,7 +5,7 @@ namespace Cyberia.Api.Data;
 
 public sealed class Datacenter
 {
-    public Aligments.AlignmentsData AlignmentsData { get; init; }
+    public Alignments.AlignmentsData AlignmentsData { get; init; }
     public Audios.AudiosData AudiosData { get; init; }
     public Breeds.BreedsData BreedsData { get; init; }
     public Crafts.CraftsData CraftsData { get; init; }
@@ -45,7 +45,7 @@ public sealed class Datacenter
 
     public Datacenter()
     {
-        AlignmentsData = Aligments.AlignmentsData.Load();
+        AlignmentsData = Alignments.AlignmentsData.Load();
         AudiosData = Audios.AudiosData.Load();
         BreedsData = Breeds.BreedsData.Load();
         CraftsData = Crafts.CraftsData.Load();

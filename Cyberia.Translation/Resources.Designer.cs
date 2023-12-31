@@ -61,6 +61,15 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AlignmentFeatEffet #1 inconnu (#2).
+        /// </summary>
+        public static string AlignmentFeatEffect_Unknown {
+            get {
+                return ResourceManager.GetString("AlignmentFeatEffect.Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Carré.
         /// </summary>
         public static string CardCombination_FourOfAKind {
@@ -1879,7 +1888,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Effet #1 inconnu non référencé (#2).
+        ///   Looks up a localized string similar to Effet #1 inconnu (#2).
         /// </summary>
         public static string Effect_Unknown {
             get {
@@ -2293,7 +2302,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type d&apos;objectif #1 inconnu non référencé (#2).
+        ///   Looks up a localized string similar to Type d&apos;objectif #1 inconnu (#2).
         /// </summary>
         public static string QuestObjectiveType_Unknown {
             get {

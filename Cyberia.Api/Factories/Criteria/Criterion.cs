@@ -20,18 +20,19 @@ public abstract record Criterion(string Id, char Operator)
     protected Description GetDescription(params object[] parameters)
     {
         var descriptionName = GetDescriptionName();
-        var strParameters = Array.ConvertAll(parameters, x => x.ToString() ?? string.Empty);
 
         var descriptionValue = Resources.ResourceManager.GetString(descriptionName);
         if (descriptionValue is null)
         {
+            var commaSeparatedParameters = string.Join(',', parameters);
+
             Log.Warning("No translation for {CriterionDescriptionName} ({RawCriterion})",
                 descriptionName,
-                $"{Id}{Operator}{string.Join(',', strParameters)}");
+                $"{Id}{Operator}{commaSeparatedParameters}");
 
-            return new($"{Id} {Operator} #1", strParameters);
+            return new($"{Id} {Operator} #1", commaSeparatedParameters);
         }
 
-        return new(descriptionValue, strParameters);
+        return new(descriptionValue, Array.ConvertAll(parameters, x => x.ToString() ?? string.Empty));
     }
 }

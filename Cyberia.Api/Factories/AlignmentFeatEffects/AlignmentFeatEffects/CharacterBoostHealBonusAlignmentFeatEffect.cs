@@ -1,0 +1,27 @@
+﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
+
+public sealed record CharacterBoostHealBonusAlignmentFeatEffect : AlignmentFeatEffect, IAlignmentFeatEffect<CharacterBoostHealBonusAlignmentFeatEffect>
+{
+    public int Value { get; init; }
+
+    public CharacterBoostHealBonusAlignmentFeatEffect(int id, int value)
+        : base(id)
+    {
+        Value = value;
+    }
+
+    public static CharacterBoostHealBonusAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    {
+        if (parameters.Length > 0)
+        {
+            return new(effectId, parameters[0]);
+        }
+
+        return null;
+    }
+
+    public Description GetDescription()
+    {
+        return GetDescription(Value);
+    }
+}

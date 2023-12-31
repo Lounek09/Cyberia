@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data.Aligments;
+﻿using Cyberia.Api.Data.Alignments;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 

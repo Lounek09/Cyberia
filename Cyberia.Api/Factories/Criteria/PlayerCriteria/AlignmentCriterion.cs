@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data.Aligments;
+﻿using Cyberia.Api.Data.Alignments;
 
 namespace Cyberia.Api.Factories.Criteria.PlayerCriteria;
 

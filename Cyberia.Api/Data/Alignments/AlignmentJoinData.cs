@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data.Aligments;
+namespace Cyberia.Api.Data.Alignments;
 
 internal sealed class AlignmentJoinData : IDofusData<int>
 {

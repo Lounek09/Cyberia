@@ -6,21 +6,27 @@ public abstract record QuestObjective(QuestObjectiveData QuestObjectiveData)
 {
     protected Description GetDescription(params object[] parameters)
     {
-        var strParameters = Array.ConvertAll(parameters, x => x.ToString() ?? string.Empty);
-
         var questObjectiveTypeData = QuestObjectiveData.GetQuestObjectiveTypeData();
-        if (questObjectiveTypeData is not null)
+        if (questObjectiveTypeData is null)
         {
-            var coordinate = QuestObjectiveData.GetCoordinate();
+            var commaSeparatedParameters = string.Join(',', parameters);
 
-            return new(questObjectiveTypeData.Description + (string.IsNullOrEmpty(coordinate) ? string.Empty : $" - {coordinate}"), strParameters);
+            Log.Warning("Unknown {QuestObjectiveTypeData} {QuestObjectiveTypeId} ({QuestObjectiveParameters})",
+                nameof(QuestObjectiveTypeData),
+                QuestObjectiveData.QuestObjectiveTypeId,
+                commaSeparatedParameters);
+
+            return new(Resources.QuestObjectiveType_Unknown, QuestObjectiveData.QuestObjectiveTypeId.ToString(), commaSeparatedParameters);
         }
 
-        Log.Warning("Unknown {QuestObjectiveTypeData} {QuestObjectiveId} ({QuestObjectiveParameters})",
-            nameof(QuestObjectiveTypeData),
-            QuestObjectiveData.QuestObjectiveTypeId,
-            string.Join(", ", strParameters));
+        var value = questObjectiveTypeData.Description;
 
-        return new(Resources.QuestObjectiveType_Unknown, QuestObjectiveData.QuestObjectiveTypeId.ToString(), string.Join(", ", strParameters));
+        var coordinate = QuestObjectiveData.GetCoordinate();
+        if (!string.IsNullOrEmpty(coordinate))
+        {
+            value += $" - {coordinate}";
+        }
+
+        return new(value, Array.ConvertAll(parameters, x => x.ToString() ?? string.Empty));
     }
 }

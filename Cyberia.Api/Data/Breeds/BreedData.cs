@@ -40,8 +40,7 @@ public sealed class BreedData : IDofusData<int>
 
     [JsonPropertyName("cc")]
     [JsonInclude]
-    //TODO: Create a class and a JsonConverter for CloseCombatInfos in BreedData
-    internal List<object> CloseCombatInfos { get; init; }
+    private object CloseCombatInfos { get; init; } //Not used anymore
 
     [JsonPropertyName("b10")]
     [JsonInclude]
@@ -83,7 +82,7 @@ public sealed class BreedData : IDofusData<int>
         SpellsId = [];
         TemporisPassiveName = string.Empty;
         TemporisPassiveDescription = string.Empty;
-        CloseCombatInfos = [];
+        CloseCombatInfos = new();
         StrengthBoostCost = [];
         VitalityBoostCost = [];
         WisdomBoostCost = [];

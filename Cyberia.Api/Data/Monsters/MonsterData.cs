@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Data.Aligments;
+﻿using Cyberia.Api.Data.Alignments;
 
 using System.Text.Json.Serialization;
 

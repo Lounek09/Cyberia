@@ -4,23 +4,8 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public abstract record Effect
+public abstract record Effect(int Id, int Duration, int Probability, CriteriaCollection Criteria, EffectArea EffectArea)
 {
-    public int Id { get; init; }
-    public int Duration { get; init; }
-    public int Probability { get; init; }
-    public CriteriaCollection Criteria { get; init; }
-    public EffectArea EffectArea { get; init; }
-
-    protected Effect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
-    {
-        Id = id;
-        Duration = duration;
-        Probability = probability;
-        Criteria = criteria;
-        EffectArea = effectArea;
-    }
-
     public EffectData? GetEffectData()
     {
         return DofusApi.Datacenter.EffectsData.GetEffectDataById(Id);
@@ -28,33 +13,35 @@ public abstract record Effect
 
     protected Description GetDescription(params object?[] parameters)
     {
-        var effect = GetEffectData();
-        if (effect is not null)
+        var effectData = GetEffectData();
+        if (effectData is null)
         {
-            var value = effect.Description;
+            var commaSeparatedParameters = string.Join(',', parameters);
 
-            if (Probability > 0)
-            {
-                value = $"{PatternDecoder.Description(Resources.Effect_Probability, Probability)} : " + value;
-            }
+            Log.Information("Unknown {EffectData} {EffectId} ({EffectParameters})",
+                nameof(EffectData),
+                Id,
+                commaSeparatedParameters);
 
-            if (Duration <= -1 || Duration >= 63)
-            {
-                value += $" ({Resources.Infinity})";
-            }
-            else if (Duration != 0)
-            {
-                value += $" ({PatternDecoder.Description(Resources.Effect_Turn, Duration)})";
-            }
-
-            return new(value, Array.ConvertAll(parameters, x => x?.ToString() ?? string.Empty));
+            return new(Resources.Effect_Unknown, Id.ToString(), commaSeparatedParameters);
         }
 
-        Log.Information("Unknown {EffectData} {EffectId} ({EffectParameters})",
-            nameof(EffectData),
-            Id,
-            string.Join(", ", parameters));
+        var value = effectData.Description;
 
-        return new(Resources.Effect_Unknown, Id.ToString(), string.Join(", ", parameters));
+        if (Probability > 0)
+        {
+            value = $"{PatternDecoder.Description(Resources.Effect_Probability, Probability)} : " + value;
+        }
+
+        if (Duration <= -1 || Duration >= 63)
+        {
+            value += $" ({Resources.Infinity})";
+        }
+        else if (Duration != 0)
+        {
+            value += $" ({PatternDecoder.Description(Resources.Effect_Turn, Duration)})";
+        }
+
+        return new(value, Array.ConvertAll(parameters, x => x?.ToString() ?? string.Empty));
     }
 }
