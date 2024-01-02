@@ -17,11 +17,10 @@ public sealed class QuestStepRewardsDataConverter : JsonConverter<QuestStepRewar
             Kamas = elements[1].ValueKind is JsonValueKind.Null ? 0 : elements[1].GetInt32(),
             ItemsIdQuantities = (JsonSerializer.Deserialize<List<List<int>>>(elements[2].GetRawText(), options) ?? [])
                 .GroupBy(x => x[0])
-                .ToDictionary(x => x.Key, x => x.Sum(y => y[1]))
-                .AsReadOnly(),
-            EmotesId = (JsonSerializer.Deserialize<List<int>>(elements[3].GetRawText(), options) ?? []).AsReadOnly(),
-            JobsId = (JsonSerializer.Deserialize<List<int>>(elements[4].GetRawText(), options) ?? []).AsReadOnly(),
-            SpellsId = (JsonSerializer.Deserialize<List<int>>(elements[5].GetRawText(), options) ?? []).AsReadOnly()
+                .ToDictionary(x => x.Key, x => x.Sum(y => y[1])),
+            EmotesId = JsonSerializer.Deserialize<List<int>>(elements[3].GetRawText(), options) ?? [],
+            JobsId = JsonSerializer.Deserialize<List<int>>(elements[4].GetRawText(), options) ?? [],
+            SpellsId = JsonSerializer.Deserialize<List<int>>(elements[5].GetRawText(), options) ?? []
         };
     }
 

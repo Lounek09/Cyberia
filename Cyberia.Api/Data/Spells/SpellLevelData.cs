@@ -3,17 +3,15 @@ using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.Values;
 
-using System.Collections.ObjectModel;
-
 namespace Cyberia.Api.Data.Spells;
 
 public sealed class SpellLevelData : IDofusData<int>
 {
     public int Id { get; init; }
 
-    public ReadOnlyCollection<IEffect> Effects { get; init; }
+    public IReadOnlyCollection<IEffect> Effects { get; init; }
 
-    public ReadOnlyCollection<IEffect> CriticalEffects { get; init; }
+    public IReadOnlyCollection<IEffect> CriticalEffects { get; init; }
 
     public int ActionPointCost { get; init; }
 
@@ -41,9 +39,9 @@ public sealed class SpellLevelData : IDofusData<int>
 
     public int DelayBetweenLaunch { get; init; }
 
-    public ReadOnlyCollection<int> RequiredStatesId { get; init; }
+    public IReadOnlyCollection<int> RequiredStatesId { get; init; }
 
-    public ReadOnlyCollection<int> ForbiddenStatesId { get; init; }
+    public IReadOnlyCollection<int> ForbiddenStatesId { get; init; }
 
     public int NeededLevel { get; init; }
 
@@ -55,14 +53,14 @@ public sealed class SpellLevelData : IDofusData<int>
 
     internal SpellLevelData()
     {
-        Effects = ReadOnlyCollection<IEffect>.Empty;
-        CriticalEffects = ReadOnlyCollection<IEffect>.Empty;
-        RequiredStatesId = ReadOnlyCollection<int>.Empty;
-        ForbiddenStatesId = ReadOnlyCollection<int>.Empty;
+        Effects = [];
+        CriticalEffects = [];
+        RequiredStatesId = [];
+        ForbiddenStatesId = [];
         SpellData = new();
     }
 
-    public ReadOnlyCollection<IEffect> GetTrapEffects()
+    public IReadOnlyCollection<IEffect> GetTrapEffects()
     {
         foreach (var effect in Effects)
         {
@@ -80,10 +78,10 @@ public sealed class SpellLevelData : IDofusData<int>
             }
         }
 
-        return ReadOnlyCollection<IEffect>.Empty;
+        return [];
     }
 
-    public ReadOnlyCollection<IEffect> GetGlyphEffects()
+    public IReadOnlyCollection<IEffect> GetGlyphEffects()
     {
         foreach (var effect in Effects)
         {
@@ -101,7 +99,7 @@ public sealed class SpellLevelData : IDofusData<int>
             }
         }
 
-        return ReadOnlyCollection<IEffect>.Empty;
+        return [];
     }
 
     public IEnumerable<StateData> GetRequiredStatesData()

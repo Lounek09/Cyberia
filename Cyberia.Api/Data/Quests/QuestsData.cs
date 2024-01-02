@@ -76,7 +76,7 @@ public sealed class QuestsData : IDofusData
                 }
             }
 
-            questStepData.QuestObjectives = QuestObjectiveFactory.GetQuestObjectives(questObjectivesData).ToList().AsReadOnly();
+            questStepData.QuestObjectives = QuestObjectiveFactory.GetQuestObjectives(questObjectivesData).ToList();
         }
 
         return data;

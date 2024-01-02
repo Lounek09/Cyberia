@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.Data.Items;
 using Cyberia.Api.JsonConverters;
 
-using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Crafts;
@@ -31,7 +30,7 @@ public sealed class CraftData : IDofusData<int>
         return Ingredients.Any(x => DofusApi.Datacenter.CraftsData.GetCraftDataById(x.Key) is not null);
     }
 
-    public ReadOnlyDictionary<ItemData, int> GetIngredients(int qte)
+    public IReadOnlyDictionary<ItemData, int> GetIngredients(int qte)
     {
         Dictionary<ItemData, int> ingredients = [];
 
@@ -44,10 +43,10 @@ public sealed class CraftData : IDofusData<int>
             }
         }
 
-        return ingredients.AsReadOnly();
+        return ingredients;
     }
 
-    public ReadOnlyDictionary<ItemData, int> GetIngredientsWithSubCraft(int qte)
+    public IReadOnlyDictionary<ItemData, int> GetIngredientsWithSubCraft(int qte)
     {
         Dictionary<ItemData, int> ingredients = [];
 
@@ -79,7 +78,7 @@ public sealed class CraftData : IDofusData<int>
             ingredients.Add(ingredient.Key, ingredient.Value);
         }
 
-        return ingredients.AsReadOnly();
+        return ingredients;
     }
 
     public int GetWeight()

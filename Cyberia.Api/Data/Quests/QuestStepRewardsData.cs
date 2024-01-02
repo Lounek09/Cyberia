@@ -13,20 +13,20 @@ public sealed class QuestStepRewardsData : IDofusData
 
     public int Kamas { get; init; }
 
-    public ReadOnlyDictionary<int, int> ItemsIdQuantities { get; init; }
+    public IReadOnlyDictionary<int, int> ItemsIdQuantities { get; init; }
 
-    public ReadOnlyCollection<int> EmotesId { get; init; }
+    public IReadOnlyCollection<int> EmotesId { get; init; }
 
-    public ReadOnlyCollection<int> JobsId { get; init; }
+    public IReadOnlyCollection<int> JobsId { get; init; }
 
-    public ReadOnlyCollection<int> SpellsId { get; init; }
+    public IReadOnlyCollection<int> SpellsId { get; init; }
 
     internal QuestStepRewardsData()
     {
         ItemsIdQuantities = ReadOnlyDictionary<int, int>.Empty;
-        EmotesId = ReadOnlyCollection<int>.Empty;
-        JobsId = ReadOnlyCollection<int>.Empty;
-        SpellsId = ReadOnlyCollection<int>.Empty;
+        EmotesId = [];
+        JobsId = [];
+        SpellsId = [];
     }
 
     public IEnumerable<ItemData> GetItemsData()
@@ -41,7 +41,7 @@ public sealed class QuestStepRewardsData : IDofusData
         }
     }
 
-    public ReadOnlyDictionary<ItemData, int> GetItemsDataQuantities()
+    public IReadOnlyDictionary<ItemData, int> GetItemsDataQuantities()
     {
         Dictionary<ItemData, int> itemsDataQuantities = [];
 
@@ -54,7 +54,7 @@ public sealed class QuestStepRewardsData : IDofusData
             }
         }
 
-        return itemsDataQuantities.AsReadOnly();
+        return itemsDataQuantities;
     }
 
     public IEnumerable<EmoteData> GetEmotesData()

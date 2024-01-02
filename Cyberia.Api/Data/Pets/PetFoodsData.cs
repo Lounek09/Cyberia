@@ -3,7 +3,6 @@ using Cyberia.Api.Data.Monsters;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
 
-using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Pets;
@@ -68,7 +67,7 @@ public class PetFoodsData : IDofusData
         }
     }
 
-    public ReadOnlyDictionary<MonsterData, int> GetMonstersDataQuantities()
+    public IReadOnlyDictionary<MonsterData, int> GetMonstersDataQuantities()
     {
         Dictionary<MonsterData, int> MonstersDataQuantities = [];
 
@@ -81,6 +80,6 @@ public class PetFoodsData : IDofusData
             }
         }
 
-        return MonstersDataQuantities.AsReadOnly();
+        return MonstersDataQuantities;
     }
 }

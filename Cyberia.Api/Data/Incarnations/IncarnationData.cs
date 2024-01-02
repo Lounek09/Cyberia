@@ -73,7 +73,7 @@ public sealed class IncarnationData : IDofusData<int>
                 var effects = itemStatsData.Effects.Where(x => x is not MarkNotTradableEffect).ToList();
                 effects.AddRange(EffectsFromLeveling);
 
-                return effects.AsReadOnly();
+                return effects;
             }
         }
 

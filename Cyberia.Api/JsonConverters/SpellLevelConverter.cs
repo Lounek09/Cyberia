@@ -23,8 +23,8 @@ public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
 
         return new SpellLevelData
         {
-            Effects = effectParse.AsReadOnly(),
-            CriticalEffects = criticalEffectParse.AsReadOnly(),
+            Effects = effectParse,
+            CriticalEffects = criticalEffectParse,
             ActionPointCost = elements[2].GetInt32(),
             MinRange = elements[3].GetInt32(),
             MaxRange = elements[4].GetInt32(),
@@ -38,8 +38,8 @@ public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
             LaunchCountByTurn = elements[12].GetInt32(),
             LaunchCountByPlayerByTurn = elements[13].GetInt32(),
             DelayBetweenLaunch = elements[14].GetInt32(),
-            RequiredStatesId = (JsonSerializer.Deserialize<List<int>>(elements[16].GetRawText(), options) ?? []).AsReadOnly(),
-            ForbiddenStatesId = (JsonSerializer.Deserialize<List<int>>(elements[17].GetRawText(), options) ?? []).AsReadOnly(),
+            RequiredStatesId = JsonSerializer.Deserialize<List<int>>(elements[16].GetRawText(), options) ?? [],
+            ForbiddenStatesId = JsonSerializer.Deserialize<List<int>>(elements[17].GetRawText(), options) ?? [],
             NeededLevel = elements[18].GetInt32(),
             CricalFailureEndTheTurn = elements[19].GetBoolean(),
             Id = elements[20].GetInt32()
