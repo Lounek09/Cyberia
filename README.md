@@ -4,7 +4,7 @@ A Discord Bot for the MMORPG Dofus Retro made with [DSharpPlus](https://github.c
 [![Build](https://github.com/Lounek09/Cyberia/actions/workflows/build-validation.yml/badge.svg)](https://github.com/Lounek09/Cyberia/actions/workflows/build-validation.yml)
 
 ## License
-Copyright (C) 2020-2023 Lounek
+Copyright (C) 2020-2024 Lounek
 
 
 This program is free software: you can redistribute it and/or modify
