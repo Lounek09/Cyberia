@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Spells;
 
-public sealed class SpellIconData : IDofusData
+public sealed class SpellIconData
+    : IDofusData
 {
     public const int INDEX_REMASTERED = 0;
     public const int INDEX_CONTRAST = 1;

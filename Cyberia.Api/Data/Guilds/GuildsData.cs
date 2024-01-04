@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Guilds;
 
-public sealed class GuildsData : IDofusData
+public sealed class GuildsData
+    : IDofusData
 {
     private const string FILE_NAME = "guilds.json";
 

@@ -9,21 +9,21 @@ using System.Text.Json.Serialization;
 namespace Cyberia.Langzilla;
 
 [JsonConverter(typeof(LangDataCollectionConverter))]
-public sealed class LangDataCollection : IReadOnlyCollection<LangData>
+public sealed class LangDataCollection
+    : IReadOnlyList<LangData>
 {
     private const string DATA_FILE_NAME = "data.json";
 
     public LangType Type { get; internal set; }
-
     public LangLanguage Language { get; internal set; }
-
     public long LastChange { get; set; }
-
     public ReadOnlyCollection<LangData> Items => ItemsCore.AsReadOnly();
-
     public int Count => ItemsCore.Count;
+    public LangData this[int index] => ItemsCore[index];
 
     internal List<LangData> ItemsCore { private get; set; }
+
+    
 
     public LangDataCollection()
     {

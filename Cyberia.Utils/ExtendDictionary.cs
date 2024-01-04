@@ -6,12 +6,12 @@ public static class ExtendDictionary
     {
         var success = false;
 
-        HashSet<TKey> keysToRemove = [];
-        foreach (var item in source)
+        List<TKey> keysToRemove = [];
+        foreach (var pair in source)
         {
-            if (item.Value is not null && item.Value.Equals(value))
+            if (pair.Value is not null && pair.Value.Equals(value))
             {
-                keysToRemove.Add(item.Key);
+                keysToRemove.Add(pair.Key);
                 success = true;
 
                 if (firstOnly)

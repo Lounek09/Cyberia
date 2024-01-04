@@ -8,8 +8,3 @@ public interface IQuestObjective
 
     Description GetDescription();
 }
-
-public interface IQuestObjective<T> : IQuestObjective
-{
-    static abstract T? Create(QuestObjectiveData questObjectiveData);
-}

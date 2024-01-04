@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Ranks;
 
-public sealed class GuildRankData : IDofusData<int>
+public sealed class GuildRankData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

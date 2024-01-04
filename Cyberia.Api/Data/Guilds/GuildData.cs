@@ -2,38 +2,38 @@
 
 namespace Cyberia.Api.Data.Guilds;
 
-public sealed class GuildData : IDofusData
+public sealed class GuildData
+    : IDofusData
 {
-    //TODO: Properly implement GuildData
     [JsonPropertyName("w")]
-    public List<List<int>> BoostCostWeight { get; set; }
+    public IReadOnlyList<IReadOnlyList<int>> BoostCostWeight { get; init; }
 
     [JsonPropertyName("p")]
-    public List<List<int>> BoostCostProspecting { get; set; }
+    public IReadOnlyList<IReadOnlyList<int>> BoostCostProspecting { get; init; }
 
     [JsonPropertyName("c")]
-    public List<List<int>> BoostCostTaxCollector { get; set; }
+    public IReadOnlyList<IReadOnlyList<int>> BoostCostTaxCollector { get; init; }
 
     [JsonPropertyName("x")]
-    public List<List<int>> BoostCostWisdom { get; set; }
+    public IReadOnlyList<IReadOnlyList<int>> BoostCostWisdom { get; init; }
 
     [JsonPropertyName("s")]
-    public List<List<int>> BoostCostSpell { get; set; }
+    public IReadOnlyList<IReadOnlyList<int>> BoostCostSpell { get; init; }
 
     [JsonPropertyName("wm")]
-    public int WeightMax { get; set; }
+    public int WeightMax { get; init; }
 
     [JsonPropertyName("pm")]
-    public int ProspectingMax { get; set; }
+    public int ProspectingMax { get; init; }
 
     [JsonPropertyName("cm")]
-    public int TaxCollectorMax { get; set; }
+    public int TaxCollectorMax { get; init; }
 
     [JsonPropertyName("xm")]
-    public int WisdomMax { get; set; }
+    public int WisdomMax { get; init; }
 
     [JsonPropertyName("sm")]
-    public int SpellMax { get; set; }
+    public int SpellMax { get; init; }
 
     [JsonConstructor]
     internal GuildData()

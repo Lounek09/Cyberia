@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Names;
 
-public sealed class TaxCollectorNamesData : IDofusData
+public sealed class TaxCollectorNamesData
+    : IDofusData
 {
     private const string FILE_NAME = "names.json";
 

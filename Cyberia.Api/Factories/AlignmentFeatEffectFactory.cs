@@ -50,7 +50,7 @@ public static class AlignmentFeatEffectFactory
            { 40, CharacterBoostMagicFindAlignmentFeatEffect.Create }
        }.ToFrozenDictionary();
 
-    public static IAlignmentFeatEffect GetAlignmentFeatEffect(int id, params int[] parameters)
+    public static IAlignmentFeatEffect Create(int id, params int[] parameters)
     {
         if (_factory.TryGetValue(id, out var builder))
         {
@@ -60,6 +60,9 @@ public static class AlignmentFeatEffectFactory
                 return alignmentFeatEffect;
             }
 
+            Log.Error("Failed to create AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}",
+                id,
+                parameters);
             return ErroredAlignmentFeatEffect.Create(id, parameters);
         }
 

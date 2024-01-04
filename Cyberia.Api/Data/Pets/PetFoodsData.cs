@@ -7,10 +7,11 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Pets;
 
-public class PetFoodsData : IDofusData
+public class PetFoodsData
+    : IDofusData
 {
     [JsonPropertyName("e")]
-    [JsonConverter(typeof(ItemEffectConverter))]
+    [JsonConverter(typeof(EffectConverter))]
     public IEffect? Effect { get; init; }
 
     [JsonPropertyName("i")]
@@ -20,7 +21,7 @@ public class PetFoodsData : IDofusData
     public IReadOnlyList<int> ItemTypesId { get; init; }
 
     [JsonPropertyName("m")]
-    [JsonConverter(typeof(DictionaryFromArrayConverter<int, int>))]
+    [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, int>))]
     public IReadOnlyDictionary<int, int> MonstersIdQuantities { get; init; }
 
     [JsonConstructor]

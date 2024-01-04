@@ -7,7 +7,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Skills;
 
-public sealed class SkillData : IDofusData<int>
+public sealed class SkillData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

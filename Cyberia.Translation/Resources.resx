@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlignmentFeatEffect.Errored" xml:space="preserve">
+    <value>AlignmentFeatEffect #1 erroné (#1)</value>
+  </data>
   <data name="AlignmentFeatEffect.Unknown" xml:space="preserve">
-    <value>AlignmentFeatEffet #1 inconnu (#2)</value>
+    <value>AlignmentFeatEffect #1 inconnu (#2)</value>
   </data>
   <data name="CardCombination.FourOfAKind" xml:space="preserve">
     <value>Carré</value>
@@ -386,6 +389,9 @@
   </data>
   <data name="Criterion.Emote.Equal" xml:space="preserve">
     <value>Connaître l'attitude #1</value>
+  </data>
+  <data name="Criterion.Errored" xml:space="preserve">
+    <value>Criterion éronné (#1)</value>
   </data>
   <data name="Criterion.FreeWeight.Different" xml:space="preserve">
     <value>Pods libre ≠ #1</value>
@@ -690,6 +696,9 @@
   <data name="Criterion.Turn.Superior" xml:space="preserve">
     <value>Tour &gt; #1</value>
   </data>
+  <data name="Criterion.Unknown" xml:space="preserve">
+    <value>Criterion #1 inconnu (#2)</value>
+  </data>
   <data name="Criterion.UnusableItem.Equal" xml:space="preserve">
     <value>Inutilisable</value>
   </data>
@@ -717,6 +726,9 @@
   <data name="Criterion.Wisdom.Superior" xml:space="preserve">
     <value>Sagesse &gt; #1</value>
   </data>
+  <data name="Effect.Errored" xml:space="preserve">
+    <value>Effect erroné (#1)</value>
+  </data>
   <data name="Effect.LinkedToAccount" xml:space="preserve">
     <value>Lié au compte</value>
   </data>
@@ -727,7 +739,7 @@
     <value>#1 tour(s)</value>
   </data>
   <data name="Effect.Unknown" xml:space="preserve">
-    <value>Effet #1 inconnu (#2)</value>
+    <value>Effect #1 inconnu (#2)</value>
   </data>
   <data name="EffectArea.1" xml:space="preserve">
     <value>Croix</value>
@@ -864,8 +876,11 @@
   <data name="MaritalStatus.Single" xml:space="preserve">
     <value>Célibataire</value>
   </data>
+  <data name="QuestObjectiveType.Errored" xml:space="preserve">
+    <value>QuestObjectiveType #1 erroné (#2)</value>
+  </data>
   <data name="QuestObjectiveType.Unknown" xml:space="preserve">
-    <value>Type d'objectif #1 inconnu (#2)</value>
+    <value>QuestObjectiveType #1 inconnu (#2)</value>
   </data>
   <data name="Rune" xml:space="preserve">
     <value>Rune #1</value>

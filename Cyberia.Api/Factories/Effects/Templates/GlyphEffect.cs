@@ -4,7 +4,8 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
-public abstract record GlyphEffect : Effect
+public abstract record GlyphEffect
+    : Effect
 {
     public int SpellId { get; init; }
     public int Level { get; init; }

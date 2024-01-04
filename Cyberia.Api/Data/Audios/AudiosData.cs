@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Audios;
 
-public sealed class AudiosData : IDofusData
+public sealed class AudiosData
+    : IDofusData
 {
     private const string FILE_NAME = "audio.json";
 

@@ -1,8 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.KnowledgeBook;
 
-public sealed class KnowledgeBookTriggerData : IDofusData<int>
+public sealed class KnowledgeBookTriggerData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -12,8 +14,7 @@ public sealed class KnowledgeBookTriggerData : IDofusData<int>
 
     [JsonPropertyName("v")]
     [JsonInclude]
-    //TODO: JsonConverter for Values in KnowledgeBookTrigger
-    internal object Values { get; init; }
+    internal JsonElement Values { get; init; } //string or int[]
 
     [JsonPropertyName("d")]
     public int KnowledgeBookTipId { get; init; }

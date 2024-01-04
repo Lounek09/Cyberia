@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Emotes;
 
-public sealed class EmoteData : IDofusData<int>
+public sealed class EmoteData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

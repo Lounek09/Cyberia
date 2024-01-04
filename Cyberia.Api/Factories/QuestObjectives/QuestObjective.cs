@@ -4,19 +4,36 @@ namespace Cyberia.Api.Factories.QuestObjectives;
 
 public abstract record QuestObjective(QuestObjectiveData QuestObjectiveData)
 {
-    protected Description GetDescription(params object[] parameters)
+    protected Description GetDescription<T>(T parameter)
+    {
+        return GetDescription(parameter?.ToString() ?? string.Empty);
+    }
+
+    protected Description GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
+    {
+        return GetDescription(
+            parameter0?.ToString() ?? string.Empty,
+            parameter1?.ToString() ?? string.Empty);
+    }
+
+    protected Description GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
+    {
+        return GetDescription(
+            parameter0?.ToString() ?? string.Empty,
+            parameter1?.ToString() ?? string.Empty,
+            parameter2?.ToString() ?? string.Empty);
+    }
+
+    protected Description GetDescription(params string[] parameters)
     {
         var questObjectiveTypeData = QuestObjectiveData.GetQuestObjectiveTypeData();
         if (questObjectiveTypeData is null)
         {
-            var commaSeparatedParameters = string.Join(',', parameters);
+            Log.Warning("Unknown QuestObjectiveTypeData {@QuestObjective}", this);
 
-            Log.Warning("Unknown {QuestObjectiveTypeData} {QuestObjectiveTypeId} ({QuestObjectiveParameters})",
-                nameof(QuestObjectiveTypeData),
-                QuestObjectiveData.QuestObjectiveTypeId,
-                commaSeparatedParameters);
-
-            return new(Resources.QuestObjectiveType_Unknown, QuestObjectiveData.QuestObjectiveTypeId.ToString(), commaSeparatedParameters);
+            return new(Resources.QuestObjectiveType_Unknown,
+                QuestObjectiveData.QuestObjectiveTypeId.ToString(),
+                string.Join(',', QuestObjectiveData.Parameters));
         }
 
         var value = questObjectiveTypeData.Description;
@@ -27,6 +44,6 @@ public abstract record QuestObjective(QuestObjectiveData QuestObjectiveData)
             value += $" - {coordinate}";
         }
 
-        return new(value, Array.ConvertAll(parameters, x => x.ToString() ?? string.Empty));
+        return new(value, parameters);
     }
 }

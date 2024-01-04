@@ -11,19 +11,44 @@ public abstract record Effect(int Id, int Duration, int Probability, CriteriaCol
         return DofusApi.Datacenter.EffectsData.GetEffectDataById(Id);
     }
 
-    protected Description GetDescription(params object?[] parameters)
+    protected Description GetDescription<T>(T parameter)
+    {
+        return GetDescription(parameter?.ToString() ?? string.Empty);
+    }
+
+    protected Description GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
+    {
+        return GetDescription(
+            parameter0?.ToString() ?? string.Empty,
+            parameter1?.ToString() ?? string.Empty);
+    }
+
+    protected Description GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
+    {
+        return GetDescription(
+            parameter0?.ToString() ?? string.Empty,
+            parameter1?.ToString() ?? string.Empty,
+            parameter2?.ToString() ?? string.Empty);
+    }
+
+    protected Description GetDescription<T0, T1, T2, T3>(T0 parameter0, T1 parameter1, T2 parameter2, T3 parameter3)
+    {
+        return GetDescription(
+            parameter0?.ToString() ?? string.Empty,
+            parameter1?.ToString() ?? string.Empty,
+            parameter2?.ToString() ?? string.Empty,
+            parameter3?.ToString() ?? string.Empty);
+    }
+
+    protected Description GetDescription(params string[] parameters)
     {
         var effectData = GetEffectData();
         if (effectData is null)
         {
-            var commaSeparatedParameters = string.Join(',', parameters);
-
-            Log.Information("Unknown {EffectData} {EffectId} ({EffectParameters})",
-                nameof(EffectData),
-                Id,
-                commaSeparatedParameters);
-
-            return new(Resources.Effect_Unknown, Id.ToString(), commaSeparatedParameters);
+            Log.Information("Unknown EffectData {@Effect}", this);
+            return new(Resources.Effect_Unknown,
+                Id.ToString(),
+                string.Join(',', parameters));
         }
 
         var value = effectData.Description;
@@ -42,6 +67,6 @@ public abstract record Effect(int Id, int Duration, int Probability, CriteriaCol
             value += $" ({PatternDecoder.Description(Resources.Effect_Turn, Duration)})";
         }
 
-        return new(value, Array.ConvertAll(parameters, x => x?.ToString() ?? string.Empty));
+        return new(value, parameters);
     }
 }

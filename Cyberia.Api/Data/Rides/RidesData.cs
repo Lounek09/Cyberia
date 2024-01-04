@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Rides;
 
-public sealed class RidesData : IDofusData
+public sealed class RidesData
+    : IDofusData
 {
     private const string FILE_NAME = "rides.json";
 

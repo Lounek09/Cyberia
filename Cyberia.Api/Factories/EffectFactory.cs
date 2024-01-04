@@ -412,7 +412,7 @@ public static class EffectFactory
             { 2150, DisplayEffectsFromItemEffect.Create }
         }.ToFrozenDictionary();
 
-    public static IEffect GetEffect(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    public static IEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
         if (_factory.TryGetValue(effectId, out var builder))
         {
@@ -422,40 +422,95 @@ public static class EffectFactory
         return UntranslatedEffect.Create(effectId, parameters, duration, probability, criteria, effectArea);
     }
 
-    public static IEnumerable<IEffect> GetEffectsParseFromSpell(JsonElement[] effects, IReadOnlyList<EffectArea> effectAreas)
+    public static IEffect Create(string compressedEffect)
     {
-        for (var i = 0; i < effects.Length; i++)
+        var args = compressedEffect.Split('#');
+
+        if (args.Length == 0)
         {
-            var effect = effects[i];
+            Log.Error("Failed to create Effect from {CompressedEffect}", compressedEffect);
+            return ErroredEffect.Create(compressedEffect);
+        }
 
-            var id = effect[0].GetInt32();
-            var param1 = effect[1].ValueKind is JsonValueKind.Null ? 0 : effect[1].GetInt32();
-            var param2 = effect[2].ValueKind is JsonValueKind.Null ? 0 : effect[2].GetInt32();
-            var param3 = effect[3].ValueKind is JsonValueKind.Null ? 0 : effect[3].GetInt32();
-            var param4 = effect.GetArrayLength() > 7 && effect[7].ValueKind is not JsonValueKind.Null ? effect[7].GetString() ?? string.Empty : string.Empty;
-            var parameters = new EffectParameters(param1, param2, param3, param4);
-            var duration = effect[4].ValueKind == JsonValueKind.Null ? 0 : effect[4].GetInt32();
-            var probability = effect[5].ValueKind == JsonValueKind.Null ? 0 : effect[5].GetInt32();
-            var criteria = CriterionFactory.GetCriteria(effect[6].GetString() ?? string.Empty);
+        var id = args[0].ParseHexOrInteger();
+        var parameters = new EffectParameters()
+        {
+            Param1 = args.Length > 1 ? args[1].ParseHexOrInteger() : 0,
+            Param2 = args.Length > 2 ? args[2].ParseHexOrInteger() : 0,
+            Param3 = args.Length > 3 ? args[3].ParseHexOrInteger() : 0,
+            Param4 = args.Length > 4 ? args[4] : string.Empty
+        };
 
-            yield return GetEffect(id, parameters, duration, probability, criteria, effectAreas[i]);
+        return Create(id, parameters, 0, 0, [], EffectArea.Default);
+    }
+
+    public static IEnumerable<IEffect> CreateMany(string compressedEffects)
+    {
+        foreach (var compressedEffect in compressedEffects.Split(',', StringSplitOptions.RemoveEmptyEntries))
+        {
+            yield return Create(compressedEffect);
         }
     }
 
-    public static IEnumerable<IEffect> GetEffectsParseFromItem(string effects)
+    public static IEffect Create(JsonElement compressedEffect, EffectArea effectArea)
     {
-        foreach (var effect in effects.Split(',', StringSplitOptions.RemoveEmptyEntries))
+        if (compressedEffect.ValueKind is not JsonValueKind.Array)
         {
-            var args = effect.Split("#");
-
-            var id = args[0].StartsWith('-') ? int.Parse(args[0]) : int.Parse(args[0], NumberStyles.HexNumber);
-            var param1 = args.Length > 1 && !string.IsNullOrEmpty(args[1]) ? args[1].StartsWith('-') ? int.Parse(args[1]) : int.Parse(args[1], NumberStyles.HexNumber) : 0;
-            var param2 = args.Length > 2 && !string.IsNullOrEmpty(args[2]) ? args[1].StartsWith('-') ? int.Parse(args[2]) : int.Parse(args[2], NumberStyles.HexNumber) : 0;
-            var param3 = args.Length > 3 && !string.IsNullOrEmpty(args[3]) ? args[1].StartsWith('-') ? int.Parse(args[3]) : int.Parse(args[3], NumberStyles.HexNumber) : 0;
-            var param4 = args.Length > 4 ? args[4] : string.Empty;
-            var parameters = new EffectParameters(param1, param2, param3, param4);
-
-            yield return GetEffect(id, parameters, 0, 0, [], EffectAreaManager.DefaultArea);
+            Log.Error("Failed to create Effect from {@CompressedEffect}", compressedEffect);
+            return ErroredEffect.Create(compressedEffect.ToString());
         }
+
+        var length = compressedEffect.GetArrayLength();
+        if (length < 7)
+        {
+            Log.Error("Failed to create Effect from {@CompressedEffect}", compressedEffect);
+            return ErroredEffect.Create(compressedEffect.ToString());
+        }
+
+        var id = compressedEffect[0].GetInt32OrDefault();
+        if (id == 0)
+        {
+            Log.Error("Failed to create Effect from {@CompressedEffect}", compressedEffect);
+            return ErroredEffect.Create(compressedEffect.ToString());
+        }
+
+        var parameters = new EffectParameters()
+        {
+            Param1 = compressedEffect[1].GetInt32OrDefault(),
+            Param2 = compressedEffect[2].GetInt32OrDefault(),
+            Param3 = compressedEffect[3].GetInt32OrDefault(),
+            Param4 = length > 7 ? compressedEffect.GetStringOrDefault() : string.Empty
+        };
+        var duration = compressedEffect[4].GetInt32OrDefault();
+        var probability = compressedEffect[5].GetInt32OrDefault();
+        var criteria = CriterionFactory.CreateMany(compressedEffect[6].GetStringOrDefault());
+
+        return Create(id, parameters, duration, probability, criteria, effectArea);
+    }
+
+    public static IEnumerable<IEffect> CreateMany(IReadOnlyList<JsonElement> compressedEffects, IReadOnlyList<EffectArea> effectAreas)
+    {
+        for (var i = 0; i < compressedEffects.Count; i++)
+        {
+            var effectArea = effectAreas.Count > i ? effectAreas[i] : EffectArea.Default;
+
+            yield return Create(compressedEffects[i], effectArea);
+        }
+    }
+
+    private static int ParseHexOrInteger(this string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return 0;
+        }
+
+        var style = value.StartsWith('-') ? NumberStyles.Integer : NumberStyles.HexNumber;
+        if (int.TryParse(value, style, null, out var result))
+        {
+            return result;
+        }
+
+        return 0;
     }
 }

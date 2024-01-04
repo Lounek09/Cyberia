@@ -108,4 +108,22 @@ public sealed class Datacenter
 
         return (T)constructor.Invoke(null);
     }
+
+    public static (int boost, int cost) GetNextBoostCost(IReadOnlyList<IReadOnlyList<int>> boostCost, int currentAmout)
+    {
+        foreach (var element in Enumerable.Reverse(boostCost))
+        {
+            if (element.Count < 2)
+            {
+                continue;
+            }
+
+            if (currentAmout < element[0])
+            {
+                return (element[1], element.Count > 2 ? element[3] : 1);
+            }
+        }
+
+        return (1, 1);
+    }
 }

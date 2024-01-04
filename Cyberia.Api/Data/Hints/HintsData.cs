@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Hints;
 
-public sealed class HintsData : IDofusData
+public sealed class HintsData
+    : IDofusData
 {
     private const string FILE_NAME = "hints.json";
 

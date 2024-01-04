@@ -36,7 +36,7 @@ public static class Formulas
         return Math.Max(0, Math.Min(100, Math.Round(escapePercent, 2)));
     }
 
-    public static int GetAgilityToEscapeForSure(int foeAgility)
+    public static int GetAgilityToEscape(int foeAgility)
     {
         return 25 + 2 * foeAgility;
     }
@@ -47,7 +47,7 @@ public static class Formulas
         {
             return TimeSpan.FromSeconds((1 + (nbSlot - 1) * 0.15) * qte);
         }
-        catch
+        catch (OverflowException)
         {
             return TimeSpan.Zero;
         }

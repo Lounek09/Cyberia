@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Maps;
 
-public sealed class MapsData : IDofusData
+public sealed class MapsData
+    : IDofusData
 {
     private const string FILE_NAME = "maps.json";
 

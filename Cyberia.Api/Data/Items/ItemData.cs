@@ -9,7 +9,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Items;
 
-public sealed class ItemData : IDofusData<int>
+public sealed class ItemData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

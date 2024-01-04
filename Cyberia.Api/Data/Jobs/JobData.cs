@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Jobs;
 
-public sealed class JobData : IDofusData<int>
+public sealed class JobData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

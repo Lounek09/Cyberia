@@ -4,7 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TTG;
 
-public sealed class TTGFamilyData : IDofusData<int>
+public sealed class TTGFamilyData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TTG;
 
-public sealed class TTGData : IDofusData
+public sealed class TTGData
+    : IDofusData
 {
     private const string FILE_NAME = "ttg.json";
 

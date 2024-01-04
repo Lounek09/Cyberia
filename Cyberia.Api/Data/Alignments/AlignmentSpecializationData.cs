@@ -1,8 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Alignments;
 
-public sealed class AlignmentSpecializationData : IDofusData<int>
+public sealed class AlignmentSpecializationData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -21,15 +23,18 @@ public sealed class AlignmentSpecializationData : IDofusData<int>
 
     [JsonPropertyName("f")]
     [JsonInclude]
-    //TODO: JsonConverter for AlignmentFeatsParameters in AlignmentSpecializationData
-    private List<List<object>> AlignmentFeatsParameters { get; init; }
+    internal IReadOnlyList<JsonElement> CompressedAlignmentFeatsParameters { get; init; }
+
+    [JsonIgnore]
+    public IReadOnlyList<AlignmentFeatParametersData> AlignmentFeatsParametersData { get; internal set; }
 
     [JsonConstructor]
     internal AlignmentSpecializationData()
     {
         Name = string.Empty;
         Description = string.Empty;
-        AlignmentFeatsParameters = [];
+        CompressedAlignmentFeatsParameters = [];
+        AlignmentFeatsParametersData = [];
     }
 
     public AlignmentOrderData? GetAlignementOrderData()

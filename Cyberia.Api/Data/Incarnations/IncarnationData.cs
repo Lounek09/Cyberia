@@ -7,7 +7,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Incarnations;
 
-public sealed class IncarnationData : IDofusData<int>
+public sealed class IncarnationData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -22,15 +23,15 @@ public sealed class IncarnationData : IDofusData<int>
     public IReadOnlyList<int> SpellsId { get; init; }
 
     [JsonPropertyName("e")]
-    [JsonConverter(typeof(ItemEffectListConverter))]
-    private IReadOnlyList<IEffect> EffectsFromLeveling { get; init; }
+    [JsonConverter(typeof(EffectReadOnlyListConverter))]
+    public IReadOnlyList<IEffect> Effects { get; init; }
 
     [JsonConstructor]
     internal IncarnationData()
     {
         Name = string.Empty;
         SpellsId = [];
-        EffectsFromLeveling = [];
+        Effects = [];
     }
 
     public async Task<string> GetImgPath()
@@ -62,7 +63,7 @@ public sealed class IncarnationData : IDofusData<int>
         }
     }
 
-    public IReadOnlyList<IEffect> GetEffects()
+    public IReadOnlyList<IEffect> GetRealEffects()
     {
         var itemData = GetItemData();
         if (itemData is not null)
@@ -71,12 +72,12 @@ public sealed class IncarnationData : IDofusData<int>
             if (itemStatsData is not null)
             {
                 var effects = itemStatsData.Effects.Where(x => x is not MarkNotTradableEffect).ToList();
-                effects.AddRange(EffectsFromLeveling);
+                effects.AddRange(Effects);
 
                 return effects;
             }
         }
 
-        return EffectsFromLeveling;
+        return Effects;
     }
 }

@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Npcs;
 
-public sealed class NpcsData : IDofusData
+public sealed class NpcsData
+    : IDofusData
 {
     private const string FILE_NAME = "npc.json";
 

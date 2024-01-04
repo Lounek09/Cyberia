@@ -20,13 +20,13 @@ public static class QuestObjectiveFactory
             { 7, FightMonsterQuestObjective.Create },
             { 8, FreeFormQuestObjective.Create },
             { 9, GoToNpcQuestObjective.Create },
-            { 10, BringItemToNpcQuestObjective.Create },
+            { 10, BringItemToNpcQuestObjective.Create }, //Missing parameters in the langs
             { 11, DuelSpecificPlayerQuestObjective.Create },
             { 12, BringSoulToNpcQuestObjective.Create },
             { 13, FightMonsterQuestObjective.Create }
         }.ToFrozenDictionary();
 
-    public static IQuestObjective GetQuestObjective(QuestObjectiveData questObjectiveData)
+    public static IQuestObjective Create(QuestObjectiveData questObjectiveData)
     {
         if (_factory.TryGetValue(questObjectiveData.QuestObjectiveTypeId, out var builder))
         {
@@ -36,17 +36,18 @@ public static class QuestObjectiveFactory
                 return questObjective;
             }
 
+            Log.Error("Failed to create QuestObjective from {@QuestObjectiveData}", questObjectiveData);
             return ErroredQuestObjective.Create(questObjectiveData);
         }
 
         return UntranslatedQuestObjective.Create(questObjectiveData);
     }
 
-    public static IEnumerable<IQuestObjective> GetQuestObjectives(IEnumerable<QuestObjectiveData> questObjectivesData)
+    public static IEnumerable<IQuestObjective> CreateMany(IEnumerable<QuestObjectiveData> questObjectivesData)
     {
         foreach (var questObjective in questObjectivesData)
         {
-            yield return GetQuestObjective(questObjective);
+            yield return Create(questObjective);
         }
     }
 }

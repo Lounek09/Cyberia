@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Monsters;
 
-public sealed class MonsterGradeData : IDofusData
+public sealed class MonsterGradeData
+    : IDofusData
 {
     [JsonPropertyName("l")]
     public int Level { get; init; }

@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Langzilla.JsonConverters;
 
-internal class LangDataCollectionConverter : JsonConverter<LangDataCollection>
+internal class LangDataCollectionConverter
+    : JsonConverter<LangDataCollection>
 {
     public override LangDataCollection? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {

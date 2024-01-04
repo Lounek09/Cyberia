@@ -84,7 +84,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
                 .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true)
                 .AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
 
-            IEnumerable<IEffect> effects = _incarnationData.GetEffects();
+            IEnumerable<IEffect> effects = _incarnationData.GetRealEffects();
             if (effects.Any())
             {
                 embed.AddEffectFields("Effets :", effects);

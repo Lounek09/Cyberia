@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.ItemSets.Custom;
 
-internal sealed class ItemSetsCustomData : IDofusData
+internal sealed class ItemSetsCustomData
+    : IDofusData
 {
     [JsonPropertyName("CIS")]
     public IReadOnlyList<ItemSetCustomData> ItemSetsCustom { get; init; }

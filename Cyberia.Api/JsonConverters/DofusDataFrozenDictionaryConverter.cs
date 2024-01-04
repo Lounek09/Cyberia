@@ -6,14 +6,16 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-internal sealed class DofusDataFrozenDictionaryConverter<TKey, TValue> : JsonConverter<FrozenDictionary<TKey, TValue>>
+public sealed class DofusDataFrozenDictionaryConverter<TKey, TValue>
+    : JsonConverter<FrozenDictionary<TKey, TValue>>
     where TKey : notnull
     where TValue : IDofusData<TKey>
 {
     public override FrozenDictionary<TKey, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var values = JsonSerializer.Deserialize<TValue[]>(ref reader, options) ?? [];
-        return values.GroupBy(x => x.Id).ToFrozenDictionary(x => x.Key, x => x.ElementAt(0));
+        return values.GroupBy(x => x.Id)
+            .ToFrozenDictionary(x => x.Key, x => x.ElementAt(0));
     }
 
     public override void Write(Utf8JsonWriter writer, FrozenDictionary<TKey, TValue> values, JsonSerializerOptions options)

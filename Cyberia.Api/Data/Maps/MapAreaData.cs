@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Maps;
 
-public sealed class MapAreaData : IDofusData<int>
+public sealed class MapAreaData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

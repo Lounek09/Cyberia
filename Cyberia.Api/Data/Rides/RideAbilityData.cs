@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Rides;
 
-public sealed class RideAbilityData : IDofusData<int>
+public sealed class RideAbilityData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

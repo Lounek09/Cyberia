@@ -4,7 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Pets;
 
-public class PetData : IDofusData<int>
+public class PetData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

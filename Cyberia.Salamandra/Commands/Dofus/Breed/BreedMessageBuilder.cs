@@ -7,6 +7,8 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
+using System.Text;
+
 namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class BreedMessageBuilder : ICustomMessageBuilder
@@ -74,7 +76,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
             .WithDescription(Formatter.Italic(_breedData.Description))
             .WithThumbnail(_breedData.GetIconImagePath())
             .WithImageUrl(_breedData.GetPreferenceWeaponsImagePath())
-            .AddField("Caractérisques :", _breedData.GetCaracteristics());
+            .AddField("Caractérisques :", StatsBoostCostContent());
 
         if (_spellsData.Count > 0)
         {
@@ -87,6 +89,66 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
         }
 
         return Task.FromResult(embed);
+    }
+
+    private string StatsBoostCostContent()
+    {
+        var builder = new StringBuilder();
+
+        builder.Append("- ");
+        builder.Append(Formatter.Bold("Vitalité"));
+        builder.Append(" :\n");
+        builder.Append(StatBoostCostBuilder(_breedData.VitalityBoostCost));
+
+        builder.Append("- ");
+        builder.Append(Formatter.Bold("Sagesse"));
+        builder.Append(" :\n");
+        builder.Append(StatBoostCostBuilder(_breedData.WisdomBoostCost));
+
+        builder.Append("- ");
+        builder.Append(Formatter.Bold("Force"));
+        builder.Append(" :\n");
+        builder.Append(StatBoostCostBuilder(_breedData.StrengthBoostCost));
+
+        builder.Append("- ");
+        builder.Append(Formatter.Bold("Intelligence"));
+        builder.Append(" :\n");
+        builder.Append(StatBoostCostBuilder(_breedData.IntelligenceBoostCost));
+
+        builder.Append("- ");
+        builder.Append(Formatter.Bold("Chance"));
+        builder.Append(" :\n");
+        builder.Append(StatBoostCostBuilder(_breedData.ChanceBoostCost));
+
+        builder.Append("- ");
+        builder.Append(Formatter.Bold("Agilité"));
+        builder.Append(" :\n");
+        builder.Append(StatBoostCostBuilder(_breedData.AgilityBoostCost));
+
+        return builder.ToString();
+    }
+
+    private static StringBuilder StatBoostCostBuilder(IReadOnlyList<IReadOnlyList<int>> boostCost)
+    {
+        var builder = new StringBuilder();
+
+        for (var i = 0; i < boostCost.Count; i++)
+        {
+            if (boostCost[i].Count < 2)
+            {
+                continue;
+            }
+
+            builder.Append(" - ");
+            builder.Append(boostCost[i].Count > 2 ? boostCost[i][2] : 1);
+            builder.Append(" pour ");
+            builder.Append(boostCost[i][1]);
+            builder.Append(" à partir de ");
+            builder.Append(boostCost[i][0]);
+            builder.Append('\n');
+        }
+
+        return builder;
     }
 
     private List<DiscordButtonComponent> ButtonsBuilder()

@@ -5,17 +5,17 @@ namespace Cyberia.Utils;
 public sealed class HttpRetryPolicy
 {
     private readonly int _maxRetries;
-    private readonly TimeSpan _retryInterval;
+    private readonly TimeSpan _startInterval;
 
-    public HttpRetryPolicy(int maxRetries, TimeSpan retryInterval)
+    public HttpRetryPolicy(int maxRetries, TimeSpan startInterval)
     {
         _maxRetries = maxRetries;
-        _retryInterval = retryInterval;
+        _startInterval = startInterval;
     }
 
     public async Task<HttpResponseMessage> ExecuteAsync(Func<Task<HttpResponseMessage>> operation, int retryCount = 0)
     {
-        var curentRetryInterval = _retryInterval * Math.Pow(2, retryCount) + TimeSpan.FromMilliseconds(Random.Shared.Next(1000));
+        var curentInterval = _startInterval * Math.Pow(2, retryCount) + TimeSpan.FromMilliseconds(Random.Shared.Next(1000));
 
         try
         {
@@ -25,8 +25,8 @@ public sealed class HttpRetryPolicy
             {
                 if (retryCount < _maxRetries)
                 {
-                    Log.Warning("The request failed with status {HttpStatusCode}. Retrying in {RetryInterval}ms.", response.StatusCode, curentRetryInterval.TotalMilliseconds);
-                    await Task.Delay(curentRetryInterval);
+                    Log.Warning("The request failed with status {HttpStatusCode}. Retrying in {RetryInterval}ms.", response.StatusCode, curentInterval.TotalMilliseconds);
+                    await Task.Delay(curentInterval);
                     return await ExecuteAsync(operation, retryCount + 1);
                 }
 
@@ -39,8 +39,8 @@ public sealed class HttpRetryPolicy
         {
             if (retryCount < _maxRetries)
             {
-                Log.Warning("The request timed out. Retrying in {RetryInterval}ms.", curentRetryInterval.TotalMilliseconds);
-                await Task.Delay(curentRetryInterval);
+                Log.Warning("The request timed out. Retrying in {RetryInterval}ms.", curentInterval.TotalMilliseconds);
+                await Task.Delay(curentInterval);
                 return await ExecuteAsync(operation, retryCount + 1);
             }
 
@@ -50,8 +50,8 @@ public sealed class HttpRetryPolicy
         {
             if (retryCount < _maxRetries)
             {
-                Log.Warning("Connection reset by peer. Retrying in {RetryInterval}ms.", curentRetryInterval.TotalMilliseconds);
-                await Task.Delay(curentRetryInterval);
+                Log.Warning("Connection reset by peer. Retrying in {RetryInterval}ms.", curentInterval.TotalMilliseconds);
+                await Task.Delay(curentInterval);
                 return await ExecuteAsync(operation, retryCount + 1);
             }
 

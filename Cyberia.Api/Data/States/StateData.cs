@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.States;
 
-public sealed class StateData : IDofusData<int>
+public sealed class StateData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

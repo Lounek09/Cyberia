@@ -2,7 +2,8 @@
 
 public static class ExtendEnum
 {
-    public static string GetDescription<T>(this T value) where T : Enum
+    public static string GetDescription<T>(this T value)
+        where T : Enum
     {
         var description = Resources.ResourceManager.GetString($"{typeof(T).Name}.{value}");
         if (description is not null)

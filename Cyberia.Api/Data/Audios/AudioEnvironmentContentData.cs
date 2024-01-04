@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Audios;
 
-internal sealed class AudioEnvironmentContentData : IDofusData<int>
+internal sealed class AudioEnvironmentContentData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public string Name { get; init; }

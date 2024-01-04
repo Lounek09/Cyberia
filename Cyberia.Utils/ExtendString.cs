@@ -21,26 +21,20 @@ public static class ExtendString
 
     public static string WithMaxLength(this string value, int maxLength)
     {
-        return value[..Math.Min(value.Length, maxLength)];
+        if (value.Length <= maxLength)
+        {
+            return value;
+        }
+
+        return value[..maxLength];
     }
 
     public static IEnumerable<string> SplitByLength(this string value, int length)
     {
-        if (value is not null)
+        for (var i = 0; i < value.Length; i += length)
         {
-            for (var i = 0; i < value.Length; i += length)
-            {
-                yield return value.Substring(i, Math.Min(length, value.Length - i));
-            }
+            yield return value.Substring(i, Math.Min(length, value.Length - i));
         }
-    }
-
-    public static string Reverse(this string value)
-    {
-        var array = value.ToCharArray();
-        Array.Reverse(array);
-
-        return new string(array);
     }
 
     public static string TrimStart(this string value, string trimString)

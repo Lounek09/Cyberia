@@ -111,7 +111,7 @@ public static class RuneManager
                 {
                     bundle.BaAmount++;
                 }
-
+                     
                 bundle.RemainingBaPercent = 0;
 
                 if (bundles.TryGetValue(runeData.Id, out var value))

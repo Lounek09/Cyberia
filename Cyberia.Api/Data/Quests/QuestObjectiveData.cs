@@ -4,7 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests;
 
-public sealed class QuestObjectiveData : IDofusData<int>
+public sealed class QuestObjectiveData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -13,7 +14,7 @@ public sealed class QuestObjectiveData : IDofusData<int>
     public int QuestObjectiveTypeId { get; init; }
 
     [JsonPropertyName("p")]
-    [JsonConverter(typeof(ToStringListConverter))]
+    [JsonConverter(typeof(StringReadOnlyListConverter))]
     public IReadOnlyList<string> Parameters { get; init; }
 
     [JsonPropertyName("x")]

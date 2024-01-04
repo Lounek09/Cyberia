@@ -7,7 +7,8 @@ using System.Collections.ObjectModel;
 
 namespace Cyberia.Api.Data.Quests;
 
-public sealed class QuestStepRewardsData : IDofusData
+public sealed class QuestStepRewardsData
+    : IDofusData
 {
     public int Experience { get; init; }
 
@@ -15,11 +16,11 @@ public sealed class QuestStepRewardsData : IDofusData
 
     public IReadOnlyDictionary<int, int> ItemsIdQuantities { get; init; }
 
-    public IReadOnlyCollection<int> EmotesId { get; init; }
+    public IReadOnlyList<int> EmotesId { get; init; }
 
-    public IReadOnlyCollection<int> JobsId { get; init; }
+    public IReadOnlyList<int> JobsId { get; init; }
 
-    public IReadOnlyCollection<int> SpellsId { get; init; }
+    public IReadOnlyList<int> SpellsId { get; init; }
 
     internal QuestStepRewardsData()
     {

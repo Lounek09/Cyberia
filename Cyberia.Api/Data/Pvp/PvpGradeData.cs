@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Pvp;
 
-public sealed class PvpGradeData : IDofusData
+public sealed class PvpGradeData
+    : IDofusData
 {
     [JsonPropertyName("nc")]
     public string ShortName { get; init; }

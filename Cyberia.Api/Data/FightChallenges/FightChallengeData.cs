@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.FightChallenges;
 
-public sealed class FightChallengeData : IDofusData<int>
+public sealed class FightChallengeData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

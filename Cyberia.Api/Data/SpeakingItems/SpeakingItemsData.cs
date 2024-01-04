@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.SpeakingItems;
 
-public sealed class SpeakingItemsData : IDofusData
+public sealed class SpeakingItemsData
+    : IDofusData
 {
     private const string FILE_NAME = "speakingitems.json";
 
@@ -13,7 +14,7 @@ public sealed class SpeakingItemsData : IDofusData
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SpeakingItemData>))]
     public FrozenDictionary<int, SpeakingItemData> SpeakingItems { get; init; }
 
-    //TODO: SIT in SpeakingItems lang
+    //TODO: SIT
 
     [JsonConstructor]
     internal SpeakingItemsData()

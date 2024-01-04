@@ -1,6 +1,7 @@
 ﻿namespace Cyberia.Api.Data.Items;
 
-public sealed class ItemWeaponData : IDofusData
+public sealed class ItemWeaponData
+    : IDofusData
 {
     public int CriticalBonus { get; init; }
 

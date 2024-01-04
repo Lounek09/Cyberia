@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Quests.Custom;
 
-internal sealed class QuestStepCustomData : IDofusData<int>
+internal sealed class QuestStepCustomData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

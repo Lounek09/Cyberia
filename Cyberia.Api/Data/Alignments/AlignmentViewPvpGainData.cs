@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Alignments;
 
-internal sealed class AlignmentViewPvpGainData : IDofusData<int>
+internal sealed class AlignmentViewPvpGainData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

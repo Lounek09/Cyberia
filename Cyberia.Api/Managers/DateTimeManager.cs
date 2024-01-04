@@ -4,7 +4,7 @@ namespace Cyberia.Api.Managers;
 
 public static class DateManager
 {
-    public static DateTime GetDateTimeFromEffectParameters(EffectParameters parameters)
+    public static DateTime CreateDateTimeFromEffectParameters(EffectParameters parameters)
     {
         if (parameters.Param1 == -1)
         {

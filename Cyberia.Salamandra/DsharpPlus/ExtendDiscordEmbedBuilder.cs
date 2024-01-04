@@ -149,7 +149,7 @@ public static class ExtendDiscordEmbedBuilder
 
         builder.Append(twoHanded ? "Arme à deux mains" : "Arme à une main");
 
-        if (itemTypeData is not null && itemTypeData.EffectArea.Id != EffectAreaManager.DefaultArea.Id)
+        if (itemTypeData is not null && itemTypeData.EffectArea != EffectArea.Default)
         {
             var emoji = Emojis.Area(itemTypeData.EffectArea.Id);
             var description = itemTypeData.EffectArea.GetDescription();
@@ -228,7 +228,7 @@ public static class ExtendDiscordEmbedBuilder
 
             var effectDescription = parametersDecorator is null ? effect.GetDescription() : effect.GetDescription().ToString(parametersDecorator);
 
-            var areaInfo = effect.EffectArea.Size == EffectAreaManager.DefaultArea.Size ? string.Empty : $" - {Emojis.Area(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
+            var areaInfo = effect.EffectArea.Size == EffectArea.Default.Size ? string.Empty : $" - {Emojis.Area(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
 
             var effectParse = $"{emoji} {effectDescription}{areaInfo}";
 

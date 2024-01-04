@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.FightChallenges;
 
-public sealed class FightChallengesData : IDofusData
+public sealed class FightChallengesData
+    : IDofusData
 {
     private const string FILE_NAME = "fightChallenge.json";
 

@@ -7,9 +7,9 @@ public static class ExtendHttpClient
         try
         {
             using var request = new HttpRequestMessage(HttpMethod.Head, url);
-            using var result = await httpClient.SendAsync(request);
+            using var response = await httpClient.SendAsync(request);
 
-            return result.IsSuccessStatusCode;
+            return response.IsSuccessStatusCode;
         }
         catch
         {

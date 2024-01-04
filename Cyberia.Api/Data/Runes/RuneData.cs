@@ -4,7 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Runes;
 
-public sealed class RuneData : IDofusData<int>
+public sealed class RuneData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

@@ -6,7 +6,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Monsters;
 
-public sealed class MonstersData : IDofusData
+public sealed class MonstersData
+    : IDofusData
 {
     private const string FILE_NAME = "monsters.json";
 

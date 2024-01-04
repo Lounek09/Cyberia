@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Incarnations;
 
-public sealed class IncarnationsData : IDofusData
+public sealed class IncarnationsData
+    : IDofusData
 {
     private const string FILE_NAME = "incarnation.json";
 

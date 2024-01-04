@@ -7,7 +7,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests;
 
-public sealed class QuestsData : IDofusData
+public sealed class QuestsData
+    : IDofusData
 {
     private const string FILE_NAME = "quests.json";
 
@@ -76,7 +77,7 @@ public sealed class QuestsData : IDofusData
                 }
             }
 
-            questStepData.QuestObjectives = QuestObjectiveFactory.GetQuestObjectives(questObjectivesData).ToList();
+            questStepData.QuestObjectives = QuestObjectiveFactory.CreateMany(questObjectivesData).ToList();
         }
 
         return data;
@@ -126,7 +127,7 @@ public sealed class QuestsData : IDofusData
 
         return questObjectiveData is null
             ? new Description(Resources.Unknown_Data, id.ToString())
-            : QuestObjectiveFactory.GetQuestObjective(questObjectiveData).GetDescription();
+            : QuestObjectiveFactory.Create(questObjectiveData).GetDescription();
     }
 
     public QuestObjectiveTypeData? GetQuestObjectiveTypeDataById(int id)

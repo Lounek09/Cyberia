@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Houses.Custom;
 
-internal sealed class HouseCustomData : IDofusData<int>
+internal sealed class HouseCustomData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

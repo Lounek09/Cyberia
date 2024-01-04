@@ -14,14 +14,10 @@ public abstract record AlignmentFeatEffect(int Id)
         var alignmentFeatEffect = GetAlignmentFeatEffectData();
         if (alignmentFeatEffect is null)
         {
-            var commaSeparatedParameters = string.Join(',', parameters);
-
-            Log.Information("Unknown {AlignmentFeatEffectData} {AlignmentFeatEffectId} ({AlignmentFeatEffectParameters})",
-                nameof(AlignmentFeatEffectData),
-                Id,
-                commaSeparatedParameters);
-
-            return new(Resources.AlignmentFeatEffect_Unknown, Id.ToString(), commaSeparatedParameters);
+            Log.Information("Unknown AlignmentFeatEffectData {@AlignmentFeatEffect}", this);
+            return new(Resources.AlignmentFeatEffect_Unknown,
+                Id.ToString(),
+                string.Join(',', parameters));
         }
 
         return new(alignmentFeatEffect.Description, Array.ConvertAll(parameters, x => x.ToString()));

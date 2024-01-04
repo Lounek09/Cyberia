@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Breeds.Custom;
 
-internal sealed class BreedsCustomData : IDofusData
+internal sealed class BreedsCustomData
+    : IDofusData
 {
     [JsonPropertyName("CG")]
     public IReadOnlyList<BreedCustomData> Breeds { get; init; }

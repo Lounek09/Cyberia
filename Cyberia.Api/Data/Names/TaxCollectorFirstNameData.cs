@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Names;
 
-public sealed class TaxCollectorFirstNameData : IDofusData<int>
+public sealed class TaxCollectorFirstNameData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

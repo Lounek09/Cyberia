@@ -4,7 +4,7 @@ namespace Cyberia.Api;
 
 public static class PatternDecoder
 {
-    public static readonly char[] HASH =
+    private static readonly char[] HASH =
     [
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -35,7 +35,7 @@ public static class PatternDecoder
             }
         }
 
-        double port = 0;
+        var port = 0D;
         for (var i = 0; i < portCrypt.Length; i++)
         {
             port += Math.Pow(64, 2 - i) * Base64(portCrypt[i]);
@@ -47,6 +47,32 @@ public static class PatternDecoder
     public static int Base64(char value)
     {
         return Array.IndexOf(HASH, value);
+    }
+
+    public static string Description<T>(string value, T parameter)
+    {
+        return Description(value,
+            parameter?.ToString() ?? string.Empty);
+    }
+
+    public static string Description<T0, T1>(string value, T0 parameter0, T1 parameter1)
+    {
+        return Description(value,
+            parameter0?.ToString() ?? string.Empty,
+            parameter1?.ToString() ?? string.Empty);
+    }
+
+    public static string Description<T0, T1, T2>(string value, T0 parameter0, T1 parameter1, T2 parameter2)
+    {
+        return Description(value,
+            parameter0?.ToString() ?? string.Empty,
+            parameter1?.ToString() ?? string.Empty,
+            parameter2?.ToString() ?? string.Empty);
+    }
+
+    public static string Description(string value, params object?[] parameters)
+    {
+        return Description(value, Array.ConvertAll(parameters, x => x?.ToString() ?? string.Empty));
     }
 
     public static string Description(string value, params string[] parameters)
@@ -95,10 +121,5 @@ public static class PatternDecoder
         }
 
         return result.ToString();
-    }
-
-    public static string Description(string value, params object[] parameters)
-    {
-        return Description(value, Array.ConvertAll(parameters, x => x.ToString() ?? string.Empty));
     }
 }

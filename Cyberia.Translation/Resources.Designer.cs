@@ -61,7 +61,16 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AlignmentFeatEffet #1 inconnu (#2).
+        ///   Looks up a localized string similar to AlignmentFeatEffect #1 erroné (#1).
+        /// </summary>
+        public static string AlignmentFeatEffect_Errored {
+            get {
+                return ResourceManager.GetString("AlignmentFeatEffect.Errored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AlignmentFeatEffect #1 inconnu (#2).
         /// </summary>
         public static string AlignmentFeatEffect_Unknown {
             get {
@@ -867,6 +876,15 @@ namespace Cyberia.Translation {
         public static string Criterion_Emote_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Emote.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Criterion éronné (#1).
+        /// </summary>
+        public static string Criterion_Errored {
+            get {
+                return ResourceManager.GetString("Criterion.Errored", resourceCulture);
             }
         }
         
@@ -1780,6 +1798,15 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Criterion #1 inconnu (#2).
+        /// </summary>
+        public static string Criterion_Unknown {
+            get {
+                return ResourceManager.GetString("Criterion.Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inutilisable.
         /// </summary>
         public static string Criterion_UnusableItem_Equal {
@@ -1861,6 +1888,15 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Effect erroné (#1).
+        /// </summary>
+        public static string Effect_Errored {
+            get {
+                return ResourceManager.GetString("Effect.Errored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lié au compte.
         /// </summary>
         public static string Effect_LinkedToAccount {
@@ -1888,7 +1924,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Effet #1 inconnu (#2).
+        ///   Looks up a localized string similar to Effect #1 inconnu (#2).
         /// </summary>
         public static string Effect_Unknown {
             get {
@@ -2302,7 +2338,16 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type d&apos;objectif #1 inconnu (#2).
+        ///   Looks up a localized string similar to QuestObjectiveType #1 erroné (#2).
+        /// </summary>
+        public static string QuestObjectiveType_Errored {
+            get {
+                return ResourceManager.GetString("QuestObjectiveType.Errored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to QuestObjectiveType #1 inconnu (#2).
         /// </summary>
         public static string QuestObjectiveType_Unknown {
             get {

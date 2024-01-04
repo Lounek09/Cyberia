@@ -13,7 +13,7 @@ public sealed class ParseCommandModule : ApplicationCommandModule
         [Option("stats", "Item's stats")]
         string value)
     {
-        var effects = EffectFactory.GetEffectsParseFromItem(value);
+        var effects = EffectFactory.CreateMany(value);
 
         if (effects.Any())
         {

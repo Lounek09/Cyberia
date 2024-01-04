@@ -10,8 +10,3 @@ public interface IAlignmentFeatEffect
 
     Description GetDescription();
 }
-
-public interface IAlignmentFeatEffect<T> : IAlignmentFeatEffect
-{
-    static abstract T? Create(int effectId, params int[] parameters);
-}

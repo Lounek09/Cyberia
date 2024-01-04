@@ -16,8 +16,3 @@ public interface IEffect
 
     Description GetDescription();
 }
-
-public interface IEffect<T> : IEffect
-{
-    static abstract T Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea);
-}

@@ -97,9 +97,9 @@ public sealed class CheckLangFinishedEventArgs : EventArgs
 {
     public LangType Type { get; init; }
     public LangLanguage Language { get; init; }
-    public IReadOnlyCollection<LangData> UpdatedLangsData { get; init; }
+    public IReadOnlyList<LangData> UpdatedLangsData { get; init; }
 
-    public CheckLangFinishedEventArgs(LangType type, LangLanguage language, IReadOnlyCollection<LangData> updatedLangsData)
+    public CheckLangFinishedEventArgs(LangType type, LangLanguage language, IReadOnlyList<LangData> updatedLangsData)
     {
         Type = type;
         Language = language;

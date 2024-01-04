@@ -6,7 +6,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Breeds;
 
-public sealed class BreedData : IDofusData<int>
+public sealed class BreedData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -44,27 +45,27 @@ public sealed class BreedData : IDofusData<int>
 
     [JsonPropertyName("b10")]
     [JsonInclude]
-    internal List<List<int>> StrengthBoostCost { get; init; }
+    public IReadOnlyList<IReadOnlyList<int>> StrengthBoostCost { get; init; }
 
     [JsonPropertyName("b11")]
     [JsonInclude]
-    internal List<List<int>> VitalityBoostCost { get; init; }
+    public IReadOnlyList<IReadOnlyList<int>> VitalityBoostCost { get; init; }
 
     [JsonPropertyName("b12")]
     [JsonInclude]
-    internal List<List<int>> WisdomBoostCost { get; init; }
+    public IReadOnlyList<IReadOnlyList<int>> WisdomBoostCost { get; init; }
 
     [JsonPropertyName("b13")]
     [JsonInclude]
-    internal List<List<int>> ChanceBoostCost { get; init; }
+    public IReadOnlyList<IReadOnlyList<int>> ChanceBoostCost { get; init; }
 
     [JsonPropertyName("b14")]
     [JsonInclude]
-    internal List<List<int>> AgilityBoostCost { get; init; }
+    public IReadOnlyList<IReadOnlyList<int>> AgilityBoostCost { get; init; }
 
     [JsonPropertyName("b15")]
     [JsonInclude]
-    internal List<List<int>> IntelligenceBoostCost { get; init; }
+    public IReadOnlyList<IReadOnlyList<int>> IntelligenceBoostCost { get; init; }
 
     [JsonIgnore]
     public int SpecialSpellId { get; internal set; }
@@ -111,71 +112,6 @@ public sealed class BreedData : IDofusData<int>
                 yield return spellData;
             }
         }
-    }
-
-
-    //TODO: Re-do this piece of shit
-    public string GetCaracteristics()
-    {
-        var tab = new string[6, 6];
-
-        tab[0, 0] = "Vita";
-        tab[0, 1] = "Sasa";
-        tab[0, 2] = "Fo  ";
-        tab[0, 3] = "Int ";
-        tab[0, 4] = "Cha ";
-        tab[0, 5] = "Age ";
-
-        foreach (var l in VitalityBoostCost)
-        {
-            tab[l[1], 0] = "|" + l[0].ToString().PadLeft(4) + " ";
-        }
-
-        foreach (var l in WisdomBoostCost)
-        {
-            tab[l[1], 1] = "|" + l[0].ToString().PadLeft(4) + " ";
-        }
-
-        foreach (var l in StrengthBoostCost)
-        {
-            tab[l[1], 2] = "|" + l[0].ToString().PadLeft(4) + " ";
-        }
-
-        foreach (var l in IntelligenceBoostCost)
-        {
-            tab[l[1], 3] = "|" + l[0].ToString().PadLeft(4) + " ";
-        }
-
-        foreach (var l in ChanceBoostCost)
-        {
-            tab[l[1], 4] = "|" + l[0].ToString().PadLeft(4) + " ";
-        }
-
-        foreach (var l in AgilityBoostCost)
-        {
-            tab[l[1], 5] = "|" + l[0].ToString().PadLeft(4) + " ";
-        }
-
-        var value = "`    |1 / " + (Id == 11 ? 2 : 1) + "|2 / 1|3 / 1|4 / 1|5 / 1`\n";
-
-        for (var i = 0; i < 6; i++)
-        {
-            value += "`";
-            for (var j = 0; j < 6; j++)
-            {
-                if (tab[j, i] is null)
-                {
-                    value += "|     ";
-                }
-                else
-                {
-                    value += tab[j, i];
-                }
-            }
-            value += "`\n";
-        }
-
-        return value;
     }
 
     public SpellData? GetSpecialSpellData()

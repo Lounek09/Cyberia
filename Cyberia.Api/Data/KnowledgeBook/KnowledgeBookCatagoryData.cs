@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.KnowledgeBook;
 
-public sealed class KnowledgeBookCatagoryData : IDofusData<int>
+public sealed class KnowledgeBookCatagoryData
+    : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

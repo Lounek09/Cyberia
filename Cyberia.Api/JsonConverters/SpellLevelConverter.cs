@@ -8,18 +8,20 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
+public sealed class SpellLevelConverter
+    : JsonConverter<SpellLevelData>
 {
     public override SpellLevelData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
-        var effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0].GetRawText(), options) ?? [];
-        var criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1].GetRawText(), options) ?? [];
-        var effectAreas = EffectAreaManager.GetEffectAreas(elements[15].ToString()).ToList();
-        var effectParse = EffectFactory.GetEffectsParseFromSpell(effects, effectAreas).ToList();
+        var effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0], options) ?? [];
+        var criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1], options) ?? [];
+        var effectAreas = EffectAreaManager.CreateMany(elements[15].GetStringOrDefault()).ToList();
+
+        var effectParse = EffectFactory.CreateMany(effects, effectAreas).ToList();
         effectAreas.RemoveRange(0, effectParse.Count);
-        var criticalEffectParse = EffectFactory.GetEffectsParseFromSpell(criticalEffects, effectAreas).ToList();
+        var criticalEffectParse = EffectFactory.CreateMany(criticalEffects, effectAreas).ToList();
 
         return new SpellLevelData
         {
@@ -38,8 +40,8 @@ public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
             LaunchCountByTurn = elements[12].GetInt32(),
             LaunchCountByPlayerByTurn = elements[13].GetInt32(),
             DelayBetweenLaunch = elements[14].GetInt32(),
-            RequiredStatesId = JsonSerializer.Deserialize<List<int>>(elements[16].GetRawText(), options) ?? [],
-            ForbiddenStatesId = JsonSerializer.Deserialize<List<int>>(elements[17].GetRawText(), options) ?? [],
+            RequiredStatesId = JsonSerializer.Deserialize<List<int>>(elements[16], options) ?? [],
+            ForbiddenStatesId = JsonSerializer.Deserialize<List<int>>(elements[17], options) ?? [],
             NeededLevel = elements[18].GetInt32(),
             CricalFailureEndTheTurn = elements[19].GetBoolean(),
             Id = elements[20].GetInt32()

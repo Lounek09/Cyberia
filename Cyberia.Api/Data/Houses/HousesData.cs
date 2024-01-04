@@ -7,7 +7,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Houses;
 
-public sealed class HousesData : IDofusData
+public sealed class HousesData
+    : IDofusData
 {
     private const string FILE_NAME = "houses.json";
 

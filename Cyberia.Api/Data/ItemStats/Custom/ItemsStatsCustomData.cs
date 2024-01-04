@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.ItemStats.Custom;
 
-internal sealed class ItemsStatsCustomData : IDofusData
+internal sealed class ItemsStatsCustomData
+    : IDofusData
 {
 
     [JsonPropertyName("CISTA")]

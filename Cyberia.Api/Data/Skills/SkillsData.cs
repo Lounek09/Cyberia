@@ -5,7 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Skills;
 
-public sealed class SkillsData : IDofusData
+public sealed class SkillsData
+    : IDofusData
 {
     private const string FILE_NAME = "skills.json";
 

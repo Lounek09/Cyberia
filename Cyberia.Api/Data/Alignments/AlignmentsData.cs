@@ -1,11 +1,14 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Factories;
+using Cyberia.Api.JsonConverters;
 
 using System.Collections.Frozen;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Alignments;
 
-public sealed class AlignmentsData : IDofusData
+public sealed class AlignmentsData
+    : IDofusData
 {
     private const string FILE_NAME = "alignment.json";
 
@@ -61,7 +64,41 @@ public sealed class AlignmentsData : IDofusData
 
     internal static AlignmentsData Load()
     {
-        return Datacenter.LoadDataFromFile<AlignmentsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        var data = Datacenter.LoadDataFromFile<AlignmentsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+
+        foreach (var alignmentSpecializationData in data.AlignmentSpecializations)
+        {
+            List<AlignmentFeatParametersData> alignmentFeatsParametersData = [];
+
+            foreach (var compressedAlignmentFeatsParameters in alignmentSpecializationData.Value.CompressedAlignmentFeatsParameters)
+            {
+                var length = compressedAlignmentFeatsParameters.GetArrayLength();
+
+                var alignmentFeatId = compressedAlignmentFeatsParameters[0].GetInt32OrDefault();
+                var level = compressedAlignmentFeatsParameters[1].GetInt32OrDefault();
+                var parameters = length > 2
+                    ? JsonSerializer.Deserialize<int[]>(compressedAlignmentFeatsParameters[2]) ?? []
+                    : [];
+
+                var alignmentFeatData = data.GetAlignmentFeatDataById(alignmentFeatId);
+                var alignmentFeatEffectId = alignmentFeatData?.AlignmentFeatEffectId ?? 0;
+                var alignmentFeatEffect = alignmentFeatEffectId != 0
+                    ? AlignmentFeatEffectFactory.Create(alignmentFeatEffectId, parameters)
+                    : null;
+
+
+                alignmentFeatsParametersData.Add(new AlignmentFeatParametersData
+                {
+                    AlignmentFeatId = alignmentFeatId,
+                    Level = level,
+                    AlignmentFeatEffect = alignmentFeatEffect
+                });
+            }
+
+            alignmentSpecializationData.Value.AlignmentFeatsParametersData = alignmentFeatsParametersData;
+        }
+
+        return data;
     }
 
     public AlignmentData? GetAlignmentDataById(int id)

@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Quests.Custom;
 
-internal sealed class QuestsCustomData : IDofusData
+internal sealed class QuestsCustomData
+    : IDofusData
 {
     [JsonPropertyName("CQ.q")]
     public IReadOnlyList<QuestCustomData> QuestsCustom { get; init; }

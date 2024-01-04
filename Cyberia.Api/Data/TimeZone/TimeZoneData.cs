@@ -4,7 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TimeZone;
 
-public sealed class TimeZoneData : IDofusData
+public sealed class TimeZoneData
+    : IDofusData
 {
     private const string FILE_NAME = "timezones.json";
 
@@ -18,7 +19,7 @@ public sealed class TimeZoneData : IDofusData
     public int YearLess { get; set; }
 
     [JsonPropertyName("T.m")]
-    [JsonConverter(typeof(DictionaryFromArrayConverter<int, string>))]
+    [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, string>))]
     public IReadOnlyDictionary<int, string> StartDayOfMonths { get; set; }
 
     [JsonConstructor]

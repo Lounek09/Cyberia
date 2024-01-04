@@ -2,7 +2,8 @@
 
 namespace Cyberia.Api.Data.Servers;
 
-public sealed class ServerSpecificTextData : IDofusData<string>
+public sealed class ServerSpecificTextData
+    : IDofusData<string>
 {
     [JsonPropertyName("id")]
     public string Id { get; init; }

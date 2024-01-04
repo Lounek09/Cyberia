@@ -1,11 +1,4 @@
 ﻿using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Factories.Criteria.CharacteristicCriteria;
-using Cyberia.Api.Factories.Criteria.FightCriteria;
-using Cyberia.Api.Factories.Criteria.MapCriteria;
-using Cyberia.Api.Factories.Criteria.OtherCriteria;
-using Cyberia.Api.Factories.Criteria.PlayerCriteria;
-using Cyberia.Api.Factories.Criteria.QuestCriteria;
-using Cyberia.Api.Factories.Criteria.ServerCriteria;
 
 using System.Collections.Frozen;
 
@@ -74,59 +67,62 @@ public static class CriterionFactory
             { "SM", MinuteCriterion.Create }
         }.ToFrozenDictionary();
 
-    public static ICriterion? GetCriterion(string value)
+    public static ICriterion Create(string id, char @operator, params string[] parameters)
     {
-        if (string.IsNullOrEmpty(value) || value.Length < 4)
-        {
-            return null;
-        }
-
-        var id = value[0..2];
-        var @operator = value[2];
-        var args = value[3..].Split(',');
-
         if (_factory.TryGetValue(id, out var builder))
         {
-            var criterion = builder(id, @operator, args);
+            var criterion = builder(id, @operator, parameters);
             if (criterion is not null)
             {
                 return criterion;
             }
 
-            return ErroredCriterion.Create(id, @operator, args);
+            var compressedCriterion = $"{id}{@operator}{string.Join(",", parameters)}";
+
+            Log.Error("Failed to create Criterion from {CompressedCriterion}", id, compressedCriterion);
+            return ErroredCriterion.Create(compressedCriterion);
         }
 
-        return UntranslatedCriterion.Create(id, @operator, args);
+        return UntranslatedCriterion.Create(id, @operator, parameters);
     }
 
-    public static CriteriaCollection GetCriteria(string value)
+    public static ICriterion Create(string compressedCriterion)
+    {
+        if (string.IsNullOrEmpty(compressedCriterion) || compressedCriterion.Length < 4)
+        {
+            Log.Error("Failed to create Criterion from {CompressedCriterion}", compressedCriterion);
+            return ErroredCriterion.Create(compressedCriterion);
+        }
+
+        var id = compressedCriterion[0..2];
+        var @operator = compressedCriterion[2];
+        var parameters = compressedCriterion[3..].Split(',');
+
+        return Create(id, @operator, parameters);
+    }
+
+    public static CriteriaCollection CreateMany(string compressedCriteria)
     {
         List<ICriteriaElement> criteria = [];
 
         var index = 0;
-        while (index < value.Length)
+        while (index < compressedCriteria.Length)
         {
-            switch (value[index])
+            switch (compressedCriteria[index])
             {
                 case '(':
-                    (var token, index) = ExtractToken(value, index + 1, ')');
+                    (var token, index) = ExtractToken(compressedCriteria, index + 1, ')');
 
-                    criteria.Add(GetCriteria(token));
+                    criteria.Add(CreateMany(token));
                     break;
                 case '&' or '|':
-                    criteria.Add(new CriteriaLogicalOperator(value[index]));
+                    criteria.Add(new CriteriaLogicalOperator(compressedCriteria[index]));
                     break;
                 default:
-                    (token, index) = ExtractToken(value, index, '&', '|', ')');
+                    (token, index) = ExtractToken(compressedCriteria, index, '&', '|', ')');
                     index--;
 
-                    ICriteriaElement? criterion = GetCriterion(token);
-                    if (criterion is null)
-                    {
-                        return new CriteriaCollection(criteria);
-                    }
-
-                    criteria.Add(criterion);
+                    criteria.Add(Create(token));
                     break;
             }
 
@@ -136,7 +132,7 @@ public static class CriterionFactory
         return new CriteriaCollection(criteria);
     }
 
-    private static (string, int) ExtractToken(string value, int startIndex, params char[] endChars)
+    public static (string, int) ExtractToken(string value, int startIndex, params char[] endChars)
     {
         var endIndex = startIndex;
         var openParenthesesCount = 0;

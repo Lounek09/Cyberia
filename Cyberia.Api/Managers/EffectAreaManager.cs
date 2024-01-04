@@ -2,6 +2,8 @@
 
 public readonly record struct EffectArea(int Id, int Size)
 {
+    public static readonly EffectArea Default = new(80, 0);
+
     public string GetImagePath()
     {
         return $"{DofusApi.Config.CdnUrl}/images/effectareas/{Id}.png";
@@ -12,43 +14,42 @@ public readonly record struct EffectArea(int Id, int Size)
         return Size >= 63 ? Resources.Infinity : Size.ToString();
     }
 
-    public string GetDescription()
+    public Description GetDescription()
     {
-        if (Id == EffectAreaManager.DefaultArea.Id)
+        if (Id == Default.Id)
         {
-            return string.Empty;
+            return new();
         }
 
         var effectAreaName = Resources.ResourceManager.GetString($"EffectArea.{Id}");
         if (effectAreaName is null)
         {
-            Log.Warning("Unknown EffectArea {EffectAreaId}", Id);
-            return $"{GetSize()} {PatternDecoder.Description(Resources.Unknown_Data, Id)}";
+            Log.Warning("Unknown {EffectArea} {EffectAreaId}", nameof(EffectArea), Id);
+            effectAreaName = PatternDecoder.Description(Resources.Unknown_Data, Id);
         }
 
-        return $"{GetSize()} {effectAreaName}";
+        return new($"#1 {effectAreaName}", GetSize());
     }
 }
 
 public static class EffectAreaManager
 {
-    public static readonly EffectArea DefaultArea = new(80, 0);
-
-    public static EffectArea GetEffectArea(string value)
+    public static EffectArea Create(string compressedEffectArea)
     {
-        if (value.Length == 2)
+        if (compressedEffectArea.Length != 2)
         {
-            return new(value[0], PatternDecoder.Base64(value[1]));
+            Log.Warning("Failed to create EffectArea from {CompressedEffectArea}", compressedEffectArea);
+            return EffectArea.Default;
         }
 
-        return new(-1, 0);
+        return new(compressedEffectArea[0], PatternDecoder.Base64(compressedEffectArea[1]));
     }
 
-    public static IEnumerable<EffectArea> GetEffectAreas(string values)
+    public static IEnumerable<EffectArea> CreateMany(string compressedEffectAreas)
     {
-        foreach (var value in values.SplitByLength(2))
+        foreach (var value in compressedEffectAreas.SplitByLength(2))
         {
-            yield return GetEffectArea(value);
+            yield return Create(value);
         }
     }
 }

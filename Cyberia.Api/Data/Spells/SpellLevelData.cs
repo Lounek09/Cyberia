@@ -5,13 +5,14 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Data.Spells;
 
-public sealed class SpellLevelData : IDofusData<int>
+public sealed class SpellLevelData
+    : IDofusData<int>
 {
     public int Id { get; init; }
 
-    public IReadOnlyCollection<IEffect> Effects { get; init; }
+    public IReadOnlyList<IEffect> Effects { get; init; }
 
-    public IReadOnlyCollection<IEffect> CriticalEffects { get; init; }
+    public IReadOnlyList<IEffect> CriticalEffects { get; init; }
 
     public int ActionPointCost { get; init; }
 
@@ -39,9 +40,9 @@ public sealed class SpellLevelData : IDofusData<int>
 
     public int DelayBetweenLaunch { get; init; }
 
-    public IReadOnlyCollection<int> RequiredStatesId { get; init; }
+    public IReadOnlyList<int> RequiredStatesId { get; init; }
 
-    public IReadOnlyCollection<int> ForbiddenStatesId { get; init; }
+    public IReadOnlyList<int> ForbiddenStatesId { get; init; }
 
     public int NeededLevel { get; init; }
 
@@ -60,7 +61,7 @@ public sealed class SpellLevelData : IDofusData<int>
         SpellData = new();
     }
 
-    public IReadOnlyCollection<IEffect> GetTrapEffects()
+    public IReadOnlyList<IEffect> GetTrapEffects()
     {
         foreach (var effect in Effects)
         {
@@ -81,7 +82,7 @@ public sealed class SpellLevelData : IDofusData<int>
         return [];
     }
 
-    public IReadOnlyCollection<IEffect> GetGlyphEffects()
+    public IReadOnlyList<IEffect> GetGlyphEffects()
     {
         foreach (var effect in Effects)
         {

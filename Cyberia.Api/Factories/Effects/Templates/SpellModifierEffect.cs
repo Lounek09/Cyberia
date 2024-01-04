@@ -4,7 +4,8 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
-public abstract record SpellModifierEffect : Effect
+public abstract record SpellModifierEffect
+    : Effect
 {
     public int SpellId { get; init; }
     public int Value { get; init; }
@@ -25,6 +26,6 @@ public abstract record SpellModifierEffect : Effect
     {
         var spellName = DofusApi.Datacenter.SpellsData.GetSpellNameById(SpellId);
 
-        return GetDescription(spellName, null, Value);
+        return GetDescription(spellName, string.Empty, Value);
     }
 }
