@@ -98,40 +98,38 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
         builder.Append("- ");
         builder.Append(Formatter.Bold("Vitalité"));
         builder.Append(" :\n");
-        builder.Append(StatBoostCostBuilder(_breedData.VitalityBoostCost));
+        AppendStatBoostCost(builder, _breedData.VitalityBoostCost);
 
         builder.Append("- ");
         builder.Append(Formatter.Bold("Sagesse"));
         builder.Append(" :\n");
-        builder.Append(StatBoostCostBuilder(_breedData.WisdomBoostCost));
+        AppendStatBoostCost(builder, _breedData.WisdomBoostCost);
 
         builder.Append("- ");
         builder.Append(Formatter.Bold("Force"));
         builder.Append(" :\n");
-        builder.Append(StatBoostCostBuilder(_breedData.StrengthBoostCost));
+        AppendStatBoostCost(builder, _breedData.StrengthBoostCost);
 
         builder.Append("- ");
         builder.Append(Formatter.Bold("Intelligence"));
         builder.Append(" :\n");
-        builder.Append(StatBoostCostBuilder(_breedData.IntelligenceBoostCost));
+        AppendStatBoostCost(builder, _breedData.IntelligenceBoostCost);
 
         builder.Append("- ");
         builder.Append(Formatter.Bold("Chance"));
         builder.Append(" :\n");
-        builder.Append(StatBoostCostBuilder(_breedData.ChanceBoostCost));
+        AppendStatBoostCost(builder, _breedData.ChanceBoostCost);
 
         builder.Append("- ");
         builder.Append(Formatter.Bold("Agilité"));
         builder.Append(" :\n");
-        builder.Append(StatBoostCostBuilder(_breedData.AgilityBoostCost));
+        AppendStatBoostCost(builder, _breedData.AgilityBoostCost);
 
         return builder.ToString();
     }
 
-    private static StringBuilder StatBoostCostBuilder(IReadOnlyList<IReadOnlyList<int>> boostCost)
+    private static void AppendStatBoostCost(StringBuilder builder, IReadOnlyList<IReadOnlyList<int>> boostCost)
     {
-        var builder = new StringBuilder();
-
         for (var i = 0; i < boostCost.Count; i++)
         {
             if (boostCost[i].Count < 2)
@@ -147,8 +145,6 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
             builder.Append(boostCost[i][0]);
             builder.Append('\n');
         }
-
-        return builder;
     }
 
     private List<DiscordButtonComponent> ButtonsBuilder()
