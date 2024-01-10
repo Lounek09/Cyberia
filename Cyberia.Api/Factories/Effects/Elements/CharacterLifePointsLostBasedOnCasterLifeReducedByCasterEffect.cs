@@ -10,7 +10,7 @@ public sealed record CharacterLifePointsLostBasedOnCasterLifeReducedByCasterEffe
     private CharacterLifePointsLostBasedOnCasterLifeReducedByCasterEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
-    
+
     }
 
     internal static CharacterLifePointsLostBasedOnCasterLifeReducedByCasterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)

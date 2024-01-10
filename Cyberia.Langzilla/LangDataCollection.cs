@@ -23,7 +23,7 @@ public sealed class LangDataCollection
 
     internal List<LangData> ItemsCore { private get; set; }
 
-    
+
 
     public LangDataCollection()
     {

@@ -10,7 +10,7 @@ public sealed record BoostSpellMaxPerTargetEffect
     private BoostSpellMaxPerTargetEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int value)
         : base(id, duration, probability, criteria, effectArea, spellId, value)
     {
-    
+
     }
 
     internal static BoostSpellMaxPerTargetEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)

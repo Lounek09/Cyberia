@@ -10,7 +10,7 @@ public sealed record TurnCriterion
     {
         Value = value;
     }
-    
+
     internal static TurnCriterion? Create(string id, char @operator, params string[] parameters)
     {
         if (parameters.Length > 0)

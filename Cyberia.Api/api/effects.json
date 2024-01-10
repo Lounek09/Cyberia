@@ -2794,6 +2794,13 @@
       "d": "Affiche les effets de #3",
       "c": 0,
       "o": ""
+    },
+    {
+      "id": 2151,
+      "d": "Lié au personnage",
+      "c": 0,
+      "o": "",
+      "t": true
     }
   ]
 }

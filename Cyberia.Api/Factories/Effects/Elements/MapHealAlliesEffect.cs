@@ -10,7 +10,7 @@ public sealed record MapHealAlliesEffect
     private MapHealAlliesEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
-    
+
     }
 
     internal static MapHealAlliesEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)

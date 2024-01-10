@@ -35,7 +35,7 @@ public sealed class HelpCommandModule : ApplicationCommandModule
 
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Help")
             .WithDescription(description.ToString());
-        
+
         await ctx.CreateResponseAsync(embed);
     }
 }
