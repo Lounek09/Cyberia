@@ -21,6 +21,6 @@ public sealed record CharacterCurseEffect
 
     public Description GetDescription()
     {
-        return GetDescription(CurseId);
+        return GetDescription(string.Empty, string.Empty, CurseId);
     }
 }
