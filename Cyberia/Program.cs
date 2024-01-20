@@ -37,10 +37,13 @@ public static class Program
             Log.Information("Initializing DofusApi");
             DofusApi.Initialize(config.ApiConfig);
 
-            Log.Information("Initializing Salamandra");
-            Bot.Initialize(config.BotConfig);
+            if (config.EnableSalamandra)
+            {
+                Log.Information("Initializing Salamandra");
+                Bot.Initialize(config.BotConfig);
 
-            await Bot.Launch();
+                await Bot.Launch();
+            }
 
             if (config.EnableCheckCytrus)
             {

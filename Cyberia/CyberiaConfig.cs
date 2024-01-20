@@ -5,6 +5,8 @@ namespace Cyberia;
 
 public sealed class CyberiaConfig
 {
+    public bool EnableSalamandra { get; init; }
+
     public bool EnableCheckCytrus { get; init; }
     public TimeSpan CheckCytrusInterval { get; init; }
 
