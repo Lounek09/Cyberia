@@ -1,12 +1,6 @@
 ﻿{
   "E": [
     {
-      "id": -1,
-      "d": "Efficacité : #3",
-      "c": 0,
-      "o": ""
-    },
-    {
       "id": 4,
       "d": "Téléporte à une distance de #1 cases maximum",
       "c": 0,
@@ -1525,6 +1519,13 @@
       "d": "Enlève les effets du sort #3",
       "c": 0,
       "o": ""
+    },
+    {
+      "id": 448,
+      "d": "Efficacité : #3",
+      "c": 0,
+      "o": "+",
+      "t": true
     },
     {
       "id": 513,

@@ -15,7 +15,6 @@ public static class EffectFactory
     private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaCollection, EffectArea, IEffect>> _factory =
         new Dictionary<int, Func<int, EffectParameters, int, int, CriteriaCollection, EffectArea, IEffect>>()
         {
-            { -1, FarmObjectEfficacityEffect.Create },
             { 4, CharacterTeleportOnSameMapEffect.Create },
             { 5, CharacterPushEffect.Create },
             { 6, CharacterPullEffect.Create },
@@ -222,6 +221,7 @@ public static class EffectFactory
             { 402, FightAddGlyphCastingSpellEndTurnEffect.Create },
             { 405, FightKIllAndSummonEffect.Create },
             { 406, CharacterDispellSpellEffect.Create },
+            { 448, FarmObjectEfficacityEffect.Create },
             { 513, AddPrismeEffect.Create },
             { 521, ItemUnbreakableEffect.Create },
             { 600, GotoWaypointEffect.Create },
