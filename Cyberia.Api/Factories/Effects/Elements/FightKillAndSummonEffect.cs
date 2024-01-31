@@ -4,20 +4,20 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record FightKIllAndSummonEffect
+public sealed record FightKillAndSummonEffect
     : Effect, IEffect
 {
     public int MonsterId { get; init; }
     public int Grade { get; init; }
 
-    private FightKIllAndSummonEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int grade)
+    private FightKillAndSummonEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int grade)
         : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
         Grade = grade;
     }
 
-    internal static FightKIllAndSummonEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static FightKillAndSummonEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param2);
     }

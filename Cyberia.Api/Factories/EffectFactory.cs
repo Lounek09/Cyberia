@@ -219,7 +219,7 @@ public static class EffectFactory
             { 400, FightAddTrapCastingSpellEffect.Create },
             { 401, FightAddGlyphCastingSpellEffect.Create },
             { 402, FightAddGlyphCastingSpellEndTurnEffect.Create },
-            { 405, FightKIllAndSummonEffect.Create },
+            { 405, FightKillAndSummonEffect.Create },
             { 406, CharacterDispellSpellEffect.Create },
             { 448, FarmObjectEfficacityEffect.Create },
             { 513, AddPrismeEffect.Create },
