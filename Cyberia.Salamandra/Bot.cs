@@ -6,6 +6,8 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
+using Microsoft.Extensions.Logging;
+
 namespace Cyberia.Salamandra;
 
 public static class Bot
@@ -25,9 +27,8 @@ public static class Bot
         Client = new(new DiscordConfiguration()
         {
             Token = Config.Token,
-            TokenType = TokenType.Bot,
-            AutoReconnect = true,
-            LogTimestampFormat = "yyyy/MM/dd HH:mm:ss:ffff"
+            LoggerFactory = new LoggerFactory().AddSerilog(Log.Logger),
+            AutoReconnect = true
         });
         Client.GuildCreated += GuildManager.OnGuildCreated;
         Client.GuildDeleted += GuildManager.OnGuildDeleted;

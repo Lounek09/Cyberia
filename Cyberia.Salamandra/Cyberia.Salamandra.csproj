@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-01898" />
     <PackageReference Include="DSharpPlus.SlashCommands" Version="5.0.0-nightly-01898" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
