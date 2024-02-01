@@ -91,12 +91,12 @@ public static class CommandManager
 
         try
         {
-            await e.Context.CreateResponseAsync("La commande a rencontré un problème d'exécution, un rapport de bug a été envoyé automatiquement au propriétaire", true);
+            await e.Context.CreateResponseAsync("La commande a rencontré un problème d'exécution, un rapport de bug a été envoyé automatiquement au propriétaire du bot.", true);
         }
         catch
         {
             await e.Context.FollowUpAsync(new DiscordFollowupMessageBuilder()
-                .WithContent("La commande a rencontré un problème d'exécution, un rapport de bug a été envoyé automatiquement au propriétaire")
+                .WithContent("La commande a rencontré un problème d'exécution, un rapport de bug a été envoyé automatiquement au propriétaire du bot.")
                 .AsEphemeral());
         }
     }

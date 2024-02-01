@@ -20,7 +20,10 @@ public static class MessageManager
     {
         foreach (var hiddenCommand in _hiddenCommands)
         {
-            if (e.Message.Content.EndsWith(hiddenCommand.Key))
+            var content = e.Message.Content;
+
+            if (!string.IsNullOrEmpty(content) &&
+                content.EndsWith(hiddenCommand.Key))
             {
                 await DeleteMessage(e.Message);
                 await SendFile(e.Channel, $"{Bot.OUTPUT_PATH}/{hiddenCommand.Value}");
@@ -89,6 +92,12 @@ public static class MessageManager
     public static async Task DeleteMessage(this DiscordMessage message)
     {
         var channel = message.Channel;
+        if (channel is null)
+        {
+            Log.Error("Unknown channel for this message {MessageId}", message.Id);
+            return;
+        }
+
         var permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
 
         if (!permissions.HasPermission(Permissions.AccessChannels))
@@ -97,13 +106,14 @@ public static class MessageManager
             return;
         }
 
-        if (message.Author.Id != Bot.Client.CurrentUser.Id && !permissions.HasPermission(Permissions.ManageMessages))
+        if ((message.Author is not null && message.Author.Id == Bot.Client.CurrentUser.Id) ||
+            permissions.HasPermission(Permissions.ManageMessages))
         {
-            Log.Error("No permission to delete this message {MessageId}", message.Id);
+            await message.DeleteAsync();
             return;
         }
 
-        await message.DeleteAsync();
+        Log.Error("No permission to delete this message {MessageId}", message.Id);
     }
 
     private static async Task<DiscordChannel?> GetLogChannel()
