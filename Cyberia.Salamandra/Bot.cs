@@ -36,6 +36,7 @@ public static class Bot
         Client.ComponentInteractionCreated += InteractionManager.OnComponentInteractionCreated;
 
         SlashCommands = Client.UseSlashCommands();
+        SlashCommands.RegisterCommands();
         SlashCommands.SlashCommandErrored += CommandManager.OnSlashCommandErrored;
 
         CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
@@ -43,10 +44,8 @@ public static class Bot
         LangsWatcher.CheckLangFinished += LangsManager.OnCheckLangFinished;
     }
 
-    public static async Task Launch()
+    public static async Task LaunchAsync()
     {
-        CommandManager.RegisterCommands();
-
         var activity = new DiscordActivity("Dofus Retro", ActivityType.Playing);
         await Client.ConnectAsync(activity);
     }

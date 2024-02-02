@@ -8,7 +8,7 @@ public sealed class IpCommandModule : ApplicationCommandModule
 {
     [SlashCommand("ip", "Decodes IPs sent from packets")]
     public async Task Command(InteractionContext ctx,
-        [Option("ip", "Encoded IP")]
+        [Option("value", "Encoded IP")]
         string value)
     {
         try

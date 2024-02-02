@@ -1,11 +1,13 @@
-﻿namespace Cyberia.Salamandra.Commands.Data;
+﻿using DSharpPlus.SlashCommands;
+
+namespace Cyberia.Salamandra.Commands.Data;
 
 public static class DataCommandsGroup
 {
-    public static void Register(ulong guildId)
+    public static void RegisterDataCommands(this SlashCommandsExtension extension, ulong guildId)
     {
-        Bot.SlashCommands.RegisterCommands<CytrusCommandModule>(guildId);
-        Bot.SlashCommands.RegisterCommands<LangsCommandModule>(guildId);
-        Bot.SlashCommands.RegisterCommands<ReloadCommandModule>(guildId);
+        extension.RegisterCommands<CytrusCommandModule>(guildId);
+        extension.RegisterCommands<LangsCommandModule>(guildId);
+        extension.RegisterCommands<ReloadCommandModule>(guildId);
     }
 }

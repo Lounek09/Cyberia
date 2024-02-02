@@ -13,22 +13,24 @@ namespace Cyberia.Salamandra.Managers;
 
 public static class CommandManager
 {
-    public static void RegisterCommands()
+    public static void RegisterCommands(this SlashCommandsExtension extension)
     {
-        AdminCommandsGroup.Register(Bot.Config.AdminGuildId);
-        DataCommandsGroup.Register(Bot.Config.AdminGuildId);
-        DofusCommandsGroup.Register();
-        OtherCommandsGroup.Register();
+        extension.RegisterAdminCommands(Bot.Config.AdminGuildId);
+        extension.RegisterDataCommands(Bot.Config.AdminGuildId);
+        extension.RegisterDofusCommands();
+        extension.RegisterOtherCommands();
     }
 
     public static async Task OnSlashCommandErrored(SlashCommandsExtension _, SlashCommandErrorEventArgs e)
     {
         switch (e.Exception)
         {
-            case SlashExecutionChecksFailedException checkFailedException when checkFailedException.FailedChecks.OfType<SlashRequireOwnerAttribute>().Any():
+            case SlashExecutionChecksFailedException checkFailedException
+            when checkFailedException.FailedChecks.OfType<SlashRequireOwnerAttribute>().Any():
                 await e.Context.CreateResponseAsync("Cette commande n'est utilisable que par le propriétaire du bot.", true);
                 return;
-            case SlashExecutionChecksFailedException checkFailedException when checkFailedException.FailedChecks.OfType<SlashRequireGuildAttribute>().Any():
+            case SlashExecutionChecksFailedException checkFailedException
+            when checkFailedException.FailedChecks.OfType<SlashRequireGuildAttribute>().Any():
                 await e.Context.CreateResponseAsync("Cette commande n'est utilisable que dans un serveur.", true);
                 return;
             case SlashExecutionChecksFailedException checkFailedException:

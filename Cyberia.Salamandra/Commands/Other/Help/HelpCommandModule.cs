@@ -11,7 +11,8 @@ public sealed class HelpCommandModule : ApplicationCommandModule
     [SlashCommand("help", "Liste les commandes du bot")]
     public async Task Command(InteractionContext ctx)
     {
-        var commands = Bot.SlashCommands.RegisteredCommands.Where(x => x.Key is null)
+        var commands = Bot.SlashCommands.RegisteredCommands
+            .Where(x => x.Key is null)
             .FirstOrDefault().Value;
 
         var description = new StringBuilder();

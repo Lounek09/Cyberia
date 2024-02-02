@@ -1,21 +1,23 @@
-﻿namespace Cyberia.Salamandra.Commands.Dofus;
+﻿using DSharpPlus.SlashCommands;
+
+namespace Cyberia.Salamandra.Commands.Dofus;
 
 public static class DofusCommandsGroup
 {
-    public static void Register()
+    public static void RegisterDofusCommands(this SlashCommandsExtension extension)
     {
-        Bot.SlashCommands.RegisterCommands<BreedCommandModule>();
-        Bot.SlashCommands.RegisterCommands<CraftCommandModule>();
-        Bot.SlashCommands.RegisterCommands<CritCommandModule>();
-        Bot.SlashCommands.RegisterCommands<EscapeCommandModule>();
-        Bot.SlashCommands.RegisterCommands<HouseCommandModule>();
-        Bot.SlashCommands.RegisterCommands<IncarnationCommandModule>();
-        Bot.SlashCommands.RegisterCommands<ItemCommandModule>();
-        Bot.SlashCommands.RegisterCommands<ItemSetCommandModule>();
-        Bot.SlashCommands.RegisterCommands<MapCommandModule>();
-        Bot.SlashCommands.RegisterCommands<MonsterCommandModule>();
-        Bot.SlashCommands.RegisterCommands<QuestCommandModule>();
-        Bot.SlashCommands.RegisterCommands<RuneCommandModule>();
-        Bot.SlashCommands.RegisterCommands<SpellCommandModule>();
+        extension.RegisterCommands<BreedCommandModule>();
+        extension.RegisterCommands<CraftCommandModule>();
+        extension.RegisterCommands<CritCommandModule>();
+        extension.RegisterCommands<EscapeCommandModule>();
+        extension.RegisterCommands<HouseCommandModule>();
+        extension.RegisterCommands<IncarnationCommandModule>();
+        extension.RegisterCommands<ItemCommandModule>();
+        extension.RegisterCommands<ItemSetCommandModule>();
+        extension.RegisterCommands<MapCommandModule>();
+        extension.RegisterCommands<MonsterCommandModule>();
+        extension.RegisterCommands<QuestCommandModule>();
+        extension.RegisterCommands<RuneCommandModule>();
+        extension.RegisterCommands<SpellCommandModule>();
     }
 }

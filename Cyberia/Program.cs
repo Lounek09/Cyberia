@@ -42,7 +42,7 @@ public static class Program
                 Log.Information("Initializing Salamandra");
                 Bot.Initialize(config.BotConfig);
 
-                await Bot.Launch();
+                await Bot.LaunchAsync();
             }
 
             if (config.EnableCheckCytrus)
