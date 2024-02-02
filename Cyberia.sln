@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Langzilla", "Cyberi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Salamandra", "Cyberia.Salamandra\Cyberia.Salamandra.csproj", "{CD004824-B6D6-4058-9B69-2117270920E3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.SalamandraWeb", "Cyberia.SalamandraWeb\Cyberia.SalamandraWeb.csproj", "{BA322B96-2201-4D77-835C-BCB52CFF5527}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Translation", "Cyberia.Translation\Cyberia.Translation.csproj", "{E3B15058-6C91-4468-B11F-4B9A200F526E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Utils", "Cyberia.Utils\Cyberia.Utils.csproj", "{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}"
@@ -53,6 +55,10 @@ Global
 		{CD004824-B6D6-4058-9B69-2117270920E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD004824-B6D6-4058-9B69-2117270920E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD004824-B6D6-4058-9B69-2117270920E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA322B96-2201-4D77-835C-BCB52CFF5527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA322B96-2201-4D77-835C-BCB52CFF5527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA322B96-2201-4D77-835C-BCB52CFF5527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA322B96-2201-4D77-835C-BCB52CFF5527}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E3B15058-6C91-4468-B11F-4B9A200F526E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E3B15058-6C91-4468-B11F-4B9A200F526E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3B15058-6C91-4468-B11F-4B9A200F526E}.Release|Any CPU.ActiveCfg = Release|Any CPU

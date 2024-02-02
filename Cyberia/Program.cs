@@ -3,6 +3,7 @@ using Cyberia.Cytrusaurus;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra;
+using Cyberia.SalamandraWeb;
 
 using Microsoft.Extensions.Configuration;
 
@@ -43,6 +44,14 @@ public static class Program
                 Bot.Initialize(config.BotConfig);
 
                 await Bot.LaunchAsync();
+            }
+
+            if (config.EnableSalamandraWeb)
+            {
+                Log.Information("Initializing SalamandraWeb");
+                Web.Initialize();
+
+                _ = Web.LaunchAsync();
             }
 
             if (config.EnableCheckCytrus)
