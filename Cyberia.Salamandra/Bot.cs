@@ -28,7 +28,9 @@ public static class Bot
         {
             Token = Config.Token,
             LoggerFactory = new LoggerFactory().AddSerilog(Log.Logger),
-            AutoReconnect = true
+            LogUnknownAuditlogs = false,
+            LogUnknownEvents = false,
+            Intents = DiscordIntents.Guilds | DiscordIntents.GuildMessages
         });
         Client.GuildCreated += GuildManager.OnGuildCreated;
         Client.GuildDeleted += GuildManager.OnGuildDeleted;
