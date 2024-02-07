@@ -178,13 +178,15 @@ public static class ExtendDiscordEmbedBuilder
 
                 if (petFoodsData.ItemsId.Count > 0)
                 {
-                    var itemsName = petFoodsData.ItemsId.Select(x => DofusApi.Datacenter.ItemsData.GetItemNameById(x));
+                    var itemsName = petFoodsData.ItemsId
+                        .Select(x => DofusApi.Datacenter.ItemsData.GetItemNameById(x));
                     builder.AppendLine(string.Join(", ", itemsName));
                 }
 
                 if (petFoodsData.ItemTypesId.Count > 0)
                 {
-                    var itemTypesName = petFoodsData.ItemTypesId.Select(x => DofusApi.Datacenter.ItemsData.GetItemTypeNameById(x));
+                    var itemTypesName = petFoodsData.ItemTypesId
+                        .Select(x => DofusApi.Datacenter.ItemsData.GetItemTypeNameById(x));
                     builder.AppendLine(string.Join(", ", itemTypesName));
                 }
 
@@ -193,8 +195,31 @@ public static class ExtendDiscordEmbedBuilder
                     foreach (var group in petFoodsData.MonstersIdQuantities.GroupBy(x => x.Value))
                     {
                         var quantity = Formatter.Bold(group.Key.ToString());
-                        var monstersName = group.Select(x => DofusApi.Datacenter.MonstersData.GetMonsterNameById(x.Key));
+                        var monstersName = group
+                            .Select(x => DofusApi.Datacenter.MonstersData.GetMonsterNameById(x.Key));
                         builder.AppendFormat("{0}x {1}\n", quantity, string.Join(", ", monstersName));
+                    }
+                }
+
+                if (petFoodsData.MonsterRacesIdQuantities.Count > 0)
+                {
+                    foreach (var group in petFoodsData.MonsterRacesIdQuantities.GroupBy(x => x.Value))
+                    {
+                        var quantity = Formatter.Bold(group.Key.ToString());
+                        var monsterRacesName = group
+                            .Select(x => DofusApi.Datacenter.MonstersData.GetMonsterRaceNameById(x.Key));
+                        builder.AppendFormat("{0}x {1}\n", quantity, string.Join(", ", monsterRacesName));
+                    }
+                }
+
+                if (petFoodsData.MonsterSuperRacesIdQuantities.Count > 0)
+                {
+                    foreach (var group in petFoodsData.MonsterSuperRacesIdQuantities.GroupBy(x => x.Value))
+                    {
+                        var quantity = Formatter.Bold(group.Key.ToString());
+                        var monsterSuperRacesName = group
+                            .Select(x => DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceNameById(x.Key));
+                        builder.AppendFormat("{0}x {1}\n", quantity, string.Join(", ", monsterSuperRacesName));
                     }
                 }
             }
