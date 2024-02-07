@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.HttpOverrides;
+
 namespace Cyberia.SalamandraWeb;
 
 public static class Web
@@ -19,6 +21,10 @@ public static class Web
 #else
         Application.UseExceptionHandler("/Error");
         Application.UseHsts();
+        Application.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
 #endif
 
         Application.UseHttpsRedirection();
