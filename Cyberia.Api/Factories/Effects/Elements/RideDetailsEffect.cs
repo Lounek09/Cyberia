@@ -7,22 +7,22 @@ public sealed record RideDetailsEffect
     : Effect, IEffect
 {
     public int ItemUuid { get; init; }
-    public long UnknownId { get; init; } //Fuck long
+    public DateTime ExpirationDate { get; init; }
 
-    private RideDetailsEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemUuid, long unknownId)
+    private RideDetailsEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemUuid, DateTime expirationDate)
         : base(id, duration, probability, criteria, effectArea)
     {
         ItemUuid = itemUuid;
-        UnknownId = unknownId;
+        ExpirationDate = expirationDate;
     }
 
     internal static RideDetailsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param2);
+        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, DateTimeOffset.FromUnixTimeMilliseconds(parameters.Param2).UtcDateTime);
     }
 
     public Description GetDescription()
     {
-        return GetDescription(ItemUuid, UnknownId);
+        return GetDescription(ItemUuid, ExpirationDate.ToString("dd/MM/yyyy"));
     }
 }
