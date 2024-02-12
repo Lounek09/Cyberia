@@ -16,7 +16,7 @@ public sealed record CaptureRideEffect
 
     internal static CaptureRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
     }
 
     public Description GetDescription()

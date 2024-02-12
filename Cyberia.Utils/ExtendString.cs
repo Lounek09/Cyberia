@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 
 namespace Cyberia.Utils;
 
@@ -67,6 +68,24 @@ public static class ExtendString
         }
 
         return result;
+    }
+
+    public static long ToInt64OrDefaultFromHex(this string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return default;
+        }
+
+        var isNegative = value.StartsWith('-');
+        value = isNegative ? value[1..] : value;
+
+        if (long.TryParse(value, NumberStyles.HexNumber, null, out var result))
+        {
+            return isNegative ? -result : result;
+        }
+
+        return default;
     }
 
     public static string NormalizeCustom(this string value)

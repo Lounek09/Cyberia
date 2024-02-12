@@ -19,7 +19,7 @@ public sealed record LadderSuperRaceEffect
 
     internal static LadderSuperRaceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param3);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }
 
     public MonsterSuperRaceData? GetMonsterSuperRaceData()

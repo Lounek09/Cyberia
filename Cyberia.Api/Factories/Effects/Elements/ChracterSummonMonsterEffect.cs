@@ -19,7 +19,7 @@ public sealed record ChracterSummonMonsterEffect
 
     internal static ChracterSummonMonsterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param2, parameters.Param1);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2, (int)parameters.Param1);
     }
 
     public MonsterData? GetMonsterData()

@@ -18,11 +18,11 @@ public sealed record RideDetailsEffect
 
     internal static RideDetailsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, DateTimeOffset.FromUnixTimeMilliseconds(parameters.Param2).UtcDateTime);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, DateTimeOffset.FromUnixTimeMilliseconds(parameters.Param2).UtcDateTime);
     }
 
     public Description GetDescription()
     {
-        return GetDescription(ItemUuid, ExpirationDate.ToString("dd/MM/yyyy"));
+        return GetDescription(ItemUuid, ExpirationDate.ToString("dd/MM/yyyy HH:mm"));
     }
 }

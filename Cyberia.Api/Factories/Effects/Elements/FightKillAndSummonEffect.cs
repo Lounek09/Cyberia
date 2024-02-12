@@ -19,7 +19,7 @@ public sealed record FightKillAndSummonEffect
 
     internal static FightKillAndSummonEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param2);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public MonsterData? GetMonsterData()

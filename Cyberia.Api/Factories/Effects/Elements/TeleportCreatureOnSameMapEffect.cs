@@ -19,7 +19,7 @@ public sealed record TeleportCreatureOnSameMapEffect
 
     internal static TeleportCreatureOnSameMapEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param3, parameters.Param1);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3, (int)parameters.Param1);
     }
 
     public MonsterData? GetMonsterData()

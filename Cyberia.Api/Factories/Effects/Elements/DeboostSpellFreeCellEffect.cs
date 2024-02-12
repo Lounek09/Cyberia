@@ -15,6 +15,6 @@ public sealed record DeboostSpellFreeCellEffect
 
     internal static DeboostSpellFreeCellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param1, parameters.Param3);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }
 }

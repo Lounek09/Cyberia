@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Cyberia.Api.Factories;
 
-public readonly record struct EffectParameters(int Param1, int Param2, int Param3, string Param4);
+public readonly record struct EffectParameters(long Param1, long Param2, long Param3, string Param4);
 
 public static class EffectFactory
 {
@@ -364,7 +364,7 @@ public static class EffectFactory
             { 989, SeekTargetEffect.Create },
             { 990, ShowTextEffect.Create },
             { 994, RideInvalidEffect.Create },
-            { 995, RideDetailsEffect.Create }, //Param2 = long, not supported
+            { 995, RideDetailsEffect.Create },
             { 996, RideOwnerEffect.Create },
             { 997, RideNameEffect.Create },
             { 998, RideCertificateValidityEffect.Create },
@@ -433,12 +433,12 @@ public static class EffectFactory
             return ErroredEffect.Create(compressedEffect);
         }
 
-        var id = args[0].ParseHexOrInteger();
+        var id = (int)args[0].ToInt64OrDefaultFromHex();
         var parameters = new EffectParameters()
         {
-            Param1 = args.Length > 1 ? args[1].ParseHexOrInteger() : 0,
-            Param2 = args.Length > 2 ? args[2].ParseHexOrInteger() : 0,
-            Param3 = args.Length > 3 ? args[3].ParseHexOrInteger() : 0,
+            Param1 = args.Length > 1 ? args[1].ToInt64OrDefaultFromHex() : 0,
+            Param2 = args.Length > 2 ? args[2].ToInt64OrDefaultFromHex() : 0,
+            Param3 = args.Length > 3 ? args[3].ToInt64OrDefaultFromHex() : 0,
             Param4 = args.Length > 4 ? args[4] : string.Empty
         };
 
@@ -477,14 +477,14 @@ public static class EffectFactory
 
         var parameters = new EffectParameters()
         {
-            Param1 = compressedEffect[1].GetInt32OrDefault(),
-            Param2 = compressedEffect[2].GetInt32OrDefault(),
-            Param3 = compressedEffect[3].GetInt32OrDefault(),
-            Param4 = length > 7 ? compressedEffect.GetStringOrDefault() : string.Empty
+            Param1 = compressedEffect[1].GetInt64OrDefault(),
+            Param2 = compressedEffect[2].GetInt64OrDefault(),
+            Param3 = compressedEffect[3].GetInt64OrDefault(),
+            Param4 = length > 7 ? compressedEffect[7].GetStringOrEmpty() : string.Empty
         };
         var duration = compressedEffect[4].GetInt32OrDefault();
         var probability = compressedEffect[5].GetInt32OrDefault();
-        var criteria = CriterionFactory.CreateMany(compressedEffect[6].GetStringOrDefault());
+        var criteria = CriterionFactory.CreateMany(compressedEffect[6].GetStringOrEmpty());
 
         return Create(id, parameters, duration, probability, criteria, effectArea);
     }
@@ -497,21 +497,5 @@ public static class EffectFactory
 
             yield return Create(compressedEffects[i], effectArea);
         }
-    }
-
-    private static int ParseHexOrInteger(this string value)
-    {
-        if (string.IsNullOrEmpty(value))
-        {
-            return 0;
-        }
-
-        var style = value.StartsWith('-') ? NumberStyles.Integer : NumberStyles.HexNumber;
-        if (int.TryParse(value, style, null, out var result))
-        {
-            return result;
-        }
-
-        return 0;
     }
 }

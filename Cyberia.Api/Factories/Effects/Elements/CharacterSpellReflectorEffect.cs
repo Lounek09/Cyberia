@@ -16,7 +16,7 @@ public sealed record CharacterSpellReflectorEffect
 
     internal static CharacterSpellReflectorEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param2);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2);
     }
 
     public Description GetDescription()

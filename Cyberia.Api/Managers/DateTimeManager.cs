@@ -11,11 +11,11 @@ public static class DateManager
             return DateTime.MaxValue;
         }
 
-        var year = parameters.Param1;
+        var year = (int)parameters.Param1;
         var month = (int)Math.Floor(parameters.Param2 / 100D) + 1;
-        var day = parameters.Param2 - (month - 1) * 100;
+        var day = (int)parameters.Param2 - (month - 1) * 100;
         var hour = (int)Math.Floor(parameters.Param3 / 100D);
-        var minute = parameters.Param3 - hour * 100;
+        var minute = (int)parameters.Param3 - hour * 100;
 
         return new DateTime(year, month, day, hour, minute, 0);
     }

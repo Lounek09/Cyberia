@@ -19,7 +19,7 @@ public sealed record CharacterGainJobXpEffect
 
     internal static CharacterGainJobXpEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param2, parameters.Param3);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2, (int)parameters.Param3);
     }
 
     public JobData? GetJobData()

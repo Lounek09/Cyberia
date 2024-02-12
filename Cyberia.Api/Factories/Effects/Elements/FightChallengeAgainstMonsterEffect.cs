@@ -17,7 +17,7 @@ public sealed record FightChallengeAgainstMonsterEffect
 
     internal static FightChallengeAgainstMonsterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param2);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2);
     }
 
     public MonsterData? GetMonsterData()

@@ -8,7 +8,7 @@ public static class ExtendJsonElement
     {
         if (element.ValueKind is not JsonValueKind.Number)
         {
-            return 0;
+            return default;
         }
 
         if (element.TryGetInt32(out var result))
@@ -16,10 +16,25 @@ public static class ExtendJsonElement
             return result;
         }
 
-        return 0;
+        return default;
     }
 
-    public static string GetStringOrDefault(this JsonElement element)
+    public static long GetInt64OrDefault(this JsonElement element)
+    {
+        if (element.ValueKind is not JsonValueKind.Number)
+        {
+            return default;
+        }
+
+        if (element.TryGetInt64(out var result))
+        {
+            return result;
+        }
+
+        return default;
+    }
+
+    public static string GetStringOrEmpty(this JsonElement element)
     {
         if (element.ValueKind is not JsonValueKind.String)
         {

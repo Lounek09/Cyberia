@@ -17,7 +17,7 @@ public sealed record DecorsAddObjectEffect
     internal static DecorsAddObjectEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
         // Param3 is a supposition
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param3);
+        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }
 
     public Description GetDescription()
