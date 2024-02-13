@@ -114,7 +114,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
         if (_craftData is not null)
         {
-            embed.AddCraftField(_craftData, _qte);
+            embed.AddCraftField(_craftData, 1);
         }
 
         StringBuilder miscellaneousBuilder = new();
