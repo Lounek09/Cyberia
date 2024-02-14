@@ -5,7 +5,7 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Managers;
 
-public record struct RuneBundle(RuneData RuneData, int BaAmount, int PaAmount, int RaAmount, int RemainingBaPercent);
+public record struct RuneBundle(RuneData RuneData, int BaAmount, int PaAmount, int RaAmount, double RemainingBaPercent);
 
 public static class RuneManager
 {
@@ -80,7 +80,7 @@ public static class RuneManager
         bundle.BaAmount += lastBaRune;
 
         amountExtractable -= lastBaRune;
-        bundle.RemainingBaPercent += (int)(Math.Round(amountExtractable, 2) * 100);
+        bundle.RemainingBaPercent += amountExtractable * 100;
 
         return bundle;
     }
@@ -107,7 +107,7 @@ public static class RuneManager
             {
                 var bundle = GetRuneBundleFromStat(runeData, itemData.Level, effect.GetRandomValue(), multiplicator);
 
-                if (Random.Shared.Next(100) < bundle.RemainingBaPercent)
+                if (Random.Shared.NextDouble() * 100 < bundle.RemainingBaPercent)
                 {
                     bundle.BaAmount++;
                 }
