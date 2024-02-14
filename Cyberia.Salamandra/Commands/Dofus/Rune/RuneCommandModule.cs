@@ -135,7 +135,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
         if (runeBundle.RemainingBaPercent > 0)
         {
             builder.Append('+');
-            builder.Append(runeBundle.RemainingBaPercent);
+            builder.Append(Math.Round(runeBundle.RemainingBaPercent, 2));
             builder.Append('%');
         }
 
