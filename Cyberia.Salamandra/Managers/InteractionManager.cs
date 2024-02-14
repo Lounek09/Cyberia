@@ -48,19 +48,19 @@ public static partial class InteractionManager
 
     public static string ComponentPacketBuilder(string header, int version, params object[] parameters)
     {
-        var packet = new StringBuilder();
+        StringBuilder packetBuilder = new();
 
-        packet.Append(header);
-        packet.Append(PACKET_PARAMETER_SEPARATOR);
-        packet.Append(version);
+        packetBuilder.Append(header);
+        packetBuilder.Append(PACKET_PARAMETER_SEPARATOR);
+        packetBuilder.Append(version);
 
         if (parameters.Length > 0)
         {
-            packet.Append(PACKET_PARAMETER_SEPARATOR);
-            packet.Append(string.Join(PACKET_PARAMETER_SEPARATOR, parameters));
+            packetBuilder.Append(PACKET_PARAMETER_SEPARATOR);
+            packetBuilder.Append(string.Join(PACKET_PARAMETER_SEPARATOR, parameters));
         }
 
-        return packet.ToString();
+        return packetBuilder.ToString();
     }
 
     public static string SelectComponentPacketBuilder(int uniqueIndex)

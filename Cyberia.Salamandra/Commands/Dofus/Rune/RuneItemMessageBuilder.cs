@@ -64,34 +64,34 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
             .WithTitle($"Brisage : {_qte.ToStringThousandSeparator()}x {Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
             .WithThumbnail(await _itemData.GetImagePath());
 
-        var description = new StringBuilder();
+        StringBuilder descriptionBuilder = new();
 
         foreach (var runeBundle in RuneManager.GetRuneBundlesFromItem(_itemData, _qte))
         {
-            description.Append(Formatter.Bold(runeBundle.BaAmount.ToStringThousandSeparator()));
-            description.Append(' ');
-            description.Append(Emojis.BaRune(runeBundle.RuneData.Id));
+            descriptionBuilder.Append(Formatter.Bold(runeBundle.BaAmount.ToStringThousandSeparator()));
+            descriptionBuilder.Append(' ');
+            descriptionBuilder.Append(Emojis.BaRune(runeBundle.RuneData.Id));
 
             if (runeBundle.PaAmount > 0)
             {
-                description.Append(" - ");
-                description.Append(Formatter.Bold(runeBundle.PaAmount.ToStringThousandSeparator()));
-                description.Append(' ');
-                description.Append(Emojis.PaRune(runeBundle.RuneData.Id));
+                descriptionBuilder.Append(" - ");
+                descriptionBuilder.Append(Formatter.Bold(runeBundle.PaAmount.ToStringThousandSeparator()));
+                descriptionBuilder.Append(' ');
+                descriptionBuilder.Append(Emojis.PaRune(runeBundle.RuneData.Id));
             }
 
             if (runeBundle.RaAmount > 0)
             {
-                description.Append(" - ");
-                description.Append(Formatter.Bold(runeBundle.RaAmount.ToStringThousandSeparator()));
-                description.Append(' ');
-                description.Append(Emojis.RaRune(runeBundle.RuneData.Id));
+                descriptionBuilder.Append(" - ");
+                descriptionBuilder.Append(Formatter.Bold(runeBundle.RaAmount.ToStringThousandSeparator()));
+                descriptionBuilder.Append(' ');
+                descriptionBuilder.Append(Emojis.RaRune(runeBundle.RuneData.Id));
             }
 
-            description.Append('\n');
+            descriptionBuilder.Append('\n');
         }
 
-        return embed.WithDescription(description.ToString());
+        return embed.WithDescription(descriptionBuilder.ToString());
     }
 
     private List<DiscordButtonComponent> LessButtonsBuilder()

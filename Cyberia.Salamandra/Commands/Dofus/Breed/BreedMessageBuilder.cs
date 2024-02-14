@@ -93,7 +93,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
     private string StatsBoostCostContent()
     {
-        var builder = new StringBuilder();
+        StringBuilder builder = new();
 
         builder.Append("- ");
         builder.Append(Formatter.Bold("Vitalité"));

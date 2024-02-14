@@ -118,10 +118,16 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         }
 
         StringBuilder miscellaneousBuilder = new();
-        miscellaneousBuilder.AppendFormat("{0} pod{1}", _itemData.Weight.ToStringThousandSeparator(), _itemData.Weight > 1 ? "s" : string.Empty);
+
+        miscellaneousBuilder.Append(_itemData.Weight.ToStringThousandSeparator());
+        miscellaneousBuilder.Append(" pod(s)");
+
         if (_itemData.Tradeable())
         {
-            miscellaneousBuilder.AppendFormat(", se vend {0}{1} aux pnj", _itemData.GetNpcRetailPrice().ToStringThousandSeparator(), Emojis.KAMAS);
+            miscellaneousBuilder.Append(", se vend ");
+            miscellaneousBuilder.Append(_itemData.Price.ToStringThousandSeparator());
+            miscellaneousBuilder.Append(Emojis.KAMAS);
+            miscellaneousBuilder.Append(" aux pnj");
         }
 
         if (_itemData.Ceremonial)

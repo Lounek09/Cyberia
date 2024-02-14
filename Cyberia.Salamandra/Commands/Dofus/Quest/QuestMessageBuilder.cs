@@ -100,45 +100,58 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
             if (_questStepData.HasReward())
             {
-                StringBuilder rewards = new();
+                StringBuilder rewardsBuilder = new();
 
                 if (_questStepData.RewardsData.Experience > 0)
                 {
-                    rewards.AppendFormat("{0} {1}\n", _questStepData.RewardsData.Experience.ToStringThousandSeparator(), Emojis.XP);
+                    rewardsBuilder.Append(_questStepData.RewardsData.Experience.ToStringThousandSeparator());
+                    rewardsBuilder.Append(' ');
+                    rewardsBuilder.Append(Emojis.XP);
+                    rewardsBuilder.Append('\n');
                 }
 
                 if (_questStepData.RewardsData.Kamas > 0)
                 {
-                    rewards.AppendFormat("{0} {1}\n", _questStepData.RewardsData.Kamas.ToStringThousandSeparator(), Emojis.KAMAS);
+                    rewardsBuilder.Append(_questStepData.RewardsData.Kamas.ToStringThousandSeparator());
+                    rewardsBuilder.Append(' ');
+                    rewardsBuilder.Append(Emojis.KAMAS);
+                    rewardsBuilder.Append('\n');
                 }
 
                 var itemsReward = _questStepData.RewardsData.GetItemsDataQuantities();
                 if (itemsReward.Count > 0)
                 {
-                    rewards.AppendLine(string.Join(", ", itemsReward.Select(x => $"{Formatter.Bold(x.Value.ToString())}x {x.Key.Name}")));
+                    rewardsBuilder.Append(string.Join(", ", itemsReward.Select(x => $"{Formatter.Bold(x.Value.ToString())}x {x.Key.Name}")));
+                    rewardsBuilder.Append('\n');
                 }
 
                 var emotesReward = _questStepData.RewardsData.GetEmotesData().ToList();
                 if (emotesReward.Count > 0)
                 {
-                    rewards.AppendFormat("Emotes : {0}\n", string.Join(", ", emotesReward.Select(x => x.Name)));
+                    rewardsBuilder.Append("Emotes : ");
+                    rewardsBuilder.Append(string.Join(", ", emotesReward.Select(x => x.Name)));
+                    rewardsBuilder.Append('\n');
                 }
 
                 var jobsReward = _questStepData.RewardsData.GetJobsData().ToList();
                 if (jobsReward.Count > 0)
                 {
-                    rewards.AppendFormat("Métiers : {0}\n", string.Join(", ", jobsReward.Select(x => x.Name)));
+                    rewardsBuilder.Append("Métiers : ");
+                    rewardsBuilder.Append(string.Join(", ", jobsReward.Select(x => x.Name)));
+                    rewardsBuilder.Append('\n');
                 }
 
                 var spellsReward = _questStepData.RewardsData.GetSpellsData().ToList();
                 if (emotesReward.Count > 0)
                 {
-                    rewards.AppendFormat("Sorts : {0}", string.Join(", ", spellsReward.Select(x => x.Name)));
+                    rewardsBuilder.Append("Sorts : ");
+                    rewardsBuilder.Append(string.Join(", ", spellsReward.Select(x => x.Name)));
+                    rewardsBuilder.Append('\n');
                 }
 
-                if (rewards.Length > 0)
+                if (rewardsBuilder.Length > 0)
                 {
-                    embed.AddField("Récompenses :", rewards.ToString());
+                    embed.AddField("Récompenses :", rewardsBuilder.ToString());
                 }
             }
         }

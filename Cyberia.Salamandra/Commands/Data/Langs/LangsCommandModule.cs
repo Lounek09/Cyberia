@@ -8,6 +8,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
 
+using System.Diagnostics;
 using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Data;
@@ -164,9 +165,15 @@ public sealed class LangsCommandModule : ApplicationCommandModule
         await ctx.DeferAsync();
 
         var type = DofusApi.Config.Temporis ? LangType.Temporis : LangType.Official;
-        var success = LangParser.Launch(type, LangLanguage.FR);
 
-        var content = success ? "Les langs ont été parsées avec succès" : "Une erreur est survenue, veuillez consulter les logs";
+        var startTime = Stopwatch.GetTimestamp();
+        var success = LangParser.Launch(type, LangLanguage.FR);
+        var elapsedTime = Stopwatch.GetElapsedTime(startTime);
+
+        var content = success
+            ? $"Les langs ont été parsées avec succès en {elapsedTime:s\\,ffff}s"
+            : "Une erreur est survenue, veuillez consulter les logs";
+
         await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(content));
     }
 }

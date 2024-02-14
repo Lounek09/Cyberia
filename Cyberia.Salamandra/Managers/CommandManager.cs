@@ -67,6 +67,7 @@ public static class CommandManager
                 if (e.Context.Interaction.Data.Options is not null)
                 {
                     args = string.Join("\n", e.Context.Interaction.Data.Options
+                        .Where(x => x.Value is not null)
                         .Select(x => $"- {x.Name} : {Formatter.InlineCode(x.Value.ToString()!)}")
                         .ToArray());
                 }

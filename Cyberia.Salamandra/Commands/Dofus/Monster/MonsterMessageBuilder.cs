@@ -97,31 +97,59 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
                 embed.AddField("Alignement :", _alignmentData.Name, true);
             }
 
-            StringBuilder caracteristicsBuilder = new();
-            caracteristicsBuilder.AppendFormat("Niveau. {0}\n", Formatter.Bold(_monsterGradeData.Level.ToString()));
+            StringBuilder caracBuilder = new();
+
+            caracBuilder.Append("Niveau. ");
+            caracBuilder.Append(Formatter.Bold(_monsterGradeData.Level.ToString()));
+            caracBuilder.Append('\n');
+
             if (_monsterGradeData.LifePoint is not null)
             {
-                caracteristicsBuilder.AppendFormat("{0}{1} ", Emojis.HEALTH, Formatter.Bold(_monsterGradeData.LifePoint.Value.ToStringThousandSeparator()));
+                caracBuilder.Append(Emojis.HEALTH);
+                caracBuilder.Append(Formatter.Bold(_monsterGradeData.LifePoint.Value.ToStringThousandSeparator()));
             }
 
             if (_monsterGradeData.ActionPoint is not null)
             {
-                caracteristicsBuilder.AppendFormat("{0}{1} ", Emojis.ACTION_POINTS, Formatter.Bold(_monsterGradeData.ActionPoint.Value.ToStringThousandSeparator()));
+                caracBuilder.Append(Emojis.ACTION_POINTS);
+                caracBuilder.Append(Formatter.Bold(_monsterGradeData.ActionPoint.Value.ToStringThousandSeparator()));
             }
 
             if (_monsterGradeData.MovementPoint is not null)
             {
-                caracteristicsBuilder.AppendFormat("{0}{1} ", Emojis.MOVEMENT_POINTS, Formatter.Bold(_monsterGradeData.MovementPoint.Value.ToStringThousandSeparator()));
+                caracBuilder.Append(Emojis.MOVEMENT_POINTS);
+                caracBuilder.Append(Formatter.Bold(_monsterGradeData.MovementPoint.Value.ToStringThousandSeparator()));
             }
 
-            caracteristicsBuilder.AppendFormat("{0}{1}% ", Emojis.DODGE_AP, Formatter.Bold(_monsterGradeData.GetActionPointDodge().ToStringThousandSeparator()));
-            caracteristicsBuilder.AppendFormat("{0}{1}%\n", Emojis.DODGE_MP, Formatter.Bold(_monsterGradeData.GetMovementPointDodge().ToStringThousandSeparator()));
-            caracteristicsBuilder.AppendFormat("{0}{1}% ", Emojis.RES_NEUTRAL, Formatter.Bold(_monsterGradeData.GetNeutralResistance().ToStringThousandSeparator()));
-            caracteristicsBuilder.AppendFormat("{0}{1}% ", Emojis.RES_EARTH, Formatter.Bold(_monsterGradeData.GetEarthResistance().ToStringThousandSeparator()));
-            caracteristicsBuilder.AppendFormat("{0}{1}% ", Emojis.RES_FIRE, Formatter.Bold(_monsterGradeData.GetFireResistance().ToStringThousandSeparator()));
-            caracteristicsBuilder.AppendFormat("{0}{1}% ", Emojis.RES_WATER, Formatter.Bold(_monsterGradeData.GetWaterResistance().ToStringThousandSeparator()));
-            caracteristicsBuilder.AppendFormat("{0}{1}%", Emojis.RES_AIR, Formatter.Bold(_monsterGradeData.GetAirResistance().ToStringThousandSeparator()));
-            embed.AddField("Caractéristiques :", caracteristicsBuilder.ToString());
+            caracBuilder.Append(Emojis.DODGE_AP);
+            caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetActionPointDodge().ToStringThousandSeparator()));
+            caracBuilder.Append("% ");
+
+            caracBuilder.Append(Emojis.DODGE_MP);
+            caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetMovementPointDodge().ToStringThousandSeparator()));
+            caracBuilder.Append("%\n");
+
+            caracBuilder.Append(Emojis.RES_NEUTRAL);
+            caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetNeutralResistance().ToStringThousandSeparator()));
+            caracBuilder.Append("% ");
+
+            caracBuilder.Append(Emojis.RES_EARTH);
+            caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetEarthResistance().ToStringThousandSeparator()));
+            caracBuilder.Append("% ");
+
+            caracBuilder.Append(Emojis.RES_FIRE);
+            caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetFireResistance().ToStringThousandSeparator()));
+            caracBuilder.Append("% ");
+
+            caracBuilder.Append(Emojis.RES_WATER);
+            caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetWaterResistance().ToStringThousandSeparator()));
+            caracBuilder.Append("% ");
+
+            caracBuilder.Append(Emojis.RES_AIR);
+            caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetAirResistance().ToStringThousandSeparator()));
+            caracBuilder.Append('%');
+
+            embed.AddField("Caractéristiques :", caracBuilder.ToString());
 
             if (!string.IsNullOrEmpty(_monsterData.TrelloUrl))
             {

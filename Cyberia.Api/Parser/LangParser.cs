@@ -73,7 +73,8 @@ public static partial class LangParser
 
     private static string ParseLines(string[] lines)
     {
-        var json = new StringBuilder();
+        StringBuilder jsonBuilder = new(lines.Sum(x => x.Length));
+
         var lastLineName = string.Empty;
         var lastLineHasId = false;
 
@@ -98,19 +99,22 @@ public static partial class LangParser
             {
                 if (!string.IsNullOrEmpty(lastLineName))
                 {
-                    json.Remove(json.Length - 1, 1);
+                    jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
                     if (lastLineHasId)
                     {
-                        json.Append(']');
+                        jsonBuilder.Append(']');
                     }
 
-                    json.Append(',');
+                    jsonBuilder.Append(',');
                 }
 
-                json.AppendFormat("\"{0}\":", currentLineName);
+                jsonBuilder.Append('"');
+                jsonBuilder.Append(currentLineName);
+                jsonBuilder.Append("\":");
+
                 if (currentLineHasId)
                 {
-                    json.Append('[');
+                    jsonBuilder.Append('[');
                 }
 
                 lastLineName = currentLineName;
@@ -119,11 +123,15 @@ public static partial class LangParser
 
             if (key.Groups["intId"].Success)
             {
-                json.AppendFormat("{{\"id\":{0},", key.Groups["intId"].Value);
+                jsonBuilder.Append("{\"id\":");
+                jsonBuilder.Append(key.Groups["intId"].Value);
+                jsonBuilder.Append(',');
             }
             else if (key.Groups["stringId"].Success)
             {
-                json.AppendFormat("{{\"id\":\"{0}\",", key.Groups["stringId"].Value);
+                jsonBuilder.Append("{\"id\":\"");
+                jsonBuilder.Append(key.Groups["stringId"].Value);
+                jsonBuilder.Append("\",");
             }
 
             var value = lineSplit[1].Replace("' + '\"' + '", @"\""");
@@ -134,30 +142,32 @@ public static partial class LangParser
             {
                 if (value.StartsWith('{'))
                 {
-                    json.Append(value[1..^1]);
+                    jsonBuilder.Append(value[1..^1]);
                 }
                 else
                 {
-                    json.AppendFormat("\"v\":{0}}}", value[..^1]);
+                    jsonBuilder.Append("\"v\":");
+                    jsonBuilder.Append(value[..^1]);
+                    jsonBuilder.Append('}');
                 }
             }
             else
             {
-                json.Append(value[..^1]);
+                jsonBuilder.Append(value[..^1]);
             }
 
-            json.Append(',');
+            jsonBuilder.Append(',');
         }
 
-        if (json.Length > 0)
+        if (jsonBuilder.Length > 0)
         {
-            json.Remove(json.Length - 1, 1);
+            jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
             if (lastLineHasId)
             {
-                json.Append(']');
+                jsonBuilder.Append(']');
             }
         }
 
-        return "{" + json.ToString() + "}";
+        return "{" + jsonBuilder.ToString() + "}";
     }
 }

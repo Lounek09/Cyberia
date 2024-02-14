@@ -70,17 +70,24 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
 
         if (_langDataCollection.Count > 0)
         {
-            StringBuilder content = new();
+            StringBuilder descriptionBuilder = new();
 
-            content.AppendFormat("Dernière modification le : {0}+00:00\n", _langDataCollection.GetDateTimeSinceLastChange().ToString("dd/MM/yyyy HH:mm"));
-            content.AppendLine(Formatter.MaskedUrl(Formatter.Bold(_langDataCollection.GetVersionFileName()), new Uri(_langDataCollection.GetVersionFileUrl())));
+            descriptionBuilder.Append("Dernière modification le : ");
+            descriptionBuilder.Append(_langDataCollection.GetDateTimeSinceLastChange().ToString("dd/MM/yyyy HH:mm"));
+            descriptionBuilder.Append("+00:00\n");
+            descriptionBuilder.Append(Formatter.MaskedUrl(Formatter.Bold(_langDataCollection.GetVersionFileName()), new Uri(_langDataCollection.GetVersionFileUrl())));
+            descriptionBuilder.Append('\n');
 
             foreach (var langData in _langDataCollection)
             {
-                content.AppendLine($"- {Formatter.MaskedUrl(langData.Name, new Uri(langData.GetFileUrl()))} {Formatter.InlineCode(langData.Version.ToString())}");
+                descriptionBuilder.Append("- ");
+                descriptionBuilder.Append(Formatter.MaskedUrl(langData.Name, new Uri(langData.GetFileUrl())));
+                descriptionBuilder.Append(' ');
+                descriptionBuilder.Append(Formatter.InlineCode(langData.Version.ToString()));
+                descriptionBuilder.Append('\n');
             }
 
-            embed.WithDescription(content.ToString());
+            embed.WithDescription(descriptionBuilder.ToString());
         }
         else
         {

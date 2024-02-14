@@ -126,7 +126,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
 
     private static string GetRuneBundleTextFieldStatCommand(RuneBundle runeBundle)
     {
-        var builder = new StringBuilder();
+        StringBuilder builder = new();
 
         builder.Append(Emojis.BaRune(runeBundle.RuneData.Id));
         builder.Append(' ');

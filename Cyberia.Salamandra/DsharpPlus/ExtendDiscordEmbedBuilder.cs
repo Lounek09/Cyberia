@@ -19,7 +19,7 @@ public static class ExtendDiscordEmbedBuilder
 {
     public static DiscordEmbedBuilder AddFields(this DiscordEmbedBuilder embed, string name, IEnumerable<string> rows, bool inline = false)
     {
-        var builder = new StringBuilder();
+        StringBuilder builder = new();
 
         foreach (var row in rows)
         {
@@ -36,7 +36,7 @@ public static class ExtendDiscordEmbedBuilder
             }
 
             builder.Append(row);
-            builder.Append('\n'); //Not using builder.AppendLine() because it adds \r\n in windows
+            builder.Append('\n');
         }
 
         builder.Length--;
@@ -109,51 +109,58 @@ public static class ExtendDiscordEmbedBuilder
 
     public static DiscordEmbedBuilder AddWeaponInfosField(this DiscordEmbedBuilder embed, ItemWeaponData itemWeaponData, bool twoHanded, ItemTypeData? itemTypeData, bool inline = false)
     {
-        var builder = new StringBuilder();
+        StringBuilder builder = new();
 
-        var actionPointCost = Formatter.Bold(itemWeaponData.ActionPointCost.ToString());
-        builder.AppendFormat("PA : {0}\n", actionPointCost);
+        builder.Append("PA : ");
+        builder.Append(Formatter.Bold(itemWeaponData.ActionPointCost.ToString()));
+        builder.Append('\n');
 
-        var minRange = Formatter.Bold(itemWeaponData.MinRange.ToString());
-        var maxRange = Formatter.Bold(itemWeaponData.MaxRange.ToString());
-        builder.AppendFormat("Portée : {0} à {1}\n", minRange, maxRange);
+        builder.Append("Portée : ");
+        builder.Append(Formatter.Bold(itemWeaponData.MinRange.ToString()));
+        builder.Append(" à ");
+        builder.Append(Formatter.Bold(itemWeaponData.MaxRange.ToString()));
+        builder.Append('\n');
 
         if (itemWeaponData.CriticalBonus != 0)
         {
-            var criticalBonus = Formatter.Bold(itemWeaponData.CriticalBonus.ToString());
-            builder.AppendFormat("Bonus coups critique : {0}\n", criticalBonus);
+            builder.Append("Bonus coups critique : ");
+            builder.Append(Formatter.Bold(itemWeaponData.CriticalBonus.ToString()));
+            builder.Append('\n');
         }
 
         if (itemWeaponData.CriticalHitRate != 0)
         {
-            var criticalHitRate = Formatter.Bold(itemWeaponData.CriticalHitRate.ToString());
-            builder.AppendFormat("Critique : 1/{0}", criticalHitRate);
+            builder.Append("Critique : 1/");
+            builder.Append(Formatter.Bold(itemWeaponData.CriticalHitRate.ToString()));
             builder.Append(itemWeaponData.CriticalFailureRate != 0 ? " - " : "\n");
         }
 
         if (itemWeaponData.CriticalFailureRate != 0)
         {
-            var criticalFailureRate = Formatter.Bold(itemWeaponData.CriticalFailureRate.ToString());
-            builder.AppendFormat("Échec : 1/{0}\n", criticalFailureRate);
+            builder.Append("Échec : 1/");
+            builder.Append(Formatter.Bold(itemWeaponData.CriticalFailureRate.ToString()));
+            builder.Append('\n');
         }
 
         if (itemWeaponData.LineOnly)
         {
-            builder.AppendLine("Lancer en ligne uniquement");
+            builder.Append("Lancer en ligne uniquement\n");
         }
 
         if (!itemWeaponData.LineOfSight && itemWeaponData.MaxRange > 1)
         {
-            builder.AppendLine("Ne possède pas de ligne de vue");
+            builder.Append("Ne possède pas de ligne de vue\n");
+
         }
 
         builder.Append(twoHanded ? "Arme à deux mains" : "Arme à une main");
 
         if (itemTypeData is not null && itemTypeData.EffectArea != EffectArea.Default)
         {
-            var emoji = Emojis.Area(itemTypeData.EffectArea.Id);
-            var description = itemTypeData.EffectArea.GetDescription();
-            builder.AppendFormat("\nZone : {0} {1}", emoji, description);
+            builder.Append("\nZone : ");
+            builder.Append(Emojis.Area(itemTypeData.EffectArea.Id));
+            builder.Append(' ');
+            builder.Append(itemTypeData.EffectArea.GetDescription());
         }
 
         return embed.AddField("Caractéristiques :", builder.ToString(), inline);
@@ -161,43 +168,55 @@ public static class ExtendDiscordEmbedBuilder
 
     public static DiscordEmbedBuilder AddPetField(this DiscordEmbedBuilder embed, PetData petData, bool inline = false)
     {
-        var builder = new StringBuilder();
+        StringBuilder builder = new();
 
         if (petData.MinFoodInterval.HasValue && petData.MaxFoodInterval.HasValue)
         {
-            var minHoursInterval = Formatter.Bold(petData.MinFoodInterval.Value.TotalHours.ToString());
-            var maxHoursInterval = Formatter.Bold(petData.MaxFoodInterval.Value.TotalHours.ToString());
-            builder.AppendFormat("Repas entre {0}h et {1}h\n", minHoursInterval, maxHoursInterval);
+            builder.Append("Repas entre ");
+            builder.Append(Formatter.Bold(petData.MinFoodInterval.Value.TotalHours.ToString()));
+            builder.Append("h et ");
+            builder.Append(Formatter.Bold(petData.MaxFoodInterval.Value.TotalHours.ToString()));
+            builder.Append("h\n");
         }
 
         foreach (var petFoodsData in petData.Foods)
         {
             if (petFoodsData.Effect is not null)
             {
-                builder.AppendFormat("{0} {1} :\n", Emojis.Effect(petFoodsData.Effect.Id), Formatter.Bold(petFoodsData.Effect.GetDescription()));
+                builder.Append(Emojis.Effect(petFoodsData.Effect.Id));
+                builder.Append(' ');
+                builder.Append(Formatter.Bold(petFoodsData.Effect.GetDescription()));
+                builder.Append(" :\n");
 
                 if (petFoodsData.ItemsId.Count > 0)
                 {
                     var itemsName = petFoodsData.ItemsId
                         .Select(x => DofusApi.Datacenter.ItemsData.GetItemNameById(x));
-                    builder.AppendLine(string.Join(", ", itemsName));
+
+                    builder.Append(string.Join(", ", itemsName));
+                    builder.Append('\n');
                 }
 
                 if (petFoodsData.ItemTypesId.Count > 0)
                 {
                     var itemTypesName = petFoodsData.ItemTypesId
                         .Select(x => DofusApi.Datacenter.ItemsData.GetItemTypeNameById(x));
-                    builder.AppendLine(string.Join(", ", itemTypesName));
+
+                    builder.Append(string.Join(", ", itemTypesName));
+                    builder.Append('\n');
                 }
 
                 if (petFoodsData.MonstersIdQuantities.Count > 0)
                 {
                     foreach (var group in petFoodsData.MonstersIdQuantities.GroupBy(x => x.Value))
                     {
-                        var quantity = Formatter.Bold(group.Key.ToString());
                         var monstersName = group
                             .Select(x => DofusApi.Datacenter.MonstersData.GetMonsterNameById(x.Key));
-                        builder.AppendFormat("{0}x {1}\n", quantity, string.Join(", ", monstersName));
+
+                        builder.Append(Formatter.Bold(group.Key.ToString()));
+                        builder.Append("x ");
+                        builder.Append(string.Join(", ", monstersName));
+                        builder.Append('\n');
                     }
                 }
 
@@ -205,10 +224,13 @@ public static class ExtendDiscordEmbedBuilder
                 {
                     foreach (var group in petFoodsData.MonsterRacesIdQuantities.GroupBy(x => x.Value))
                     {
-                        var quantity = Formatter.Bold(group.Key.ToString());
                         var monsterRacesName = group
                             .Select(x => DofusApi.Datacenter.MonstersData.GetMonsterRaceNameById(x.Key));
-                        builder.AppendFormat("{0}x {1}\n", quantity, string.Join(", ", monsterRacesName));
+
+                        builder.Append(Formatter.Bold(group.Key.ToString()));
+                        builder.Append("x ");
+                        builder.Append(string.Join(", ", monsterRacesName));
+                        builder.Append('\n');
                     }
                 }
 
@@ -216,10 +238,14 @@ public static class ExtendDiscordEmbedBuilder
                 {
                     foreach (var group in petFoodsData.MonsterSuperRacesIdQuantities.GroupBy(x => x.Value))
                     {
-                        var quantity = Formatter.Bold(group.Key.ToString());
                         var monsterSuperRacesName = group
                             .Select(x => DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceNameById(x.Key));
-                        builder.AppendFormat("{0}x {1}\n", quantity, string.Join(", ", monsterSuperRacesName));
+
+                        builder.Append(Formatter.Bold(group.Key.ToString()));
+                        builder.Append("x ");
+                        builder.Append(string.Join(", ", monsterSuperRacesName));
+                        builder.Append('\n');
+
                     }
                 }
             }

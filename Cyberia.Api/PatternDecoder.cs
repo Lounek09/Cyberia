@@ -77,11 +77,11 @@ public static class PatternDecoder
 
     public static string Description(string value, params string[] parameters)
     {
-        var result = new StringBuilder(value);
+        StringBuilder builder = new(value);
 
         for (var i = 0; i < parameters.Length; i++)
         {
-            result.Replace($"#{i + 1}", parameters[i]);
+            builder.Replace($"#{i + 1}", parameters[i]);
         }
 
         var indexOfOpenBrace = value.IndexOf('{');
@@ -115,11 +115,11 @@ public static class PatternDecoder
                 replacement = string.Empty;
             }
 
-            result.Replace(value[indexOfOpenBrace..(indexOfCloseBrace + 1)], replacement);
+            builder.Replace(value[indexOfOpenBrace..(indexOfCloseBrace + 1)], replacement);
 
             indexOfOpenBrace = value.IndexOf('{', indexOfCloseBrace);
         }
 
-        return result.ToString();
+        return builder.ToString();
     }
 }

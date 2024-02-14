@@ -15,27 +15,41 @@ public sealed class HelpCommandModule : ApplicationCommandModule
             .Where(x => x.Key is null)
             .FirstOrDefault().Value;
 
-        var description = new StringBuilder();
+        StringBuilder descriptionBuilder = new();
+
         foreach (var command in commands)
         {
             if (command.Name.Equals("help"))
+            {
                 continue;
+            }
 
             if (command.Options is not null)
             {
-                var subCommands = command.Options.Where(x => x.Type is ApplicationCommandOptionType.SubCommand);
+                var subCommands = command.Options
+                    .Where(x => x.Type is ApplicationCommandOptionType.SubCommand);
+
                 if (subCommands.Any())
                 {
-                    description.AppendLine($"- {string.Join(" - ", subCommands.Select(x => command.GetSubcommandMention(x.Name)))} : {command.Description}");
+                    descriptionBuilder.Append("- ");
+                    descriptionBuilder.Append(string.Join(" - ", subCommands.Select(x => command.GetSubcommandMention(x.Name))));
+                    descriptionBuilder.Append(" : ");
+                    descriptionBuilder.Append(command.Description);
+                    descriptionBuilder.Append('\n');
+
                     continue;
                 }
             }
 
-            description.AppendLine($"- {command.Mention} : {command.Description}");
+            descriptionBuilder.Append("- ");
+            descriptionBuilder.Append(command.Mention);
+            descriptionBuilder.Append(" : ");
+            descriptionBuilder.Append(command.Description);
+            descriptionBuilder.Append('\n');
         }
 
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Help")
-            .WithDescription(description.ToString());
+            .WithDescription(descriptionBuilder.ToString());
 
         await ctx.CreateResponseAsync(embed);
     }
