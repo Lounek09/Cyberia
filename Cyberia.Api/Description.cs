@@ -14,6 +14,6 @@ public readonly record struct Description(string Value, params string[] Paramete
 
     public static implicit operator string(Description description)
     {
-        return PatternDecoder.Description(description.Value, description.Parameters);
+        return description.ToString();
     }
 }

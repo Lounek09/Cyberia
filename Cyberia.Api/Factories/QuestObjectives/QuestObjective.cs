@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Data.Quests;
 
+using System.Text;
+
 namespace Cyberia.Api.Factories.QuestObjectives;
 
 public abstract record QuestObjective(QuestObjectiveData QuestObjectiveData)
@@ -36,14 +38,15 @@ public abstract record QuestObjective(QuestObjectiveData QuestObjectiveData)
                 string.Join(',', QuestObjectiveData.Parameters));
         }
 
-        var value = questObjectiveTypeData.Description;
+        StringBuilder builder = new(questObjectiveTypeData.Description);
 
         var coordinate = QuestObjectiveData.GetCoordinate();
         if (!string.IsNullOrEmpty(coordinate))
         {
-            value += $" - {coordinate}";
+            builder.Append(" - ");
+            builder.Append(coordinate);
         }
 
-        return new(value, parameters);
+        return new(builder.ToString(), parameters);
     }
 }

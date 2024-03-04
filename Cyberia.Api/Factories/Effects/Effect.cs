@@ -2,6 +2,8 @@
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Managers;
 
+using System.Text;
+
 namespace Cyberia.Api.Factories.Effects;
 
 public abstract record Effect(int Id, int Duration, int Probability, CriteriaCollection Criteria, EffectArea EffectArea)
@@ -51,22 +53,29 @@ public abstract record Effect(int Id, int Duration, int Probability, CriteriaCol
                 string.Join(',', parameters));
         }
 
-        var value = effectData.Description;
+        StringBuilder builder = new();
 
         if (Probability > 0)
         {
-            value = $"{PatternDecoder.Description(Resources.Effect_Probability, Probability)} : " + value;
+            builder.Append(PatternDecoder.Description(Resources.Effect_Probability, Probability));
+            builder.Append(" : ");
         }
+
+        builder.Append(effectData.Description);
 
         if (Duration <= -1 || Duration >= 63)
         {
-            value += $" ({Resources.Infinity})";
+            builder.Append(" (");
+            builder.Append(Resources.Infinity);
+            builder.Append(')');
         }
         else if (Duration != 0)
         {
-            value += $" ({PatternDecoder.Description(Resources.Effect_Turn, Duration)})";
+            builder.Append(" (");
+            builder.Append(PatternDecoder.Description(Resources.Effect_Turn, Duration));
+            builder.Append(')');
         }
 
-        return new(value, parameters);
+        return new(builder.ToString(), parameters);
     }
 }
