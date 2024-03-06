@@ -4,42 +4,55 @@ namespace Cyberia.Utils;
 
 public static class ExecuteCmd
 {
-    public static bool ExecuteCommand(string command, string args)
+    public static void ExecuteCommand(string command, string args, string workingDirectory = "")
     {
+        ProcessStartInfo startInfo = new()
+        {
+            FileName = command,
+            Arguments = args,
+            WorkingDirectory = workingDirectory,
+            CreateNoWindow = true,
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true
+        };
+
         try
         {
-            using var process = new Process()
+            using var process = new Process
             {
-                StartInfo = new ProcessStartInfo(command, args)
-                {
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                }
+                StartInfo = startInfo
             };
+
+            process.OutputDataReceived += Process_OutputDataReceived;
+            process.ErrorDataReceived += Process_ErrorDataReceived;
 
             process.Start();
 
-            var message = process.StandardOutput.ReadToEnd();
-            if (!string.IsNullOrEmpty(message))
-            {
-                Log.Information(message);
-            }
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
 
-            var error = process.StandardError.ReadToEnd();
-            if (!string.IsNullOrEmpty(error))
-            {
-                Log.Error(error);
-                return false;
-            }
-
-            return true;
+            process.WaitForExit();
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            Log.Error("An error occurred while executing {CommandName} with {CommandArguments} arguments", command, args);
-            return false;
+            Log.Error(e, "An error occured while execute {CommandName} command", command);
+        }
+    }
+
+    private static void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(e.Data))
+        {
+            Log.Information(e.Data);
+        }
+    }
+
+    private static void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(e.Data))
+        {
+            Log.Error(e.Data);
         }
     }
 }
