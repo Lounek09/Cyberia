@@ -15,10 +15,17 @@ public sealed class StateData
     [JsonInclude]
     internal int P { get; init; }
 
+    [JsonPropertyName("d")]
+    public bool Display { get; init; }
+
+    [JsonPropertyName("s")]
+    public string ShortName { get; init; }
+
     [JsonConstructor]
     internal StateData()
     {
         Name = string.Empty;
+        ShortName = string.Empty;
     }
 
     public string GetImagePath()
