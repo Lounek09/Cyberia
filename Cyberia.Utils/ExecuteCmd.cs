@@ -4,7 +4,7 @@ namespace Cyberia.Utils;
 
 public static class ExecuteCmd
 {
-    public static void ExecuteCommand(string command, string args, string workingDirectory = "")
+    public static bool Execute(string command, string args, string workingDirectory = "")
     {
         ProcessStartInfo startInfo = new()
         {
@@ -33,10 +33,12 @@ public static class ExecuteCmd
             process.BeginErrorReadLine();
 
             process.WaitForExit();
+            return true;
         }
         catch (Exception e)
         {
             Log.Error(e, "An error occured while execute {CommandName} command", command);
+            return false;
         }
     }
 

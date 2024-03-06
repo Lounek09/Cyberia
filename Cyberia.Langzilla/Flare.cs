@@ -9,7 +9,7 @@ internal static class Flare
         lock (_lock)
         {
             outputFilePath = $"{swfFilePath.TrimEnd(".swf")}.flr";
-            return ExecuteCmd.ExecuteCommand(GetFlareExecutablePath(), swfFilePath);
+            return ExecuteCmd.Execute(GetFlareExecutablePath(), swfFilePath);
         }
     }
 
