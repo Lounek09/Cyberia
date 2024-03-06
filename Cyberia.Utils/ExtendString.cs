@@ -7,27 +7,37 @@ public static class ExtendString
 {
     public static string Capitalize(this string value)
     {
-        if (value.Length == 0)
+        return Capitalize(value.AsSpan());
+    }
+
+    public static string Capitalize(this ReadOnlySpan<char> value)
+    {
+        if (value.IsEmpty)
         {
             return string.Empty;
         }
 
         if (value.Length > 1)
         {
-            return char.ToUpper(value[0]) + value[1..];
+            return char.ToUpper(value[0]) + value[1..].ToString();
         }
 
-        return value.ToUpper();
+        return value.ToString().ToUpper();
     }
 
     public static string WithMaxLength(this string value, int maxLength)
     {
+        return WithMaxLength(value.AsSpan(), maxLength);
+    }
+
+    public static string WithMaxLength(this ReadOnlySpan<char> value, int maxLength)
+    {
         if (value.Length <= maxLength)
         {
-            return value;
+            return value.ToString();
         }
 
-        return value[..maxLength];
+        return value[..maxLength].ToString();
     }
 
     public static IEnumerable<string> SplitByLength(this string value, int length)
@@ -38,46 +48,69 @@ public static class ExtendString
         }
     }
 
-    public static string TrimStart(this string value, string trimString)
+    public static string TrimStart(this string value, ReadOnlySpan<char> trimString)
     {
-        if (string.IsNullOrEmpty(trimString))
-        {
-            return value;
-        }
-
-        var result = value;
-        while (result.StartsWith(trimString))
-        {
-            result = result[trimString.Length..];
-        }
-
-        return result;
+        return TrimStart(value.AsSpan(), trimString);
     }
 
-    public static string TrimEnd(this string value, string trimString)
+    public static string TrimStart(this ReadOnlySpan<char> value, ReadOnlySpan<char> trimString)
     {
-        if (string.IsNullOrEmpty(trimString))
+        if (value.IsEmpty)
         {
-            return value;
+            return string.Empty;
         }
 
-        var result = value;
-        while (result.EndsWith(trimString))
+        if (trimString.Length == 0)
         {
-            result = result[..^trimString.Length];
+            return value.ToString();
         }
 
-        return result;
+        while (value.StartsWith(trimString))
+        {
+            value = value[trimString.Length..];
+        }
+
+        return value.ToString();
+    }
+
+    public static string TrimEnd(this string value, ReadOnlySpan<char> trimString)
+    {
+        return TrimEnd(value.AsSpan(), trimString);
+    }
+
+    public static string TrimEnd(this ReadOnlySpan<char> value, ReadOnlySpan<char> trimString)
+    {
+        if (value.IsEmpty)
+        {
+            return string.Empty;
+        }
+
+        if (trimString.Length == 0)
+        {
+            return value.ToString();
+        }
+
+        while (value.StartsWith(trimString))
+        {
+            value = value[..^trimString.Length];
+        }
+
+        return value.ToString();
     }
 
     public static long ToInt64OrDefaultFromHex(this string value)
     {
-        if (string.IsNullOrEmpty(value))
+        return ToInt64OrDefaultFromHex(value.AsSpan());
+    }
+
+    public static long ToInt64OrDefaultFromHex(this ReadOnlySpan<char> value)
+    {
+        if (value.IsEmpty)
         {
             return default;
         }
 
-        var isNegative = value.StartsWith('-');
+        var isNegative = value[0] == '-';
         value = isNegative ? value[1..] : value;
 
         if (long.TryParse(value, NumberStyles.HexNumber, null, out var result))
@@ -96,7 +129,6 @@ public static class ExtendString
         {
             var c = value[pos];
 
-            // Quick test: if it's not in range then just keep current character
             if (c < '\u0080')
             {
                 builder.Append(c);
@@ -1811,6 +1843,6 @@ public static class ExtendString
             }
         }
 
-        return builder.ToString().ToUpper();
+        return builder.ToString();
     }
 }

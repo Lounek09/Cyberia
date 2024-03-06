@@ -41,7 +41,7 @@ public sealed class BreedData
 
     [JsonPropertyName("cc")]
     [JsonInclude]
-    private object CloseCombatInfos { get; init; } //Not used anymore
+    internal object CloseCombatInfos { get; init; } //Not used anymore
 
     [JsonPropertyName("b10")]
     [JsonInclude]
