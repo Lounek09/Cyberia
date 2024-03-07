@@ -1,4 +1,4 @@
-Flare, ActionScript decompiler
+﻿Flare, ActionScript decompiler
 
 Copyright (c) 2003-2007 Igor Kogan
 All rights reserved.
