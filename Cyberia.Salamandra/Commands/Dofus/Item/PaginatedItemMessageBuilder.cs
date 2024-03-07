@@ -26,7 +26,7 @@ public sealed class PaginatedItemMessageBuilder : PaginatedMessageBuilder<ItemDa
             parameters.Length > 2 &&
             int.TryParse(parameters[1], out var selectedPageIndex))
         {
-            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsData(parameters[2]).ToList();
+            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsDataByName(parameters[2]).ToList();
             if (itemsData.Count > 0)
             {
                 return new(itemsData, parameters[2], selectedPageIndex);

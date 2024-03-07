@@ -35,6 +35,8 @@ public sealed class TitlesData
     {
         var titleData = GetTitleDataById(id);
 
-        return titleData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : titleData.Name;
+        return titleData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : titleData.Name;
     }
 }

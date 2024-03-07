@@ -51,7 +51,9 @@ public sealed class TTGData
     {
         var ttgEntityData = GetTTGEntityDataById(id);
 
-        return ttgEntityData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : ttgEntityData.Name;
+        return ttgEntityData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : ttgEntityData.Name;
     }
 
     public TTGFamilyData? GetTTGFamilyDataById(int id)
@@ -64,6 +66,8 @@ public sealed class TTGData
     {
         var ttgFamilyData = GetTTGFamilyDataById(id);
 
-        return ttgFamilyData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : ttgFamilyData.Name;
+        return ttgFamilyData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : ttgFamilyData.Name;
     }
 }

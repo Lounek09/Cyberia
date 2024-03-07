@@ -25,7 +25,7 @@ public sealed class ItemCommandModule : ApplicationCommandModule
         }
         else
         {
-            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsData(value).ToList();
+            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsDataByName(value).ToList();
             if (itemsData.Count == 1)
             {
                 response = await new ItemMessageBuilder(itemsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

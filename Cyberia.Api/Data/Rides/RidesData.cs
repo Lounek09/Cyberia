@@ -40,7 +40,9 @@ public sealed class RidesData
     {
         var rideData = GetRideDataById(id);
 
-        return rideData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : rideData.Name;
+        return rideData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : rideData.Name;
     }
 
     public RideAbilityData? GetRideAbilityDataById(int id)

@@ -35,6 +35,8 @@ public sealed class EmotesData
     {
         var emoteData = GetEmoteById(id);
 
-        return emoteData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : emoteData.Name;
+        return emoteData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : emoteData.Name;
     }
 }

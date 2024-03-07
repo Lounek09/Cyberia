@@ -71,7 +71,9 @@ public sealed class MapsData
     {
         var mapSuperAreaData = GetMapSuperAreaDataById(id);
 
-        return mapSuperAreaData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : mapSuperAreaData.Name;
+        return mapSuperAreaData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : mapSuperAreaData.Name;
     }
 
     public MapAreaData? GetMapAreaDataById(int id)
@@ -82,15 +84,24 @@ public sealed class MapsData
 
     public IEnumerable<MapAreaData> GetMapAreasDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ');
-        return MapAreas.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return MapAreas.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
     }
 
     public string GetMapAreaNameById(int id)
     {
         var mapAreaData = GetMapAreaDataById(id);
 
-        return mapAreaData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : mapAreaData.Name;
+        return mapAreaData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : mapAreaData.Name;
     }
 
     public MapSubAreaData? GetMapSubAreaDataById(int id)
@@ -101,14 +112,23 @@ public sealed class MapsData
 
     public IEnumerable<MapSubAreaData> GetMapSubAreasDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ');
-        return MapSubAreas.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return MapSubAreas.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
     }
 
     public string GetMapSubAreaNameById(int id)
     {
         var mapSubAreaData = GetMapSubAreaDataById(id);
 
-        return mapSubAreaData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : mapSubAreaData.Name.TrimStart("//");
+        return mapSubAreaData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : mapSubAreaData.Name.TrimStart('/');
     }
 }

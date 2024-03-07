@@ -44,16 +44,25 @@ public sealed class ItemSetsData
         return itemSetData;
     }
 
+    public IEnumerable<ItemSetData> GetItemSetsDataByName(string name)
+    {
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return ItemSets.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
+    }
+
     public string GetItemSetNameById(int id)
     {
         var itemSetData = GetItemSetDataById(id);
 
-        return itemSetData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : itemSetData.Name;
-    }
-
-    public IEnumerable<ItemSetData> GetItemSetsDataByName(string name)
-    {
-        var names = name.NormalizeCustom().Split(' ');
-        return ItemSets.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+        return itemSetData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : itemSetData.Name;
     }
 }

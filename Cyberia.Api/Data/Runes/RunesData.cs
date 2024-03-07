@@ -33,13 +33,25 @@ public sealed class RunesData
 
     public RuneData? GetRuneDataByName(string name)
     {
-        return Runes.Values.FirstOrDefault(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
+        name = name.NormalizeCustom();
+
+        return Runes.Values.FirstOrDefault(x =>
+        {
+            return x.Name.NormalizeCustom().Equals(name, StringComparison.OrdinalIgnoreCase);
+        });
     }
 
     public IEnumerable<RuneData> GetRunesDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ');
-        return Runes.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return Runes.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
     }
 
     public string GetAllRuneName()

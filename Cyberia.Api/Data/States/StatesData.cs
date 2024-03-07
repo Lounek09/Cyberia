@@ -35,6 +35,8 @@ public sealed class StatesData
     {
         var stateData = GetStateDataById(id);
 
-        return stateData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : stateData.Name;
+        return stateData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : stateData.Name;
     }
 }

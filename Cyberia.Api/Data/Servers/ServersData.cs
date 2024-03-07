@@ -71,7 +71,9 @@ public sealed class ServersData
     {
         var serverData = GetServerDataById(id);
 
-        return serverData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : serverData.Name;
+        return serverData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : serverData.Name;
     }
 
     public ServerPopulationData? GetServerPopulationDataById(int id)

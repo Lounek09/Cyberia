@@ -33,7 +33,14 @@ public sealed class IncarnationsData
 
     public IEnumerable<IncarnationData> GetIncarnationsDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ');
-        return Incarnations.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return Incarnations.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
     }
 }

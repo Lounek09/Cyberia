@@ -9,7 +9,7 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record CharacterSummonMonsterGroupEffect
     : Effect, IEffect
 {
-    public List<int> MonstersId { get; init; }
+    public IReadOnlyList<int> MonstersId { get; init; }
 
     private CharacterSummonMonsterGroupEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, List<int> monstersId)
         : base(id, duration, probability, criteria, effectArea)
@@ -19,7 +19,9 @@ public sealed record CharacterSummonMonsterGroupEffect
 
     internal static CharacterSummonMonsterGroupEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        var monstersId = parameters.Param4.Split(":").Select(x => int.Parse(x, NumberStyles.HexNumber)).ToList();
+        var monstersId = parameters.Param4.Split(":", StringSplitOptions.RemoveEmptyEntries)
+            .Select(x => int.Parse(x, NumberStyles.HexNumber))
+            .ToList();
 
         return new(effectId, duration, probability, criteria, effectArea, monstersId);
     }

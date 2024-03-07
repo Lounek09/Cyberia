@@ -111,7 +111,9 @@ public sealed class AlignmentsData
     {
         var alignmentData = GetAlignmentDataById(id);
 
-        return alignmentData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentData.Name;
+        return alignmentData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : alignmentData.Name;
     }
 
     internal AlignmentJoinData? GetAlignmentJoinDataById(int id)
@@ -148,7 +150,9 @@ public sealed class AlignmentsData
     {
         var alignmentFeatData = GetAlignmentFeatDataById(id);
 
-        return alignmentFeatData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentFeatData.Name;
+        return alignmentFeatData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : alignmentFeatData.Name;
     }
 
     public AlignmentFeatEffectData? GetAlignmentFeatEffectDataById(int id)
@@ -167,6 +171,8 @@ public sealed class AlignmentsData
     {
         var alignmentSpecializationData = GetAlignmentSpecializationDataById(id);
 
-        return alignmentSpecializationData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : alignmentSpecializationData.Name;
+        return alignmentSpecializationData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : alignmentSpecializationData.Name;
     }
 }

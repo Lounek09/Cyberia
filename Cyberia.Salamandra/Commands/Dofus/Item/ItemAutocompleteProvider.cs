@@ -17,7 +17,7 @@ public sealed class ItemAutocompleteProvider : AutocompleteProvider
 
         List<DiscordAutoCompleteChoice> choices = [];
 
-        foreach (var itemData in DofusApi.Datacenter.ItemsData.GetItemsData(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+        foreach (var itemData in DofusApi.Datacenter.ItemsData.GetItemsDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
         {
             choices.Add(new($"{itemData.Name.WithMaxLength(90)} ({itemData.Id})", itemData.Id.ToString()));
         }

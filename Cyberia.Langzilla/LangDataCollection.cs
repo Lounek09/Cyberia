@@ -76,7 +76,12 @@ public sealed class LangDataCollection
 
     public List<LangData> GetLangsByName(string name)
     {
-        return ItemsCore.FindAll(x => x.Name.NormalizeCustom().Contains(name.NormalizeCustom()));
+        name = name.NormalizeCustom();
+
+        return ItemsCore.FindAll(x =>
+        {
+            return x.Name.NormalizeCustom().Equals(name, StringComparison.OrdinalIgnoreCase);
+        });
     }
 
     public IEnumerator<LangData> GetEnumerator()
@@ -142,7 +147,7 @@ public sealed class LangDataCollection
         var langInfos = versionFileContent[3..].Split("|", StringSplitOptions.RemoveEmptyEntries);
         foreach (var langInfo in langInfos)
         {
-            var langParameters = langInfo.Split(',');
+            var langParameters = langInfo.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
             var langData = new LangData(langParameters[0], int.Parse(langParameters[2]), Type, Language);
             if (!File.Exists(langData.GetFilePath()))

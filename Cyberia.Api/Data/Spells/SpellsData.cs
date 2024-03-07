@@ -45,15 +45,24 @@ public sealed class SpellsData
 
     public IEnumerable<SpellData> GetSpellsDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ');
-        return Spells.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return Spells.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
     }
 
     public string GetSpellNameById(int id)
     {
         var spellData = GetSpellDataById(id);
 
-        return spellData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : spellData.Name;
+        return spellData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : spellData.Name;
     }
 
     public SpellLevelData? GetSpellLevelDataById(int id)

@@ -47,19 +47,30 @@ public sealed class BreedsData
 
     public BreedData? GetBreedDataByName(string name)
     {
-        return Breeds.Values.FirstOrDefault(x => x.Name.NormalizeCustom().Equals(name.NormalizeCustom()));
+        name = name.NormalizeCustom();
+
+        return Breeds.Values.FirstOrDefault(x => x.Name.NormalizeCustom().Equals(name));
     }
 
     public IEnumerable<BreedData> GetBreedsDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ');
-        return Breeds.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return Breeds.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
     }
 
     public string GetBreedNameById(int id)
     {
         var breed = GetBreedDataById(id);
 
-        return breed is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : breed.Name;
+        return breed is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : breed.Name;
     }
 }

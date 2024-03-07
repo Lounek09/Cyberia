@@ -59,9 +59,16 @@ public sealed class HousesData
 
     public IEnumerable<HouseData> GetHousesDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ');
-        return Houses.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains))
-            .OrderBy(x => x.Id);
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return Houses.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        })
+        .OrderBy(x => x.Id);
     }
 
     public IEnumerable<HouseData> GetHousesDataByCoordinate(int x, int y)

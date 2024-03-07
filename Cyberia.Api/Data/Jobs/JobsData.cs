@@ -35,6 +35,8 @@ public sealed class JobsData
     {
         var jobData = GetJobDataById(id);
 
-        return jobData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : jobData.Name;
+        return jobData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : jobData.Name;
     }
 }

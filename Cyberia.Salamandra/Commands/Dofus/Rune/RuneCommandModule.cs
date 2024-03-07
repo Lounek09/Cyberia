@@ -35,7 +35,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
         }
         else
         {
-            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsData(value).ToList();
+            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsDataByName(value).ToList();
             if (itemsData.Count == 1)
             {
                 response = await new RuneItemMessageBuilder(itemsData[0], (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();

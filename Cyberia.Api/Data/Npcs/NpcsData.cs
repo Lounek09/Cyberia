@@ -46,6 +46,8 @@ public sealed class NpcsData
     {
         var npc = GetNpcDataById(id);
 
-        return npc is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : npc.Name;
+        return npc is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : npc.Name;
     }
 }

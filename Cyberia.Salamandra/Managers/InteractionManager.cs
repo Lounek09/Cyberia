@@ -77,7 +77,8 @@ public static partial class InteractionManager
 
         var response = new DiscordInteractionResponseBuilder();
 
-        var decomposedPacket = (SelectComponentPacketRegex().IsMatch(e.Id) ? e.Values[0] : e.Id).Split(PACKET_PARAMETER_SEPARATOR);
+        var decomposedPacket = (SelectComponentPacketRegex().IsMatch(e.Id) ? e.Values[0] : e.Id)
+            .Split(PACKET_PARAMETER_SEPARATOR, StringSplitOptions.RemoveEmptyEntries);
 
         if (decomposedPacket.Length < 2)
         {

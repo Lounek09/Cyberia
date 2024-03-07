@@ -33,11 +33,13 @@ public sealed class CraftsData
 
     public IEnumerable<CraftData> GetCraftsDataByItemName(string itemName)
     {
-        var itemNames = itemName.NormalizeCustom().Split(' ');
+        var itemNames = itemName.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
         foreach (var craftData in Crafts.Values)
         {
             var itemData = craftData.GetItemData();
-            if (itemData is not null && itemNames.All(itemData.NormalizedName.Contains))
+            if (itemData is not null &&
+                itemNames.All(x => itemData.NormalizedName.Contains(x, StringComparison.OrdinalIgnoreCase)))
             {
                 yield return craftData;
             }

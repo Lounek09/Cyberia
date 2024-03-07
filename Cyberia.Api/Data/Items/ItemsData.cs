@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.JsonConverters;
 
+using System;
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
@@ -78,7 +79,9 @@ public sealed class ItemsData
     {
         var itemTypeData = GetItemTypeDataById(id);
 
-        return itemTypeData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : itemTypeData.Name;
+        return itemTypeData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : itemTypeData.Name;
     }
 
     public ItemData? GetItemDataById(int id)
@@ -87,16 +90,25 @@ public sealed class ItemsData
         return itemData;
     }
 
-    public IEnumerable<ItemData> GetItemsData(string name)
+    public IEnumerable<ItemData> GetItemsDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ');
-        return Items.Values.Where(x => names.All(x.NormalizedName.Contains));
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return Items.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.NormalizedName.Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
     }
 
     public string GetItemNameById(int id)
     {
         var itemData = GetItemDataById(id);
 
-        return itemData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : itemData.Name;
+        return itemData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : itemData.Name;
     }
 }

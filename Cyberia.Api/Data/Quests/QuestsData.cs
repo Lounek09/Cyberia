@@ -91,15 +91,24 @@ public sealed class QuestsData
 
     public IEnumerable<QuestData> GetQuestsDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ');
-        return Quests.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return Quests.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
     }
 
     public string GetQuestNameById(int id)
     {
         var questData = GetQuestDataById(id);
 
-        return questData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : questData.Name;
+        return questData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : questData.Name;
     }
 
     public QuestStepData? GetQuestStepDataById(int id)
@@ -112,7 +121,9 @@ public sealed class QuestsData
     {
         var questStepData = GetQuestStepDataById(id);
 
-        return questStepData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : questStepData.Name;
+        return questStepData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : questStepData.Name;
     }
 
     public QuestObjectiveData? GetQuestObjectiveDataById(int id)

@@ -69,7 +69,9 @@ public sealed class MonstersData
     {
         var monsterSuperRaceData = GetMonsterSuperRaceDataById(id);
 
-        return monsterSuperRaceData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : monsterSuperRaceData.Name;
+        return monsterSuperRaceData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : monsterSuperRaceData.Name;
     }
 
     public MonsterRaceData? GetMonsterRaceDataById(int id)
@@ -82,7 +84,9 @@ public sealed class MonstersData
     {
         var monsterRaceData = GetMonsterRaceDataById(id);
 
-        return monsterRaceData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : monsterRaceData.Name;
+        return monsterRaceData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : monsterRaceData.Name;
     }
 
     public MonsterData? GetMonsterDataById(int id)
@@ -93,14 +97,23 @@ public sealed class MonstersData
 
     public IEnumerable<MonsterData> GetMonstersDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ');
-        return Monsters.Values.Where(x => names.All(x.Name.NormalizeCustom().Contains));
+        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return Monsters.Values.Where(x =>
+        {
+            return names.All(y =>
+            {
+                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
     }
 
     public string GetMonsterNameById(int id)
     {
         var monsterData = GetMonsterDataById(id);
 
-        return monsterData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : monsterData.Name;
+        return monsterData is null
+            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            : monsterData.Name;
     }
 }
