@@ -23,7 +23,7 @@ public sealed record TurnCriterion
 
     protected override string GetDescriptionName()
     {
-        if (Operator is '%')
+        if (Operator == '%')
         {
             if (Value.Equals("2:0"))
             {
