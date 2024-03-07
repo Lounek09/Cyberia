@@ -20,7 +20,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
         [Minimum(1), Maximum(RuneItemMessageBuilder.MAX_QTE)]
         long qte,
         [Option("item", "Nom de l'item à briser", true)]
-        [Autocomplete(typeof(ItemAutocompleteProvider))]
+        [Autocomplete(typeof(RuneItemAutocompleteProvider))]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;
