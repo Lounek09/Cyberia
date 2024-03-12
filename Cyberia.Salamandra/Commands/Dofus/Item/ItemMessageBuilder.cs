@@ -125,7 +125,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         if (_itemData.Tradeable())
         {
             miscellaneousBuilder.Append(", se vend ");
-            miscellaneousBuilder.Append(_itemData.Price.ToStringThousandSeparator());
+            miscellaneousBuilder.Append(_itemData.GetNpcRetailPrice().ToStringThousandSeparator());
             miscellaneousBuilder.Append(Emojis.KAMAS);
             miscellaneousBuilder.Append(" aux pnj");
         }

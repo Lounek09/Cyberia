@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.ItemStats;
+using Cyberia.Api.Data.Npcs;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
@@ -153,6 +154,6 @@ public sealed class ItemData
 
     public int GetNpcRetailPrice()
     {
-        return Price == 0 ? 0 : Math.Max(1, (int)Math.Round(Price / 10d));
+        return Price == 0 ? 0 : Math.Max(1, (int)Math.Round(Price * NpcData.RETAIL_RATIO));
     }
 }
