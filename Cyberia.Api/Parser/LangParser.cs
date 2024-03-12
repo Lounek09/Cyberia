@@ -40,7 +40,7 @@ public static partial class LangParser
     [GeneratedRegex(@"(?'name'[A-Z]+(?:\.[a-z]+|))(?:\[(?'intId'-?\d+)\]|\.(?'stringId'[\w|]+)|)", RegexOptions.Compiled)]
     private static partial Regex KeyRegex();
 
-    [GeneratedRegex(@"(?<!\\)'")]
+    [GeneratedRegex(@"(?<!\\)'", RegexOptions.Compiled)]
     private static partial Regex EscapedQuoteRegex();
 
     private static bool TryParseLangData(LangData langData)
