@@ -115,14 +115,7 @@ public sealed class LangData
         return string.Join('\n', diff.OrderBy(x => x.Index).Select(x => x.Row));
     }
 
-    public async Task DownloadExtractAndDiffAsync()
-    {
-        await DownloadAsync();
-        Extract();
-        Diff();
-    }
-
-    private async Task DownloadAsync()
+    internal async Task DownloadAsync()
     {
         Array.ForEach(Directory.GetFiles(GetDirectoryPath(), "*.swf"), File.Delete);
 
@@ -144,7 +137,7 @@ public sealed class LangData
         }
     }
 
-    private void Extract()
+    internal void Extract()
     {
         var filePath = GetFilePath();
         if (!File.Exists(filePath))
@@ -155,7 +148,7 @@ public sealed class LangData
         var currentDecompiledFilePath = GetCurrentDecompiledFilePath();
         var oldDecompiledFilePath = GetOldDecompiledFilePath();
 
-        if (!Flare.TryExtractSwf(filePath, out var flareOutputFilePath))
+        if (!Flare.TryExtract(filePath, out var flareOutputFilePath))
         {
             Log.Error("Error when decompiling {FilePath}", filePath);
             return;
@@ -182,7 +175,7 @@ public sealed class LangData
         File.Delete(flareOutputFilePath);
     }
 
-    private void Diff()
+    internal void Diff()
     {
         var diff = GenerateDiff(this);
         if (string.IsNullOrEmpty(diff))

@@ -33,7 +33,7 @@ public sealed class LangNameAutocompleteProvider : AutocompleteProvider
         var type = Enum.Parse<LangType>(typeStr);
         var language = Enum.Parse<LangLanguage>(languageStr);
 
-        foreach (var langData in LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangsByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
+        foreach (var langData in LangsWatcher.Langs[(type, language)].GetLangsByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
         {
             choices.Add(new(langData.Name, langData.Name));
         }

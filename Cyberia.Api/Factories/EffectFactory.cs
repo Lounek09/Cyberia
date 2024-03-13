@@ -3,7 +3,6 @@ using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Managers;
 
 using System.Collections.Frozen;
-using System.Globalization;
 using System.Text.Json;
 
 namespace Cyberia.Api.Factories;

@@ -17,8 +17,7 @@ public static partial class LangParser
 
     public static bool Launch(LangType type, LangLanguage language)
     {
-        var langsType = LangsWatcher.GetLangsByType(type);
-        var langDataCollection = langsType.GetLangsByLanguage(language);
+        var langDataCollection = LangsWatcher.Langs[(type, language)];
 
         foreach (var langData in langDataCollection)
         {

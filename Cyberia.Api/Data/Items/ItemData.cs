@@ -56,7 +56,6 @@ public sealed class ItemData
     public bool TwoHanded { get; init; }
 
     [JsonPropertyName("e")]
-    [JsonConverter(typeof(ItemWeaponDataConverter))]
     public ItemWeaponData? WeaponData { get; init; }
 
     [JsonPropertyName("c")]

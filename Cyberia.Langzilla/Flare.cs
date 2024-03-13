@@ -1,19 +1,40 @@
-﻿namespace Cyberia.Langzilla;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Cyberia.Langzilla;
 
 internal static class Flare
 {
     private static readonly object _lock = new();
+    private static readonly string _flarePath = GetFlarePath();
 
-    internal static bool TryExtractSwf(string swfFilePath, out string outputFilePath)
+    internal static bool TryExtract(string inputFilePath, [NotNullWhen(true)] out string? outputFilePath)
     {
+        if (!File.Exists(inputFilePath))
+        {
+            outputFilePath = null;
+            return false;
+        }
+
         lock (_lock)
         {
-            outputFilePath = $"{swfFilePath.TrimEnd(".swf")}.flr";
-            return ExecuteCmd.Execute(GetFlareExecutablePath(), swfFilePath);
+            if (!ExecuteCmd.Execute(_flarePath, inputFilePath))
+            {
+                outputFilePath = null;
+                return false;
+            }
         }
+
+        outputFilePath = $"{inputFilePath.TrimEnd(".swf")}.flr";
+        if (File.Exists(outputFilePath))
+        {
+            return true;
+        }
+
+        outputFilePath = null;
+        return false;
     }
 
-    private static string GetFlareExecutablePath()
+    private static string GetFlarePath()
     {
         if (OperatingSystem.IsWindows())
         {

@@ -1,4 +1,5 @@
-﻿using Cyberia.Cytrusaurus.Models;
+﻿using Cyberia.Cytrusaurus.EventArgs;
+using Cyberia.Cytrusaurus.Models;
 
 namespace Cyberia.Cytrusaurus;
 
@@ -10,8 +11,8 @@ public static class CytrusWatcher
     internal const string OLD_CYTRUS_PATH = $"{OUTPUT_PATH}/old_{CYTRUS_FILE_NAME}";
     internal const string BASE_URL = "https://cytrus.cdn.ankama.com";
 
-    public static CytrusData Data { get; internal set; } = default!;
-    public static CytrusData OldData { get; internal set; } = default!;
+    public static CytrusData CytrusData { get; internal set; } = default!;
+    public static CytrusData OldCytrusData { get; internal set; } = default!;
 
     internal static HttpClient HttpClient { get; private set; } = default!;
     internal static HttpRetryPolicy HttpRetryPolicy { get; private set; } = default!;
@@ -25,8 +26,9 @@ public static class CytrusWatcher
     {
         Directory.CreateDirectory(OUTPUT_PATH);
 
-        Data = CytrusData.LoadFromFile(CYTRUS_PATH);
-        OldData = CytrusData.LoadFromFile(OLD_CYTRUS_PATH);
+        CytrusData = CytrusData.LoadFromFile(CYTRUS_PATH);
+        OldCytrusData = CytrusData.LoadFromFile(OLD_CYTRUS_PATH);
+
         HttpClient = new()
         {
             BaseAddress = new Uri(BASE_URL)
@@ -43,7 +45,7 @@ public static class CytrusWatcher
 
     public static async Task CheckAsync()
     {
-        var cytrus = "{}";
+        string cytrus;
         try
         {
             using var response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(CYTRUS_FILE_NAME));
@@ -59,8 +61,8 @@ public static class CytrusWatcher
 
         var oldCytrus = File.Exists(CYTRUS_PATH) ? File.ReadAllText(CYTRUS_PATH) : "{}";
 
-        OldData = Data;
-        Data = CytrusData.Load(cytrus);
+        OldCytrusData = CytrusData;
+        CytrusData = CytrusData.Load(cytrus);
 
         var diff = Json.Diff(cytrus, oldCytrus);
         if (string.IsNullOrEmpty(diff))
@@ -69,26 +71,12 @@ public static class CytrusWatcher
         }
 
         Log.Information("Cytrus update detected :\n{CytrusDiff}", diff);
-        NewCytrusDetected?.Invoke(null, new NewCytrusDetectedEventArgs(Data, OldData, diff));
+        NewCytrusDetected?.Invoke(null, new NewCytrusDetectedEventArgs(CytrusData, OldCytrusData, diff));
 
         if (File.Exists(CYTRUS_PATH))
         {
             File.Move(CYTRUS_PATH, OLD_CYTRUS_PATH, true);
         }
         File.WriteAllText(CYTRUS_PATH, cytrus);
-    }
-}
-
-public sealed class NewCytrusDetectedEventArgs : EventArgs
-{
-    public CytrusData CytrusData { get; init; }
-    public CytrusData OldCytrusData { get; init; }
-    public string Diff { get; init; }
-
-    public NewCytrusDetectedEventArgs(CytrusData cytrusData, CytrusData oldCytrusData, string diff)
-    {
-        CytrusData = cytrusData;
-        OldCytrusData = oldCytrusData;
-        Diff = diff;
     }
 }

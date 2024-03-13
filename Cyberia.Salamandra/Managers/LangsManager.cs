@@ -1,5 +1,6 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.EventArgs;
 
 using DSharpPlus;
 using DSharpPlus.Entities;

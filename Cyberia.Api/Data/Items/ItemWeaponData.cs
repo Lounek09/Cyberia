@@ -1,5 +1,10 @@
-﻿namespace Cyberia.Api.Data.Items;
+﻿using Cyberia.Api.JsonConverters;
 
+using System.Text.Json.Serialization;
+
+namespace Cyberia.Api.Data.Items;
+
+[JsonConverter(typeof(ItemWeaponDataConverter))]
 public sealed class ItemWeaponData
     : IDofusData
 {

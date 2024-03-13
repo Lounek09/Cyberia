@@ -1,4 +1,4 @@
-﻿using Cyberia.Cytrusaurus;
+﻿using Cyberia.Cytrusaurus.EventArgs;
 using Cyberia.Cytrusaurus.Models;
 using Cyberia.Cytrusaurus.Models.FlatBuffers;
 

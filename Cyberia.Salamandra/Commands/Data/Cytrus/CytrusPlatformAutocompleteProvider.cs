@@ -23,7 +23,7 @@ public sealed class CytrusPlatformAutocompleteProvider : AutocompleteProvider
 
         List<DiscordAutoCompleteChoice> choices = [];
 
-        foreach (var platform in CytrusWatcher.Data.Games[game].Platforms)
+        foreach (var platform in CytrusWatcher.CytrusData.Games[game].Platforms)
         {
             choices.Add(new(platform.Key.Capitalize(), platform.Key));
         }

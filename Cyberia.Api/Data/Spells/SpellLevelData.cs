@@ -1,10 +1,14 @@
 ﻿using Cyberia.Api.Data.States;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Templates;
+using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Values;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Spells;
 
+[JsonConverter(typeof(SpellLevelConverter))]
 public sealed class SpellLevelData
     : IDofusData<int>
 {

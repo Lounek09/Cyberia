@@ -25,11 +25,11 @@ public sealed class CytrusCommandModule : ApplicationCommandModule
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus");
 
-        embed.AddField("Name", CytrusWatcher.Data.Name.Capitalize(), true);
-        embed.AddField("Version", CytrusWatcher.Data.Version.ToString(), true);
+        embed.AddField("Name", CytrusWatcher.CytrusData.Name.Capitalize(), true);
+        embed.AddField("Version", CytrusWatcher.CytrusData.Version.ToString(), true);
         embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
 
-        foreach (var game in CytrusWatcher.Data.Games.OrderBy(x => x.Value.Order))
+        foreach (var game in CytrusWatcher.CytrusData.Games.OrderBy(x => x.Value.Order))
         {
             List<string> content = [];
 

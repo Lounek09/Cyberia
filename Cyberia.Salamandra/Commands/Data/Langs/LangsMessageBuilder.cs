@@ -22,7 +22,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     {
         _type = type;
         _language = language;
-        _langDataCollection = LangsWatcher.GetLangsByType(_type).GetLangsByLanguage(_language);
+        _langDataCollection = LangsWatcher.Langs[(type, language)];
     }
 
     public static LangsMessageBuilder? Create(int version, string[] parameters)

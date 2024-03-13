@@ -81,7 +81,7 @@ public sealed class LangsCommandModule : ApplicationCommandModule
         var type = Enum.Parse<LangType>(typeStr);
         var language = Enum.Parse<LangLanguage>(languageStr);
 
-        var langData = LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language).GetLangByName(name);
+        var langData = LangsWatcher.Langs[(type, language)].GetLangByName(name);
         if (langData is null)
         {
             await ctx.CreateResponseAsync("Ce lang n'existe pas ou n'a jamais été décompilé");
@@ -124,14 +124,14 @@ public sealed class LangsCommandModule : ApplicationCommandModule
             {
                 var thread = await ctx.Channel.CreateThreadAsync($"Diff entre {type} et {typeModel} en {language}", AutoArchiveDuration.Hour, ChannelType.PublicThread);
 
-                var langDataCollection = LangsWatcher.GetLangsByType(type).GetLangsByLanguage(language);
-                var langDataCollectionModel = LangsWatcher.GetLangsByType(typeModel).GetLangsByLanguage(language);
+                var langsData = LangsWatcher.Langs[(type, language)];
+                var langsDataModel = LangsWatcher.Langs[(typeModel, language)];
 
-                foreach (var langData in langDataCollection)
+                foreach (var langData in langsData)
                 {
                     var rateLimit = Task.Delay(1000);
 
-                    var langDataModel = langDataCollectionModel.GetLangByName(langData.Name);
+                    var langDataModel = langsDataModel.GetLangByName(langData.Name);
 
                     var message = new DiscordMessageBuilder()
                     {
