@@ -90,7 +90,7 @@ public static class ExtendString
             return value.ToString();
         }
 
-        while (value.StartsWith(trimString))
+        while (value.EndsWith(trimString))
         {
             value = value[..^trimString.Length];
         }
