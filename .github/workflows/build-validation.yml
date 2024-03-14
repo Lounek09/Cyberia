@@ -2,26 +2,29 @@ name: Build
 
 on:
   push:
-    branches:
-    - main
   pull_request:
-    branches:
-    - main
+    branches: [main]
+    paths:
+      - ".github/workflows/build-validation.yml"
+      - "Cyberia*/**"
+      - "*.sln"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    if: "!contains(format('{0} {1}', github.event.head_commit.message, github.event.pull_request.title), '[ci-skip]')"
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8
+      - name: Checkout
+        uses: actions/checkout@v4
+  
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8
         
-    - name: Restore dependencies
-      run: dotnet restore
-      
-    - name: Build
-      run: dotnet build -c Release
+      - name: Build
+        run: dotnet build -c Release
+
+      - name: Test
+        run: dotnet test --no-build -c Release
