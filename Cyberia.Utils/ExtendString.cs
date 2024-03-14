@@ -42,6 +42,12 @@ public static class ExtendString
 
     public static IEnumerable<string> SplitByLength(this string value, int length)
     {
+        if (length <= 0)
+        {
+            yield return value;
+            yield break;
+        }
+
         for (var i = 0; i < value.Length; i += length)
         {
             yield return value.Substring(i, Math.Min(length, value.Length - i));

@@ -13,6 +13,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{E9996FEC-8D8C-459C-A144-6B74911A4F2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{29964EE0-98E6-4108-982F-E89561503B55}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build-validation.yml = .github\workflows\build-validation.yml
+		.github\workflows\publish.yml = .github\workflows\publish.yml
+	EndProjectSection
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia", "Cyberia\Cyberia.csproj", "{D8647CDE-B4EB-4A87-86F1-26B2E631EF03}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Api", "Cyberia.Api\Cyberia.Api.csproj", "{6AE2EA0C-2F65-4CAD-B6C9-1CF01AC9E64D}"
@@ -24,6 +32,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Salamandra", "Cyberia.Salamandra\Cyberia.Salamandra.csproj", "{CD004824-B6D6-4058-9B69-2117270920E3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.SalamandraWeb", "Cyberia.SalamandraWeb\Cyberia.SalamandraWeb.csproj", "{BA322B96-2201-4D77-835C-BCB52CFF5527}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Test", "Cyberia.Test\Cyberia.Test.csproj", "{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Translation", "Cyberia.Translation\Cyberia.Translation.csproj", "{E3B15058-6C91-4468-B11F-4B9A200F526E}"
 EndProject
@@ -67,9 +77,17 @@ Global
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E9996FEC-8D8C-459C-A144-6B74911A4F2F} = {096057BB-3D5F-4B1F-A4CB-95630A0E2375}
+		{29964EE0-98E6-4108-982F-E89561503B55} = {E9996FEC-8D8C-459C-A144-6B74911A4F2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2C25FFF3-90BE-4A1B-9B80-F18CE8A94B1F}

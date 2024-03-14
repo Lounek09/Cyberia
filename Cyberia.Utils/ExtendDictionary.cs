@@ -9,7 +9,7 @@ public static class ExtendDictionary
         List<TKey> keysToRemove = [];
         foreach (var pair in source)
         {
-            if (pair.Value is not null && pair.Value.Equals(value))
+            if (Equals(value, pair.Value))
             {
                 keysToRemove.Add(pair.Key);
                 success = true;

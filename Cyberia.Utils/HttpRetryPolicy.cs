@@ -15,7 +15,7 @@ public sealed class HttpRetryPolicy
 
     public async Task<HttpResponseMessage> ExecuteAsync(Func<Task<HttpResponseMessage>> operation, int retryCount = 0)
     {
-        var curentInterval = _startInterval * Math.Pow(2, retryCount) + TimeSpan.FromMilliseconds(Random.Shared.Next(1000));
+        var curentInterval = _startInterval * Math.Pow(2, retryCount);
 
         try
         {
