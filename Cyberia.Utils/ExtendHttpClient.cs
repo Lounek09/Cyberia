@@ -1,7 +1,16 @@
 ﻿namespace Cyberia.Utils;
 
+/// <summary>
+/// Provides extension methods for HttpClient.
+/// </summary>
 public static class ExtendHttpClient
 {
+    /// <summary>
+    /// Checks if the specified URL exists by sending a HEAD request and checking the response status.
+    /// </summary>
+    /// <param name="httpClient">The HttpClient instance.</param>
+    /// <param name="url">The URL to check.</param>
+    /// <returns>True if the URL exists (response is successful); otherwise, false.</returns>
     public static async Task<bool> ExistsAsync(this HttpClient httpClient, string url)
     {
         try

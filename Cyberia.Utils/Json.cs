@@ -4,6 +4,9 @@ using System.Text.Json.Nodes;
 
 namespace Cyberia.Utils;
 
+/// <summary>
+/// Provides utility methods for working with JSON.
+/// </summary>
 public static class Json
 {
     private static readonly JsonSerializerOptions _indentOptions = new()
@@ -12,6 +15,54 @@ public static class Json
         WriteIndented = true
     };
 
+    /// <summary>
+    /// Computes the difference between two JSON strings.
+    /// </summary>
+    /// <param name="current">The current JSON string.</param>
+    /// <param name="model">The model JSON string.</param>
+    /// <returns>A string representing the difference between the current and model JSON strings.</returns>
+    public static string Diff(string current, string model)
+    {
+        if (current.Equals(model))
+        {
+            return string.Empty;
+        }
+
+        JsonNode? currentNode;
+        JsonNode? modelNode;
+        try
+        {
+            currentNode = JsonNode.Parse(current);
+            modelNode = JsonNode.Parse(model);
+        }
+        catch (JsonException e)
+        {
+            Log.Error(e, "Failed to parse the given JSON to diff");
+            return string.Empty;
+        }
+
+        if (currentNode is null || modelNode is null)
+        {
+            return string.Empty;
+        }
+
+        var resultNode = currentNode.Diff(modelNode);
+        var result = resultNode.ToJsonString(_indentOptions);
+
+        if (result.Equals("{}"))
+        {
+            return string.Empty;
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Computes the difference between two JSON nodes.
+    /// </summary>
+    /// <param name="current">The current JSON node.</param>
+    /// <param name="model">The model JSON node.</param>
+    /// <returns>A JSON node representing the difference between the current and model nodes.</returns>
     public static JsonNode Diff(this JsonNode current, JsonNode model)
     {
         JsonObject result = [];
@@ -82,42 +133,6 @@ public static class Json
         {
             result["-"] = model.DeepClone();
             result["+"] = current.DeepClone();
-        }
-
-        return result;
-    }
-
-    public static string Diff(string current, string model)
-    {
-        if (current.Equals(model))
-        {
-            return string.Empty;
-        }
-
-        JsonNode? currentNode;
-        JsonNode? modelNode;
-        try
-        {
-            currentNode = JsonNode.Parse(current);
-            modelNode = JsonNode.Parse(model);
-        }
-        catch (JsonException e)
-        {
-            Log.Error(e, "Failed to parse the given JSON to diff");
-            return string.Empty;
-        }
-
-        if (currentNode is null || modelNode is null)
-        {
-            return string.Empty;
-        }
-
-        var resultNode = currentNode.Diff(modelNode);
-        var result = resultNode.ToJsonString(_indentOptions);
-
-        if (result.Equals("{}"))
-        {
-            return string.Empty;
         }
 
         return result;
