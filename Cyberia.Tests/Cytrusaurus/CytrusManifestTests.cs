@@ -197,15 +197,6 @@ public sealed class CytrusManifestTests
     [TestMethod]
     public void GetGameFiles_ReturnsCorrectNumberOfGameFiles()
     {
-        if (BitConverter.IsLittleEndian)
-        {
-            Console.WriteLine("System uses little-endian byte order.");
-        }
-        else
-        {
-            Console.WriteLine("System uses big-endian byte order.");
-        }
-
         var fragment = _currentManifest.Fragments(0)!.Value;
         var gameFiles = fragment.GetGameFiles();
 
