@@ -73,10 +73,11 @@ public static class CytrusWatcher
     /// 1. Sends a GET request to the Cytrus file URL.
     /// 2. If the request is successful, it reads the response content as a string.
     /// 3. If a previous Cytrus file exists, it reads the file content as a string, otherwise it uses an empty JSON object string.
-    /// 4. Replaces the old Cytrus data by the new Cytrus data.
-    /// 5. Loads the new Cytrus data from the response content.
-    /// 6. Calculates the difference between the new and old Cytrus data.
-    /// 7. If there is a difference, it logs the difference, triggers the NewCytrusDetected event, and updates the Cytrus file with the new data.
+    /// 4. Calculates the difference between the new and old Cytrus data.
+    /// 5. If there is no difference, it returns.
+    /// 6. Replaces the old Cytrus data by the new Cytrus data.
+    /// 7. Loads the new Cytrus data from the response content.
+    /// 8. If there is a difference, it logs the difference, triggers the NewCytrusDetected event, and updates the Cytrus file with the new data.
     /// </remarks>
     public static async Task CheckAsync()
     {
@@ -96,14 +97,14 @@ public static class CytrusWatcher
 
         var oldCytrus = File.Exists(CYTRUS_PATH) ? File.ReadAllText(CYTRUS_PATH) : "{}";
 
-        OldCytrusData = CytrusData;
-        CytrusData = CytrusData.Load(cytrus);
-
         var diff = Json.Diff(cytrus, oldCytrus);
         if (string.IsNullOrEmpty(diff))
         {
             return;
         }
+
+        OldCytrusData = CytrusData;
+        CytrusData = CytrusData.Load(cytrus);
 
         Log.Information("Cytrus update detected :\n{CytrusDiff}", diff);
         NewCytrusDetected?.Invoke(null, new NewCytrusDetectedEventArgs(CytrusData, OldCytrusData, diff));
