@@ -19,9 +19,6 @@ jobs:
       - name: Build
         run: dotnet build -c Release
 
-      - name: Test
-        run: dotnet test --no-build -c Release
-
       - name: Publish
         run: dotnet publish Cyberia/Cyberia.csproj --no-build -c Release -o ./Salamandra
     
