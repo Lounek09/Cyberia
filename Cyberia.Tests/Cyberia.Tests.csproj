@@ -30,10 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="tests\6.0_1.42.1.3203.226-5569ce7.manifest">
+    <None Update="tests\model.manifest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="tests\6.0_1.42.1.3205.227-d31f250.manifest">
+    <None Update="tests\current.manifest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="tests\cytrus.json">

@@ -14,8 +14,8 @@ namespace Cyberia.Tests.Cytrusaurus;
 [TestClass]
 public sealed class CytrusManifestTests
 {
-    private const string CURRENT_MANIFEST = "6.0_1.42.1.3205.227-d31f250.manifest";
-    private const string MODEL_MANIFEST = "6.0_1.42.1.3203.226-5569ce7.manifest";
+    private const string CURRENT_MANIFEST = "current.manifest";
+    private const string MODEL_MANIFEST = "model.manifest";
 
     private Mock<HttpMessageHandler> _mockHttpMessageHandler = default!;
     private Manifest _currentManifest = default!;
