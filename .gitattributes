@@ -40,10 +40,9 @@
 #
 # image files are treated as binary by default.
 ###############################################################################
-#*.jpg   binary
-#*.png   binary
-#*.gif   binary
-*.exe   binary
+#*.jpg     binary
+#*.png     binary
+#*.gif     binary
 
 ###############################################################################
 # diff behavior for common document formats
@@ -62,3 +61,9 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+###############################################################################
+# Set the merge driver for all other files
+###############################################################################
+*.exe      binary
+*.manifest binary
