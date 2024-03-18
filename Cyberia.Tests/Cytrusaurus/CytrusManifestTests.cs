@@ -197,8 +197,13 @@ public sealed class CytrusManifestTests
     [TestMethod]
     public void GetGameFiles_ReturnsCorrectNumberOfGameFiles()
     {
+        Console.WriteLine(_currentManifest.FragmentsLength);
+        Console.WriteLine(_currentManifest.Fragments(0)!.Value.FilesLength);
+
         var fragment = _currentManifest.Fragments(0)!.Value;
         var gameFiles = fragment.GetGameFiles();
+
+        Console.WriteLine(gameFiles.Count());
 
         Assert.AreEqual(fragment.FilesLength, gameFiles.Count());
     }
