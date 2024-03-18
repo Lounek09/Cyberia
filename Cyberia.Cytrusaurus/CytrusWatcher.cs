@@ -77,7 +77,7 @@ public static class CytrusWatcher
     /// 5. Loads the new Cytrus data from the response content.
     /// 6. Calculates the difference between the new and old Cytrus data.
     /// 7. If there is a difference, it logs the difference, triggers the NewCytrusDetected event, and updates the Cytrus file with the new data.
-    /// </summary>
+    /// </remarks>
     public static async Task CheckAsync()
     {
         string cytrus;

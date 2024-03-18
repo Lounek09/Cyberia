@@ -21,7 +21,7 @@ public sealed class CytrusData
     /// Collection of games
     /// </summary>
     [JsonPropertyName("games")]
-    public Dictionary<string, CytrusGame> Games { get; init; }
+    public IReadOnlyDictionary<string, CytrusGame> Games { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusData"/> class.
@@ -30,7 +30,7 @@ public sealed class CytrusData
     internal CytrusData()
     {
         Name = string.Empty;
-        Games = [];
+        Games = new Dictionary<string, CytrusGame>();
     }
 
     /// <summary>

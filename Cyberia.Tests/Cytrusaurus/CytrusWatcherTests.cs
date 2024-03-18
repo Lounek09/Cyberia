@@ -6,7 +6,7 @@ using Moq.Protected;
 
 using System.Net;
 
-namespace Cyberia.Tests;
+namespace Cyberia.Tests.Cytrusaurus;
 
 [TestClass]
 public sealed class CytrusWatcherTests

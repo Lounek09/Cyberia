@@ -35,13 +35,13 @@ public sealed class CytrusGame
     /// Assets of the game
     /// </summary>
     [JsonPropertyName("assets")]
-    public Dictionary<string, Dictionary<string, string>> Assets { get; init; }
+    public IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Assets { get; init; }
 
     /// <summary>
     /// Platforms the game is available on
     /// </summary>
     [JsonPropertyName("platforms")]
-    public Dictionary<string, Dictionary<string, string>> Platforms { get; init; }
+    public IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Platforms { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusGame"/> class.
@@ -50,8 +50,8 @@ public sealed class CytrusGame
     internal CytrusGame()
     {
         Name = string.Empty;
-        Assets = [];
-        Platforms = [];
+        Assets = new Dictionary<string, IReadOnlyDictionary<string, string>>();
+        Platforms = new Dictionary<string, IReadOnlyDictionary<string, string>>();
     }
 
     /// <summary>
@@ -59,10 +59,10 @@ public sealed class CytrusGame
     /// </summary>
     /// <param name="assetsName">The name of the assets.</param>
     /// <returns>The assets if found; otherwise, an empty dictionary.</returns>
-    public Dictionary<string, string> GetAssetsByName(string assetName)
+    public IReadOnlyDictionary<string, string> GetAssetsByName(string assetName)
     {
         Assets.TryGetValue(assetName, out var asset);
-        return asset ?? [];
+        return asset ?? new Dictionary<string, string>();
     }
 
     /// <summary>
@@ -91,10 +91,10 @@ public sealed class CytrusGame
     /// </summary>
     /// <param name="platform">The name of the platform.</param>
     /// <returns>The platform if found; otherwise, an empty dictionary.</returns>
-    public Dictionary<string, string> GetReleasesByPlatformName(string platformName)
+    public IReadOnlyDictionary<string, string> GetReleasesByPlatformName(string platformName)
     {
         Platforms.TryGetValue(platformName, out var releases);
-        return releases ?? [];
+        return releases ?? new Dictionary<string, string>();
     }
 
     /// <summary>
