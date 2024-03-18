@@ -1,11 +1,8 @@
-﻿using Cyberia.Cytrusaurus.EventArgs;
-using Cyberia.Cytrusaurus.Models;
-using Cyberia.Cytrusaurus.Models.FlatBuffers;
+﻿using Cyberia.Cytrusaurus;
+using Cyberia.Cytrusaurus.EventArgs;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
-
-using Google.FlatBuffers;
 
 using System.Text;
 using System.Text.Json;
@@ -22,38 +19,27 @@ public static class CytrusManager
 
     public static async Task SendCytrusManifestDiffMessageAsync(this DiscordChannel channel, string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
     {
-        var httpClient = new HttpClient();
-        var message = new DiscordMessageBuilder();
+        DiscordMessageBuilder messageBuilder = new();
 
-        var url1 = CytrusData.GetGameManifestUrl(game, platform, oldRelease, oldVersion);
-        Manifest client1;
-        try
-        {
-            var metafile = await httpClient.GetByteArrayAsync(url1);
-            var buffer = new ByteBuffer(metafile);
-            client1 = Manifest.GetRootAsManifest(buffer);
-        }
-        catch (HttpRequestException)
-        {
-            await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
+        var modelManifest = await CytrusManifest.GetManifestAsync(game, platform, oldRelease, oldVersion);
+        if (modelManifest is null)
+        { 
+            await channel.SendMessage(messageBuilder.WithContent($"Nouveau client introuvable"));
             return;
         }
 
-        var url2 = CytrusData.GetGameManifestUrl(game, platform, newRelease, newVersion);
-        Manifest client2;
-        try
+        var currentManifest = await CytrusManifest.GetManifestAsync(game, platform, newRelease, newVersion);
+        if (currentManifest is null)
         {
-            var metafile = await httpClient.GetByteArrayAsync(url2);
-            var buffer = new ByteBuffer(metafile);
-            client2 = Manifest.GetRootAsManifest(buffer);
-        }
-        catch (HttpRequestException)
-        {
-            await channel.SendMessage(message.WithContent($"Nouveau client introuvable"));
+            await channel.SendMessage(messageBuilder.WithContent($"Nouveau client introuvable"));
             return;
         }
 
-        var diff = client2.Diff(client1);
+        var diff = CytrusManifest.Diff(currentManifest.Value, modelManifest.Value);
+        if (string.IsNullOrEmpty(diff))
+        {
+            diff = "No difference";
+        }
 
         var mainContent = $"""
              Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform)}
@@ -62,12 +48,12 @@ public static class CytrusManager
 
         if (mainContent.Length + diff.Length < 2000)
         {
-            await channel.SendMessage(message.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
+            await channel.SendMessage(messageBuilder.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
         }
         else
         {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(diff));
-            await channel.SendMessage(message.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
+            using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
+            await channel.SendMessage(messageBuilder.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
         }
     }
 

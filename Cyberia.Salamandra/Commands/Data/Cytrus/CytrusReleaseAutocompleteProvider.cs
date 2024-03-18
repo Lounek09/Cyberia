@@ -10,7 +10,7 @@ public sealed class CytrusReleaseAutocompleteProvider : AutocompleteProvider
     public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
     {
         var value = ctx.OptionValue.ToString();
-        if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
+        if (value is null)
         {
             return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
         }
@@ -29,7 +29,7 @@ public sealed class CytrusReleaseAutocompleteProvider : AutocompleteProvider
 
         List<DiscordAutoCompleteChoice> choices = [];
 
-        foreach (var release in CytrusWatcher.CytrusData.Games[game].GetReleasesByPlatform(platform))
+        foreach (var release in CytrusWatcher.CytrusData.Games[game].GetReleasesByPlatformName(platform))
         {
             choices.Add(new(release.Key.Capitalize(), release.Key));
         }

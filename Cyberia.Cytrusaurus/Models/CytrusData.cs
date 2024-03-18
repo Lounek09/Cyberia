@@ -3,58 +3,29 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Cytrusaurus.Models;
 
-public sealed class Game
-{
-    [JsonPropertyName("name")]
-    public string Name { get; init; }
-
-    [JsonPropertyName("order")]
-    public int Order { get; init; }
-
-    [JsonPropertyName("gameId")]
-    public int GameId { get; init; }
-
-    [JsonPropertyName("assets")]
-    public Dictionary<string, Dictionary<string, string>> Assets { get; init; }
-
-    [JsonPropertyName("platforms")]
-    public Dictionary<string, Dictionary<string, string>> Platforms { get; init; }
-
-    [JsonConstructor]
-    internal Game()
-    {
-        Name = string.Empty;
-        Assets = [];
-        Platforms = [];
-    }
-
-    public Dictionary<string, string> GetReleasesByPlatform(string platform)
-    {
-        return Platforms.Where(x => x.Key.Equals(platform)).FirstOrDefault().Value;
-    }
-
-    public string? GetVersionByPlatformAndRelease(string platform, string release)
-    {
-        return GetReleasesByPlatform(platform).Where(x => x.Key.Equals(release)).FirstOrDefault().Value;
-    }
-
-    public string GetManifestUrl(string platform, string release)
-    {
-        return $"{CytrusWatcher.BASE_URL}/{Name}/releases/{release}/{platform}/{GetVersionByPlatformAndRelease(platform, release)}.manifest";
-    }
-}
-
 public sealed class CytrusData
 {
+    /// <summary>
+    /// Version of Cytrus
+    /// </summary>
     [JsonPropertyName("version")]
     public int Version { get; init; }
 
+    /// <summary>
+    /// Name of the environment
+    /// </summary>
     [JsonPropertyName("name")]
     public string Name { get; init; }
 
+    /// <summary>
+    /// Collection of games
+    /// </summary>
     [JsonPropertyName("games")]
-    public Dictionary<string, Game> Games { get; init; }
+    public Dictionary<string, CytrusGame> Games { get; init; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CytrusData"/> class.
+    /// </summary>
     [JsonConstructor]
     internal CytrusData()
     {
@@ -62,6 +33,11 @@ public sealed class CytrusData
         Games = [];
     }
 
+    /// <summary>
+    /// Loads the Cytrus data from a file.
+    /// </summary>
+    /// <param name="path">The path to the file.</param>
+    /// <returns>A new instance of the <see cref="CytrusData"/> class if the file does not exist; otherwise, the data loaded from the file.</returns>
     internal static CytrusData LoadFromFile(string path)
     {
         if (!File.Exists(path))
@@ -73,6 +49,11 @@ public sealed class CytrusData
         return Load(json);
     }
 
+    /// <summary>
+    /// Loads the Cytrus data from a JSON string.
+    /// </summary>
+    /// <param name="json">The JSON string to load the data from.</param>
+    /// <returns>A new instance of the <see cref="CytrusData"/> class if the data could not be deserialized; otherwise, the deserialized data.</returns>
     internal static CytrusData Load(string json)
     {
         var data = JsonSerializer.Deserialize<CytrusData>(json);
@@ -85,8 +66,14 @@ public sealed class CytrusData
         return data;
     }
 
-    public static string GetGameManifestUrl(string game, string platform, string release, string version)
+    /// <summary>
+    /// Retrieves a game by its name.
+    /// </summary>
+    /// <param name="name">The name of the game.</param>
+    /// <returns>The game if found; otherwise, null.</returns>
+    public CytrusGame? GetGameByName(string name)
     {
-        return $"{CytrusWatcher.BASE_URL}/{game}/releases/{release}/{platform}/{version}.manifest";
+        Games.TryGetValue(name, out var cytrusGame);
+        return cytrusGame;
     }
 }

@@ -17,6 +17,11 @@ namespace Cyberia.Salamandra.DsharpPlus;
 
 public static class ExtendDiscordEmbedBuilder
 {
+    public static DiscordEmbedBuilder AddEmptyField(this DiscordEmbedBuilder embed, bool inline = false)
+    {
+        return embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, inline);
+    }
+
     public static DiscordEmbedBuilder AddFields(this DiscordEmbedBuilder embed, string name, IEnumerable<string> rows, bool inline = false)
     {
         StringBuilder builder = new();

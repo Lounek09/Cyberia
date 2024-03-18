@@ -3,6 +3,9 @@ using Cyberia.Cytrusaurus.Models;
 
 namespace Cyberia.Cytrusaurus;
 
+/// <summary>
+/// A static class that watches for updates of Cytrus.
+/// </summary>
 public static class CytrusWatcher
 {
     internal const string OUTPUT_PATH = "cytrus";
@@ -11,17 +14,28 @@ public static class CytrusWatcher
     internal const string OLD_CYTRUS_PATH = $"{OUTPUT_PATH}/old_{CYTRUS_FILE_NAME}";
     internal const string BASE_URL = "https://cytrus.cdn.ankama.com";
 
+    /// <summary>
+    /// The current Cytrus data.
+    /// </summary>
     public static CytrusData CytrusData { get; internal set; } = default!;
+
+    /// <summary>
+    /// The old Cytrus data.
+    /// </summary>
     public static CytrusData OldCytrusData { get; internal set; } = default!;
 
-    internal static HttpClient HttpClient { get; private set; } = default!;
-    internal static HttpRetryPolicy HttpRetryPolicy { get; private set; } = default!;
+
+    internal static HttpClient HttpClient { get; set; } = default!;
+    internal static HttpRetryPolicy HttpRetryPolicy { get; set; } = default!;
 
 
 #pragma warning disable IDE0052 // Remove unread private members
     private static Timer? _timer;
 #pragma warning restore IDE0052 // Remove unread private members
 
+    /// <summary>
+    /// Initializes the CytrusWatcher.
+    /// </summary>
     public static void Initialize()
     {
         Directory.CreateDirectory(OUTPUT_PATH);
@@ -36,13 +50,34 @@ public static class CytrusWatcher
         HttpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
     }
 
+    /// <summary>
+    /// Event that is triggered when a new Cytrus is detected.
+    /// </summary>
     public static event EventHandler<NewCytrusDetectedEventArgs>? NewCytrusDetected;
 
+    /// <summary>
+    /// Starts watching for updates of Cytrus.
+    /// </summary>
+    /// <param name="dueTime">The amount of time to delay before the first check.</param>
+    /// <param name="interval">The interval between checks.</param>
     public static void Watch(TimeSpan dueTime, TimeSpan interval)
     {
         _timer = new(async _ => await CheckAsync(), null, dueTime, interval);
     }
 
+    /// <summary>
+    /// Asynchronously checks for updates of Cytrus.
+    /// </summary>
+    /// <remarks>
+    /// This method performs the following steps:
+    /// 1. Sends a GET request to the Cytrus file URL.
+    /// 2. If the request is successful, it reads the response content as a string.
+    /// 3. If a previous Cytrus file exists, it reads the file content as a string, otherwise it uses an empty JSON object string.
+    /// 4. Replaces the old Cytrus data by the new Cytrus data.
+    /// 5. Loads the new Cytrus data from the response content.
+    /// 6. Calculates the difference between the new and old Cytrus data.
+    /// 7. If there is a difference, it logs the difference, triggers the NewCytrusDetected event, and updates the Cytrus file with the new data.
+    /// </summary>
     public static async Task CheckAsync()
     {
         string cytrus;

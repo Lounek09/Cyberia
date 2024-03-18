@@ -1,10 +1,13 @@
 ﻿using Cyberia.Cytrusaurus;
+using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
+
+using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Data;
 
@@ -16,7 +19,9 @@ public sealed class CytrusCommandModule : ApplicationCommandModule
     public async Task CheckCytrusCommand(InteractionContext ctx)
     {
         await ctx.CreateResponseAsync($"Lancement du check de Cytrus...");
+
         await CytrusWatcher.CheckAsync();
+
         await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check de Cytrus terminé"));
     }
 
@@ -27,23 +32,28 @@ public sealed class CytrusCommandModule : ApplicationCommandModule
 
         embed.AddField("Name", CytrusWatcher.CytrusData.Name.Capitalize(), true);
         embed.AddField("Version", CytrusWatcher.CytrusData.Version.ToString(), true);
-        embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
+        embed.AddEmptyField(true);
 
         foreach (var game in CytrusWatcher.CytrusData.Games.OrderBy(x => x.Value.Order))
         {
-            List<string> content = [];
+            StringBuilder fieldContentBuilder = new();
 
             foreach (var platform in game.Value.Platforms)
             {
-                content.Add(Formatter.Underline($"{platform.Key.Capitalize()} :"));
+                fieldContentBuilder.Append(Formatter.Underline($"{platform.Key.Capitalize()} :"));
+                fieldContentBuilder.Append('\n');
 
-                foreach (var release in game.Value.GetReleasesByPlatform(platform.Key))
+                foreach (var release in game.Value.GetReleasesByPlatformName(platform.Key))
                 {
-                    content.Add($"- {release.Key.Capitalize()} : {Formatter.InlineCode(release.Value)}");
+                    fieldContentBuilder.Append("- ");
+                    fieldContentBuilder.Append(release.Key.Capitalize());
+                    fieldContentBuilder.Append(" : ");
+                    fieldContentBuilder.Append(Formatter.InlineCode(release.Value));
+                    fieldContentBuilder.Append('\n');
                 }
             }
 
-            embed.AddField($"{game.Value.Name.Capitalize()} ({game.Value.GameId})", string.Join("\n", content));
+            embed.AddField($"{game.Value.Name.Capitalize()} ({game.Value.GameId})", fieldContentBuilder.ToString());
         }
 
         await ctx.CreateResponseAsync(embed);

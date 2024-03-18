@@ -19,7 +19,7 @@ public static class Json
     /// Computes the difference between two JSON strings.
     /// </summary>
     /// <param name="current">The current JSON string.</param>
-    /// <param name="model">The model JSON string.</param>
+    /// <param name="model">The model JSON string to compare with.</param>
     /// <returns>A string representing the difference between the current and model JSON strings.</returns>
     public static string Diff(string current, string model)
     {
@@ -61,7 +61,7 @@ public static class Json
     /// Computes the difference between two JSON nodes.
     /// </summary>
     /// <param name="current">The current JSON node.</param>
-    /// <param name="model">The model JSON node.</param>
+    /// <param name="model">The model JSON node to compare with.</param>
     /// <returns>A JSON node representing the difference between the current and model nodes.</returns>
     public static JsonNode Diff(this JsonNode current, JsonNode model)
     {

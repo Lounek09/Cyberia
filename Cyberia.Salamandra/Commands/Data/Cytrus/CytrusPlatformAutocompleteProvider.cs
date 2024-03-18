@@ -10,7 +10,7 @@ public sealed class CytrusPlatformAutocompleteProvider : AutocompleteProvider
     public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
     {
         var value = ctx.OptionValue.ToString();
-        if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
+        if (value is null)
         {
             return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
         }

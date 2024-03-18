@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.2.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cyberia.Api\Cyberia.Api.csproj" />
+    <ProjectReference Include="..\Cyberia.Cytrusaurus\Cyberia.Cytrusaurus.csproj" />
+    <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
+    <ProjectReference Include="..\Cyberia.SalamandraWeb\Cyberia.SalamandraWeb.csproj" />
+    <ProjectReference Include="..\Cyberia.Salamandra\Cyberia.Salamandra.csproj" />
+    <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Cyberia.Utils" />
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="tests\6.0_1.42.1.3203.226-5569ce7.manifest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="tests\6.0_1.42.1.3205.227-d31f250.manifest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="tests\cytrus.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

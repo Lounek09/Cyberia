@@ -82,7 +82,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
                 .WithThumbnail(await _itemData.GetImagePath())
                 .AddField("Niveau :", _itemData.Level.ToString(), true)
                 .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true)
-                .AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, true);
+                .AddEmptyField(true);
 
             IEnumerable<IEffect> effects = _incarnationData.GetRealEffects();
             if (effects.Any())

@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Salamandra", "Cyber
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.SalamandraWeb", "Cyberia.SalamandraWeb\Cyberia.SalamandraWeb.csproj", "{BA322B96-2201-4D77-835C-BCB52CFF5527}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Test", "Cyberia.Test\Cyberia.Test.csproj", "{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Tests", "Cyberia.Tests\Cyberia.Tests.csproj", "{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Translation", "Cyberia.Translation\Cyberia.Translation.csproj", "{E3B15058-6C91-4468-B11F-4B9A200F526E}"
 EndProject
@@ -69,6 +69,10 @@ Global
 		{BA322B96-2201-4D77-835C-BCB52CFF5527}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA322B96-2201-4D77-835C-BCB52CFF5527}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA322B96-2201-4D77-835C-BCB52CFF5527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E3B15058-6C91-4468-B11F-4B9A200F526E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E3B15058-6C91-4468-B11F-4B9A200F526E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3B15058-6C91-4468-B11F-4B9A200F526E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,10 +81,6 @@ Global
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
