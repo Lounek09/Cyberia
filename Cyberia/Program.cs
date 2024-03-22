@@ -1,9 +1,9 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Amphibian;
+using Cyberia.Api;
 using Cyberia.Cytrusaurus;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra;
-using Cyberia.SalamandraWeb;
 
 using Microsoft.Extensions.Configuration;
 
@@ -46,9 +46,9 @@ public static class Program
                 await Bot.LaunchAsync();
             }
 
-            if (config.EnableSalamandraWeb)
+            if (config.EnableAmphibian)
             {
-                Log.Information("Initializing SalamandraWeb");
+                Log.Information("Initializing Amphibian");
                 Web.Initialize();
 
                 _ = Web.LaunchAsync();

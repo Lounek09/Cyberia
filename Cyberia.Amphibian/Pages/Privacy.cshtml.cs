@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Cyberia.SalamandraWeb.Pages;
+namespace Cyberia.Amphibian.Pages;
 
 public class PrivacyModel : PageModel
 {

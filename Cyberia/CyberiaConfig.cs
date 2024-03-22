@@ -16,7 +16,7 @@ public sealed class CyberiaConfig
     /// <summary>
     /// Gets a value indicating whether Salamandra Web is enabled.
     /// </summary>
-    public bool EnableSalamandraWeb { get; init; }
+    public bool EnableAmphibian { get; init; }
 
     /// <summary>
     /// Gets a value indicating whether Cytrus check is enabled.

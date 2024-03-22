@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia", "Cyberia\Cyberia.csproj", "{D8647CDE-B4EB-4A87-86F1-26B2E631EF03}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Amphibian", "Cyberia.Amphibian\Cyberia.Amphibian.csproj", "{BA322B96-2201-4D77-835C-BCB52CFF5527}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Api", "Cyberia.Api\Cyberia.Api.csproj", "{6AE2EA0C-2F65-4CAD-B6C9-1CF01AC9E64D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Cytrusaurus", "Cyberia.Cytrusaurus\Cyberia.Cytrusaurus.csproj", "{02579824-672C-4F45-9C1A-1E913889A2AC}"
@@ -30,8 +32,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Langzilla", "Cyberia.Langzilla\Cyberia.Langzilla.csproj", "{BC6D1BD7-9C6A-472B-B6DF-A95188D6C2F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Salamandra", "Cyberia.Salamandra\Cyberia.Salamandra.csproj", "{CD004824-B6D6-4058-9B69-2117270920E3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.SalamandraWeb", "Cyberia.SalamandraWeb\Cyberia.SalamandraWeb.csproj", "{BA322B96-2201-4D77-835C-BCB52CFF5527}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Tests", "Cyberia.Tests\Cyberia.Tests.csproj", "{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}"
 EndProject

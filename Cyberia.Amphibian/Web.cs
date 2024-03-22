@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.HttpOverrides;
 
-namespace Cyberia.SalamandraWeb;
+namespace Cyberia.Amphibian;
 
 public static class Web
 {

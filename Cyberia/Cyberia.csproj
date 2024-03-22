@@ -23,7 +23,7 @@
     <ProjectReference Include="..\Cyberia.Api\Cyberia.Api.csproj" />
     <ProjectReference Include="..\Cyberia.Cytrusaurus\Cyberia.Cytrusaurus.csproj" />
     <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
-    <ProjectReference Include="..\Cyberia.SalamandraWeb\Cyberia.SalamandraWeb.csproj" />
+    <ProjectReference Include="..\Cyberia.SalamandraWeb\Cyberia.Amphibian.csproj" />
     <ProjectReference Include="..\Cyberia.Salamandra\Cyberia.Salamandra.csproj" />
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
   </ItemGroup>
