@@ -14,9 +14,6 @@ namespace Cyberia.Tests.Cytrusaurus;
 [TestClass]
 public sealed class CytrusManifestTests
 {
-    private const string CURRENT_MANIFEST = "current.manifest";
-    private const string MODEL_MANIFEST = "model.manifest";
-
     private Mock<HttpMessageHandler> _mockHttpMessageHandler = default!;
     private Manifest _currentManifest = default!;
     private Manifest _modelManifest = default!;
@@ -26,11 +23,11 @@ public sealed class CytrusManifestTests
     {
         _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
 
-        var bytes = File.ReadAllBytes(Path.Join(SharedData.DATA_DIRECTORY, CURRENT_MANIFEST));
+        var bytes = File.ReadAllBytes(SharedData.CURRENT_MANIFEST_PATH);
         ByteBuffer buffer = new(bytes);
         _currentManifest = Manifest.GetRootAsManifest(buffer);
 
-        bytes = File.ReadAllBytes(Path.Join(SharedData.DATA_DIRECTORY, MODEL_MANIFEST));
+        bytes = File.ReadAllBytes(SharedData.MODEL_MANIFEST_PATH);
         buffer = new(bytes);
         _modelManifest = Manifest.GetRootAsManifest(buffer);
 
@@ -56,7 +53,7 @@ public sealed class CytrusManifestTests
         var platform = CytrusGame.WINDOWS_PLATFORM;
         var release = CytrusGame.MAIN_RELEASE;
         var version = "6.0_1.42.1.3205.227-d31f250";
-        var bytes = File.ReadAllBytes(Path.Join(SharedData.DATA_DIRECTORY, CURRENT_MANIFEST));
+        var bytes = File.ReadAllBytes(SharedData.CURRENT_MANIFEST_PATH);
 
         _mockHttpMessageHandler
             .Protected()

@@ -10,7 +10,7 @@ public sealed class CytrusGameTests
     [TestInitialize]
     public void Setup()
     {
-        var cytrusData = CytrusData.Load(CytrusDataTests.JSON);
+        var cytrusData = CytrusData.LoadFromFile(SharedData.CYTRUS_JSON_PATH);
         _game = cytrusData.Games["dofus"];
     }
 
@@ -95,7 +95,7 @@ public sealed class CytrusGameTests
     {
         var version = _game.GetVersionByPlatformNameAndReleaseName(CytrusGame.WINDOWS_PLATFORM, CytrusGame.BETA_RELEASE);
 
-        Assert.AreEqual("6.0_2.71.3.11", version);
+        Assert.AreEqual("6.0_2.71.3.12", version);
     }
 
     [TestMethod]

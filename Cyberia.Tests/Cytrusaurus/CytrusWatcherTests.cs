@@ -11,8 +11,6 @@ namespace Cyberia.Tests.Cytrusaurus;
 [TestClass]
 public sealed class CytrusWatcherTests
 {
-    private const string CYTRUS_JSON = "cytrus.json";
-
     private Mock<HttpMessageHandler> _mockHttpMessageHandler = default!;
 
     [TestInitialize]
@@ -38,7 +36,7 @@ public sealed class CytrusWatcherTests
     [TestMethod]
     public async Task CheckAsync_WhenCalled_ShouldUpdateCytrusData()
     {
-        var cytrus = File.ReadAllText(Path.Combine(SharedData.DATA_DIRECTORY, CYTRUS_JSON));
+        var cytrus = File.ReadAllText(SharedData.CYTRUS_JSON_PATH);
 
         _mockHttpMessageHandler
             .Protected()
