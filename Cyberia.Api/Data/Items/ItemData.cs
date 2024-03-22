@@ -116,9 +116,10 @@ public sealed class ItemData
         var itemTypeData = GetItemTypeData();
         if (itemTypeData is not null)
         {
-            int[] enhanceableSuperTypes = [1, 2, 3, 4, 5, 10, 11];
-            int[] nonEnhanceableWeaponTypes = [20, 21, 22, 102, 114];
-            return enhanceableSuperTypes.Contains(itemTypeData.ItemSuperTypeId) && !nonEnhanceableWeaponTypes.Contains(itemTypeData.Id) && Enhanceable;
+            return !Ceremonial &&
+                Enhanceable &&
+                ItemSuperTypeData.ENHANCEABLE_SUPER_TYPES.Contains(itemTypeData.ItemSuperTypeId) &&
+                !ItemTypeData.NON_ENHANCEABLE_TYPES_WEAPON.Contains(itemTypeData.Id);
         }
 
         return false;
