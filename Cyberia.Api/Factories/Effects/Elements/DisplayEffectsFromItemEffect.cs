@@ -4,18 +4,18 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record DisplayEffectsFromItemEffect
+public sealed record ReplaceEffect
     : Effect, IEffect
 {
     public int ItemId { get; init; }
 
-    private DisplayEffectsFromItemEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId)
+    private ReplaceEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId)
         : base(id, duration, probability, criteria, effectArea)
     {
         ItemId = itemId;
     }
 
-    internal static DisplayEffectsFromItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ReplaceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

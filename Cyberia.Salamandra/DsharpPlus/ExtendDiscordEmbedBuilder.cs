@@ -265,9 +265,9 @@ public static class ExtendDiscordEmbedBuilder
 
         foreach (var effect in effects)
         {
-            if (effect is DisplayEffectsFromItemEffect displayEffectsFromItemEffect)
+            if (effect is ReplaceEffect replaceEffect)
             {
-                var itemStatsData = displayEffectsFromItemEffect.GetItemData()?.GetItemStatsData();
+                var itemStatsData = replaceEffect.GetItemData()?.GetItemStatsData();
                 if (itemStatsData is not null)
                 {
                     effectsParse.AddRange(GetEffectsParse(itemStatsData.Effects, parametersDecorator));

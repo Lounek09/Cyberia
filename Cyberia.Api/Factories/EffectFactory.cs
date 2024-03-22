@@ -408,7 +408,7 @@ public static class EffectFactory
             { 2147, ItemCurrentSoulEaterEffect.Create },
             { 2148, ItemMaxSoulEaterEffect.Create },
             { 2149, ItemCeremonialChangeDurabilityEffect.Create },
-            { 2150, DisplayEffectsFromItemEffect.Create },
+            { 2150, ReplaceEffect.Create },
             { 2151, MarkNeverTradableStrongEffect.Create }
         }.ToFrozenDictionary();
 
