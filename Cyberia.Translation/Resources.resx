@@ -612,6 +612,12 @@
   <data name="Criterion.Quest.Superior" xml:space="preserve">
     <value>Quête #1 validée</value>
   </data>
+  <data name="Criterion.QuestAvailable.Different" xml:space="preserve">
+    <value>Quête #1 indisponible</value>
+  </data>
+  <data name="Criterion.QuestAvailable.Equal" xml:space="preserve">
+    <value>Quête #1 disponible</value>
+  </data>
   <data name="Criterion.QuestObjective.Different" xml:space="preserve">
     <value>Objectif de quête #1 pas en cours</value>
   </data>

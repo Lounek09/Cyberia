@@ -60,6 +60,7 @@ public static class CriterionFactory
             { "PX", PlayerRightsCriterion.Create },
             { "PZ", SubscribeCriterion.Create },
             { "Qa", QuestCriterion.Create },
+            { "Qc", QuestAvailableCriterion.Create },
             { "Qo", QuestObjectiveCriterion.Create },
             { "Qs", QuestStepCriterion.Create },
             { "Sc", ServerContentCriterion.Create },

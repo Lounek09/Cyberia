@@ -1546,6 +1546,24 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quête #1 indisponible.
+        /// </summary>
+        public static string Criterion_QuestAvailable_Different {
+            get {
+                return ResourceManager.GetString("Criterion.QuestAvailable.Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quête #1 disponible.
+        /// </summary>
+        public static string Criterion_QuestAvailable_Equal {
+            get {
+                return ResourceManager.GetString("Criterion.QuestAvailable.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Objectif de quête #1 pas en cours.
         /// </summary>
         public static string Criterion_QuestObjective_Different {
