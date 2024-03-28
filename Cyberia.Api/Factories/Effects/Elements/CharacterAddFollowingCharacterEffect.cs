@@ -21,6 +21,6 @@ public sealed record CharacterAddFollowingCharacterEffect
 
     public Description GetDescription()
     {
-        return GetDescription(SpriteId);
+        return GetDescription(string.Empty, string.Empty, SpriteId);
     }
 }
