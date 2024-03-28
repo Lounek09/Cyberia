@@ -390,6 +390,18 @@
   <data name="Criterion.Emote.Equal" xml:space="preserve">
     <value>Connaître l'attitude #1</value>
   </data>
+  <data name="Criterion.EnergyPoints.Different" xml:space="preserve">
+    <value>Points d'énergie ≠ #1</value>
+  </data>
+  <data name="Criterion.EnergyPoints.Equal" xml:space="preserve">
+    <value>Points d'énergie = #1</value>
+  </data>
+  <data name="Criterion.EnergyPoints.Inferior" xml:space="preserve">
+    <value>Points d'énergie &lt; #1</value>
+  </data>
+  <data name="Criterion.EnergyPoints.Superior" xml:space="preserve">
+    <value>Points d'énergie &gt; #1</value>
+  </data>
   <data name="Criterion.Errored" xml:space="preserve">
     <value>Criterion éronné (#1)</value>
   </data>
@@ -533,6 +545,18 @@
   </data>
   <data name="Criterion.MaritalStatus.Equal" xml:space="preserve">
     <value>Etre #1</value>
+  </data>
+  <data name="Criterion.MaxEnergyPoints.Different" xml:space="preserve">
+    <value>Points d'énergie maximum ≠ #1</value>
+  </data>
+  <data name="Criterion.MaxEnergyPoints.Equal" xml:space="preserve">
+    <value>Points d'énergie maximum = #1</value>
+  </data>
+  <data name="Criterion.MaxEnergyPoints.Inferior" xml:space="preserve">
+    <value>Points d'énergie maximum &lt; #1</value>
+  </data>
+  <data name="Criterion.MaxEnergyPoints.Superior" xml:space="preserve">
+    <value>Points d'énergie maximum &gt; #1</value>
   </data>
   <data name="Criterion.Minute.Different" xml:space="preserve">
     <value>Minute ≠ #1</value>

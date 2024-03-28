@@ -880,6 +880,42 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Points d&apos;énergie ≠ #1.
+        /// </summary>
+        public static string Criterion_EnergyPoints_Different {
+            get {
+                return ResourceManager.GetString("Criterion.EnergyPoints.Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points d&apos;énergie = #1.
+        /// </summary>
+        public static string Criterion_EnergyPoints_Equal {
+            get {
+                return ResourceManager.GetString("Criterion.EnergyPoints.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points d&apos;énergie &lt; #1.
+        /// </summary>
+        public static string Criterion_EnergyPoints_Inferior {
+            get {
+                return ResourceManager.GetString("Criterion.EnergyPoints.Inferior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points d&apos;énergie &gt; #1.
+        /// </summary>
+        public static string Criterion_EnergyPoints_Superior {
+            get {
+                return ResourceManager.GetString("Criterion.EnergyPoints.Superior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Criterion éronné (#1).
         /// </summary>
         public static string Criterion_Errored {
@@ -1308,6 +1344,42 @@ namespace Cyberia.Translation {
         public static string Criterion_MaritalStatus_Equal {
             get {
                 return ResourceManager.GetString("Criterion.MaritalStatus.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points d&apos;énergie maximum ≠ #1.
+        /// </summary>
+        public static string Criterion_MaxEnergyPoints_Different {
+            get {
+                return ResourceManager.GetString("Criterion.MaxEnergyPoints.Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points d&apos;énergie maximum = #1.
+        /// </summary>
+        public static string Criterion_MaxEnergyPoints_Equal {
+            get {
+                return ResourceManager.GetString("Criterion.MaxEnergyPoints.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points d&apos;énergie maximum &lt; #1.
+        /// </summary>
+        public static string Criterion_MaxEnergyPoints_Inferior {
+            get {
+                return ResourceManager.GetString("Criterion.MaxEnergyPoints.Inferior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points d&apos;énergie maximum &gt; #1.
+        /// </summary>
+        public static string Criterion_MaxEnergyPoints_Superior {
+            get {
+                return ResourceManager.GetString("Criterion.MaxEnergyPoints.Superior", resourceCulture);
             }
         }
         

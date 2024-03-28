@@ -16,6 +16,8 @@ public static class CriterionFactory
             { "CC", ChanceCriterion.Create },
             { "Cc", BaseChanceCriterion.Create },
             { "CD", DisgracePointCriterion.Create },
+            { "CE", MaxEnergyPointsCriterion.Create },
+            { "Ce", EnergyPointsCriterion.Create },
             { "CH", HonorPointCriterion.Create },
             { "CI", IntelligenceCriterion.Create },
             { "Ci", BaseIntelligenceCriterion.Create },
