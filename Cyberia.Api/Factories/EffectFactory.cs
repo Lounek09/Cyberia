@@ -22,6 +22,7 @@ public static class EffectFactory
             { 9, CharacterDodgeHitEffect.Create },
             { 10, CharacterLearnEmoteEffect.Create },
             { 34, QuestStartEffect.Create },
+            { 35, QuestEndEffect.Create },
             { 50, CarryCharacterEffect.Create },
             { 51, ThrowCarriedCaracterEffect.Create },
             { 77, CharacterMovementPointsStealEffect.Create },
