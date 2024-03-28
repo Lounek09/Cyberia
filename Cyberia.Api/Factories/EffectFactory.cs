@@ -419,6 +419,7 @@ public static class EffectFactory
             return builder(effectId, parameters, duration, probability, criteria, effectArea);
         }
 
+        Log.Warning("Unknown Effect {EffectId} with {@EffectParameters}", effectId, parameters);
         return UntranslatedEffect.Create(effectId, parameters, duration, probability, criteria, effectArea);
     }
 

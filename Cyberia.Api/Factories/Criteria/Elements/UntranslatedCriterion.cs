@@ -18,7 +18,7 @@ public sealed record UntranslatedCriterion
 
     protected override string GetDescriptionName()
     {
-        return "Criterion.Untranslated";
+        return "Criterion.Unknown";
     }
 
     public Description GetDescription()

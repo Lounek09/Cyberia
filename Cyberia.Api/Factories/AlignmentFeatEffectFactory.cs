@@ -66,6 +66,9 @@ public static class AlignmentFeatEffectFactory
             return ErroredAlignmentFeatEffect.Create(id, parameters);
         }
 
+        Log.Warning("Unknown AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}",
+            id,
+            parameters);
         return UntranslatedAlignmentFeatEffect.Create(id, parameters);
     }
 }

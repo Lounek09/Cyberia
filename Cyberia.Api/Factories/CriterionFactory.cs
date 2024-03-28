@@ -70,6 +70,8 @@ public static class CriterionFactory
 
     public static ICriterion Create(string id, char @operator, params string[] parameters)
     {
+        string compressedCriterion;
+
         if (_factory.TryGetValue(id, out var builder))
         {
             var criterion = builder(id, @operator, parameters);
@@ -78,12 +80,13 @@ public static class CriterionFactory
                 return criterion;
             }
 
-            var compressedCriterion = $"{id}{@operator}{string.Join(",", parameters)}";
-
-            Log.Error("Failed to create Criterion from {CompressedCriterion}", id, compressedCriterion);
+            compressedCriterion = $"{id}{@operator}{string.Join(",", parameters)}";
+            Log.Error("Failed to create Criterion from {CompressedCriterion}", compressedCriterion);
             return ErroredCriterion.Create(compressedCriterion);
         }
 
+        compressedCriterion = $"{id}{@operator}{string.Join(",", parameters)}";
+        Log.Warning("Unknown Criterion {CompressedCriterion}", compressedCriterion);
         return UntranslatedCriterion.Create(id, @operator, parameters);
     }
 

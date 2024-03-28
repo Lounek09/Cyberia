@@ -40,6 +40,7 @@ public static class QuestObjectiveFactory
             return ErroredQuestObjective.Create(questObjectiveData);
         }
 
+        Log.Warning("Unknown QuestObjectiveType from {@QuestObjectiveData}", questObjectiveData);
         return UntranslatedQuestObjective.Create(questObjectiveData);
     }
 
