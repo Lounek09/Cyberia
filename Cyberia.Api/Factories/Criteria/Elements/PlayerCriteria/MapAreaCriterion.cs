@@ -7,17 +7,17 @@ public sealed record MapAreaCriterion
 {
     public int MapAreaId { get; init; }
 
-    private MapAreaCriterion(string id, char @operator, int mapSubAreaId)
+    private MapAreaCriterion(string id, char @operator, int mapAreaId)
         : base(id, @operator)
     {
-        MapSubAreaId = mapSubAreaId;
+        MapAreaId = mapAreaId;
     }
 
     internal static MapAreaCriterion? Create(string id, char @operator, params string[] parameters)
     {
-        if (parameters.Length > 0 && int.TryParse(parameters[0], out var mapSubAreaId))
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out var mapAreaId))
         {
-            return new(id, @operator, mapSubAreaId);
+            return new(id, @operator, mapAreaId);
         }
 
         return null;
