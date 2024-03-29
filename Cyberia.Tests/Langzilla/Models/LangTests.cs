@@ -8,6 +8,8 @@ namespace Cyberia.Tests.Langzilla.Models;
 [TestClass]
 public sealed class LangTests
 {
+    public TestContext TestContext { get; set; }
+
     private Lang _lang = default!;
 
     [TestInitialize]
@@ -78,6 +80,15 @@ public sealed class LangTests
         var expected = File.ReadAllLines(SharedData.RANKS_CURRENT_PATH);
 
         var success = _lang.Extract();
+
+        TestContext.WriteLine("Success: " + success);
+        TestContext.WriteLine("Expected: " + string.Join('\n', expected));
+        TestContext.WriteLine($"Exist ({_lang.OutputPath}): " + Directory.Exists(_lang.OutputPath));
+        foreach (var file in Directory.GetFiles(_lang.OutputPath))
+        {
+            TestContext.WriteLine($"File: {file}");
+        }
+
         var result = File.ReadAllLines(_lang.CurrentDecompiledFilePath);
 
         Assert.IsTrue(success);
