@@ -59,13 +59,19 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             .AddEmbed(await EmbedBuilder());
 
         var buttons = Buttons1Builder();
-        if (buttons.Count > 0)
+        if (buttons.Any())
         {
             message.AddComponents(buttons);
         }
 
         buttons = Buttons2Builder();
-        if (buttons.Count > 0)
+        if (buttons.Any())
+        {
+            message.AddComponents(buttons);
+        }
+
+        buttons = OtherButtonsBuilder();
+        if (buttons.Any())
         {
             message.AddComponents(buttons);
         }
@@ -164,40 +170,36 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
         return embed;
     }
 
-    private List<DiscordButtonComponent> Buttons1Builder()
+    private IEnumerable<DiscordButtonComponent> Buttons1Builder()
     {
-        List<DiscordButtonComponent> components = [];
-
-        for (var i = 1; i < 6; i++)
+        for (var i = 0; i < Constant.MAX_BUTTON_PER_ROW; i++)
         {
-            if (_spellData.GetSpellLevelData(i) is not null)
+            var y = i + 1;
+            if (_spellData.GetSpellLevelData(y) is not null)
             {
-                components.Add(new(ButtonStyle.Primary, GetPacket(_spellData.Id, i), i.ToString(), _selectedLevel == i));
+                yield return new(ButtonStyle.Primary, GetPacket(_spellData.Id, y), y.ToString(), _selectedLevel == y);
             }
         }
-
-        return components;
     }
 
-    private List<DiscordButtonComponent> Buttons2Builder()
+    private IEnumerable<DiscordButtonComponent> Buttons2Builder()
     {
-        List<DiscordButtonComponent> components = [];
-
         if (_spellData.GetSpellLevelData(6) is not null)
         {
-            components.Add(new(ButtonStyle.Primary, GetPacket(_spellData.Id, 6), "6", _selectedLevel == 6));
+            yield return new(ButtonStyle.Primary, GetPacket(_spellData.Id, 6), "6", _selectedLevel == 6);
         }
+    }
 
+    private IEnumerable<DiscordButtonComponent> OtherButtonsBuilder()
+    {
         if (_breedData is not null)
         {
-            components.Add(BreedComponentsBuilder.BreedButtonBuilder(_breedData));
+            yield return BreedComponentsBuilder.BreedButtonBuilder(_breedData);
         }
 
         if (_incarnationData is not null)
         {
-            components.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData));
+            yield return IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData);
         }
-
-        return components;
     }
 }

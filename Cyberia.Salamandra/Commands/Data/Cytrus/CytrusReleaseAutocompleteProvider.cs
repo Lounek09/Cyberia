@@ -1,4 +1,5 @@
 ﻿using Cyberia.Cytrusaurus;
+using Cyberia.Salamandra.DsharpPlus;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -7,33 +8,28 @@ namespace Cyberia.Salamandra.Commands.Data;
 
 public sealed class CytrusReleaseAutocompleteProvider : AutocompleteProvider
 {
-    public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
+    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
     {
-        var value = ctx.OptionValue.ToString();
-        if (value is null)
-        {
-            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
-        }
-
-        var game = CreateFromOption<string>(ctx, "game");
+        var game = ctx.GetOption<string>("game");
         if (string.IsNullOrEmpty(game))
         {
-            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+            return Enumerable.Empty<DiscordAutoCompleteChoice>();
         }
 
-        var platform = CreateFromOption<string>(ctx, "platform");
+        var platform = ctx.GetOption<string>("platform");
         if (string.IsNullOrEmpty(platform))
         {
-            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
+            return Enumerable.Empty<DiscordAutoCompleteChoice>();
         }
 
-        List<DiscordAutoCompleteChoice> choices = [];
-
-        foreach (var release in CytrusWatcher.Cytrus.Games[game].GetReleasesByPlatformName(platform))
+        var cytrusGame = CytrusWatcher.Cytrus.GetGameByName(game);
+        if (cytrusGame is null)
         {
-            choices.Add(new(release.Key.Capitalize(), release.Key));
+            return Enumerable.Empty<DiscordAutoCompleteChoice>();
         }
 
-        return Task.FromResult(choices.AsEnumerable());
+        return cytrusGame.GetReleasesByPlatformName(platform)
+            .Take(Constant.MAX_CHOICE)
+            .Select(x => new DiscordAutoCompleteChoice(x.Key.Capitalize(), x.Key));
     }
 }

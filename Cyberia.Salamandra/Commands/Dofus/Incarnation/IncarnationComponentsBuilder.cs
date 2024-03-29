@@ -13,9 +13,17 @@ public static class IncarnationComponentsBuilder
         return new(ButtonStyle.Success, IncarnationMessageBuilder.GetPacket(incarnationData.Id), incarnationData.Name, disable);
     }
 
-    public static DiscordSelectComponent IncarnationsSelectBuilder(int index, List<IncarnationData> incarnationsData, bool disable = false)
+    public static DiscordSelectComponent IncarnationsSelectBuilder(int index, IEnumerable<IncarnationData> incarnationsData, bool disable = false)
     {
-        var options = incarnationsData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), IncarnationMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
+        var options = incarnationsData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
+            {
+                return new DiscordSelectComponentOption(
+                    x.Name.WithMaxLength(100),
+                    IncarnationMessageBuilder.GetPacket(x.Id),
+                    x.Id.ToString());
+            });
 
         return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne une incarnation pour l'afficher", options, disable);
     }

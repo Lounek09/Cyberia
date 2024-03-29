@@ -16,7 +16,10 @@ public static class MapComponentsBuilder
 
     public static DiscordButtonComponent PaginatedMapCoordinateButtonBuilder(MapData mapData, bool disable = false)
     {
-        return new(ButtonStyle.Success, PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.XCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{mapData.YCoord}"), mapData.GetCoordinate(), disable);
+        return new(ButtonStyle.Success,
+            PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.XCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{mapData.YCoord}"),
+            mapData.GetCoordinate(),
+            disable);
     }
 
     public static DiscordButtonComponent PaginatedMapMapSubAreaButtonBuilder(MapSubAreaData mapSubAreaData, bool disable = false)
@@ -29,23 +32,47 @@ public static class MapComponentsBuilder
         return new(ButtonStyle.Success, PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, mapAreaData.Id.ToString()), mapAreaData.Name, disable);
     }
 
-    public static DiscordSelectComponent MapsSelectBuilder(int uniqueIndex, List<MapData> mapsData, bool disable = false)
+    public static DiscordSelectComponent MapsSelectBuilder(int uniqueIndex, IEnumerable<MapData> mapsData, bool disable = false)
     {
-        var options = mapsData.Select(x => new DiscordSelectComponentOption($"{x.GetCoordinate()} ({x.Id})", MapMessageBuilder.GetPacket(x.Id), x.GetMapAreaName().WithMaxLength(50)));
+        var options = mapsData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
+            {
+                return new DiscordSelectComponentOption(
+                    $"{x.GetCoordinate()} ({x.Id})",
+                    MapMessageBuilder.GetPacket(x.Id),
+                    x.GetMapAreaName().WithMaxLength(50));
+            });
 
         return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une map pour l'afficher", options, disable);
     }
 
-    public static DiscordSelectComponent MapSubAreasSelectBuilder(int uniqueIndex, List<MapSubAreaData> mapSubAreasData, bool disable = false)
+    public static DiscordSelectComponent MapSubAreasSelectBuilder(int uniqueIndex, IEnumerable<MapSubAreaData> mapSubAreasData, bool disable = false)
     {
-        var options = mapSubAreasData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, x.Id.ToString()), DofusApi.Datacenter.MapsData.GetMapAreaNameById(x.MapAreaId)));
+        var options = mapSubAreasData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
+            {
+                return new DiscordSelectComponentOption(
+                    x.Name.WithMaxLength(100),
+                    PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, x.Id.ToString()),
+                    DofusApi.Datacenter.MapsData.GetMapAreaNameById(x.MapAreaId));
+            });
 
         return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une sous-zone pour afficher ses maps", options, disable);
     }
 
-    public static DiscordSelectComponent MapAreasSelectBuilder(int uniqueIndex, List<MapAreaData> mapAreasData, bool disable = false)
+    public static DiscordSelectComponent MapAreasSelectBuilder(int uniqueIndex, IEnumerable<MapAreaData> mapAreasData, bool disable = false)
     {
-        var options = mapAreasData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, x.Id.ToString()), DofusApi.Datacenter.MapsData.GetMapSuperAreaNameById(x.MapSuperAreaId)));
+        var options = mapAreasData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
+            {
+                return new DiscordSelectComponentOption(
+                    x.Name.WithMaxLength(100),
+                    PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, x.Id.ToString()),
+                    DofusApi.Datacenter.MapsData.GetMapSuperAreaNameById(x.MapSuperAreaId));
+            });
 
         return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une zone pour afficher ses maps", options, disable);
     }

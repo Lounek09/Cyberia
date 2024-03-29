@@ -52,7 +52,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
             .AddEmbed(await EmbedBuilder());
 
         var components = ButtonsBuilder();
-        if (components.Count > 0)
+        if (components.Any())
         {
             message.AddComponents(components);
         }
@@ -70,31 +70,27 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
         return Task.FromResult(embed);
     }
 
-    private List<DiscordButtonComponent> ButtonsBuilder()
+    private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
-        List<DiscordButtonComponent> components = [];
-
-        var mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord).ToList();
-        if (mapsData.Count > 1)
+        var mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord);
+        if (mapsData.Skip(1).Any())
         {
-            components.Add(MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_mapData));
+            yield return MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_mapData);
         }
 
         if (_mapSubAreaData is not null)
         {
-            components.Add(MapComponentsBuilder.PaginatedMapMapSubAreaButtonBuilder(_mapSubAreaData));
+            yield return MapComponentsBuilder.PaginatedMapMapSubAreaButtonBuilder(_mapSubAreaData);
         }
 
         if (_mapAreaData is not null)
         {
-            components.Add(MapComponentsBuilder.PaginatedMapMapAreaButtonBuilder(_mapAreaData));
+            yield return MapComponentsBuilder.PaginatedMapMapAreaButtonBuilder(_mapAreaData);
         }
 
         if (_houseData is not null)
         {
-            components.Add(HouseComponentsBuilder.HouseButtonBuilder(_houseData));
+            yield return HouseComponentsBuilder.HouseButtonBuilder(_houseData);
         }
-
-        return components;
     }
 }

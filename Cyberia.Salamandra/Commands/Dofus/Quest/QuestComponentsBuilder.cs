@@ -13,9 +13,17 @@ public static class QuestComponentsBuilder
         return new(ButtonStyle.Primary, QuestMessageBuilder.GetPacket(questData.Id), questData.Name, disable);
     }
 
-    public static DiscordSelectComponent QuestsSelectBuilder(int index, List<QuestData> questsData, bool disable = false)
+    public static DiscordSelectComponent QuestsSelectBuilder(int index, IEnumerable<QuestData> questsData, bool disable = false)
     {
-        var options = questsData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), QuestMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
+        var options = questsData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
+            {
+                return new DiscordSelectComponentOption(
+                    x.Name.WithMaxLength(100),
+                    QuestMessageBuilder.GetPacket(x.Id),
+                    x.Id.ToString());
+            });
 
         return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne une quête pour l'afficher", options, disable);
     }

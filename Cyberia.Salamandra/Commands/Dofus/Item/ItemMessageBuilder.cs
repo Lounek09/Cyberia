@@ -70,7 +70,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             .AddEmbed(await EmbedBuilder());
 
         var buttons = ButtonsBuilder();
-        if (buttons.Count > 0)
+        if (buttons.Any())
         {
             message.AddComponents(buttons);
         }
@@ -165,30 +165,26 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         return embed;
     }
 
-    private List<DiscordButtonComponent> ButtonsBuilder()
+    private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
-        List<DiscordButtonComponent> buttons = [];
-
         if (_itemSetData is not null)
         {
-            buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData));
+            yield return ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData);
         }
 
         if (_incarnationData is not null)
         {
-            buttons.Add(IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData));
+            yield return IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData);
         }
 
         if (_craftData is not null)
         {
-            buttons.Add(CraftComponentsBuilder.CraftButtonBuilder(_craftData, _qte));
+            yield return CraftComponentsBuilder.CraftButtonBuilder(_craftData, _qte);
         }
 
         if (_itemStatsData is not null && _itemStatsData.Effects.OfType<IRuneGeneratorEffect>().Any())
         {
-            buttons.Add(RuneComponentsBuilder.RuneItemButtonBuilder(_itemData, _qte));
+            yield return RuneComponentsBuilder.RuneItemButtonBuilder(_itemData, _qte);
         }
-
-        return buttons;
     }
 }

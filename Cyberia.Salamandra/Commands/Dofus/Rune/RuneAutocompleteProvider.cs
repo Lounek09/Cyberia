@@ -7,21 +7,10 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class RuneAutocompleteProvider : AutocompleteProvider
 {
-    public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
+    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
     {
-        var value = ctx.OptionValue.ToString();
-        if (value is null)
-        {
-            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
-        }
-
-        List<DiscordAutoCompleteChoice> choices = [];
-
-        foreach (var runeData in DofusApi.Datacenter.RunesData.GetRunesDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
-        {
-            choices.Add(new(runeData.Name, runeData.Name));
-        }
-
-        return Task.FromResult(choices.AsEnumerable());
+        return DofusApi.Datacenter.RunesData.GetRunesDataByName(value)
+            .Take(Constant.MAX_CHOICE)
+            .Select(x => new DiscordAutoCompleteChoice(x.Name, x.Name));
     }
 }

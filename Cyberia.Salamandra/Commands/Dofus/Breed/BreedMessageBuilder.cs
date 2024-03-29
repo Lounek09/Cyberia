@@ -61,7 +61,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
         }
 
         var buttons = ButtonsBuilder();
-        if (buttons.Count > 0)
+        if (buttons.Any())
         {
             message.AddComponents(buttons);
         }
@@ -147,20 +147,16 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
         }
     }
 
-    private List<DiscordButtonComponent> ButtonsBuilder()
+    private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
-        List<DiscordButtonComponent> buttons = [];
-
         if (_specialSpellData is not null)
         {
-            buttons.Add(SpellComponentsBuilder.SpellButtonBuilder(_specialSpellData));
+            yield return SpellComponentsBuilder.SpellButtonBuilder(_specialSpellData);
         }
 
         if (_itemSetData is not null)
         {
-            buttons.Add(ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData));
+            yield return ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData);
         }
-
-        return buttons;
     }
 }

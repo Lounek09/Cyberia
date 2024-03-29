@@ -7,21 +7,11 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class MapAreaAutocompleteProvider : AutocompleteProvider
 {
-    public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
+    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
     {
-        var value = ctx.OptionValue.ToString();
-        if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
-        {
-            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
-        }
 
-        List<DiscordAutoCompleteChoice> choices = [];
-
-        foreach (var mapAreaData in DofusApi.Datacenter.MapsData.GetMapAreasDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
-        {
-            choices.Add(new($"{mapAreaData.Name.WithMaxLength(90)} ({mapAreaData.Id})", mapAreaData.Id.ToString()));
-        }
-
-        return Task.FromResult(choices.AsEnumerable());
+        return DofusApi.Datacenter.MapsData.GetMapAreasDataByName(value)
+            .Take(Constant.MAX_CHOICE)
+            .Select(x => new DiscordAutoCompleteChoice($"{x.Name.WithMaxLength(90)} ({x.Id})", x.Id.ToString()));
     }
 }

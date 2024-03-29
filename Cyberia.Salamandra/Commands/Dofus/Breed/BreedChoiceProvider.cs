@@ -9,13 +9,8 @@ public sealed class BreedChoiceProvider : IChoiceProvider
 {
     public Task<IEnumerable<DiscordApplicationCommandOptionChoice>> Provider()
     {
-        List<DiscordApplicationCommandOptionChoice> choices = [];
-
-        foreach (var breedData in DofusApi.Datacenter.BreedsData.Breeds.Values)
-        {
-            choices.Add(new(breedData.Name, breedData.Name));
-        }
-
-        return Task.FromResult(choices.AsEnumerable());
+        return Task.FromResult(
+            DofusApi.Datacenter.BreedsData.Breeds.Values
+                .Select(x => new DiscordApplicationCommandOptionChoice(x.Name, x.Name)));
     }
 }

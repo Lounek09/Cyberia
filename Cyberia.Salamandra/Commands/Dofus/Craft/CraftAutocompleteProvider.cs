@@ -7,25 +7,14 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class CraftAutocompleteProvider : AutocompleteProvider
 {
-    public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
+    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
     {
-        var value = ctx.OptionValue.ToString();
-        if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
-        {
-            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
-        }
-
-        List<DiscordAutoCompleteChoice> choices = [];
-
-        foreach (var craftData in DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
-        {
-            var itemData = craftData.GetItemData();
-            if (itemData is not null)
+        return DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value)
+            .Take(Constant.MAX_CHOICE)
+            .Select(x =>
             {
-                choices.Add(new($"{itemData.Name.WithMaxLength(90)} ({craftData.Id})", craftData.Id.ToString()));
-            }
-        }
-
-        return Task.FromResult(choices.AsEnumerable());
+                var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(x.Id);
+                return new DiscordAutoCompleteChoice($"{itemName.WithMaxLength(90)} ({x.Id})", x.Id.ToString());
+            });
     }
 }

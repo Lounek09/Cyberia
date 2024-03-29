@@ -14,18 +14,18 @@ public static class RuneComponentsBuilder
         return new(ButtonStyle.Success, RuneItemMessageBuilder.GetPacket(itemData.Id, qte), "Calculateur de runes", disable);
     }
 
-    public static DiscordSelectComponent ItemsSelectBuilder(int index, List<ItemData> itemsData, int qte, bool disable = false)
+    public static DiscordSelectComponent ItemsSelectBuilder(int index, IEnumerable<ItemData> itemsData, int qte, bool disable = false)
     {
-        var options = itemsData.Select(x =>
+        var options = itemsData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
             {
-                return new DiscordSelectComponentOption(x.Name.WithMaxLength(100),
+                return new DiscordSelectComponentOption(
+                    x.Name.WithMaxLength(100),
                     RuneItemMessageBuilder.GetPacket(x.Id, qte),
                     DofusApi.Datacenter.ItemsData.GetItemTypeNameById(x.ItemTypeId));
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index),
-            "Sélectionne un item pour calculer les runes obtenable",
-            options,
-            disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne un item pour calculer les runes obtenable", options, disable);
     }
 }

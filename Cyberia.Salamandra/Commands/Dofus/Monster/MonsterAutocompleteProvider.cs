@@ -7,21 +7,14 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class MonsterAutocompleteProvider : AutocompleteProvider
 {
-    public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
+    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
     {
-        var value = ctx.OptionValue.ToString();
-        if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
-        {
-            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
-        }
-
-        List<DiscordAutoCompleteChoice> choices = [];
-
-        foreach (var monsterData in DofusApi.Datacenter.MonstersData.GetMonstersDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
-        {
-            choices.Add(new($"{$"{monsterData.Name} {(monsterData.BreedSummon ? "(invocation)" : string.Empty)}".WithMaxLength(90)} ({monsterData.Id})", monsterData.Id.ToString()));
-        }
-
-        return Task.FromResult(choices.AsEnumerable());
+        return DofusApi.Datacenter.MonstersData.GetMonstersDataByName(value)
+            .Take(Constant.MAX_CHOICE)
+            .Select(x =>
+            {
+                var name = $"{$"{x.Name}{(x.BreedSummon ? " (invocation)" : string.Empty)}".WithMaxLength(90)} ({x.Id})";
+                return new DiscordAutoCompleteChoice(name, x.Id.ToString());
+            });
     }
 }

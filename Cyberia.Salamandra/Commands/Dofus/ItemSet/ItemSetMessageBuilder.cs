@@ -55,14 +55,20 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
         var message = new T()
             .AddEmbed(await EmbedBuilder());
 
-        var buttons = Buttons1Builder();
-        if (buttons.Count > 0)
+        var buttons = ButtonsBuilder(0);
+        if (buttons.Any())
         {
             message.AddComponents(buttons);
         }
 
-        buttons = Buttons2Builder();
-        if (buttons.Count > 0)
+        buttons = ButtonsBuilder(Constant.MAX_BUTTON_PER_ROW);
+        if (buttons.Any())
+        {
+            message.AddComponents(buttons);
+        }
+
+        buttons = OtherButtonsBuilder();
+        if (buttons.Any())
         {
             message.AddComponents(buttons);
         }
@@ -95,32 +101,26 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
         return Task.FromResult(embed);
     }
 
-    private List<DiscordButtonComponent> Buttons1Builder()
+    private IEnumerable<DiscordButtonComponent> ButtonsBuilder(int startIndex)
     {
-        List<DiscordButtonComponent> components = [];
 
-        for (var i = 1; i < _itemSetData.Effects.Count + 1 && i < 6; i++)
+        var endIndex = Math.Min(startIndex + Constant.MAX_BUTTON_PER_ROW, _itemSetData.Effects.Count);
+        for (var i = startIndex; i < endIndex; i++)
         {
-            components.Add(new(ButtonStyle.Primary, GetPacket(_itemSetData.Id, i), $"{i}/{_itemSetData.ItemsId.Count}", _nbItemSelected == i));
+            var y = i + 1;
+            yield return new DiscordButtonComponent(
+                ButtonStyle.Primary,
+                GetPacket(_itemSetData.Id, y),
+                $"{y}/{_itemSetData.ItemsId.Count}",
+                _nbItemSelected == y);
         }
-
-        return components;
     }
 
-    private List<DiscordButtonComponent> Buttons2Builder()
+    private IEnumerable<DiscordButtonComponent> OtherButtonsBuilder()
     {
-        List<DiscordButtonComponent> components = [];
-
-        for (var i = 6; i < _itemSetData.Effects.Count + 1 && i < 10; i++)
-        {
-            components.Add(new(ButtonStyle.Primary, GetPacket(_itemSetData.Id, i), $"{i}/{_itemSetData.ItemsId.Count}", _nbItemSelected == i));
-        }
-
         if (_breedData is not null)
         {
-            components.Add(BreedComponentsBuilder.BreedButtonBuilder(_breedData));
+            yield return BreedComponentsBuilder.BreedButtonBuilder(_breedData);
         }
-
-        return components;
     }
 }

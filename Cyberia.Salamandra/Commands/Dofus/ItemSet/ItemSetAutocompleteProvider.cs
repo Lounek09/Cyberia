@@ -7,21 +7,10 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class ItemSetAutocompleteProvider : AutocompleteProvider
 {
-    public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
+    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
     {
-        var value = ctx.OptionValue.ToString();
-        if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
-        {
-            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
-        }
-
-        List<DiscordAutoCompleteChoice> choices = [];
-
-        foreach (var itemSetData in DofusApi.Datacenter.ItemSetsData.GetItemSetsDataByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
-        {
-            choices.Add(new($"{itemSetData.Name.WithMaxLength(90)} ({itemSetData.Id})", itemSetData.Id.ToString()));
-        }
-
-        return Task.FromResult(choices.AsEnumerable());
+        return DofusApi.Datacenter.ItemSetsData.GetItemSetsDataByName(value)
+            .Take(Constant.MAX_CHOICE)
+            .Select(x => new DiscordAutoCompleteChoice($"{x.Name.WithMaxLength(90)} ({x.Id})", x.Id.ToString()));
     }
 }

@@ -59,14 +59,14 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
         var message = new T()
             .AddEmbed(await EmbedBuilder());
 
-        var buttons = Buttons1Builder();
-        if (buttons.Count > 0)
+        var buttons = GradeButtons1Builder();
+        if (buttons.Any())
         {
             message.AddComponents(buttons);
         }
 
-        buttons = Buttons2Builder();
-        if (buttons.Count > 0)
+        buttons = GradeButtons2Builder();
+        if (buttons.Any())
         {
             message.AddComponents(buttons);
         }
@@ -160,33 +160,27 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
         return embed;
     }
 
-    private List<DiscordButtonComponent> Buttons1Builder()
+    private IEnumerable<DiscordButtonComponent> GradeButtons1Builder()
     {
-        List<DiscordButtonComponent> components = [];
-
-        for (var i = 1; i < 6; i++)
+        for (var i = 0; i < Constant.MAX_BUTTON_PER_ROW; i++)
         {
-            if (_monsterData.GetMonsterGradeData(i) is not null)
+            var y = i + 1;
+            if (_monsterData.GetMonsterGradeData(y) is not null)
             {
-                components.Add(new(ButtonStyle.Primary, GetPacket(_monsterData.Id, i), i.ToString(), _selectedGrade == i));
+                yield return new(ButtonStyle.Primary, GetPacket(_monsterData.Id,y), y.ToString(), _selectedGrade == y);
             }
         }
-
-        return components;
     }
 
-    private List<DiscordButtonComponent> Buttons2Builder()
+    private IEnumerable<DiscordButtonComponent> GradeButtons2Builder()
     {
-        List<DiscordButtonComponent> components = [];
-
-        for (var i = 6; i < 11; i++)
+        for (var i = Constant.MAX_BUTTON_PER_ROW; i < Constant.MAX_BUTTON_PER_ROW * 2; i++)
         {
-            if (_monsterData.GetMonsterGradeData(i) is not null)
+            var y = i + 1;
+            if (_monsterData.GetMonsterGradeData(y) is not null)
             {
-                components.Add(new(ButtonStyle.Primary, GetPacket(_monsterData.Id, i), i.ToString(), _selectedGrade == i));
+                yield return new(ButtonStyle.Primary, GetPacket(_monsterData.Id, y), y.ToString(), _selectedGrade == y);
             }
         }
-
-        return components;
     }
 }

@@ -13,9 +13,17 @@ public static class HouseComponentsBuilder
         return new(ButtonStyle.Success, HouseMessageBuilder.GetPacket(houseData.Id), houseData.Name, disable);
     }
 
-    public static DiscordSelectComponent HousesSelectBuilder(int uniqueIndex, List<HouseData> housesData, bool disable = false)
+    public static DiscordSelectComponent HousesSelectBuilder(int uniqueIndex, IEnumerable<HouseData> housesData, bool disable = false)
     {
-        var options = housesData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), HouseMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
+        var options = housesData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
+            {
+                return new DiscordSelectComponentOption(
+                    x.Name.WithMaxLength(100),
+                    HouseMessageBuilder.GetPacket(x.Id),
+                    x.Id.ToString());
+            });
 
         return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une maison pour l'afficher", options, disable);
     }

@@ -14,9 +14,17 @@ public static class ItemComponentsBuilder
         return new(ButtonStyle.Success, ItemMessageBuilder.GetPacket(itemData.Id, craftQte), itemData.Name, disable);
     }
 
-    public static DiscordSelectComponent ItemsSelectBuilder(int index, List<ItemData> itemsData, bool disable = false)
+    public static DiscordSelectComponent ItemsSelectBuilder(int index, IEnumerable<ItemData> itemsData, bool disable = false)
     {
-        var options = itemsData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), ItemMessageBuilder.GetPacket(x.Id), DofusApi.Datacenter.ItemsData.GetItemTypeNameById(x.ItemTypeId)));
+        var options = itemsData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
+            {
+                return new DiscordSelectComponentOption(
+                    x.Name.WithMaxLength(100),
+                    ItemMessageBuilder.GetPacket(x.Id),
+                    DofusApi.Datacenter.ItemsData.GetItemTypeNameById(x.ItemTypeId));
+            });
 
         return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne un item pour l'afficher", options, disable);
     }

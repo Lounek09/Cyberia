@@ -14,9 +14,17 @@ public static class SpellComponentsBuilder
         return new(ButtonStyle.Success, SpellMessageBuilder.GetPacket(spell.Id, spell.GetMaxLevelNumber()), spell.Name, disable);
     }
 
-    public static DiscordSelectComponent SpellsSelectBuilder(int index, List<SpellData> spells, bool disable = false)
+    public static DiscordSelectComponent SpellsSelectBuilder(int index, IEnumerable<SpellData> spells, bool disable = false)
     {
-        var options = spells.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), SpellMessageBuilder.GetPacket(x.Id, x.GetMaxLevelNumber()), x.SpellCategory.GetDescription()));
+        var options = spells
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
+        {
+            return new DiscordSelectComponentOption(
+                x.Name.WithMaxLength(100),
+                SpellMessageBuilder.GetPacket(x.Id, x.GetMaxLevelNumber()),
+                x.SpellCategory.GetDescription());
+        });
 
         return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne un sort pour l'afficher", options, disable);
     }

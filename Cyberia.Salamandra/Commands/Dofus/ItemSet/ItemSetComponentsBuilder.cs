@@ -13,9 +13,17 @@ public static class ItemSetComponentsBuilder
         return new(ButtonStyle.Success, ItemSetMessageBuilder.GetPacket(itemSetData.Id, itemSetData.Effects.Count), itemSetData.Name, disable);
     }
 
-    public static DiscordSelectComponent ItemSetsSelectBuilder(int uniqueIndex, List<ItemSetData> itemSetsData, bool disable = false)
+    public static DiscordSelectComponent ItemSetsSelectBuilder(int uniqueIndex, IEnumerable<ItemSetData> itemSetsData, bool disable = false)
     {
-        var options = itemSetsData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), ItemSetMessageBuilder.GetPacket(x.Id, x.Effects.Count), x.Id.ToString()));
+        var options = itemSetsData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
+            {
+                return new DiscordSelectComponentOption(
+                    x.Name.WithMaxLength(100),
+                    ItemSetMessageBuilder.GetPacket(x.Id, x.Effects.Count),
+                    x.Id.ToString());
+            });
 
         return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une panoplie pour l'afficher", options, disable);
     }

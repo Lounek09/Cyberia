@@ -5,20 +5,16 @@ namespace Cyberia.Salamandra.Commands;
 
 public abstract class AutocompleteProvider : IAutocompleteProvider
 {
-    public const int MIN_LENGTH_AUTOCOMPLETE = 2;
-    public const int MAX_AUTOCOMPLETE_CHOICE = 25;
-
-    protected static T? CreateFromOption<T>(AutocompleteContext ctx, string name)
+    public Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
     {
-        var option = ctx.Options.FirstOrDefault(x => x.Name.Equals(name));
-
-        if (option is not null && option.Value is T value)
+        var value = ctx.OptionValue.ToString();
+        if (value is null)
         {
-            return value;
+            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
         }
 
-        return default;
+        return Task.FromResult(InternalProvider(ctx, value));
     }
 
-    public abstract Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx);
+    protected abstract IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value);
 }

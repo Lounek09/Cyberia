@@ -94,34 +94,25 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
         return embed.WithDescription(descriptionBuilder.ToString());
     }
 
-    private List<DiscordButtonComponent> LessButtonsBuilder()
+    private IEnumerable<DiscordButtonComponent> LessButtonsBuilder()
     {
-        return new List<DiscordButtonComponent>(4)
-        {
-            new(ButtonStyle.Danger, GetPacket(_itemData.Id, _qte - 1000), "-1000", (_qte - 1000) < 1),
-            new(ButtonStyle.Danger, GetPacket(_itemData.Id, _qte - 100), "-100", (_qte - 100) < 1),
-            new(ButtonStyle.Danger, GetPacket(_itemData.Id, _qte - 10), "-10", (_qte - 10) < 1),
-            new(ButtonStyle.Danger, GetPacket(_itemData.Id, _qte - 1), "-1", (_qte - 1) < 1)
-        };
+        yield return new(ButtonStyle.Danger, GetPacket(_itemData.Id, _qte - 1000), "-1000", (_qte - 1000) < 1);
+        yield return new(ButtonStyle.Danger, GetPacket(_itemData.Id, _qte - 100), "-100", (_qte - 100) < 1);
+        yield return new(ButtonStyle.Danger, GetPacket(_itemData.Id, _qte - 10), "-10", (_qte - 10) < 1);
+        yield return new(ButtonStyle.Danger, GetPacket(_itemData.Id, _qte - 1), "-1", (_qte - 1) < 1);
     }
 
-    private List<DiscordButtonComponent> MoreButtonsBuilder()
+    private IEnumerable<DiscordButtonComponent> MoreButtonsBuilder()
     {
-        return new List<DiscordButtonComponent>(4)
-        {
-            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1000), "+1000", _qte + 1000 > MAX_QTE),
-            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 100), "+100", _qte + 100 > MAX_QTE),
-            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 10), "+10", _qte + 10 > MAX_QTE),
-            new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1), "+1", _qte + 1 > MAX_QTE)
-        };
+        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1000), "+1000", _qte + 1000 > MAX_QTE);
+        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 100), "+100", _qte + 100 > MAX_QTE);
+        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 10), "+10", _qte + 10 > MAX_QTE);
+        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1), "+1", _qte + 1 > MAX_QTE);
     }
 
-    private List<DiscordButtonComponent> ButtonsBuilder()
+    private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
-        return
-        [
-            new DiscordButtonComponent(ButtonStyle.Primary, GetPacket(_itemData.Id, _qte), "Régénérer"),
-            ItemComponentsBuilder.ItemButtonBuilder(_itemData, _qte)
-        ];
+        yield return new DiscordButtonComponent(ButtonStyle.Primary, GetPacket(_itemData.Id, _qte), "Régénérer");
+        yield return ItemComponentsBuilder.ItemButtonBuilder(_itemData, _qte);
     }
 }

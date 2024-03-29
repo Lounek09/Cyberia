@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data.Crafts;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data.Crafts;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -13,18 +14,18 @@ public static class CraftComponentsBuilder
         return new(ButtonStyle.Success, CraftMessageBuilder.GetPacket(craftData.Id, qte), "Craft", disable);
     }
 
-    public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, List<CraftData> craftsData, int qte = 1, bool disable = false)
+    public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, IEnumerable<CraftData> craftsData, int qte = 1, bool disable = false)
     {
-        List<DiscordSelectComponentOption> options = [];
-
-        foreach (var craftData in craftsData)
-        {
-            var itemData = craftData.GetItemData();
-            if (itemData is not null)
+        var options = craftsData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
             {
-                options.Add(new(itemData.Name.WithMaxLength(100), CraftMessageBuilder.GetPacket(craftData.Id, qte), craftData.Id.ToString()));
-            }
-        }
+                var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(x.Id);
+                return new DiscordSelectComponentOption(
+                    itemName.WithMaxLength(100),
+                    CraftMessageBuilder.GetPacket(x.Id, qte),
+                    x.Id.ToString());
+            });
 
         return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne un item pour calculer son craft", options, disable);
     }

@@ -13,9 +13,17 @@ public static class MonsterComponentsBuilder
         return new(ButtonStyle.Success, MonsterMessageBuilder.GetPacket(monsterData.Id), monsterData.Name, disable);
     }
 
-    public static DiscordSelectComponent MonstersSelectBuilder(int index, List<MonsterData> monstersData, bool disable = false)
+    public static DiscordSelectComponent MonstersSelectBuilder(int index, IEnumerable<MonsterData> monstersData, bool disable = false)
     {
-        var options = monstersData.Select(x => new DiscordSelectComponentOption(x.Name.WithMaxLength(100), MonsterMessageBuilder.GetPacket(x.Id), x.Id.ToString()));
+        var options = monstersData
+            .Take(Constant.MAX_SELECT_OPTION)
+            .Select(x =>
+            {
+                return new DiscordSelectComponentOption(
+                    x.Name.WithMaxLength(100),
+                    MonsterMessageBuilder.GetPacket(x.Id),
+                    x.Id.ToString());
+            });
 
         return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne un monstre pour l'afficher", options, disable);
     }

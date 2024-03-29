@@ -53,15 +53,19 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
 
     protected int PreviousPageIndex()
     {
-        return _selectedPageIndex - 1 < 0 ? _totalPage - 1 : _selectedPageIndex - 1;
+        return _selectedPageIndex - 1 < 0
+            ? _totalPage - 1
+            : _selectedPageIndex - 1;
     }
-
-    protected abstract string PreviousPacketBuilder();
 
     protected int NextPageIndex()
     {
-        return _selectedPageIndex + 1 == _totalPage ? 0 : _selectedPageIndex + 1;
+        return _selectedPageIndex + 1 == _totalPage
+            ? 0
+            : _selectedPageIndex + 1;
     }
+
+    protected abstract string PreviousPacketBuilder();
 
     protected abstract string NextPacketBuilder();
 
@@ -75,11 +79,9 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
         return Task.FromResult(embed);
     }
 
-    private List<DiscordButtonComponent> PaginationButtonsBuilder()
+    private IEnumerable<DiscordButtonComponent> PaginationButtonsBuilder()
     {
-        return [
-            new(ButtonStyle.Primary, $"{PreviousPacketBuilder()}{InteractionManager.PACKET_PARAMETER_SEPARATOR}P", "Précédent", _totalPage == 1),
-            new(ButtonStyle.Primary, $"{NextPacketBuilder()}{InteractionManager.PACKET_PARAMETER_SEPARATOR}N", "Suivant", _totalPage == 1)
-        ];
+        yield return new(ButtonStyle.Primary, $"{PreviousPacketBuilder()}{InteractionManager.PACKET_PARAMETER_SEPARATOR}P", "Précédent", _totalPage == 1);
+        yield return new(ButtonStyle.Primary, $"{NextPacketBuilder()}{InteractionManager.PACKET_PARAMETER_SEPARATOR}N", "Suivant", _totalPage == 1);
     }
 }

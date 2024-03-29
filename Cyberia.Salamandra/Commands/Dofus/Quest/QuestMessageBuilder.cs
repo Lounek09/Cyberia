@@ -58,13 +58,13 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
         var message = new T()
             .AddEmbed(await EmbedBuilder());
 
-        var select = Select1Builder();
+        var select = SelectBuilder(0, 0);
         if (select.Options.Count > 1)
         {
             message.AddComponents(select);
         }
 
-        var select2 = Select2Builder();
+        var select2 = SelectBuilder(1, Constant.MAX_SELECT_OPTION);
         if (select2.Options.Count > 0)
         {
             message.AddComponents(select2);
@@ -159,27 +159,21 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
         return Task.FromResult(embed);
     }
 
-    private DiscordSelectComponent Select1Builder()
+    private DiscordSelectComponent SelectBuilder(int selectIndex, int startIndex)
     {
-        List<DiscordSelectComponentOption> options = [];
-
-        for (var i = 0; i < _questStepsData.Count && i < 25; i++)
+        IEnumerable<DiscordSelectComponentOption> OptionsGenerator(int startIndex)
         {
-            options.Add(new($"Etape {i + 1}", GetPacket(_questData.Id, i), _questStepsData[i].Name.WithMaxLength(100), isDefault: i == _selectedQuestStepIndex));
+            var endIndex = Math.Min(startIndex + Constant.MAX_SELECT_OPTION, _questStepsData.Count);
+            for (var i = startIndex; i < endIndex; i++)
+            {
+                yield return new DiscordSelectComponentOption(
+                    $"Etape {i + 1}",
+                    GetPacket(_questData.Id, i),
+                    _questStepsData[i].Name.WithMaxLength(100),
+                    isDefault: i == _selectedQuestStepIndex);
+            }
         }
 
-        return new(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne une étape pour l'afficher", options);
-    }
-
-    private DiscordSelectComponent Select2Builder()
-    {
-        List<DiscordSelectComponentOption> options = [];
-
-        for (var i = 25; i < _questStepsData.Count; i++)
-        {
-            options.Add(new($"Etape {i + 1}", GetPacket(_questData.Id, i), _questStepsData[i].Name.WithMaxLength(100), isDefault: i == _selectedQuestStepIndex));
-        }
-
-        return new(InteractionManager.SelectComponentPacketBuilder(1), "Sélectionne une étape pour l'afficher", options);
+        return new(InteractionManager.SelectComponentPacketBuilder(selectIndex), "Sélectionne une étape pour l'afficher", OptionsGenerator(startIndex));
     }
 }

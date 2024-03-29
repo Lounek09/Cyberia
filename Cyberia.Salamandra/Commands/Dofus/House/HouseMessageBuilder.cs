@@ -53,7 +53,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
         var message = new T()
             .AddEmbed(await EmbedBuilder());
 
-        if (_outdoorMapData != null || _mapsData.Count > 0)
+        if (_outdoorMapData is not null || _mapsData.Count > 0)
         {
             message.AddComponents(HouseMapsSelectBuilder());
         }
@@ -81,18 +81,19 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
     private DiscordSelectComponent HouseMapsSelectBuilder()
     {
-        List<DiscordSelectComponentOption> options = [];
-
-        if (_outdoorMapData is not null)
+        IEnumerable<DiscordSelectComponentOption> OptionsGenerator()
         {
-            options.Add(new("Extérieur", GetPacket(_houseData.Id), isDefault: _selectedMapIndex == -1));
+            if (_outdoorMapData is not null)
+            {
+                yield return new DiscordSelectComponentOption("Extérieur", GetPacket(_houseData.Id), isDefault: _selectedMapIndex == -1);
+            }
+
+            for (var i = 0; i < _mapsData.Count; i++)
+            {
+                yield return new DiscordSelectComponentOption($"Pièce {i + 1}", GetPacket(_houseData.Id, i), isDefault: i == _selectedMapIndex);
+            }
         }
 
-        for (var i = 0; i < _mapsData.Count; i++)
-        {
-            options.Add(new($"Pièce {i + 1}", GetPacket(_houseData.Id, i), isDefault: i == _selectedMapIndex));
-        }
-
-        return new(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne une pièce pour l'afficher", options);
+        return new DiscordSelectComponent(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne une pièce pour l'afficher", OptionsGenerator());
     }
 }

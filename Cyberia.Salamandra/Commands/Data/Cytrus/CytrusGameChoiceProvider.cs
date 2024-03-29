@@ -9,13 +9,8 @@ public sealed class CytrusGameChoiceProvider : IChoiceProvider
 {
     public Task<IEnumerable<DiscordApplicationCommandOptionChoice>> Provider()
     {
-        List<DiscordApplicationCommandOptionChoice> choices = [];
-
-        foreach (var game in CytrusWatcher.Cytrus.Games)
-        {
-            choices.Add(new(game.Key.Capitalize(), game.Key));
-        }
-
-        return Task.FromResult(choices.AsEnumerable());
+        return Task.FromResult(
+            CytrusWatcher.Cytrus.Games
+                .Select(x => new DiscordApplicationCommandOptionChoice(x.Key.Capitalize(), x.Key)));
     }
 }
