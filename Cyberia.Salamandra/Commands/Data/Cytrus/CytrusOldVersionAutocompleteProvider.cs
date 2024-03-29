@@ -35,7 +35,7 @@ public sealed class CytrusOldVersionAutocompleteProvider : AutocompleteProvider
 
         List<DiscordAutoCompleteChoice> choices = [];
 
-        var version = CytrusWatcher.OldCytrusData.Games[game].GetVersionByPlatformNameAndReleaseName(platform, release);
+        var version = CytrusWatcher.OldCytrus.Games[game].GetVersionByPlatformNameAndReleaseName(platform, release);
         if (!string.IsNullOrEmpty(version))
         {
             choices.Add(new(version, version));

@@ -1,0 +1,14 @@
+// CLASSIC \\
+- resources/app/retroclient/clips/items/15/492.swf
++ resources/app/retroclient/clips/items/69/492.swf
+
+// REMASTERED \\
+- resources/app/retroclient/clips/items/15/492.swf
++ resources/app/retroclient/clips/items/69/492.swf
+
+// WINDOWS \\
+~ Dofus Retro.exe
+~ resources/app/main.jsc (13006296 -> 13000992)
+~ resources/app/retroclient/js/D1Chat.js (640764 -> 629735)
+~ resources/app/retroclient/js/D1Console.js (435697 -> 420482)
+~ resources/app/retroclient/js/D1ElectronLauncher.js (605254 -> 608267)

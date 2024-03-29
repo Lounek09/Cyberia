@@ -9,13 +9,12 @@ public sealed class LanguageChoiceProvider : IChoiceProvider
 {
     public Task<IEnumerable<DiscordApplicationCommandOptionChoice>> Provider()
     {
-        List<DiscordApplicationCommandOptionChoice> choices = [];
-
-        foreach (var language in Enum.GetValues<LangLanguage>())
-        {
-            choices.Add(new(language.ToString(), language.ToString()));
-        }
-
-        return Task.FromResult(choices.AsEnumerable());
+        return Task.FromResult(
+            Enum.GetValues<LangLanguage>()
+                .Select(x =>
+                {
+                    var language = x.ToString();
+                    return new DiscordApplicationCommandOptionChoice(language, language);
+                }));
     }
 }

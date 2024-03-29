@@ -2,6 +2,9 @@
 
 namespace Cyberia.Cytrusaurus.Models;
 
+/// <summary>
+/// Represents a game in Cytrus.
+/// </summary>
 public sealed class CytrusGame
 {
     public const string META_ASSETS = "meta";

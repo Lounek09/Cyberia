@@ -10,8 +10,8 @@ public sealed class CytrusGameTests
     [TestInitialize]
     public void Setup()
     {
-        var cytrusData = CytrusData.LoadFromFile(SharedData.CYTRUS_JSON_PATH);
-        _game = cytrusData.Games["dofus"];
+        var cytrus = Cytrus.LoadFromFile(SharedData.CYTRUS_JSON_PATH);
+        _game = cytrus.Games["dofus"];
     }
 
     #region GetAssetsByName
@@ -21,7 +21,7 @@ public sealed class CytrusGameTests
     {
         var assets = _game.GetAssetsByName(CytrusGame.META_ASSETS);
 
-        Assert.AreNotEqual(0, assets.Count);
+        Assert.AreEqual(2, assets.Count);
         Assert.IsTrue(assets.ContainsKey(CytrusGame.BETA_RELEASE));
     }
 
@@ -48,20 +48,16 @@ public sealed class CytrusGameTests
     [TestMethod]
     public void GetAssetHashByNameAndReleaseName_InvalidAssetsName_ReturnsEmptyString()
     {
-        // Arrange & Act
         var hash = _game.GetAssetHashByNameAndReleaseName("undefined", CytrusGame.BETA_RELEASE);
 
-        // Assert
         Assert.AreEqual(string.Empty, hash);
     }
 
     [TestMethod]
     public void GetAssetHashByNameAndReleaseName_InvalidReleaseName_ReturnsEmptyString()
     {
-        // Arrange & Act
         var hash = _game.GetAssetHashByNameAndReleaseName(CytrusGame.META_ASSETS, "undefined");
 
-        // Assert
         Assert.AreEqual(string.Empty, hash);
     }
 
@@ -74,7 +70,7 @@ public sealed class CytrusGameTests
     {
         var releases = _game.GetReleasesByPlatformName(CytrusGame.WINDOWS_PLATFORM);
 
-        Assert.AreNotEqual(0, releases.Count);
+        Assert.AreEqual(2, releases.Count);
         Assert.IsTrue(releases.ContainsKey(CytrusGame.BETA_RELEASE));
     }
 

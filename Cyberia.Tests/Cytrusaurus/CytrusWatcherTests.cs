@@ -2,7 +2,6 @@
 using Cyberia.Cytrusaurus.EventArgs;
 
 using Moq;
-using Moq.Protected;
 
 using System.Net;
 
@@ -11,13 +10,9 @@ namespace Cyberia.Tests.Cytrusaurus;
 [TestClass]
 public sealed class CytrusWatcherTests
 {
-    private Mock<HttpMessageHandler> _mockHttpMessageHandler = default!;
-
     [TestInitialize]
     public void Initialize()
     {
-        _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
-
         CytrusWatcher.Initialize();
         CytrusWatcher.HttpRetryPolicy = SharedData.HttpRetryPolicy;
     }
@@ -36,33 +31,27 @@ public sealed class CytrusWatcherTests
     [TestMethod]
     public async Task CheckAsync_WhenCalled_ShouldUpdateCytrusData()
     {
-        var cytrus = File.ReadAllText(SharedData.CYTRUS_JSON_PATH);
-
-        _mockHttpMessageHandler
-            .Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
-                ItExpr.IsAny<HttpRequestMessage>(),
-                ItExpr.IsAny<CancellationToken>())
-            .ReturnsAsync(new HttpResponseMessage
+        var json = File.ReadAllText(SharedData.CYTRUS_JSON_PATH);
+        var mock = SharedData.SetupMockHttpMessageHandlerForSuccessfullResponse(
+            new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(cytrus)
+                Content = new StringContent(json)
             });
 
-        CytrusWatcher.HttpClient = new HttpClient(_mockHttpMessageHandler.Object)
+        CytrusWatcher.HttpClient = new HttpClient(mock.Object)
         {
             BaseAddress = new Uri(CytrusWatcher.BASE_URL)
         };
 
-        var mockHandler = new Mock<EventHandler<NewCytrusDetectedEventArgs>>();
+        Mock<EventHandler<NewCytrusDetectedEventArgs>> mockHandler = new();
         CytrusWatcher.NewCytrusDetected += mockHandler.Object;
 
         await CytrusWatcher.CheckAsync();
 
-        Assert.AreEqual(6, CytrusWatcher.CytrusData.Version);
-        Assert.AreEqual("production", CytrusWatcher.CytrusData.Name);
-        mockHandler.Verify(handler => handler(It.IsAny<object>(), It.IsAny<NewCytrusDetectedEventArgs>()), Times.Once);
+        Assert.AreEqual(6, CytrusWatcher.Cytrus.Version);
+        Assert.AreEqual("production", CytrusWatcher.Cytrus.Name);
+        mockHandler.Verify(x => x(It.IsAny<object>(), It.IsAny<NewCytrusDetectedEventArgs>()), Times.Once);
     }
 
     #endregion

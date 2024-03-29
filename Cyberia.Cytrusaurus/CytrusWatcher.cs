@@ -4,25 +4,25 @@ using Cyberia.Cytrusaurus.Models;
 namespace Cyberia.Cytrusaurus;
 
 /// <summary>
-/// A static class that watches for updates of Cytrus.
+/// Provides methods for watching updates of Cytrus.
 /// </summary>
 public static class CytrusWatcher
 {
     internal const string OUTPUT_PATH = "cytrus";
     internal const string CYTRUS_FILE_NAME = "cytrus.json";
-    internal const string CYTRUS_PATH = $"{OUTPUT_PATH}/{CYTRUS_FILE_NAME}";
-    internal const string OLD_CYTRUS_PATH = $"{OUTPUT_PATH}/old_{CYTRUS_FILE_NAME}";
+    internal static readonly string CYTRUS_PATH = Path.Join(OUTPUT_PATH, CYTRUS_FILE_NAME);
+    internal static readonly string OLD_CYTRUS_PATH = Path.Join(OUTPUT_PATH, $"old_{CYTRUS_FILE_NAME}");
     internal const string BASE_URL = "https://cytrus.cdn.ankama.com";
 
     /// <summary>
     /// The current Cytrus data.
     /// </summary>
-    public static CytrusData CytrusData { get; internal set; } = default!;
+    public static Cytrus Cytrus { get; internal set; } = default!;
 
     /// <summary>
     /// The old Cytrus data.
     /// </summary>
-    public static CytrusData OldCytrusData { get; internal set; } = default!;
+    public static Cytrus OldCytrus { get; internal set; } = default!;
 
 
     internal static HttpClient HttpClient { get; set; } = default!;
@@ -40,8 +40,8 @@ public static class CytrusWatcher
     {
         Directory.CreateDirectory(OUTPUT_PATH);
 
-        CytrusData = CytrusData.LoadFromFile(CYTRUS_PATH);
-        OldCytrusData = CytrusData.LoadFromFile(OLD_CYTRUS_PATH);
+        Cytrus = Cytrus.LoadFromFile(CYTRUS_PATH);
+        OldCytrus = Cytrus.LoadFromFile(OLD_CYTRUS_PATH);
 
         HttpClient = new()
         {
@@ -77,17 +77,17 @@ public static class CytrusWatcher
     /// 5. If there is no difference, it returns.
     /// 6. Replaces the old Cytrus data by the new Cytrus data.
     /// 7. Loads the new Cytrus data from the response content.
-    /// 8. If there is a difference, it logs the difference, triggers the NewCytrusDetected event, and updates the Cytrus file with the new data.
+    /// 8. Triggers the <see cref="NewCytrusDetected"/> event.
     /// </remarks>
     public static async Task CheckAsync()
     {
-        string cytrus;
+        string json;
         try
         {
             using var response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(CYTRUS_FILE_NAME));
             response.EnsureSuccessStatusCode();
 
-            cytrus = await response.Content.ReadAsStringAsync();
+            json = await response.Content.ReadAsStringAsync();
         }
         catch (HttpRequestException e)
         {
@@ -95,24 +95,24 @@ public static class CytrusWatcher
             return;
         }
 
-        var oldCytrus = File.Exists(CYTRUS_PATH) ? File.ReadAllText(CYTRUS_PATH) : "{}";
+        var modelJson = File.Exists(CYTRUS_PATH) ? File.ReadAllText(CYTRUS_PATH) : "{}";
 
-        var diff = Json.Diff(cytrus, oldCytrus);
+        var diff = Json.Diff(json, modelJson);
         if (string.IsNullOrEmpty(diff))
         {
             return;
         }
 
-        OldCytrusData = CytrusData;
-        CytrusData = CytrusData.Load(cytrus);
+        OldCytrus = Cytrus;
+        Cytrus = Cytrus.Load(json);
 
         Log.Information("Cytrus update detected :\n{CytrusDiff}", diff);
-        NewCytrusDetected?.Invoke(null, new NewCytrusDetectedEventArgs(CytrusData, OldCytrusData, diff));
+        NewCytrusDetected?.Invoke(null, new NewCytrusDetectedEventArgs(Cytrus, OldCytrus, diff));
 
         if (File.Exists(CYTRUS_PATH))
         {
             File.Move(CYTRUS_PATH, OLD_CYTRUS_PATH, true);
         }
-        File.WriteAllText(CYTRUS_PATH, cytrus);
+        File.WriteAllText(CYTRUS_PATH, json);
     }
 }

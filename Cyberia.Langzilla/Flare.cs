@@ -2,14 +2,24 @@
 
 namespace Cyberia.Langzilla;
 
+/// <summary>
+/// Provides methods for extracting SWF files using Flare.
+/// </summary>
 internal static class Flare
 {
     private static readonly object _lock = new();
     private static readonly string _flarePath = GetFlarePath();
 
+    /// <summary>
+    /// Tries to extract the specified input SWF file.
+    /// </summary>
+    /// <param name="inputFilePath">The input SWF file path.</param>
+    /// <param name="outputFilePath">The output extracted file path.</param>
+    /// <returns>A value indicating whether the extraction was successful.</returns>
     internal static bool TryExtract(string inputFilePath, [NotNullWhen(true)] out string? outputFilePath)
     {
-        if (!File.Exists(inputFilePath))
+        if (!inputFilePath.EndsWith(".swf") ||
+            !File.Exists(inputFilePath))
         {
             outputFilePath = null;
             return false;
@@ -34,7 +44,11 @@ internal static class Flare
         return false;
     }
 
-    private static string GetFlarePath()
+    /// <summary>
+    /// Gets the path of the flare executable depending of the current OS.
+    /// </summary>
+    /// <returns>The path of the flare executable.</returns>
+    internal static string GetFlarePath()
     {
         if (OperatingSystem.IsWindows())
         {

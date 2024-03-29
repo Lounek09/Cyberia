@@ -3,7 +3,7 @@
 namespace Cyberia.Cytrusaurus.EventArgs;
 
 /// <summary>
-/// Provides data for the NewCytrusDetected event.
+/// Represents the event arguments for when a new Cytrus is detected.
 /// </summary>
 public sealed class NewCytrusDetectedEventArgs
     : System.EventArgs
@@ -11,12 +11,12 @@ public sealed class NewCytrusDetectedEventArgs
     /// <summary>
     /// Gets the current Cytrus data.
     /// </summary>
-    public CytrusData CytrusData { get; init; }
+    public Cytrus Cytrus { get; init; }
 
     /// <summary>
     /// Gets the old Cytrus data.
     /// </summary>
-    public CytrusData OldCytrusData { get; init; }
+    public Cytrus OldCytrus { get; init; }
 
     /// <summary>
     /// Gets the difference between the current and old Cytrus data.
@@ -26,13 +26,13 @@ public sealed class NewCytrusDetectedEventArgs
     /// <summary>
     /// Initializes a new instance of the <see cref="NewCytrusDetectedEventArgs"/> class.
     /// </summary>
-    /// <param name="cytrusData">The current Cytrus data.</param>
-    /// <param name="oldCytrusData">The old Cytrus data.</param>
+    /// <param name="cytrus">The current Cytrus data.</param>
+    /// <param name="oldCytrus">The old Cytrus data.</param>
     /// <param name="diff">The difference between the current and old Cytrus data.</param>
-    public NewCytrusDetectedEventArgs(CytrusData cytrusData, CytrusData oldCytrusData, string diff)
+    internal NewCytrusDetectedEventArgs(Cytrus cytrus, Cytrus oldCytrus, string diff)
     {
-        CytrusData = cytrusData;
-        OldCytrusData = oldCytrusData;
+        Cytrus = cytrus;
+        OldCytrus = oldCytrus;
         Diff = diff;
     }
 }

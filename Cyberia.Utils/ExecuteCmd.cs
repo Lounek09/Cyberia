@@ -3,7 +3,7 @@
 namespace Cyberia.Utils;
 
 /// <summary>
-/// A utility class for executing command line commands.
+/// Provides methods for executing command line commands.
 /// </summary>
 public static class ExecuteCmd
 {

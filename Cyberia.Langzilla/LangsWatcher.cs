@@ -5,64 +5,144 @@ using System.Collections.Concurrent;
 
 namespace Cyberia.Langzilla;
 
+/// <summary>
+/// Provides methods for watching updates of langs.
+/// </summary>
 public static class LangsWatcher
 {
     public const string OUTPUT_PATH = "langs";
-    public const string BASE_URL = "https://dofusretro.cdn.ankama.com";
+    public const string BASE_URL = "https://dofusretro.cdn.ankama.com/";
 
-    public static IReadOnlyDictionary<(LangType, LangLanguage), LangDataCollection> Langs => _langs.AsReadOnly();
+    /// <summary>
+    /// Gets a read-only dictionary of the langs by type and language.
+    /// </summary>
+    public static IReadOnlyDictionary<(LangType, LangLanguage), LangRepository> LangRepositories => _langRepositories.AsReadOnly();
 
-    internal static HttpClient HttpClient { get; private set; } = default!;
-    internal static HttpRetryPolicy HttpRetryPolicy { get; private set; } = default!;
+    internal static HttpClient HttpClient { get; set; } = default!;
+    internal static HttpRetryPolicy HttpRetryPolicy { get; set; } = default!;
 
-    private static readonly Dictionary<(LangType, LangLanguage), LangDataCollection> _langs = [];
-    private static readonly ConcurrentDictionary<(LangType, LangLanguage), Timer> _timers = [];
+    private static Dictionary<(LangType, LangLanguage), LangRepository> _langRepositories = [];
+    private static ConcurrentDictionary<(LangType, LangLanguage), Timer> _timers = [];
 
+    /// <summary>
+    /// Initializes the LangsWatcher.
+    /// </summary>
     public static void Initialize()
     {
         Directory.CreateDirectory(OUTPUT_PATH);
+
+        _langRepositories = [];
+        _timers = [];
 
         foreach (var type in Enum.GetValues<LangType>())
         {
             foreach (var language in Enum.GetValues<LangLanguage>())
             {
-                var langsData = LangDataCollection.Load(type, language);
-                _langs.Add((type, language), langsData);
+                var outputPath = GetOutputPath(type, language);
+                if (!Directory.Exists(outputPath))
+                {
+                    Directory.CreateDirectory(outputPath);
+                }
+
+                var filePath = Path.Join(outputPath, LangRepository.FILE_NAME);
+                var repository = LangRepository.LoadFromFile(filePath);
+                _langRepositories.Add((type, language), repository);
             }
         }
 
-        HttpClient = new();
+        HttpClient = new()
+        {
+            BaseAddress = new(BASE_URL)
+        };
         HttpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
     }
 
+    /// <summary>
+    /// Event that is triggered when a lang check is started.
+    /// </summary>
     public static event EventHandler<CheckLangStartedEventArgs>? CheckLangStarted;
+
+    /// <summary>
+    /// Event that is triggered when a lang check is finished.
+    /// </summary>
     public static event EventHandler<CheckLangFinishedEventArgs>? CheckLangFinished;
 
+
+    /// <summary>
+    /// Starts watching for update of langs by type.
+    /// </summary>
+    /// <param name="type">The type of the langs to check.</param>
+    /// <param name="dueTime">The amount of time to delay before the first check.</param>
+    /// <param name="interval">The interval between checks.</param>
     public static void Watch(LangType type, TimeSpan dueTime, TimeSpan interval)
     {
         foreach (var language in Enum.GetValues<LangLanguage>())
         {
-            var timer = new Timer(async _ => await CheckAsync(type, language), null, dueTime, interval);
+            var repository = _langRepositories[(type, language)];
+            var timer = new Timer(async _ => await CheckAsync(repository), null, dueTime, interval);
 
             _timers.AddOrUpdate((type, language), timer, (key, oldValue) => oldValue = timer);
         }
     }
 
-    public static async Task CheckAsync(LangType type, LangLanguage language, bool force = false)
+    /// <summary>
+    /// Asynchronously checks for updates of langs by type and language.
+    /// </summary>
+    /// <param name="type">The type of the langs to check.</param>
+    /// <param name="language">The language of the langs to check.</param>
+    /// <param name="force">true to force the update; otherwise, false.</param>
+    /// <remarks>
+    /// This method performs the following steps:
+    /// 1. Triggers the <see cref="CheckLangStarted"/> event.
+    /// 2. Fetches the version of the langs.
+    /// 3. If the version is empty, triggers the <see cref="CheckLangFinished"/> event and returns.
+    /// 4. Gets the updated langs from the versions.
+    /// 5. Downloads, extracts, and diffs the updated langs.
+    /// 6. Triggers the <see cref="CheckLangFinished"/> event.
+    /// </remarks>
+    public static async Task CheckAsync(LangRepository repository, bool force = false)
     {
-        CheckLangStarted?.Invoke(null, new CheckLangStartedEventArgs(type, language));
+        CheckLangStarted?.Invoke(null, new CheckLangStartedEventArgs(repository.Type, repository.Language));
 
-        var langsData = _langs[(type, language)];
-        var updatedLangsData = await langsData.FetchLangsAsync(force);
+        var versions = await repository.FetchVersionsAsync(force);
+        if (string.IsNullOrEmpty(versions))
+        {
+            CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(repository.Type, repository.Language, []));
+            return;
+        }
 
-        CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(type, language, updatedLangsData));
+        var updatedLangs = repository.GetUpdatedLangsFromVersions(versions).ToList();
+        foreach (var updatedLang in updatedLangs)
+        {
+            if (!await updatedLang.DownloadAsync())
+            {
+                Log.Error("Failed to download {LangType} {LangName} lang in {LangLanguage}",
+                    repository.Type, updatedLang.Name, repository.Language);
+                continue;
+            }
+
+            if (!updatedLang.Extract())
+            {
+                Log.Error("Failed to extract {LangType} {LangName} lang in {LangLanguage}",
+                    repository.Type, updatedLang.Name, repository.Language);
+                continue;
+            }
+
+            if (!updatedLang.Diff())
+            {
+                Log.Error("Failed to diff {LangType} {LangName} lang in {LangLanguage}",
+                    repository.Type, updatedLang.Name, repository.Language);
+            }
+        }
+
+        CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(repository.Type, repository.Language, updatedLangs));
     }
 
-    internal static string GetOutputDirectoryPath(LangType type, LangLanguage language)
-    {
-        return Path.Join(OUTPUT_PATH, type.ToString().ToLower(), language.ToString().ToLower());
-    }
-
+    /// <summary>
+    /// Gets the base route of the langs.
+    /// </summary>
+    /// <param name="type">The type of the langs.</param>
+    /// <returns>The route of the langs.</returns>
     internal static string GetRoute(LangType type)
     {
         return type switch
@@ -71,5 +151,16 @@ public static class LangsWatcher
             LangType.Temporis => "ephemeris2releasebucket/lang",
             _ => "lang",
         };
+    }
+
+    /// <summary>
+    /// Gets the output path of the langs.
+    /// </summary>
+    /// <param name="type">The type of the langs.</param>
+    /// <param name="language">The language of the langs.</param>
+    /// <returns>The output path of the langs.</returns>
+    internal static string GetOutputPath(LangType type, LangLanguage language)
+    {
+        return Path.Join(OUTPUT_PATH, type.ToString().ToLower(), language.ToString().ToLower());
     }
 }

@@ -11,7 +11,7 @@ public static class LangsManager
 {
     public static async void OnCheckLangFinished(object? _, CheckLangFinishedEventArgs e)
     {
-        if (e.UpdatedLangsData.Count == 0)
+        if (e.UpdatedLangs.Count == 0)
         {
             return;
         }
@@ -24,11 +24,11 @@ public static class LangsManager
 
         var thread = await CreateThreadAsync(forum, e.Type, e.Language);
 
-        foreach (var updatedLangData in e.UpdatedLangsData)
+        foreach (var updatedLang in e.UpdatedLangs)
         {
             var delay = Task.Delay(1000);
 
-            await SendLangMessageAsync(thread, updatedLangData);
+            await SendLangMessageAsync(thread, updatedLang);
 
             await delay;
         }
@@ -81,7 +81,6 @@ public static class LangsManager
         }
 
         var post = await forum.CreateForumPostAsync(postBuilder);
-
         return post.Channel;
     }
 
@@ -90,18 +89,18 @@ public static class LangsManager
         return forum.AvailableTags.FirstOrDefault(x => x.Name.Equals(name));
     }
 
-    private static async Task<DiscordMessage> SendLangMessageAsync(DiscordThreadChannel thread, LangData langData)
+    private static async Task<DiscordMessage> SendLangMessageAsync(DiscordThreadChannel thread, Lang lang)
     {
         var message = new DiscordMessageBuilder()
-                .WithContent($"{(langData.New ? $"{Formatter.Bold("New")} lang" : "Lang")} {Formatter.Bold(langData.Name)} version {Formatter.Bold(langData.Version.ToString())}");
+            .WithContent($"{(lang.New ? $"{Formatter.Bold("New")} lang" : "Lang")} {Formatter.Bold(lang.Name)} version {Formatter.Bold(lang.Version.ToString())}");
 
-        var diffFilePath = langData.GetDiffFilePath();
+        var diffFilePath = lang.DiffFilePath;
         if (!File.Exists(diffFilePath))
         {
             return await thread.SendMessageAsync(message);
         }
 
         using var fileStream = File.OpenRead(diffFilePath);
-        return await thread.SendMessageAsync(message.AddFile($"{langData.Name}.as", fileStream));
+        return await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", fileStream));
     }
 }

@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Cyberia.Cytrusaurus;
 
+/// <summary>
+/// Provides methods for retrieving and comparing game manifests of Cytrus.
+/// </summary>
 public static class CytrusManifest
 {
     /// <summary>
@@ -52,7 +55,7 @@ public static class CytrusManifest
         var modelFragments = model.GetFragments().ToList();
 
         var modelFragmentsByIndex = modelFragments
-            .Select((fragment, index) => new { fragment.Name, Index = index }) //TODO: .NET9 Use new Index() instead
+            .Select((fragment, index) => (fragment.Name, Index: index)) //TODO: .NET9 Use new Index() instead
             .ToDictionary(x => x.Name, x => x.Index);
 
         for (var i = 0; i < currentFragments.Count; i++)
@@ -109,7 +112,7 @@ public static class CytrusManifest
     }
 
     /// <summary>
-    /// Constructs the route for the game manifest.
+    /// Gets the route of the game manifest.
     /// </summary>
     /// <param name="game">The name of the game.</param>
     /// <param name="platform">The platform for which the game is released.</param>
@@ -135,7 +138,7 @@ public static class CytrusManifest
         var modelGameFiles = model.GetGameFiles().ToList();
 
         var modelGameFilesByIndex = modelGameFiles
-            .Select((file, index) => new { file.Name, Index = index }) //TODO: .NET9 Use new Index() instead
+            .Select((file, index) => (file.Name, Index: index)) //TODO: .NET9 Use new Index() instead
             .ToDictionary(x => x.Name, x => x.Index);
 
         for (var i = 0; i < currentGameFiles.Count; i++)

@@ -17,18 +17,17 @@ public static partial class LangParser
 
     public static bool Launch(LangType type, LangLanguage language)
     {
-        var langDataCollection = LangsWatcher.Langs[(type, language)];
-
-        foreach (var langData in langDataCollection)
+        var langRepository = LangsWatcher.LangRepositories[(type, language)];
+        foreach (var lang in langRepository.Langs)
         {
-            if (_ignoredLangs.Contains(langData.Name))
+            if (_ignoredLangs.Contains(lang.Name))
             {
                 continue;
             }
 
-            if (!TryParseLangData(langData))
+            if (!TryParseLang(lang))
             {
-                Log.Error("An error occurred while parsing {LangName} lang", langData.Name);
+                Log.Error("An error occurred while parsing {LangName} lang", lang.Name);
                 return false;
             }
         }
@@ -42,18 +41,18 @@ public static partial class LangParser
     [GeneratedRegex(@"(?<!\\)'", RegexOptions.Compiled)]
     private static partial Regex EscapedQuoteRegex();
 
-    private static bool TryParseLangData(LangData langData)
+    private static bool TryParseLang(Lang lang)
     {
-        var filePath = langData.GetCurrentDecompiledFilePath();
+        var filePath = lang.CurrentDecompiledFilePath;
         if (!File.Exists(filePath))
         {
-            Log.Error("The lang {LangName} has never been decompiled", langData.Name);
+            Log.Error("The lang {LangName} has never been decompiled", lang.Name);
             return false;
         }
 
-        Log.Debug("Start parsing {LangName} lang", langData.Name);
+        Log.Debug("Start parsing {LangName} lang", lang.Name);
 
-        var lines = File.ReadAllLines(filePath);
+        var lines = File.ReadLines(filePath);
         var json = ParseLines(lines);
 
         try
@@ -62,15 +61,15 @@ public static partial class LangParser
         }
         catch (Exception e)
         {
-            Log.Error(e, "The JSON generated from {LangName} lang is not valid", langData.Name);
+            Log.Error(e, "The JSON generated from {LangName} lang is not valid", lang.Name);
             return false;
         }
 
-        File.WriteAllText(Path.Join(DofusApi.OUTPUT_PATH, $"{langData.Name}.json"), json);
+        File.WriteAllText(Path.Join(DofusApi.OUTPUT_PATH, $"{lang.Name}.json"), json);
         return true;
     }
 
-    private static string ParseLines(string[] lines)
+    private static string ParseLines(IEnumerable<string> lines)
     {
         StringBuilder jsonBuilder = new(lines.Sum(x => x.Length));
 

@@ -3,7 +3,10 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Cytrusaurus.Models;
 
-public sealed class CytrusData
+/// <summary>
+/// Represents the Cytrus data.
+/// </summary>
+public sealed class Cytrus
 {
     /// <summary>
     /// Version of Cytrus
@@ -24,21 +27,21 @@ public sealed class CytrusData
     public IReadOnlyDictionary<string, CytrusGame> Games { get; init; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CytrusData"/> class.
+    /// Initializes a new instance of the <see cref="Cytrus"/> class.
     /// </summary>
     [JsonConstructor]
-    internal CytrusData()
+    internal Cytrus()
     {
         Name = string.Empty;
         Games = new Dictionary<string, CytrusGame>();
     }
 
     /// <summary>
-    /// Loads the Cytrus data from a file.
+    /// Loads the <see cref="Cytrus"/> data from a file.
     /// </summary>
     /// <param name="path">The path to the file.</param>
-    /// <returns>A new instance of the <see cref="CytrusData"/> class if the file does not exist; otherwise, the data loaded from the file.</returns>
-    internal static CytrusData LoadFromFile(string path)
+    /// <returns>A new instance of the <see cref="Cytrus"/> class if the file does not exist; otherwise, the data loaded from the file.</returns>
+    internal static Cytrus LoadFromFile(string path)
     {
         if (!File.Exists(path))
         {
@@ -50,20 +53,20 @@ public sealed class CytrusData
     }
 
     /// <summary>
-    /// Loads the Cytrus data from a JSON string.
+    /// Loads the <see cref="Cytrus"/> data from a JSON string.
     /// </summary>
     /// <param name="json">The JSON string to load the data from.</param>
-    /// <returns>A new instance of the <see cref="CytrusData"/> class if the data could not be deserialized; otherwise, the deserialized data.</returns>
-    internal static CytrusData Load(string json)
+    /// <returns>A new instance of the <see cref="Cytrus"/> class if the data could not be deserialized; otherwise, the deserialized data.</returns>
+    internal static Cytrus Load(string json)
     {
-        var data = JsonSerializer.Deserialize<CytrusData>(json);
-        if (data is null)
+        var cytrus = JsonSerializer.Deserialize<Cytrus>(json);
+        if (cytrus is null)
         {
-            Log.Error("Failed to deserialize the JSON to initialize {TypeName}", typeof(CytrusData).Name);
+            Log.Error("Failed to deserialize the JSON to initialize {TypeName}", typeof(Cytrus).Name);
             return new();
         }
 
-        return data;
+        return cytrus;
     }
 
     /// <summary>

@@ -11,7 +11,7 @@ public sealed class CytrusGameChoiceProvider : IChoiceProvider
     {
         List<DiscordApplicationCommandOptionChoice> choices = [];
 
-        foreach (var game in CytrusWatcher.CytrusData.Games)
+        foreach (var game in CytrusWatcher.Cytrus.Games)
         {
             choices.Add(new(game.Key.Capitalize(), game.Key));
         }

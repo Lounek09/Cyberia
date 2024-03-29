@@ -103,7 +103,7 @@ public class ExtendStringTests
     {
         var value = "Bouftou";
 
-        var result = value.SplitByLength(0).ToList();
+        var result = value.SplitByLength(-1).ToList();
 
         Assert.AreEqual(1, result.Count);
         Assert.AreEqual(value, result[0]);

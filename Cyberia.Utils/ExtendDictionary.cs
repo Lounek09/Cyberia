@@ -6,28 +6,49 @@
 public static class ExtendDictionary
 {
     /// <summary>
-    /// Removes all (or the first) key-value pair(s) in the source dictionary that has the specified value.
+    /// Removes the first key-value pair in the source dictionary that has the specified value.
     /// </summary>
     /// <param name="source">The source dictionary.</param>
     /// <param name="value">The value to remove.</param>
-    /// <param name="firstOnly">If true, only the first key-value pair with the specified value is removed. Default is false.</param>
     /// <returns>True if at least one element was removed; otherwise, false.</returns>
-    public static bool RemoveByValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TValue value, bool firstOnly = false)
+    public static bool RemoveByValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TValue value)
     {
-        var success = false;
+        var keyToRemove = default(TKey);
+        var found = false;
 
+        foreach (var pair in source)
+        {
+            if (Equals(value, pair.Value))
+            {
+                keyToRemove = pair.Key;
+                found = true;
+                break;
+            }
+        }
+
+        if (found && keyToRemove is not null)
+        {
+            source.Remove(keyToRemove);
+        }
+
+        return found;
+    }
+
+    /// <summary>
+    /// Removes all key-value pairs in the source dictionary that has the specified value.
+    /// </summary>
+    /// <param name="source">The source dictionary.</param>
+    /// <param name="value">The value to remove.</param>
+    /// <returns>True if at least one element was removed; otherwise, false.</returns>
+    public static bool RemoveAllByValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TValue value)
+    {
         List<TKey> keysToRemove = [];
+
         foreach (var pair in source)
         {
             if (Equals(value, pair.Value))
             {
                 keysToRemove.Add(pair.Key);
-                success = true;
-
-                if (firstOnly)
-                {
-                    break;
-                }
             }
         }
 
@@ -36,6 +57,6 @@ public static class ExtendDictionary
             source.Remove(key);
         }
 
-        return success;
+        return keysToRemove.Count > 0;
     }
 }

@@ -16,13 +16,13 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
 
     private readonly LangType _type;
     private readonly LangLanguage _language;
-    private readonly LangDataCollection _langDataCollection;
+    private readonly LangRepository _langRepository;
 
     public LangsMessageBuilder(LangType type, LangLanguage language)
     {
         _type = type;
         _language = language;
-        _langDataCollection = LangsWatcher.Langs[(type, language)];
+        _langRepository = LangsWatcher.LangRepositories[(type, language)];
     }
 
     public static LangsMessageBuilder? Create(int version, string[] parameters)
@@ -46,21 +46,11 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
     {
         var message = new T()
-            .AddEmbed(await EmbedBuilder());
+            .AddEmbed(await EmbedBuilder())
+            .AddComponents(TypeSelectBuilder())
+            .AddComponents(LanguageSelectBuilder());
 
-        var select = Select1Builder();
-        if (select.Options.Count > 0)
-        {
-            message.AddComponents(select);
-        }
-
-        var select2 = Select2Builder();
-        if (select2.Options.Count > 0)
-        {
-            message.AddComponents(select2);
-        }
-
-        return (T)message;
+        return (T)message; 
     }
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
@@ -68,20 +58,20 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Langs")
             .WithTitle($"Langs {_type} en {_language}");
 
-        if (_langDataCollection.Count > 0)
+        if (_langRepository.Langs.Count > 0)
         {
             StringBuilder descriptionBuilder = new();
 
             descriptionBuilder.Append("Dernière modification le : ");
-            descriptionBuilder.Append(_langDataCollection.GetDateTimeSinceLastChange().ToString("dd/MM/yyyy HH:mm"));
+            descriptionBuilder.Append(_langRepository.LastChange.ToString("dd/MM/yyyy HH:mm"));
             descriptionBuilder.Append("+00:00\n");
-            descriptionBuilder.Append(Formatter.MaskedUrl(Formatter.Bold(_langDataCollection.GetVersionFileName()), new Uri(_langDataCollection.GetVersionFileUrl())));
+            descriptionBuilder.Append(Formatter.MaskedUrl(Formatter.Bold(_langRepository.VersionFileName), new Uri(LangsWatcher.BASE_URL + _langRepository.VersionFileRoute)));
             descriptionBuilder.Append('\n');
 
-            foreach (var langData in _langDataCollection)
+            foreach (var langData in _langRepository.Langs)
             {
                 descriptionBuilder.Append("- ");
-                descriptionBuilder.Append(Formatter.MaskedUrl(langData.Name, new Uri(langData.GetFileUrl())));
+                descriptionBuilder.Append(Formatter.MaskedUrl(langData.Name, new Uri(LangsWatcher.BASE_URL + langData.FileRoute)));
                 descriptionBuilder.Append(' ');
                 descriptionBuilder.Append(Formatter.InlineCode(langData.Version.ToString()));
                 descriptionBuilder.Append('\n');
@@ -91,35 +81,27 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         }
         else
         {
-            embed.WithDescription("void (°~°)");
+            embed.WithDescription($"Aucun lang {Formatter.Bold(_type.ToString())} en {Formatter.Bold(_language.ToString())} n'a été trouvé");
         }
 
         return Task.FromResult(embed);
     }
 
-    private DiscordSelectComponent Select1Builder()
+    private DiscordSelectComponent TypeSelectBuilder()
     {
-        List<DiscordSelectComponentOption> options = [];
-
-        var types = Enum.GetValues<LangType>();
-        for (var i = 0; i < types.Length && i < 25; i++)
-        {
-            options.Add(new(types[i].ToString(), GetPacket(types[i], _language), isDefault: (int)_type == i));
-        }
-
-        return new(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne un type pour l'afficher", options);
+        return new DiscordSelectComponent(
+            InteractionManager.SelectComponentPacketBuilder(0),
+            "Sélectionne un type pour l'afficher",
+            Enum.GetValues<LangType>()
+                .Select(x => new DiscordSelectComponentOption(x.ToString(), GetPacket(x, _language), isDefault: x == _type)));
     }
 
-    private DiscordSelectComponent Select2Builder()
+    private DiscordSelectComponent LanguageSelectBuilder()
     {
-        List<DiscordSelectComponentOption> options = [];
-
-        var languages = Enum.GetValues<LangLanguage>();
-        for (var i = 0; i < languages.Length && i < 25; i++)
-        {
-            options.Add(new(languages[i].ToString(), GetPacket(_type, languages[i]), isDefault: (int)_language == i));
-        }
-
-        return new(InteractionManager.SelectComponentPacketBuilder(1), "Sélectionne une langue pour l'afficher", options);
+        return new DiscordSelectComponent(
+            InteractionManager.SelectComponentPacketBuilder(1),
+            "Sélectionne une langue pour l'afficher",
+            Enum.GetValues<LangLanguage>()
+                .Select(x => new DiscordSelectComponentOption(x.ToString(), GetPacket(_type, x), isDefault: x == _language)));
     }
 }

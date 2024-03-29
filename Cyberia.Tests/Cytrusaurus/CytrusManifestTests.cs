@@ -4,9 +4,6 @@ using Cyberia.Cytrusaurus.Models.FlatBuffers;
 
 using Google.FlatBuffers;
 
-using Moq;
-using Moq.Protected;
-
 using System.Net;
 
 namespace Cyberia.Tests.Cytrusaurus;
@@ -14,15 +11,12 @@ namespace Cyberia.Tests.Cytrusaurus;
 [TestClass]
 public sealed class CytrusManifestTests
 {
-    private Mock<HttpMessageHandler> _mockHttpMessageHandler = default!;
     private Manifest _currentManifest = default!;
     private Manifest _modelManifest = default!;
 
     [TestInitialize]
     public void Initialize()
     {
-        _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
-
         var bytes = File.ReadAllBytes(SharedData.CURRENT_MANIFEST_PATH);
         ByteBuffer buffer = new(bytes);
         _currentManifest = Manifest.GetRootAsManifest(buffer);
@@ -47,7 +41,7 @@ public sealed class CytrusManifestTests
     #region GetManifestAsync
 
     [TestMethod]
-    public async Task GetManifestAsync_ReturnsManifest_WhenRequestIsSuccessful()
+    public async Task GetManifestAsync_WhenRequestIsSuccessful_ReturnsManifest()
     {
         var game = "retro";
         var platform = CytrusGame.WINDOWS_PLATFORM;
@@ -55,19 +49,15 @@ public sealed class CytrusManifestTests
         var version = "6.0_1.42.1.3205.227-d31f250";
         var bytes = File.ReadAllBytes(SharedData.CURRENT_MANIFEST_PATH);
 
-        _mockHttpMessageHandler
-            .Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
-                ItExpr.IsAny<HttpRequestMessage>(),
-                ItExpr.IsAny<CancellationToken>())
-            .ReturnsAsync(new HttpResponseMessage()
+        var mock = SharedData.SetupMockHttpMessageHandlerForSuccessfullResponse(
+            new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.OK,
                 Content = new ByteArrayContent(bytes)
-            });
+            }
+        );
 
-        CytrusWatcher.HttpClient = new(_mockHttpMessageHandler.Object)
+        CytrusWatcher.HttpClient = new(mock.Object)
         {
             BaseAddress = new Uri(CytrusWatcher.BASE_URL)
         };
@@ -78,25 +68,21 @@ public sealed class CytrusManifestTests
     }
 
     [TestMethod]
-    public async Task GetManifestAsync_ReturnsNull_WhenRequestFails()
+    public async Task GetManifestAsync_WhenRequestFails_ReturnsNull()
     {
         var game = "retro";
         var platform = CytrusGame.WINDOWS_PLATFORM;
         var release = CytrusGame.MAIN_RELEASE;
         var version = "6.0_1.42.1.3205.227-d31f250";
 
-        _mockHttpMessageHandler
-            .Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
-                ItExpr.IsAny<HttpRequestMessage>(),
-                ItExpr.IsAny<CancellationToken>())
-            .ReturnsAsync(new HttpResponseMessage()
+        var mock = SharedData.SetupMockHttpMessageHandlerForSuccessfullResponse(
+            new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.InternalServerError
-            });
+            }
+        );
 
-        CytrusWatcher.HttpClient = new HttpClient(_mockHttpMessageHandler.Object)
+        CytrusWatcher.HttpClient = new HttpClient(mock.Object)
         {
             BaseAddress = new Uri(CytrusWatcher.BASE_URL)
         };
@@ -111,29 +97,13 @@ public sealed class CytrusManifestTests
     #region Diff
 
     [TestMethod]
-    public void Diff_ReturnsCorrectDifferences()
+    public void Diff_WhithDifferentManifest_ReturnsCorrectDifferences()
     {
-        var diff = CytrusManifest.Diff(_currentManifest, _modelManifest);
+        var result = CytrusManifest.Diff(_currentManifest, _modelManifest);
 
-        var expected = """
-            // CLASSIC \\
-            - resources/app/retroclient/clips/items/15/492.swf
-            + resources/app/retroclient/clips/items/69/492.swf
+        var expected = File.ReadAllText(SharedData.MANIFEST_DIFF_PATH);
 
-            // REMASTERED \\
-            - resources/app/retroclient/clips/items/15/492.swf
-            + resources/app/retroclient/clips/items/69/492.swf
-
-            // WINDOWS \\
-            ~ Dofus Retro.exe
-            ~ resources/app/main.jsc (13006296 -> 13000992)
-            ~ resources/app/retroclient/js/D1Chat.js (640764 -> 629735)
-            ~ resources/app/retroclient/js/D1Console.js (435697 -> 420482)
-            ~ resources/app/retroclient/js/D1ElectronLauncher.js (605254 -> 608267)
-
-            """;
-
-        Assert.AreEqual(expected, diff);
+        Assert.AreEqual(expected, result);
     }
 
     #endregion
@@ -159,7 +129,7 @@ public sealed class CytrusManifestTests
     #region DiffFragment
 
     [TestMethod]
-    public void DiffFragment_ReturnsCorrectDifferences()
+    public void DiffFragment_WithDifferentFragment_ReturnsCorrectDifferences()
     {
         var currentFragment = _currentManifest.Fragments(0)!.Value;
         var modelFragment = _modelManifest.Fragments(0)!.Value;

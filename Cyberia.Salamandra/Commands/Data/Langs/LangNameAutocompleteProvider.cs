@@ -11,7 +11,7 @@ public sealed class LangNameAutocompleteProvider : AutocompleteProvider
     public override Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
     {
         var value = ctx.OptionValue.ToString();
-        if (value is null || value.Length < MIN_LENGTH_AUTOCOMPLETE)
+        if (value is null)
         {
             return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
         }
@@ -28,16 +28,13 @@ public sealed class LangNameAutocompleteProvider : AutocompleteProvider
             return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
         }
 
-        List<DiscordAutoCompleteChoice> choices = [];
-
         var type = Enum.Parse<LangType>(typeStr);
         var language = Enum.Parse<LangLanguage>(languageStr);
 
-        foreach (var langData in LangsWatcher.Langs[(type, language)].GetLangsByName(value).Take(MAX_AUTOCOMPLETE_CHOICE))
-        {
-            choices.Add(new(langData.Name, langData.Name));
-        }
-
-        return Task.FromResult(choices.AsEnumerable());
+        return Task.FromResult(
+            LangsWatcher.LangRepositories[(type, language)]
+                .GetAllByName(value)
+                .Take(MAX_AUTOCOMPLETE_CHOICE)
+                .Select(x => new DiscordAutoCompleteChoice(x.Name, x.Name)));
     }
 }
