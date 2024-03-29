@@ -1285,6 +1285,24 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ne pas être dans la zone ≠ #1.
+        /// </summary>
+        public static string Criterion_MapArea_Different {
+            get {
+                return ResourceManager.GetString("Criterion.MapArea.Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etre dans la zone #1.
+        /// </summary>
+        public static string Criterion_MapArea_Equal {
+            get {
+                return ResourceManager.GetString("Criterion.MapArea.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nombre de joueurs sur la map #1 (#2) ≠ #3.
         /// </summary>
         public static string Criterion_MapPlayer_Different {
@@ -1321,7 +1339,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sous-zone ≠ #1.
+        ///   Looks up a localized string similar to Ne pas être dans la sous-zone ≠ #1.
         /// </summary>
         public static string Criterion_MapSubArea_Different {
             get {
@@ -1330,7 +1348,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sous-zone = #1.
+        ///   Looks up a localized string similar to Etre dans la sous-zone #1.
         /// </summary>
         public static string Criterion_MapSubArea_Equal {
             get {

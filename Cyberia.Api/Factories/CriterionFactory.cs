@@ -52,6 +52,7 @@ public static class CriterionFactory
             { "Pm", MapCriterion.Create },
             { "PN", NameCriterion.Create },
             { "Pn", SlotCriterion.Create },
+            { "Po", MapAreaCriterion.Create },
             { "PO", ItemCriterion.Create },
             { "PP", AlignmentRankCriterion.Create },
             { "PR", MaritalStatusCriterion.Create },
