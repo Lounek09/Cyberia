@@ -526,7 +526,7 @@
     <value>Etre sur la map #1 (#2)</value>
   </data>
   <data name="Criterion.MapArea.Different" xml:space="preserve">
-    <value>Ne pas être dans la zone ≠ #1</value>
+    <value>Ne pas être dans la zone #1</value>
   </data>
   <data name="Criterion.MapArea.Equal" xml:space="preserve">
     <value>Etre dans la zone #1</value>
@@ -544,7 +544,7 @@
     <value>Nombre de joueurs sur la map #1 (#2) &gt; #3</value>
   </data>
   <data name="Criterion.MapSubArea.Different" xml:space="preserve">
-    <value>Ne pas être dans la sous-zone ≠ #1</value>
+    <value>Ne pas être dans la sous-zone #1</value>
   </data>
   <data name="Criterion.MapSubArea.Equal" xml:space="preserve">
     <value>Etre dans la sous-zone #1</value>

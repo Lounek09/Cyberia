@@ -1285,7 +1285,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être dans la zone ≠ #1.
+        ///   Looks up a localized string similar to Ne pas être dans la zone #1.
         /// </summary>
         public static string Criterion_MapArea_Different {
             get {
@@ -1339,7 +1339,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être dans la sous-zone ≠ #1.
+        ///   Looks up a localized string similar to Ne pas être dans la sous-zone #1.
         /// </summary>
         public static string Criterion_MapSubArea_Different {
             get {
