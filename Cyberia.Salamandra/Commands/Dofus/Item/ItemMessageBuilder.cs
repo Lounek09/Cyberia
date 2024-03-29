@@ -182,7 +182,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             yield return CraftComponentsBuilder.CraftButtonBuilder(_craftData, _qte);
         }
 
-        if (_itemStatsData is not null && _itemStatsData.Effects.OfType<IRuneGeneratorEffect>().Any())
+        if (_itemStatsData is not null && _itemStatsData.Effects.Any(x => x is IRuneGeneratorEffect))
         {
             yield return RuneComponentsBuilder.RuneItemButtonBuilder(_itemData, _qte);
         }

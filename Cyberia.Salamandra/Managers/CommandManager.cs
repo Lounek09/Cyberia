@@ -26,11 +26,11 @@ public static class CommandManager
         switch (e.Exception)
         {
             case SlashExecutionChecksFailedException checkFailedException
-            when checkFailedException.FailedChecks.OfType<SlashRequireOwnerAttribute>().Any():
+            when checkFailedException.FailedChecks.Any(x => x is SlashRequireOwnerAttribute):
                 await e.Context.CreateResponseAsync("Cette commande n'est utilisable que par le propriétaire du bot.", true);
                 return;
             case SlashExecutionChecksFailedException checkFailedException
-            when checkFailedException.FailedChecks.OfType<SlashRequireGuildAttribute>().Any():
+            when checkFailedException.FailedChecks.Any(x => x is SlashRequireGuildAttribute):
                 await e.Context.CreateResponseAsync("Cette commande n'est utilisable que dans un serveur.", true);
                 return;
             case SlashExecutionChecksFailedException checkFailedException:
