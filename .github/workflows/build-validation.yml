@@ -27,7 +27,7 @@ jobs:
         run: dotnet build -c Release
 
       - name: Add execution right on Flare
-        run: ls -la
+        run: find . -type d -name "flare" -exec chmod -R 755 {} +
 
       - name: Test
         run: dotnet test --no-build -c Release -l "console;verbosity=detailed"
