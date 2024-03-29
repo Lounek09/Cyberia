@@ -75,7 +75,8 @@ public sealed class SearchCommandModule : ApplicationCommandModule
 
         }
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, $"Search effect {id} in {where}")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
+            .WithTitle($"Search effect {id} in {where}")
             .WithDescription(descriptionBuilder.ToString().WithMaxLength(4000));
 
         await ctx.CreateResponseAsync(embed);

@@ -99,7 +99,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
         if (_itemData.Criteria.Count > 0)
         {
-            embed.AddCriteriaFields(_itemData.Criteria);
+            embed.AddCriteriaFields("Conditions : ", _itemData.Criteria);
         }
 
         if (_itemData.WeaponData is not null)

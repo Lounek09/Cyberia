@@ -53,10 +53,10 @@ public static class ExtendDiscordEmbedBuilder
         return embed.AddFields(name, GetEffectsParse(effects, x => Formatter.Bold(Formatter.Sanitize(x))), inline);
     }
 
-    public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, CriteriaCollection criteria, bool inline = false)
+    public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, string name, CriteriaCollection criteria, bool inline = false)
     {
         var criteriaParse = GetCriteriaParse(criteria, x => Formatter.Bold(Formatter.Sanitize(x)));
-        return embed.AddFields("Conditions : ", criteriaParse, inline);
+        return embed.AddFields(name, criteriaParse, inline);
     }
 
     public static DiscordEmbedBuilder AddQuestObjectiveFields(this DiscordEmbedBuilder embed, IEnumerable<IQuestObjective> questObjectives, bool inline = false)
