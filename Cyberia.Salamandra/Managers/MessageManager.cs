@@ -2,31 +2,37 @@
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
+using System.Collections.Frozen;
+
 namespace Cyberia.Salamandra.Managers;
 
 public static class MessageManager
 {
-    private static readonly Dictionary<string, string> _hiddenCommands = new()
+    private static readonly FrozenDictionary<string, string> _hiddenCommands = new Dictionary<string, string>()
     {
-        { "tppttp", "onTotProut.mp3" },
-        { "fppffp", "onFranckyPassion.mp3" },
-        { "wizz", "onWizz.mp3" },
-        { "hncabot", "onBelge.mp3" },
-        { "foot2rue", "onFoot2Rue.mp4" },
-        { "monkeychan", "onMonkeyChan.mp4" }
-    };
+        { "tppttp", Path.Join(Bot.OUTPUT_PATH, "onTotProut.mp3") },
+        { "fppffp", Path.Join(Bot.OUTPUT_PATH, "onFranckyPassion.mp3") },
+        { "wizz", Path.Join(Bot.OUTPUT_PATH, "onWizz.mp3") },
+        { "hncabot", Path.Join(Bot.OUTPUT_PATH, "onBelge.mp3") },
+        { "foot2rue", Path.Join(Bot.OUTPUT_PATH, "onFoot2Rue.mp4") },
+        { "monkeychan", Path.Join(Bot.OUTPUT_PATH, "onMonkeyChan.mp4") }
+    }.ToFrozenDictionary();
 
     public static async Task OnMessageCreated(DiscordClient _, MessageCreateEventArgs e)
     {
-        foreach (var hiddenCommand in _hiddenCommands)
-        {
-            var content = e.Message.Content;
+        var content = e.Message.Content;
 
-            if (!string.IsNullOrEmpty(content) &&
-                content.EndsWith(hiddenCommand.Key))
+        if (!string.IsNullOrEmpty(content))
+        {
+            var lastSpaceIndex = content.LastIndexOf(' ');
+            var lastWord = lastSpaceIndex > -1
+                ? content[(lastSpaceIndex + 1)..].ToString()
+                : content;
+
+            if (_hiddenCommands.TryGetValue(lastWord, out var filePath))
             {
                 await DeleteMessage(e.Message);
-                await SendFile(e.Channel, $"{Bot.OUTPUT_PATH}/{hiddenCommand.Value}");
+                await SendFile(e.Channel, filePath);
             }
         }
     }
