@@ -9,6 +9,7 @@ public sealed class SpeakingItemsData
     : IDofusData
 {
     private const string FILE_NAME = "speakingitems.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("SIM")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SpeakingItemData>))]
@@ -22,9 +23,9 @@ public sealed class SpeakingItemsData
         SpeakingItems = FrozenDictionary<int, SpeakingItemData>.Empty;
     }
 
-    internal static SpeakingItemsData Load()
+    internal static async Task<SpeakingItemsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<SpeakingItemsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<SpeakingItemsData>(FILE_PATH);
     }
 
     public SpeakingItemData? GetSpeakingItemData(int id)

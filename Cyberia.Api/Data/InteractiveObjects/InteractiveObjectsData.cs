@@ -9,6 +9,7 @@ public sealed class InteractiveObjectsData
     : IDofusData
 {
     private const string FILE_NAME = "interactiveobjects.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("IO.g")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, InteractiveObjectGfxData>))]
@@ -25,9 +26,9 @@ public sealed class InteractiveObjectsData
         InteractiveObjects = FrozenDictionary<int, InteractiveObjectData>.Empty;
     }
 
-    internal static InteractiveObjectsData Load()
+    internal static async Task<InteractiveObjectsData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<InteractiveObjectsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<InteractiveObjectsData>(FILE_PATH);
 
         foreach (var interactiveObjectData in data.InteractiveObjects.Values)
         {

@@ -9,6 +9,7 @@ public class PetsData
     : IDofusData
 {
     private const string FILE_NAME = "pets.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("PET")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, PetData>))]
@@ -20,9 +21,9 @@ public class PetsData
         Pets = FrozenDictionary<int, PetData>.Empty;
     }
 
-    internal static PetsData Load()
+    internal static async Task<PetsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<PetsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<PetsData>(FILE_PATH);
     }
 
     public PetData? GetPetDataByItemId(int id)

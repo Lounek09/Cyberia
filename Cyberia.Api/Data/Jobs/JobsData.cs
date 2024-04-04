@@ -9,6 +9,7 @@ public sealed class JobsData
     : IDofusData
 {
     private const string FILE_NAME = "jobs.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("J")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, JobData>))]
@@ -20,9 +21,9 @@ public sealed class JobsData
         Jobs = FrozenDictionary<int, JobData>.Empty;
     }
 
-    internal static JobsData Load()
+    internal static async Task<JobsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<JobsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<JobsData>(FILE_PATH);
     }
 
     public JobData? GetJobDataById(int id)

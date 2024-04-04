@@ -9,6 +9,7 @@ public sealed class RidesData
     : IDofusData
 {
     private const string FILE_NAME = "rides.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("RI")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, RideData>))]
@@ -25,9 +26,9 @@ public sealed class RidesData
         RideAbilities = FrozenDictionary<int, RideAbilityData>.Empty;
     }
 
-    internal static RidesData Load()
+    internal static async Task<RidesData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<RidesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<RidesData>(FILE_PATH);
     }
 
     public RideData? GetRideDataById(int id)

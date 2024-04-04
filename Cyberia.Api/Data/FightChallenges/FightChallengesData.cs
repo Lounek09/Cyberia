@@ -9,6 +9,7 @@ public sealed class FightChallengesData
     : IDofusData
 {
     private const string FILE_NAME = "fightChallenge.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("FC")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, FightChallengeData>))]
@@ -20,9 +21,9 @@ public sealed class FightChallengesData
         FightChallenges = FrozenDictionary<int, FightChallengeData>.Empty;
     }
 
-    internal static FightChallengesData Load()
+    internal static async Task<FightChallengesData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<FightChallengesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<FightChallengesData>(FILE_PATH);
     }
 
     public FightChallengeData? GetFightChallenge(int id)

@@ -11,6 +11,8 @@ public sealed class HousesData
     : IDofusData
 {
     private const string FILE_NAME = "houses.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private static readonly string CUSTOM_FILE_PATH = Path.Join(DofusApi.CUSTOM_PATH, FILE_NAME);
 
     [JsonPropertyName("H.h")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, HouseData>))]
@@ -31,10 +33,10 @@ public sealed class HousesData
         HousesIndoorSkillsId = [];
     }
 
-    internal static HousesData Load()
+    internal static async Task<HousesData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<HousesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        var customData = Datacenter.LoadDataFromFile<HousesCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<HousesData>(FILE_PATH);
+        var customData = await Datacenter.LoadDataAsync<HousesCustomData>(CUSTOM_FILE_PATH);
 
         foreach (var houseCustomData in customData.HousesCustom)
         {

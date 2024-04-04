@@ -10,6 +10,8 @@ public sealed class BreedsData
     : IDofusData
 {
     private const string FILE_NAME = "classes.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private static readonly string CUSTOM_FILE_PATH = Path.Join(DofusApi.CUSTOM_PATH, FILE_NAME);
 
     [JsonPropertyName("G")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, BreedData>))]
@@ -21,10 +23,10 @@ public sealed class BreedsData
         Breeds = FrozenDictionary<int, BreedData>.Empty;
     }
 
-    internal static BreedsData Load()
+    internal static async Task<BreedsData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<BreedsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        var customData = Datacenter.LoadDataFromFile<BreedsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<BreedsData>(FILE_PATH);
+        var customData = await Datacenter.LoadDataAsync<BreedsCustomData>(CUSTOM_FILE_PATH);
 
         foreach (var breedCustomData in customData.Breeds)
         {

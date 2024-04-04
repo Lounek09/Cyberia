@@ -10,6 +10,8 @@ public sealed class ItemsStatsData
     : IDofusData
 {
     private const string FILE_NAME = "itemstats.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private static readonly string CUSTOM_FILE_PATH = Path.Join(DofusApi.CUSTOM_PATH, FILE_NAME);
 
     [JsonPropertyName("ISTA")]
     [JsonInclude]
@@ -25,10 +27,10 @@ public sealed class ItemsStatsData
         ItemsStats = FrozenDictionary<int, ItemStatsData>.Empty;
     }
 
-    internal static ItemsStatsData Load()
+    internal static async Task<ItemsStatsData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<ItemsStatsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        var customData = Datacenter.LoadDataFromFile<ItemsStatsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<ItemsStatsData>(FILE_PATH);
+        var customData = await Datacenter.LoadDataAsync<ItemsStatsCustomData>(CUSTOM_FILE_PATH);
 
         foreach (var itemStatsCustomData in customData.ItemsStatsCustom)
         {

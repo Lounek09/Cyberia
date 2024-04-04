@@ -9,6 +9,7 @@ public sealed class IncarnationsData
     : IDofusData
 {
     private const string FILE_NAME = "incarnation.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("INCA")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, IncarnationData>))]
@@ -20,9 +21,9 @@ public sealed class IncarnationsData
         Incarnations = FrozenDictionary<int, IncarnationData>.Empty;
     }
 
-    internal static IncarnationsData Load()
+    internal static async Task<IncarnationsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<IncarnationsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<IncarnationsData>(FILE_PATH);
     }
 
     public IncarnationData? GetIncarnationDataByItemId(int id)

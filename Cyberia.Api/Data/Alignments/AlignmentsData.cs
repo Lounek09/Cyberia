@@ -11,6 +11,7 @@ public sealed class AlignmentsData
     : IDofusData
 {
     private const string FILE_NAME = "alignment.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("A.a")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentData>))]
@@ -62,9 +63,9 @@ public sealed class AlignmentsData
         AlignmentSpecializations = FrozenDictionary<int, AlignmentSpecializationData>.Empty;
     }
 
-    internal static AlignmentsData Load()
+    internal static async Task<AlignmentsData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<AlignmentsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<AlignmentsData>(FILE_PATH);
 
         foreach (var alignmentSpecializationData in data.AlignmentSpecializations)
         {

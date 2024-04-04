@@ -6,6 +6,7 @@ public sealed class PvpData
     : IDofusData
 {
     private const string FILE_NAME = "pvp.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("PP.hp")]
     public IReadOnlyList<int> HonnorPointThresholds { get; init; }
@@ -23,8 +24,8 @@ public sealed class PvpData
         PvpGrades = [];
     }
 
-    internal static PvpData Load()
+    internal static async Task<PvpData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<PvpData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<PvpData>(FILE_PATH);
     }
 }

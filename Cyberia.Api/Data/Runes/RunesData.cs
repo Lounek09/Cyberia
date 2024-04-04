@@ -9,6 +9,7 @@ public sealed class RunesData
     : IDofusData
 {
     private const string FILE_NAME = "runes.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("RU")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, RuneData>))]
@@ -20,9 +21,9 @@ public sealed class RunesData
         Runes = FrozenDictionary<int, RuneData>.Empty;
     }
 
-    internal static RunesData Load()
+    internal static async Task<RunesData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<RunesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<RunesData>(FILE_PATH);
     }
 
     public RuneData? GetRuneDataById(int id)

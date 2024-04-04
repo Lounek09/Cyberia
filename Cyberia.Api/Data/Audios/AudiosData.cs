@@ -9,6 +9,7 @@ public sealed class AudiosData
     : IDofusData
 {
     private const string FILE_NAME = "audio.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("AUMC")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AudioMusicContentData>))]
@@ -45,9 +46,9 @@ public sealed class AudiosData
         AudioEnvironments = FrozenDictionary<int, AudioEnvironmentData>.Empty;
     }
 
-    internal static AudiosData Load()
+    internal static async Task<AudiosData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<AudiosData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<AudiosData>(FILE_PATH);
 
         foreach (var audioMusicData in data.AudioMusics.Values)
         {

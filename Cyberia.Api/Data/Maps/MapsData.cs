@@ -9,6 +9,7 @@ public sealed class MapsData
     : IDofusData
 {
     private const string FILE_NAME = "maps.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("MA.m")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapData>))]
@@ -35,9 +36,9 @@ public sealed class MapsData
         MapSubAreas = FrozenDictionary<int, MapSubAreaData>.Empty;
     }
 
-    internal static MapsData Load()
+    internal static async Task<MapsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<MapsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<MapsData>(FILE_PATH);
     }
 
     public MapData? GetMapDataById(int id)

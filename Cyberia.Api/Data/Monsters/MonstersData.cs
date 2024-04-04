@@ -10,6 +10,8 @@ public sealed class MonstersData
     : IDofusData
 {
     private const string FILE_NAME = "monsters.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private static readonly string CUSTOM_FILE_PATH = Path.Join(DofusApi.CUSTOM_PATH, FILE_NAME);
 
     [JsonPropertyName("MSR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MonsterSuperRaceData>))]
@@ -31,10 +33,10 @@ public sealed class MonstersData
         Monsters = FrozenDictionary<int, MonsterData>.Empty;
     }
 
-    internal static MonstersData Load()
+    internal static async Task<MonstersData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<MonstersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        var customData = Datacenter.LoadDataFromFile<MonstersCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<MonstersData>(FILE_PATH);
+        var customData = await Datacenter.LoadDataAsync<MonstersCustomData>(CUSTOM_FILE_PATH);
 
         foreach (var pair in data.Monsters)
         {

@@ -14,7 +14,7 @@ public sealed class ReloadCommandModule : ApplicationCommandModule
     {
         await ctx.DeferAsync();
 
-        DofusApi.Reload();
+        await DofusApi.ReloadAsync();
 
         await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Api reload !"));
     }

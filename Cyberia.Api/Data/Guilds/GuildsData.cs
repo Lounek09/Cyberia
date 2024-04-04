@@ -6,6 +6,7 @@ public sealed class GuildsData
     : IDofusData
 {
     private const string FILE_NAME = "guilds.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("GU.b")]
     public GuildData Guild { get; init; }
@@ -16,8 +17,8 @@ public sealed class GuildsData
         Guild = new();
     }
 
-    internal static GuildsData Load()
+    internal static async Task<GuildsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<GuildsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<GuildsData>(FILE_PATH);
     }
 }

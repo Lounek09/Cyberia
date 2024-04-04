@@ -9,6 +9,7 @@ public sealed class TTGData
     : IDofusData
 {
     private const string FILE_NAME = "ttg.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("TTG.c")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGCardData>))]
@@ -30,9 +31,9 @@ public sealed class TTGData
         TTGFamilies = FrozenDictionary<int, TTGFamilyData>.Empty;
     }
 
-    internal static TTGData Load()
+    internal static async Task<TTGData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<TTGData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<TTGData>(FILE_PATH);
     }
 
     public TTGCardData? GetTTGCardDataById(int id)

@@ -9,6 +9,7 @@ public sealed class HintsData
     : IDofusData
 {
     private const string FILE_NAME = "hints.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("HIC")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, HintCategoryData>))]
@@ -24,9 +25,9 @@ public sealed class HintsData
         Hints = [];
     }
 
-    internal static HintsData Load()
+    internal static async Task<HintsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<HintsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<HintsData>(FILE_PATH);
     }
 
     public HintCategoryData? GetHintCategory(int id)

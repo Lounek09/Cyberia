@@ -9,6 +9,7 @@ public sealed class TaxCollectorNamesData
     : IDofusData
 {
     private const string FILE_NAME = "names.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("NF.n")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TaxCollectorLastNameData>))]
@@ -25,9 +26,9 @@ public sealed class TaxCollectorNamesData
         TaxCollectorFirstNames = FrozenDictionary<int, TaxCollectorFirstNameData>.Empty;
     }
 
-    internal static TaxCollectorNamesData Load()
+    internal static async Task<TaxCollectorNamesData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<TaxCollectorNamesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<TaxCollectorNamesData>(FILE_PATH);
     }
 
     public string GetRandomTaxCollectorName()

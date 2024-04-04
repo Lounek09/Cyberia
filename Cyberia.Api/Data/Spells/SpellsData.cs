@@ -9,6 +9,7 @@ public sealed class SpellsData
     : IDofusData
 {
     private const string FILE_NAME = "spells.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("S")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SpellData>))]
@@ -20,9 +21,9 @@ public sealed class SpellsData
         Spells = FrozenDictionary<int, SpellData>.Empty;
     }
 
-    internal static SpellsData Load()
+    internal static async Task<SpellsData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<SpellsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<SpellsData>(FILE_PATH);
 
         foreach (var pair in data.Spells)
         {

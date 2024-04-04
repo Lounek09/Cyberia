@@ -9,6 +9,7 @@ public sealed class TitlesData
     : IDofusData
 {
     private const string FILE_NAME = "titles.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("PT")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TitleData>))]
@@ -20,9 +21,9 @@ public sealed class TitlesData
         Titles = FrozenDictionary<int, TitleData>.Empty;
     }
 
-    internal static TitlesData Load()
+    internal static async Task<TitlesData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<TitlesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<TitlesData>(FILE_PATH);
     }
 
     public TitleData? GetTitleDataById(int id)

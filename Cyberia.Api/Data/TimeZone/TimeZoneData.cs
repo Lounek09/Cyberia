@@ -8,6 +8,7 @@ public sealed class TimeZoneData
     : IDofusData
 {
     private const string FILE_NAME = "timezones.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("T.mspd")]
     public int MilisecondPerDay { get; set; }
@@ -28,9 +29,9 @@ public sealed class TimeZoneData
         StartDayOfMonths = new Dictionary<int, string>();
     }
 
-    internal static TimeZoneData Load()
+    internal static async Task<TimeZoneData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<TimeZoneData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<TimeZoneData>(FILE_PATH);
     }
 
     public string GetMonth(int dayOfYear)

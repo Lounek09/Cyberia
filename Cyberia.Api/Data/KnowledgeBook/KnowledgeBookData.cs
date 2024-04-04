@@ -9,6 +9,7 @@ public sealed class KnowledgeBookData
     : IDofusData
 {
     private const string FILE_NAME = "kb.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("KBC")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, KnowledgeBookCatagoryData>))]
@@ -35,9 +36,9 @@ public sealed class KnowledgeBookData
         KnowledgeBookTriggers = FrozenDictionary<int, KnowledgeBookTriggerData>.Empty;
     }
 
-    internal static KnowledgeBookData Load()
+    internal static async Task<KnowledgeBookData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<KnowledgeBookData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<KnowledgeBookData>(FILE_PATH);
     }
 
     public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryDataById(int id)

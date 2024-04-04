@@ -9,6 +9,7 @@ public sealed class DialogsData
     : IDofusData
 {
     private const string FILE_NAME = "dialog.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("D.q")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, DialogQuestionData>))]
@@ -25,9 +26,9 @@ public sealed class DialogsData
         DialogAnswers = FrozenDictionary<int, DialogAnswerData>.Empty;
     }
 
-    internal static DialogsData Load()
+    internal static async Task<DialogsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<DialogsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<DialogsData>(FILE_PATH);
     }
 
     public DialogQuestionData? GetDialogQuestionDataById(int id)

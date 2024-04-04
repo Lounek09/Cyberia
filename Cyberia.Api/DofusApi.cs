@@ -12,18 +12,18 @@ public static class DofusApi
 
     internal static HttpClient HttpClient { get; private set; } = default!;
 
-    public static void Initialize(ApiConfig config)
+    public static async Task InitializeAsync(ApiConfig config)
     {
         Directory.CreateDirectory(OUTPUT_PATH);
         Directory.CreateDirectory(CUSTOM_PATH);
 
         Config = config;
         HttpClient = new();
-        Datacenter = new();
+        Datacenter = await Datacenter.LoadAsync();
     }
 
-    public static void Reload()
+    public static async Task ReloadAsync()
     {
-        Datacenter = new();
+        Datacenter = await Datacenter.LoadAsync();
     }
 }

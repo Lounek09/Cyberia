@@ -9,6 +9,7 @@ public sealed class NpcsData
     : IDofusData
 {
     private const string FILE_NAME = "npc.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("N.a")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, NpcActionData>))]
@@ -25,9 +26,9 @@ public sealed class NpcsData
         Npcs = FrozenDictionary<int, NpcData>.Empty;
     }
 
-    internal static NpcsData Load()
+    internal static async Task<NpcsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<NpcsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<NpcsData>(FILE_PATH);
     }
 
     public NpcActionData? GetNpcActionDataById(int id)

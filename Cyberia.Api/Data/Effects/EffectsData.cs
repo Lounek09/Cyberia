@@ -9,6 +9,7 @@ public sealed class EffectsData
     : IDofusData
 {
     private const string FILE_NAME = "effects.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("E")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, EffectData>))]
@@ -20,9 +21,9 @@ public sealed class EffectsData
         Effects = FrozenDictionary<int, EffectData>.Empty;
     }
 
-    internal static EffectsData Load()
+    internal static async Task<EffectsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<EffectsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<EffectsData>(FILE_PATH);
     }
 
     public EffectData? GetEffectDataById(int id)

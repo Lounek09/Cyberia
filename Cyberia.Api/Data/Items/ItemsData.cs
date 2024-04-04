@@ -9,6 +9,7 @@ public sealed class ItemsData
     : IDofusData
 {
     private const string FILE_NAME = "items.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("I.us")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemUnicStringData>))]
@@ -40,9 +41,9 @@ public sealed class ItemsData
         Items = FrozenDictionary<int, ItemData>.Empty;
     }
 
-    internal static ItemsData Load()
+    internal static async Task<ItemsData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<ItemsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<ItemsData>(FILE_PATH);
 
         foreach (var itemSuperTypeSlotData in data.ItemSuperTypeSlots.Values)
         {

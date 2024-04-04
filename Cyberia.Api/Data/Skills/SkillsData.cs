@@ -9,6 +9,7 @@ public sealed class SkillsData
     : IDofusData
 {
     private const string FILE_NAME = "skills.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("SK")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SkillData>))]
@@ -20,9 +21,9 @@ public sealed class SkillsData
         Skills = FrozenDictionary<int, SkillData>.Empty;
     }
 
-    internal static SkillsData Load()
+    internal static async Task<SkillsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<SkillsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<SkillsData>(FILE_PATH);
     }
 
     public SkillData? GetSkillDataById(int id)

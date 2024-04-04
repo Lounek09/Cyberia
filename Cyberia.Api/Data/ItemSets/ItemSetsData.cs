@@ -10,6 +10,8 @@ public sealed class ItemSetsData
     : IDofusData
 {
     private const string FILE_NAME = "itemsets.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private static readonly string CUSTOM_FILE_PATH = Path.Join(DofusApi.CUSTOM_PATH, FILE_NAME);
 
     [JsonPropertyName("IS")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemSetData>))]
@@ -21,10 +23,10 @@ public sealed class ItemSetsData
         ItemSets = FrozenDictionary<int, ItemSetData>.Empty;
     }
 
-    internal static ItemSetsData Load()
+    internal static async Task<ItemSetsData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<ItemSetsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        var customData = Datacenter.LoadDataFromFile<ItemSetsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<ItemSetsData>(FILE_PATH);
+        var customData = await Datacenter.LoadDataAsync<ItemSetsCustomData>(CUSTOM_FILE_PATH);
 
         foreach (var itemSetCustomData in customData.ItemSetsCustom)
         {

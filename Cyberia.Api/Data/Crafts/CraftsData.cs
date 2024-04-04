@@ -9,6 +9,7 @@ public sealed class CraftsData
     : IDofusData
 {
     private const string FILE_NAME = "crafts.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("CR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, CraftData>))]
@@ -20,9 +21,9 @@ public sealed class CraftsData
         Crafts = FrozenDictionary<int, CraftData>.Empty;
     }
 
-    internal static CraftsData Load()
+    internal static async Task<CraftsData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<CraftsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<CraftsData>(FILE_PATH);
     }
 
     public CraftData? GetCraftDataById(int id)

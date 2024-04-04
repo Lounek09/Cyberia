@@ -9,6 +9,7 @@ public sealed class StatesData
     : IDofusData
 {
     private const string FILE_NAME = "states.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("ST")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, StateData>))]
@@ -20,9 +21,9 @@ public sealed class StatesData
         States = FrozenDictionary<int, StateData>.Empty;
     }
 
-    internal static StatesData Load()
+    internal static async Task<StatesData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<StatesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<StatesData>(FILE_PATH);
     }
 
     public StateData? GetStateDataById(int id)

@@ -9,6 +9,7 @@ public sealed class ServersData
     : IDofusData
 {
     private const string FILE_NAME = "servers.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("SR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ServerData>))]
@@ -45,9 +46,9 @@ public sealed class ServersData
         ServerSpecificTexts = FrozenDictionary<string, ServerSpecificTextData>.Empty;
     }
 
-    internal static ServersData Load()
+    internal static async Task<ServersData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<ServersData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<ServersData>(FILE_PATH);
 
         foreach (var serverPopulationData in data.ServerPopulations.Values)
         {

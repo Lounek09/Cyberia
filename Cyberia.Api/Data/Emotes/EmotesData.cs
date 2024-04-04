@@ -9,6 +9,7 @@ public sealed class EmotesData
     : IDofusData
 {
     private const string FILE_NAME = "emotes.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
 
     [JsonPropertyName("EM")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, EmoteData>))]
@@ -20,9 +21,9 @@ public sealed class EmotesData
         Emotes = FrozenDictionary<int, EmoteData>.Empty;
     }
 
-    internal static EmotesData Load()
+    internal static async Task<EmotesData> LoadAsync()
     {
-        return Datacenter.LoadDataFromFile<EmotesData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
+        return await Datacenter.LoadDataAsync<EmotesData>(FILE_PATH);
     }
 
     public EmoteData? GetEmoteById(int id)

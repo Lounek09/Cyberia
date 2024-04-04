@@ -11,6 +11,8 @@ public sealed class QuestsData
     : IDofusData
 {
     private const string FILE_NAME = "quests.json";
+    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private static readonly string CUSTOM_FILE_PATH = Path.Join(DofusApi.CUSTOM_PATH, FILE_NAME);
 
     [JsonPropertyName("Q.q")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, QuestData>))]
@@ -37,10 +39,10 @@ public sealed class QuestsData
         QuestObjectiveTypes = FrozenDictionary<int, QuestObjectiveTypeData>.Empty;
     }
 
-    internal static QuestsData Load()
+    internal static async Task<QuestsData> LoadAsync()
     {
-        var data = Datacenter.LoadDataFromFile<QuestsData>(Path.Combine(DofusApi.OUTPUT_PATH, FILE_NAME));
-        var dataCustom = Datacenter.LoadDataFromFile<QuestsCustomData>(Path.Combine(DofusApi.CUSTOM_PATH, FILE_NAME));
+        var data = await Datacenter.LoadDataAsync<QuestsData>(FILE_PATH);
+        var dataCustom = await Datacenter.LoadDataAsync<QuestsCustomData>(CUSTOM_FILE_PATH);
 
         foreach (var questCustomData in dataCustom.QuestsCustom)
         {
