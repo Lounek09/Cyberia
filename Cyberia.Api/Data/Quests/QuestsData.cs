@@ -10,9 +10,10 @@ namespace Cyberia.Api.Data.Quests;
 public sealed class QuestsData
     : IDofusData
 {
-    private const string FILE_NAME = "quests.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
-    private static readonly string CUSTOM_FILE_PATH = Path.Join(DofusApi.CUSTOM_PATH, FILE_NAME);
+    private const string c_fileName = "quests.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
+    private static readonly string s_customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
 
     [JsonPropertyName("Q.q")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, QuestData>))]
@@ -41,8 +42,8 @@ public sealed class QuestsData
 
     internal static async Task<QuestsData> LoadAsync()
     {
-        var data = await Datacenter.LoadDataAsync<QuestsData>(FILE_PATH);
-        var dataCustom = await Datacenter.LoadDataAsync<QuestsCustomData>(CUSTOM_FILE_PATH);
+        var data = await Datacenter.LoadDataAsync<QuestsData>(s_filePath);
+        var dataCustom = await Datacenter.LoadDataAsync<QuestsCustomData>(s_customFilePath);
 
         foreach (var questCustomData in dataCustom.QuestsCustom)
         {

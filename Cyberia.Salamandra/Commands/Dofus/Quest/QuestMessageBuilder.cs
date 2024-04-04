@@ -13,8 +13,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class QuestMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "Q";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "Q";
+    public const int PacketVersion = 1;
 
     private readonly QuestData _questData;
     private readonly List<QuestStepData> _questStepsData;
@@ -33,7 +33,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
     public static QuestMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var questId) &&
             int.TryParse(parameters[1], out var selectedQuestStepIndex))
@@ -50,7 +50,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int questId, int selectedQuestStepIndex = 0)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, questId, selectedQuestStepIndex);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, questId, selectedQuestStepIndex);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -64,7 +64,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             message.AddComponents(select);
         }
 
-        var select2 = SelectBuilder(1, Constant.MAX_SELECT_OPTION);
+        var select2 = SelectBuilder(1, Constant.MaxSelectOption);
         if (select2.Options.Count > 0)
         {
             message.AddComponents(select2);
@@ -76,7 +76,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Quests, "Livre de quêtes")
-            .WithTitle($"{_questData.Name} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.DUNGEON : string.Empty)}");
+            .WithTitle($"{_questData.Name} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.Dungeon : string.Empty)}");
 
         if (_questStepData is not null)
         {
@@ -106,7 +106,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 {
                     rewardsBuilder.Append(_questStepData.RewardsData.Experience.ToStringThousandSeparator());
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(Emojis.XP);
+                    rewardsBuilder.Append(Emojis.Xp);
                     rewardsBuilder.Append('\n');
                 }
 
@@ -114,7 +114,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 {
                     rewardsBuilder.Append(_questStepData.RewardsData.Kamas.ToStringThousandSeparator());
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(Emojis.KAMAS);
+                    rewardsBuilder.Append(Emojis.Kamas);
                     rewardsBuilder.Append('\n');
                 }
 
@@ -163,7 +163,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
     {
         IEnumerable<DiscordSelectComponentOption> OptionsGenerator(int startIndex)
         {
-            var endIndex = Math.Min(startIndex + Constant.MAX_SELECT_OPTION, _questStepsData.Count);
+            var endIndex = Math.Min(startIndex + Constant.MaxSelectOption, _questStepsData.Count);
             for (var i = startIndex; i < endIndex; i++)
             {
                 yield return new DiscordSelectComponentOption(

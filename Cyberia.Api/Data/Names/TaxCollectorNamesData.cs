@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Names;
 public sealed class TaxCollectorNamesData
     : IDofusData
 {
-    private const string FILE_NAME = "names.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "names.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("NF.n")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TaxCollectorLastNameData>))]
@@ -28,7 +29,7 @@ public sealed class TaxCollectorNamesData
 
     internal static async Task<TaxCollectorNamesData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<TaxCollectorNamesData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<TaxCollectorNamesData>(s_filePath);
     }
 
     public string GetRandomTaxCollectorName()

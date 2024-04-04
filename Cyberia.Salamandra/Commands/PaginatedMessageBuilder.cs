@@ -14,7 +14,7 @@ public enum PaginatedAction
 
 public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
 {
-    private const int ROW_PER_PAGE = 25;
+    private const int c_rowPerPage = 25;
 
     private readonly EmbedCategory _category;
     private readonly string _authorText;
@@ -30,10 +30,10 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
         _authorText = authorText;
         _title = title;
         _selectedPageIndex = selectedPageIndex;
-        _totalPage = (int)Math.Ceiling(data.Count / (double)ROW_PER_PAGE);
+        _totalPage = (int)Math.Ceiling(data.Count / (double)c_rowPerPage);
 
-        var index = selectedPageIndex * ROW_PER_PAGE;
-        var count = Math.Min(data.Count - index, ROW_PER_PAGE);
+        var index = selectedPageIndex * c_rowPerPage;
+        var count = Math.Min(data.Count - index, c_rowPerPage);
         _data = data.GetRange(index, count);
     }
 
@@ -74,14 +74,14 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
         var embed = EmbedManager.CreateEmbedBuilder(_category, _authorText)
             .WithTitle(_title)
             .WithDescription(string.Join('\n', GetContent()))
-            .AddField(Constant.ZERO_WIDTH_SPACE, $"Page {_selectedPageIndex + 1}/{_totalPage}");
+            .AddField(Constant.ZeroWidthSpace, $"Page {_selectedPageIndex + 1}/{_totalPage}");
 
         return Task.FromResult(embed);
     }
 
     private IEnumerable<DiscordButtonComponent> PaginationButtonsBuilder()
     {
-        yield return new(ButtonStyle.Primary, $"{PreviousPacketBuilder()}{InteractionManager.PACKET_PARAMETER_SEPARATOR}P", "Précédent", _totalPage == 1);
-        yield return new(ButtonStyle.Primary, $"{NextPacketBuilder()}{InteractionManager.PACKET_PARAMETER_SEPARATOR}N", "Suivant", _totalPage == 1);
+        yield return new(ButtonStyle.Primary, $"{PreviousPacketBuilder()}{InteractionManager.PacketParameterSeparator}P", "Précédent", _totalPage == 1);
+        yield return new(ButtonStyle.Primary, $"{NextPacketBuilder()}{InteractionManager.PacketParameterSeparator}N", "Suivant", _totalPage == 1);
     }
 }

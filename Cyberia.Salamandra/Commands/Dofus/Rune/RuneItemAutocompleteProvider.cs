@@ -16,7 +16,7 @@ public sealed class RuneItemAutocompleteProvider : AutocompleteProvider
                 var itemStatsData = x.GetItemStatsData();
                 return itemStatsData is not null && itemStatsData.Effects.Any(x => x is IRuneGeneratorEffect);
             })
-            .Take(Constant.MAX_CHOICE)
+            .Take(Constant.MaxChoice)
             .Select(x => new DiscordAutoCompleteChoice($"{x.Name.WithMaxLength(90)} ({x.Id})", x.Id.ToString()));
     }
 }

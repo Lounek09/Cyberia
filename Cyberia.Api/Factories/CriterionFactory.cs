@@ -6,7 +6,7 @@ namespace Cyberia.Api.Factories;
 
 public static class CriterionFactory
 {
-    private static readonly FrozenDictionary<string, Func<string, char, string[], ICriterion?>> _factory =
+    private static readonly FrozenDictionary<string, Func<string, char, string[], ICriterion?>> s_factory =
         new Dictionary<string, Func<string, char, string[], ICriterion?>>()
         {
             { "BI", UnusableItemCriterion.Create },
@@ -75,7 +75,7 @@ public static class CriterionFactory
     {
         string compressedCriterion;
 
-        if (_factory.TryGetValue(id, out var builder))
+        if (s_factory.TryGetValue(id, out var builder))
         {
             var criterion = builder(id, @operator, parameters);
             if (criterion is not null)

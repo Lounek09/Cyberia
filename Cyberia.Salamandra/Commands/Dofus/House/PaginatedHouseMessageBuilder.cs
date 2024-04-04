@@ -17,8 +17,8 @@ public enum HouseSearchCategory
 
 public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<HouseData>
 {
-    public const string PACKET_HEADER = "PH";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "PH";
+    public const int PacketVersion = 1;
 
     private readonly HouseSearchCategory _searchCategory;
     private readonly string _search;
@@ -32,7 +32,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
 
     public static PaginatedHouseMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 3 &&
             int.TryParse(parameters[1], out var selectedPageIndex) &&
             Enum.TryParse(parameters[2], true, out HouseSearchCategory searchCategory))
@@ -51,7 +51,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
                         int.TryParse(parameters[4], out var yCoord))
                     {
                         housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate(xCoord, yCoord).ToList();
-                        search = $"{parameters[3]}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{parameters[4]}";
+                        search = $"{parameters[3]}{InteractionManager.PacketParameterSeparator}{parameters[4]}";
                     }
                     break;
                 case HouseSearchCategory.MapSubArea:
@@ -81,7 +81,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
 
     public static string GetPacket(HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0, PaginatedAction action = PaginatedAction.None)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, (int)action, selectedPageIndex, (int)searchCategory, search);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, (int)action, selectedPageIndex, (int)searchCategory, search);
     }
 
     protected override IEnumerable<string> GetContent()

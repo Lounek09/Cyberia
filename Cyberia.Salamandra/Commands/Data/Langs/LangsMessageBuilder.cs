@@ -11,8 +11,8 @@ namespace Cyberia.Salamandra.Commands.Data;
 
 public sealed class LangsMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "LANG";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "LANG";
+    public const int PacketVersion = 1;
 
     private readonly LangType _type;
     private readonly LangLanguage _language;
@@ -27,7 +27,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
 
     public static LangsMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 1 &&
             Enum.TryParse(parameters[0], out LangType langType) &&
             Enum.TryParse(parameters[1], out LangLanguage language))
@@ -40,7 +40,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(LangType langType, LangLanguage language)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, langType, language);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, langType, language);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -65,13 +65,13 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
             descriptionBuilder.Append("Dernière modification le : ");
             descriptionBuilder.Append(_langRepository.LastChange.ToString("dd/MM/yyyy HH:mm"));
             descriptionBuilder.Append("+00:00\n");
-            descriptionBuilder.Append(Formatter.MaskedUrl(Formatter.Bold(_langRepository.VersionFileName), new Uri(LangsWatcher.BASE_URL + _langRepository.VersionFileRoute)));
+            descriptionBuilder.Append(Formatter.MaskedUrl(Formatter.Bold(_langRepository.VersionFileName), new Uri(LangsWatcher.BaseUrl + _langRepository.VersionFileRoute)));
             descriptionBuilder.Append('\n');
 
             foreach (var langData in _langRepository.Langs)
             {
                 descriptionBuilder.Append("- ");
-                descriptionBuilder.Append(Formatter.MaskedUrl(langData.Name, new Uri(LangsWatcher.BASE_URL + langData.FileRoute)));
+                descriptionBuilder.Append(Formatter.MaskedUrl(langData.Name, new Uri(LangsWatcher.BaseUrl + langData.FileRoute)));
                 descriptionBuilder.Append(' ');
                 descriptionBuilder.Append(Formatter.InlineCode(langData.Version.ToString()));
                 descriptionBuilder.Append('\n');

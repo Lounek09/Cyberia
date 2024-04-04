@@ -2,10 +2,10 @@
 
 internal static class Constant
 {
-    public const string ZERO_WIDTH_SPACE = "\u200b";
+    public const string ZeroWidthSpace = "\u200b";
 
-    public const int MAX_CHOICE = 25;
-    public const int MAX_SELECT_OPTION = 25;
-    public const int MAX_BUTTON_PER_ROW = 5;
-    public const int MAX_COMPONENT_ROW_PER_MESSAGE = 5;
+    public const int MaxChoice = 25;
+    public const int MaxSelectOption = 25;
+    public const int MaxButtonPerRow = 5;
+    public const int MaxComponentRowPerMessage = 5;
 }

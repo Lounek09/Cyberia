@@ -51,7 +51,7 @@ public sealed class MapCommandModule : ApplicationCommandModule
         }
         else
         {
-            await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
+            await ctx.CreateResponseAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PacketParameterSeparator}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
     }
 

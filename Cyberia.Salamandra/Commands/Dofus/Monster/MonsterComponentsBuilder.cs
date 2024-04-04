@@ -16,7 +16,7 @@ public static class MonsterComponentsBuilder
     public static DiscordSelectComponent MonstersSelectBuilder(int index, IEnumerable<MonsterData> monstersData, bool disable = false)
     {
         var options = monstersData
-            .Take(Constant.MAX_SELECT_OPTION)
+            .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(

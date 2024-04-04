@@ -13,8 +13,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class BreedMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "G";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "G";
+    public const int PacketVersion = 1;
 
     private readonly BreedData _breedData;
     private readonly List<SpellData> _spellsData;
@@ -31,7 +31,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
     public static BreedMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 0 &&
             int.TryParse(parameters[0], out var breedId))
         {
@@ -47,7 +47,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int breedId)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, breedId);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, breedId);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()

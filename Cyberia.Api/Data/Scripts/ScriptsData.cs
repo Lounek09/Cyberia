@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Scripts;
 public sealed class ScriptsData
     : IDofusData
 {
-    private const string FILE_NAME = "scripts.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "scripts.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("SCR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ScriptDialogData>))]
@@ -23,7 +24,7 @@ public sealed class ScriptsData
 
     internal static async Task<ScriptsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<ScriptsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<ScriptsData>(s_filePath);
     }
 
     public ScriptDialogData? GetScriptDialog(int id)

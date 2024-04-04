@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories;
 
 public static class QuestObjectiveFactory
 {
-    private static readonly FrozenDictionary<int, Func<QuestObjectiveData, IQuestObjective?>> _factory =
+    private static readonly FrozenDictionary<int, Func<QuestObjectiveData, IQuestObjective?>> s_factory =
         new Dictionary<int, Func<QuestObjectiveData, IQuestObjective?>>()
         {
             { 0, FreeFormQuestObjective.Create },
@@ -28,7 +28,7 @@ public static class QuestObjectiveFactory
 
     public static IQuestObjective Create(QuestObjectiveData questObjectiveData)
     {
-        if (_factory.TryGetValue(questObjectiveData.QuestObjectiveTypeId, out var builder))
+        if (s_factory.TryGetValue(questObjectiveData.QuestObjectiveTypeId, out var builder))
         {
             var questObjective = builder(questObjectiveData);
             if (questObjective is not null)

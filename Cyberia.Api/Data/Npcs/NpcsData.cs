@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Npcs;
 public sealed class NpcsData
     : IDofusData
 {
-    private const string FILE_NAME = "npc.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "npc.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("N.a")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, NpcActionData>))]
@@ -28,7 +29,7 @@ public sealed class NpcsData
 
     internal static async Task<NpcsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<NpcsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<NpcsData>(s_filePath);
     }
 
     public NpcActionData? GetNpcActionDataById(int id)

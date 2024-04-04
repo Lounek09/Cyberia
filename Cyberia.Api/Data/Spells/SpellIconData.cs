@@ -5,10 +5,10 @@ namespace Cyberia.Api.Data.Spells;
 public sealed class SpellIconData
     : IDofusData
 {
-    public const int INDEX_REMASTERED = 0;
-    public const int INDEX_CONTRAST = 1;
-    public const int INDEX_CLASSIC_ANGELIC = 2;
-    public const int INDEX_CLASSIC_DIABOLIC = 3;
+    public const int IndexRemastered = 0;
+    public const int IndexContrast = 1;
+    public const int IndexClassicfAngelic = 2;
+    public const int IndexClassicDiabolic = 3;
 
     [JsonPropertyName("up")]
     public int UpGfxId { get; init; }

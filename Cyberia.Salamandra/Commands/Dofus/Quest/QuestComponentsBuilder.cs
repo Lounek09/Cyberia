@@ -16,7 +16,7 @@ public static class QuestComponentsBuilder
     public static DiscordSelectComponent QuestsSelectBuilder(int index, IEnumerable<QuestData> questsData, bool disable = false)
     {
         var options = questsData
-            .Take(Constant.MAX_SELECT_OPTION)
+            .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(

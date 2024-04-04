@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Crafts;
 public sealed class CraftsData
     : IDofusData
 {
-    private const string FILE_NAME = "crafts.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "crafts.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("CR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, CraftData>))]
@@ -23,7 +24,7 @@ public sealed class CraftsData
 
     internal static async Task<CraftsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<CraftsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<CraftsData>(s_filePath);
     }
 
     public CraftData? GetCraftDataById(int id)

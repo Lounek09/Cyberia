@@ -16,8 +16,8 @@ public enum MapSearchCategory
 
 public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData>
 {
-    public const string PACKET_HEADER = "PMA";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "PMA";
+    public const int PacketVersion = 1;
 
     private readonly MapSearchCategory _searchCategory;
     private readonly string _search;
@@ -31,7 +31,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
 
     public static PaginatedMapMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 3 &&
             int.TryParse(parameters[1], out var selectedPageIndex) &&
             Enum.TryParse(parameters[2], true, out MapSearchCategory searchCategory))
@@ -46,7 +46,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
                         int.TryParse(parameters[4], out var yCoord))
                     {
                         mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(xCoord, yCoord).ToList();
-                        search = $"{parameters[3]}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{parameters[4]}";
+                        search = $"{parameters[3]}{InteractionManager.PacketParameterSeparator}{parameters[4]}";
                     }
                     break;
                 case MapSearchCategory.MapSubArea:
@@ -76,12 +76,12 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
 
     public static string GetPacket(MapSearchCategory searchCategory, string search, int selectedPageIndex = 0, PaginatedAction action = PaginatedAction.None)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, (int)action, selectedPageIndex, (int)searchCategory, search);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, (int)action, selectedPageIndex, (int)searchCategory, search);
     }
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {Formatter.Bold(x.GetCoordinate())} {x.GetMapAreaName()} ({x.Id}) {(x.IsHouse() ? Emojis.HOUSE : string.Empty)}");
+        return _data.Select(x => $"- {Formatter.Bold(x.GetCoordinate())} {x.GetMapAreaName()} ({x.Id}) {(x.IsHouse() ? Emojis.House : string.Empty)}");
     }
 
     protected override DiscordSelectComponent SelectBuilder()

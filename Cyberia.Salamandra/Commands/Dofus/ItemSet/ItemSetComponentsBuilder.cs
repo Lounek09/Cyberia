@@ -16,7 +16,7 @@ public static class ItemSetComponentsBuilder
     public static DiscordSelectComponent ItemSetsSelectBuilder(int uniqueIndex, IEnumerable<ItemSetData> itemSetsData, bool disable = false)
     {
         var options = itemSetsData
-            .Take(Constant.MAX_SELECT_OPTION)
+            .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(

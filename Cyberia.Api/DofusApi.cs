@@ -4,8 +4,9 @@ namespace Cyberia.Api;
 
 public static class DofusApi
 {
-    internal const string OUTPUT_PATH = "api";
-    internal const string CUSTOM_PATH = $"{OUTPUT_PATH}/custom";
+    public const string OutputPath = "api";
+
+    public static readonly string CustomPath = Path.Join(OutputPath, "custom");
 
     public static ApiConfig Config { get; private set; } = default!;
     public static Datacenter Datacenter { get; private set; } = default!;
@@ -14,8 +15,8 @@ public static class DofusApi
 
     public static async Task InitializeAsync(ApiConfig config)
     {
-        Directory.CreateDirectory(OUTPUT_PATH);
-        Directory.CreateDirectory(CUSTOM_PATH);
+        Directory.CreateDirectory(OutputPath);
+        Directory.CreateDirectory(CustomPath);
 
         Config = config;
         HttpClient = new();

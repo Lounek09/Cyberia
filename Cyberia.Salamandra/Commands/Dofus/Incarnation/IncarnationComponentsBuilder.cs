@@ -16,7 +16,7 @@ public static class IncarnationComponentsBuilder
     public static DiscordSelectComponent IncarnationsSelectBuilder(int index, IEnumerable<IncarnationData> incarnationsData, bool disable = false)
     {
         var options = incarnationsData
-            .Take(Constant.MAX_SELECT_OPTION)
+            .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(

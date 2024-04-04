@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Items;
 public sealed class ItemsData
     : IDofusData
 {
-    private const string FILE_NAME = "items.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "items.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("I.us")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemUnicStringData>))]
@@ -43,7 +44,7 @@ public sealed class ItemsData
 
     internal static async Task<ItemsData> LoadAsync()
     {
-        var data = await Datacenter.LoadDataAsync<ItemsData>(FILE_PATH);
+        var data = await Datacenter.LoadDataAsync<ItemsData>(s_filePath);
 
         foreach (var itemSuperTypeSlotData in data.ItemSuperTypeSlots.Values)
         {

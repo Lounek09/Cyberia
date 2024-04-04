@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Jobs;
 public sealed class JobsData
     : IDofusData
 {
-    private const string FILE_NAME = "jobs.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "jobs.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("J")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, JobData>))]
@@ -23,7 +24,7 @@ public sealed class JobsData
 
     internal static async Task<JobsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<JobsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<JobsData>(s_filePath);
     }
 
     public JobData? GetJobDataById(int id)

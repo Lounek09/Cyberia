@@ -12,9 +12,9 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "R";
-    public const int PACKET_VERSION = 1;
-    public const int MAX_QTE = 9999;
+    public const string PacketHeader = "R";
+    public const int PacketVersion = 1;
+    public const int MaxQte = 9999;
 
     private readonly ItemData _itemData;
     private readonly int _qte;
@@ -27,7 +27,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
     public static RuneItemMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var itemId) &&
             int.TryParse(parameters[1], out var qte))
@@ -44,7 +44,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int itemId, int qte = 1)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, itemId, qte);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, itemId, qte);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -104,10 +104,10 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> MoreButtonsBuilder()
     {
-        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1000), "+1000", _qte + 1000 > MAX_QTE);
-        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 100), "+100", _qte + 100 > MAX_QTE);
-        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 10), "+10", _qte + 10 > MAX_QTE);
-        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1), "+1", _qte + 1 > MAX_QTE);
+        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1000), "+1000", _qte + 1000 > MaxQte);
+        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 100), "+100", _qte + 100 > MaxQte);
+        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 10), "+10", _qte + 10 > MaxQte);
+        yield return new(ButtonStyle.Success, GetPacket(_itemData.Id, _qte + 1), "+1", _qte + 1 > MaxQte);
     }
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()

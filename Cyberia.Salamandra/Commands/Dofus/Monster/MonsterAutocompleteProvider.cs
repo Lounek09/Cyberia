@@ -10,7 +10,7 @@ public sealed class MonsterAutocompleteProvider : AutocompleteProvider
     protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
     {
         return DofusApi.Datacenter.MonstersData.GetMonstersDataByName(value)
-            .Take(Constant.MAX_CHOICE)
+            .Take(Constant.MaxChoice)
             .Select(x =>
             {
                 var name = $"{$"{x.Name}{(x.BreedSummon ? " (invocation)" : string.Empty)}".WithMaxLength(90)} ({x.Id})";

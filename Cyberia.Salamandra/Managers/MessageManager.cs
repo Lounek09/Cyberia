@@ -10,12 +10,12 @@ public static class MessageManager
 {
     private static readonly FrozenDictionary<string, string> _hiddenCommands = new Dictionary<string, string>()
     {
-        { "tppttp", Path.Join(Bot.OUTPUT_PATH, "onTotProut.mp3") },
-        { "fppffp", Path.Join(Bot.OUTPUT_PATH, "onFranckyPassion.mp3") },
-        { "wizz", Path.Join(Bot.OUTPUT_PATH, "onWizz.mp3") },
-        { "hncabot", Path.Join(Bot.OUTPUT_PATH, "onBelge.mp3") },
-        { "foot2rue", Path.Join(Bot.OUTPUT_PATH, "onFoot2Rue.mp4") },
-        { "monkeychan", Path.Join(Bot.OUTPUT_PATH, "onMonkeyChan.mp4") }
+        { "tppttp", Path.Join(Bot.OutputPath, "onTotProut.mp3") },
+        { "fppffp", Path.Join(Bot.OutputPath, "onFranckyPassion.mp3") },
+        { "wizz", Path.Join(Bot.OutputPath, "onWizz.mp3") },
+        { "hncabot", Path.Join(Bot.OutputPath, "onBelge.mp3") },
+        { "foot2rue", Path.Join(Bot.OutputPath, "onFoot2Rue.mp4") },
+        { "monkeychan", Path.Join(Bot.OutputPath, "onMonkeyChan.mp4") }
     }.ToFrozenDictionary();
 
     public static async Task OnMessageCreated(DiscordClient _, MessageCreateEventArgs e)

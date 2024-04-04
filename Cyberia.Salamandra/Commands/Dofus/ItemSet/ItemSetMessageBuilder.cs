@@ -12,8 +12,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "IS";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "IS";
+    public const int PacketVersion = 1;
 
     private readonly ItemSetData _itemSetData;
     private readonly int _nbItemSelected;
@@ -30,7 +30,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 
     public static ItemSetMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var itemSetId) &&
             int.TryParse(parameters[1], out var nbItemSelected))
@@ -47,7 +47,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int itemSetId, int nbItemSelected)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, itemSetId, nbItemSelected);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, itemSetId, nbItemSelected);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -61,7 +61,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
             message.AddComponents(buttons);
         }
 
-        buttons = ButtonsBuilder(Constant.MAX_BUTTON_PER_ROW);
+        buttons = ButtonsBuilder(Constant.MaxButtonPerRow);
         if (buttons.Any())
         {
             message.AddComponents(buttons);
@@ -104,7 +104,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder(int startIndex)
     {
 
-        var endIndex = Math.Min(startIndex + Constant.MAX_BUTTON_PER_ROW, _itemSetData.Effects.Count);
+        var endIndex = Math.Min(startIndex + Constant.MaxButtonPerRow, _itemSetData.Effects.Count);
         for (var i = startIndex; i < endIndex; i++)
         {
             var y = i + 1;

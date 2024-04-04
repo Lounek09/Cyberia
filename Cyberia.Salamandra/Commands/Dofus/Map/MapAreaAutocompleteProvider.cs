@@ -11,7 +11,7 @@ public sealed class MapAreaAutocompleteProvider : AutocompleteProvider
     {
 
         return DofusApi.Datacenter.MapsData.GetMapAreasDataByName(value)
-            .Take(Constant.MAX_CHOICE)
+            .Take(Constant.MaxChoice)
             .Select(x => new DiscordAutoCompleteChoice($"{x.Name.WithMaxLength(90)} ({x.Id})", x.Id.ToString()));
     }
 }

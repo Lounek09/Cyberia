@@ -35,7 +35,7 @@ public static class CytrusManifest
         }
         catch (HttpRequestException e)
         {
-            Log.Error(e, "An error occurred while sending Get request to {CytrusManifestUrl}", $"{CytrusWatcher.BASE_URL}/{route}");
+            Log.Error(e, "An error occurred while sending Get request to {CytrusManifestUrl}", $"{CytrusWatcher.BaseUrl}/{route}");
         }
 
         return null;

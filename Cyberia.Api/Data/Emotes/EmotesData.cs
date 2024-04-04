@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Emotes;
 public sealed class EmotesData
     : IDofusData
 {
-    private const string FILE_NAME = "emotes.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "emotes.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("EM")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, EmoteData>))]
@@ -23,7 +24,7 @@ public sealed class EmotesData
 
     internal static async Task<EmotesData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<EmotesData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<EmotesData>(s_filePath);
     }
 
     public EmoteData? GetEmoteById(int id)

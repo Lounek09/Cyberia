@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Skills;
 public sealed class SkillsData
     : IDofusData
 {
-    private const string FILE_NAME = "skills.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "skills.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("SK")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SkillData>))]
@@ -23,7 +24,7 @@ public sealed class SkillsData
 
     internal static async Task<SkillsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<SkillsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<SkillsData>(s_filePath);
     }
 
     public SkillData? GetSkillDataById(int id)

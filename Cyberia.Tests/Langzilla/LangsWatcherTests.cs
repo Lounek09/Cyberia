@@ -16,9 +16,9 @@ public sealed class LangsWatcherTests
     [TestCleanup]
     public void Cleanup()
     {
-        if (Directory.Exists(LangsWatcher.OUTPUT_PATH))
+        if (Directory.Exists(LangsWatcher.OutputPath))
         {
-            Directory.Delete(LangsWatcher.OUTPUT_PATH, true);
+            Directory.Delete(LangsWatcher.OutputPath, true);
         }
     }
 
@@ -41,7 +41,7 @@ public sealed class LangsWatcherTests
     {
         var result = LangsWatcher.GetOutputPath(LangType.Official, LangLanguage.FR);
 
-        Assert.AreEqual(Path.Join(LangsWatcher.OUTPUT_PATH, "official", "fr"), result);
+        Assert.AreEqual(Path.Join(LangsWatcher.OutputPath, "official", "fr"), result);
     }
 
     #endregion

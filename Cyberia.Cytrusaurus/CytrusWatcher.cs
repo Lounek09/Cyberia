@@ -8,11 +8,12 @@ namespace Cyberia.Cytrusaurus;
 /// </summary>
 public static class CytrusWatcher
 {
-    internal const string OUTPUT_PATH = "cytrus";
-    internal const string CYTRUS_FILE_NAME = "cytrus.json";
-    internal static readonly string CYTRUS_PATH = Path.Join(OUTPUT_PATH, CYTRUS_FILE_NAME);
-    internal static readonly string OLD_CYTRUS_PATH = Path.Join(OUTPUT_PATH, $"old_{CYTRUS_FILE_NAME}");
-    internal const string BASE_URL = "https://cytrus.cdn.ankama.com";
+    public const string OutputPath = "cytrus";
+    public const string CytrusFileName = "cytrus.json";
+    public const string BaseUrl = "https://cytrus.cdn.ankama.com";
+
+    public static readonly string CytrusPath = Path.Join(OutputPath, CytrusFileName);
+    public static readonly string OldCytrusPath = Path.Join(OutputPath, $"old_{CytrusFileName}");
 
     /// <summary>
     /// The current Cytrus data.
@@ -38,14 +39,14 @@ public static class CytrusWatcher
     /// </summary>
     public static void Initialize()
     {
-        Directory.CreateDirectory(OUTPUT_PATH);
+        Directory.CreateDirectory(OutputPath);
 
-        Cytrus = Cytrus.LoadFromFile(CYTRUS_PATH);
-        OldCytrus = Cytrus.LoadFromFile(OLD_CYTRUS_PATH);
+        Cytrus = Cytrus.LoadFromFile(CytrusPath);
+        OldCytrus = Cytrus.LoadFromFile(OldCytrusPath);
 
         HttpClient = new()
         {
-            BaseAddress = new Uri(BASE_URL)
+            BaseAddress = new Uri(BaseUrl)
         };
         HttpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
     }
@@ -84,18 +85,18 @@ public static class CytrusWatcher
         string json;
         try
         {
-            using var response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(CYTRUS_FILE_NAME));
+            using var response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(CytrusFileName));
             response.EnsureSuccessStatusCode();
 
             json = await response.Content.ReadAsStringAsync();
         }
         catch (HttpRequestException e)
         {
-            Log.Error(e, "An error occurred while sending Get request to {CytrusUrl}", $"{BASE_URL}/{CYTRUS_FILE_NAME}");
+            Log.Error(e, "An error occurred while sending Get request to {CytrusUrl}", $"{BaseUrl}/{CytrusFileName}");
             return;
         }
 
-        var modelJson = File.Exists(CYTRUS_PATH) ? File.ReadAllText(CYTRUS_PATH) : "{}";
+        var modelJson = File.Exists(CytrusPath) ? File.ReadAllText(CytrusPath) : "{}";
 
         var diff = Json.Diff(json, modelJson);
         if (string.IsNullOrEmpty(diff))
@@ -109,10 +110,10 @@ public static class CytrusWatcher
         Log.Information("Cytrus update detected :\n{CytrusDiff}", diff);
         NewCytrusDetected?.Invoke(null, new NewCytrusDetectedEventArgs(Cytrus, OldCytrus, diff));
 
-        if (File.Exists(CYTRUS_PATH))
+        if (File.Exists(CytrusPath))
         {
-            File.Move(CYTRUS_PATH, OLD_CYTRUS_PATH, true);
+            File.Move(CytrusPath, OldCytrusPath, true);
         }
-        File.WriteAllText(CYTRUS_PATH, json);
+        File.WriteAllText(CytrusPath, json);
     }
 }

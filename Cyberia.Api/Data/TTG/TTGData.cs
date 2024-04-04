@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.TTG;
 public sealed class TTGData
     : IDofusData
 {
-    private const string FILE_NAME = "ttg.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "ttg.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("TTG.c")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGCardData>))]
@@ -33,7 +34,7 @@ public sealed class TTGData
 
     internal static async Task<TTGData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<TTGData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<TTGData>(s_filePath);
     }
 
     public TTGCardData? GetTTGCardDataById(int id)

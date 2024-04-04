@@ -12,8 +12,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "M";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "M";
+    public const int PacketVersion = 1;
 
     private readonly MonsterData _monsterData;
     private readonly int _selectedGrade;
@@ -34,7 +34,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
     public static MonsterMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var monsterId) &&
             int.TryParse(parameters[1], out var selectedGrade))
@@ -51,7 +51,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int monsterId, int selectedGrade = 1)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, monsterId, selectedGrade);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, monsterId, selectedGrade);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -153,7 +153,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
             if (!string.IsNullOrEmpty(_monsterData.TrelloUrl))
             {
-                embed.AddField(Constant.ZERO_WIDTH_SPACE, _monsterData.TrelloUrl);
+                embed.AddField(Constant.ZeroWidthSpace, _monsterData.TrelloUrl);
             }
         }
 
@@ -162,7 +162,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> GradeButtons1Builder()
     {
-        for (var i = 0; i < Constant.MAX_BUTTON_PER_ROW; i++)
+        for (var i = 0; i < Constant.MaxButtonPerRow; i++)
         {
             var y = i + 1;
             if (_monsterData.GetMonsterGradeData(y) is not null)
@@ -174,7 +174,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> GradeButtons2Builder()
     {
-        for (var i = Constant.MAX_BUTTON_PER_ROW; i < Constant.MAX_BUTTON_PER_ROW * 2; i++)
+        for (var i = Constant.MaxButtonPerRow; i < Constant.MaxButtonPerRow * 2; i++)
         {
             var y = i + 1;
             if (_monsterData.GetMonsterGradeData(y) is not null)

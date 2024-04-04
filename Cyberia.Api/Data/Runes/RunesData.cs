@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Runes;
 public sealed class RunesData
     : IDofusData
 {
-    private const string FILE_NAME = "runes.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "runes.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("RU")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, RuneData>))]
@@ -23,7 +24,7 @@ public sealed class RunesData
 
     internal static async Task<RunesData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<RunesData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<RunesData>(s_filePath);
     }
 
     public RuneData? GetRuneDataById(int id)

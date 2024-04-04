@@ -13,8 +13,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "INCA";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "INCA";
+    public const int PacketVersion = 1;
 
     private readonly IncarnationData _incarnationData;
     private readonly ItemData? _itemData;
@@ -33,7 +33,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     public static IncarnationMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 0 &&
             int.TryParse(parameters[0], out var incarnationId))
         {
@@ -49,7 +49,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int incarnationId)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, incarnationId);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, incarnationId);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()

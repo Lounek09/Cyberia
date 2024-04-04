@@ -10,7 +10,7 @@ public sealed class RuneAutocompleteProvider : AutocompleteProvider
     protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
     {
         return DofusApi.Datacenter.RunesData.GetRunesDataByName(value)
-            .Take(Constant.MAX_CHOICE)
+            .Take(Constant.MaxChoice)
             .Select(x => new DiscordAutoCompleteChoice(x.Name, x.Name));
     }
 }

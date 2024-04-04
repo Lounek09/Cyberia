@@ -10,8 +10,8 @@ namespace Cyberia.Langzilla;
 /// </summary>
 public static class LangsWatcher
 {
-    public const string OUTPUT_PATH = "langs";
-    public const string BASE_URL = "https://dofusretro.cdn.ankama.com/";
+    public const string OutputPath = "langs";
+    public const string BaseUrl = "https://dofusretro.cdn.ankama.com/";
 
     /// <summary>
     /// Gets a read-only dictionary of the langs by type and language.
@@ -29,7 +29,7 @@ public static class LangsWatcher
     /// </summary>
     public static void Initialize()
     {
-        Directory.CreateDirectory(OUTPUT_PATH);
+        Directory.CreateDirectory(OutputPath);
 
         _langRepositories = [];
         _timers = [];
@@ -44,7 +44,7 @@ public static class LangsWatcher
                     Directory.CreateDirectory(outputPath);
                 }
 
-                var filePath = Path.Join(outputPath, LangRepository.FILE_NAME);
+                var filePath = Path.Join(outputPath, LangRepository.FileName);
                 var repository = LangRepository.LoadFromFile(filePath);
                 _langRepositories.Add((type, language), repository);
             }
@@ -52,7 +52,7 @@ public static class LangsWatcher
 
         HttpClient = new()
         {
-            BaseAddress = new(BASE_URL)
+            BaseAddress = new(BaseUrl)
         };
         HttpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
     }
@@ -161,6 +161,6 @@ public static class LangsWatcher
     /// <returns>The output path of the langs.</returns>
     internal static string GetOutputPath(LangType type, LangLanguage language)
     {
-        return Path.Join(OUTPUT_PATH, type.ToString().ToLower(), language.ToString().ToLower());
+        return Path.Join(OutputPath, type.ToString().ToLower(), language.ToString().ToLower());
     }
 }

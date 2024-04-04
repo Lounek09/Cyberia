@@ -10,7 +10,7 @@ public sealed class CytrusTests
     [TestMethod]
     public void LoadFromFile_FileExists_LoadsDataCorrectly()
     {
-        var cytrus = Cytrus.LoadFromFile(SharedData.CYTRUS_JSON_PATH);
+        var cytrus = Cytrus.LoadFromFile(SharedData.CytrusJsonPath);
 
         Assert.IsNotNull(cytrus);
         Assert.AreEqual(6, cytrus.Version);
@@ -25,7 +25,7 @@ public sealed class CytrusTests
     [TestMethod]
     public void Load_ValidJson_ReturnsCorrectCytrus()
     {
-        var json = File.ReadAllText(SharedData.CYTRUS_JSON_PATH);
+        var json = File.ReadAllText(SharedData.CytrusJsonPath);
         var cytrus = Cytrus.Load(json);
 
         Assert.IsNotNull(cytrus);
@@ -41,7 +41,7 @@ public sealed class CytrusTests
     [TestMethod]
     public void GetGameByName_ValidGameName_ReturnsGame()
     {
-        var cytrus = Cytrus.LoadFromFile(SharedData.CYTRUS_JSON_PATH);
+        var cytrus = Cytrus.LoadFromFile(SharedData.CytrusJsonPath);
         var game = cytrus.GetGameByName("dofus");
 
         Assert.IsNotNull(game);
@@ -55,7 +55,7 @@ public sealed class CytrusTests
     [TestMethod]
     public void GetGameByName_InvalidGameName_ReturnsNull()
     {
-        var cytrus = Cytrus.LoadFromFile(SharedData.CYTRUS_JSON_PATH);
+        var cytrus = Cytrus.LoadFromFile(SharedData.CytrusJsonPath);
         var game = cytrus.GetGameByName("undefined");
 
         Assert.IsNull(game);

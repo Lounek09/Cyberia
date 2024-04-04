@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Spells;
 public sealed class SpellsData
     : IDofusData
 {
-    private const string FILE_NAME = "spells.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "spells.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("S")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SpellData>))]
@@ -23,7 +24,7 @@ public sealed class SpellsData
 
     internal static async Task<SpellsData> LoadAsync()
     {
-        var data = await Datacenter.LoadDataAsync<SpellsData>(FILE_PATH);
+        var data = await Datacenter.LoadDataAsync<SpellsData>(s_filePath);
 
         foreach (var pair in data.Spells)
         {

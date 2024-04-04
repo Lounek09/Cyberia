@@ -4,6 +4,8 @@ namespace Cyberia.Amphibian;
 
 public static class Web
 {
+    public const string OutputPath = "wwwroot";
+
     public static WebApplication Application { get; private set; } = default!;
 
     public static void Initialize()

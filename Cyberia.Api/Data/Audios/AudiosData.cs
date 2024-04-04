@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Audios;
 public sealed class AudiosData
     : IDofusData
 {
-    private const string FILE_NAME = "audio.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "audio.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("AUMC")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AudioMusicContentData>))]
@@ -48,7 +49,7 @@ public sealed class AudiosData
 
     internal static async Task<AudiosData> LoadAsync()
     {
-        var data = await Datacenter.LoadDataAsync<AudiosData>(FILE_PATH);
+        var data = await Datacenter.LoadDataAsync<AudiosData>(s_filePath);
 
         foreach (var audioMusicData in data.AudioMusics.Values)
         {

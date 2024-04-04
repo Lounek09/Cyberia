@@ -13,8 +13,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class SpellMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "S";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "S";
+    public const int PacketVersion = 1;
 
     private readonly SpellData _spellData;
     private readonly int _selectedLevel;
@@ -33,7 +33,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
     public static SpellMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var spellId) &&
             int.TryParse(parameters[1], out var selectedLevel))
@@ -50,7 +50,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int spellId, int selectedLevel)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, spellId, selectedLevel);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, spellId, selectedLevel);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -88,11 +88,11 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
         if (_spellLevelData is not null)
         {
-            embed.AddField(Constant.ZERO_WIDTH_SPACE, $"Niveau requis : {Formatter.Bold(_spellLevelData.NeededLevel.ToString())}", true);
+            embed.AddField(Constant.ZeroWidthSpace, $"Niveau requis : {Formatter.Bold(_spellLevelData.NeededLevel.ToString())}", true);
 
             var range = $"{Formatter.Bold(_spellLevelData.MinRange.ToString())}{(_spellLevelData.MinRange == _spellLevelData.MaxRange ? string.Empty : $" à {Formatter.Bold(_spellLevelData.MaxRange.ToString())}")} PO";
             var apCost = $"{Formatter.Bold(_spellLevelData.ActionPointCost.ToString())} PA";
-            embed.AddField(Constant.ZERO_WIDTH_SPACE, $"{range}\n{apCost}", true);
+            embed.AddField(Constant.ZeroWidthSpace, $"{range}\n{apCost}", true);
 
             embed.AddField("Catégorie :", _spellData.SpellCategory.GetDescription(), true);
 
@@ -121,7 +121,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
                 if (effects.Count == 0 && trapEffects.Count == 0 && glyphEffects.Count == 0 && criticalEffects.Count == 0)
                 {
-                    embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE);
+                    embed.AddField(Constant.ZeroWidthSpace, Constant.ZeroWidthSpace);
                 }
                 else
                 {
@@ -164,7 +164,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
                 {Emojis.Bool(_spellLevelData.NeedFreeCell)} Cellules libres
                 {Emojis.Bool(_spellLevelData.CricalFailureEndTheTurn)} EC fini le tour
                 """;
-            embed.AddField(Constant.ZERO_WIDTH_SPACE, caracteristics, true);
+            embed.AddField(Constant.ZeroWidthSpace, caracteristics, true);
         }
 
         return embed;
@@ -172,7 +172,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> Buttons1Builder()
     {
-        for (var i = 0; i < Constant.MAX_BUTTON_PER_ROW; i++)
+        for (var i = 0; i < Constant.MaxButtonPerRow; i++)
         {
             var y = i + 1;
             if (_spellData.GetSpellLevelData(y) is not null)

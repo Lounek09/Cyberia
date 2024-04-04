@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Effects;
 public sealed class EffectsData
     : IDofusData
 {
-    private const string FILE_NAME = "effects.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "effects.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("E")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, EffectData>))]
@@ -23,7 +24,7 @@ public sealed class EffectsData
 
     internal static async Task<EffectsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<EffectsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<EffectsData>(s_filePath);
     }
 
     public EffectData? GetEffectDataById(int id)

@@ -7,8 +7,9 @@ namespace Cyberia.Api.Data.TimeZone;
 public sealed class TimeZoneData
     : IDofusData
 {
-    private const string FILE_NAME = "timezones.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "timezones.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("T.mspd")]
     public int MilisecondPerDay { get; set; }
@@ -31,7 +32,7 @@ public sealed class TimeZoneData
 
     internal static async Task<TimeZoneData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<TimeZoneData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<TimeZoneData>(s_filePath);
     }
 
     public string GetMonth(int dayOfYear)

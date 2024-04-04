@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.InteractiveObjects;
 public sealed class InteractiveObjectsData
     : IDofusData
 {
-    private const string FILE_NAME = "interactiveobjects.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "interactiveobjects.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("IO.g")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, InteractiveObjectGfxData>))]
@@ -28,7 +29,7 @@ public sealed class InteractiveObjectsData
 
     internal static async Task<InteractiveObjectsData> LoadAsync()
     {
-        var data = await Datacenter.LoadDataAsync<InteractiveObjectsData>(FILE_PATH);
+        var data = await Datacenter.LoadDataAsync<InteractiveObjectsData>(s_filePath);
 
         foreach (var interactiveObjectData in data.InteractiveObjects.Values)
         {

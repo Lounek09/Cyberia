@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Maps;
 public sealed class MapsData
     : IDofusData
 {
-    private const string FILE_NAME = "maps.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "maps.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("MA.m")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapData>))]
@@ -38,7 +39,7 @@ public sealed class MapsData
 
     internal static async Task<MapsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<MapsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<MapsData>(s_filePath);
     }
 
     public MapData? GetMapDataById(int id)

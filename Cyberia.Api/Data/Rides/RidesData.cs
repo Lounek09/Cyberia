@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Rides;
 public sealed class RidesData
     : IDofusData
 {
-    private const string FILE_NAME = "rides.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "rides.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("RI")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, RideData>))]
@@ -28,7 +29,7 @@ public sealed class RidesData
 
     internal static async Task<RidesData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<RidesData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<RidesData>(s_filePath);
     }
 
     public RideData? GetRideDataById(int id)

@@ -17,7 +17,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
     [SlashCommand("item", "Permet de calculer le nombre de rune obtenable depuis un item")]
     public async Task ItemCommand(InteractionContext ctx,
         [Option("quantite", "Quantité d'item")]
-        [Minimum(1), Maximum(RuneItemMessageBuilder.MAX_QTE)]
+        [Minimum(1), Maximum(RuneItemMessageBuilder.MaxQte)]
         long qte,
         [Option("item", "Nom de l'item à briser", true)]
         [Autocomplete(typeof(RuneItemAutocompleteProvider))]
@@ -92,15 +92,15 @@ public sealed class RuneCommandModule : ApplicationCommandModule
 
             if (!runeData.HasPa && !runeData.HasRa)
             {
-                var runeBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AVERAGE_MULTIPLICATOR);
+                var runeBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AverageMultiplicator);
 
                 embed.AddField("Moy.", $"{Emojis.BaRune(runeData.Id)} {Formatter.Bold(runeBundle.BaAmount.ToString())}");
             }
             else
             {
-                var minRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.MIN_MULTIPLICATOR);
-                var averageRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AVERAGE_MULTIPLICATOR);
-                var maxRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.MAX_MULTIPLICATOR);
+                var minRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.MinMultiplicator);
+                var averageRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AverageMultiplicator);
+                var maxRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.MaxMultiplicator);
 
                 embed.AddField("Min.", GetRuneBundleTextFieldStatCommand(minRuneBundle), true);
                 embed.AddField("Moy.", GetRuneBundleTextFieldStatCommand(averageRuneBundle), true);

@@ -9,9 +9,10 @@ namespace Cyberia.Api.Data.Monsters;
 public sealed class MonstersData
     : IDofusData
 {
-    private const string FILE_NAME = "monsters.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
-    private static readonly string CUSTOM_FILE_PATH = Path.Join(DofusApi.CUSTOM_PATH, FILE_NAME);
+    private const string c_fileName = "monsters.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
+    private static readonly string s_customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
 
     [JsonPropertyName("MSR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MonsterSuperRaceData>))]
@@ -35,8 +36,8 @@ public sealed class MonstersData
 
     internal static async Task<MonstersData> LoadAsync()
     {
-        var data = await Datacenter.LoadDataAsync<MonstersData>(FILE_PATH);
-        var customData = await Datacenter.LoadDataAsync<MonstersCustomData>(CUSTOM_FILE_PATH);
+        var data = await Datacenter.LoadDataAsync<MonstersData>(s_filePath);
+        var customData = await Datacenter.LoadDataAsync<MonstersCustomData>(s_customFilePath);
 
         foreach (var pair in data.Monsters)
         {

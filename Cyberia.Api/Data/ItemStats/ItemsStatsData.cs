@@ -9,9 +9,10 @@ namespace Cyberia.Api.Data.ItemStats;
 public sealed class ItemsStatsData
     : IDofusData
 {
-    private const string FILE_NAME = "itemstats.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
-    private static readonly string CUSTOM_FILE_PATH = Path.Join(DofusApi.CUSTOM_PATH, FILE_NAME);
+    private const string c_fileName = "itemstats.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
+    private static readonly string s_customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
 
     [JsonPropertyName("ISTA")]
     [JsonInclude]
@@ -29,8 +30,8 @@ public sealed class ItemsStatsData
 
     internal static async Task<ItemsStatsData> LoadAsync()
     {
-        var data = await Datacenter.LoadDataAsync<ItemsStatsData>(FILE_PATH);
-        var customData = await Datacenter.LoadDataAsync<ItemsStatsCustomData>(CUSTOM_FILE_PATH);
+        var data = await Datacenter.LoadDataAsync<ItemsStatsData>(s_filePath);
+        var customData = await Datacenter.LoadDataAsync<ItemsStatsCustomData>(s_customFilePath);
 
         foreach (var itemStatsCustomData in customData.ItemsStatsCustom)
         {

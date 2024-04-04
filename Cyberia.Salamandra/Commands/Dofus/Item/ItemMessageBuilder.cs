@@ -18,8 +18,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class ItemMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "I";
-    public const int PACKET_VERSION = 2;
+    public const string PacketHeader = "I";
+    public const int PacketVersion = 2;
 
     private readonly ItemData _itemData;
     private readonly ItemTypeData? _itemTypeData;
@@ -36,7 +36,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         _itemTypeData = itemData.GetItemTypeData();
         _itemSetData = itemData.GetItemSetData();
         _itemStatsData = itemData.GetItemStatsData();
-        _petData = _itemData.ItemTypeId == ItemTypeData.TYPE_PET ? DofusApi.Datacenter.PetsData.GetPetDataByItemId(_itemData.Id) : null;
+        _petData = _itemData.ItemTypeId == ItemTypeData.Pet ? DofusApi.Datacenter.PetsData.GetPetDataByItemId(_itemData.Id) : null;
         _craftData = itemData.GetCraftData();
         _incarnationData = _itemData.IsWeapon() ? DofusApi.Datacenter.IncarnationsData.GetIncarnationDataByItemId(_itemData.Id) : null;
         _qte = qte;
@@ -44,7 +44,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
     public static ItemMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var itemId) &&
             int.TryParse(parameters[1], out var qte))
@@ -61,7 +61,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int itemId, int craftQte = 1)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, itemId, craftQte);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, itemId, craftQte);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -126,7 +126,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         {
             miscellaneousBuilder.Append(", se vend ");
             miscellaneousBuilder.Append(_itemData.GetNpcRetailPrice().ToStringThousandSeparator());
-            miscellaneousBuilder.Append(Emojis.KAMAS);
+            miscellaneousBuilder.Append(Emojis.Kamas);
             miscellaneousBuilder.Append(" aux pnj");
         }
 

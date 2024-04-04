@@ -17,7 +17,7 @@ public static class SpellComponentsBuilder
     public static DiscordSelectComponent SpellsSelectBuilder(int index, IEnumerable<SpellData> spells, bool disable = false)
     {
         var options = spells
-            .Take(Constant.MAX_SELECT_OPTION)
+            .Take(Constant.MaxSelectOption)
             .Select(x =>
         {
             return new DiscordSelectComponentOption(

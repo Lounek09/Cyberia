@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.States;
 public sealed class StatesData
     : IDofusData
 {
-    private const string FILE_NAME = "states.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "states.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("ST")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, StateData>))]
@@ -23,7 +24,7 @@ public sealed class StatesData
 
     internal static async Task<StatesData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<StatesData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<StatesData>(s_filePath);
     }
 
     public StateData? GetStateDataById(int id)

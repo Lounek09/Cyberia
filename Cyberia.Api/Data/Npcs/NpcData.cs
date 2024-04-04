@@ -5,7 +5,7 @@ namespace Cyberia.Api.Data.Npcs;
 public sealed class NpcData
     : IDofusData<int>
 {
-    public const double RETAIL_RATIO = 0.1;
+    public const double RetailRatio = 0.1;
 
     [JsonPropertyName("id")]
     public int Id { get; init; }

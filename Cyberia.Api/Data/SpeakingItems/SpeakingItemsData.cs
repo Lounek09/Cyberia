@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.SpeakingItems;
 public sealed class SpeakingItemsData
     : IDofusData
 {
-    private const string FILE_NAME = "speakingitems.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "speakingitems.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("SIM")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SpeakingItemData>))]
@@ -25,7 +26,7 @@ public sealed class SpeakingItemsData
 
     internal static async Task<SpeakingItemsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<SpeakingItemsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<SpeakingItemsData>(s_filePath);
     }
 
     public SpeakingItemData? GetSpeakingItemData(int id)

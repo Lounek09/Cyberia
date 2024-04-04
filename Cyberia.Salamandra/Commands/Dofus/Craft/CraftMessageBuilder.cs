@@ -11,9 +11,9 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class CraftMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "CR";
-    public const int PACKET_VERSION = 1;
-    public const int MAX_QTE = 99999;
+    public const string PacketHeader = "CR";
+    public const int PacketVersion = 1;
+    public const int MaxQte = 99999;
 
     private readonly CraftData _craftData;
     private readonly ItemData? _itemData;
@@ -30,7 +30,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     public static CraftMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 2 &&
             int.TryParse(parameters[0], out var craftId) &&
             int.TryParse(parameters[1], out var qte) &&
@@ -48,7 +48,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int craftId, int qte = 1, bool recursive = false)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, craftId, qte, recursive);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, craftId, qte, recursive);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -103,10 +103,10 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> MoreButtonsBuilder()
     {
-        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1000, _recursive), "+1000", _qte + 1000 > MAX_QTE);
-        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 100, _recursive), "+100", _qte + 100 > MAX_QTE);
-        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 10, _recursive), "+10", _qte + 10 > MAX_QTE);
-        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1, _recursive), "+1", _qte + 1 > MAX_QTE);
+        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1000, _recursive), "+1000", _qte + 1000 > MaxQte);
+        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 100, _recursive), "+100", _qte + 100 > MaxQte);
+        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 10, _recursive), "+10", _qte + 10 > MaxQte);
+        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1, _recursive), "+1", _qte + 1 > MaxQte);
     }
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()

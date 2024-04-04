@@ -6,7 +6,7 @@ namespace Cyberia.Api.Factories;
 
 public static class AlignmentFeatEffectFactory
 {
-    private static readonly FrozenDictionary<int, Func<int, int[], IAlignmentFeatEffect?>> _factory =
+    private static readonly FrozenDictionary<int, Func<int, int[], IAlignmentFeatEffect?>> s_factory =
        new Dictionary<int, Func<int, int[], IAlignmentFeatEffect?>>()
        {
            { 1, CharacterBoostRangeAlignmentFeatEffect.Create },
@@ -52,7 +52,7 @@ public static class AlignmentFeatEffectFactory
 
     public static IAlignmentFeatEffect Create(int id, params int[] parameters)
     {
-        if (_factory.TryGetValue(id, out var builder))
+        if (s_factory.TryGetValue(id, out var builder))
         {
             var alignmentFeatEffect = builder(id, parameters);
             if (alignmentFeatEffect is not null)

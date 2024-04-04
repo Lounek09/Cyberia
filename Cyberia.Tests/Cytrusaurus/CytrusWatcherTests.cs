@@ -20,9 +20,9 @@ public sealed class CytrusWatcherTests
     [TestCleanup]
     public void Cleanup()
     {
-        if (Directory.Exists(CytrusWatcher.OUTPUT_PATH))
+        if (Directory.Exists(CytrusWatcher.OutputPath))
         {
-            Directory.Delete(CytrusWatcher.OUTPUT_PATH, true);
+            Directory.Delete(CytrusWatcher.OutputPath, true);
         }
     }
 
@@ -31,7 +31,7 @@ public sealed class CytrusWatcherTests
     [TestMethod]
     public async Task CheckAsync_WhenCalled_ShouldUpdateCytrusData()
     {
-        var json = File.ReadAllText(SharedData.CYTRUS_JSON_PATH);
+        var json = File.ReadAllText(SharedData.CytrusJsonPath);
         var mock = SharedData.SetupMockHttpMessageHandlerForSuccessfullResponse(
             new HttpResponseMessage
             {
@@ -41,7 +41,7 @@ public sealed class CytrusWatcherTests
 
         CytrusWatcher.HttpClient = new HttpClient(mock.Object)
         {
-            BaseAddress = new Uri(CytrusWatcher.BASE_URL)
+            BaseAddress = new Uri(CytrusWatcher.BaseUrl)
         };
 
         Mock<EventHandler<NewCytrusDetectedEventArgs>> mockHandler = new();

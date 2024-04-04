@@ -10,8 +10,9 @@ namespace Cyberia.Api.Data.Alignments;
 public sealed class AlignmentsData
     : IDofusData
 {
-    private const string FILE_NAME = "alignment.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "alignment.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("A.a")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentData>))]
@@ -65,7 +66,7 @@ public sealed class AlignmentsData
 
     internal static async Task<AlignmentsData> LoadAsync()
     {
-        var data = await Datacenter.LoadDataAsync<AlignmentsData>(FILE_PATH);
+        var data = await Datacenter.LoadDataAsync<AlignmentsData>(s_filePath);
 
         foreach (var alignmentSpecializationData in data.AlignmentSpecializations)
         {

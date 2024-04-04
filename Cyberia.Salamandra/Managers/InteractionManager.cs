@@ -13,34 +13,34 @@ namespace Cyberia.Salamandra.Managers;
 
 public static partial class InteractionManager
 {
-    public const char PACKET_PARAMETER_SEPARATOR = '|';
+    public const char PacketParameterSeparator = '|';
 
     private static readonly Dictionary<string, Func<int, string[], ICustomMessageBuilder?>> _factory = new()
     {
-        { BreedMessageBuilder.PACKET_HEADER, BreedMessageBuilder.Create },
-        { CraftMessageBuilder.PACKET_HEADER, CraftMessageBuilder.Create },
-        { PaginatedCraftMessageBuilder.PACKET_HEADER, PaginatedCraftMessageBuilder.Create },
-        { HouseMessageBuilder.PACKET_HEADER, HouseMessageBuilder.Create },
-        { PaginatedHouseMessageBuilder.PACKET_HEADER, PaginatedHouseMessageBuilder.Create },
-        { IncarnationMessageBuilder.PACKET_HEADER, IncarnationMessageBuilder.Create },
-        { PaginatedIncarnationMessageBuilder.PACKET_HEADER, PaginatedIncarnationMessageBuilder.Create },
-        { ItemMessageBuilder.PACKET_HEADER, ItemMessageBuilder.Create },
-        { PaginatedItemMessageBuilder.PACKET_HEADER, PaginatedItemMessageBuilder.Create },
-        { ItemSetMessageBuilder.PACKET_HEADER, ItemSetMessageBuilder.Create },
-        { PaginatedItemSetMessageBuilder.PACKET_HEADER, PaginatedItemSetMessageBuilder.Create },
-        { LangsMessageBuilder.PACKET_HEADER, LangsMessageBuilder.Create },
-        { MapMessageBuilder.PACKET_HEADER, MapMessageBuilder.Create },
-        { PaginatedMapMessageBuilder.PACKET_HEADER, PaginatedMapMessageBuilder.Create },
-        { PaginatedMapSubAreaMessageBuilder.PACKET_HEADER, PaginatedMapSubAreaMessageBuilder.Create },
-        { PaginatedMapAreaMessageBuilder.PACKET_HEADER, PaginatedMapAreaMessageBuilder.Create },
-        { MonsterMessageBuilder.PACKET_HEADER, MonsterMessageBuilder.Create },
-        { PaginatedMonsterMessageBuilder.PACKET_HEADER, PaginatedMonsterMessageBuilder.Create },
-        { QuestMessageBuilder.PACKET_HEADER, QuestMessageBuilder.Create },
-        { PaginatedQuestMessageBuilder.PACKET_HEADER, PaginatedQuestMessageBuilder.Create },
-        { RuneItemMessageBuilder.PACKET_HEADER, RuneItemMessageBuilder.Create },
-        { PaginatedRuneItemMessageBuilder.PACKET_HEADER, PaginatedRuneItemMessageBuilder.Create },
-        { SpellMessageBuilder.PACKET_HEADER, SpellMessageBuilder.Create },
-        { PaginatedSpellMessageBuilder.PACKET_HEADER, PaginatedSpellMessageBuilder.Create }
+        { BreedMessageBuilder.PacketHeader, BreedMessageBuilder.Create },
+        { CraftMessageBuilder.PacketHeader, CraftMessageBuilder.Create },
+        { PaginatedCraftMessageBuilder.PacketHeader, PaginatedCraftMessageBuilder.Create },
+        { HouseMessageBuilder.PacketHeader, HouseMessageBuilder.Create },
+        { PaginatedHouseMessageBuilder.PacketHeader, PaginatedHouseMessageBuilder.Create },
+        { IncarnationMessageBuilder.PacketHeader, IncarnationMessageBuilder.Create },
+        { PaginatedIncarnationMessageBuilder.PacketHeader, PaginatedIncarnationMessageBuilder.Create },
+        { ItemMessageBuilder.PacketHeader, ItemMessageBuilder.Create },
+        { PaginatedItemMessageBuilder.PacketHeader, PaginatedItemMessageBuilder.Create },
+        { ItemSetMessageBuilder.PacketHeader, ItemSetMessageBuilder.Create },
+        { PaginatedItemSetMessageBuilder.PacketHeader, PaginatedItemSetMessageBuilder.Create },
+        { LangsMessageBuilder.PacketHeader, LangsMessageBuilder.Create },
+        { MapMessageBuilder.PacketHeader, MapMessageBuilder.Create },
+        { PaginatedMapMessageBuilder.PacketHeader, PaginatedMapMessageBuilder.Create },
+        { PaginatedMapSubAreaMessageBuilder.PacketHeader, PaginatedMapSubAreaMessageBuilder.Create },
+        { PaginatedMapAreaMessageBuilder.PacketHeader, PaginatedMapAreaMessageBuilder.Create },
+        { MonsterMessageBuilder.PacketHeader, MonsterMessageBuilder.Create },
+        { PaginatedMonsterMessageBuilder.PacketHeader, PaginatedMonsterMessageBuilder.Create },
+        { QuestMessageBuilder.PacketHeader, QuestMessageBuilder.Create },
+        { PaginatedQuestMessageBuilder.PacketHeader, PaginatedQuestMessageBuilder.Create },
+        { RuneItemMessageBuilder.PacketHeader, RuneItemMessageBuilder.Create },
+        { PaginatedRuneItemMessageBuilder.PacketHeader, PaginatedRuneItemMessageBuilder.Create },
+        { SpellMessageBuilder.PacketHeader, SpellMessageBuilder.Create },
+        { PaginatedSpellMessageBuilder.PacketHeader, PaginatedSpellMessageBuilder.Create }
     };
 
     [GeneratedRegex(@"SELECT\d+", RegexOptions.Compiled)]
@@ -51,13 +51,13 @@ public static partial class InteractionManager
         StringBuilder packetBuilder = new();
 
         packetBuilder.Append(header);
-        packetBuilder.Append(PACKET_PARAMETER_SEPARATOR);
+        packetBuilder.Append(PacketParameterSeparator);
         packetBuilder.Append(version);
 
         if (parameters.Length > 0)
         {
-            packetBuilder.Append(PACKET_PARAMETER_SEPARATOR);
-            packetBuilder.Append(string.Join(PACKET_PARAMETER_SEPARATOR, parameters));
+            packetBuilder.Append(PacketParameterSeparator);
+            packetBuilder.Append(string.Join(PacketParameterSeparator, parameters));
         }
 
         return packetBuilder.ToString();
@@ -78,7 +78,7 @@ public static partial class InteractionManager
         var response = new DiscordInteractionResponseBuilder();
 
         var decomposedPacket = (SelectComponentPacketRegex().IsMatch(e.Id) ? e.Values[0] : e.Id)
-            .Split(PACKET_PARAMETER_SEPARATOR, StringSplitOptions.RemoveEmptyEntries);
+            .Split(PacketParameterSeparator, StringSplitOptions.RemoveEmptyEntries);
 
         if (decomposedPacket.Length < 2)
         {

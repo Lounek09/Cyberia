@@ -19,7 +19,7 @@ public static class ExtendDiscordEmbedBuilder
 {
     public static DiscordEmbedBuilder AddEmptyField(this DiscordEmbedBuilder embed, bool inline = false)
     {
-        return embed.AddField(Constant.ZERO_WIDTH_SPACE, Constant.ZERO_WIDTH_SPACE, inline);
+        return embed.AddField(Constant.ZeroWidthSpace, Constant.ZeroWidthSpace, inline);
     }
 
     public static DiscordEmbedBuilder AddFields(this DiscordEmbedBuilder embed, string name, IEnumerable<string> rows, bool inline = false)
@@ -163,7 +163,7 @@ public static class ExtendDiscordEmbedBuilder
         if (itemTypeData is not null && itemTypeData.EffectArea != EffectArea.Default)
         {
             builder.Append("\nZone : ");
-            builder.Append(Emojis.Area(itemTypeData.EffectArea.Id));
+            builder.Append(Emojis.EffectArea(itemTypeData.EffectArea.Id));
             builder.Append(' ');
             builder.Append(itemTypeData.EffectArea.GetDescription());
         }
@@ -284,7 +284,7 @@ public static class ExtendDiscordEmbedBuilder
 
             var effectDescription = parametersDecorator is null ? effect.GetDescription() : effect.GetDescription().ToString(parametersDecorator);
 
-            var areaInfo = effect.EffectArea.Size == EffectArea.Default.Size ? string.Empty : $" - {Emojis.Area(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
+            var areaInfo = effect.EffectArea.Size == EffectArea.Default.Size ? string.Empty : $" - {Emojis.EffectArea(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
 
             var effectParse = $"{emoji} {effectDescription}{areaInfo}";
 

@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Dialogs;
 public sealed class DialogsData
     : IDofusData
 {
-    private const string FILE_NAME = "dialog.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "dialog.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("D.q")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, DialogQuestionData>))]
@@ -28,7 +29,7 @@ public sealed class DialogsData
 
     internal static async Task<DialogsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<DialogsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<DialogsData>(s_filePath);
     }
 
     public DialogQuestionData? GetDialogQuestionDataById(int id)

@@ -17,11 +17,11 @@ public sealed class CytrusManifestTests
     [TestInitialize]
     public void Initialize()
     {
-        var bytes = File.ReadAllBytes(SharedData.CURRENT_MANIFEST_PATH);
+        var bytes = File.ReadAllBytes(SharedData.CurrentNanifestPath);
         ByteBuffer buffer = new(bytes);
         _currentManifest = Manifest.GetRootAsManifest(buffer);
 
-        bytes = File.ReadAllBytes(SharedData.MODEL_MANIFEST_PATH);
+        bytes = File.ReadAllBytes(SharedData.ModelManifestPath);
         buffer = new(bytes);
         _modelManifest = Manifest.GetRootAsManifest(buffer);
 
@@ -32,9 +32,9 @@ public sealed class CytrusManifestTests
     [TestCleanup]
     public void Cleanup()
     {
-        if (Directory.Exists(CytrusWatcher.OUTPUT_PATH))
+        if (Directory.Exists(CytrusWatcher.OutputPath))
         {
-            Directory.Delete(CytrusWatcher.OUTPUT_PATH, true);
+            Directory.Delete(CytrusWatcher.OutputPath, true);
         }
     }
 
@@ -44,10 +44,10 @@ public sealed class CytrusManifestTests
     public async Task GetManifestAsync_WhenRequestIsSuccessful_ReturnsManifest()
     {
         var game = "retro";
-        var platform = CytrusGame.WINDOWS_PLATFORM;
-        var release = CytrusGame.MAIN_RELEASE;
+        var platform = CytrusGame.WindowsPlatform;
+        var release = CytrusGame.MainRelease;
         var version = "6.0_1.42.1.3205.227-d31f250";
-        var bytes = File.ReadAllBytes(SharedData.CURRENT_MANIFEST_PATH);
+        var bytes = File.ReadAllBytes(SharedData.CurrentNanifestPath);
 
         var mock = SharedData.SetupMockHttpMessageHandlerForSuccessfullResponse(
             new HttpResponseMessage()
@@ -59,7 +59,7 @@ public sealed class CytrusManifestTests
 
         CytrusWatcher.HttpClient = new(mock.Object)
         {
-            BaseAddress = new Uri(CytrusWatcher.BASE_URL)
+            BaseAddress = new Uri(CytrusWatcher.BaseUrl)
         };
 
         var result = await CytrusManifest.GetManifestAsync(game, platform, release, version);
@@ -71,8 +71,8 @@ public sealed class CytrusManifestTests
     public async Task GetManifestAsync_WhenRequestFails_ReturnsNull()
     {
         var game = "retro";
-        var platform = CytrusGame.WINDOWS_PLATFORM;
-        var release = CytrusGame.MAIN_RELEASE;
+        var platform = CytrusGame.WindowsPlatform;
+        var release = CytrusGame.MainRelease;
         var version = "6.0_1.42.1.3205.227-d31f250";
 
         var mock = SharedData.SetupMockHttpMessageHandlerForSuccessfullResponse(
@@ -84,7 +84,7 @@ public sealed class CytrusManifestTests
 
         CytrusWatcher.HttpClient = new HttpClient(mock.Object)
         {
-            BaseAddress = new Uri(CytrusWatcher.BASE_URL)
+            BaseAddress = new Uri(CytrusWatcher.BaseUrl)
         };
 
         var result = await CytrusManifest.GetManifestAsync(game, platform, release, version);
@@ -101,7 +101,7 @@ public sealed class CytrusManifestTests
     {
         var result = CytrusManifest.Diff(_currentManifest, _modelManifest);
 
-        var expected = File.ReadAllText(SharedData.MANIFEST_DIFF_PATH);
+        var expected = File.ReadAllText(SharedData.ManifestDiffPath);
 
         Assert.AreEqual(expected, result);
     }
@@ -114,8 +114,8 @@ public sealed class CytrusManifestTests
     public void GetGameManifestRoute_ReturnsCorrectRoute()
     {
         var game = "retro";
-        var platform = CytrusGame.WINDOWS_PLATFORM;
-        var release = CytrusGame.MAIN_RELEASE;
+        var platform = CytrusGame.WindowsPlatform;
+        var release = CytrusGame.MainRelease;
         var version = "6.0_1.42.1.3205.227-d31f250";
         var expectedRoute = $"{game}/releases/{release}/{platform}/{version}.manifest";
 

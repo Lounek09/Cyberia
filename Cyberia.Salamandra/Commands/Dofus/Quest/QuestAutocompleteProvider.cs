@@ -10,7 +10,7 @@ public sealed class QuestAutocompleteProvider : AutocompleteProvider
     protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
     {
         return DofusApi.Datacenter.QuestsData.GetQuestsDataByName(value)
-            .Take(Constant.MAX_CHOICE)
+            .Take(Constant.MaxChoice)
             .Select(x => new DiscordAutoCompleteChoice($"{x.Name.WithMaxLength(90)} ({x.Id})", x.Id.ToString()));
     }
 }

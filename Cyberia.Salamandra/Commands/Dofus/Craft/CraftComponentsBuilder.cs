@@ -17,7 +17,7 @@ public static class CraftComponentsBuilder
     public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, IEnumerable<CraftData> craftsData, int qte = 1, bool disable = false)
     {
         var options = craftsData
-            .Take(Constant.MAX_SELECT_OPTION)
+            .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(x.Id);

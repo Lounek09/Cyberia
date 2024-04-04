@@ -5,8 +5,9 @@ namespace Cyberia.Api.Data.Guilds;
 public sealed class GuildsData
     : IDofusData
 {
-    private const string FILE_NAME = "guilds.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "guilds.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("GU.b")]
     public GuildData Guild { get; init; }
@@ -19,6 +20,6 @@ public sealed class GuildsData
 
     internal static async Task<GuildsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<GuildsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<GuildsData>(s_filePath);
     }
 }

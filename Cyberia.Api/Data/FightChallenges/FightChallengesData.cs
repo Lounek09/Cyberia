@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.FightChallenges;
 public sealed class FightChallengesData
     : IDofusData
 {
-    private const string FILE_NAME = "fightChallenge.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "fightChallenge.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("FC")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, FightChallengeData>))]
@@ -23,7 +24,7 @@ public sealed class FightChallengesData
 
     internal static async Task<FightChallengesData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<FightChallengesData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<FightChallengesData>(s_filePath);
     }
 
     public FightChallengeData? GetFightChallenge(int id)

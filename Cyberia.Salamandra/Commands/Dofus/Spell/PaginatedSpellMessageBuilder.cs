@@ -9,8 +9,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<SpellData>
 {
-    public const string PACKET_HEADER = "PS";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "PS";
+    public const int PacketVersion = 1;
 
     private readonly string _search;
 
@@ -22,7 +22,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
 
     public static PaginatedSpellMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 2 &&
             int.TryParse(parameters[1], out var selectedPageIndex))
         {
@@ -38,7 +38,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
 
     public static string GetPacket(string search, int selectedPageIndex = 0, PaginatedAction action = PaginatedAction.None)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, (int)action, selectedPageIndex, search);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, (int)action, selectedPageIndex, search);
     }
 
     protected override IEnumerable<string> GetContent()

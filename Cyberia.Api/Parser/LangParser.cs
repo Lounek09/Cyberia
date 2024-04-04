@@ -10,17 +10,17 @@ namespace Cyberia.Api.Parser;
 
 public static partial class LangParser
 {
-    private const string KEY_VALUE_SEPARATOR = " = ";
+    private const string c_keyValueSeparator = " = ";
 
-    private static readonly string[] _ignoredLangs = ["dungeons", "effects", "lang"];
-    private static readonly string[] _ignoredLines = ["new Object();", "new Array();"];
+    private static readonly IReadOnlyList<string> s_ignoredLangs = ["dungeons", "effects", "lang"];
+    private static readonly IReadOnlyList<string> s_ignoredLines = ["new Object();", "new Array();"];
 
     public static bool Launch(LangType type, LangLanguage language)
     {
         var langRepository = LangsWatcher.LangRepositories[(type, language)];
         foreach (var lang in langRepository.Langs)
         {
-            if (_ignoredLangs.Contains(lang.Name))
+            if (s_ignoredLangs.Contains(lang.Name))
             {
                 continue;
             }
@@ -65,7 +65,7 @@ public static partial class LangParser
             return false;
         }
 
-        File.WriteAllText(Path.Join(DofusApi.OUTPUT_PATH, $"{lang.Name}.json"), json);
+        File.WriteAllText(Path.Join(DofusApi.OutputPath, $"{lang.Name}.json"), json);
         return true;
     }
 
@@ -78,12 +78,12 @@ public static partial class LangParser
 
         foreach (var line in lines)
         {
-            if (_ignoredLines.Any(x => line.EndsWith(x)))
+            if (s_ignoredLines.Any(x => line.EndsWith(x)))
             {
                 continue;
             }
 
-            var lineSplit = line.Split(KEY_VALUE_SEPARATOR, 2);
+            var lineSplit = line.Split(c_keyValueSeparator, 2);
             if (lineSplit.Length < 2)
             {
                 continue;

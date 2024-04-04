@@ -9,9 +9,9 @@ public record struct RuneBundle(RuneData RuneData, int BaAmount, int PaAmount, i
 
 public static class RuneManager
 {
-    public const double MIN_MULTIPLICATOR = 0.9;
-    public const double AVERAGE_MULTIPLICATOR = 1;
-    public const double MAX_MULTIPLICATOR = 1.1;
+    public const double MinMultiplicator = 0.9;
+    public const double AverageMultiplicator = 1;
+    public const double MaxMultiplicator = 1.1;
 
     public static double GetPercentStatExtractable(RuneData runeData, int itemLvl, int amount)
     {
@@ -26,17 +26,17 @@ public static class RuneManager
     {
         var multiplicator = GetRequiredStatAmountExtractableToObtainRune(runeData, type) / (GetPercentStatExtractable(runeData, itemLvl, statAmount) / 100) / statAmount;
 
-        if (multiplicator <= MIN_MULTIPLICATOR)
+        if (multiplicator <= MinMultiplicator)
         {
             return 100;
         }
 
-        if (multiplicator >= MAX_MULTIPLICATOR)
+        if (multiplicator >= MaxMultiplicator)
         {
             return 0;
         }
 
-        return (multiplicator - MAX_MULTIPLICATOR) / (MIN_MULTIPLICATOR - MAX_MULTIPLICATOR) * 100;
+        return (multiplicator - MaxMultiplicator) / (MinMultiplicator - MaxMultiplicator) * 100;
     }
 
     public static RuneBundle GetRuneBundleFromStat(RuneData runeData, int itemLvl, int statAmount, double? multiplicator = null)
@@ -146,7 +146,7 @@ public static class RuneManager
 
     private static double GetRandomMultiplicator()
     {
-        return new Random().NextDouble() * (MAX_MULTIPLICATOR - MIN_MULTIPLICATOR) + MIN_MULTIPLICATOR;
+        return new Random().NextDouble() * (MaxMultiplicator - MinMultiplicator) + MinMultiplicator;
     }
 
     private static double GetStatAmountExtractable(RuneData runeData, int itemLvl, int statAmount, double multiplicator)

@@ -9,8 +9,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<CraftData>
 {
-    public const string PACKET_HEADER = "PC";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "PC";
+    public const int PacketVersion = 1;
 
     private readonly string _search;
     private readonly int _qte;
@@ -24,7 +24,7 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
 
     public static PaginatedCraftMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 3 &&
             int.TryParse(parameters[1], out var selectedPageIndex) &&
             int.TryParse(parameters[3], out var qte))
@@ -41,7 +41,7 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
 
     public static string GetPacket(string search, int qte, int selectedPageIndex = 0, PaginatedAction action = PaginatedAction.None)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, (int)action, selectedPageIndex, search, qte);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, (int)action, selectedPageIndex, search, qte);
     }
 
     protected override IEnumerable<string> GetContent()

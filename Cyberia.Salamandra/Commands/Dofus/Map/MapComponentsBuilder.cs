@@ -17,7 +17,7 @@ public static class MapComponentsBuilder
     public static DiscordButtonComponent PaginatedMapCoordinateButtonBuilder(MapData mapData, bool disable = false)
     {
         return new(ButtonStyle.Success,
-            PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.XCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{mapData.YCoord}"),
+            PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.XCoord}{InteractionManager.PacketParameterSeparator}{mapData.YCoord}"),
             mapData.GetCoordinate(),
             disable);
     }
@@ -35,7 +35,7 @@ public static class MapComponentsBuilder
     public static DiscordSelectComponent MapsSelectBuilder(int uniqueIndex, IEnumerable<MapData> mapsData, bool disable = false)
     {
         var options = mapsData
-            .Take(Constant.MAX_SELECT_OPTION)
+            .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
@@ -50,7 +50,7 @@ public static class MapComponentsBuilder
     public static DiscordSelectComponent MapSubAreasSelectBuilder(int uniqueIndex, IEnumerable<MapSubAreaData> mapSubAreasData, bool disable = false)
     {
         var options = mapSubAreasData
-            .Take(Constant.MAX_SELECT_OPTION)
+            .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
@@ -65,7 +65,7 @@ public static class MapComponentsBuilder
     public static DiscordSelectComponent MapAreasSelectBuilder(int uniqueIndex, IEnumerable<MapAreaData> mapAreasData, bool disable = false)
     {
         var options = mapAreasData
-            .Take(Constant.MAX_SELECT_OPTION)
+            .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(

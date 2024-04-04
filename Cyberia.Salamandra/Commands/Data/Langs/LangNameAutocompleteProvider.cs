@@ -28,7 +28,7 @@ public sealed class LangNameAutocompleteProvider : AutocompleteProvider
 
         return LangsWatcher.LangRepositories[(type, language)]
             .GetAllByName(value)
-            .Take(Constant.MAX_CHOICE)
+            .Take(Constant.MaxChoice)
             .Select(x => new DiscordAutoCompleteChoice(x.Name, x.Name));
     }
 }

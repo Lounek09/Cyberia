@@ -22,9 +22,9 @@ public sealed class LangTests
     [TestCleanup]
     public void Cleanup()
     {
-        if (Directory.Exists(LangsWatcher.OUTPUT_PATH))
+        if (Directory.Exists(LangsWatcher.OutputPath))
         {
-            Directory.Delete(LangsWatcher.OUTPUT_PATH, true);
+            Directory.Delete(LangsWatcher.OutputPath, true);
         }
     }
 
@@ -37,13 +37,13 @@ public sealed class LangTests
             new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = new ByteArrayContent(File.ReadAllBytes(SharedData.RANKS_SWF_PATH))
+                Content = new ByteArrayContent(File.ReadAllBytes(SharedData.RanksSwfPath))
             }
         );
 
         LangsWatcher.HttpClient = new HttpClient(mock.Object)
         {
-            BaseAddress = new Uri(LangsWatcher.BASE_URL)
+            BaseAddress = new Uri(LangsWatcher.BaseUrl)
         };
 
         var success = await _lang.DownloadAsync();
@@ -58,7 +58,7 @@ public sealed class LangTests
 
         LangsWatcher.HttpClient = new HttpClient(mock.Object)
         {
-            BaseAddress = new Uri(LangsWatcher.BASE_URL)
+            BaseAddress = new Uri(LangsWatcher.BaseUrl)
         };
 
         var success = await _lang.DownloadAsync();
@@ -74,8 +74,8 @@ public sealed class LangTests
     public void Extract_WhenFileExists_ExtractionSuccessful()
     {
         Directory.CreateDirectory(_lang.OutputPath);
-        File.WriteAllBytes(_lang.FilePath, File.ReadAllBytes(SharedData.RANKS_SWF_PATH));
-        var expected = File.ReadAllLines(SharedData.RANKS_CURRENT_PATH);
+        File.WriteAllBytes(_lang.FilePath, File.ReadAllBytes(SharedData.RanksSwfPath));
+        var expected = File.ReadAllLines(SharedData.RanksCurrentPath);
 
         var success = _lang.Extract();
         var result = File.ReadAllLines(_lang.CurrentDecompiledFilePath);
@@ -100,9 +100,9 @@ public sealed class LangTests
     public void Diff_WhenCurrentAndOldExtractedFileExist_ReturnsTrueAndWritesDiffFile()
     {
         Directory.CreateDirectory(_lang.OutputPath);
-        File.WriteAllText(_lang.CurrentDecompiledFilePath, File.ReadAllText(SharedData.RANKS_CURRENT_PATH));
-        File.WriteAllText(_lang.OldDecompiledFilePath, File.ReadAllText(SharedData.RANKS_OLD_PATH));
-        var expected = File.ReadAllText(SharedData.RANKS_DIFF_PATH);
+        File.WriteAllText(_lang.CurrentDecompiledFilePath, File.ReadAllText(SharedData.RanksCurrentPath));
+        File.WriteAllText(_lang.OldDecompiledFilePath, File.ReadAllText(SharedData.RanksOldPath));
+        var expected = File.ReadAllText(SharedData.RanksDiffPath);
 
         var success = _lang.Diff();
         var result = File.ReadAllText(_lang.DiffFilePath);
@@ -116,9 +116,9 @@ public sealed class LangTests
     public void Diff_WhenCurrentAndOldExtractedFileExistButAreTheSame_ReturnsTrueAndDeleteDiffFile()
     {
         Directory.CreateDirectory(_lang.OutputPath);
-        File.WriteAllText(_lang.CurrentDecompiledFilePath, File.ReadAllText(SharedData.RANKS_CURRENT_PATH));
-        File.WriteAllText(_lang.OldDecompiledFilePath, File.ReadAllText(SharedData.RANKS_CURRENT_PATH));
-        File.WriteAllText(_lang.DiffFilePath, File.ReadAllText(SharedData.RANKS_DIFF_PATH));
+        File.WriteAllText(_lang.CurrentDecompiledFilePath, File.ReadAllText(SharedData.RanksCurrentPath));
+        File.WriteAllText(_lang.OldDecompiledFilePath, File.ReadAllText(SharedData.RanksCurrentPath));
+        File.WriteAllText(_lang.DiffFilePath, File.ReadAllText(SharedData.RanksDiffPath));
 
         var success = _lang.Diff();
 

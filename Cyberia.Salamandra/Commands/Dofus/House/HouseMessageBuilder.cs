@@ -10,8 +10,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class HouseMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "H";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "H";
+    public const int PacketVersion = 1;
 
     private readonly HouseData _houseData;
     private readonly int _selectedMapIndex;
@@ -28,7 +28,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
     public static HouseMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var houseId) &&
             int.TryParse(parameters[1], out var selectedMapIndex))
@@ -45,7 +45,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int houseId, int selectedMapIndex = -1)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, houseId, selectedMapIndex);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, houseId, selectedMapIndex);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()

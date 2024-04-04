@@ -118,8 +118,8 @@ public sealed class ItemData
         {
             return !Ceremonial &&
                 Enhanceable &&
-                ItemSuperTypeData.ENHANCEABLE_SUPER_TYPES.Contains(itemTypeData.ItemSuperTypeId) &&
-                !ItemTypeData.NON_ENHANCEABLE_TYPES_WEAPON.Contains(itemTypeData.Id);
+                ItemSuperTypeData.EnhanceableSuperTypes.Contains(itemTypeData.ItemSuperTypeId) &&
+                !ItemTypeData.NonEnhanceableTypesWeapon.Contains(itemTypeData.Id);
         }
 
         return false;
@@ -145,7 +145,7 @@ public sealed class ItemData
         var itemTypeData = GetItemTypeData();
         var itemStatsData = GetItemStatsData();
 
-        var isQuestItem = itemTypeData is not null && itemTypeData.ItemSuperTypeId == ItemSuperTypeData.SUPER_TYPE_QUEST;
+        var isQuestItem = itemTypeData is not null && itemTypeData.ItemSuperTypeId == ItemSuperTypeData.Quest;
         var isLinkedToAccount = itemStatsData is not null && itemStatsData.Effects.OfType<MarkNotTradableEffect>().Any(x => x.IsLinkedToAccount());
         var isUnbreakable = itemStatsData is not null && itemStatsData.Effects.Any(x => x is ItemUnbreakableEffect);
 
@@ -154,6 +154,6 @@ public sealed class ItemData
 
     public int GetNpcRetailPrice()
     {
-        return Price == 0 ? 0 : Math.Max(1, (int)Math.Round(Price * NpcData.RETAIL_RATIO));
+        return Price == 0 ? 0 : Math.Max(1, (int)Math.Round(Price * NpcData.RetailRatio));
     }
 }

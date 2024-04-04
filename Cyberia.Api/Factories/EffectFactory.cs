@@ -11,7 +11,7 @@ public readonly record struct EffectParameters(long Param1, long Param2, long Pa
 
 public static class EffectFactory
 {
-    private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaCollection, EffectArea, IEffect>> _factory =
+    private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaCollection, EffectArea, IEffect>> s_factory =
         new Dictionary<int, Func<int, EffectParameters, int, int, CriteriaCollection, EffectArea, IEffect>>()
         {
             { 4, CharacterTeleportOnSameMapEffect.Create },
@@ -415,7 +415,7 @@ public static class EffectFactory
 
     public static IEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
     {
-        if (_factory.TryGetValue(effectId, out var builder))
+        if (s_factory.TryGetValue(effectId, out var builder))
         {
             return builder(effectId, parameters, duration, probability, criteria, effectArea);
         }

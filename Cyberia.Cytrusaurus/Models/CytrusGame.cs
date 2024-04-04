@@ -7,14 +7,14 @@ namespace Cyberia.Cytrusaurus.Models;
 /// </summary>
 public sealed class CytrusGame
 {
-    public const string META_ASSETS = "meta";
+    public const string MetaAssets = "meta";
 
-    public const string DARWIN_PLATFORM = "darwin";
-    public const string LINUX_PLATFORM = "linux";
-    public const string WINDOWS_PLATFORM = "windows";
+    public const string DarwinPlatform = "darwin";
+    public const string LinuxPlatform = "linux";
+    public const string WindowsPlatform = "windows";
 
-    public const string MAIN_RELEASE = "main";
-    public const string BETA_RELEASE = "beta";
+    public const string MainRelease = "main";
+    public const string BetaRelease = "beta";
 
     /// <summary>
     /// Name of the game

@@ -9,8 +9,8 @@ namespace Cyberia.Salamandra.Commands.Dofus;
 
 public sealed class MapMessageBuilder : ICustomMessageBuilder
 {
-    public const string PACKET_HEADER = "MA";
-    public const int PACKET_VERSION = 1;
+    public const string PacketHeader = "MA";
+    public const int PacketVersion = 1;
 
     private readonly MapData _mapData;
     private readonly MapSubAreaData? _mapSubAreaData;
@@ -27,7 +27,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     public static MapMessageBuilder? Create(int version, string[] parameters)
     {
-        if (version == PACKET_VERSION &&
+        if (version == PacketVersion &&
             parameters.Length > 0 &&
             int.TryParse(parameters[0], out var mapId))
         {
@@ -43,7 +43,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int mapId)
     {
-        return InteractionManager.ComponentPacketBuilder(PACKET_HEADER, PACKET_VERSION, mapId);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, mapId);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()

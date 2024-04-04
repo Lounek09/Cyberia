@@ -66,7 +66,7 @@ public sealed class HouseCommandModule : ApplicationCommandModule
         }
         else
         {
-            await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PACKET_PARAMETER_SEPARATOR}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
+            await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PacketParameterSeparator}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
     }
 

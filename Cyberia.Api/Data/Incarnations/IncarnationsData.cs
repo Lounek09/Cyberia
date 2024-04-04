@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Incarnations;
 public sealed class IncarnationsData
     : IDofusData
 {
-    private const string FILE_NAME = "incarnation.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "incarnation.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("INCA")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, IncarnationData>))]
@@ -23,7 +24,7 @@ public sealed class IncarnationsData
 
     internal static async Task<IncarnationsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<IncarnationsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<IncarnationsData>(s_filePath);
     }
 
     public IncarnationData? GetIncarnationDataByItemId(int id)

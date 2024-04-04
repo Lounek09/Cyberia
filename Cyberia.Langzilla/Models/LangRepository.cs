@@ -10,7 +10,7 @@ namespace Cyberia.Langzilla;
 /// </summary>
 public sealed class LangRepository
 {
-    internal const string FILE_NAME = "data.json";
+    internal const string FileName = "data.json";
 
     /// <summary>
     /// Gets the type of the langs.
@@ -160,7 +160,7 @@ public sealed class LangRepository
         }
         catch (HttpRequestException e)
         {
-            Log.Error(e, "An error occurred while sending Get request to {VersionFileRoute}}", Path.Join(LangsWatcher.BASE_URL, versionFileRoute));
+            Log.Error(e, "An error occurred while sending Get request to {VersionFileRoute}}", Path.Join(LangsWatcher.BaseUrl, versionFileRoute));
         }
 
         return string.Empty;
@@ -218,7 +218,7 @@ public sealed class LangRepository
     /// </summary>
     internal void Save()
     {
-        var filePath = Path.Join(OutputPath, FILE_NAME);
+        var filePath = Path.Join(OutputPath, FileName);
         var json = JsonSerializer.Serialize(this);
 
         File.WriteAllText(filePath, json);

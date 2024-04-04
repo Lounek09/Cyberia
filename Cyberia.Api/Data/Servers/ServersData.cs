@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Servers;
 public sealed class ServersData
     : IDofusData
 {
-    private const string FILE_NAME = "servers.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "servers.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("SR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ServerData>))]
@@ -48,7 +49,7 @@ public sealed class ServersData
 
     internal static async Task<ServersData> LoadAsync()
     {
-        var data = await Datacenter.LoadDataAsync<ServersData>(FILE_PATH);
+        var data = await Datacenter.LoadDataAsync<ServersData>(s_filePath);
 
         foreach (var serverPopulationData in data.ServerPopulations.Values)
         {

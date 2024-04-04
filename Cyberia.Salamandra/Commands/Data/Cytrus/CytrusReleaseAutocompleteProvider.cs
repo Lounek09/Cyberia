@@ -29,7 +29,7 @@ public sealed class CytrusReleaseAutocompleteProvider : AutocompleteProvider
         }
 
         return cytrusGame.GetReleasesByPlatformName(platform)
-            .Take(Constant.MAX_CHOICE)
+            .Take(Constant.MaxChoice)
             .Select(x => new DiscordAutoCompleteChoice(x.Key.Capitalize(), x.Key));
     }
 }

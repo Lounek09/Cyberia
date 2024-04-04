@@ -16,7 +16,7 @@ public static class HouseComponentsBuilder
     public static DiscordSelectComponent HousesSelectBuilder(int uniqueIndex, IEnumerable<HouseData> housesData, bool disable = false)
     {
         var options = housesData
-            .Take(Constant.MAX_SELECT_OPTION)
+            .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(

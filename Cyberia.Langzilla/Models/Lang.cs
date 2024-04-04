@@ -181,7 +181,7 @@ public sealed class Lang
         }
         catch (HttpRequestException e)
         {
-            Log.Error(e, "An error occurred while sending Get request to {Url}", Path.Join(LangsWatcher.OUTPUT_PATH, fileRoute));
+            Log.Error(e, "An error occurred while sending Get request to {Url}", Path.Join(LangsWatcher.OutputPath, fileRoute));
         }
 
         return false;

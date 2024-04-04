@@ -1,7 +1,10 @@
-﻿namespace Cyberia.Salamandra;
+﻿using System.Collections.Frozen;
+
+namespace Cyberia.Salamandra;
 
 public static class Emojis
 {
+    //TODO: Use a frozen dictionary for the emojis when the new Salamandra.Cdn is ready
     //Effects
     public const string TRAP_PERCENT = "<:trapPercent:801770569695232025>";
     public const string TRAP_DAMAGE = "<:trapDamage:801770569556164678>";
@@ -115,13 +118,13 @@ public static class Emojis
             141 => DEAD,
             163 => ATTACK_MP,
             162 or 166 => ATTACK_AP,
-            _ => EMPTY,
+            _ => Empty,
         };
     }
 
 
     //States
-    public static readonly Dictionary<int, string> STATES = new()
+    private static readonly FrozenDictionary<int, string> s_states = new Dictionary<int, string>()
     {
         { 0, "<:state_neutral:1067793405855408128>" },
         { 1, "<:state_drunk:1067793252717170748>" },
@@ -165,16 +168,16 @@ public static class Emojis
         { 60, "<:state_devoted:1067793248833257614>" },
         { 61, "<:state_aggressive:1067793137961013288>" },
         { 73, "<:state_boggedown:1067793144801939497>" }
-    };
+    }.ToFrozenDictionary();
 
     public static string State(int id)
     {
-        return STATES.TryGetValue(id, out var emoji) ? emoji : EMPTY;
+        return s_states.TryGetValue(id, out var emoji) ? emoji : Empty;
     }
 
 
     //Runes
-    public static readonly Dictionary<int, string> BA_RUNES = new()
+    private static readonly FrozenDictionary<int, string> s_baRunes = new Dictionary<int, string>()
     {
         { 1, "<:rune_fo:971137161153884221>" },
         { 2, "<:rune_sa:971137179432657017>" },
@@ -207,14 +210,14 @@ public static class Emojis
         { 29, "<:rune_neutral_re_per:971137183576629368>" },
         { 30, "<:rune_water_re_per:971137188899201124>" },
         { 31, "<:rune_hunting:971137189087944795>" }
-    };
+    }.ToFrozenDictionary();
 
     public static string BaRune(int id)
     {
-        return BA_RUNES.TryGetValue(id, out var emoji) ? emoji : EMPTY;
+        return s_baRunes.TryGetValue(id, out var emoji) ? emoji : Empty;
     }
 
-    public static readonly Dictionary<int, string> PA_RUNES = new()
+    private static readonly FrozenDictionary<int, string> s_paRunes = new Dictionary<int, string>()
     {
         { 1, "<:rune_pa_fo:971137184532922378>" },
         { 2, "<:rune_pa_sa:971137185392767089>" },
@@ -228,14 +231,14 @@ public static class Emojis
         { 18, "<:rune_pa_pi_per:971137185610891294>" },
         { 19, "<:rune_pa_ini:971137167957032960>" },
         { 20, "<:rune_pa_prospe:971137170217775104>" }
-    };
+    }.ToFrozenDictionary();
 
     public static string PaRune(int id)
     {
-        return PA_RUNES.TryGetValue(id, out var emoji) ? emoji : EMPTY;
+        return s_paRunes.TryGetValue(id, out var emoji) ? emoji : Empty;
     }
 
-    public static readonly Dictionary<int, string> RA_RUNES = new()
+    private static readonly FrozenDictionary<int, string> s_raRunes = new Dictionary<int, string>()
     {
         { 1, "<:rune_ra_fo:971137186927898666>" },
         { 2, "<:rune_ra_sa:971137188081307688>" },
@@ -247,15 +250,15 @@ public static class Emojis
         { 16, "<:rune_ra_pod:971137178006618162>" },
         { 18, "<:rune_ra_pi_per:971137187896766534>" },
         { 19, "<:rune_ra_ini:971137177071272006>" }
-    };
+    }.ToFrozenDictionary();
 
     public static string RaRune(int id)
     {
-        return RA_RUNES.TryGetValue(id, out var emoji) ? emoji : EMPTY;
+        return s_raRunes.TryGetValue(id, out var emoji) ? emoji : Empty;
     }
 
     //Areas
-    public static readonly Dictionary<int, string> AREAS = new()
+    private static readonly FrozenDictionary<int, string> s_effectAreas = new Dictionary<int, string>()
     {
         { 1, "<:area_cross:1107731330999013456>" },
         { 2, "<:area_perpendicular_line:1107731337886056521>" },
@@ -282,56 +285,56 @@ public static class Emojis
         { 80, "<:area_dot:1107731332160823346>" },
         { 84, "<:area_perpendicular_line:1107731337886056521>" },
         { 88, "<:area_cross:1107731330999013456>" }
-    };
+    }.ToFrozenDictionary();
 
-    public static string Area(int id)
+    public static string EffectArea(int id)
     {
-        return AREAS.TryGetValue(id, out var emoji) ? emoji : UNKNOWN;
+        return s_effectAreas.TryGetValue(id, out var emoji) ? emoji : Unknown;
     }
 
 
     //Bool
-    public const string TRUE = "<:true:971147169908289556>";
-    public const string FALSE = "<:false:971147169966997514>";
+    private const string c_true = "<:true:971147169908289556>";
+    private const string c_false = "<:false:971147169966997514>";
 
     public static string Bool(bool value)
     {
-        return value ? TRUE : FALSE;
+        return value ? c_true : c_false;
     }
 
 
     //Quests
-    public const string QUEST = "<:quest:1095984758921625712>";
-    public const string REPEATABLE_QUEST = "<:repeatable_quest:1095984761178165320>";
-    public const string ACCOUNT_QUEST = "<:account_quest:1095984762482597888>";
-    public const string ACCOUNT_REPEATABLE_QUEST = "<:account_repeatable_quest:1095984763812188201>";
+    private const string c_quest = "<:quest:1095984758921625712>";
+    private const string c_repeatableQuest = "<:repeatable_quest:1095984761178165320>";
+    private const string c_accountQuest = "<:account_quest:1095984762482597888>";
+    private const string c_accoutRepeatableQuest = "<:account_repeatable_quest:1095984763812188201>";
 
     public static string Quest(bool isRepeatable, bool isAccount)
     {
         if (isRepeatable && isAccount)
         {
-            return ACCOUNT_REPEATABLE_QUEST;
+            return c_accoutRepeatableQuest;
         }
 
         if (isAccount)
         {
-            return ACCOUNT_QUEST;
+            return c_accountQuest;
         }
 
         if (isRepeatable)
         {
-            return REPEATABLE_QUEST;
+            return c_repeatableQuest;
         }
 
-        return QUEST;
+        return c_quest;
     }
 
 
     //Others
-    public const string EMPTY = "<:empty:971146087572316230>";
-    public const string HOUSE = "<:house:971448610610884718>";
-    public const string DUNGEON = "<:dungeon:971144890928996352>";
-    public const string KAMAS = "<:kamas:971144891163885618>";
-    public const string XP = "<:xp:971144890870300732>";
-    public const string UNKNOWN = "<:unknown:1111058034941251695>";
+    public const string Empty = "<:empty:971146087572316230>";
+    public const string House = "<:house:971448610610884718>";
+    public const string Dungeon = "<:dungeon:971144890928996352>";
+    public const string Kamas = "<:kamas:971144891163885618>";
+    public const string Xp = "<:xp:971144890870300732>";
+    public const string Unknown = "<:unknown:1111058034941251695>";
 }

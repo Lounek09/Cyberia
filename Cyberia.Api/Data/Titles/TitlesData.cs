@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Titles;
 public sealed class TitlesData
     : IDofusData
 {
-    private const string FILE_NAME = "titles.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "titles.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("PT")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TitleData>))]
@@ -23,7 +24,7 @@ public sealed class TitlesData
 
     internal static async Task<TitlesData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<TitlesData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<TitlesData>(s_filePath);
     }
 
     public TitleData? GetTitleDataById(int id)

@@ -12,7 +12,7 @@ namespace Cyberia.Salamandra;
 
 public static class Bot
 {
-    public const string OUTPUT_PATH = "bot";
+    public const string OutputPath = "bot";
 
     public static BotConfig Config { get; private set; } = default!;
     public static DiscordClient Client { get; private set; } = default!;
@@ -20,7 +20,7 @@ public static class Bot
 
     public static void Initialize(BotConfig config)
     {
-        Directory.CreateDirectory(OUTPUT_PATH);
+        Directory.CreateDirectory(OutputPath);
 
         Config = config;
 

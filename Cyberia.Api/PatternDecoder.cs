@@ -4,7 +4,7 @@ namespace Cyberia.Api;
 
 public static class PatternDecoder
 {
-    private static readonly char[] HASH =
+    private static readonly char[] s_hash =
     [
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -46,7 +46,7 @@ public static class PatternDecoder
 
     public static int Base64(char value)
     {
-        return Array.IndexOf(HASH, value);
+        return Array.IndexOf(s_hash, value);
     }
 
     public static string Description<T>(string value, T parameter)

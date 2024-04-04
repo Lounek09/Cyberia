@@ -10,7 +10,7 @@ public sealed class CraftAutocompleteProvider : AutocompleteProvider
     protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
     {
         return DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value)
-            .Take(Constant.MAX_CHOICE)
+            .Take(Constant.MaxChoice)
             .Select(x =>
             {
                 var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(x.Id);

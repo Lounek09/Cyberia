@@ -8,8 +8,9 @@ namespace Cyberia.Api.Data.Pets;
 public class PetsData
     : IDofusData
 {
-    private const string FILE_NAME = "pets.json";
-    private static readonly string FILE_PATH = Path.Join(DofusApi.OUTPUT_PATH, FILE_NAME);
+    private const string c_fileName = "pets.json";
+
+    private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("PET")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, PetData>))]
@@ -23,7 +24,7 @@ public class PetsData
 
     internal static async Task<PetsData> LoadAsync()
     {
-        return await Datacenter.LoadDataAsync<PetsData>(FILE_PATH);
+        return await Datacenter.LoadDataAsync<PetsData>(s_filePath);
     }
 
     public PetData? GetPetDataByItemId(int id)

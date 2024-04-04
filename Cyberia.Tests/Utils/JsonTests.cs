@@ -5,14 +5,14 @@ namespace Cyberia.Tests.Utils;
 [TestClass]
 public class JsonTests
 {
-    private const string CURRENT_JSON = """
+    private const string c_currentJson = """
         {
             "name": "Fallanster",
             "age": 40
         }
         """;
 
-    private const string MODEL_JSON = """
+    private const string c_modelJson = """
         {
             "name": "Allisteria",
             "age": 18
@@ -25,7 +25,7 @@ public class JsonTests
     [TestMethod]
     public void Diff_WithEqualJsonNodes_ReturnsEmptyJsonObject()
     {
-        var value = JsonNode.Parse(CURRENT_JSON)!;
+        var value = JsonNode.Parse(c_currentJson)!;
 
         var result = value.Diff(value);
 
@@ -35,8 +35,8 @@ public class JsonTests
     [TestMethod]
     public void Diff_WithDifferentJsonNodes_ReturnsDifferences()
     {
-        var current = JsonNode.Parse(CURRENT_JSON)!;
-        var model = JsonNode.Parse(MODEL_JSON)!;
+        var current = JsonNode.Parse(c_currentJson)!;
+        var model = JsonNode.Parse(c_modelJson)!;
 
         var result = current.Diff(model);
 
@@ -51,7 +51,7 @@ public class JsonTests
     [TestMethod]
     public void DiffString_WithEqualJsonStrings_ReturnsEmptyString()
     {
-        var result = Json.Diff(CURRENT_JSON, CURRENT_JSON);
+        var result = Json.Diff(c_currentJson, c_currentJson);
 
         Assert.AreEqual(string.Empty, result);
     }
@@ -59,7 +59,7 @@ public class JsonTests
     [TestMethod]
     public void DiffString_WithDifferentJsonStrings_ReturnsDifferences()
     {
-        var result = Json.Diff(CURRENT_JSON, MODEL_JSON);
+        var result = Json.Diff(c_currentJson, c_modelJson);
 
         Assert.IsFalse(string.IsNullOrEmpty(result));
         Assert.IsTrue(result.Contains("name"));
@@ -70,10 +70,9 @@ public class JsonTests
     public void DiffString_WithInvalidJson_ReturnsEmptyString()
     {
         var invalidJson = "This is not a JSON string";
-        var validJson = MODEL_JSON;
 
-        var resultFromInvalidCurrent = Json.Diff(invalidJson, validJson);
-        var resultFromInvalidModel = Json.Diff(validJson, invalidJson);
+        var resultFromInvalidCurrent = Json.Diff(invalidJson, c_modelJson);
+        var resultFromInvalidModel = Json.Diff(c_modelJson, invalidJson);
 
         Assert.AreEqual(string.Empty, resultFromInvalidCurrent);
         Assert.AreEqual(string.Empty, resultFromInvalidModel);
