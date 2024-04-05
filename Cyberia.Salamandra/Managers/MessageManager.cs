@@ -88,7 +88,7 @@ public static class MessageManager
 
     public static async Task SendErrorMessage(DiscordEmbed embed)
     {
-        var channel = ChannelManager.LogChannel;
+        var channel = ChannelManager.ErrorChannel;
         if (channel is null)
         {
             return;
