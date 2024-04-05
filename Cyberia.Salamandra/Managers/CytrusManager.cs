@@ -1,5 +1,6 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Cytrusaurus.EventArgs;
+using Cyberia.Cytrusaurus.Models;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -117,44 +118,55 @@ public static class CytrusManager
         var document = JsonDocument.Parse(e.Diff);
         var root = document.RootElement;
 
-        if (!root.TryGetProperty("games", out var games))
+        if (!root.TryGetProperty("games", out var games) &&
+            games.ValueKind == JsonValueKind.Object)
         {
             return;
         }
 
         foreach (var game in games.EnumerateObject())
         {
-            if (!game.Value.TryGetProperty("platforms", out var platforms))
+            if (!game.Value.TryGetProperty("platforms", out var platforms) &&
+                platforms.ValueKind == JsonValueKind.Object)
             {
                 return;
             }
 
-            if (!platforms.TryGetProperty("windows", out var platform))
+            if (!platforms.TryGetProperty(CytrusGame.WindowsPlatform, out var platform) &&
+                platform.ValueKind == JsonValueKind.Object)
             {
                 return;
             }
 
             foreach (var release in platform.EnumerateObject())
             {
-                if (!release.Value.TryGetProperty("-", out var minus))
+                if (!release.Value.TryGetProperty("-", out var oldRelease) &&
+                    oldRelease.ValueKind == JsonValueKind.String)
                 {
                     return;
                 }
 
-                if (!release.Value.TryGetProperty("+", out var plus))
+                if (!release.Value.TryGetProperty("+", out var newRelease) &&
+                    newRelease.ValueKind == JsonValueKind.String)
                 {
                     return;
                 }
 
-                var oldVersion = minus.GetString();
-                var newVersion = plus.GetString();
+                var oldVersion = oldRelease.GetString();
+                var newVersion = newRelease.GetString();
 
                 if (string.IsNullOrEmpty(oldVersion) || string.IsNullOrEmpty(newVersion))
                 {
                     return;
                 }
 
-                await channel.SendCytrusManifestDiffMessageAsync(game.Name, "windows", release.Name, oldVersion, release.Name, newVersion);
+                await channel.SendCytrusManifestDiffMessageAsync(
+                    game.Name,
+                    CytrusGame.WindowsPlatform,
+                    release.Name,
+                    oldVersion,
+                    release.Name,
+                    newVersion);
             }
         }
     }
