@@ -1,4 +1,5 @@
-﻿using Cyberia.Salamandra.Managers;
+﻿using Cyberia.Salamandra.Enums;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.SlashCommands;

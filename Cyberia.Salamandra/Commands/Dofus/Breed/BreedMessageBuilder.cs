@@ -2,6 +2,7 @@
 using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.Spells;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

@@ -11,6 +11,6 @@ public sealed class KillCommandModule : ApplicationCommandModule
     {
         await ctx.CreateResponseAsync(@"\💀");
 
-        await Bot.Client.DisconnectAsync();
+        await ctx.Client.DisconnectAsync();
     }
 }

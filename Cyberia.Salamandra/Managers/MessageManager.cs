@@ -3,12 +3,13 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using System.Collections.Frozen;
+using System.Threading.Channels;
 
 namespace Cyberia.Salamandra.Managers;
 
 public static class MessageManager
 {
-    private static readonly FrozenDictionary<string, string> _hiddenCommands = new Dictionary<string, string>()
+    private static readonly FrozenDictionary<string, string> s_hiddenCommands = new Dictionary<string, string>()
     {
         { "tppttp", Path.Join(Bot.OutputPath, "onTotProut.mp3") },
         { "fppffp", Path.Join(Bot.OutputPath, "onFranckyPassion.mp3") },
@@ -18,22 +19,34 @@ public static class MessageManager
         { "monkeychan", Path.Join(Bot.OutputPath, "onMonkeyChan.mp4") }
     }.ToFrozenDictionary();
 
-    public static async Task OnMessageCreated(DiscordClient _, MessageCreateEventArgs e)
+    public static async Task OnMessageCreated(DiscordClient _, MessageCreateEventArgs args)
     {
-        var content = e.Message.Content;
-
-        if (!string.IsNullOrEmpty(content))
+        if (args.Author.IsBot || args.Channel.IsPrivate)
         {
-            var lastSpaceIndex = content.LastIndexOf(' ');
-            var lastWord = lastSpaceIndex > -1
-                ? content[(lastSpaceIndex + 1)..].ToString()
-                : content;
+            return;
+        }
 
-            if (_hiddenCommands.TryGetValue(lastWord, out var filePath))
+        var content = args.Message.Content;
+        if (string.IsNullOrWhiteSpace(content))
+        {
+            return;
+        }
+
+        var lastSpaceIndex = content.LastIndexOf(' ');
+        var lastWord = lastSpaceIndex > -1
+            ? content[(lastSpaceIndex + 1)..].ToString()
+            : content;
+
+        if (s_hiddenCommands.TryGetValue(lastWord, out var filePath))
+        {
+            var permissions = args.Channel.Guild.CurrentMember.PermissionsIn(args.Channel);
+            if (permissions.HasPermission(Permissions.ManageMessages))
             {
-                await DeleteMessage(e.Message);
-                await SendFile(e.Channel, filePath);
+                await args.Message.DeleteAsync();
             }
+
+            using var fileStream = File.OpenRead(filePath);
+            await args.Channel.SendMessage(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
         }
     }
 
@@ -62,12 +75,6 @@ public static class MessageManager
         await channel.SendMessageAsync(message);
     }
 
-    public static async Task SendFile(this DiscordChannel channel, string filePath)
-    {
-        using var fileStream = File.OpenRead(filePath);
-        await channel.SendMessage(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
-    }
-
     public static async Task SendLogMessage(string content)
     {
         var channel = ChannelManager.LogChannel;
@@ -88,32 +95,5 @@ public static class MessageManager
         }
 
         await channel.SendMessage(new DiscordMessageBuilder().AddEmbed(embed));
-    }
-
-    public static async Task DeleteMessage(this DiscordMessage message)
-    {
-        var channel = message.Channel;
-        if (channel is null)
-        {
-            Log.Error("Unknown channel for this message {MessageId}", message.Id);
-            return;
-        }
-
-        var permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
-
-        if (!permissions.HasPermission(Permissions.AccessChannels))
-        {
-            Log.Error("No permission to access to this channel {ChannelId}", channel.Id);
-            return;
-        }
-
-        if ((message.Author is not null && message.Author.Id == Bot.Client.CurrentUser.Id) ||
-            permissions.HasPermission(Permissions.ManageMessages))
-        {
-            await message.DeleteAsync();
-            return;
-        }
-
-        Log.Error("No permission to delete this message {MessageId}", message.Id);
     }
 }

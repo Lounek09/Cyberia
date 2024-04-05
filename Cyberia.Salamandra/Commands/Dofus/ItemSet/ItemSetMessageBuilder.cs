@@ -3,6 +3,7 @@ using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

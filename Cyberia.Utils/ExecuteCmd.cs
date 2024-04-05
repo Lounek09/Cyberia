@@ -56,12 +56,12 @@ public static class ExecuteCmd
     /// Handles the OutputDataReceived event of the Process.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The DataReceivedEventArgs instance containing the event data.</param>
-    private static void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+    /// <param name="args">The DataReceivedEventArgs instance containing the event data.</param>
+    private static void Process_OutputDataReceived(object sender, DataReceivedEventArgs args)
     {
-        if (!string.IsNullOrEmpty(e.Data))
+        if (!string.IsNullOrEmpty(args.Data))
         {
-            Log.Information(e.Data);
+            Log.Information(args.Data);
         }
     }
 
@@ -69,12 +69,12 @@ public static class ExecuteCmd
     /// Handles the ErrorDataReceived event of the Process.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The DataReceivedEventArgs instance containing the event data.</param>
-    private static void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+    /// <param name="args">The DataReceivedEventArgs instance containing the event data.</param>
+    private static void Process_ErrorDataReceived(object sender, DataReceivedEventArgs args)
     {
-        if (!string.IsNullOrEmpty(e.Data))
+        if (!string.IsNullOrEmpty(args.Data))
         {
-            Log.Error(e.Data);
+            Log.Error(args.Data);
         }
     }
 }

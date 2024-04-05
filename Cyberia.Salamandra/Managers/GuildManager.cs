@@ -5,17 +5,18 @@ namespace Cyberia.Salamandra.Managers;
 
 public static class GuildManager
 {
-    public static async Task OnGuildCreated(DiscordClient _, GuildCreateEventArgs e)
+    public static async Task OnGuildCreated(DiscordClient _, GuildCreateEventArgs args)
     {
-        await MessageManager.SendLogMessage($"""
-            [NEW] {Formatter.Bold(e.Guild.Name)} ({e.Guild.Id})
-            créé le : {e.Guild.CreationTimestamp:dd/MM/yyyy hh:mm}
-            Propriétaire : {Formatter.Sanitize(e.Guild.Owner.Username)} ({e.Guild.Owner.Mention})
+        await MessageManager.SendLogMessage(
+            $"""
+            [NEW] {Formatter.Bold(args.Guild.Name)} ({args.Guild.Id})
+            créé le : {args.Guild.CreationTimestamp:dd/MM/yyyy hh:mm}
+            Propriétaire : {Formatter.Sanitize(args.Guild.Owner.Username)} ({args.Guild.Owner.Mention})
             """);
     }
 
-    public static async Task OnGuildDeleted(DiscordClient _, GuildDeleteEventArgs e)
+    public static async Task OnGuildDeleted(DiscordClient _, GuildDeleteEventArgs args)
     {
-        await MessageManager.SendLogMessage($"[LOSE] {Formatter.Bold(e.Guild.Name)} ({e.Guild.Id})");
+        await MessageManager.SendLogMessage($"[LOSE] {Formatter.Bold(args.Guild.Name)} ({args.Guild.Id})");
     }
 }

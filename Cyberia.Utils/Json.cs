@@ -9,7 +9,7 @@ namespace Cyberia.Utils;
 /// </summary>
 public static class Json
 {
-    private static readonly JsonSerializerOptions _indentOptions = new()
+    private static readonly JsonSerializerOptions s_indentOptions = new()
     {
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         WriteIndented = true
@@ -47,7 +47,7 @@ public static class Json
         }
 
         var resultNode = currentNode.Diff(modelNode);
-        var result = resultNode.ToJsonString(_indentOptions);
+        var result = resultNode.ToJsonString(s_indentOptions);
 
         if (result.Equals("{}"))
         {

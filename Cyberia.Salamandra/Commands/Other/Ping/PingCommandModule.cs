@@ -6,6 +6,6 @@ public sealed class PingCommandModule : ApplicationCommandModule
     [SlashCommand("ping", "Retourne Pong")]
     public async Task Command(InteractionContext ctx)
     {
-        await ctx.CreateResponseAsync("Pong... " + Bot.Client.Ping + "ms !", true);
+        await ctx.CreateResponseAsync("Pong... " + ctx.Client.Ping + "ms !", true);
     }
 }

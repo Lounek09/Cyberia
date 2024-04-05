@@ -1,5 +1,6 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

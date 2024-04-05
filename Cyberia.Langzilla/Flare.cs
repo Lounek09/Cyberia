@@ -7,8 +7,8 @@ namespace Cyberia.Langzilla;
 /// </summary>
 internal static class Flare
 {
-    private static readonly object _lock = new();
-    private static readonly string _flarePath = GetFlarePath();
+    private static readonly object s_lock = new();
+    private static readonly string s_flarePath = GetFlarePath();
 
     /// <summary>
     /// Tries to extract the specified input SWF file.
@@ -25,9 +25,9 @@ internal static class Flare
             return false;
         }
 
-        lock (_lock)
+        lock (s_lock)
         {
-            if (!ExecuteCmd.Execute(_flarePath, inputFilePath))
+            if (!ExecuteCmd.Execute(s_flarePath, inputFilePath))
             {
                 outputFilePath = null;
                 return false;

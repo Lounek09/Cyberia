@@ -7,6 +7,7 @@ using Cyberia.Api.Data.ItemStats;
 using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -119,13 +120,13 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
         StringBuilder miscellaneousBuilder = new();
 
-        miscellaneousBuilder.Append(_itemData.Weight.ToStringThousandSeparator());
+        miscellaneousBuilder.Append(_itemData.Weight.ToFormattedString());
         miscellaneousBuilder.Append(" pod(s)");
 
         if (_itemData.Tradeable())
         {
             miscellaneousBuilder.Append(", se vend ");
-            miscellaneousBuilder.Append(_itemData.GetNpcRetailPrice().ToStringThousandSeparator());
+            miscellaneousBuilder.Append(_itemData.GetNpcRetailPrice().ToFormattedString());
             miscellaneousBuilder.Append(Emojis.Kamas);
             miscellaneousBuilder.Append(" aux pnj");
         }

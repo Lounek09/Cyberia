@@ -4,6 +4,7 @@ using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Values;
 using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

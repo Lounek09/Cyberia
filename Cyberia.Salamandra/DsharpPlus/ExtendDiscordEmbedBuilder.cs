@@ -79,7 +79,7 @@ public static class ExtendDiscordEmbedBuilder
         var ingredients = recursive ? craftData.GetIngredientsWithSubCraft(qte) : craftData.GetIngredients(qte);
         foreach (var ingredient in ingredients)
         {
-            var quantity = Formatter.Bold(ingredient.Value.ToStringThousandSeparator());
+            var quantity = Formatter.Bold(ingredient.Value.ToFormattedString());
             var itemName = Formatter.Sanitize(ingredient.Key.Name);
 
             if (!recursive)
@@ -103,7 +103,7 @@ public static class ExtendDiscordEmbedBuilder
 
         foreach (var ingredient in craftData.GetIngredients(qte))
         {
-            var quantity = Formatter.Bold(ingredient.Value.ToStringThousandSeparator());
+            var quantity = Formatter.Bold(ingredient.Value.ToFormattedString());
             var itemName = Formatter.Sanitize(ingredient.Key.Name);
 
             result.Add($"{quantity}x {itemName}");

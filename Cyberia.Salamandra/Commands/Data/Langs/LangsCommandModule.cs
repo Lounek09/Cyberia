@@ -28,6 +28,7 @@ public sealed class LangsCommandModule : ApplicationCommandModule
         [Option("force", "Force le check")]
         bool force = false)
     {
+        DiscordFollowupMessageBuilder message = new();
         var type = Enum.Parse<LangType>(typeStr);
 
         if (languageStr is null)
@@ -42,9 +43,7 @@ public sealed class LangsCommandModule : ApplicationCommandModule
                         return LangsWatcher.CheckAsync(repository, force);
                     }));
 
-            await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder()
-                .WithContent($"Check des langs {Formatter.Bold(typeStr)} dans toutes les langues terminé"));
-
+            await ctx.FollowUpAsync(message.WithContent($"Check des langs {Formatter.Bold(typeStr)} dans toutes les langues terminé"));
             return;
         }
 
@@ -55,8 +54,7 @@ public sealed class LangsCommandModule : ApplicationCommandModule
         var repository = LangsWatcher.LangRepositories[(type, language)];
         await LangsWatcher.CheckAsync(repository, force);
 
-        await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder()
-            .WithContent($"Check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)} terminé"));
+        await ctx.FollowUpAsync(message.WithContent($"Check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)} terminé"));
     }
 
     [SlashCommand("show", "Affiche les informations des langs actuellement en ligne")]
@@ -76,8 +74,10 @@ public sealed class LangsCommandModule : ApplicationCommandModule
             ? LangLanguage.FR
             : Enum.Parse<LangLanguage>(languageStr);
 
-        await ctx.CreateResponseAsync(await new LangsMessageBuilder(type, language)
-            .GetMessageAsync<DiscordInteractionResponseBuilder>());
+        var message = await new LangsMessageBuilder(type, language)
+            .GetMessageAsync<DiscordInteractionResponseBuilder>();
+
+        await ctx.CreateResponseAsync(message);
     }
 
     [SlashCommand("get", "Retourne le lang demandé décompilé")]
@@ -105,8 +105,10 @@ public sealed class LangsCommandModule : ApplicationCommandModule
         }
 
         using var fileStream = File.OpenRead(currentDecompiledFilePath);
-        await ctx.CreateResponseAsync(new DiscordInteractionResponseBuilder()
-            .AddFile($"{Path.GetFileNameWithoutExtension(lang.FileName)}.as", fileStream));
+        var message = new DiscordInteractionResponseBuilder()
+            .AddFile($"{Path.GetFileNameWithoutExtension(currentDecompiledFilePath)}.as", fileStream);
+
+        await ctx.CreateResponseAsync(message);
     }
 
     [SlashCommand("diff", "[Owner] Lance un diff des langs entre différents types")]

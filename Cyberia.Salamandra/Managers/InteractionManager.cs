@@ -6,6 +6,7 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
+using System.Collections.Frozen;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -15,7 +16,7 @@ public static partial class InteractionManager
 {
     public const char PacketParameterSeparator = '|';
 
-    private static readonly Dictionary<string, Func<int, string[], ICustomMessageBuilder?>> _factory = new()
+    private static readonly FrozenDictionary<string, Func<int, string[], ICustomMessageBuilder?>> s_factory = new Dictionary<string, Func<int, string[], ICustomMessageBuilder?>>()
     {
         { BreedMessageBuilder.PacketHeader, BreedMessageBuilder.Create },
         { CraftMessageBuilder.PacketHeader, CraftMessageBuilder.Create },
@@ -41,7 +42,7 @@ public static partial class InteractionManager
         { PaginatedRuneItemMessageBuilder.PacketHeader, PaginatedRuneItemMessageBuilder.Create },
         { SpellMessageBuilder.PacketHeader, SpellMessageBuilder.Create },
         { PaginatedSpellMessageBuilder.PacketHeader, PaginatedSpellMessageBuilder.Create }
-    };
+    }.ToFrozenDictionary();
 
     [GeneratedRegex(@"SELECT\d+", RegexOptions.Compiled)]
     private static partial Regex SelectComponentPacketRegex();
@@ -68,45 +69,46 @@ public static partial class InteractionManager
         return $"SELECT{uniqueIndex}";
     }
 
-    public static async Task OnComponentInteractionCreated(DiscordClient _, ComponentInteractionCreateEventArgs e)
+    public static async Task OnComponentInteractionCreated(DiscordClient _, ComponentInteractionCreateEventArgs args)
     {
-        if (e.User.IsBot || string.IsNullOrEmpty(e.Id))
+        if (args.User.IsBot || string.IsNullOrEmpty(args.Id))
         {
             return;
         }
 
         var response = new DiscordInteractionResponseBuilder();
 
-        var decomposedPacket = (SelectComponentPacketRegex().IsMatch(e.Id) ? e.Values[0] : e.Id)
+        var decomposedPacket = (SelectComponentPacketRegex().IsMatch(args.Id) ? args.Values[0] : args.Id)
             .Split(PacketParameterSeparator, StringSplitOptions.RemoveEmptyEntries);
 
         if (decomposedPacket.Length < 2)
         {
             response.WithContent("Le message est trop ancien").AsEphemeral();
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
+            await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
         var header = decomposedPacket[0];
-        var version = int.Parse(decomposedPacket[1]);
-        var parameters = decomposedPacket.Length > 2 ? decomposedPacket[2..] : [];
 
-        if (!_factory.TryGetValue(header, out var builder))
+        if (!s_factory.TryGetValue(header, out var builder))
         {
             response.WithContent("Bouton inconnu, le message est probablement trop ancien").AsEphemeral();
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
+            await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
+
+        var version = int.Parse(decomposedPacket[1]);
+        var parameters = decomposedPacket.Length > 2 ? decomposedPacket[2..] : [];
 
         var message = builder(version, parameters);
         if (message is null)
         {
             response.WithContent("Un problème a eu lieu lors de la création de la réponse, le message est probablement trop ancien").AsEphemeral();
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
+            await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
         response = await message.GetMessageAsync<DiscordInteractionResponseBuilder>();
-        await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, response);
+        await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, response);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Managers;
 using Cyberia.Api.Values;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -130,7 +131,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
 
         builder.Append(Emojis.BaRune(runeBundle.RuneData.Id));
         builder.Append(' ');
-        builder.Append(Formatter.Bold(runeBundle.BaAmount.ToStringThousandSeparator()));
+        builder.Append(Formatter.Bold(runeBundle.BaAmount.ToFormattedString()));
 
         if (runeBundle.RemainingBaPercent > 0)
         {
@@ -144,7 +145,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
             builder.Append('\n');
             builder.Append(Emojis.PaRune(runeBundle.RuneData.Id));
             builder.Append(' ');
-            builder.Append(Formatter.Bold(runeBundle.PaAmount.ToStringThousandSeparator()));
+            builder.Append(Formatter.Bold(runeBundle.PaAmount.ToFormattedString()));
         }
 
         if (runeBundle.RaAmount > 0)
@@ -152,7 +153,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
             builder.Append('\n');
             builder.Append(Emojis.RaRune(runeBundle.RuneData.Id));
             builder.Append(' ');
-            builder.Append(Formatter.Bold(runeBundle.RaAmount.ToStringThousandSeparator()));
+            builder.Append(Formatter.Bold(runeBundle.RaAmount.ToFormattedString()));
         }
 
         return builder.ToString();

@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Houses;
 using Cyberia.Api.Data.Maps;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -68,7 +69,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
             .WithDescription(string.IsNullOrEmpty(_houseData.Description) ? string.Empty : Formatter.Italic(_houseData.Description))
             .AddField("Pièce :", _houseData.RoomNumber == 0 ? "?" : _houseData.RoomNumber.ToString(), true)
             .AddField("Coffre :", _houseData.ChestNumber == 0 ? "?" : _houseData.ChestNumber.ToString(), true)
-            .AddField("Prix :", _houseData.Price == 0 ? "?" : _houseData.Price.ToStringThousandSeparator(), true);
+            .AddField("Prix :", _houseData.Price == 0 ? "?" : _houseData.Price.ToFormattedString(), true);
 
         var currentMapData = _selectedMapIndex == -1 ? _outdoorMapData : _mapsData[_selectedMapIndex];
         if (currentMapData is not null)

@@ -2,6 +2,7 @@
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.Items;
 using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -74,12 +75,12 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
         if (_itemData is not null)
         {
-            embed.WithTitle($"Craft : {_qte.ToStringThousandSeparator()}x {Formatter.Sanitize(_itemData.Name)} ({_craftData.Id})")
+            embed.WithTitle($"Craft : {_qte.ToFormattedString()}x {Formatter.Sanitize(_itemData.Name)} ({_craftData.Id})")
                 .WithThumbnail(await _itemData.GetImagePath());
         }
 
         var weight = _recursive ? _craftData.GetWeightWithSubCraft() : _craftData.GetWeight();
-        embed.AddField("Poids :", $"{Formatter.Bold(weight.ToStringThousandSeparator())} pod{(weight > 1 ? "s" : string.Empty)} par craft" + (_qte > 1 ? $", {Formatter.Bold((weight * _qte).ToStringThousandSeparator())} au total" : string.Empty));
+        embed.AddField("Poids :", $"{Formatter.Bold(weight.ToFormattedString())} pod{(weight > 1 ? "s" : string.Empty)} par craft" + (_qte > 1 ? $", {Formatter.Bold((weight * _qte).ToFormattedString())} au total" : string.Empty));
 
         var time = $"{Formatter.Bold((_recursive ? _craftData.GetTimePerCraftWithSubCraft(1) : _craftData.GetTimePerCraft(1)).ToString(@"mm\mss\sfff"))} par craft";
         if (_qte > 1)

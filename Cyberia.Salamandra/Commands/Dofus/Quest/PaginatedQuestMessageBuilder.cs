@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Quests;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

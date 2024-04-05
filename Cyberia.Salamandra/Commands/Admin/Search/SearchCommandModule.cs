@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Factories.Criteria;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

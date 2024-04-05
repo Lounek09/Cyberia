@@ -10,11 +10,11 @@ public sealed class LeaveCommandModule : ApplicationCommandModule
     [SlashRequireOwner]
     public async Task LeaveCommand(InteractionContext ctx,
         [Option("id", "Guild's id")]
-        string guildId)
+        long guildId)
     {
         try
         {
-            var guild = await Bot.Client.GetGuildAsync(Convert.ToUInt64(guildId));
+            var guild = await ctx.Client.GetGuildAsync((ulong)guildId);
             await guild.LeaveAsync();
 
             if (guild.Id != ctx.Guild.Id)

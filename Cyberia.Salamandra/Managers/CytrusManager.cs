@@ -12,10 +12,10 @@ namespace Cyberia.Salamandra.Managers;
 
 public static class CytrusManager
 {
-    public static async void OnNewCytrusDetected(object? sender, NewCytrusDetectedEventArgs e)
+    public static async void OnNewCytrusDetected(object? _, NewCytrusDetectedEventArgs args)
     {
-        await SendCytrusDiffAsync(e);
-        await SendCytrusManifestDiffAsync(e);
+        await SendCytrusDiffAsync(args);
+        await SendCytrusManifestDiffAsync(args);
     }
 
     public static async Task SendCytrusManifestDiffMessageAsync(this DiscordChannel channel, string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
@@ -58,7 +58,7 @@ public static class CytrusManager
         }
     }
 
-    private static async Task SendCytrusDiffAsync(NewCytrusDetectedEventArgs e)
+    private static async Task SendCytrusDiffAsync(NewCytrusDetectedEventArgs args)
     {
         var channel = ChannelManager.CytrusChannel;
         if (channel is null)
@@ -66,10 +66,10 @@ public static class CytrusManager
             return;
         }
 
-        await channel.SendMessageAsync(new DiscordMessageBuilder().WithContent(Formatter.BlockCode(e.Diff, "json")));
+        await channel.SendMessageAsync(new DiscordMessageBuilder().WithContent(Formatter.BlockCode(args.Diff, "json")));
     }
 
-    private static async Task SendCytrusManifestDiffAsync(NewCytrusDetectedEventArgs e)
+    private static async Task SendCytrusManifestDiffAsync(NewCytrusDetectedEventArgs args)
     {
         var channel = ChannelManager.CytrusManifestChannel;
         if (channel is null)
@@ -77,7 +77,7 @@ public static class CytrusManager
             return;
         }
 
-        var document = JsonDocument.Parse(e.Diff);
+        var document = JsonDocument.Parse(args.Diff);
         var root = document.RootElement;
 
         if (!root.TryGetProperty("games", out var games) &&

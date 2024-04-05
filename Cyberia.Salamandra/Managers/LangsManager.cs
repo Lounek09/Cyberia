@@ -9,9 +9,9 @@ namespace Cyberia.Salamandra.Managers;
 
 public static class LangsManager
 {
-    public static async void OnCheckLangFinished(object? _, CheckLangFinishedEventArgs e)
+    public static async void OnCheckLangFinished(object? _, CheckLangFinishedEventArgs args)
     {
-        if (e.UpdatedLangs.Count == 0)
+        if (args.UpdatedLangs.Count == 0)
         {
             return;
         }
@@ -22,9 +22,9 @@ public static class LangsManager
             return;
         }
 
-        var thread = await CreateThreadAsync(forum, e.Type, e.Language);
+        var thread = await CreateThreadAsync(forum, args.Type, args.Language);
 
-        foreach (var updatedLang in e.UpdatedLangs)
+        foreach (var updatedLang in args.UpdatedLangs)
         {
             var delay = Task.Delay(1000);
 

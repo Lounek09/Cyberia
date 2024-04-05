@@ -2,6 +2,7 @@
 using Cyberia.Api.Data.Dialogs;
 using Cyberia.Api.Data.Quests;
 using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -104,7 +105,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
                 if (_questStepData.RewardsData.Experience > 0)
                 {
-                    rewardsBuilder.Append(_questStepData.RewardsData.Experience.ToStringThousandSeparator());
+                    rewardsBuilder.Append(_questStepData.RewardsData.Experience.ToFormattedString());
                     rewardsBuilder.Append(' ');
                     rewardsBuilder.Append(Emojis.Xp);
                     rewardsBuilder.Append('\n');
@@ -112,7 +113,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
                 if (_questStepData.RewardsData.Kamas > 0)
                 {
-                    rewardsBuilder.Append(_questStepData.RewardsData.Kamas.ToStringThousandSeparator());
+                    rewardsBuilder.Append(_questStepData.RewardsData.Kamas.ToFormattedString());
                     rewardsBuilder.Append(' ');
                     rewardsBuilder.Append(Emojis.Kamas);
                     rewardsBuilder.Append('\n');

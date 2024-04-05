@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Managers;
+using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -61,21 +62,21 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de runes")
-            .WithTitle($"Brisage : {_qte.ToStringThousandSeparator()}x {Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
+            .WithTitle($"Brisage : {_qte.ToFormattedString()}x {Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
             .WithThumbnail(await _itemData.GetImagePath());
 
         StringBuilder descriptionBuilder = new();
 
         foreach (var runeBundle in RuneManager.GetRuneBundlesFromItem(_itemData, _qte))
         {
-            descriptionBuilder.Append(Formatter.Bold(runeBundle.BaAmount.ToStringThousandSeparator()));
+            descriptionBuilder.Append(Formatter.Bold(runeBundle.BaAmount.ToFormattedString()));
             descriptionBuilder.Append(' ');
             descriptionBuilder.Append(Emojis.BaRune(runeBundle.RuneData.Id));
 
             if (runeBundle.PaAmount > 0)
             {
                 descriptionBuilder.Append(" - ");
-                descriptionBuilder.Append(Formatter.Bold(runeBundle.PaAmount.ToStringThousandSeparator()));
+                descriptionBuilder.Append(Formatter.Bold(runeBundle.PaAmount.ToFormattedString()));
                 descriptionBuilder.Append(' ');
                 descriptionBuilder.Append(Emojis.PaRune(runeBundle.RuneData.Id));
             }
@@ -83,7 +84,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
             if (runeBundle.RaAmount > 0)
             {
                 descriptionBuilder.Append(" - ");
-                descriptionBuilder.Append(Formatter.Bold(runeBundle.RaAmount.ToStringThousandSeparator()));
+                descriptionBuilder.Append(Formatter.Bold(runeBundle.RaAmount.ToFormattedString()));
                 descriptionBuilder.Append(' ');
                 descriptionBuilder.Append(Emojis.RaRune(runeBundle.RuneData.Id));
             }

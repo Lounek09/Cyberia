@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Managers;
+using Cyberia.Salamandra.Enums;
 
 using DSharpPlus.Entities;
 
@@ -7,60 +8,23 @@ namespace Cyberia.Salamandra.Managers;
 
 public static class EmbedManager
 {
+    private static readonly string s_baseIconUrl = $"{DofusApi.Config.CdnUrl}/images/embed_categories";
+    private static readonly string s_footerIconUrl = $"{DofusApi.Config.CdnUrl}/images/mini-salamandra.png";
+    private static readonly DiscordColor s_embedColor = new(Bot.Config.EmbedColor);
+
     public static DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText)
     {
-        var embed = new DiscordEmbedBuilder()
-            .WithColor(new DiscordColor(Bot.Config.EmbedColor))
-            .WithFooter($"{Bot.Client.CurrentUser.Username} • {DateTime.Now.ToRolePlayString()} - {DateTime.Now:HH:mm}", $"{DofusApi.Config.CdnUrl}/images/mini-salamandra.png");
-
-        var iconUrl = $"{DofusApi.Config.CdnUrl}/images/embed_categories";
-        switch (category)
-        {
-            case EmbedCategory.Bestiary:
-                iconUrl = $"{iconUrl}/category_bestiary.png";
-                break;
-            case EmbedCategory.Breeds:
-                iconUrl = $"{iconUrl}/category_breeds.png";
-                break;
-            case EmbedCategory.Houses:
-                iconUrl = $"{iconUrl}/category_houses.png";
-                break;
-            case EmbedCategory.Inventory:
-                iconUrl = $"{iconUrl}/category_inventory.png";
-                break;
-            case EmbedCategory.Jobs:
-                iconUrl = $"{iconUrl}/category_jobs.png";
-                break;
-            case EmbedCategory.Map:
-                iconUrl = $"{iconUrl}/category_map.png";
-                break;
-            case EmbedCategory.Quests:
-                iconUrl = $"{iconUrl}/category_quests.png";
-                break;
-            case EmbedCategory.Spells:
-                iconUrl = $"{iconUrl}/category_spells.png";
-                break;
-            case EmbedCategory.Tools:
-                iconUrl = $"{iconUrl}/category_tools.png";
-                break;
-            default:
-                return embed;
-        }
-
-        return embed.WithAuthor(authorText, iconUrl: iconUrl);
+        return new DiscordEmbedBuilder()
+            .WithColor(s_embedColor)
+            .WithFooter(
+                $"{Bot.Client.CurrentUser.Username} • {DateTime.Now.ToRolePlayString()} - {DateTime.Now:HH:mm}",
+                s_footerIconUrl)
+            .WithAuthor(authorText, iconUrl: GetIconUrl(category));
     }
-}
 
-public enum EmbedCategory
-{
-    None,
-    Bestiary,
-    Breeds,
-    Houses,
-    Inventory,
-    Jobs,
-    Map,
-    Quests,
-    Spells,
-    Tools
+    private static string GetIconUrl(EmbedCategory category)
+    {
+        //TODO: change the name of the images with just the id of the enum in the new Salamandra.Cdn
+        return $"{s_baseIconUrl}/category_{category.ToString().ToLower()}.png";
+    }
 }
