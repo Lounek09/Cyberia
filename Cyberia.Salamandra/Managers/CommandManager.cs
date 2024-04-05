@@ -53,7 +53,7 @@ public static class CommandManager
 #if DEBUG
                 await args.Context.Channel.SendMessageAsync(embed);
 #else
-                await MessageManager.SendCommandErrorMessage(embed);
+                await MessageManager.SendErrorMessage(embed);
 #endif
                 break;
             default:
@@ -87,7 +87,7 @@ public static class CommandManager
 #if DEBUG
                 await args.Context.Channel.SendMessageAsync(embed);
 #else
-                await MessageManager.SendCommandErrorMessage(embed);
+                await MessageManager.SendErrorMessage(embed);
 #endif
                 break;
         }
