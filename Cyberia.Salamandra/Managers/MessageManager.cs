@@ -65,34 +65,29 @@ public static class MessageManager
     public static async Task SendFile(this DiscordChannel channel, string filePath)
     {
         using var fileStream = File.OpenRead(filePath);
-
         await channel.SendMessage(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
     }
 
     public static async Task SendLogMessage(string content)
     {
-        var logChannel = await GetLogChannel();
-
-        if (logChannel is null)
+        var channel = ChannelManager.LogChannel;
+        if (channel is null)
         {
-            Log.Error("Unknown log channel {ChannelId}", Bot.Config.LogChannelId);
             return;
         }
 
-        await logChannel.SendMessage(new DiscordMessageBuilder().WithContent(content));
+        await channel.SendMessage(new DiscordMessageBuilder().WithContent(content));
     }
 
-    public static async Task SendCommandErrorMessage(DiscordEmbed embed)
+    public static async Task SendErrorMessage(DiscordEmbed embed)
     {
-        var commandErrorChannel = await GetCommandErrorChannel();
-
-        if (commandErrorChannel is null)
+        var channel = ChannelManager.LogChannel;
+        if (channel is null)
         {
-            Log.Error("Unknown command error channel {ChannelId}", Bot.Config.LogChannelId);
             return;
         }
 
-        await commandErrorChannel.SendMessage(new DiscordMessageBuilder().AddEmbed(embed));
+        await channel.SendMessage(new DiscordMessageBuilder().AddEmbed(embed));
     }
 
     public static async Task DeleteMessage(this DiscordMessage message)
@@ -120,31 +115,5 @@ public static class MessageManager
         }
 
         Log.Error("No permission to delete this message {MessageId}", message.Id);
-    }
-
-    private static async Task<DiscordChannel?> GetLogChannel()
-    {
-        try
-        {
-            return await Bot.Client.GetChannelAsync(Bot.Config.LogChannelId);
-        }
-        catch
-        {
-            Log.Error("Unknown log channel ({ChannelId})", Bot.Config.LogChannelId);
-            return null;
-        }
-    }
-
-    private static async Task<DiscordChannel?> GetCommandErrorChannel()
-    {
-        try
-        {
-            return await Bot.Client.GetChannelAsync(Bot.Config.CommandErrorChannelId);
-        }
-        catch
-        {
-            Log.Error("Unknown command error channel ({ChannelId})", Bot.Config.CommandErrorChannelId);
-            return null;
-        }
     }
 }

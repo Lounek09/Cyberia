@@ -7,7 +7,7 @@ public sealed class BotConfig
     public ulong AdminGuildId { get; init; }
     public string DiscordGuildInviteUrl { get; init; }
     public ulong LogChannelId { get; init; }
-    public ulong CommandErrorChannelId { get; init; }
+    public ulong ErrorChannelId { get; init; }
     public ulong LangForumChannelId { get; init; }
     public ulong CytrusChannelId { get; init; }
     public ulong CytrusManifestChannelId { get; init; }

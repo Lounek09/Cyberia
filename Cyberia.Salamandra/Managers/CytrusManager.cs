@@ -58,47 +58,9 @@ public static class CytrusManager
         }
     }
 
-    private static async Task<DiscordChannel?> GetCytrusChannel()
-    {
-        var id = Bot.Config.CytrusChannelId;
-        if (id == 0)
-        {
-            return null;
-        }
-
-        try
-        {
-            return await Bot.Client.GetChannelAsync(id);
-        }
-        catch
-        {
-            Log.Error("Unknown cytrus channel {ChannelId}", id);
-            return null;
-        }
-    }
-
-    private static async Task<DiscordChannel?> GetCytrusManifestChannel()
-    {
-        var id = Bot.Config.CytrusManifestChannelId;
-        if (id == 0)
-        {
-            return null;
-        }
-
-        try
-        {
-            return await Bot.Client.GetChannelAsync(id);
-        }
-        catch
-        {
-            Log.Error("Unknown cytrus manifest channel {ChannelId}", id);
-            return null;
-        }
-    }
-
     private static async Task SendCytrusDiffAsync(NewCytrusDetectedEventArgs e)
     {
-        var channel = await GetCytrusChannel();
+        var channel = ChannelManager.CytrusChannel;
         if (channel is null)
         {
             return;
@@ -109,7 +71,7 @@ public static class CytrusManager
 
     private static async Task SendCytrusManifestDiffAsync(NewCytrusDetectedEventArgs e)
     {
-        var channel = await GetCytrusManifestChannel();
+        var channel = ChannelManager.CytrusManifestChannel;
         if (channel is null)
         {
             return;

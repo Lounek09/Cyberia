@@ -16,7 +16,7 @@ public static class LangsManager
             return;
         }
 
-        var forum = await GetLangForumChannel();
+        var forum = ChannelManager.LangForumChannel;
         if (forum is null)
         {
             return;
@@ -32,32 +32,6 @@ public static class LangsManager
 
             await delay;
         }
-    }
-
-    private static async Task<DiscordForumChannel?> GetLangForumChannel()
-    {
-        var id = Bot.Config.LangForumChannelId;
-        if (id == 0)
-        {
-            return null;
-        }
-
-        try
-        {
-            var channel = await Bot.Client.GetChannelAsync(id);
-            if (channel is DiscordForumChannel forum)
-            {
-                return forum;
-            }
-
-            Log.Error("The given lang channel is not a forum {ChannelId}", id);
-        }
-        catch
-        {
-            Log.Error("Unknown lang forum channel {ChannelId}", id);
-        }
-
-        return null;
     }
 
     private static async Task<DiscordThreadChannel> CreateThreadAsync(DiscordForumChannel forum, LangType type, LangLanguage language)

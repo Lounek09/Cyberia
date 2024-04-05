@@ -30,9 +30,7 @@ public static class CytrusWatcher
     internal static HttpRetryPolicy HttpRetryPolicy { get; set; } = default!;
 
 
-#pragma warning disable IDE0052 // Remove unread private members
     private static Timer? _timer;
-#pragma warning restore IDE0052 // Remove unread private members
 
     /// <summary>
     /// Initializes the CytrusWatcher.
