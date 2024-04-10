@@ -15,6 +15,11 @@ public sealed class SpellLevelConverter
     {
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
+        if (elements.Length < 21)
+        {
+            throw new JsonException();
+        }
+
         var effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0], options) ?? [];
         var criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1], options) ?? [];
         var effectAreas = EffectAreaManager.CreateMany(elements[15].GetStringOrEmpty()).ToList();

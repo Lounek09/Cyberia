@@ -12,6 +12,11 @@ public sealed class ItemWeaponDataConverter
     {
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
+        if (elements.Length < 8)
+        {
+            throw new JsonException();
+        }
+
         return new ItemWeaponData
         {
             CriticalBonus = elements[0].GetInt32(),

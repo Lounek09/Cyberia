@@ -11,9 +11,21 @@ public sealed class ReadOnlyDictionaryFromArrayConverter<TKey, TValue>
     {
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
-        return elements.ToDictionary(
-            x => JsonSerializer.Deserialize<TKey>(x[0], options)!,
-            x => JsonSerializer.Deserialize<TValue>(x[1], options)!);
+        Dictionary<TKey, TValue> dictionary = [];
+
+        foreach (var element in elements)
+        {
+            if (element.ValueKind != JsonValueKind.Array || element.GetArrayLength() != 2)
+            {
+                throw new JsonException();
+            }
+
+            dictionary.Add(
+                JsonSerializer.Deserialize<TKey>(element[0], options) ?? throw new JsonException(),
+                JsonSerializer.Deserialize<TValue>(element[1], options) ?? throw new JsonException());
+        }
+
+        return dictionary;
     }
 
     public override void Write(Utf8JsonWriter writer, IReadOnlyDictionary<TKey, TValue> value, JsonSerializerOptions options)

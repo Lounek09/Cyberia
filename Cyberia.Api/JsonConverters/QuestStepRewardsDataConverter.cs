@@ -12,13 +12,36 @@ public sealed class QuestStepRewardsDataConverter
     {
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
+        if (elements.Length < 6)
+        {
+            throw new JsonException();
+        }
+
+        var itemsIdQuantities = JsonSerializer.Deserialize<int[][]>(elements[2], options) ?? [];
+        Dictionary<int, int> itemsIdQuantitiesDictionary = [];
+
+        foreach (var item in itemsIdQuantities)
+        {
+            if (item.Length != 2)
+            {
+                throw new JsonException();
+            }
+
+            if (itemsIdQuantitiesDictionary.ContainsKey(item[0]))
+            {
+                itemsIdQuantitiesDictionary[item[0]] += item[1];
+            }
+            else
+            {
+                itemsIdQuantitiesDictionary[item[0]] = item[1];
+            }
+        }
+
         return new QuestStepRewardsData
         {
             Experience = elements[0].GetInt32OrDefault(),
             Kamas = elements[1].GetInt32OrDefault(),
-            ItemsIdQuantities = (JsonSerializer.Deserialize<List<List<int>>>(elements[2], options) ?? [])
-                .GroupBy(x => x[0])
-                .ToDictionary(x => x.Key, x => x.Sum(y => y[1])),
+            ItemsIdQuantities = itemsIdQuantitiesDictionary,
             EmotesId = JsonSerializer.Deserialize<List<int>>(elements[3], options) ?? [],
             JobsId = JsonSerializer.Deserialize<List<int>>(elements[4], options) ?? [],
             SpellsId = JsonSerializer.Deserialize<List<int>>(elements[5], options) ?? []

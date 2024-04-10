@@ -14,7 +14,9 @@ public sealed class DofusDataFrozenDictionaryConverter<TKey, TValue>
     public override FrozenDictionary<TKey, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var values = JsonSerializer.Deserialize<TValue[]>(ref reader, options) ?? [];
-        return values.GroupBy(x => x.Id)
+
+        return values
+            .GroupBy(x => x.Id)
             .ToFrozenDictionary(x => x.Key, x => x.ElementAt(0));
     }
 

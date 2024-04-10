@@ -12,7 +12,10 @@ public sealed class EffectsReadOnlyListOfReadOnlyListConverter
     public override IReadOnlyList<IReadOnlyList<IEffect>> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var compressedEffects = JsonSerializer.Deserialize<string[]>(ref reader, options) ?? [];
-        return compressedEffects.Select(x => EffectFactory.CreateMany(x).ToList()).ToList();
+
+        return compressedEffects
+            .Select(x => EffectFactory.CreateMany(x).ToList())
+            .ToList();
     }
 
     public override void Write(Utf8JsonWriter writer, IReadOnlyList<IReadOnlyList<IEffect>> values, JsonSerializerOptions options)

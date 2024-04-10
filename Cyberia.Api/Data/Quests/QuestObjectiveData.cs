@@ -14,7 +14,7 @@ public sealed class QuestObjectiveData
     public int QuestObjectiveTypeId { get; init; }
 
     [JsonPropertyName("p")]
-    [JsonConverter(typeof(StringReadOnlyListConverter))]
+    [JsonConverter(typeof(ToStringReadOnlyListConverter))]
     public IReadOnlyList<string> Parameters { get; init; }
 
     [JsonPropertyName("x")]
