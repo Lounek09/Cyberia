@@ -3,8 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.KnowledgeBook;
 
-public sealed class KnowledgeBookTriggerData
-    : IDofusData<int>
+public sealed class KnowledgeBookTriggerData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

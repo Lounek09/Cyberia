@@ -6,8 +6,7 @@ using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterSummonMonsterGroupEffect
-    : Effect, IEffect
+public sealed record CharacterSummonMonsterGroupEffect : Effect, IEffect
 {
     public IReadOnlyList<int> MonstersId { get; init; }
 

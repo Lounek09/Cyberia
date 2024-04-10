@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterManaUseKillLifeFireEffect
-    : Effect, IEffect
+public sealed record CharacterManaUseKillLifeFireEffect : Effect, IEffect
 {
     public int ActionPoints { get; init; }
     public int Damage { get; init; }

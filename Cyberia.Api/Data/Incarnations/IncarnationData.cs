@@ -7,8 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Incarnations;
 
-public sealed class IncarnationData
-    : IDofusData<int>
+public sealed class IncarnationData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

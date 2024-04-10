@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Scripts;
 
-public sealed class ScriptsData
-    : IDofusData
+public sealed class ScriptsData : IDofusData
 {
     private const string c_fileName = "scripts.json";
 

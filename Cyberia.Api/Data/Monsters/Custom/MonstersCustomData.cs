@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Monsters.Custom;
 
-internal sealed class MonstersCustomData
-    : IDofusData
+internal sealed class MonstersCustomData : IDofusData
 {
     [JsonPropertyName("CM")]
     public IReadOnlyList<MonsterCustomData> MonstersCustom { get; init; }

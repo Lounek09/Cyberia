@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterLifePointsLostCasterEffect
-    : MinMaxEffect, IEffect
+public sealed record CharacterLifePointsLostCasterEffect : MinMaxEffect, IEffect
 {
     private CharacterLifePointsLostCasterEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)

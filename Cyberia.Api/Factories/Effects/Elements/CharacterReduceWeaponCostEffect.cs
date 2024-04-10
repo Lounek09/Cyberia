@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterReduceWeaponCostEffect
-    : Effect, IEffect
+public sealed record CharacterReduceWeaponCostEffect : Effect, IEffect
 {
     public int ActionPointsReduced { get; init; }
 

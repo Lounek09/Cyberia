@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterDispellSpellEffect
-    : Effect, IEffect
+public sealed record CharacterDispellSpellEffect : Effect, IEffect
 {
     public int SpellId { get; init; }
 

@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record DuelSpecificPlayerQuestObjective
-    : QuestObjective, IQuestObjective
+public sealed record DuelSpecificPlayerQuestObjective : QuestObjective, IQuestObjective
 {
     public string SpecificPlayer { get; init; }
 

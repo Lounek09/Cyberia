@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
-public sealed record CharacterBoostWaterElementResistAlignmentFeatEffect
-    : AlignmentFeatEffect, IAlignmentFeatEffect
+public sealed record CharacterBoostWaterElementResistAlignmentFeatEffect : AlignmentFeatEffect, IAlignmentFeatEffect
 {
     public int Value { get; init; }
 

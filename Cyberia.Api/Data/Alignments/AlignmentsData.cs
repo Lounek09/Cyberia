@@ -7,8 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Alignments;
 
-public sealed class AlignmentsData
-    : IDofusData
+public sealed class AlignmentsData : IDofusData
 {
     private const string c_fileName = "alignment.json";
 

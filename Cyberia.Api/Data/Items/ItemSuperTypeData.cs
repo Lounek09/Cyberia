@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Items;
 
-public sealed class ItemSuperTypeData
-    : IDofusData<int>
+public sealed class ItemSuperTypeData : IDofusData<int>
 {
     public const int Quest = 14;
 

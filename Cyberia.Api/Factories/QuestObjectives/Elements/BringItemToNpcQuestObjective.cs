@@ -4,8 +4,7 @@ using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record BringItemToNpcQuestObjective
-    : QuestObjective, IQuestObjective
+public sealed record BringItemToNpcQuestObjective : QuestObjective, IQuestObjective
 {
     public int NpcId { get; init; }
     public int ItemId { get; init; }

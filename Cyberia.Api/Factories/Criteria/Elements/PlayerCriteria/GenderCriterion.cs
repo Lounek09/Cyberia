@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record GenderCriterion
-    : Criterion, ICriterion
+public sealed record GenderCriterion : Criterion, ICriterion
 {
     public Gender Gender { get; init; }
 

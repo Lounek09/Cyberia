@@ -5,8 +5,7 @@ namespace Cyberia.Cytrusaurus.EventArgs;
 /// <summary>
 /// Represents the event arguments for when a new Cytrus is detected.
 /// </summary>
-public sealed class NewCytrusDetectedEventArgs
-    : System.EventArgs
+public sealed class NewCytrusDetectedEventArgs : System.EventArgs
 {
     /// <summary>
     /// Gets the current Cytrus data.

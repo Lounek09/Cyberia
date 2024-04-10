@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemFragmentCompletionEffect
-    : Effect, IEffect
+public sealed record ItemFragmentCompletionEffect : Effect, IEffect
 {
     public int ValueInt { get; init; }
     public int ValueDecimal { get; init; }

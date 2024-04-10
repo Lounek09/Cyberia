@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record TeleportCreatureOnSameMapEffect
-    : Effect, IEffect
+public sealed record TeleportCreatureOnSameMapEffect : Effect, IEffect
 {
     public int MonsterId { get; init; }
     public int MaximumDistance { get; init; }

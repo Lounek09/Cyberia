@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ShowTextEffect
-    : Effect, IEffect
+public sealed record ShowTextEffect : Effect, IEffect
 {
     public string Value { get; init; }
 

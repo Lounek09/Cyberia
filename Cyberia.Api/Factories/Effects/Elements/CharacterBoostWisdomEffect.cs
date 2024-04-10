@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostWisdomEffect
-    : MinMaxEffect, IEffect, IRuneGeneratorEffect
+public sealed record CharacterBoostWisdomEffect : MinMaxEffect, IEffect, IRuneGeneratorEffect
 {
     public int RuneId { get; init; }
 

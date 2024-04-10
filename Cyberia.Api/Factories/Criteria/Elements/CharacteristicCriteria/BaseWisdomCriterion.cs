@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record BaseWisdomCriterion
-    : Criterion, ICriterion
+public sealed record BaseWisdomCriterion : Criterion, ICriterion
 {
     public int Value { get; init; }
 

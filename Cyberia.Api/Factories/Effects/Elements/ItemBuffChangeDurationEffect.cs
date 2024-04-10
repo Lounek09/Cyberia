@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemBuffChangeDurationEffect
-    : Effect, IEffect
+public sealed record ItemBuffChangeDurationEffect : Effect, IEffect
 {
     public int TurnDuration { get; init; }
 

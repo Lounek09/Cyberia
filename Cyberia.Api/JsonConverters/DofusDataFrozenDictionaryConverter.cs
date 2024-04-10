@@ -6,8 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class DofusDataFrozenDictionaryConverter<TKey, TValue>
-    : JsonConverter<FrozenDictionary<TKey, TValue>>
+public sealed class DofusDataFrozenDictionaryConverter<TKey, TValue> : JsonConverter<FrozenDictionary<TKey, TValue>>
     where TKey : notnull
     where TValue : IDofusData<TKey>
 {

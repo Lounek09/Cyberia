@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
-public sealed record CharacterBoostChanceAlignmentFeatEffect
-    : AlignmentFeatEffect, IAlignmentFeatEffect
+public sealed record CharacterBoostChanceAlignmentFeatEffect : AlignmentFeatEffect, IAlignmentFeatEffect
 {
     public int Value { get; init; }
 

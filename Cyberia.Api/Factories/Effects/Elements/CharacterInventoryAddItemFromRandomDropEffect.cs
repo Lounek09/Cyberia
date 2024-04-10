@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterInventoryAddItemFromRandomDropEffect
-    : Effect, IEffect
+public sealed record CharacterInventoryAddItemFromRandomDropEffect : Effect, IEffect
 {
     public int Quantity { get; init; }
     public int BundleId { get; init; }

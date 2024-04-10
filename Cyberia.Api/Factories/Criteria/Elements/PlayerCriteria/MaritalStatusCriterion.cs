@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record MaritalStatusCriterion
-    : Criterion, ICriterion
+public sealed record MaritalStatusCriterion : Criterion, ICriterion
 {
     public MaritalStatus MaritalStatus { get; init; }
 

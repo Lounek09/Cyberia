@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterCurseEffect
-    : Effect, IEffect
+public sealed record CharacterCurseEffect : Effect, IEffect
 {
     public int CurseId { get; init; }
 

@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Scripts;
 
-public sealed class ScriptDialogData
-    : IDofusData<int>
+public sealed class ScriptDialogData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.SpeakingItems;
 
-public sealed class SpeakingItemsData
-    : IDofusData
+public sealed class SpeakingItemsData : IDofusData
 {
     private const string c_fileName = "speakingitems.json";
 

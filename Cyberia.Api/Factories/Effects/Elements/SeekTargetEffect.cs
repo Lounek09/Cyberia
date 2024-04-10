@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record SeekTargetEffect
-    : Effect, IEffect
+public sealed record SeekTargetEffect : Effect, IEffect
 {
     public string Name { get; init; }
 

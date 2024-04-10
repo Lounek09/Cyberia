@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record StateCriterion
-    : Criterion, ICriterion
+public sealed record StateCriterion : Criterion, ICriterion
 {
     public int StateId { get; init; }
 

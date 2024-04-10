@@ -4,8 +4,7 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GotoGuildStructureEffect
-    : Effect, IEffect
+public sealed record GotoGuildStructureEffect : Effect, IEffect
 {
     public GuildStructure GuildStructure { get; init; }
 

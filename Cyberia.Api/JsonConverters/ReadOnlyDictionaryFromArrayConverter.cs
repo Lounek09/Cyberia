@@ -3,8 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class ReadOnlyDictionaryFromArrayConverter<TKey, TValue>
-    : JsonConverter<IReadOnlyDictionary<TKey, TValue>>
+public sealed class ReadOnlyDictionaryFromArrayConverter<TKey, TValue> : JsonConverter<IReadOnlyDictionary<TKey, TValue>>
     where TKey : notnull
 {
     public override IReadOnlyDictionary<TKey, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

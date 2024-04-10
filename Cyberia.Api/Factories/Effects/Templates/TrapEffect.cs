@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
-public abstract record TrapEffect
-    : Effect
+public abstract record TrapEffect : Effect
 {
     public int SpellId { get; init; }
     public int Level { get; init; }

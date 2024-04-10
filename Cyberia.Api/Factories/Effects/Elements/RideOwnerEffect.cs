@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record RideOwnerEffect
-    : Effect, IEffect
+public sealed record RideOwnerEffect : Effect, IEffect
 {
     public string Name { get; init; }
 

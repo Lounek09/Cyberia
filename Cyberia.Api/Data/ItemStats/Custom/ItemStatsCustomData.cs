@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.ItemStats.Custom;
 
-internal sealed class ItemStatsCustomData
-    : IDofusData<int>
+internal sealed class ItemStatsCustomData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

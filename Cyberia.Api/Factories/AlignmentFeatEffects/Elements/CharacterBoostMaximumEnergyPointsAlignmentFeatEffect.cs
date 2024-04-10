@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
-public sealed record CharacterBoostMaximumEnergyPointsAlignmentFeatEffect
-    : AlignmentFeatEffect, IAlignmentFeatEffect
+public sealed record CharacterBoostMaximumEnergyPointsAlignmentFeatEffect : AlignmentFeatEffect, IAlignmentFeatEffect
 {
     public int Value { get; init; }
 

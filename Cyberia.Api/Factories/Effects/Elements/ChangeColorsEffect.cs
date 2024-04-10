@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ChangeColorsEffect
-    : ParameterlessEffect, IEffect
+public sealed record ChangeColorsEffect : ParameterlessEffect, IEffect
 {
     private ChangeColorsEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)

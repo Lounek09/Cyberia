@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemLivingMaxSkinEffect
-    : Effect, IEffect
+public sealed record ItemLivingMaxSkinEffect : Effect, IEffect
 {
     public int Number { get; init; }
 

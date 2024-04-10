@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record UntranslatedEffect
-    : Effect, IEffect
+public sealed record UntranslatedEffect : Effect, IEffect
 {
     public EffectParameters Parameters { get; init; }
 

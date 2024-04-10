@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GiveTTGCardFromFamilyEffect
-    : Effect, IEffect
+public sealed record GiveTTGCardFromFamilyEffect : Effect, IEffect
 {
     public int TTGFamilyId { get; init; }
 

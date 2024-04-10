@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.SpeakingItems;
 
-public sealed class SpeakingItemData
-    : IDofusData<int>
+public sealed class SpeakingItemData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

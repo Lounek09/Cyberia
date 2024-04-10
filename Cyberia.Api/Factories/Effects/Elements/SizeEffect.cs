@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record SizeEffect
-    : Effect, IEffect
+public sealed record SizeEffect : Effect, IEffect
 {
     public int MinSize { get; init; }
     public int MaxSize { get; init; }

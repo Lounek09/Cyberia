@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GladiatroolBoostExtraEffectEffect
-    : ParameterlessEffect, IEffect
+public sealed record GladiatroolBoostExtraEffectEffect : ParameterlessEffect, IEffect
 {
     private GladiatroolBoostExtraEffectEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)

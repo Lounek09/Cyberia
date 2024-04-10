@@ -5,8 +5,7 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterInventoryAddItemCheckEffect
-    : Effect, IEffect
+public sealed record CharacterInventoryAddItemCheckEffect : Effect, IEffect
 {
     public int ItemId { get; init; }
     public int Qte { get; init; }

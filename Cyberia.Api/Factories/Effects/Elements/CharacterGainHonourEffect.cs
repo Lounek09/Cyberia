@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterGainHonourEffect
-    : Effect, IEffect
+public sealed record CharacterGainHonourEffect : Effect, IEffect
 {
     public int Honour { get; init; }
 

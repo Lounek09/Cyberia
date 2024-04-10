@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterPunishmentEffect
-    : Effect, IEffect
+public sealed record CharacterPunishmentEffect : Effect, IEffect
 {
     public int BoostEffectId { get; init; }
     public int MaxBoost { get; init; }

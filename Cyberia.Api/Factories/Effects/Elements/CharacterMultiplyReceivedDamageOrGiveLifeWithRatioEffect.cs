@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterMultiplyReceivedDamageOrGiveLifeWithRatioEffect
-    : Effect, IEffect
+public sealed record CharacterMultiplyReceivedDamageOrGiveLifeWithRatioEffect : Effect, IEffect
 {
     public int DamageRatio { get; init; }
     public int HealRatio { get; init; }

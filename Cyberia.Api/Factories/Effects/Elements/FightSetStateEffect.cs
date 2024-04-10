@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record FightSetStateEffect
-    : StateEffect, IEffect
+public sealed record FightSetStateEffect : StateEffect, IEffect
 {
     private FightSetStateEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int stateId)
         : base(id, duration, probability, criteria, effectArea, stateId)

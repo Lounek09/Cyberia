@@ -7,8 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Pets;
 
-public class PetFoodsData
-    : IDofusData
+public sealed class PetFoodsData : IDofusData
 {
     [JsonPropertyName("e")]
     [JsonConverter(typeof(EffectConverter))]

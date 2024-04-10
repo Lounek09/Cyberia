@@ -4,8 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Houses;
 
-public sealed class HouseData
-    : IDofusData<int>
+public sealed class HouseData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

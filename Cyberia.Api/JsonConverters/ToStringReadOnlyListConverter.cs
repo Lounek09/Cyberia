@@ -3,8 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class ToStringReadOnlyListConverter
-    : JsonConverter<IReadOnlyList<string>>
+public sealed class ToStringReadOnlyListConverter : JsonConverter<IReadOnlyList<string>>
 {
     public override IReadOnlyList<string> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {

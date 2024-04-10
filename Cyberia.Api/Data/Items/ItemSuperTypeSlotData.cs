@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Items;
 
-internal sealed class ItemSuperTypeSlotData
-    : IDofusData<int>
+internal sealed class ItemSuperTypeSlotData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

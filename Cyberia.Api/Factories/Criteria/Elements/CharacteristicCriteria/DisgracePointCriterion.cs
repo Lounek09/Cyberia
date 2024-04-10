@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record DisgracePointCriterion
-    : Criterion, ICriterion
+public sealed record DisgracePointCriterion : Criterion, ICriterion
 {
     public int Value { get; init; }
 

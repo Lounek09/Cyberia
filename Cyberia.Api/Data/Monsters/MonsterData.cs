@@ -4,8 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Monsters;
 
-public sealed class MonsterData
-    : IDofusData<int>
+public sealed class MonsterData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

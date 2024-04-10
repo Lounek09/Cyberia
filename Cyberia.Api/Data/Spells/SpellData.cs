@@ -6,8 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Spells;
 
-public sealed class SpellData
-    : IDofusData<int>
+public sealed class SpellData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

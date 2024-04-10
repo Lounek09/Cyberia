@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterDeboostReflectorUnboostedEffect
-    : MinMaxEffect, IEffect
+public sealed record CharacterDeboostReflectorUnboostedEffect : MinMaxEffect, IEffect
 {
     private CharacterDeboostReflectorUnboostedEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)

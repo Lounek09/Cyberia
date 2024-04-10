@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Dialogs;
 
-public sealed class DialogsData
-    : IDofusData
+public sealed class DialogsData : IDofusData
 {
     private const string c_fileName = "dialog.json";
 

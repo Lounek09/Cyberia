@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class EffectAreaConverter
-    : JsonConverter<EffectArea>
+public sealed class EffectAreaConverter : JsonConverter<EffectArea>
 {
     public override EffectArea Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {

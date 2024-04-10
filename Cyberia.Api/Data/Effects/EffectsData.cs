@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Effects;
 
-public sealed class EffectsData
-    : IDofusData
+public sealed class EffectsData : IDofusData
 {
     private const string c_fileName = "effects.json";
 

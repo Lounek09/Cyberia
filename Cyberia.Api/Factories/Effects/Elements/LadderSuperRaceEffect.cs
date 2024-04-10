@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record LadderSuperRaceEffect
-    : Effect, IEffect
+public sealed record LadderSuperRaceEffect : Effect, IEffect
 {
     public int MonsterSuperRaceId { get; init; }
     public int Count { get; init; }

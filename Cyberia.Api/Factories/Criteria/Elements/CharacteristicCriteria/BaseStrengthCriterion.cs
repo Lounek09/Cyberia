@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record BaseStrengthCriterion
-    : Criterion, ICriterion
+public sealed record BaseStrengthCriterion : Criterion, ICriterion
 {
     public int Value { get; init; }
 

@@ -6,8 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class EffectReadOnlyListConverter
-    : JsonConverter<IReadOnlyList<IEffect>>
+public sealed class EffectReadOnlyListConverter : JsonConverter<IReadOnlyList<IEffect>>
 {
     public override IReadOnlyList<IEffect> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {

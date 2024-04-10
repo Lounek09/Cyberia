@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ErroredEffect
-    : Effect, IEffect
+public sealed record ErroredEffect : Effect, IEffect
 {
     public string CompressedEffect { get; init; }
 

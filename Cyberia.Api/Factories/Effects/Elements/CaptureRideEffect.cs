@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CaptureRideEffect
-    : Effect, IEffect
+public sealed record CaptureRideEffect : Effect, IEffect
 {
     public int CapturePercent { get; init; }
 

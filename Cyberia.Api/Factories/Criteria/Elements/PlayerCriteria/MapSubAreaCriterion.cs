@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record MapSubAreaCriterion
-    : Criterion, ICriterion
+public sealed record MapSubAreaCriterion : Criterion, ICriterion
 {
     public int MapSubAreaId { get; init; }
 

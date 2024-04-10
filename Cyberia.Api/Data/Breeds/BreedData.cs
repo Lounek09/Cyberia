@@ -6,8 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Breeds;
 
-public sealed class BreedData
-    : IDofusData<int>
+public sealed class BreedData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

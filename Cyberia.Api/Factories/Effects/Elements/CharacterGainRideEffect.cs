@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterGainRideEffect
-    : Effect, IEffect
+public sealed record CharacterGainRideEffect : Effect, IEffect
 {
     public int RideId { get; init; }
     public int RideAbilityId { get; init; }

@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostRangeForAllSpellEffect
-    : Effect, IEffect
+public sealed record CharacterBoostRangeForAllSpellEffect : Effect, IEffect
 {
     public int Range { get; init; }
 

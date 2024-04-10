@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record BreedCriterion
-    : Criterion, ICriterion
+public sealed record BreedCriterion : Criterion, ICriterion
 {
     public int BreedId { get; init; }
 

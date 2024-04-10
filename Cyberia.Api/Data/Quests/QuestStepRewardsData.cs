@@ -7,8 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace Cyberia.Api.Data.Quests;
 
-public sealed class QuestStepRewardsData
-    : IDofusData
+public sealed class QuestStepRewardsData : IDofusData
 {
     public int Experience { get; init; }
 

@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record ErroredQuestObjective
-    : QuestObjective, IQuestObjective
+public sealed record ErroredQuestObjective : QuestObjective, IQuestObjective
 {
     private ErroredQuestObjective(QuestObjectiveData questObjectiveData)
         : base(questObjectiveData)

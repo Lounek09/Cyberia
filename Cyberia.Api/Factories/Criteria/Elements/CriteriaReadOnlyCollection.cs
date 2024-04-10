@@ -3,8 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record CriteriaReadOnlyCollection
-    : ICriteriaElement, IReadOnlyList<ICriteriaElement>
+public sealed record CriteriaReadOnlyCollection : ICriteriaElement, IReadOnlyList<ICriteriaElement>
 {
     public ReadOnlyCollection<ICriteriaElement> Items => _items.AsReadOnly();
     public int Count => _items.Count;

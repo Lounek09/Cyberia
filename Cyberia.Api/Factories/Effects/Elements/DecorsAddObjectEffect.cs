@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record DecorsAddObjectEffect
-    : Effect, IEffect
+public sealed record DecorsAddObjectEffect : Effect, IEffect
 {
     public int GfxId { get; init; }
 

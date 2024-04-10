@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Titles;
 
-public sealed class TitleData
-    : IDofusData<int>
+public sealed class TitleData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

@@ -4,8 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Hints;
 
-public sealed class HintData
-    : IDofusData
+public sealed class HintData : IDofusData
 {
     [JsonPropertyName("n")]
     public string Name { get; init; }

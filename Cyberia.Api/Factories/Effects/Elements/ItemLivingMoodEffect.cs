@@ -4,8 +4,7 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemLivingMoodEffect
-    : Effect, IEffect
+public sealed record ItemLivingMoodEffect : Effect, IEffect
 {
     public Corpulence Corpulence { get; init; }
 

@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record CriteriaLogicalOperator
-    : ICriteriaElement
+public sealed record CriteriaLogicalOperator : ICriteriaElement
 {
     public char Operator { get; init; }
 

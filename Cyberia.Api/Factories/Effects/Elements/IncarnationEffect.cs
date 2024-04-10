@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record IncarnationEffect
-    : Effect, IEffect
+public sealed record IncarnationEffect : Effect, IEffect
 {
     public int Level { get; init; }
 

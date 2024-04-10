@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record SubscribeCriterion
-    : Criterion, ICriterion
+public sealed record SubscribeCriterion : Criterion, ICriterion
 {
     public bool Subscribed { get; init; }
 

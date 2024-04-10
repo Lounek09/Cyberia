@@ -22,8 +22,7 @@ public static class ChannelManager
            sender.SetChannelAsync<DiscordChannel>(Bot.Config.CytrusManifestChannelId, "cytrus manifest", x => CytrusManifestChannel = x));
     }
 
-    private static async Task SetChannelAsync<T>(this DiscordClient client, ulong id, string name, Action<T> set)
-        where T : DiscordChannel
+    private static async Task SetChannelAsync<T>(this DiscordClient client, ulong id, string name, Action<T> set) where T : DiscordChannel
     {
         if (id == 0)
         {

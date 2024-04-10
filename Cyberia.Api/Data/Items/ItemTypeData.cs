@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Items;
 
-public sealed class ItemTypeData
-    : IDofusData<int>
+public sealed class ItemTypeData : IDofusData<int>
 {
     public const int Pet = 18;
 

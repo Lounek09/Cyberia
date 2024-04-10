@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Items;
 
-public sealed class ItemsData
-    : IDofusData
+public sealed class ItemsData : IDofusData
 {
     private const string c_fileName = "items.json";
 

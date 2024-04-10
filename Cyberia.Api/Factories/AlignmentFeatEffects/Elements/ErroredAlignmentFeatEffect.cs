@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
-public sealed record ErroredAlignmentFeatEffect
-    : AlignmentFeatEffect, IAlignmentFeatEffect
+public sealed record ErroredAlignmentFeatEffect : AlignmentFeatEffect, IAlignmentFeatEffect
 {
     IReadOnlyList<int> Parameters { get; init; }
 

@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record PlayerRightsCriterion
-    : Criterion, ICriterion
+public sealed record PlayerRightsCriterion : Criterion, ICriterion
 {
     public int RightsLevel { get; init; }
 

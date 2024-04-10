@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record ErroredCriterion
-    : Criterion, ICriterion
+public sealed record ErroredCriterion : Criterion, ICriterion
 {
     public string CompressedCriterion { get; init; }
 

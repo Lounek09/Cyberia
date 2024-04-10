@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterInventoryRemoveItemAroundEffect
-    : Effect, IEffect
+public sealed record CharacterInventoryRemoveItemAroundEffect : Effect, IEffect
 {
     public int ItemId { get; init; }
     public int Qte { get; init; }

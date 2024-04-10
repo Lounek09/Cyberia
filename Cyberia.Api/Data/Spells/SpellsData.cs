@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Spells;
 
-public sealed class SpellsData
-    : IDofusData
+public sealed class SpellsData : IDofusData
 {
     private const string c_fileName = "spells.json";
 

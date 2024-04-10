@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record UntranslatedCriterion
-    : Criterion, ICriterion
+public sealed record UntranslatedCriterion : Criterion, ICriterion
 {
     IReadOnlyList<string> Parameters { get; init; }
 

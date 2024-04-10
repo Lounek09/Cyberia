@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Pvp;
 
-public sealed class PvpData
-    : IDofusData
+public sealed class PvpData : IDofusData
 {
     private const string c_fileName = "pvp.json";
 

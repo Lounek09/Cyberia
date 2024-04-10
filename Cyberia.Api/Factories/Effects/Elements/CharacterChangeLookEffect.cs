@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterChangeLookEffect
-    : Effect, IEffect
+public sealed record CharacterChangeLookEffect : Effect, IEffect
 {
     public int SpriteId { get; init; }
 

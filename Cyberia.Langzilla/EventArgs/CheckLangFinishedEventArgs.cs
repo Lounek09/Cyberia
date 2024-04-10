@@ -5,8 +5,7 @@ namespace Cyberia.Langzilla.EventArgs;
 /// <summary>
 /// Represents the event arguments for when a check of the langs is finished.
 /// </summary>
-public sealed class CheckLangFinishedEventArgs
-    : System.EventArgs
+public sealed class CheckLangFinishedEventArgs : System.EventArgs
 {
     /// <summary>
     /// Gets the type of the checked langs.

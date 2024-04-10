@@ -3,8 +3,7 @@ using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record FightMonsterQuestObjective
-    : QuestObjective, IQuestObjective
+public sealed record FightMonsterQuestObjective : QuestObjective, IQuestObjective
 {
     public int MonsterId { get; init; }
 

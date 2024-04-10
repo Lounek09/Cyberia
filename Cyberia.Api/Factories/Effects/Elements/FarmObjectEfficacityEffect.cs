@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record FarmObjectEfficacityEffect
-    : Effect, IEffect
+public sealed record FarmObjectEfficacityEffect : Effect, IEffect
 {
     public int Effectiveness { get; init; }
 

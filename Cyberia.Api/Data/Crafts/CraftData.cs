@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Crafts;
 
-public sealed class CraftData
-    : IDofusData<int>
+public sealed class CraftData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

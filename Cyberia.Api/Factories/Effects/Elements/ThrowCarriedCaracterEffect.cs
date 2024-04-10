@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ThrowCarriedCaracterEffect
-    : ParameterlessEffect, IEffect
+public sealed record ThrowCarriedCaracterEffect : ParameterlessEffect, IEffect
 {
     private ThrowCarriedCaracterEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)

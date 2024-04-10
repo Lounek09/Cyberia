@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterMovementPointsLostEffect
-    : MinMaxEffect, IEffect
+public sealed record CharacterMovementPointsLostEffect : MinMaxEffect, IEffect
 {
     private CharacterMovementPointsLostEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)

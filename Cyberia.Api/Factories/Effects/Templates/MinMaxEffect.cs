@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
-public abstract record MinMaxEffect
-    : Effect
+public abstract record MinMaxEffect : Effect
 {
     public int Min { get; init; }
     public int Max { get; init; }

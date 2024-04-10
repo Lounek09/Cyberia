@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 namespace Cyberia.Api.Data.Items;
 
 [JsonConverter(typeof(ItemWeaponDataConverter))]
-public sealed class ItemWeaponData
-    : IDofusData
+public sealed class ItemWeaponData : IDofusData
 {
     public int CriticalBonus { get; init; }
 

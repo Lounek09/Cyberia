@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record RideDetailsEffect
-    : Effect, IEffect
+public sealed record RideDetailsEffect : Effect, IEffect
 {
     public int ItemUuid { get; init; }
     public DateTime ExpirationDate { get; init; }

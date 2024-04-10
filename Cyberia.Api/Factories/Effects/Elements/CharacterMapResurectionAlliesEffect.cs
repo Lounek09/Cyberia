@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterMapResurectionAlliesEffect
-    : Effect, IEffect
+public sealed record CharacterMapResurectionAlliesEffect : Effect, IEffect
 {
     public int Energy { get; init; }
 

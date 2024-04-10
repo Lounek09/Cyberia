@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GotoMapEffect
-    : Effect, IEffect
+public sealed record GotoMapEffect : Effect, IEffect
 {
     public int MapId { get; init; }
     public int Cell { get; init; }

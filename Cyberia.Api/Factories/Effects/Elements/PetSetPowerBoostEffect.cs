@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record PetSetPowerBoostEffect
-    : Effect, IEffect
+public sealed record PetSetPowerBoostEffect : Effect, IEffect
 {
     public int StatsWeightBonus { get; init; }
     public int ItemId { get; init; }

@@ -4,8 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Maps;
 
-public sealed class MapSubAreaData
-    : IDofusData<int>
+public sealed class MapSubAreaData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class ItemWeaponDataConverter
-    : JsonConverter<ItemWeaponData>
+public sealed class ItemWeaponDataConverter : JsonConverter<ItemWeaponData>
 {
     public override ItemWeaponData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {

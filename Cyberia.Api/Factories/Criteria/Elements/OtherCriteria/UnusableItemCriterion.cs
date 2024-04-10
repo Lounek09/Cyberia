@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record UnusableItemCriterion
-    : Criterion, ICriterion
+public sealed record UnusableItemCriterion : Criterion, ICriterion
 {
     public string Value { get; init; }
 

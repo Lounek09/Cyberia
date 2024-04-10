@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record FreeFormQuestObjective
-    : QuestObjective, IQuestObjective
+public sealed record FreeFormQuestObjective : QuestObjective, IQuestObjective
 {
     public string Description { get; init; }
 

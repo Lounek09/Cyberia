@@ -4,8 +4,7 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GiveTTGCardFromRarityEffect
-    : Effect, IEffect
+public sealed record GiveTTGCardFromRarityEffect : Effect, IEffect
 {
     public TTGCardRarity Rarity { get; init; }
 

@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record AlignmentSpecializationCriterion
-    : Criterion, ICriterion
+public sealed record AlignmentSpecializationCriterion : Criterion, ICriterion
 {
     public int AlignmentSpecializationId { get; init; }
 

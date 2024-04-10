@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Guilds;
 
-public sealed class GuildData
-    : IDofusData
+public sealed class GuildData : IDofusData
 {
     [JsonPropertyName("w")]
     public IReadOnlyList<IReadOnlyList<int>> BoostCostWeight { get; init; }

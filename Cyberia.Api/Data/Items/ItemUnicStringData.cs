@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Items;
 
-public sealed class ItemUnicStringData
-    : IDofusData<int>
+public sealed class ItemUnicStringData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

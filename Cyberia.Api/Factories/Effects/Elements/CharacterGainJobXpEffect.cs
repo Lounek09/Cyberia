@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterGainJobXpEffect
-    : Effect, IEffect
+public sealed record CharacterGainJobXpEffect : Effect, IEffect
 {
     public int JobId { get; init; }
     public int XpAmount { get; init; }

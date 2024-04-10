@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Emotes;
 
-public sealed class EmotesData
-    : IDofusData
+public sealed class EmotesData : IDofusData
 {
     private const string c_fileName = "emotes.json";
 

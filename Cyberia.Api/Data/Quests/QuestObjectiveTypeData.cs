@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Quests;
 
-public sealed class QuestObjectiveTypeData
-    : IDofusData<int>
+public sealed class QuestObjectiveTypeData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

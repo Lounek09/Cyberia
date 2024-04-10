@@ -3,8 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Alignments;
 
-public sealed class AlignmentSpecializationData
-    : IDofusData<int>
+public sealed class AlignmentSpecializationData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

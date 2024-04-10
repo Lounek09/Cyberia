@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record MonsterSummonCriterion
-    : Criterion, ICriterion
+public sealed record MonsterSummonCriterion : Criterion, ICriterion
 {
     public int MonsterId { get; init; }
 

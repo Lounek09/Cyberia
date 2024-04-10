@@ -3,8 +3,7 @@ using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public record class DiscoverMapSubAreaQuestObjective
-    : QuestObjective, IQuestObjective
+public sealed record DiscoverMapSubAreaQuestObjective : QuestObjective, IQuestObjective
 {
     public int MapSubAreaId { get; init; }
 

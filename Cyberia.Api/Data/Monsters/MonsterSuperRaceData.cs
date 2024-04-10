@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Monsters;
 
-public sealed class MonsterSuperRaceData
-    : IDofusData<int>
+public sealed class MonsterSuperRaceData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

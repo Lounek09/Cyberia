@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterLearnSpellLevelEffect
-    : Effect, IEffect
+public sealed record CharacterLearnSpellLevelEffect : Effect, IEffect
 {
     public int SpellLevelId { get; init; }
 

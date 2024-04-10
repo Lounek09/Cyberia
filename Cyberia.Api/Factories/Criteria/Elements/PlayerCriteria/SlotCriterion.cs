@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record SlotCriterion
-    : Criterion, ICriterion
+public sealed record SlotCriterion : Criterion, ICriterion
 {
     public int SlotId { get; init; }
 

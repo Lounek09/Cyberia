@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record UntranslatedQuestObjective
-    : QuestObjective, IQuestObjective
+public sealed record UntranslatedQuestObjective : QuestObjective, IQuestObjective
 {
     private UntranslatedQuestObjective(QuestObjectiveData questObjectiveData)
         : base(questObjectiveData)

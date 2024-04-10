@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record PetPowerBoostEffect
-    : Effect, IEffect
+public sealed record PetPowerBoostEffect : Effect, IEffect
 {
     public int Power { get; init; }
 

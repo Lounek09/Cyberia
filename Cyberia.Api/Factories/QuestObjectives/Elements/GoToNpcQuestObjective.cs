@@ -3,8 +3,7 @@ using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record GoToNpcQuestObjective
-    : QuestObjective, IQuestObjective
+public sealed record GoToNpcQuestObjective : QuestObjective, IQuestObjective
 {
     public int NpcId { get; init; }
 

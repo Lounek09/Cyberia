@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record QuestStartEffect
-    : Effect, IEffect
+public sealed record QuestStartEffect : Effect, IEffect
 {
     public int QuestId { get; init; }
 

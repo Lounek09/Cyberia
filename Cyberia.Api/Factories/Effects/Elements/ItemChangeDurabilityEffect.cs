@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemChangeDurabilityEffect
-    : Effect, IEffect
+public sealed record ItemChangeDurabilityEffect : Effect, IEffect
 {
     public int CurrentDurability { get; init; }
     public int MaxDurability { get; init; }

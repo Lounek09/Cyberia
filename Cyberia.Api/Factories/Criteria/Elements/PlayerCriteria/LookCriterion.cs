@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record LookCriterion
-    : Criterion, ICriterion
+public sealed record LookCriterion : Criterion, ICriterion
 {
     public string LookId { get; init; }
 

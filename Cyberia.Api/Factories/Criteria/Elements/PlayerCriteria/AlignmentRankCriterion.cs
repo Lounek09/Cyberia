@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record AlignmentRankCriterion
-    : Criterion, ICriterion
+public sealed record AlignmentRankCriterion : Criterion, ICriterion
 {
     public int Rank { get; init; }
 

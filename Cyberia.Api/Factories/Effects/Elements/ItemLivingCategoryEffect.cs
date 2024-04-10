@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemLivingCategoryEffect
-    : Effect, IEffect
+public sealed record ItemLivingCategoryEffect : Effect, IEffect
 {
     public int ItemTypeId { get; init; }
 

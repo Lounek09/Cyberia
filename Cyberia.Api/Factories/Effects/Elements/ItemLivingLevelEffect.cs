@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemLivingLevelEffect
-    : Effect, IEffect
+public sealed record ItemLivingLevelEffect : Effect, IEffect
 {
     public int Experience { get; init; }
 

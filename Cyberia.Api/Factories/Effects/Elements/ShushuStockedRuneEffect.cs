@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ShushuStockedRuneEffect
-    : Effect, IEffect
+public sealed record ShushuStockedRuneEffect : Effect, IEffect
 {
     public int Amont { get; init; }
 

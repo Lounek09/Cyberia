@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record BoostSpellRangeableEffect
-    : SpellModifierEffect, IEffect
+public sealed record BoostSpellRangeableEffect : SpellModifierEffect, IEffect
 {
     private BoostSpellRangeableEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId, int value)
         : base(id, duration, probability, criteria, effectArea, spellId, value)

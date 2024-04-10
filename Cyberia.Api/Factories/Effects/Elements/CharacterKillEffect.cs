@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterKillEffect
-    : ParameterlessEffect, IEffect
+public sealed record CharacterKillEffect : ParameterlessEffect, IEffect
 {
     private CharacterKillEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)

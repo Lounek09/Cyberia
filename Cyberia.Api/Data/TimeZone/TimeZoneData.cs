@@ -4,8 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TimeZone;
 
-public sealed class TimeZoneData
-    : IDofusData
+public sealed class TimeZoneData : IDofusData
 {
     private const string c_fileName = "timezones.json";
 

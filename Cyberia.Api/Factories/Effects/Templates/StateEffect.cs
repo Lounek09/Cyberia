@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
-public abstract record StateEffect
-    : Effect
+public abstract record StateEffect : Effect
 {
     public int StateId { get; init; }
 

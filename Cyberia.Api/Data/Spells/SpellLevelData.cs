@@ -9,8 +9,7 @@ using System.Text.Json.Serialization;
 namespace Cyberia.Api.Data.Spells;
 
 [JsonConverter(typeof(SpellLevelConverter))]
-public sealed class SpellLevelData
-    : IDofusData<int>
+public sealed class SpellLevelData : IDofusData<int>
 {
     public int Id { get; init; }
 

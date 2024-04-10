@@ -4,8 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests;
 
-public sealed class QuestObjectiveData
-    : IDofusData<int>
+public sealed class QuestObjectiveData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

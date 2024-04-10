@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record JobCriterion
-    : Criterion, ICriterion
+public sealed record JobCriterion : Criterion, ICriterion
 {
     public int JobId { get; init; }
     public int? Level { get; init; }

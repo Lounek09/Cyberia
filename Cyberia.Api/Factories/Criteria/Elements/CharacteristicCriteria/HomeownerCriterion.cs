@@ -1,7 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record HomeownerCriterion
-    : Criterion, ICriterion
+public sealed record HomeownerCriterion : Criterion, ICriterion
 {
     public bool IsHomeowner { get; init; }
 

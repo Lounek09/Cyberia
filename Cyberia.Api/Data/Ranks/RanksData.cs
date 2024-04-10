@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Ranks;
 
-public sealed class RanksData
-    : IDofusData
+public sealed class RanksData : IDofusData
 {
     private const string c_fileName = "ranks.json";
 

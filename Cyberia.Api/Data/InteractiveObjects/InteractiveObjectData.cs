@@ -4,8 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.InteractiveObjects;
 
-public sealed class InteractiveObjectData
-    : IDofusData<int>
+public sealed class InteractiveObjectData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

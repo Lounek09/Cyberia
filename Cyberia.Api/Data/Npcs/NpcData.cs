@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Npcs;
 
-public sealed class NpcData
-    : IDofusData<int>
+public sealed class NpcData : IDofusData<int>
 {
     public const double RetailRatio = 0.1;
 

@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterDodgeHitEffect
-    : Effect, IEffect
+public sealed record CharacterDodgeHitEffect : Effect, IEffect
 {
     public int DodgePercent { get; init; }
     public int CasePushed { get; init; }

@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemChangeDurationEffect
-    : Effect, IEffect
+public sealed record ItemChangeDurationEffect : Effect, IEffect
 {
     public DateTime DateTime { get; init; }
 

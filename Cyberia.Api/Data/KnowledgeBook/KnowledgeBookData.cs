@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.KnowledgeBook;
 
-public sealed class KnowledgeBookData
-    : IDofusData
+public sealed class KnowledgeBookData : IDofusData
 {
     private const string c_fileName = "kb.json";
 

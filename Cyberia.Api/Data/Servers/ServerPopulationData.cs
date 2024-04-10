@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Servers;
 
-public sealed class ServerPopulationData
-    : IDofusData<int>
+public sealed class ServerPopulationData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record FightChallengeAgainstMonsterEffect
-    : Effect, IEffect
+public sealed record FightChallengeAgainstMonsterEffect : Effect, IEffect
 {
     public int MonsterId { get; init; }
 

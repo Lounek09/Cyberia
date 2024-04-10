@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record FightAddGlyphCastingSpellEffect
-    : GlyphEffect, IEffect
+public sealed record FightAddGlyphCastingSpellEffect : GlyphEffect, IEffect
 {
     private FightAddGlyphCastingSpellEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId, int level)
         : base(id, duration, probability, criteria, effectArea, spellId, level)

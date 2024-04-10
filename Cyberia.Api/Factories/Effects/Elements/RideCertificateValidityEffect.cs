@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record RideCertificateValidityEffect
-    : Effect, IEffect
+public sealed record RideCertificateValidityEffect : Effect, IEffect
 {
     public int Days { get; init; }
     public int Hours { get; init; }

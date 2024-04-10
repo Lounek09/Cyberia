@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Alignments;
 
-public sealed class AlignmentFeatData
-    : IDofusData<int>
+public sealed class AlignmentFeatData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

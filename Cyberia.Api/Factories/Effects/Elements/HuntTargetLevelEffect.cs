@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record HuntTargetLevelEffect
-    : Effect, IEffect
+public sealed record HuntTargetLevelEffect : Effect, IEffect
 {
     public int Level { get; init; }
 

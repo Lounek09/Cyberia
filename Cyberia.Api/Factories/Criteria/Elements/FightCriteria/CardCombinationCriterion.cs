@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record CardCombinationCriterion
-    : Criterion, ICriterion
+public sealed record CardCombinationCriterion : Criterion, ICriterion
 {
     public CardCombination CardCombination { get; init; }
 

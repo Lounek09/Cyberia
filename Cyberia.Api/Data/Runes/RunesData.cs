@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Runes;
 
-public sealed class RunesData
-    : IDofusData
+public sealed class RunesData : IDofusData
 {
     private const string c_fileName = "runes.json";
 

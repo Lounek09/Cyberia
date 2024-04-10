@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostOneWeaponDamagePercentEffect
-    : Effect, IEffect
+public sealed record CharacterBoostOneWeaponDamagePercentEffect : Effect, IEffect
 {
     public int ItemTypeId { get; init; }
     public int PercentDamage { get; init; }

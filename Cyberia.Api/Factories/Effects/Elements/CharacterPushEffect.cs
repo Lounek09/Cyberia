@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterPushEffect
-    : Effect, IEffect
+public sealed record CharacterPushEffect : Effect, IEffect
 {
     public int Distance { get; init; }
 

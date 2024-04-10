@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemPetsEatEffect
-    : Effect, IEffect
+public sealed record ItemPetsEatEffect : Effect, IEffect
 {
     public int ItemId { get; init; }
 

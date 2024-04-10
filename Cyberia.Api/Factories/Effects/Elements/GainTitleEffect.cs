@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GainTitleEffect
-    : Effect, IEffect
+public sealed record GainTitleEffect : Effect, IEffect
 {
     public int TitleId { get; init; }
 

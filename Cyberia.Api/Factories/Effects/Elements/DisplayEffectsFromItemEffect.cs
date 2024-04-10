@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ReplaceEffect
-    : Effect, IEffect
+public sealed record ReplaceEffect : Effect, IEffect
 {
     public int ItemId { get; init; }
 

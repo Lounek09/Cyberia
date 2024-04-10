@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Dialogs;
 
-public sealed class DialogQuestionData
-    : IDofusData<int>
+public sealed class DialogQuestionData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

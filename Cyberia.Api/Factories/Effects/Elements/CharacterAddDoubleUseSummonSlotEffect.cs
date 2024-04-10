@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterAddDoubleUseSummonSlotEffect
-    : ParameterlessEffect, IEffect
+public sealed record CharacterAddDoubleUseSummonSlotEffect : ParameterlessEffect, IEffect
 {
     private CharacterAddDoubleUseSummonSlotEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)

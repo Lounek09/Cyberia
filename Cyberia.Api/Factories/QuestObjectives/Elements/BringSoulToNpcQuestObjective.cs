@@ -4,8 +4,7 @@ using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record BringSoulToNpcQuestObjective
-    : QuestObjective, IQuestObjective
+public sealed record BringSoulToNpcQuestObjective : QuestObjective, IQuestObjective
 {
     public int NpcId { get; init; }
     public int MonsterId { get; init; }

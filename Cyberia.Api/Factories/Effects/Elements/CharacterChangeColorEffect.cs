@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterChangeColorEffect
-    : Effect, IEffect
+public sealed record CharacterChangeColorEffect : Effect, IEffect
 {
     public int Position { get; init; }
     public int Color { get; init; }

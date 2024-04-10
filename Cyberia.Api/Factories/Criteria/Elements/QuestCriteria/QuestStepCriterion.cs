@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record QuestStepCriterion
-    : Criterion, ICriterion
+public sealed record QuestStepCriterion : Criterion, ICriterion
 {
     public int QuestStepId { get; init; }
 

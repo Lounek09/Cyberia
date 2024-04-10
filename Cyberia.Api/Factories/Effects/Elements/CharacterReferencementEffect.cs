@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterReferencementEffect
-    : Effect, IEffect
+public sealed record CharacterReferencementEffect : Effect, IEffect
 {
     public int JobId { get; init; }
 

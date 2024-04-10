@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterLearnEmoteEffect
-    : Effect, IEffect
+public sealed record CharacterLearnEmoteEffect : Effect, IEffect
 {
     public int EmoteId { get; init; }
 

@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterTransformEffect
-    : Effect, IEffect
+public sealed record CharacterTransformEffect : Effect, IEffect
 {
     public int MonsterId { get; init; }
 

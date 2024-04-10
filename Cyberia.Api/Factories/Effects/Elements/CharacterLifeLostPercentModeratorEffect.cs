@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterLifeLostPercentReductorEffect
-    : Effect, IEffect
+public sealed record CharacterLifeLostPercentReductorEffect : Effect, IEffect
 {
     public int PercentReductor { get; init; }
 

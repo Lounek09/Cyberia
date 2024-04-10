@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record EmoteCriterion
-    : Criterion, ICriterion
+public sealed record EmoteCriterion : Criterion, ICriterion
 {
     public int EmoteId { get; init; }
 

@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record MapPlayerCriterion
-    : Criterion, ICriterion
+public sealed record MapPlayerCriterion : Criterion, ICriterion
 {
     public int MapId { get; init; }
     public int MaxPlayers { get; init; }

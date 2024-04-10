@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.Effects;
 
-public sealed class EffectData
-    : IDofusData<int>
+public sealed class EffectData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }

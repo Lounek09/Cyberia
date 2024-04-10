@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.InteractiveObjects;
 
-public sealed class InteractiveObjectsData
-    : IDofusData
+public sealed class InteractiveObjectsData : IDofusData
 {
     private const string c_fileName = "interactiveobjects.json";
 

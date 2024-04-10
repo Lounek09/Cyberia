@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GainAuraEffect
-    : Effect, IEffect
+public sealed record GainAuraEffect : Effect, IEffect
 {
     public int AuraId { get; init; }
 

@@ -3,8 +3,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterReadBookEffect
-    : Effect, IEffect
+public sealed record CharacterReadBookEffect : Effect, IEffect
 {
     public int BookId { get; init; }
 

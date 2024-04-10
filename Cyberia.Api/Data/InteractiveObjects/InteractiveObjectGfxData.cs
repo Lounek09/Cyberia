@@ -2,8 +2,7 @@
 
 namespace Cyberia.Api.Data.InteractiveObjects;
 
-internal sealed class InteractiveObjectGfxData
-    : IDofusData<int>
+internal sealed class InteractiveObjectGfxData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int GfxId { get; init; }

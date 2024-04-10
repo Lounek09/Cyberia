@@ -7,8 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests;
 
-public sealed class QuestsData
-    : IDofusData
+public sealed class QuestsData : IDofusData
 {
     private const string c_fileName = "quests.json";
 

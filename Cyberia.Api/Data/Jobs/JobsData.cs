@@ -5,8 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Jobs;
 
-public sealed class JobsData
-    : IDofusData
+public sealed class JobsData : IDofusData
 {
     private const string c_fileName = "jobs.json";
 

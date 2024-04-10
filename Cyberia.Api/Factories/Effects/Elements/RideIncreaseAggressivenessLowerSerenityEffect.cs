@@ -4,8 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record RideIncreaseAggressivenessLowerSerenityEffect
-    : ParameterlessEffect, IEffect
+public sealed record RideIncreaseAggressivenessLowerSerenityEffect : ParameterlessEffect, IEffect
 {
     private RideIncreaseAggressivenessLowerSerenityEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)
