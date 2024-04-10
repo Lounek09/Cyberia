@@ -10,14 +10,14 @@ public sealed record CharacterGainJobXpEffect
     public int JobId { get; init; }
     public int XpAmount { get; init; }
 
-    private CharacterGainJobXpEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int jobId, int xpAmount)
+    private CharacterGainJobXpEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int jobId, int xpAmount)
         : base(id, duration, probability, criteria, effectArea)
     {
         JobId = jobId;
         XpAmount = xpAmount;
     }
 
-    internal static CharacterGainJobXpEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterGainJobXpEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2, (int)parameters.Param3);
     }

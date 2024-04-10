@@ -8,13 +8,13 @@ public sealed record HuntTargetRankEffect
 {
     public int Rank { get; init; }
 
-    private HuntTargetRankEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rank)
+    private HuntTargetRankEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int rank)
         : base(id, duration, probability, criteria, effectArea)
     {
         Rank = rank;
     }
 
-    internal static HuntTargetRankEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static HuntTargetRankEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

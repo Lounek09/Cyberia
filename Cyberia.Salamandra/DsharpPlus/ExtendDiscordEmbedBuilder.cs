@@ -53,7 +53,7 @@ public static class ExtendDiscordEmbedBuilder
         return embed.AddFields(name, GetEffectsParse(effects, x => Formatter.Bold(Formatter.Sanitize(x))), inline);
     }
 
-    public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, string name, CriteriaCollection criteria, bool inline = false)
+    public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, string name, CriteriaReadOnlyCollection criteria, bool inline = false)
     {
         var criteriaParse = GetCriteriaParse(criteria, x => Formatter.Bold(Formatter.Sanitize(x)));
         return embed.AddFields(name, criteriaParse, inline);
@@ -300,7 +300,7 @@ public static class ExtendDiscordEmbedBuilder
         return effectsParse;
     }
 
-    private static List<string> GetCriteriaParse(CriteriaCollection criteria, Func<string, string>? parametersDecorator = null)
+    private static List<string> GetCriteriaParse(CriteriaReadOnlyCollection criteria, Func<string, string>? parametersDecorator = null)
     {
         List<string> criteriaParse = [string.Empty];
 
@@ -311,7 +311,7 @@ public static class ExtendDiscordEmbedBuilder
                 case CriteriaLogicalOperator logicalOperator:
                     criteriaParse[^1] += $"{logicalOperator.GetDescription()} ";
                     break;
-                case CriteriaCollection subCriteria:
+                case CriteriaReadOnlyCollection subCriteria:
                     var subCriteriaParse = GetCriteriaParse(subCriteria, parametersDecorator);
                     criteriaParse[^1] += "(" + subCriteriaParse[0];
 

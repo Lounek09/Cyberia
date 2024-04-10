@@ -8,13 +8,13 @@ public sealed record CharacterLoseDishonourEffect
 {
     public int Dishonnour { get; init; }
 
-    private CharacterLoseDishonourEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int dishonnour)
+    private CharacterLoseDishonourEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int dishonnour)
         : base(id, duration, probability, criteria, effectArea)
     {
         Dishonnour = dishonnour;
     }
 
-    internal static CharacterLoseDishonourEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterLoseDishonourEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

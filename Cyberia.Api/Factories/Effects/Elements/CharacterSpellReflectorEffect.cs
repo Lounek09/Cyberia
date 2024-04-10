@@ -8,13 +8,13 @@ public sealed record CharacterSpellReflectorEffect
 {
     public int Level { get; init; }
 
-    private CharacterSpellReflectorEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int level)
+    private CharacterSpellReflectorEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int level)
         : base(id, duration, probability, criteria, effectArea)
     {
         Level = level;
     }
 
-    internal static CharacterSpellReflectorEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterSpellReflectorEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2);
     }

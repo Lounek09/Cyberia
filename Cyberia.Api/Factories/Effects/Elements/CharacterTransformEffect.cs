@@ -9,13 +9,13 @@ public sealed record CharacterTransformEffect
 {
     public int MonsterId { get; init; }
 
-    private CharacterTransformEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId)
+    private CharacterTransformEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int monsterId)
         : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
     }
 
-    internal static CharacterTransformEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterTransformEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
     }

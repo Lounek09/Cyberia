@@ -9,13 +9,13 @@ public sealed record CharacterLearnEmoteEffect
 {
     public int EmoteId { get; init; }
 
-    private CharacterLearnEmoteEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int emoteId)
+    private CharacterLearnEmoteEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int emoteId)
         : base(id, duration, probability, criteria, effectArea)
     {
         EmoteId = emoteId;
     }
 
-    internal static CharacterLearnEmoteEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterLearnEmoteEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

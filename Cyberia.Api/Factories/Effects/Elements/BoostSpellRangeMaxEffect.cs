@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record BoostSpellRangeMaxEffect
     : SpellModifierEffect, IEffect
 {
-    private BoostSpellRangeMaxEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int value)
+    private BoostSpellRangeMaxEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId, int value)
         : base(id, duration, probability, criteria, effectArea, spellId, value)
     {
 
     }
 
-    internal static BoostSpellRangeMaxEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static BoostSpellRangeMaxEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }

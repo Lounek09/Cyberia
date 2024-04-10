@@ -9,14 +9,14 @@ public sealed record RideDetailsEffect
     public int ItemUuid { get; init; }
     public DateTime ExpirationDate { get; init; }
 
-    private RideDetailsEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemUuid, DateTime expirationDate)
+    private RideDetailsEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemUuid, DateTime expirationDate)
         : base(id, duration, probability, criteria, effectArea)
     {
         ItemUuid = itemUuid;
         ExpirationDate = expirationDate;
     }
 
-    internal static RideDetailsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static RideDetailsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, DateTimeOffset.FromUnixTimeMilliseconds(parameters.Param2).UtcDateTime);
     }

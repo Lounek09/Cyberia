@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record BoostSpellDamagePercentEffect
     : SpellModifierEffect, IEffect
 {
-    private BoostSpellDamagePercentEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int value)
+    private BoostSpellDamagePercentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId, int value)
         : base(id, duration, probability, criteria, effectArea, spellId, value)
     {
 
     }
 
-    internal static BoostSpellDamagePercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static BoostSpellDamagePercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }

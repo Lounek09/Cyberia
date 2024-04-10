@@ -10,14 +10,14 @@ public sealed record GotoMapEffect
     public int MapId { get; init; }
     public int Cell { get; init; }
 
-    private GotoMapEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int mapId, int cell)
+    private GotoMapEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int mapId, int cell)
         : base(id, duration, probability, criteria, effectArea)
     {
         MapId = mapId;
         Cell = cell;
     }
 
-    internal static GotoMapEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static GotoMapEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2, (int)parameters.Param3);
     }

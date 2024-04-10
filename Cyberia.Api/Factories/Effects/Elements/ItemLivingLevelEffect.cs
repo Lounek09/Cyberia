@@ -8,13 +8,13 @@ public sealed record ItemLivingLevelEffect
 {
     public int Experience { get; init; }
 
-    private ItemLivingLevelEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int experience)
+    private ItemLivingLevelEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int experience)
         : base(id, duration, probability, criteria, effectArea)
     {
         Experience = experience;
     }
 
-    internal static ItemLivingLevelEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ItemLivingLevelEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

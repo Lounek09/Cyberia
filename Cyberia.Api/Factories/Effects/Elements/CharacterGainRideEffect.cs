@@ -11,7 +11,7 @@ public sealed record CharacterGainRideEffect
     public int RideAbilityId { get; init; }
     public bool Infertile { get; init; }
 
-    private CharacterGainRideEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rideId, int rideAbilityId, bool infertile)
+    private CharacterGainRideEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int rideId, int rideAbilityId, bool infertile)
         : base(id, duration, probability, criteria, effectArea)
     {
         RideId = rideId;
@@ -19,7 +19,7 @@ public sealed record CharacterGainRideEffect
         Infertile = infertile;
     }
 
-    internal static CharacterGainRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterGainRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3, (int)parameters.Param2, parameters.Param1 == 1);
     }

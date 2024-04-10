@@ -8,13 +8,13 @@ public sealed record ShowTextEffect
 {
     public string Value { get; init; }
 
-    private ShowTextEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string value)
+    private ShowTextEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, string value)
         : base(id, duration, probability, criteria, effectArea)
     {
         Value = value;
     }
 
-    internal static ShowTextEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ShowTextEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, parameters.Param4);
     }

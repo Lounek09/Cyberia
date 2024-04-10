@@ -8,13 +8,13 @@ public sealed record RideNameEffect
 {
     public string Name { get; init; }
 
-    private RideNameEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, string name)
+    private RideNameEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, string name)
         : base(id, duration, probability, criteria, effectArea)
     {
         Name = name;
     }
 
-    internal static RideNameEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static RideNameEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, parameters.Param4);
     }

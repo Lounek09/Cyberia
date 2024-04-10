@@ -10,14 +10,14 @@ public sealed record ItemTeleportEffect
     public int MapId { get; init; }
     public int Cell { get; init; }
 
-    private ItemTeleportEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int mapId, int cell)
+    private ItemTeleportEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int mapId, int cell)
         : base(id, duration, probability, criteria, effectArea)
     {
         MapId = mapId;
         Cell = cell;
     }
 
-    internal static ItemTeleportEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ItemTeleportEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         var binary1 = Convert.ToString(parameters.Param1, 2);
         var binary2 = Convert.ToString(parameters.Param2, 2);

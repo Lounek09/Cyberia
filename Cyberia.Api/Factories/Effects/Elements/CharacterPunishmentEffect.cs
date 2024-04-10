@@ -11,7 +11,7 @@ public sealed record CharacterPunishmentEffect
     public int MaxBoost { get; init; }
     public int Turn { get; init; }
 
-    private CharacterPunishmentEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int boostEffectId, int maxBoost, int turn)
+    private CharacterPunishmentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int boostEffectId, int maxBoost, int turn)
         : base(id, duration, probability, criteria, effectArea)
     {
         BoostEffectId = boostEffectId;
@@ -19,7 +19,7 @@ public sealed record CharacterPunishmentEffect
         Turn = turn;
     }
 
-    internal static CharacterPunishmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterPunishmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2, (int)parameters.Param3);
     }

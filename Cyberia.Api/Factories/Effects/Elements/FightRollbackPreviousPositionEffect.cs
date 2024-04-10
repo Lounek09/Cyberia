@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record FightRollbackPreviousPositionEffect
     : ParameterlessEffect, IEffect
 {
-    private FightRollbackPreviousPositionEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    private FightRollbackPreviousPositionEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)
     {
 
     }
 
-    internal static FightRollbackPreviousPositionEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static FightRollbackPreviousPositionEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea);
     }

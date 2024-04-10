@@ -9,13 +9,13 @@ public sealed record GiveTTGCardFromRarityEffect
 {
     public TTGCardRarity Rarity { get; init; }
 
-    private GiveTTGCardFromRarityEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, TTGCardRarity rarity)
+    private GiveTTGCardFromRarityEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, TTGCardRarity rarity)
         : base(id, duration, probability, criteria, effectArea)
     {
         Rarity = rarity;
     }
 
-    internal static GiveTTGCardFromRarityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static GiveTTGCardFromRarityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (TTGCardRarity)parameters.Param3);
     }

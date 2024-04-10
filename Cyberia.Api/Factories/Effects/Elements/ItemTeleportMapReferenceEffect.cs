@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record ItemTeleportMapReferenceEffect
     : ParameterlessEffect, IEffect
 {
-    private ItemTeleportMapReferenceEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    private ItemTeleportMapReferenceEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)
     {
 
     }
 
-    internal static ItemTeleportMapReferenceEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ItemTeleportMapReferenceEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea);
     }

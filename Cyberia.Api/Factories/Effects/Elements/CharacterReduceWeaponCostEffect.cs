@@ -8,13 +8,13 @@ public sealed record CharacterReduceWeaponCostEffect
 {
     public int ActionPointsReduced { get; init; }
 
-    private CharacterReduceWeaponCostEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int actionPointsReduced)
+    private CharacterReduceWeaponCostEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int actionPointsReduced)
         : base(id, duration, probability, criteria, effectArea)
     {
         ActionPointsReduced = actionPointsReduced;
     }
 
-    internal static CharacterReduceWeaponCostEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterReduceWeaponCostEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

@@ -9,13 +9,13 @@ public sealed record CharacterUnlearnGuildSpellEffect
 {
     public int SpellId { get; init; }
 
-    private CharacterUnlearnGuildSpellEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId)
+    private CharacterUnlearnGuildSpellEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId)
         : base(id, duration, probability, criteria, effectArea)
     {
         SpellId = spellId;
     }
 
-    internal static CharacterUnlearnGuildSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterUnlearnGuildSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

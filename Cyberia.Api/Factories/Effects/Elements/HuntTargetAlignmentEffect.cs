@@ -9,13 +9,13 @@ public sealed record HuntTargetAlignmentEffect
 {
     public int AlignmentId { get; init; }
 
-    private HuntTargetAlignmentEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int alignmentId)
+    private HuntTargetAlignmentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int alignmentId)
         : base(id, duration, probability, criteria, effectArea)
     {
         AlignmentId = alignmentId;
     }
 
-    internal static HuntTargetAlignmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static HuntTargetAlignmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

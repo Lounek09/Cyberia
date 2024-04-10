@@ -8,13 +8,13 @@ public sealed record CharacterBoostRangeForAllSpellEffect
 {
     public int Range { get; init; }
 
-    private CharacterBoostRangeForAllSpellEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int range)
+    private CharacterBoostRangeForAllSpellEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int range)
         : base(id, duration, probability, criteria, effectArea)
     {
         Range = range;
     }
 
-    internal static CharacterBoostRangeForAllSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterBoostRangeForAllSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

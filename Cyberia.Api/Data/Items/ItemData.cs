@@ -59,8 +59,8 @@ public sealed class ItemData
     public ItemWeaponData? WeaponData { get; init; }
 
     [JsonPropertyName("c")]
-    [JsonConverter(typeof(CriteriaCollectionConverter))]
-    public CriteriaCollection Criteria { get; init; }
+    [JsonConverter(typeof(CriteriaReadOnlyCollectionConverter))]
+    public CriteriaReadOnlyCollection Criteria { get; init; }
 
     [JsonPropertyName("s")]
     public int ItemSetId { get; init; }

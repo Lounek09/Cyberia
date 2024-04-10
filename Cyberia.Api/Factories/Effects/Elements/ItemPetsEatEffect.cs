@@ -9,13 +9,13 @@ public sealed record ItemPetsEatEffect
 {
     public int ItemId { get; init; }
 
-    private ItemPetsEatEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId)
+    private ItemPetsEatEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemId)
         : base(id, duration, probability, criteria, effectArea)
     {
         ItemId = itemId;
     }
 
-    internal static ItemPetsEatEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ItemPetsEatEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

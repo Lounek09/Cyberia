@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public abstract record Effect(int Id, int Duration, int Probability, CriteriaCollection Criteria, EffectArea EffectArea)
+public abstract record Effect(int Id, int Duration, int Probability, CriteriaReadOnlyCollection Criteria, EffectArea EffectArea)
 {
     public EffectData? GetEffectData()
     {

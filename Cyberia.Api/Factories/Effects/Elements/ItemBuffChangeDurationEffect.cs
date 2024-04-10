@@ -8,13 +8,13 @@ public sealed record ItemBuffChangeDurationEffect
 {
     public int TurnDuration { get; init; }
 
-    private ItemBuffChangeDurationEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int turnDuration)
+    private ItemBuffChangeDurationEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int turnDuration)
         : base(id, duration, probability, criteria, effectArea)
     {
         TurnDuration = turnDuration;
     }
 
-    internal static ItemBuffChangeDurationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ItemBuffChangeDurationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

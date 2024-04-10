@@ -9,13 +9,13 @@ public sealed record ItemLivingMoodEffect
 {
     public Corpulence Corpulence { get; init; }
 
-    private ItemLivingMoodEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, Corpulence corpulence)
+    private ItemLivingMoodEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, Corpulence corpulence)
         : base(id, duration, probability, criteria, effectArea)
     {
         Corpulence = corpulence;
     }
 
-    internal static ItemLivingMoodEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ItemLivingMoodEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (Corpulence)parameters.Param3);
     }

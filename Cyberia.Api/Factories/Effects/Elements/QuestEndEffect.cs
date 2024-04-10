@@ -9,13 +9,13 @@ public sealed record QuestEndEffect
 {
     public int QuestId { get; init; }
 
-    private QuestEndEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int questId)
+    private QuestEndEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int questId)
         : base(id, duration, probability, criteria, effectArea)
     {
         QuestId = questId;
     }
 
-    internal static QuestEndEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static QuestEndEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

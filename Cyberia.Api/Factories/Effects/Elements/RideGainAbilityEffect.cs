@@ -9,13 +9,13 @@ public sealed record RideGainAbilityEffect
 {
     public int RideAbilityId { get; init; }
 
-    private RideGainAbilityEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int rideAbilityId)
+    private RideGainAbilityEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int rideAbilityId)
         : base(id, duration, probability, criteria, effectArea)
     {
         RideAbilityId = rideAbilityId;
     }
 
-    internal static RideGainAbilityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static RideGainAbilityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

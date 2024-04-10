@@ -10,14 +10,14 @@ public sealed record CharacterSummonMonsterGroupDynamicEffect
     public int MonsterId { get; init; }
     public int Grade { get; init; }
 
-    private CharacterSummonMonsterGroupDynamicEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int grade)
+    private CharacterSummonMonsterGroupDynamicEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int monsterId, int grade)
         : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
         Grade = grade;
     }
 
-    internal static CharacterSummonMonsterGroupDynamicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterSummonMonsterGroupDynamicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3, (int)parameters.Param1);
     }

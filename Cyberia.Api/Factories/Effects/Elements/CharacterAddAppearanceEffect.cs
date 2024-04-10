@@ -8,13 +8,13 @@ public sealed record CharacterAddAppearanceEffect
 {
     public int SpriteId { get; init; }
 
-    private CharacterAddAppearanceEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spriteId)
+    private CharacterAddAppearanceEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spriteId)
         : base(id, duration, probability, criteria, effectArea)
     {
         SpriteId = spriteId;
     }
 
-    internal static CharacterAddAppearanceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterAddAppearanceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

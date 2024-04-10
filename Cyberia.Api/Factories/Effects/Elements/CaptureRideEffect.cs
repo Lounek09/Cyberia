@@ -8,13 +8,13 @@ public sealed record CaptureRideEffect
 {
     public int CapturePercent { get; init; }
 
-    private CaptureRideEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int capturePercent)
+    private CaptureRideEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int capturePercent)
         : base(id, duration, probability, criteria, effectArea)
     {
         CapturePercent = capturePercent;
     }
 
-    internal static CaptureRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CaptureRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
     }

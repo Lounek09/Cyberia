@@ -9,14 +9,14 @@ public sealed record CharacterInventoryAddItemFromRandomDropEffect
     public int Quantity { get; init; }
     public int BundleId { get; init; }
 
-    private CharacterInventoryAddItemFromRandomDropEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int quantity, int bundleId)
+    private CharacterInventoryAddItemFromRandomDropEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int quantity, int bundleId)
         : base(id, duration, probability, criteria, effectArea)
     {
         Quantity = quantity;
         BundleId = bundleId;
     }
 
-    internal static CharacterInventoryAddItemFromRandomDropEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterInventoryAddItemFromRandomDropEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }

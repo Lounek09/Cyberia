@@ -8,13 +8,13 @@ public sealed record ItemPetsLifePointsEffect
 {
     public int LifePoints { get; init; }
 
-    private ItemPetsLifePointsEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int lifePoints)
+    private ItemPetsLifePointsEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int lifePoints)
         : base(id, duration, probability, criteria, effectArea)
     {
         LifePoints = lifePoints;
     }
 
-    internal static ItemPetsLifePointsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ItemPetsLifePointsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

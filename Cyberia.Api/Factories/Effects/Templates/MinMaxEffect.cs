@@ -9,7 +9,7 @@ public abstract record MinMaxEffect
     public int Min { get; init; }
     public int Max { get; init; }
 
-    protected MinMaxEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
+    protected MinMaxEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea)
     {
         Min = min;

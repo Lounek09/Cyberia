@@ -12,7 +12,7 @@ public sealed record CharacterInventoryAddItemCheckEffect
     public int Qte { get; init; }
     public GiveItemTarget Target { get; init; }
 
-    private CharacterInventoryAddItemCheckEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId, int qte, GiveItemTarget giveItemTarget)
+    private CharacterInventoryAddItemCheckEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemId, int qte, GiveItemTarget giveItemTarget)
         : base(id, duration, probability, criteria, effectArea)
     {
         ItemId = itemId;
@@ -20,7 +20,7 @@ public sealed record CharacterInventoryAddItemCheckEffect
         Target = giveItemTarget;
     }
 
-    internal static CharacterInventoryAddItemCheckEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterInventoryAddItemCheckEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3, (int)parameters.Param2, (GiveItemTarget)parameters.Param1);
     }

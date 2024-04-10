@@ -11,13 +11,13 @@ public sealed record CharacterSummonMonsterGroupEffect
 {
     public IReadOnlyList<int> MonstersId { get; init; }
 
-    private CharacterSummonMonsterGroupEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, List<int> monstersId)
+    private CharacterSummonMonsterGroupEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, List<int> monstersId)
         : base(id, duration, probability, criteria, effectArea)
     {
         MonstersId = monstersId;
     }
 
-    internal static CharacterSummonMonsterGroupEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterSummonMonsterGroupEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         var monstersId = parameters.Param4.Split(":", StringSplitOptions.RemoveEmptyEntries)
             .Select(x => int.Parse(x, NumberStyles.HexNumber))

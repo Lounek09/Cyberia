@@ -8,13 +8,13 @@ public sealed record FarmObjectEfficacityEffect
 {
     public int Effectiveness { get; init; }
 
-    private FarmObjectEfficacityEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int effectiveness)
+    private FarmObjectEfficacityEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int effectiveness)
         : base(id, duration, probability, criteria, effectArea)
     {
         Effectiveness = effectiveness;
     }
 
-    internal static FarmObjectEfficacityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static FarmObjectEfficacityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

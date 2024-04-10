@@ -9,13 +9,13 @@ public sealed record CharacterReferencementEffect
 {
     public int JobId { get; init; }
 
-    private CharacterReferencementEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int jobId)
+    private CharacterReferencementEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int jobId)
         : base(id, duration, probability, criteria, effectArea)
     {
         JobId = jobId;
     }
 
-    internal static CharacterReferencementEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterReferencementEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
     }

@@ -8,13 +8,13 @@ public sealed record DecorsAddObjectEffect
 {
     public int GfxId { get; init; }
 
-    private DecorsAddObjectEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int gfxId)
+    private DecorsAddObjectEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int gfxId)
         : base(id, duration, probability, criteria, effectArea)
     {
         GfxId = gfxId;
     }
 
-    internal static DecorsAddObjectEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static DecorsAddObjectEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         // Param3 is a supposition
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);

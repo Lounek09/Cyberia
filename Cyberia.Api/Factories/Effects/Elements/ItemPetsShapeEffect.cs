@@ -9,13 +9,13 @@ public sealed record ItemPetsShapeEffect
 {
     public Corpulence Corpulence { get; init; }
 
-    private ItemPetsShapeEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, Corpulence corpulence)
+    private ItemPetsShapeEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, Corpulence corpulence)
         : base(id, duration, probability, criteria, effectArea)
     {
         Corpulence = corpulence;
     }
 
-    internal static ItemPetsShapeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ItemPetsShapeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         var corpulence = parameters.Param2 <= 6 ? parameters.Param3 <= 6 ? Corpulence.Satisfied : Corpulence.Skinny : Corpulence.Obese;
 

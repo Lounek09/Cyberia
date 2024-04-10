@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record RideLowerLoveEffect
     : ParameterlessEffect, IEffect
 {
-    private RideLowerLoveEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    private RideLowerLoveEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)
     {
 
     }
 
-    internal static RideLowerLoveEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static RideLowerLoveEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea);
     }

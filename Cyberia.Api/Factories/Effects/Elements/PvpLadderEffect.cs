@@ -8,13 +8,13 @@ public sealed record PvpLadderEffect
 {
     public int Count { get; init; }
 
-    private PvpLadderEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int count)
+    private PvpLadderEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int count)
         : base(id, duration, probability, criteria, effectArea)
     {
         Count = count;
     }
 
-    internal static PvpLadderEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static PvpLadderEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2);
     }

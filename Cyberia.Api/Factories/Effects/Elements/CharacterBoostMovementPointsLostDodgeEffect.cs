@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record CharacterBoostMovementPointsLostDodgeEffect
     : MinMaxEffect, IEffect
 {
-    private CharacterBoostMovementPointsLostDodgeEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
+    private CharacterBoostMovementPointsLostDodgeEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
 
     }
 
-    internal static CharacterBoostMovementPointsLostDodgeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterBoostMovementPointsLostDodgeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }

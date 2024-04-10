@@ -108,7 +108,7 @@ public static class CriterionFactory
         return Create(id, @operator, parameters);
     }
 
-    public static CriteriaCollection CreateMany(string compressedCriteria)
+    public static CriteriaReadOnlyCollection CreateMany(string compressedCriteria)
     {
         List<ICriteriaElement> criteria = [];
 
@@ -136,7 +136,7 @@ public static class CriterionFactory
             index++;
         }
 
-        return new CriteriaCollection(criteria);
+        return new CriteriaReadOnlyCollection(criteria);
     }
 
     public static (string, int) ExtractToken(string value, int startIndex, params char[] endChars)

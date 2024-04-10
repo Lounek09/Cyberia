@@ -9,13 +9,13 @@ public sealed record GotoGuildStructureEffect
 {
     public GuildStructure GuildStructure { get; init; }
 
-    private GotoGuildStructureEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, GuildStructure guildStructure)
+    private GotoGuildStructureEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, GuildStructure guildStructure)
         : base(id, duration, probability, criteria, effectArea)
     {
         GuildStructure = guildStructure;
     }
 
-    internal static GotoGuildStructureEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static GotoGuildStructureEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (GuildStructure)parameters.Param3);
     }

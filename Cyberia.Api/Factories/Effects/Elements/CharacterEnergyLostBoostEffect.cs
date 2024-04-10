@@ -8,13 +8,13 @@ public sealed record CharacterEnergyLossBoostEffect
 {
     public int EnergyLoss { get; init; }
 
-    private CharacterEnergyLossBoostEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int energyLoss)
+    private CharacterEnergyLossBoostEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int energyLoss)
         : base(id, duration, probability, criteria, effectArea)
     {
         EnergyLoss = energyLoss;
     }
 
-    internal static CharacterEnergyLossBoostEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterEnergyLossBoostEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
     }

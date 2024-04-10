@@ -9,14 +9,14 @@ public sealed record CharacterDodgeHitEffect
     public int DodgePercent { get; init; }
     public int CasePushed { get; init; }
 
-    private CharacterDodgeHitEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int dodgePercent, int casePushed)
+    private CharacterDodgeHitEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int dodgePercent, int casePushed)
         : base(id, duration, probability, criteria, effectArea)
     {
         DodgePercent = dodgePercent;
         CasePushed = casePushed;
     }
 
-    internal static CharacterDodgeHitEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterDodgeHitEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }

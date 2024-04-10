@@ -10,14 +10,14 @@ public sealed record CharacterInventoryRemoveItemAroundEffect
     public int ItemId { get; init; }
     public int Qte { get; init; }
 
-    private CharacterInventoryRemoveItemAroundEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemId, int qte)
+    private CharacterInventoryRemoveItemAroundEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemId, int qte)
         : base(id, duration, probability, criteria, effectArea)
     {
         ItemId = itemId;
         Qte = qte;
     }
 
-    internal static CharacterInventoryRemoveItemAroundEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterInventoryRemoveItemAroundEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3, (int)parameters.Param2);
     }

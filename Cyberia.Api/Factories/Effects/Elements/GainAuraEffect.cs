@@ -8,13 +8,13 @@ public sealed record GainAuraEffect
 {
     public int AuraId { get; init; }
 
-    private GainAuraEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int auraId)
+    private GainAuraEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int auraId)
         : base(id, duration, probability, criteria, effectArea)
     {
         AuraId = auraId;
     }
 
-    internal static GainAuraEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static GainAuraEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

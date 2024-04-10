@@ -9,13 +9,13 @@ public sealed record FightChallengeAgainstMonsterEffect
 {
     public int MonsterId { get; init; }
 
-    private FightChallengeAgainstMonsterEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId)
+    private FightChallengeAgainstMonsterEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int monsterId)
         : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
     }
 
-    internal static FightChallengeAgainstMonsterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static FightChallengeAgainstMonsterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2);
     }

@@ -9,7 +9,7 @@ public interface IEffect
     int Id { get; init; }
     int Duration { get; init; }
     int Probability { get; init; }
-    CriteriaCollection Criteria { get; init; }
+    CriteriaReadOnlyCollection Criteria { get; init; }
     EffectArea EffectArea { get; init; }
 
     EffectData? GetEffectData();

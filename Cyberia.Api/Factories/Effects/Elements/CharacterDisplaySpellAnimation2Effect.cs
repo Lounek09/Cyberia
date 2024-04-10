@@ -8,13 +8,13 @@ public sealed record CharacterDisplaySpellAnimation2Effect
 {
     public int GfxId { get; init; }
 
-    private CharacterDisplaySpellAnimation2Effect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int gfxId)
+    private CharacterDisplaySpellAnimation2Effect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int gfxId)
         : base(id, duration, probability, criteria, effectArea)
     {
         GfxId = gfxId;
     }
 
-    internal static CharacterDisplaySpellAnimation2Effect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterDisplaySpellAnimation2Effect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

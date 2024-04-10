@@ -11,8 +11,8 @@ public readonly record struct EffectParameters(long Param1, long Param2, long Pa
 
 public static class EffectFactory
 {
-    private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaCollection, EffectArea, IEffect>> s_factory =
-        new Dictionary<int, Func<int, EffectParameters, int, int, CriteriaCollection, EffectArea, IEffect>>()
+    private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, EffectArea, IEffect>> s_factory =
+        new Dictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, EffectArea, IEffect>>()
         {
             { 4, CharacterTeleportOnSameMapEffect.Create },
             { 5, CharacterPushEffect.Create },
@@ -413,7 +413,7 @@ public static class EffectFactory
             { 2151, MarkNeverTradableStrongEffect.Create }
         }.ToFrozenDictionary();
 
-    public static IEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    public static IEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         if (s_factory.TryGetValue(effectId, out var builder))
         {

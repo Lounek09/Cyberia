@@ -10,14 +10,14 @@ public sealed record LadderIdEffect
     public int MonsterId { get; init; }
     public int Count { get; init; }
 
-    private LadderIdEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterId, int count)
+    private LadderIdEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int monsterId, int count)
         : base(id, duration, probability, criteria, effectArea)
     {
         MonsterId = monsterId;
         Count = count;
     }
 
-    internal static LadderIdEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static LadderIdEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }

@@ -8,13 +8,13 @@ public sealed record ShushuStackRuneWeaponEffect
 {
     public int Amont { get; init; }
 
-    private ShushuStackRuneWeaponEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int amont)
+    private ShushuStackRuneWeaponEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int amont)
         : base(id, duration, probability, criteria, effectArea)
     {
         Amont = amont;
     }
 
-    internal static ShushuStackRuneWeaponEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ShushuStackRuneWeaponEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

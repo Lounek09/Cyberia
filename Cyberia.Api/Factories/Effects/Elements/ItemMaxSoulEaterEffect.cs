@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record ItemMaxSoulEaterEffect
     : ParameterlessEffect, IEffect
 {
-    private ItemMaxSoulEaterEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    private ItemMaxSoulEaterEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)
     {
 
     }
 
-    internal static ItemMaxSoulEaterEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static ItemMaxSoulEaterEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea);
     }

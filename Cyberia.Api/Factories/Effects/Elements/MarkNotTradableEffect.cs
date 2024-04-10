@@ -8,13 +8,13 @@ public sealed record MarkNotTradableEffect
 {
     public DateTime DateTime { get; init; }
 
-    private MarkNotTradableEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, DateTime dateTime)
+    private MarkNotTradableEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, DateTime dateTime)
         : base(id, duration, probability, criteria, effectArea)
     {
         DateTime = dateTime;
     }
 
-    internal static MarkNotTradableEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static MarkNotTradableEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, DateManager.CreateDateTimeFromEffectParameters(parameters));
     }

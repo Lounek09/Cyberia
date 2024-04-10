@@ -8,13 +8,13 @@ public sealed record CharacterReadBookEffect
 {
     public int BookId { get; init; }
 
-    private CharacterReadBookEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int bookId)
+    private CharacterReadBookEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int bookId)
         : base(id, duration, probability, criteria, effectArea)
     {
         BookId = bookId;
     }
 
-    internal static CharacterReadBookEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterReadBookEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

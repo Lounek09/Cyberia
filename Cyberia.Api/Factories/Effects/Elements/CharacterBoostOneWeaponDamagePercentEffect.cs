@@ -10,14 +10,14 @@ public sealed record CharacterBoostOneWeaponDamagePercentEffect
     public int ItemTypeId { get; init; }
     public int PercentDamage { get; init; }
 
-    private CharacterBoostOneWeaponDamagePercentEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int itemTypeId, int percentDamage)
+    private CharacterBoostOneWeaponDamagePercentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemTypeId, int percentDamage)
         : base(id, duration, probability, criteria, effectArea)
     {
         ItemTypeId = itemTypeId;
         PercentDamage = percentDamage;
     }
 
-    internal static CharacterBoostOneWeaponDamagePercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterBoostOneWeaponDamagePercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }

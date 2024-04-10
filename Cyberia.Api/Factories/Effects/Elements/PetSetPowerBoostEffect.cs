@@ -10,14 +10,14 @@ public sealed record PetSetPowerBoostEffect
     public int StatsWeightBonus { get; init; }
     public int ItemId { get; init; }
 
-    private PetSetPowerBoostEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int statsWeightBonus, int itemId)
+    private PetSetPowerBoostEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int statsWeightBonus, int itemId)
         : base(id, duration, probability, criteria, effectArea)
     {
         StatsWeightBonus = statsWeightBonus;
         ItemId = itemId;
     }
 
-    internal static PetSetPowerBoostEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static PetSetPowerBoostEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2, (int)parameters.Param3);
     }

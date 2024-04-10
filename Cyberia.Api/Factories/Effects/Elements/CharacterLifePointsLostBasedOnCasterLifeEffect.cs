@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record CharacterLifePointsLostBasedOnCasterLifeEffect
     : MinMaxEffect, IEffect
 {
-    private CharacterLifePointsLostBasedOnCasterLifeEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int min, int max)
+    private CharacterLifePointsLostBasedOnCasterLifeEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
 
     }
 
-    internal static CharacterLifePointsLostBasedOnCasterLifeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterLifePointsLostBasedOnCasterLifeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }

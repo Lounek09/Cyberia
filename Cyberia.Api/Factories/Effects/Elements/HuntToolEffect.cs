@@ -9,7 +9,7 @@ public sealed record HuntToolEffect
 {
     public int RuneId { get; init; }
 
-    private HuntToolEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    private HuntToolEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)
     {
         RuneId = 31;
@@ -20,7 +20,7 @@ public sealed record HuntToolEffect
         return 1;
     }
 
-    internal static HuntToolEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static HuntToolEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea);
     }

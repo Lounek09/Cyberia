@@ -11,14 +11,14 @@ public sealed record LadderRaceEffect
     public int Count { get; init; }
 
 
-    private LadderRaceEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int monsterRaceId, int count)
+    private LadderRaceEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int monsterRaceId, int count)
         : base(id, duration, probability, criteria, effectArea)
     {
         MonsterRaceId = monsterRaceId;
         Count = count;
     }
 
-    internal static LadderRaceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static LadderRaceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }

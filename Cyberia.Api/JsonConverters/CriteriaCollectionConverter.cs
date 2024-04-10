@@ -6,15 +6,15 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
-public sealed class CriteriaCollectionConverter
-    : JsonConverter<CriteriaCollection>
+public sealed class CriteriaReadOnlyCollectionConverter
+    : JsonConverter<CriteriaReadOnlyCollection>
 {
-    public override CriteriaCollection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override CriteriaReadOnlyCollection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         return CriterionFactory.CreateMany(reader.GetString() ?? string.Empty);
     }
 
-    public override void Write(Utf8JsonWriter writer, CriteriaCollection values, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, CriteriaReadOnlyCollection values, JsonSerializerOptions options)
     {
         throw new NotImplementedException();
     }

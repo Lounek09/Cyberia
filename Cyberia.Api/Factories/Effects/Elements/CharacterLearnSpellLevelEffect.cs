@@ -9,13 +9,13 @@ public sealed record CharacterLearnSpellLevelEffect
 {
     public int SpellLevelId { get; init; }
 
-    private CharacterLearnSpellLevelEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellLevelId)
+    private CharacterLearnSpellLevelEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellLevelId)
         : base(id, duration, probability, criteria, effectArea)
     {
         SpellLevelId = spellLevelId;
     }
 
-    internal static CharacterLearnSpellLevelEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterLearnSpellLevelEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

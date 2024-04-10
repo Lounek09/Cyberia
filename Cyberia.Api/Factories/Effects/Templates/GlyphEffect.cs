@@ -10,7 +10,7 @@ public abstract record GlyphEffect
     public int SpellId { get; init; }
     public int Level { get; init; }
 
-    protected GlyphEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int spellId, int level)
+    protected GlyphEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId, int level)
         : base(id, duration, probability, criteria, effectArea)
     {
         SpellId = spellId;

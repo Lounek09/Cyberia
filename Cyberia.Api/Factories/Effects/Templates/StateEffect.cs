@@ -9,7 +9,7 @@ public abstract record StateEffect
 {
     public int StateId { get; init; }
 
-    protected StateEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int stateId)
+    protected StateEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int stateId)
         : base(id, duration, probability, criteria, effectArea)
     {
         StateId = stateId;

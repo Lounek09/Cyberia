@@ -8,13 +8,13 @@ public sealed record UntranslatedEffect
 {
     public EffectParameters Parameters { get; init; }
 
-    private UntranslatedEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, EffectParameters parameters)
+    private UntranslatedEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, EffectParameters parameters)
         : base(id, duration, probability, criteria, effectArea)
     {
         Parameters = parameters;
     }
 
-    internal static UntranslatedEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static UntranslatedEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, parameters);
     }

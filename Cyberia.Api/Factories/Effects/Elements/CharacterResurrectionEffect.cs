@@ -8,13 +8,13 @@ public sealed record CharacterResurrectionEffect
 {
     public int Energy { get; init; }
 
-    private CharacterResurrectionEffect(int id, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea, int energy)
+    private CharacterResurrectionEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int energy)
         : base(id, duration, probability, criteria, effectArea)
     {
         Energy = energy;
     }
 
-    internal static CharacterResurrectionEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaCollection criteria, EffectArea effectArea)
+    internal static CharacterResurrectionEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }
