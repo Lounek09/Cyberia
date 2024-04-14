@@ -1442,7 +1442,7 @@
     },
     {
       "id": 295,
-      "d": "Augment la portée minimale du sort #1 de #3",
+      "d": "Augmente la portée minimale du sort #1 de #3",
       "c": 0,
       "o": "-"
     },
@@ -2110,7 +2110,7 @@
     },
     {
       "id": 791,
-      "d": "Prépare #1{~1~2 à }#2 parchemins pour mercenaire [wait]",
+      "d": "Prépare #1{~1~2 à }#2 parchemins pour mercenaire",
       "c": 0,
       "o": "/",
       "t": true

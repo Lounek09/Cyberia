@@ -106,7 +106,7 @@ public sealed class LangsCommandModule : ApplicationCommandModule
 
         using var fileStream = File.OpenRead(currentDecompiledFilePath);
         var message = new DiscordInteractionResponseBuilder()
-            .AddFile($"{Path.GetFileNameWithoutExtension(currentDecompiledFilePath)}.as", fileStream);
+            .AddFile($"{lang.FileName}.as", fileStream);
 
         await ctx.CreateResponseAsync(message);
     }
