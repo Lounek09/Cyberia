@@ -435,7 +435,7 @@ public static class EffectFactory
         }
 
         var id = (int)args[0].ToInt64OrDefaultFromHex();
-        var parameters = new EffectParameters()
+        EffectParameters parameters = new()
         {
             Param1 = args.Length > 1 ? args[1].ToInt64OrDefaultFromHex() : 0,
             Param2 = args.Length > 2 ? args[2].ToInt64OrDefaultFromHex() : 0,
@@ -470,7 +470,7 @@ public static class EffectFactory
         }
 
         var id = compressedEffect[0].GetInt32OrDefault();
-        if (id == 0)
+        if (id == default)
         {
             Log.Error("Failed to create Effect from {@CompressedEffect}", compressedEffect);
             return ErroredEffect.Create(compressedEffect.ToString());

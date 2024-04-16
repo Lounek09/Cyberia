@@ -96,24 +96,24 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> LessButtonsBuilder()
     {
-        yield return new(ButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 1000, _recursive), "-1000", (_qte - 1000) < 1);
-        yield return new(ButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 100, _recursive), "-100", (_qte - 100) < 1);
-        yield return new(ButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 10, _recursive), "-10", (_qte - 10) < 1);
-        yield return new(ButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 1, _recursive), "-1", (_qte - 1) < 1);
+        yield return new(DiscordButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 1000, _recursive), "-1000", (_qte - 1000) < 1);
+        yield return new(DiscordButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 100, _recursive), "-100", (_qte - 100) < 1);
+        yield return new(DiscordButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 10, _recursive), "-10", (_qte - 10) < 1);
+        yield return new(DiscordButtonStyle.Danger, GetPacket(_craftData.Id, _qte - 1, _recursive), "-1", (_qte - 1) < 1);
     }
 
     private IEnumerable<DiscordButtonComponent> MoreButtonsBuilder()
     {
-        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1000, _recursive), "+1000", _qte + 1000 > MaxQte);
-        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 100, _recursive), "+100", _qte + 100 > MaxQte);
-        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 10, _recursive), "+10", _qte + 10 > MaxQte);
-        yield return new(ButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1, _recursive), "+1", _qte + 1 > MaxQte);
+        yield return new(DiscordButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1000, _recursive), "+1000", _qte + 1000 > MaxQte);
+        yield return new(DiscordButtonStyle.Success, GetPacket(_craftData.Id, _qte + 100, _recursive), "+100", _qte + 100 > MaxQte);
+        yield return new(DiscordButtonStyle.Success, GetPacket(_craftData.Id, _qte + 10, _recursive), "+10", _qte + 10 > MaxQte);
+        yield return new(DiscordButtonStyle.Success, GetPacket(_craftData.Id, _qte + 1, _recursive), "+1", _qte + 1 > MaxQte);
     }
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
 
-        yield return new(ButtonStyle.Primary, GetPacket(_craftData.Id, _qte, !_recursive), $"{(_recursive ? "Masquer" : "Afficher")} les sous crafts", !_craftData.HasSubCraft());
+        yield return new(DiscordButtonStyle.Primary, GetPacket(_craftData.Id, _qte, !_recursive), $"{(_recursive ? "Masquer" : "Afficher")} les sous crafts", !_craftData.HasSubCraft());
 
         if (_itemData is not null)
         {

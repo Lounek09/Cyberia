@@ -2,7 +2,6 @@
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
@@ -11,12 +10,12 @@ public static class MapComponentsBuilder
 {
     public static DiscordButtonComponent MapButtonBuilder(MapData mapData, bool disable = false)
     {
-        return new(ButtonStyle.Success, MapMessageBuilder.GetPacket(mapData.Id), mapData.GetCoordinate(), disable);
+        return new(DiscordButtonStyle.Success, MapMessageBuilder.GetPacket(mapData.Id), mapData.GetCoordinate(), disable);
     }
 
     public static DiscordButtonComponent PaginatedMapCoordinateButtonBuilder(MapData mapData, bool disable = false)
     {
-        return new(ButtonStyle.Success,
+        return new(DiscordButtonStyle.Success,
             PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.XCoord}{InteractionManager.PacketParameterSeparator}{mapData.YCoord}"),
             mapData.GetCoordinate(),
             disable);
@@ -24,12 +23,12 @@ public static class MapComponentsBuilder
 
     public static DiscordButtonComponent PaginatedMapMapSubAreaButtonBuilder(MapSubAreaData mapSubAreaData, bool disable = false)
     {
-        return new(ButtonStyle.Success, PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, mapSubAreaData.Id.ToString()), mapSubAreaData.Name, disable);
+        return new(DiscordButtonStyle.Success, PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, mapSubAreaData.Id.ToString()), mapSubAreaData.Name, disable);
     }
 
     public static DiscordButtonComponent PaginatedMapMapAreaButtonBuilder(MapAreaData mapAreaData, bool disable = false)
     {
-        return new(ButtonStyle.Success, PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, mapAreaData.Id.ToString()), mapAreaData.Name, disable);
+        return new(DiscordButtonStyle.Success, PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, mapAreaData.Id.ToString()), mapAreaData.Name, disable);
     }
 
     public static DiscordSelectComponent MapsSelectBuilder(int uniqueIndex, IEnumerable<MapData> mapsData, bool disable = false)

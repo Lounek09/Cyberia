@@ -49,7 +49,7 @@ public static class Bot
 
     public static async Task LaunchAsync()
     {
-        var activity = new DiscordActivity("Dofus Retro", ActivityType.Playing);
+        var activity = new DiscordActivity("Dofus Retro", DiscordActivityType.Playing);
         await Client.ConnectAsync(activity);
     }
 }

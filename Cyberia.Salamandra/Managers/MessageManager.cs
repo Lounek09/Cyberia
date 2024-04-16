@@ -3,7 +3,6 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using System.Collections.Frozen;
-using System.Threading.Channels;
 
 namespace Cyberia.Salamandra.Managers;
 
@@ -40,7 +39,7 @@ public static class MessageManager
         if (s_hiddenCommands.TryGetValue(lastWord, out var filePath))
         {
             var permissions = args.Channel.Guild.CurrentMember.PermissionsIn(args.Channel);
-            if (permissions.HasPermission(Permissions.ManageMessages))
+            if (permissions.HasPermission(DiscordPermissions.ManageMessages))
             {
                 await args.Message.DeleteAsync();
             }
@@ -54,19 +53,19 @@ public static class MessageManager
     {
         var permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
 
-        if (!permissions.HasPermission(Permissions.AccessChannels))
+        if (!permissions.HasPermission(DiscordPermissions.AccessChannels))
         {
             Log.Error("No permission to access to this channel {ChannelId}", channel.Id);
             return;
         }
 
-        if (!permissions.HasPermission(Permissions.SendMessages))
+        if (!permissions.HasPermission(DiscordPermissions.SendMessages))
         {
             Log.Error("No permission to send message in this channel {ChannelId}", channel.Id);
             return;
         }
 
-        if (message.Files.Count > 0 && !permissions.HasPermission(Permissions.AttachFiles))
+        if (message.Files.Count > 0 && !permissions.HasPermission(DiscordPermissions.AttachFiles))
         {
             Log.Error("No permission to attach files in this channel {ChannelId}", channel.Id);
             return;

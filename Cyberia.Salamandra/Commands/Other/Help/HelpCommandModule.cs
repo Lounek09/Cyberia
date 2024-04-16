@@ -1,7 +1,7 @@
 ﻿using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 using System.Text;
@@ -28,7 +28,7 @@ public sealed class HelpCommandModule : ApplicationCommandModule
             if (command.Options is not null)
             {
                 var subCommands = command.Options
-                    .Where(x => x.Type is ApplicationCommandOptionType.SubCommand);
+                    .Where(x => x.Type is DiscordApplicationCommandOptionType.SubCommand);
 
                 if (subCommands.Any())
                 {

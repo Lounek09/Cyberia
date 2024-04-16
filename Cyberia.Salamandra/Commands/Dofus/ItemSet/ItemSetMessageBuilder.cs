@@ -110,7 +110,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
         {
             var y = i + 1;
             yield return new DiscordButtonComponent(
-                ButtonStyle.Primary,
+                DiscordButtonStyle.Primary,
                 GetPacket(_itemSetData.Id, y),
                 $"{y}/{_itemSetData.ItemsId.Count}",
                 _nbItemSelected == y);

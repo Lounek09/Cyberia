@@ -13,7 +13,7 @@ public struct Manifest : IFlatbufferObject
 {
   private Table __p;
   public ByteBuffer ByteBuffer { get { return __p.bb; } }
-  public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_24_3_7(); }
+  public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_24_3_25(); }
   public static Manifest GetRootAsManifest(ByteBuffer _bb) { return GetRootAsManifest(_bb, new Manifest()); }
   public static Manifest GetRootAsManifest(ByteBuffer _bb, Manifest obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
   public static bool VerifyManifest(ByteBuffer _bb) {Google.FlatBuffers.Verifier verifier = new Google.FlatBuffers.Verifier(_bb); return verifier.VerifyBuffer("", false, ManifestVerify.Verify); }

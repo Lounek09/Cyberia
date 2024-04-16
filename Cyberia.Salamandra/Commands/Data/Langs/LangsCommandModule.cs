@@ -137,7 +137,7 @@ public sealed class LangsCommandModule : ApplicationCommandModule
 
         async Task diff(LangLanguage language)
         {
-            var thread = await ctx.Channel.CreateThreadAsync($"Diff entre {type} et {typeModel} en {language}", AutoArchiveDuration.Hour, ChannelType.PublicThread);
+            var thread = await ctx.Channel.CreateThreadAsync($"Diff entre {type} et {typeModel} en {language}", DiscordAutoArchiveDuration.Hour, DiscordChannelType.PublicThread);
 
             var langRepository = LangsWatcher.LangRepositories[(type, language)];
             var langRepositoryModel = LangsWatcher.LangRepositories[(typeModel, language)];

@@ -2,7 +2,6 @@
 using Cyberia.Api.Data.Items;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
@@ -11,7 +10,7 @@ public static class ItemComponentsBuilder
 {
     public static DiscordButtonComponent ItemButtonBuilder(ItemData itemData, int craftQte = 1, bool disable = false)
     {
-        return new(ButtonStyle.Success, ItemMessageBuilder.GetPacket(itemData.Id, craftQte), itemData.Name, disable);
+        return new(DiscordButtonStyle.Success, ItemMessageBuilder.GetPacket(itemData.Id, craftQte), itemData.Name, disable);
     }
 
     public static DiscordSelectComponent ItemsSelectBuilder(int index, IEnumerable<ItemData> itemsData, bool disable = false)

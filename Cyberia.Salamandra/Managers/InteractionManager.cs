@@ -84,7 +84,7 @@ public static partial class InteractionManager
         if (decomposedPacket.Length < 2)
         {
             response.WithContent("Le message est trop ancien").AsEphemeral();
-            await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
+            await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
@@ -93,7 +93,7 @@ public static partial class InteractionManager
         if (!s_factory.TryGetValue(header, out var builder))
         {
             response.WithContent("Bouton inconnu, le message est probablement trop ancien").AsEphemeral();
-            await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
+            await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
@@ -104,11 +104,11 @@ public static partial class InteractionManager
         if (message is null)
         {
             response.WithContent("Un problème a eu lieu lors de la création de la réponse, le message est probablement trop ancien").AsEphemeral();
-            await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
+            await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
         response = await message.GetMessageAsync<DiscordInteractionResponseBuilder>();
-        await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, response);
+        await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.UpdateMessage, response);
     }
 }

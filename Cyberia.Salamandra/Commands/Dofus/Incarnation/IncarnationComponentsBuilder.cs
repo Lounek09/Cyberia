@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.Data.Incarnations;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
@@ -10,7 +9,7 @@ public static class IncarnationComponentsBuilder
 {
     public static DiscordButtonComponent IncarnationButtonBuilder(IncarnationData incarnationData, bool disable = false)
     {
-        return new(ButtonStyle.Success, IncarnationMessageBuilder.GetPacket(incarnationData.Id), incarnationData.Name, disable);
+        return new(DiscordButtonStyle.Success, IncarnationMessageBuilder.GetPacket(incarnationData.Id), incarnationData.Name, disable);
     }
 
     public static DiscordSelectComponent IncarnationsSelectBuilder(int index, IEnumerable<IncarnationData> incarnationsData, bool disable = false)

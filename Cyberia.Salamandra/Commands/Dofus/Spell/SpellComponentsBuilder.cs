@@ -2,7 +2,6 @@
 using Cyberia.Api.Values;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
@@ -11,7 +10,7 @@ public static class SpellComponentsBuilder
 {
     public static DiscordButtonComponent SpellButtonBuilder(SpellData spell, bool disable = false)
     {
-        return new(ButtonStyle.Success, SpellMessageBuilder.GetPacket(spell.Id, spell.GetMaxLevelNumber()), spell.Name, disable);
+        return new(DiscordButtonStyle.Success, SpellMessageBuilder.GetPacket(spell.Id, spell.GetMaxLevelNumber()), spell.Name, disable);
     }
 
     public static DiscordSelectComponent SpellsSelectBuilder(int index, IEnumerable<SpellData> spells, bool disable = false)

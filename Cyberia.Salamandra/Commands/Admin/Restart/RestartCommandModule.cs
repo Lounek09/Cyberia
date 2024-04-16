@@ -14,6 +14,6 @@ public sealed class RestartCommandModule : ApplicationCommandModule
 
         await ctx.Client.DisconnectAsync();
 
-        await ctx.Client.ConnectAsync(new DiscordActivity("Dofus Retro", ActivityType.Playing));
+        await ctx.Client.ConnectAsync(new DiscordActivity("Dofus Retro", DiscordActivityType.Playing));
     }
 }

@@ -168,7 +168,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             var y = i + 1;
             if (_monsterData.GetMonsterGradeData(y) is not null)
             {
-                yield return new(ButtonStyle.Primary, GetPacket(_monsterData.Id,y), y.ToString(), _selectedGrade == y);
+                yield return new(DiscordButtonStyle.Primary, GetPacket(_monsterData.Id,y), y.ToString(), _selectedGrade == y);
             }
         }
     }
@@ -180,7 +180,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             var y = i + 1;
             if (_monsterData.GetMonsterGradeData(y) is not null)
             {
-                yield return new(ButtonStyle.Primary, GetPacket(_monsterData.Id, y), y.ToString(), _selectedGrade == y);
+                yield return new(DiscordButtonStyle.Primary, GetPacket(_monsterData.Id, y), y.ToString(), _selectedGrade == y);
             }
         }
     }

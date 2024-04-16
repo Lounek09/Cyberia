@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.Data.Houses;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
@@ -10,7 +9,7 @@ public static class HouseComponentsBuilder
 {
     public static DiscordButtonComponent HouseButtonBuilder(HouseData houseData, bool disable = false)
     {
-        return new(ButtonStyle.Success, HouseMessageBuilder.GetPacket(houseData.Id), houseData.Name, disable);
+        return new(DiscordButtonStyle.Success, HouseMessageBuilder.GetPacket(houseData.Id), houseData.Name, disable);
     }
 
     public static DiscordSelectComponent HousesSelectBuilder(int uniqueIndex, IEnumerable<HouseData> housesData, bool disable = false)

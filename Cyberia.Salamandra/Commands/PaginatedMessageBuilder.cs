@@ -1,7 +1,6 @@
 ﻿using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands;
@@ -82,7 +81,7 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> PaginationButtonsBuilder()
     {
-        yield return new(ButtonStyle.Primary, $"{PreviousPacketBuilder()}{InteractionManager.PacketParameterSeparator}P", "Précédent", _totalPage == 1);
-        yield return new(ButtonStyle.Primary, $"{NextPacketBuilder()}{InteractionManager.PacketParameterSeparator}N", "Suivant", _totalPage == 1);
+        yield return new(DiscordButtonStyle.Primary, $"{PreviousPacketBuilder()}{InteractionManager.PacketParameterSeparator}P", "Précédent", _totalPage == 1);
+        yield return new(DiscordButtonStyle.Primary, $"{NextPacketBuilder()}{InteractionManager.PacketParameterSeparator}N", "Suivant", _totalPage == 1);
     }
 }

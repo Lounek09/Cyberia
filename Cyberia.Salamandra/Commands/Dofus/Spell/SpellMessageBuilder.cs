@@ -178,7 +178,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             var y = i + 1;
             if (_spellData.GetSpellLevelData(y) is not null)
             {
-                yield return new(ButtonStyle.Primary, GetPacket(_spellData.Id, y), y.ToString(), _selectedLevel == y);
+                yield return new(DiscordButtonStyle.Primary, GetPacket(_spellData.Id, y), y.ToString(), _selectedLevel == y);
             }
         }
     }
@@ -187,7 +187,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
     {
         if (_spellData.GetSpellLevelData(6) is not null)
         {
-            yield return new(ButtonStyle.Primary, GetPacket(_spellData.Id, 6), "6", _selectedLevel == 6);
+            yield return new(DiscordButtonStyle.Primary, GetPacket(_spellData.Id, 6), "6", _selectedLevel == 6);
         }
     }
 

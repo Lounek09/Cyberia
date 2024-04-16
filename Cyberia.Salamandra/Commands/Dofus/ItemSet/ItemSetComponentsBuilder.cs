@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.Data.ItemSets;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
@@ -10,7 +9,7 @@ public static class ItemSetComponentsBuilder
 {
     public static DiscordButtonComponent ItemSetButtonBuilder(ItemSetData itemSetData, bool disable = false)
     {
-        return new(ButtonStyle.Success, ItemSetMessageBuilder.GetPacket(itemSetData.Id, itemSetData.Effects.Count), itemSetData.Name, disable);
+        return new(DiscordButtonStyle.Success, ItemSetMessageBuilder.GetPacket(itemSetData.Id, itemSetData.Effects.Count), itemSetData.Name, disable);
     }
 
     public static DiscordSelectComponent ItemSetsSelectBuilder(int uniqueIndex, IEnumerable<ItemSetData> itemSetsData, bool disable = false)
