@@ -4,36 +4,41 @@ using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 
 using DSharpPlus;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.ContextChecks;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
-using DSharpPlus.SlashCommands.Attributes;
 
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Data;
 
-[SlashCommandGroup("langs", "Langs")]
-public sealed class LangsCommandModule : ApplicationCommandModule
+[Command("langs")]
+public sealed class LangsCommandModule
 {
-    [SlashCommand("check", "[Owner] Lance un check des langs, si aucun language n'est précisé lance pour toutes les langues")]
-    [SlashRequireOwner]
-    public async Task CheckLangsCommand(InteractionContext ctx,
-        [Option("type", "Type des langs à check")]
-        [ChoiceProvider(typeof(LangTypeChoiceProvider))]
-        string typeStr,
-        [Option("langue", "Language des langs à check, si vide lance pour toutes les langues")]
-        [ChoiceProvider(typeof(LanguageChoiceProvider))]
+    [Command("check"), Description("[Owner] Lance un check des langs, si aucun language n'est précisé lance pour toutes les langues")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [RequireApplicationOwner]
+    public static async Task CheckExecuteAsync(SlashCommandContext ctx,
+        [Parameter("type"), Description("Type des langs à check")]
+        LangType type,
+        [Parameter("langue"), Description("Language des langs à check, si vide lance pour toutes les langues")]
+        [SlashChoiceProvider<LangLanguageChoiceProvider>]
         string? languageStr = null,
-        [Option("force", "Force le check")]
+        [Parameter("force"), Description("Force le check")]
         bool force = false)
     {
         DiscordFollowupMessageBuilder message = new();
-        var type = Enum.Parse<LangType>(typeStr);
 
         if (languageStr is null)
         {
-            await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} dans toutes les langues...");
+            await ctx.RespondAsync($"Lancement du check des langs {Formatter.Bold(type.ToString())} dans toutes les langues...");
 
             await Task.WhenAll(
                 Enum.GetValues<LangLanguage>()
@@ -43,97 +48,41 @@ public sealed class LangsCommandModule : ApplicationCommandModule
                         return LangsWatcher.CheckAsync(repository, force);
                     }));
 
-            await ctx.FollowUpAsync(message.WithContent($"Check des langs {Formatter.Bold(typeStr)} dans toutes les langues terminé"));
+            await ctx.FollowupAsync(message.WithContent($"Check des langs {Formatter.Bold(type.ToString())} dans toutes les langues terminé"));
             return;
         }
 
         var language = Enum.Parse<LangLanguage>(languageStr);
 
-        await ctx.CreateResponseAsync($"Lancement du check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)}...");
+        await ctx.RespondAsync($"Lancement du check des langs {Formatter.Bold(type.ToString())} en {Formatter.Bold(languageStr)}...");
 
         var repository = LangsWatcher.LangRepositories[(type, language)];
         await LangsWatcher.CheckAsync(repository, force);
 
-        await ctx.FollowUpAsync(message.WithContent($"Check des langs {Formatter.Bold(typeStr)} en {Formatter.Bold(languageStr)} terminé"));
+        await ctx.FollowupAsync(message.WithContent($"Check des langs {Formatter.Bold(type.ToString())} en {Formatter.Bold(languageStr)} terminé"));
     }
 
-    [SlashCommand("show", "Affiche les informations des langs actuellement en ligne")]
-    public async Task ShowLangsCommand(InteractionContext ctx,
-        [Option("type", "Type des langs à afficher")]
-        [ChoiceProvider(typeof(LangTypeChoiceProvider))]
-        string? typeStr = null,
-        [Option("langue", "Language des langs à afficher")]
-        [ChoiceProvider(typeof(LanguageChoiceProvider))]
+    [Command("diff"), Description("[Owner] Lance un diff des langs entre différents types")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [RequireApplicationOwner]
+    public static async Task DiffExecuteAsync(SlashCommandContext ctx,
+        [Parameter("type"), Description("Type des langs à diff")]
+        LangType type,
+        [Parameter("type_model"), Description("Type des langs models")]
+        LangType typeModel,
+        [Parameter("langue"), Description("Language des langs à diff, si vide lance pour toutes les langues")]
+        [SlashChoiceProvider<LangLanguageChoiceProvider>]
         string? languageStr = null)
     {
-        var type = typeStr is null
-            ? LangType.Official
-            : Enum.Parse<LangType>(typeStr);
-
-        var language = languageStr is null
-            ? LangLanguage.FR
-            : Enum.Parse<LangLanguage>(languageStr);
-
-        var message = await new LangsMessageBuilder(type, language)
-            .GetMessageAsync<DiscordInteractionResponseBuilder>();
-
-        await ctx.CreateResponseAsync(message);
-    }
-
-    [SlashCommand("get", "Retourne le lang demandé décompilé")]
-    public async Task GetLangsCommand(InteractionContext ctx,
-        [Option("type", "Type du lang voulu")]
-        [ChoiceProvider(typeof(LangTypeChoiceProvider))]
-        string typeStr,
-        [Option("langue", "Language du lang voulu")]
-        [ChoiceProvider(typeof(LanguageChoiceProvider))]
-        string languageStr,
-        [Option("nom", "Nom du lang voulu", true)]
-        [Autocomplete(typeof(LangNameAutocompleteProvider))]
-        string name)
-    {
-        var type = Enum.Parse<LangType>(typeStr);
-        var language = Enum.Parse<LangLanguage>(languageStr);
-        var langRepository = LangsWatcher.LangRepositories[(type, language)];
-        var lang = langRepository.GetByName(name);
-        var currentDecompiledFilePath = lang?.CurrentDecompiledFilePath;
-
-        if (lang is null || string.IsNullOrEmpty(currentDecompiledFilePath))
+        if (type == typeModel)
         {
-            await ctx.CreateResponseAsync("Ce lang n'existe pas ou n'a jamais été décompilé");
+            await ctx.RespondAsync("Impossible de diff le même type");
             return;
         }
 
-        using var fileStream = File.OpenRead(currentDecompiledFilePath);
-        var message = new DiscordInteractionResponseBuilder()
-            .AddFile($"{lang.FileName}.as", fileStream);
-
-        await ctx.CreateResponseAsync(message);
-    }
-
-    [SlashCommand("diff", "[Owner] Lance un diff des langs entre différents types")]
-    [SlashRequireOwner]
-    public async Task DiffLangsCommand(InteractionContext ctx,
-        [Option("type", "Type des langs à diff")]
-        [ChoiceProvider(typeof(LangTypeChoiceProvider))]
-        string typeStr,
-        [Option("type_model", "Type des langs models")]
-        [ChoiceProvider(typeof(LangTypeChoiceProvider))]
-        string typeModelStr,
-        [Option("langue", "Language des langs à diff, si vide lance pour toutes les langues")]
-        [ChoiceProvider(typeof(LanguageChoiceProvider))]
-        string? languageStr = null)
-    {
-        if (typeStr.Equals(typeModelStr))
-        {
-            await ctx.CreateResponseAsync($"Impossible de diff le même type");
-            return;
-        }
-
-        await ctx.CreateResponseAsync("👷", true);
-
-        var type = Enum.Parse<LangType>(typeStr);
-        var typeModel = Enum.Parse<LangType>(typeModelStr);
+        await ctx.DeferResponseAsync();
 
         async Task diff(LangLanguage language)
         {
@@ -173,17 +122,24 @@ public sealed class LangsCommandModule : ApplicationCommandModule
         if (languageStr is null)
         {
             await Task.WhenAll(Enum.GetValues<LangLanguage>().Select(diff));
-            return;
+        }
+        else
+        {
+            var language = Enum.Parse<LangLanguage>(languageStr);
+            await diff(language);
         }
 
-        await diff(Enum.Parse<LangLanguage>(languageStr));
+        await ctx.EditResponseAsync("Done");
     }
 
-    [SlashCommand("parse", "[Owner] Lance le parsing des langs en json")]
-    [SlashRequireOwner]
-    public async Task ParseLangsCommand(InteractionContext ctx)
+    [Command("parse"), Description("[Owner] Lance le parsing des langs en json")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [RequireApplicationOwner]
+    public static async Task ParseExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.DeferAsync();
+        await ctx.DeferResponseAsync();
 
         var type = DofusApi.Config.Temporis
             ? LangType.Temporis
@@ -198,5 +154,47 @@ public sealed class LangsCommandModule : ApplicationCommandModule
             : "Une erreur est survenue, veuillez consulter les logs";
 
         await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(content));
+    }
+
+    [Command("show"), Description("Affiche les informations des langs actuellement en ligne")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    public static async Task ShowExecuteAsync(SlashCommandContext ctx,
+        [Parameter("type"), Description("Type des langs à afficher")]
+        LangType type = LangType.Official,
+        [Parameter("langue"), Description("Language des langs à afficher")]
+        LangLanguage language = LangLanguage.FR)
+    {
+        await ctx.RespondAsync(await new LangsMessageBuilder(type, language)
+            .GetMessageAsync<DiscordInteractionResponseBuilder>());
+    }
+
+    [Command("get"), Description("Retourne le lang demandé décompilé")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    public static async Task GetExecuteAsync(SlashCommandContext ctx,
+        [Parameter("type"), Description("Type du lang voulu")]
+        LangType type,
+        [Parameter("langue"), Description("Language du lang voulu")]
+        LangLanguage language,
+        [Parameter("nom"), Description("Nom du lang voulu")]
+        [SlashAutoCompleteProvider<LangNameAutocompleteProvider>]
+        string name)
+    {
+        var langRepository = LangsWatcher.LangRepositories[(type, language)];
+        var lang = langRepository.GetByName(name);
+        var currentDecompiledFilePath = lang?.CurrentDecompiledFilePath;
+
+        if (lang is null || string.IsNullOrEmpty(currentDecompiledFilePath))
+        {
+            await ctx.RespondAsync("Ce lang n'existe pas ou n'a jamais été décompilé");
+            return;
+        }
+
+        using var fileStream = File.OpenRead(currentDecompiledFilePath);
+        await ctx.RespondAsync(new DiscordInteractionResponseBuilder()
+            .AddFile($"{lang.FileName}.as", fileStream));
     }
 }

@@ -1,16 +1,15 @@
 ﻿using Cyberia.Api;
 
-using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
-public sealed class RuneAutocompleteProvider : AutocompleteProvider
+public sealed class RuneAutocompleteProvider : AutoCompleteProvider
 {
-    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
+    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.RunesData.GetRunesDataByName(value)
+        return DofusApi.Datacenter.RunesData.GetRunesDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
-            .Select(x => new DiscordAutoCompleteChoice(x.Name, x.Name));
+            .ToDictionary(x => x.Name, x => (object)x.Name);
     }
 }

@@ -22,6 +22,6 @@ public sealed record ErroredCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        return new(Resources.Criterion_Errored, CompressedCriterion);
+        return GetDescription(CompressedCriterion);
     }
 }

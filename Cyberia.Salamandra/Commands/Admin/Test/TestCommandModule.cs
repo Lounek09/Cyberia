@@ -1,13 +1,21 @@
-﻿using DSharpPlus.SlashCommands;
-using DSharpPlus.SlashCommands.Attributes;
+﻿using DSharpPlus.Commands;
+using DSharpPlus.Commands.ContextChecks;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
+using DSharpPlus.Entities;
+
+using System.ComponentModel;
 
 namespace Cyberia.Salamandra.Commands.Admin;
 
-public sealed class TestCommandModule : ApplicationCommandModule
+public sealed class TestCommandModule
 {
-    [SlashCommand("test", "[Owner] Command to test random stuff")]
-    [SlashRequireOwner]
-    public async Task Command(InteractionContext _)
+    [Command("test"), Description("[Owner] Command to test random stuff")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [RequireApplicationOwner]
+    public static async Task ExecuteAsync(SlashCommandContext _)
     {
         await Task.Delay(0);
 

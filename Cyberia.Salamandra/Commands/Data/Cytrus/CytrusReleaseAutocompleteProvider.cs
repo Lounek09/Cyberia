@@ -1,35 +1,34 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Salamandra.DsharpPlus;
 
-using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Data;
 
-public sealed class CytrusReleaseAutocompleteProvider : AutocompleteProvider
+public sealed class CytrusReleaseAutoCompleteProvider : AutoCompleteProvider
 {
-    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
+    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        var game = ctx.GetOption<string>("game");
+        var game = ctx.GetArgument<string>("game");
         if (string.IsNullOrEmpty(game))
         {
-            return Enumerable.Empty<DiscordAutoCompleteChoice>();
+            return s_empty;
         }
 
-        var platform = ctx.GetOption<string>("platform");
+        var platform = ctx.GetArgument<string>("platform");
         if (string.IsNullOrEmpty(platform))
         {
-            return Enumerable.Empty<DiscordAutoCompleteChoice>();
+            return s_empty;
         }
 
         var cytrusGame = CytrusWatcher.Cytrus.GetGameByName(game);
         if (cytrusGame is null)
         {
-            return Enumerable.Empty<DiscordAutoCompleteChoice>();
+            return s_empty;
         }
 
         return cytrusGame.GetReleasesByPlatformName(platform)
-            .Take(Constant.MaxChoice)
-            .Select(x => new DiscordAutoCompleteChoice(x.Key.Capitalize(), x.Key));
+           .Take(Constant.MaxChoice)
+           .ToDictionary(x => x.Key.Capitalize(), x => (object)x.Key);
     }
 }

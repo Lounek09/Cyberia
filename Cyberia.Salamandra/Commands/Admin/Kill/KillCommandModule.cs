@@ -1,15 +1,23 @@
-﻿using DSharpPlus.SlashCommands;
-using DSharpPlus.SlashCommands.Attributes;
+﻿using DSharpPlus.Commands;
+using DSharpPlus.Commands.ContextChecks;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
+using DSharpPlus.Entities;
+
+using System.ComponentModel;
 
 namespace Cyberia.Salamandra.Commands.Admin;
 
-public sealed class KillCommandModule : ApplicationCommandModule
+public sealed class KillCommandModule
 {
-    [SlashCommand("kill", "[Owner] Kill Salamandra")]
-    [SlashRequireOwner]
-    public async Task Command(InteractionContext ctx)
+    [Command("kill"), Description("[Owner] Kill Salamandra")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [RequireApplicationOwner]
+    public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.CreateResponseAsync(@"\💀");
+        await ctx.RespondAsync(@"\💀");
 
         await ctx.Client.DisconnectAsync();
     }

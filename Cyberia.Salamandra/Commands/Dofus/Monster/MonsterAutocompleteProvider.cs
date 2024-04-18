@@ -1,20 +1,15 @@
 ﻿using Cyberia.Api;
 
-using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
-public sealed class MonsterAutocompleteProvider : AutocompleteProvider
+public sealed class MonsterAutocompleteProvider : AutoCompleteProvider
 {
-    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
+    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.MonstersData.GetMonstersDataByName(value)
+        return DofusApi.Datacenter.MonstersData.GetMonstersDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
-            .Select(x =>
-            {
-                var name = $"{$"{x.Name}{(x.BreedSummon ? " (invocation)" : string.Empty)}".WithMaxLength(90)} ({x.Id})";
-                return new DiscordAutoCompleteChoice(name, x.Id.ToString());
-            });
+            .ToDictionary(x => $"{$"{x.Name}{(x.BreedSummon ? " (invocation)" : string.Empty)}".WithMaxLength(90)} ({x.Id})", x => (object)x.Id.ToString());
     }
 }

@@ -41,7 +41,7 @@ public static class Program
             if (config.EnableSalamandra)
             {
                 Log.Information("Initializing Salamandra");
-                Bot.Initialize(config.BotConfig);
+                await Bot.InitializeAsync(config.BotConfig);
 
                 await Bot.LaunchAsync();
             }

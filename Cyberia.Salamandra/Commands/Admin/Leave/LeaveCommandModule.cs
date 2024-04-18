@@ -1,15 +1,25 @@
 ﻿using DSharpPlus;
-using DSharpPlus.SlashCommands;
-using DSharpPlus.SlashCommands.Attributes;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.ContextChecks;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
+using DSharpPlus.Entities;
+
+using System.ComponentModel;
 
 namespace Cyberia.Salamandra.Commands.Admin;
 
-public sealed class LeaveCommandModule : ApplicationCommandModule
+public sealed class LeaveCommandModule
 {
-    [SlashCommand("leave", "[Owner] Leave a guild")]
-    [SlashRequireOwner]
-    public async Task LeaveCommand(InteractionContext ctx,
-        [Option("id", "Guild's id")]
+    [Command("leave"), Description("[Owner] Leave a guild")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [RequireApplicationOwner]
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("id"), Description("Guild's id")]
+        [SlashMinMaxValue(MinValue = 0)]
         long guildId)
     {
         try
@@ -17,14 +27,14 @@ public sealed class LeaveCommandModule : ApplicationCommandModule
             var guild = await ctx.Client.GetGuildAsync((ulong)guildId);
             await guild.LeaveAsync();
 
-            if (guild.Id != ctx.Guild.Id)
+            if (ctx.Guild is null || guild.Id != ctx.Guild.Id)
             {
-                await ctx.CreateResponseAsync($"Bot kick from the guild {Formatter.Bold(guild.Name)} ({guild.Id}) !");
+                await ctx.RespondAsync($"Bot kick from the guild {Formatter.Bold(guild.Name)} ({guild.Id}) !");
             }
         }
         catch
         {
-            await ctx.CreateResponseAsync("Guild not found");
+            await ctx.RespondAsync("Guild not found");
         }
     }
 }

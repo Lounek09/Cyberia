@@ -1,17 +1,17 @@
-﻿using DSharpPlus.SlashCommands;
+﻿using DSharpPlus.Commands;
 
 namespace Cyberia.Salamandra.Commands.Admin;
 
 public static class AdminCommandsGroup
 {
-    public static void RegisterAdminCommands(this SlashCommandsExtension extension, ulong guildId)
+    public static void RegisterAdminCommands(this CommandsExtension extension, ulong guildId)
     {
-        extension.RegisterCommands<IpCommandModule>(guildId);
-        extension.RegisterCommands<KillCommandModule>(guildId);
-        extension.RegisterCommands<LeaveCommandModule>(guildId);
-        extension.RegisterCommands<ParseCommandModule>(guildId);
-        extension.RegisterCommands<RestartCommandModule>(guildId);
-        extension.RegisterCommands<SearchCommandModule>(guildId);
-        extension.RegisterCommands<TestCommandModule>(guildId);
+        extension.AddCommand(IpCommandModule.ExecuteAsync);
+        extension.AddCommand(KillCommandModule.ExecuteAsync);
+        extension.AddCommand(LeaveCommandModule.ExecuteAsync);
+        extension.AddCommands<ParseCommandModule>();
+        extension.AddCommand(RestartCommandModule.ExecuteAsync);
+        extension.AddCommands<SearchCommandModule>();
+        extension.AddCommand(TestCommandModule.ExecuteAsync);
     }
 }

@@ -2,33 +2,20 @@
 using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.DsharpPlus;
 
-using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Data;
 
-public sealed class LangNameAutocompleteProvider : AutocompleteProvider
+public sealed class LangNameAutocompleteProvider : AutoCompleteProvider
 {
-    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
+    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        var typeStr = ctx.GetOption<string>("type");
-        if (string.IsNullOrEmpty(typeStr))
-        {
-            return Enumerable.Empty<DiscordAutoCompleteChoice>();
-        }
-
-        var languageStr = ctx.GetOption<string>("langue");
-        if (string.IsNullOrEmpty(languageStr))
-        {
-            return Enumerable.Empty<DiscordAutoCompleteChoice>();
-        }
-
-        var type = Enum.Parse<LangType>(typeStr);
-        var language = Enum.Parse<LangLanguage>(languageStr);
+        var type = ctx.GetArgument<LangType>("type");
+        var language = ctx.GetArgument<LangLanguage>("language");
 
         return LangsWatcher.LangRepositories[(type, language)]
-            .GetAllByName(value)
-            .Take(Constant.MaxChoice)
-            .Select(x => new DiscordAutoCompleteChoice(x.Name, x.Name));
+           .GetAllByName(ctx.UserInput)
+           .Take(Constant.MaxChoice)
+           .ToDictionary(x => x.Name, x => (object)x.Name);
     }
 }

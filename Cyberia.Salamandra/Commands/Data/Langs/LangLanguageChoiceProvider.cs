@@ -1,15 +1,15 @@
-﻿using Cyberia.Cytrusaurus;
+﻿using Cyberia.Langzilla.Enums;
 
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Trees;
 
 namespace Cyberia.Salamandra.Commands.Data;
 
-public sealed class CytrusGameChoiceProvider : IChoiceProvider
+internal class LangLanguageChoiceProvider : IChoiceProvider
 {
     public ValueTask<IReadOnlyDictionary<string, object>> ProvideAsync(CommandParameter parameter)
     {
         return new ValueTask<IReadOnlyDictionary<string, object>>(
-            CytrusWatcher.Cytrus.Games.ToDictionary(x => x.Key.Capitalize(), x => (object)x.Key));
+            Enum.GetNames<LangLanguage>().ToDictionary(x => x, x => (object)x));
     }
 }

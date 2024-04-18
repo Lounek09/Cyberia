@@ -1,22 +1,27 @@
 ﻿using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
 
+using System.ComponentModel;
 using System.Text;
+
 namespace Cyberia.Salamandra.Commands.Other;
 
-public sealed class HelpCommandModule : ApplicationCommandModule
+public sealed class HelpCommandModule
 {
-    [SlashCommand("help", "Liste les commandes du bot")]
-    public async Task Command(InteractionContext ctx)
+    [Command("help"), Description("Liste les commandes du bot")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        var commands = Bot.SlashCommands.RegisteredCommands
-            .Where(x => x.Key is null)
-            .FirstOrDefault().Value;
-
         StringBuilder descriptionBuilder = new();
+
+        var commands = await ctx.Client.GetGlobalApplicationCommandsAsync();
 
         foreach (var command in commands)
         {
@@ -49,9 +54,7 @@ public sealed class HelpCommandModule : ApplicationCommandModule
             descriptionBuilder.Append('\n');
         }
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Help")
-            .WithDescription(descriptionBuilder.ToString());
-
-        await ctx.CreateResponseAsync(embed);
+        await ctx.RespondAsync(EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Help")
+            .WithDescription(descriptionBuilder.ToString()));
     }
 }

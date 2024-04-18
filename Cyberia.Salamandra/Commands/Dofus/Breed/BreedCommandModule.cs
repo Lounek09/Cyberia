@@ -1,27 +1,36 @@
 ﻿using Cyberia.Api;
 
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+
+using System.ComponentModel;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
-public sealed class BreedCommandModule : ApplicationCommandModule
+public sealed class BreedCommandModule
 {
-    [SlashCommand("classe", "Retourne les informations d'une classe à partir de son nom")]
-    public async Task Command(InteractionContext ctx,
-        [Option("nom", "Nom de la classe")]
-        [ChoiceProvider(typeof(BreedChoiceProvider))]
-        string breedName)
+    [Command("classe"), Description("Retourne les informations d'une classe à partir de son nom")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("nom"), Description("Nom de la classe")]
+        [SlashChoiceProvider<BreedChoiceProvider>]
+        int breedId)
     {
-        var breedData = DofusApi.Datacenter.BreedsData.GetBreedDataByName(breedName);
+        var breedData = DofusApi.Datacenter.BreedsData.GetBreedDataById(breedId);
 
         if (breedData is null)
         {
-            await ctx.CreateResponseAsync("Classe introuvable");
+            await ctx.RespondAsync("Classe introuvable");
         }
         else
         {
-            await ctx.CreateResponseAsync(await new BreedMessageBuilder(breedData).GetMessageAsync<DiscordInteractionResponseBuilder>());
+            await ctx.RespondAsync(await new BreedMessageBuilder(breedData)
+                .GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
     }
 }

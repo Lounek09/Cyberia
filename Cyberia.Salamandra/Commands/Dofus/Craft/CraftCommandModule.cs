@@ -1,19 +1,27 @@
 ﻿using Cyberia.Api;
 
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+
+using System.ComponentModel;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
-public sealed class CraftCommandModule : ApplicationCommandModule
+public sealed class CraftCommandModule
 {
-    [SlashCommand("craft", "Permet de calculer les ressources nécessaires pour craft un objet")]
-    public async Task Command(InteractionContext ctx,
-        [Option("quantite", "Quantité à craft")]
-        [Minimum(1), Maximum(CraftMessageBuilder.MaxQte)]
+    [Command("craft"), Description("Permet de calculer les ressources nécessaires pour craft un objet")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("quantite"), Description("Quantité à craft")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = CraftMessageBuilder.MaxQte)]
         long qte,
-        [Option("nom", "Nom de l'item à craft", true)]
-        [Autocomplete(typeof(CraftAutocompleteProvider))]
+        [Parameter("nom"), Description("Nom de l'item à craft")]
+        [SlashAutoCompleteProvider<CraftAutocompleteProvider>]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;
@@ -40,6 +48,6 @@ public sealed class CraftCommandModule : ApplicationCommandModule
         }
 
         response ??= new DiscordInteractionResponseBuilder().WithContent("Craft introuvable");
-        await ctx.CreateResponseAsync(response);
+        await ctx.RespondAsync(response);
     }
 }

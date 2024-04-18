@@ -1,23 +1,23 @@
-﻿using DSharpPlus.SlashCommands;
+﻿using DSharpPlus.Commands;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
 public static class DofusCommandsGroup
 {
-    public static void RegisterDofusCommands(this SlashCommandsExtension extension)
+    public static void RegisterDofusCommands(this CommandsExtension extension)
     {
-        extension.RegisterCommands<BreedCommandModule>();
-        extension.RegisterCommands<CraftCommandModule>();
-        extension.RegisterCommands<CritCommandModule>();
-        extension.RegisterCommands<EscapeCommandModule>();
-        extension.RegisterCommands<HouseCommandModule>();
-        extension.RegisterCommands<IncarnationCommandModule>();
-        extension.RegisterCommands<ItemCommandModule>();
-        extension.RegisterCommands<ItemSetCommandModule>();
-        extension.RegisterCommands<MapCommandModule>();
-        extension.RegisterCommands<MonsterCommandModule>();
-        extension.RegisterCommands<QuestCommandModule>();
-        extension.RegisterCommands<RuneCommandModule>();
-        extension.RegisterCommands<SpellCommandModule>();
+        extension.AddCommand(BreedCommandModule.ExecuteAsync);
+        extension.AddCommand(CraftCommandModule.ExecuteAsync);
+        extension.AddCommand(CritCommandModule.ExecuteAsync);
+        extension.AddCommand(EscapeCommandModule.ExecuteAsync);
+        extension.AddCommands<HouseCommandModule>();
+        extension.AddCommand(IncarnationCommandModule.ExecuteAsync);
+        extension.AddCommand(ItemCommandModule.ExecuteAsync);
+        extension.AddCommand(ItemSetCommandModule.ExecuteAsync);
+        extension.AddCommands<MapCommandModule>();
+        extension.AddCommand(MonsterCommandModule.ExecuteAsync);
+        extension.AddCommand(QuestCommandModule.ExecuteAsync);
+        extension.AddCommands<RuneCommandModule>();
+        extension.AddCommand(SpellCommandModule.ExecuteAsync);
     }
 }

@@ -1,45 +1,47 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Salamandra.DsharpPlus;
 
-using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Data;
 
-public sealed class CytrusOldVersionAutocompleteProvider : AutocompleteProvider
+public sealed class CytrusOldVersionAutocompleteProvider : AutoCompleteProvider
 {
-    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
+    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        var game = ctx.GetOption<string>("game");
+        var game = ctx.GetArgument<string>("game");
         if (string.IsNullOrEmpty(game))
         {
-            return Enumerable.Empty<DiscordAutoCompleteChoice>();
+            return s_empty;
         }
 
-        var platform = ctx.GetOption<string>("platform");
+        var platform = ctx.GetArgument<string>("platform");
         if (string.IsNullOrEmpty(platform))
         {
-            return Enumerable.Empty<DiscordAutoCompleteChoice>();
+            return s_empty;
         }
 
-        var release = ctx.GetOption<string>("old_release");
+        var release = ctx.GetArgument<string>("old_release");
         if (string.IsNullOrEmpty(release))
         {
-            return Enumerable.Empty<DiscordAutoCompleteChoice>();
+            return s_empty;
         }
 
         var cytrusGame = CytrusWatcher.Cytrus.GetGameByName(game);
         if (cytrusGame is null)
         {
-            return Enumerable.Empty<DiscordAutoCompleteChoice>();
+            return s_empty;
         }
 
         var version = cytrusGame.GetVersionByPlatformNameAndReleaseName(platform, release);
         if (string.IsNullOrEmpty(version))
         {
-            return Enumerable.Empty<DiscordAutoCompleteChoice>();
+            return s_empty;
         }
 
-        return Enumerable.Repeat(new DiscordAutoCompleteChoice(version, version), 1);
+        return new Dictionary<string, object>
+        {
+            { version, version }
+        };
     }
 }

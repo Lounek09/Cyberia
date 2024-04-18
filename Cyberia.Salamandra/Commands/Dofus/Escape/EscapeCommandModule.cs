@@ -3,19 +3,28 @@ using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
+using DSharpPlus.Entities;
+
+using System.ComponentModel;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
-public sealed class EscapeCommandModule : ApplicationCommandModule
+public sealed class EscapeCommandModule
 {
-    [SlashCommand("fuite", "Permet de calculer son % de fuite")]
-    public async Task Command(InteractionContext ctx,
-        [Option("agilite", "Votre agilité")]
-        [Minimum(0), Maximum(99999)]
+    [Command("fuite"), Description("Permet de calculer son % de fuite")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("agilite"), Description("Votre agilité")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
         long agility,
-        [Option("agilite_ennemi", "Agilité de l'ennemi à votre contact")]
-        [Minimum(0), Maximum(99999)]
+        [Parameter("agilite_ennemi"), Description("Agilité de l'ennemi à votre contact")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
         long foeAgility)
     {
         var escapePercent = Formulas.GetEscapePercent((int)agility, (int)foeAgility);
@@ -27,6 +36,6 @@ public sealed class EscapeCommandModule : ApplicationCommandModule
                 Pour fuir à 100% il te faudra au minimum {Formatter.Bold(agilityToEscapeForSure.ToString())}agi !
                 """);
 
-        await ctx.CreateResponseAsync(embed);
+        await ctx.RespondAsync(embed);
     }
 }

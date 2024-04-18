@@ -1,13 +1,13 @@
-﻿using DSharpPlus.SlashCommands;
+﻿using DSharpPlus.Commands;
 
 namespace Cyberia.Salamandra.Commands.Other;
 
 public static class OtherCommandsGroup
 {
-    public static void RegisterOtherCommands(this SlashCommandsExtension extension)
+    public static void RegisterOtherCommands(this CommandsExtension extension)
     {
-        extension.RegisterCommands<DiscordCommandModule>();
-        extension.RegisterCommands<HelpCommandModule>();
-        extension.RegisterCommands<PingCommandModule>();
+        extension.AddCommand(DiscordCommandModule.ExecuteAsync);
+        extension.AddCommand(HelpCommandModule.ExecuteAsync);
+        extension.AddCommand(PingCommandModule.ExecuteAsync);
     }
 }

@@ -1,16 +1,24 @@
 ﻿using Cyberia.Api;
 
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+
+using System.ComponentModel;
 
 namespace Cyberia.Salamandra.Commands.Dofus;
 
-public sealed class MonsterCommandModule : ApplicationCommandModule
+public sealed class MonsterCommandModule
 {
-    [SlashCommand("monstre", "Retourne les informations d'un monstre à partir de son nom")]
-    public async Task Command(InteractionContext ctx,
-        [Option("nom", "Nom du monstre", true)]
-        [Autocomplete(typeof(MonsterAutocompleteProvider))]
+    [Command("monstre"), Description("Retourne les informations d'un monstre à partir de son nom")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("nom"), Description("Nom du monstre")]
+        [SlashAutoCompleteProvider<MonsterAutocompleteProvider>]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;
@@ -37,7 +45,6 @@ public sealed class MonsterCommandModule : ApplicationCommandModule
         }
 
         response ??= new DiscordInteractionResponseBuilder().WithContent("Monstre introuvable");
-        await ctx.CreateResponseAsync(response);
-
+        await ctx.RespondAsync(response);
     }
 }
