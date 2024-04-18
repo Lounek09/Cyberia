@@ -49,16 +49,15 @@ public static class CommandManager
             args.Context.User.Id,
             args.Context.Command.FullName);
 
-        var commandArgs = string.Join(
-            '\n',
-            args.Context.Arguments.Select(x => $"- {x.Key.Name} : {Formatter.InlineCode(x.Value is null ? "null" : x.Value.ToString()!)}"));
+        var commandArgs = string.Join('\n',
+            args.Context.Arguments.Select(x => $"- {x.Key.Name} : {Formatter.InlineCode(x.Value is null ? "null" : x.Value.ToString() ?? string.Empty)}"));
 
         DiscordEmbedBuilder embed = new()
         {
             Title = "An error occurred when executing a slash command",
             Description =
             $"""
-            An error occurred when {Formatter.Sanitize(args.Context.User.Username)} ({args.Context.User.Mention}) used the {Formatter.Bold(args.Context.Command.Name)} command.
+            An error occurred when {Formatter.Sanitize(args.Context.User.Username)} ({args.Context.User.Mention}) used the {Formatter.Bold(args.Context.Command.FullName)} command.
             {(commandArgs.Length > 0 ? $"\n{Formatter.Bold("Arguments :")}\n{commandArgs}\n" : string.Empty)}
             {Formatter.Bold($"{args.Exception.GetType().Name} :")}
             {Formatter.BlockCode($"{args.Exception.Message}\n{args.Exception.StackTrace}".WithMaxLength(3000))}
