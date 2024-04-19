@@ -24,7 +24,9 @@ public static class RuneManager
 
     public static double GetPercentToObtainRune(RuneData runeData, RuneType type, int itemLvl, int statAmount)
     {
-        var multiplicator = GetRequiredStatAmountExtractableToObtainRune(runeData, type) / (GetPercentStatExtractable(runeData, itemLvl, statAmount) / 100) / statAmount;
+        var multiplicator = GetRequiredStatAmountExtractableToObtainRune(runeData, type)
+            / (GetPercentStatExtractable(runeData, itemLvl, statAmount) / 100)
+            / statAmount;
 
         if (multiplicator <= MinMultiplicator)
         {
@@ -47,30 +49,36 @@ public static class RuneManager
             ? GetStatAmountExtractable(runeData, itemLvl, statAmount, multiplicator.Value)
             : GetStatAmountExtractable(runeData, itemLvl, statAmount, GetRandomMultiplicator());
 
-        var amontBeforeRa = amountExtractable;
-        double transitionalRaRate = GetRequiredStatAmountExtractableToObtainRune(runeData, RuneType.RA);
-        if (runeData.HasRa && amontBeforeRa > transitionalRaRate)
+        if (runeData.HasRa)
         {
-            for (var i = 0; i < Math.Floor(amontBeforeRa / transitionalRaRate); i++)
+            var amontBeforeRa = amountExtractable;
+            double transitionalRaRate = GetRequiredStatAmountExtractableToObtainRune(runeData, RuneType.RA);
+            if (amontBeforeRa > transitionalRaRate)
             {
-                bundle.BaAmount += 4;
-                bundle.PaAmount += 2;
-                bundle.RaAmount += 1;
+                for (var i = 0; i < Math.Floor(amontBeforeRa / transitionalRaRate); i++)
+                {
+                    bundle.BaAmount += 4;
+                    bundle.PaAmount += 2;
+                    bundle.RaAmount += 1;
 
-                amountExtractable -= transitionalRaRate;
+                    amountExtractable -= transitionalRaRate;
+                }
             }
         }
 
-        var amontBeforePa = amountExtractable;
-        double transitionalPaRate = GetRequiredStatAmountExtractableToObtainRune(runeData, RuneType.PA);
-        if (runeData.HasPa && amontBeforePa > transitionalPaRate)
+        if (runeData.HasPa)
         {
-            for (var i = 0; i < Math.Floor(amontBeforePa / transitionalPaRate); i++)
+            var amontBeforePa = amountExtractable;
+            double transitionalPaRate = GetRequiredStatAmountExtractableToObtainRune(runeData, RuneType.PA);
+            if (amontBeforePa > transitionalPaRate)
             {
-                bundle.BaAmount += 2;
-                bundle.PaAmount += 1;
+                for (var i = 0; i < Math.Floor(amontBeforePa / transitionalPaRate); i++)
+                {
+                    bundle.BaAmount += 2;
+                    bundle.PaAmount += 1;
 
-                amountExtractable -= transitionalPaRate;
+                    amountExtractable -= transitionalPaRate;
+                }
             }
         }
 
