@@ -43,7 +43,9 @@ public static class Bot
 
         Commands = Client.UseCommands(new CommandsConfiguration()
         {
-            ServiceProvider = new ServiceCollection().BuildServiceProvider(),
+            ServiceProvider = new ServiceCollection()
+                .AddLogging(x => x.AddSerilog(Log.Logger))
+                .BuildServiceProvider(),
             UseDefaultCommandErrorHandler = false,
             RegisterDefaultCommandProcessors = false
         });
