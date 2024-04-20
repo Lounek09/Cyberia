@@ -62,7 +62,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de runes")
-            .WithTitle($"Brisage : {_qte.ToFormattedString()}x {Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
+            .WithTitle($"Simulation de brisage : {_qte.ToFormattedString()}x {Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
             .WithThumbnail(await _itemData.GetImagePath());
 
         StringBuilder descriptionBuilder = new();
@@ -113,7 +113,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
-        yield return new DiscordButtonComponent(DiscordButtonStyle.Primary, GetPacket(_itemData.Id, _qte), "Régénérer");
+        yield return new DiscordButtonComponent(DiscordButtonStyle.Primary, GetPacket(_itemData.Id, _qte), "Resimuler");
         yield return ItemComponentsBuilder.ItemButtonBuilder(_itemData, _qte);
     }
 }
