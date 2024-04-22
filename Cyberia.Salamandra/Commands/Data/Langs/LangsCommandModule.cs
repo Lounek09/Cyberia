@@ -2,6 +2,8 @@
 using Cyberia.Api.Parser;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
+using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -78,7 +80,13 @@ public sealed class LangsCommandModule
     {
         if (type == typeModel)
         {
-            await ctx.RespondAsync("Impossible de diff le même type");
+            await ctx.RespondAsync($"Les langs de même type sont déjà diff automatiquement");
+            return;
+        }
+
+        if (ChannelManager.LangForumChannel is null)
+        {
+            await ctx.RespondAsync("Le channel des langs n'est pas défini");
             return;
         }
 
@@ -86,10 +94,27 @@ public sealed class LangsCommandModule
 
         async Task diff(LangLanguage language)
         {
-            var thread = await ctx.Channel.CreateThreadAsync($"Diff entre {type} et {typeModel} en {language}", DiscordAutoArchiveDuration.Hour, DiscordChannelType.PublicThread);
-
             var langRepository = LangsWatcher.LangRepositories[(type, language)];
             var langRepositoryModel = LangsWatcher.LangRepositories[(typeModel, language)];
+
+            var lastChange = langRepository.LastChange.ToLocalTime();
+            var lastChangeModel = langRepositoryModel.LastChange.ToLocalTime();
+
+            var postBuilder = new ForumPostBuilder()
+                .WithName($"Diff {type} -> {typeModel} en {language} {DateTime.Now:dd-MM-yyyy HH\\hmm}")
+                .WithMessage(new DiscordMessageBuilder().WithContent(
+                    $"Diff des langs {Formatter.Bold(type.ToString())} de {lastChange:HH\\hmm} le {lastChange:dd/MM/yyyy} " +
+                    $"et {Formatter.Bold(typeModel.ToString())} de {lastChangeModel:HH\\hmm} le {lastChangeModel:dd/MM/yyyy} " +
+                    $"en {Formatter.Bold(language.ToString())}"));
+
+            var tag = ChannelManager.LangForumChannel!.GetDiscordForumTagByName("Diff manuel");
+            if (tag is not null)
+            {
+                postBuilder.AddTag(tag);
+            }
+
+            var post = await ChannelManager.LangForumChannel!.CreateForumPostAsync(postBuilder);
+            var thread = post.Channel;
 
             foreach (var lang in langRepository.Langs)
             {
@@ -98,11 +123,10 @@ public sealed class LangsCommandModule
                 var langModel = langRepositoryModel.GetByName(lang.Name);
 
                 var message = new DiscordMessageBuilder()
-                {
-                    Content = $"{(lang.New ? $"{Formatter.Bold("New")} lang" : "Lang")} " +
+                    .WithContent(
+                        $"{(lang.New ? $"{Formatter.Bold("New")} lang" : "Lang")} " +
                         $"{Formatter.Bold(lang.Name)} version {Formatter.Bold(lang.Version.ToString())}" +
-                        langModel is null ? $", non présent dans les langs {typeModel}" : string.Empty
-                };
+                        (langModel is null ? $", non présent dans les langs {typeModel}" : string.Empty));
 
                 var diff = lang.Diff(langModel);
                 if (string.IsNullOrEmpty(diff))
