@@ -26,6 +26,7 @@ public sealed class LangRepository
     /// Gets the last modified datetime of the langs.
     /// </summary>
     // TODO: Change the name to LastModified (in the JSON too)
+    [JsonInclude]
     public DateTime LastChange { get; internal set; }
 
     /// <summary>
