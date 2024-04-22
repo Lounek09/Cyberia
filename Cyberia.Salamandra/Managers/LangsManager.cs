@@ -41,7 +41,8 @@ public static class LangsManager
 
         var postBuilder = new ForumPostBuilder()
             .WithName($"{type} {language} {now:dd-MM-yyyy HH\\hmm}")
-            .WithMessage(new DiscordMessageBuilder().WithContent($"Diff des langs {Formatter.Bold(type.ToString())} de {now:HH\\hmm} le {now:dd/MM/yyyy} en {Formatter.Bold(language.ToString())}"));
+            .WithMessage(new DiscordMessageBuilder().WithContent(
+                $"Diff des langs {Formatter.Bold(type.ToString())} de {now:HH\\hmm} le {now:dd/MM/yyyy} en {Formatter.Bold(language.ToString())}"));
 
         var typeTag = forum.GetDiscordForumTagByName(type.ToString());
         if (typeTag is not null)
