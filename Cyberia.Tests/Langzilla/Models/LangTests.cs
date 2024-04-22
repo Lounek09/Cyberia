@@ -104,7 +104,7 @@ public sealed class LangTests
         File.WriteAllText(_lang.OldDecompiledFilePath, File.ReadAllText(SharedData.RanksOldPath));
         var expected = File.ReadAllText(SharedData.RanksDiffPath);
 
-        var success = _lang.Diff();
+        var success = _lang.SelfDiff();
         var result = File.ReadAllText(_lang.DiffFilePath);
 
         Assert.IsTrue(success);
@@ -120,7 +120,7 @@ public sealed class LangTests
         File.WriteAllText(_lang.OldDecompiledFilePath, File.ReadAllText(SharedData.RanksCurrentPath));
         File.WriteAllText(_lang.DiffFilePath, File.ReadAllText(SharedData.RanksDiffPath));
 
-        var success = _lang.Diff();
+        var success = _lang.SelfDiff();
 
         Assert.IsFalse(success);
         Assert.IsFalse(File.Exists(_lang.DiffFilePath));
@@ -129,7 +129,7 @@ public sealed class LangTests
     [TestMethod]
     public void Diff_WhenNoCurrentExtractedFileExists_ReturnsFalse()
     {
-        var result = _lang.Diff();
+        var result = _lang.SelfDiff();
 
         Assert.IsFalse(result);
         Assert.IsFalse(File.Exists(_lang.DiffFilePath));

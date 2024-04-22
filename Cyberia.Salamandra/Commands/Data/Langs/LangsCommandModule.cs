@@ -73,12 +73,12 @@ public sealed class LangsCommandModule
         [Parameter("type"), Description("Type des langs à diff")]
         LangType type,
         [Parameter("type_model"), Description("Type des langs models")]
-        LangType typeModel,
+        LangType modelType,
         [Parameter("langue"), Description("Language des langs à diff, si vide lance pour toutes les langues")]
         [SlashChoiceProvider<LangLanguageChoiceProvider>]
         string? languageStr = null)
     {
-        if (type == typeModel)
+        if (type == modelType)
         {
             await ctx.RespondAsync($"Les langs de même type sont déjà diff automatiquement");
             return;
@@ -92,65 +92,15 @@ public sealed class LangsCommandModule
 
         await ctx.DeferResponseAsync();
 
-        async Task diff(LangLanguage language)
-        {
-            var langRepository = LangsWatcher.LangRepositories[(type, language)];
-            var langRepositoryModel = LangsWatcher.LangRepositories[(typeModel, language)];
-
-            var lastChange = langRepository.LastChange.ToLocalTime();
-            var lastChangeModel = langRepositoryModel.LastChange.ToLocalTime();
-
-            var postBuilder = new ForumPostBuilder()
-                .WithName($"Diff {type} -> {typeModel} en {language} {DateTime.Now:dd-MM-yyyy HH\\hmm}")
-                .WithMessage(new DiscordMessageBuilder().WithContent(
-                    $"Diff des langs {Formatter.Bold(type.ToString())} de {lastChange:HH\\hmm} le {lastChange:dd/MM/yyyy} " +
-                    $"et {Formatter.Bold(typeModel.ToString())} de {lastChangeModel:HH\\hmm} le {lastChangeModel:dd/MM/yyyy} " +
-                    $"en {Formatter.Bold(language.ToString())}"));
-
-            var tag = ChannelManager.LangForumChannel!.GetDiscordForumTagByName("Diff manuel");
-            if (tag is not null)
-            {
-                postBuilder.AddTag(tag);
-            }
-
-            var post = await ChannelManager.LangForumChannel!.CreateForumPostAsync(postBuilder);
-            var thread = post.Channel;
-
-            foreach (var lang in langRepository.Langs)
-            {
-                var rateLimit = Task.Delay(1000);
-
-                var langModel = langRepositoryModel.GetByName(lang.Name);
-
-                var message = new DiscordMessageBuilder()
-                    .WithContent(
-                        $"{(lang.New ? $"{Formatter.Bold("New")} lang" : "Lang")} " +
-                        $"{Formatter.Bold(lang.Name)} version {Formatter.Bold(lang.Version.ToString())}" +
-                        (langModel is null ? $", non présent dans les langs {typeModel}" : string.Empty));
-
-                var diff = lang.Diff(langModel);
-                if (string.IsNullOrEmpty(diff))
-                {
-                    await thread.SendMessageAsync(message);
-                }
-                else
-                {
-                    using var stream = new MemoryStream(Encoding.UTF8.GetBytes(diff));
-                    await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", stream));
-                }
-
-                await rateLimit;
-            }
-        }
-
         if (languageStr is null)
         {
-            await Task.WhenAll(Enum.GetValues<LangLanguage>().Select(diff));
+            await Task.WhenAll(Enum.GetValues<LangLanguage>()
+                .Select(x => LangsManager.LaunchManualDiff(type, modelType, x)));
         }
         else
         {
             var language = Enum.Parse<LangLanguage>(languageStr);
-            await diff(language);
+            await LangsManager.LaunchManualDiff(type, modelType, language);
         }
 
         await ctx.EditResponseAsync("Done");

@@ -227,7 +227,7 @@ public sealed class Lang
     /// Compares the current decompiled lang file with the old one and generates a diff file.
     /// </summary>
     /// <returns>True if the diff file was generated; otherwise, false.</returns>
-    internal bool Diff()
+    internal bool SelfDiff()
     {
         var diff = Diff(this);
         if (string.IsNullOrEmpty(diff))
