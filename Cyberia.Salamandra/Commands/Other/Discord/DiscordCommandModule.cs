@@ -15,8 +15,6 @@ public sealed class DiscordCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.RespondAsync(new DiscordInteractionResponseBuilder()
-            .WithContent(Bot.Config.DiscordGuildInviteUrl)
-            .AsEphemeral());
+        await ctx.RespondAsync(Bot.Config.DiscordGuildInviteUrl, true);
     }
 }

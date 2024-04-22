@@ -19,6 +19,7 @@ public sealed class ItemSetCommandModule
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("Nom"), Description("Nom de la panoplie")]
         [SlashAutoCompleteProvider<ItemSetAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;

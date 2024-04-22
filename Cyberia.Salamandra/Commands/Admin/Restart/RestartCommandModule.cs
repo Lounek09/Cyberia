@@ -17,9 +17,7 @@ public sealed class RestartCommandModule
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.RespondAsync(new DiscordInteractionResponseBuilder()
-            .WithContent("🔃")
-            .AsEphemeral());
+        await ctx.RespondAsync("🔃", true);
 
         await ctx.Client.DisconnectAsync();
 

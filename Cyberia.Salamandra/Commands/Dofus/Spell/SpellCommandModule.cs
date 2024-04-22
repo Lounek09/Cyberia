@@ -19,6 +19,7 @@ public sealed class SpellCommandModule
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom du sort")]
         [SlashAutoCompleteProvider<SpellAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;

@@ -50,7 +50,6 @@ public static class Bot
             RegisterDefaultCommandProcessors = false
         });
         Commands.CommandErrored += CommandManager.OnCommandErrored;
-
         await Commands.AddProcessorAsync(new SlashCommandProcessor());
         await Commands.AddProcessorAsync(new UserCommandProcessor());
         Commands.RegisterCommands();

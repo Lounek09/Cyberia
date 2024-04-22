@@ -23,6 +23,7 @@ public sealed class HouseCommandModule
     public static async Task NameExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la maison")]
         [SlashAutoCompleteProvider<HouseAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;
@@ -89,6 +90,7 @@ public sealed class HouseCommandModule
     public static async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la sous-zone")]
         [SlashAutoCompleteProvider<MapSubAreaAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         MapSubAreaData? mapSubAreaData = null;
@@ -129,6 +131,7 @@ public sealed class HouseCommandModule
     public static async Task MapAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la zone")]
         [SlashAutoCompleteProvider<MapAreaAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         MapAreaData? mapAreaData = null;

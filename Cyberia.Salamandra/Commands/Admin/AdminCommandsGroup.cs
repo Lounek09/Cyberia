@@ -6,12 +6,12 @@ public static class AdminCommandsGroup
 {
     public static void RegisterAdminCommands(this CommandsExtension extension, ulong guildId)
     {
-        extension.AddCommand(IpCommandModule.ExecuteAsync);
-        extension.AddCommand(KillCommandModule.ExecuteAsync);
-        extension.AddCommand(LeaveCommandModule.ExecuteAsync);
-        extension.AddCommands<ParseCommandModule>();
-        extension.AddCommand(RestartCommandModule.ExecuteAsync);
-        extension.AddCommands<SearchCommandModule>();
-        extension.AddCommand(TestCommandModule.ExecuteAsync);
+        extension.AddCommand(IpCommandModule.ExecuteAsync, guildId);
+        extension.AddCommand(KillCommandModule.ExecuteAsync, guildId);
+        extension.AddCommand(LeaveCommandModule.ExecuteAsync, guildId);
+        extension.AddCommands<ParseCommandModule>(guildId);
+        extension.AddCommand(RestartCommandModule.ExecuteAsync, guildId);
+        extension.AddCommands<SearchCommandModule>(guildId);
+        extension.AddCommand(TestCommandModule.ExecuteAsync, guildId);
     }
 }

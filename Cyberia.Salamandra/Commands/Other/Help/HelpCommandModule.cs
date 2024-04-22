@@ -19,10 +19,7 @@ public sealed class HelpCommandModule
     {
         if (EmbedManager.HelpEmbed is null)
         {
-            await ctx.RespondAsync(new DiscordInteractionResponseBuilder()
-                .WithContent("Le bot est en cours de démarrage, veuillez réessayer dans quelques secondes.")
-                .AsEphemeral());
-
+            await ctx.RespondAsync("Le bot est en cours de démarrage, veuillez réessayer dans quelques secondes.", true);
             return;
         }
 

@@ -6,8 +6,8 @@ public static class DataCommandsGroup
 {
     public static void RegisterDataCommands(this CommandsExtension extension, ulong guildId)
     {
-        extension.AddCommands<CytrusCommandModule>();
-        extension.AddCommands<LangsCommandModule>();
-        extension.AddCommand(ReloadCommandModule.ExecuteAsync);
+        extension.AddCommands<CytrusCommandModule>(guildId);
+        extension.AddCommands<LangsCommandModule>(guildId);
+        extension.AddCommand(ReloadCommandModule.ExecuteAsync, guildId);
     }
 }

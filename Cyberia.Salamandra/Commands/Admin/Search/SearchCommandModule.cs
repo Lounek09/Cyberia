@@ -94,8 +94,7 @@ public sealed class SearchCommandModule
         [Parameter("where"), Description("Where to look for the criterion")]
         SearchLocation where,
         [Parameter("id"), Description("Criterion id")]
-        //TODO: Remove comment when SlashMinMaxLength works
-        //[SlashMinMaxLength(MinLength = 2, MaxLength = 2)]
+        [SlashMinMaxLength(MinLength = 2, MaxLength = 2)]
         string criterionId)
     {
         StringBuilder descriptionBuilder = new();
@@ -152,9 +151,7 @@ public sealed class SearchCommandModule
                 return;
         }
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, $"Search criterion {criterionId} in {where}")
-            .WithDescription(descriptionBuilder.ToString().WithMaxLength(4000));
-
-        await ctx.RespondAsync(embed);
+        await ctx.RespondAsync(EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, $"Search criterion {criterionId} in {where}")
+            .WithDescription(descriptionBuilder.ToString().WithMaxLength(4000)));
     }
 }

@@ -29,6 +29,7 @@ public sealed class RuneCommandModule
         long qte,
         [Parameter("item"), Description("Nom de l'item à briser")]
         [SlashAutoCompleteProvider<RuneItemAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;
@@ -71,6 +72,7 @@ public sealed class RuneCommandModule
         long statAmountlong,
         [Parameter("rune"), Description("Nom de la rune")]
         [SlashAutoCompleteProvider<RuneAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string runeName)
     {
         var runeData = DofusApi.Datacenter.RunesData.GetRuneDataByName(runeName);

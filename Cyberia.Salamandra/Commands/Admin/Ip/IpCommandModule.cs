@@ -2,6 +2,7 @@
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -17,8 +18,7 @@ public sealed class IpCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("value"), Description("The encoded IP")]
-        //TODO: Remove comment when SlashMinMaxLength works
-        //[SlashMinMaxLength(MinLength = 11, MaxLength = 11)]
+        [SlashMinMaxLength(MinLength = 11, MaxLength = 11)]
         string value)
     {
         try

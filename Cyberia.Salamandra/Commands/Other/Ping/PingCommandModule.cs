@@ -15,8 +15,6 @@ public sealed class PingCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.RespondAsync(new DiscordInteractionResponseBuilder()
-            .WithContent($"Pong... {ctx.Client.Ping}ms !")
-            .AsEphemeral());
+        await ctx.RespondAsync($"Pong... {ctx.Client.Ping}ms !", true);
     }
 }

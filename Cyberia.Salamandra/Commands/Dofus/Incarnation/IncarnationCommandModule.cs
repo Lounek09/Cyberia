@@ -19,6 +19,7 @@ public sealed class IncarnationCommandModule
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de l'incarnation")]
         [SlashAutoCompleteProvider<IncarnationAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;

@@ -22,6 +22,7 @@ public sealed class CraftCommandModule
         long qte,
         [Parameter("nom"), Description("Nom de l'item à craft")]
         [SlashAutoCompleteProvider<CraftAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;

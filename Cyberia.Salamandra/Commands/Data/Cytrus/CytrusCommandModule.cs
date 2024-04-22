@@ -41,11 +41,10 @@ public sealed class CytrusCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     public static async Task ShowExecuteAsync(SlashCommandContext ctx)
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus");
-
-        embed.AddField("Name", CytrusWatcher.Cytrus.Name.Capitalize(), true);
-        embed.AddField("Version", CytrusWatcher.Cytrus.Version.ToString(), true);
-        embed.AddEmptyField(true);
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus")
+            .AddField("Name", CytrusWatcher.Cytrus.Name.Capitalize(), true)
+            .AddField("Version", CytrusWatcher.Cytrus.Version.ToString(), true)
+            .AddEmptyField(true);
 
         foreach (var game in CytrusWatcher.Cytrus.Games.OrderBy(x => x.Value.Order))
         {
@@ -96,9 +95,8 @@ public sealed class CytrusCommandModule
         [SlashAutoCompleteProvider<CytrusNewVersionAutocompleteProvider>]
         string newVersion)
     {
-        await ctx.RespondAsync(new DiscordInteractionResponseBuilder()
-            .WithContent("👷")
-            .AsEphemeral());
+        //TODO: Change this piece of shit to use DeferResponseAsync
+        await ctx.RespondAsync("👷", true);
 
         await ctx.Channel.SendCytrusManifestDiffMessageAsync(game, platform.ToLower(), oldRelease.ToLower(), oldVersion, newRelease.ToLower(), newVersion);
     }

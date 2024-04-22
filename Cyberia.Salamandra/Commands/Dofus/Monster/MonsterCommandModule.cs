@@ -19,6 +19,7 @@ public sealed class MonsterCommandModule
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom du monstre")]
         [SlashAutoCompleteProvider<MonsterAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;
