@@ -1,6 +1,7 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 using Cyberia.Langzilla.EventArgs;
+using Cyberia.Salamandra.DsharpPlus;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -40,15 +41,16 @@ public static class LangsManager
 
         var postBuilder = new ForumPostBuilder()
             .WithName($"{type} {language} {now:dd-MM-yyyy HH\\hmm}")
-            .WithMessage(new DiscordMessageBuilder().WithContent($"Diff des langs {Formatter.Bold(type.ToString())} de {now:HH\\hmm} le {now:dd/MM/yyyy} en {Formatter.Bold(language.ToString())}"));
+            .WithMessage(new DiscordMessageBuilder().WithContent(
+                $"Diff des langs {Formatter.Bold(type.ToString())} de {now:HH\\hmm} le {now:dd/MM/yyyy} en {Formatter.Bold(language.ToString())}"));
 
-        var typeTag = GetDiscordForumTagByName(forum, type.ToString());
+        var typeTag = forum.GetDiscordForumTagByName(type.ToString());
         if (typeTag is not null)
         {
             postBuilder.AddTag(typeTag);
         }
 
-        var languageTag = GetDiscordForumTagByName(forum, language.ToString());
+        var languageTag = forum.GetDiscordForumTagByName(language.ToString());
         if (languageTag is not null)
         {
             postBuilder.AddTag(languageTag);
@@ -56,11 +58,6 @@ public static class LangsManager
 
         var post = await forum.CreateForumPostAsync(postBuilder);
         return post.Channel;
-    }
-
-    private static DiscordForumTag? GetDiscordForumTagByName(DiscordForumChannel forum, string name)
-    {
-        return forum.AvailableTags.FirstOrDefault(x => x.Name.Equals(name));
     }
 
     private static async Task<DiscordMessage> SendLangMessageAsync(DiscordThreadChannel thread, Lang lang)
