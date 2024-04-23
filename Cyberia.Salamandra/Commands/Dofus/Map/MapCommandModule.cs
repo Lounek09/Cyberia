@@ -14,12 +14,11 @@ using System.ComponentModel;
 namespace Cyberia.Salamandra.Commands.Dofus;
 
 [Command("map"), Description("Retourne les informations d'une map")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
 public sealed class MapCommandModule
 {
     [Command("id"), Description("Retourne les informations d'une map à partir de son id")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task IdExecuteAsync(SlashCommandContext ctx,
         [Parameter("id"), Description("Id de la map")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
@@ -38,8 +37,6 @@ public sealed class MapCommandModule
 
     [Command("coordonnees"), Description("Retourne une liste de maps à partir de leurs coordonnées")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter("x"), Description("Coordonnée x de la map")]
         [SlashMinMaxValue(MinValue = -666, MaxValue = 666)]
@@ -69,8 +66,6 @@ public sealed class MapCommandModule
 
     [Command("sous-zone"), Description("Retourne une liste de maps à partir de leur sous-zone")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la sous-zone")]
         [SlashAutoCompleteProvider<MapSubAreaAutocompleteProvider>]
@@ -106,8 +101,6 @@ public sealed class MapCommandModule
 
     [Command("zone"), Description("Retourne une liste de maps à partir de leur zone")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task MapAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la zone")]
         [SlashAutoCompleteProvider<MapAreaAutocompleteProvider>]

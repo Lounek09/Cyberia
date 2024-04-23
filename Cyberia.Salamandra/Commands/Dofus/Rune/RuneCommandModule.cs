@@ -17,12 +17,12 @@ using System.Text;
 namespace Cyberia.Salamandra.Commands.Dofus;
 
 [Command("rune"), Description("Permet de calculer les runes obtenues lors d'un brisage")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
 public sealed class RuneCommandModule
 {
     [Command("item"), Description("Permet de calculer le nombre de rune obtenable depuis un item")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task ItemExecuteAsync(SlashCommandContext ctx,
         [Parameter("quantite"), Description("Quantité d'item")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = RuneItemMessageBuilder.MaxQte)]
@@ -61,8 +61,6 @@ public sealed class RuneCommandModule
 
     [Command("stat"), Description("Permet de calculer le nombre de rune obtenable d'une stat sur un item")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task StatExecuteAsync(SlashCommandContext ctx,
         [Parameter("niveau"), Description("Niveau de l'item")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = 200)]

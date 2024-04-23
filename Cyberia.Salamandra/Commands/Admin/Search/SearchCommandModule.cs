@@ -16,12 +16,12 @@ using System.Text;
 namespace Cyberia.Salamandra.Commands.Admin;
 
 [Command("search")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class SearchCommandModule
 {
     [Command("effect"), Description("Search where the effect is used")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     public static async Task EffectExecuteAsync(SlashCommandContext ctx,
         [Parameter("where"), Description("Where to look for the effect")]
         SearchLocation where,

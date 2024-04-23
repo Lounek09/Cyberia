@@ -13,12 +13,12 @@ using System.ComponentModel;
 namespace Cyberia.Salamandra.Commands.Admin;
 
 [Command("parse")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class ParseCommandModule
 {
     [Command("effects"), Description("Parse the effects of an item")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     public static async Task EffectsExecuteAsync(SlashCommandContext ctx,
         [Parameter("value"), Description("Effects of an item")]
         string value)

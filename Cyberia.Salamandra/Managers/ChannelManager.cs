@@ -20,8 +20,6 @@ public static class ChannelManager
            sender.SetChannelAsync<DiscordForumChannel>(Bot.Config.LangForumChannelId, "lang forum", x => LangForumChannel = x),
            sender.SetChannelAsync<DiscordChannel>(Bot.Config.CytrusChannelId, "cytrus", x => CytrusChannel = x),
            sender.SetChannelAsync<DiscordChannel>(Bot.Config.CytrusManifestChannelId, "cytrus manifest", x => CytrusManifestChannel = x));
-
-        await EmbedManager.CacheHelpEmbed();
     }
 
     private static async Task SetChannelAsync<T>(this DiscordClient client, ulong id, string name, Action<T> set) where T : DiscordChannel

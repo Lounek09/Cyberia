@@ -19,12 +19,12 @@ using System.Text;
 namespace Cyberia.Salamandra.Commands.Data;
 
 [Command("cytrus")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class CytrusCommandModule
 {
     [Command("check"), Description("[Owner] Lance un check de cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     [RequireApplicationOwner]
     public static async Task CheckExecuteAsync(SlashCommandContext ctx)
     {
@@ -37,8 +37,6 @@ public sealed class CytrusCommandModule
 
     [Command("show"), Description("Affiche les informations du cytrus actuellement en ligne")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     public static async Task ShowExecuteAsync(SlashCommandContext ctx)
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus")
@@ -73,8 +71,6 @@ public sealed class CytrusCommandModule
 
     [Command("diff"), Description("Liste les différences entre les fichiers de deux versions d'un jeu sur Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     public static async Task DiffExecuteAsync(SlashCommandContext ctx,
         [Parameter("game"), Description("Nom du jeu")]
         [SlashChoiceProvider<CytrusGameChoiceProvider>]

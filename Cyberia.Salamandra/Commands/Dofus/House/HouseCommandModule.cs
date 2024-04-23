@@ -14,12 +14,12 @@ using System.ComponentModel;
 namespace Cyberia.Salamandra.Commands.Dofus;
 
 [Command("maison"), Description("Retourne les informations d'une maison")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
 public sealed class HouseCommandModule
 {
     [Command("nom"), Description("Retourne les informations d'une maison à partir de son nom")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task NameExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la maison")]
         [SlashAutoCompleteProvider<HouseAutocompleteProvider>]
@@ -56,8 +56,6 @@ public sealed class HouseCommandModule
 
     [Command("coordonnees"), Description("Retourne une liste de maisons à partir de leurs coordonnées")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter("x"), Description("Coordonnée x de la map de la maison")]
         [SlashMinMaxValue(MinValue = -666, MaxValue = 666)]
@@ -85,8 +83,6 @@ public sealed class HouseCommandModule
 
     [Command("sous-zone"), Description("Retourne une liste de maisons à partir de leur sous-zone")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la sous-zone")]
         [SlashAutoCompleteProvider<MapSubAreaAutocompleteProvider>]
@@ -126,8 +122,6 @@ public sealed class HouseCommandModule
 
     [Command("zone"), Description("Retourne une liste de maisons à partir de leur zone")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task MapAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la zone")]
         [SlashAutoCompleteProvider<MapAreaAutocompleteProvider>]

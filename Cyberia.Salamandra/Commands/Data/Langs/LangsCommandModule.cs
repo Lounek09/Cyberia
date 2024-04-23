@@ -20,12 +20,12 @@ using System.Text;
 namespace Cyberia.Salamandra.Commands.Data;
 
 [Command("langs")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class LangsCommandModule
 {
     [Command("check"), Description("[Owner] Lance un check des langs, si aucun language n'est précisé lance pour toutes les langues")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     [RequireApplicationOwner]
     public static async Task CheckExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("Type des langs à check")]
@@ -66,8 +66,6 @@ public sealed class LangsCommandModule
 
     [Command("diff"), Description("[Owner] Lance un diff des langs entre différents types")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     [RequireApplicationOwner]
     public static async Task DiffExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("Type des langs à diff")]
@@ -108,8 +106,6 @@ public sealed class LangsCommandModule
 
     [Command("parse"), Description("[Owner] Lance le parsing des langs en json")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     [RequireApplicationOwner]
     public static async Task ParseExecuteAsync(SlashCommandContext ctx)
     {
@@ -132,8 +128,6 @@ public sealed class LangsCommandModule
 
     [Command("show"), Description("Affiche les informations des langs actuellement en ligne")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     public static async Task ShowExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("Type des langs à afficher")]
         LangType type = LangType.Official,
@@ -146,8 +140,6 @@ public sealed class LangsCommandModule
 
     [Command("get"), Description("Retourne le lang demandé décompilé")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
-    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     public static async Task GetExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("Type du lang voulu")]
         LangType type,
