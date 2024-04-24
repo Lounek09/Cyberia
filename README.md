@@ -26,6 +26,6 @@ For any inquiries or further information, please contact <a href="mailto:lounek0
 
 --
 
-This project uses [Flare](http://www.nowrap.de/flare.html) for SWF decompilation. Please note that Flare is governed by its own licensing terms, which are separate and distinct from the licensing terms of this project under the AGPL v3. For the specific terms and conditions of Flare’s license, please refer to the [LICENSE](Cyberia.Langzilla/flare/LICENSE.TXT) file included in this distribution or visit the [official website](http://www.nowrap.de/flare.html) of Flare.
+This project uses [Flare](http://www.nowrap.de/flare.html) for SWF decompilation. Please note that Flare is governed by its own licensing terms, which are separate and distinct from the licensing terms of this project under the AGPL-3.0. For the specific terms and conditions of Flareâ€™s license, please refer to the [LICENSE](Cyberia.Langzilla/flare/LICENSE.TXT) file included in this distribution or visit the [official website](http://www.nowrap.de/flare.html) of Flare.
 
-**Important:** Flare is provided for use under specific terms that do not allow commercial use without prior permission. Users are responsible for adhering to these terms and should not assume that the commercial permissions granted under the AGPL v3 extend to the use of Flare.
+**Important:** Flare is provided for use under specific terms that do not allow commercial use without prior permission. Users are responsible for adhering to these terms and should not assume that the commercial permissions granted under the AGPL-3.0 extend to the use of Flare.
