@@ -64,8 +64,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
             StringBuilder descriptionBuilder = new();
 
             descriptionBuilder.Append("Dernière modification le : ");
-            descriptionBuilder.Append(_langRepository.LastChange.ToString("dd/MM/yyyy HH:mm"));
-            descriptionBuilder.Append("+00:00\n");
+            descriptionBuilder.Append(_langRepository.LastChange.ToLocalTime().ToString("dd/MM/yyyy HH:mmzzz"));
             descriptionBuilder.Append(Formatter.MaskedUrl(Formatter.Bold(_langRepository.VersionFileName), new Uri(LangsWatcher.BaseUrl + _langRepository.VersionFileRoute)));
             descriptionBuilder.Append('\n');
 
