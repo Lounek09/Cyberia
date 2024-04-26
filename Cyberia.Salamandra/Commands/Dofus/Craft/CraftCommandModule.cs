@@ -19,7 +19,7 @@ public sealed class CraftCommandModule
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("quantite"), Description("Quantité à craft")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = CraftMessageBuilder.MaxQte)]
-        long qte,
+        int qte,
         [Parameter("nom"), Description("Nom de l'item à craft")]
         [SlashAutoCompleteProvider<CraftAutocompleteProvider>]
         [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
@@ -32,7 +32,7 @@ public sealed class CraftCommandModule
             var craftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(id);
             if (craftData is not null)
             {
-                response = await new CraftMessageBuilder(craftData, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(craftData, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -40,11 +40,11 @@ public sealed class CraftCommandModule
             var craftsData = DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value).ToList();
             if (craftsData.Count == 1)
             {
-                response = await new CraftMessageBuilder(craftsData[0], (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(craftsData[0], qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else if (craftsData.Count > 1)
             {
-                response = await new PaginatedCraftMessageBuilder(craftsData, value, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedCraftMessageBuilder(craftsData, value, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

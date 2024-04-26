@@ -26,7 +26,7 @@ public sealed class RuneCommandModule
     public static async Task ItemExecuteAsync(SlashCommandContext ctx,
         [Parameter("quantite"), Description("Quantité d'item")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = RuneItemMessageBuilder.MaxQte)]
-        long qte,
+        int qte,
         [Parameter("item"), Description("Nom de l'item à briser")]
         [SlashAutoCompleteProvider<RuneItemAutocompleteProvider>]
         [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
@@ -39,7 +39,7 @@ public sealed class RuneCommandModule
             var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                response = await new RuneItemMessageBuilder(itemData, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new RuneItemMessageBuilder(itemData, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -47,11 +47,11 @@ public sealed class RuneCommandModule
             var itemsData = DofusApi.Datacenter.ItemsData.GetItemsDataByName(value).ToList();
             if (itemsData.Count == 1)
             {
-                response = await new RuneItemMessageBuilder(itemsData[0], (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new RuneItemMessageBuilder(itemsData[0], qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else if (itemsData.Count > 1)
             {
-                response = await new PaginatedRuneItemMessageBuilder(itemsData, value, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedRuneItemMessageBuilder(itemsData, value, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
@@ -64,10 +64,10 @@ public sealed class RuneCommandModule
     public static async Task StatExecuteAsync(SlashCommandContext ctx,
         [Parameter("niveau"), Description("Niveau de l'item")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = 200)]
-        long itemLvllong,
+        int itemLvl,
         [Parameter("montant") , Description("Montant de la stat")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = 9999)]
-        long statAmountlong,
+        int statAmount,
         [Parameter("rune"), Description("Nom de la rune")]
         [SlashAutoCompleteProvider<RuneAutocompleteProvider>]
         [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
@@ -79,9 +79,6 @@ public sealed class RuneCommandModule
             await ctx.RespondAsync($"Paramètre incorrect\n{Formatter.Italic("Valeur possible :")} {Formatter.InlineCode(DofusApi.Datacenter.RunesData.GetAllRuneName())}");
             return;
         }
-
-        var itemLvl = (int)itemLvllong;
-        var statAmount = (int)statAmountlong;
 
         var percentRuneExtractable = Math.Round(RuneManager.GetPercentStatExtractable(runeData, itemLvl, statAmount), 2);
         if (percentRuneExtractable == -1)

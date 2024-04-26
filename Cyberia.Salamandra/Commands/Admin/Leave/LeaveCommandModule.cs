@@ -20,11 +20,11 @@ public sealed class LeaveCommandModule
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("id"), Description("Guild's id")]
         [SlashMinMaxValue(MinValue = 0)]
-        long guildId)
+        string guildId)
     {
         try
         {
-            var guild = await ctx.Client.GetGuildAsync((ulong)guildId);
+            var guild = await ctx.Client.GetGuildAsync(ulong.Parse(guildId));
             await guild.LeaveAsync();
 
             if (ctx.Guild is null || guild.Id != ctx.Guild.Id)

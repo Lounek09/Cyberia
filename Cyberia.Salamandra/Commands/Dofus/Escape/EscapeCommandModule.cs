@@ -22,13 +22,13 @@ public sealed class EscapeCommandModule
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("agilite"), Description("Votre agilité")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
-        long agility,
+        int agility,
         [Parameter("agilite_ennemi"), Description("Agilité de l'ennemi à votre contact")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
-        long foeAgility)
+        int foeAgility)
     {
-        var escapePercent = Formulas.GetEscapePercent((int)agility, (int)foeAgility);
-        var agilityToEscapeForSure = Formulas.GetAgilityToEscape((int)foeAgility);
+        var escapePercent = Formulas.GetEscapePercent(agility, foeAgility);
+        var agilityToEscapeForSure = Formulas.GetAgilityToEscape(foeAgility);
 
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de % de fuite")
             .WithDescription($"""

@@ -22,15 +22,15 @@ public sealed class CritCommandModule
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("nombre"), Description("Nombre de crit")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = 999)]
-        long number,
+        int number,
         [Parameter("taux"), Description("Taux de crit cible")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = 999)]
-        long target,
+        int target,
         [Parameter("agilite") , Description("Votre agilité")]
         [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
-        long agility)
+        int agility)
     {
-        var rate = Formulas.GetCriticalRate((int)number, (int)target, (int)agility);
+        var rate = Formulas.GetCriticalRate(number, target, agility);
         if (rate < 0)
         {
             await ctx.RespondAsync("Paramètre incorrect");
@@ -40,7 +40,7 @@ public sealed class CritCommandModule
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de coups critiques")
             .WithDescription($"Tu seras {Formatter.Bold($"1/{rate}")} au {Formatter.Bold($"1/{target}")} avec {Formatter.Bold(number.ToString())}crit et {Formatter.Bold(agility.ToString())}agi");
 
-        var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate((int)number, (int)target);
+        var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, target);
         if (rate != 2 && agilityNeeded > -1)
         {
             embed.Description += $"\nPour atteindre le 1/2 il te faudra au minimum {Formatter.Bold(agilityNeeded.ToString())}agi !";

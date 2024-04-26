@@ -40,12 +40,12 @@ public sealed class MapCommandModule
     public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter("x"), Description("Coordonnée x de la map")]
         [SlashMinMaxValue(MinValue = -666, MaxValue = 666)]
-        long xCoord,
+        int xCoord,
         [Parameter("y"), Description("Coordonnée y de la map")]
         [SlashMinMaxValue(MinValue = -666, MaxValue = 666)]
-        long yCoord)
+        int yCoord)
     {
-        var mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate((int)xCoord, (int)yCoord).ToList();
+        var mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(xCoord, yCoord).ToList();
 
         if (mapsData.Count == 0)
         {

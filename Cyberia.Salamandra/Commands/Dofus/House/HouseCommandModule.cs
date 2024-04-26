@@ -59,12 +59,12 @@ public sealed class HouseCommandModule
     public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter("x"), Description("Coordonnée x de la map de la maison")]
         [SlashMinMaxValue(MinValue = -666, MaxValue = 666)]
-        long xCoord,
+        int xCoord,
         [Parameter("y"), Description("Coordonnée y de la map de la maison")]
         [SlashMinMaxValue(MinValue = -666, MaxValue = 666)]
-        long yCoord)
+        int yCoord)
     {
-        var housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate((int)xCoord, (int)yCoord).ToList();
+        var housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate(xCoord, yCoord).ToList();
 
         if (housesData.Count == 0)
         {
@@ -76,7 +76,8 @@ public sealed class HouseCommandModule
         }
         else
         {
-            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PacketParameterSeparator}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
+            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PacketParameterSeparator}{yCoord}")
+                .GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
     }
 
@@ -114,7 +115,8 @@ public sealed class HouseCommandModule
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapSubArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapSubArea, value)
+                    .GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }
@@ -153,7 +155,8 @@ public sealed class HouseCommandModule
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapArea, value)
+                    .GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }

@@ -27,7 +27,7 @@ public sealed class SearchCommandModule
         SearchLocation where,
         [Parameter("id"), Description("Effect id")]
         [SlashMinMaxValue(MinValue = 0, MaxValue = 9999)]
-        long effectId)
+        int effectId)
     {
         StringBuilder descriptionBuilder = new();
 
