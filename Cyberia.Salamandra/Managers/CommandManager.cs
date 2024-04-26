@@ -10,6 +10,7 @@ using DSharpPlus.Commands.EventArgs;
 using DSharpPlus.Commands.Exceptions;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Entities;
+using DSharpPlus.Exceptions;
 
 namespace Cyberia.Salamandra.Managers;
 
@@ -42,12 +43,19 @@ public static class CommandManager
             return;
         }
 
+        var commandName = ctx.Command?.FullName ?? "undefined";
+
         Log.Error(
             args.Exception,
             "An error occurred when {UserName} ({UserId}) used the {CommandName} command",
             ctx.User.Username,
             ctx.User.Id,
-            ctx.Command.FullName);
+            commandName);
+
+        if (args.Exception is DiscordException discordException)
+        {
+            Log.Error("With JsonMessage:\n{JsonMessage}", discordException.JsonMessage);
+        }
 
         var commandArgs = string.Join('\n',
             ctx.Arguments.Select(x => $"- {x.Key.Name} : {Formatter.InlineCode(x.Value is null ? "null" : x.Value.ToString() ?? string.Empty)}"));
@@ -57,7 +65,7 @@ public static class CommandManager
             Title = "An error occurred when executing a slash command",
             Description =
             $"""
-            An error occurred when {Formatter.Sanitize(ctx.User.Username)} ({ctx.User.Mention}) used the {Formatter.Bold(ctx.Command.FullName)} command.
+            An error occurred when {Formatter.Sanitize(ctx.User.Username)} ({ctx.User.Mention}) used the {Formatter.Bold(commandName)} command.
             {(commandArgs.Length > 0 ? $"\n{Formatter.Bold("Arguments :")}\n{commandArgs}\n" : string.Empty)}
             {Formatter.Bold($"{args.Exception.GetType().Name} :")}
             {Formatter.BlockCode($"{args.Exception.Message}\n{args.Exception.StackTrace}".WithMaxLength(3000))}
