@@ -17,13 +17,13 @@ public sealed class CraftCommandModule
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("quantite"), Description("Quantité à craft")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = CraftMessageBuilder.MaxQte)]
-        int qte,
         [Parameter("nom"), Description("Nom de l'item à craft")]
         [SlashAutoCompleteProvider<CraftAutocompleteProvider>]
         [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
-        string value)
+        string value,
+        [Parameter("quantite"), Description("Quantité à craft")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = CraftMessageBuilder.MaxQte)]
+        int qte = 1)
     {
         DiscordInteractionResponseBuilder? response = null;
 

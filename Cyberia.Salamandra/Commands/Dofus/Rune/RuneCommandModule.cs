@@ -24,13 +24,13 @@ public sealed class RuneCommandModule
     [Command("item"), Description("Permet de calculer le nombre de rune obtenable depuis un item")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ItemExecuteAsync(SlashCommandContext ctx,
-        [Parameter("quantite"), Description("Quantité d'item")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = RuneItemMessageBuilder.MaxQte)]
-        int qte,
         [Parameter("item"), Description("Nom de l'item à briser")]
         [SlashAutoCompleteProvider<RuneItemAutocompleteProvider>]
         [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
-        string value)
+        string value,
+        [Parameter("quantite"), Description("Quantité d'item")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = RuneItemMessageBuilder.MaxQte)]
+        int qte = 1)
     {
         DiscordInteractionResponseBuilder? response = null;
 
