@@ -2,7 +2,7 @@
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Item;
 
 public sealed class ItemAutocompleteProvider : AutoCompleteProvider
 {

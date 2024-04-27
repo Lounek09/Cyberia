@@ -5,7 +5,7 @@ using DSharpPlus.Entities;
 
 using System.ComponentModel;
 
-namespace Cyberia.Salamandra.Commands.Other;
+namespace Cyberia.Salamandra.Commands.Other.Discord;
 
 public sealed class DiscordCommandModule
 {

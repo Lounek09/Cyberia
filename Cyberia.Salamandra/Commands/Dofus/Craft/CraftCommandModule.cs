@@ -8,7 +8,7 @@ using DSharpPlus.Entities;
 
 using System.ComponentModel;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
 public sealed class CraftCommandModule
 {

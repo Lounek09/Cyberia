@@ -10,7 +10,7 @@ using DSharpPlus.Entities;
 
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Quest;
 
 public sealed class QuestMessageBuilder : ICustomMessageBuilder
 {

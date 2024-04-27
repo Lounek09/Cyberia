@@ -13,7 +13,7 @@ using DSharpPlus.Entities;
 using System.ComponentModel;
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Admin;
+namespace Cyberia.Salamandra.Commands.Admin.Search;
 
 [Command("search")]
 [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]

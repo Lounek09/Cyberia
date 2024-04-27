@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Managers;
+using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
@@ -9,7 +10,7 @@ using DSharpPlus.Entities;
 
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 
 public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 {

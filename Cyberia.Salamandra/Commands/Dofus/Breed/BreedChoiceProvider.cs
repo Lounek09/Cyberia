@@ -3,7 +3,7 @@
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Trees;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 
 public sealed class BreedChoiceProvider : IChoiceProvider
 {

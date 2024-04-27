@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 
 public sealed class RuneItemAutocompleteProvider : AutoCompleteProvider
 {

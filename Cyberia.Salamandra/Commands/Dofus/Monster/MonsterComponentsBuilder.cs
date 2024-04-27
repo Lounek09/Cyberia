@@ -3,7 +3,7 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Monster;
 
 public static class MonsterComponentsBuilder
 {

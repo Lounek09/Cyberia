@@ -2,7 +2,7 @@
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
 public sealed class IncarnationAutocompleteProvider : AutoCompleteProvider
 {

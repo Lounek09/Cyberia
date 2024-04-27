@@ -52,7 +52,7 @@ public static class Bot
         Commands.CommandErrored += CommandManager.OnCommandErrored;
         await Commands.AddProcessorAsync(new SlashCommandProcessor());
         await Commands.AddProcessorAsync(new UserCommandProcessor());
-        Commands.RegisterCommands();
+        Commands.RegisterCommands(Config.AdminGuildId);
 
         CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
 

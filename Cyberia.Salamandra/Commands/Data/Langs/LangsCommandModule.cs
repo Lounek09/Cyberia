@@ -17,7 +17,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Data;
+namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
 [Command("langs")]
 [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]

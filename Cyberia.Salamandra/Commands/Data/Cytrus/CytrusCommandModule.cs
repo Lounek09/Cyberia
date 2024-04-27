@@ -16,7 +16,7 @@ using System.ComponentModel;
 using System.Reflection.Metadata;
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Data;
+namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
 [Command("cytrus")]
 [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]

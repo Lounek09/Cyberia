@@ -1,6 +1,16 @@
 ﻿using Cyberia.Salamandra.Commands;
-using Cyberia.Salamandra.Commands.Data;
-using Cyberia.Salamandra.Commands.Dofus;
+using Cyberia.Salamandra.Commands.Data.Cytrus;
+using Cyberia.Salamandra.Commands.Dofus.Breed;
+using Cyberia.Salamandra.Commands.Dofus.Craft;
+using Cyberia.Salamandra.Commands.Dofus.House;
+using Cyberia.Salamandra.Commands.Dofus.Incarnation;
+using Cyberia.Salamandra.Commands.Dofus.Item;
+using Cyberia.Salamandra.Commands.Dofus.ItemSet;
+using Cyberia.Salamandra.Commands.Dofus.Map;
+using Cyberia.Salamandra.Commands.Dofus.Monster;
+using Cyberia.Salamandra.Commands.Dofus.Quest;
+using Cyberia.Salamandra.Commands.Dofus.Rune;
+using Cyberia.Salamandra.Commands.Dofus.Spell;
 
 using DSharpPlus;
 using DSharpPlus.Entities;

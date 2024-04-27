@@ -8,7 +8,7 @@ using DSharpPlus.Entities;
 
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Data;
+namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
 public sealed class LangsMessageBuilder : ICustomMessageBuilder
 {

@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Maps;
+using Cyberia.Salamandra.Commands.Dofus.Map;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -11,7 +12,7 @@ using DSharpPlus.Entities;
 
 using System.ComponentModel;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.House;
 
 [Command("maison"), Description("Retourne les informations d'une maison")]
 [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]

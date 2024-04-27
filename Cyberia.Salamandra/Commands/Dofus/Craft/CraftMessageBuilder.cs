@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.Items;
+using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
@@ -8,7 +9,7 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
 public sealed class CraftMessageBuilder : ICustomMessageBuilder
 {

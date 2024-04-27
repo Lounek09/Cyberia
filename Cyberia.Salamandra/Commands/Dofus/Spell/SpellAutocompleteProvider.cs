@@ -2,7 +2,7 @@
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 
 public sealed class SpellAutocompleteProvider : AutoCompleteProvider
 {

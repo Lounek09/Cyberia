@@ -9,7 +9,7 @@ using DSharpPlus.Entities;
 
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Monster;
 
 public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 {

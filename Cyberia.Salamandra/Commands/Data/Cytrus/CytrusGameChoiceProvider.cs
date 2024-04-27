@@ -3,7 +3,7 @@
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Trees;
 
-namespace Cyberia.Salamandra.Commands.Data;
+namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
 public sealed class CytrusGameChoiceProvider : IChoiceProvider
 {

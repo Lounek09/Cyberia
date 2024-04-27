@@ -14,7 +14,7 @@ using DSharpPlus.Entities;
 using System.ComponentModel;
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 
 [Command("rune"), Description("Permet de calculer les runes obtenues lors d'un brisage")]
 [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]

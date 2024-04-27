@@ -12,16 +12,38 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Entities;
 using DSharpPlus.Exceptions;
 
+using System.Reflection;
+
 namespace Cyberia.Salamandra.Managers;
 
 public static class CommandManager
 {
-    public static void RegisterCommands(this CommandsExtension extension)
+    public static void RegisterCommands(this CommandsExtension extension, params ulong[] guildIds)
     {
-        extension.RegisterAdminCommands(Bot.Config.AdminGuildId);
-        extension.RegisterDataCommands(Bot.Config.AdminGuildId);
-        extension.RegisterDofusCommands();
-        extension.RegisterOtherCommands();
+        var commandGroups = new Dictionary<string, bool>
+        {
+            { "Cyberia.Salamandra.Commands.Admin", true },
+            { "Cyberia.Salamandra.Commands.Data", true },
+            { "Cyberia.Salamandra.Commands.Dofus", false },
+            { "Cyberia.Salamandra.Commands.Other", false }
+        };
+
+        var types = Assembly.GetExecutingAssembly().GetTypes()
+            .Where(x => !string.IsNullOrEmpty(x.Namespace) && x.Name.EndsWith("CommandModule"));
+
+        foreach (var (startNamespace, requiresGuildId) in commandGroups)
+        {
+            var commandModules = types.Where(x => x.Namespace!.StartsWith(startNamespace));
+
+            if (requiresGuildId)
+            {
+                extension.AddCommands(commandModules, guildIds);
+            }
+            else
+            {
+                extension.AddCommands(commandModules);
+            }
+        }
     }
 
     public static async Task OnCommandErrored(CommandsExtension _, CommandErroredEventArgs args)
@@ -43,7 +65,7 @@ public static class CommandManager
             return;
         }
 
-        var commandName = ctx.Command?.FullName ?? "undefined";
+        var commandName = ctx.Command?.FullName ?? "Command NotFound";
 
         Log.Error(
             args.Exception,

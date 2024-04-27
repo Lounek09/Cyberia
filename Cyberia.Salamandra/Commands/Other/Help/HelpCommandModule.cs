@@ -9,7 +9,7 @@ using DSharpPlus.Entities;
 using System.ComponentModel;
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Other;
+namespace Cyberia.Salamandra.Commands.Other.Help;
 
 public sealed class HelpCommandModule
 {

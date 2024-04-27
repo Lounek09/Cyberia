@@ -6,7 +6,7 @@ using DSharpPlus.Entities;
 
 using System.ComponentModel;
 
-namespace Cyberia.Salamandra.Commands.Admin;
+namespace Cyberia.Salamandra.Commands.Admin.Restart;
 
 public sealed class RestartCommandModule
 {

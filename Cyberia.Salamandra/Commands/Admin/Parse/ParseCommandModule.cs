@@ -10,7 +10,7 @@ using DSharpPlus.Entities;
 
 using System.ComponentModel;
 
-namespace Cyberia.Salamandra.Commands.Admin;
+namespace Cyberia.Salamandra.Commands.Admin.Parse;
 
 [Command("parse")]
 [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]

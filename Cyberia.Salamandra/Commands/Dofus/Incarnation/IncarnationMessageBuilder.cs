@@ -3,6 +3,8 @@ using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Salamandra.Commands.Dofus.Item;
+using Cyberia.Salamandra.Commands.Dofus.Spell;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
@@ -10,7 +12,7 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
 public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 {

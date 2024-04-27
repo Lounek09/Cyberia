@@ -3,7 +3,7 @@ using Cyberia.Salamandra.DsharpPlus;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Data;
+namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
 public sealed class CytrusReleaseAutoCompleteProvider : AutoCompleteProvider
 {

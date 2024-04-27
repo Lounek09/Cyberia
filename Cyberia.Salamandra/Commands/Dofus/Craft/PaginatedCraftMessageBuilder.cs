@@ -6,7 +6,7 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
 public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<CraftData>
 {
