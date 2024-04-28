@@ -17,7 +17,7 @@ public sealed class ItemSetCommandModule
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("Nom"), Description("Nom de la panoplie")]
+        [Parameter("nom"), Description("Nom de la panoplie")]
         [SlashAutoCompleteProvider<ItemSetAutocompleteProvider>]
         [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
