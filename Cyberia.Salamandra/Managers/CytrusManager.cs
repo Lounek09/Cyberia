@@ -80,36 +80,36 @@ public static class CytrusManager
         var document = JsonDocument.Parse(args.Diff);
         var root = document.RootElement;
 
-        if (!root.TryGetProperty("games", out var games) &&
-            games.ValueKind == JsonValueKind.Object)
+        if (!root.TryGetProperty("games", out var games) ||
+            games.ValueKind != JsonValueKind.Object)
         {
             return;
         }
 
         foreach (var game in games.EnumerateObject())
         {
-            if (!game.Value.TryGetProperty("platforms", out var platforms) &&
-                platforms.ValueKind == JsonValueKind.Object)
+            if (!game.Value.TryGetProperty("platforms", out var platforms) ||
+                platforms.ValueKind != JsonValueKind.Object)
             {
                 return;
             }
 
-            if (!platforms.TryGetProperty(CytrusGame.WindowsPlatform, out var platform) &&
-                platform.ValueKind == JsonValueKind.Object)
+            if (!platforms.TryGetProperty(CytrusGame.WindowsPlatform, out var platform) ||
+                platform.ValueKind != JsonValueKind.Object)
             {
                 return;
             }
 
             foreach (var release in platform.EnumerateObject())
             {
-                if (!release.Value.TryGetProperty("-", out var oldRelease) &&
-                    oldRelease.ValueKind == JsonValueKind.String)
+                if (!release.Value.TryGetProperty("-", out var oldRelease) ||
+                    oldRelease.ValueKind != JsonValueKind.String)
                 {
                     return;
                 }
 
-                if (!release.Value.TryGetProperty("+", out var newRelease) &&
-                    newRelease.ValueKind == JsonValueKind.String)
+                if (!release.Value.TryGetProperty("+", out var newRelease) ||
+                    newRelease.ValueKind != JsonValueKind.String)
                 {
                     return;
                 }
