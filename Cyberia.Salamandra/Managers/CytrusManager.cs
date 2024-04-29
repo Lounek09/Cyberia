@@ -1,6 +1,7 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Cytrusaurus.EventArgs;
 using Cyberia.Cytrusaurus.Models;
+using Cyberia.Salamandra.DsharpPlus;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -25,14 +26,14 @@ public static class CytrusManager
         var modelManifest = await CytrusManifest.GetManifestAsync(game, platform, oldRelease, oldVersion);
         if (modelManifest is null)
         { 
-            await channel.SendMessage(messageBuilder.WithContent($"Nouveau client introuvable"));
+            await channel.SendMessageSafe(messageBuilder.WithContent($"Nouveau client introuvable"));
             return;
         }
 
         var currentManifest = await CytrusManifest.GetManifestAsync(game, platform, newRelease, newVersion);
         if (currentManifest is null)
         {
-            await channel.SendMessage(messageBuilder.WithContent($"Nouveau client introuvable"));
+            await channel.SendMessageSafe(messageBuilder.WithContent($"Nouveau client introuvable"));
             return;
         }
 
@@ -49,12 +50,12 @@ public static class CytrusManager
 
         if (mainContent.Length + diff.Length < 2000)
         {
-            await channel.SendMessage(messageBuilder.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
+            await channel.SendMessageSafe(messageBuilder.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
         }
         else
         {
             using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
-            await channel.SendMessage(messageBuilder.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
+            await channel.SendMessageSafe(messageBuilder.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
         }
     }
 
