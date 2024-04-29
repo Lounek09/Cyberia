@@ -25,15 +25,14 @@ public static class ChannelManager
             if (channel is T typedChannel)
             {
                 set(typedChannel);
+                return;
             }
-            else
-            {
-                Log.Error("Channel ID {ChannelId} is not of type {ChannelType}, expected for {Identifier}", id, typeof(T).Name, name);
-            }
+
+            Log.Error("The {Name} channel with ID {ChannelId} is not of type {ChannelType}", name, id, typeof(T).Name);
         }
         catch
         {
-            Log.Error("Failed to set channel with ID {ChannelId} for {Identifier}", id, name);
+            Log.Error("Failed to get the {Name} channel with ID {ChannelId}", name, id);
         }
     }
 }
