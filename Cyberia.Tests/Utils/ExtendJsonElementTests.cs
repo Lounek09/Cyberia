@@ -10,7 +10,7 @@ public class ExtendJsonElementTests
     [TestMethod]
     public void GetInt32OrDefault_WithValue_ReturnsValue()
     {
-        var json = "{\"number\": 123}";
+        var json = """{"number":123}""";
         var value = JsonDocument.Parse(json).RootElement.GetProperty("number");
 
         var result = value.GetInt32OrDefault();
@@ -21,7 +21,7 @@ public class ExtendJsonElementTests
     [TestMethod]
     public void GetInt32OrDefault_WithNonNumber_ReturnsDefault()
     {
-        var json = "{\"number\": \"Bouftou\"}";
+        var json = """{"number":"Bouftou"}""";
         var value = JsonDocument.Parse(json).RootElement.GetProperty("number");
 
         var result = value.GetInt32OrDefault();
@@ -32,7 +32,7 @@ public class ExtendJsonElementTests
     [TestMethod]
     public void GetInt32OrDefault_WithNumberExceedingIntMaxValue_ReturnsDefault()
     {
-        var json = $"{{\"number\": {((long)int.MaxValue) + 1}}}";
+        var json = $$"""{"number":{{int.MaxValue + 1L}}}""";
         var value = JsonDocument.Parse(json).RootElement.GetProperty("number");
 
         var result = value.GetInt32OrDefault();
@@ -47,7 +47,7 @@ public class ExtendJsonElementTests
     [TestMethod]
     public void GetInt64OrDefault_WithValue_ReturnsValue()
     {
-        var json = "{\"number\": 1234567890123}";
+        var json = """{"number":1234567890123}""";
         var value = JsonDocument.Parse(json).RootElement.GetProperty("number");
 
         var result = value.GetInt64OrDefault();
@@ -58,7 +58,7 @@ public class ExtendJsonElementTests
     [TestMethod]
     public void GetInt64OrDefault_WithNonNumber_ReturnsDefault()
     {
-        var json = "{\"number\": \"Bouftou\"}";
+        var json = """{"number":"Bouftou"}""";
         var value = JsonDocument.Parse(json).RootElement.GetProperty("number");
 
         var result = value.GetInt64OrDefault();
@@ -73,7 +73,7 @@ public class ExtendJsonElementTests
     [TestMethod]
     public void GetStringOrEmpty_WithValue_ReturnsValue()
     {
-        var json = "{\"text\": \"Bouftou\"}";
+        var json = """{"text":"Bouftou"}""";
         var value = JsonDocument.Parse(json).RootElement.GetProperty("text");
 
         var result = value.GetStringOrEmpty();
@@ -84,7 +84,7 @@ public class ExtendJsonElementTests
     [TestMethod]
     public void GetStringOrEmpty_WithNonString_ReturnsEmpty()
     {
-        var json = "{\"text\": 123}";
+        var json = """{"text":123}""";
         var value = JsonDocument.Parse(json).RootElement.GetProperty("text");
 
         var result = value.GetStringOrEmpty();
