@@ -35,7 +35,7 @@ public static class Bot
             LogUnknownEvents = false,
             Intents = DiscordIntents.Guilds | DiscordIntents.GuildMessages
         });
-        Client.GuildDownloadCompleted += ChannelManager.OnGuildDownloadCompleted;
+        Client.GuildDownloadCompleted += ClientManager.OnGuildDownloadCompleted;
         Client.GuildCreated += GuildManager.OnGuildCreated;
         Client.GuildDeleted += GuildManager.OnGuildDeleted;
         Client.MessageCreated += MessageManager.OnMessageCreated;
