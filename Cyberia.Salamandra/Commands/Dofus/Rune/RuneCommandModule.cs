@@ -5,24 +5,32 @@ using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
 
+using System.ComponentModel;
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 
-[SlashCommandGroup("rune", "Permet de calculer les runes obtenues lors d'un brisage")]
-public sealed class RuneCommandModule : ApplicationCommandModule
+[Command("rune"), Description("Permet de calculer les runes obtenues lors d'un brisage")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+public sealed class RuneCommandModule
 {
-    [SlashCommand("item", "Permet de calculer le nombre de rune obtenable depuis un item")]
-    public async Task ItemCommand(InteractionContext ctx,
-        [Option("quantite", "Quantité d'item")]
-        [Minimum(1), Maximum(RuneItemMessageBuilder.MaxQte)]
-        long qte,
-        [Option("item", "Nom de l'item à briser", true)]
-        [Autocomplete(typeof(RuneItemAutocompleteProvider))]
-        string value)
+    [Command("item"), Description("Permet de calculer le nombre de rune obtenable depuis un item")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    public static async Task ItemExecuteAsync(SlashCommandContext ctx,
+        [Parameter("item"), Description("Nom de l'item à briser")]
+        [SlashAutoCompleteProvider<RuneItemAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
+        string value,
+        [Parameter("quantite"), Description("Quantité d'item")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = RuneItemMessageBuilder.MaxQte)]
+        int qte = 1)
     {
         DiscordInteractionResponseBuilder? response = null;
 
@@ -31,7 +39,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
             var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                response = await new RuneItemMessageBuilder(itemData, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new RuneItemMessageBuilder(itemData, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -39,44 +47,43 @@ public sealed class RuneCommandModule : ApplicationCommandModule
             var itemsData = DofusApi.Datacenter.ItemsData.GetItemsDataByName(value).ToList();
             if (itemsData.Count == 1)
             {
-                response = await new RuneItemMessageBuilder(itemsData[0], (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new RuneItemMessageBuilder(itemsData[0], qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else if (itemsData.Count > 1)
             {
-                response = await new PaginatedRuneItemMessageBuilder(itemsData, value, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedRuneItemMessageBuilder(itemsData, value, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
         response ??= new DiscordInteractionResponseBuilder().WithContent("Item introuvable");
-        await ctx.CreateResponseAsync(response);
+        await ctx.RespondAsync(response);
     }
 
-    [SlashCommand("stat", "Permet de calculer le nombre de rune obtenable d'une stat sur un item")]
-    public async Task StatCommand(InteractionContext ctx,
-        [Option("niveau", "Niveau de l'item")]
-        [Minimum(1), Maximum(200)]
-        long itemLvllong,
-        [Option("montant", "Montant de la stat")]
-        [Minimum(1), Maximum(9999)]
-        long statAmountlong,
-        [Option("rune", "Nom de la rune", true)]
-        [Autocomplete(typeof(RuneAutocompleteProvider))]
-        string name)
+    [Command("stat"), Description("Permet de calculer le nombre de rune obtenable d'une stat sur un item")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    public static async Task StatExecuteAsync(SlashCommandContext ctx,
+        [Parameter("niveau"), Description("Niveau de l'item")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = 200)]
+        int itemLvl,
+        [Parameter("montant") , Description("Montant de la stat")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = 9999)]
+        int statAmount,
+        [Parameter("rune"), Description("Nom de la rune")]
+        [SlashAutoCompleteProvider<RuneAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
+        string runeName)
     {
-        var runeData = DofusApi.Datacenter.RunesData.GetRuneDataByName(name);
+        var runeData = DofusApi.Datacenter.RunesData.GetRuneDataByName(runeName);
         if (runeData is null)
         {
-            await ctx.CreateResponseAsync($"Paramètre incorrect\n{Formatter.Italic("Valeur possible :")} {Formatter.InlineCode(DofusApi.Datacenter.RunesData.GetAllRuneName())}");
+            await ctx.RespondAsync($"Paramètre incorrect\n{Formatter.Italic("Valeur possible :")} {Formatter.InlineCode(DofusApi.Datacenter.RunesData.GetAllRuneName())}");
             return;
         }
-
-        var itemLvl = (int)itemLvllong;
-        var statAmount = (int)statAmountlong;
 
         var percentRuneExtractable = Math.Round(RuneManager.GetPercentStatExtractable(runeData, itemLvl, statAmount), 2);
         if (percentRuneExtractable == -1)
         {
-            await ctx.CreateResponseAsync("Une erreur est survenue lors du calcul du % de statistique extractible");
+            await ctx.RespondAsync("Une erreur est survenue lors du calcul du % de statistique extractible");
             return;
         }
 
@@ -122,7 +129,7 @@ public sealed class RuneCommandModule : ApplicationCommandModule
 
         embed.AddField("Source :", "https://forums.jeuxonline.info/sujet/1045383/les-taux-de-brisage");
 
-        await ctx.CreateResponseAsync(embed);
+        await ctx.RespondAsync(embed);
     }
 
     private static string GetRuneBundleTextFieldStatCommand(RuneBundle runeBundle)

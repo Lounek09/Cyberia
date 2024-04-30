@@ -66,4 +66,5 @@
 # Set the merge driver for all other files
 ###############################################################################
 *.exe      binary
+*.dll      binary
 *.manifest binary

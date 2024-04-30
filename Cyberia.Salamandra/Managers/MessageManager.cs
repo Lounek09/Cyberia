@@ -1,4 +1,6 @@
-﻿using DSharpPlus;
+﻿using Cyberia.Salamandra.DsharpPlus;
+
+using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
@@ -45,33 +47,8 @@ public static class MessageManager
             }
 
             using var fileStream = File.OpenRead(filePath);
-            await args.Channel.SendMessage(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
+            await args.Channel.SendMessageSafe(new DiscordMessageBuilder().AddFile(Path.GetFileName(filePath), fileStream));
         }
-    }
-
-    public static async Task SendMessage(this DiscordChannel channel, DiscordMessageBuilder message)
-    {
-        var permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
-
-        if (!permissions.HasPermission(DiscordPermissions.AccessChannels))
-        {
-            Log.Error("No permission to access to this channel {ChannelId}", channel.Id);
-            return;
-        }
-
-        if (!permissions.HasPermission(DiscordPermissions.SendMessages))
-        {
-            Log.Error("No permission to send message in this channel {ChannelId}", channel.Id);
-            return;
-        }
-
-        if (message.Files.Count > 0 && !permissions.HasPermission(DiscordPermissions.AttachFiles))
-        {
-            Log.Error("No permission to attach files in this channel {ChannelId}", channel.Id);
-            return;
-        }
-
-        await channel.SendMessageAsync(message);
     }
 
     public static async Task SendLogMessage(string content)
@@ -82,7 +59,7 @@ public static class MessageManager
             return;
         }
 
-        await channel.SendMessage(new DiscordMessageBuilder().WithContent(content));
+        await channel.SendMessageSafe(new DiscordMessageBuilder().WithContent(content));
     }
 
     public static async Task SendErrorMessage(DiscordEmbed embed)
@@ -93,6 +70,6 @@ public static class MessageManager
             return;
         }
 
-        await channel.SendMessage(new DiscordMessageBuilder().AddEmbed(embed));
+        await channel.SendMessageSafe(new DiscordMessageBuilder().AddEmbed(embed));
     }
 }

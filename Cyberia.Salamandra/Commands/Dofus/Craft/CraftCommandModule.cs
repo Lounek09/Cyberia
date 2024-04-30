@@ -1,20 +1,29 @@
 ﻿using Cyberia.Api;
 
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+using System.ComponentModel;
 
-public sealed class CraftCommandModule : ApplicationCommandModule
+namespace Cyberia.Salamandra.Commands.Dofus.Craft;
+
+public sealed class CraftCommandModule
 {
-    [SlashCommand("craft", "Permet de calculer les ressources nécessaires pour craft un objet")]
-    public async Task Command(InteractionContext ctx,
-        [Option("quantite", "Quantité à craft")]
-        [Minimum(1), Maximum(CraftMessageBuilder.MaxQte)]
-        long qte,
-        [Option("nom", "Nom de l'item à craft", true)]
-        [Autocomplete(typeof(CraftAutocompleteProvider))]
-        string value)
+    [Command("craft"), Description("Permet de calculer les ressources nécessaires pour craft un objet")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("nom"), Description("Nom de l'item à craft")]
+        [SlashAutoCompleteProvider<CraftAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
+        string value,
+        [Parameter("quantite"), Description("Quantité à craft")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = CraftMessageBuilder.MaxQte)]
+        int qte = 1)
     {
         DiscordInteractionResponseBuilder? response = null;
 
@@ -23,7 +32,7 @@ public sealed class CraftCommandModule : ApplicationCommandModule
             var craftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(id);
             if (craftData is not null)
             {
-                response = await new CraftMessageBuilder(craftData, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(craftData, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -31,15 +40,15 @@ public sealed class CraftCommandModule : ApplicationCommandModule
             var craftsData = DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value).ToList();
             if (craftsData.Count == 1)
             {
-                response = await new CraftMessageBuilder(craftsData[0], (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(craftsData[0], qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else if (craftsData.Count > 1)
             {
-                response = await new PaginatedCraftMessageBuilder(craftsData, value, (int)qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedCraftMessageBuilder(craftsData, value, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
         response ??= new DiscordInteractionResponseBuilder().WithContent("Craft introuvable");
-        await ctx.CreateResponseAsync(response);
+        await ctx.RespondAsync(response);
     }
 }

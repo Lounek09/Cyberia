@@ -1,17 +1,15 @@
 ﻿using Cyberia.Api;
 
-using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
-public sealed class MapAreaAutocompleteProvider : AutocompleteProvider
+public sealed class MapAreaAutocompleteProvider : AutoCompleteProvider
 {
-    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
+    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-
-        return DofusApi.Datacenter.MapsData.GetMapAreasDataByName(value)
-            .Take(Constant.MaxChoice)
-            .Select(x => new DiscordAutoCompleteChoice($"{x.Name.WithMaxLength(90)} ({x.Id})", x.Id.ToString()));
+        return DofusApi.Datacenter.MapsData.GetMapAreasDataByName(ctx.UserInput)
+             .Take(Constant.MaxChoice)
+             .ToDictionary(x => $"{x.Name.WithMaxLength(90)} ({x.Id})", x => (object)x.Id.ToString());
     }
 }

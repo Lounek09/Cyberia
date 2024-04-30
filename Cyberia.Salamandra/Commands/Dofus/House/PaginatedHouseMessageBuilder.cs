@@ -6,15 +6,7 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
-
-public enum HouseSearchCategory
-{
-    Name,
-    Coordinate,
-    MapSubArea,
-    MapArea
-}
+namespace Cyberia.Salamandra.Commands.Dofus.House;
 
 public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<HouseData>
 {

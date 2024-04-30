@@ -1,39 +1,48 @@
-﻿using Cyberia.Cytrusaurus;
+﻿using Cyberia.Api;
+using Cyberia.Cytrusaurus;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.ContextChecks;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
-using DSharpPlus.SlashCommands.Attributes;
 
+using System.ComponentModel;
+using System.Reflection.Metadata;
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Data;
+namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
-[SlashCommandGroup("cytrus", "Cytrus")]
-public sealed class CytrusCommandModule : ApplicationCommandModule
+[Command("cytrus")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+public sealed class CytrusCommandModule
 {
-    [SlashCommand("check", "[Owner] Lance un check de cytrus")]
-    [SlashRequireOwner]
-    public async Task CheckCytrusCommand(InteractionContext ctx)
+    [Command("check"), Description("[Owner] Lance un check de cytrus")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [RequireApplicationOwner]
+    public static async Task CheckExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.CreateResponseAsync($"Lancement du check de Cytrus...");
+        await ctx.RespondAsync("Lancement du check de Cytrus...");
 
         await CytrusWatcher.CheckAsync();
 
-        await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Check de Cytrus terminé"));
+        await ctx.FollowupAsync("Check de Cytrus terminé");
     }
 
-    [SlashCommand("show", "Affiche les informations du cytrus actuellement en ligne")]
-    public async Task ShowCytrusCommand(InteractionContext ctx)
+    [Command("show"), Description("Affiche les informations du cytrus actuellement en ligne")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    public static async Task ShowExecuteAsync(SlashCommandContext ctx)
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus");
-
-        embed.AddField("Name", CytrusWatcher.Cytrus.Name.Capitalize(), true);
-        embed.AddField("Version", CytrusWatcher.Cytrus.Version.ToString(), true);
-        embed.AddEmptyField(true);
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus")
+            .AddField("Name", CytrusWatcher.Cytrus.Name.Capitalize(), true)
+            .AddField("Version", CytrusWatcher.Cytrus.Version.ToString(), true)
+            .AddEmptyField(true);
 
         foreach (var game in CytrusWatcher.Cytrus.Games.OrderBy(x => x.Value.Order))
         {
@@ -57,31 +66,33 @@ public sealed class CytrusCommandModule : ApplicationCommandModule
             embed.AddField($"{game.Value.Name.Capitalize()} ({game.Value.GameId})", fieldContentBuilder.ToString());
         }
 
-        await ctx.CreateResponseAsync(embed);
+        await ctx.RespondAsync(embed);
     }
 
-    [SlashCommand("diff", "Liste les différences entre les fichiers de deux versions d'un jeu sur Cytrus")]
-    public async Task DiffCytrusCommand(InteractionContext ctx,
-        [Option("game", "Nom du jeu")]
-        [ChoiceProvider(typeof(CytrusGameChoiceProvider))]
+    [Command("diff"), Description("Liste les différences entre les fichiers de deux versions d'un jeu sur Cytrus")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    public static async Task DiffExecuteAsync(SlashCommandContext ctx,
+        [Parameter("game"), Description("Nom du jeu")]
+        [SlashChoiceProvider<CytrusGameChoiceProvider>]
         string game,
-        [Option("platform", "Platform", true)]
-        [Autocomplete(typeof(CytrusPlatformAutocompleteProvider))]
+        [Parameter("platform"), Description("Platform")]
+        [SlashAutoCompleteProvider<CytrusPlatformAutoCompleteProvider>]
         string platform,
-        [Option("old_release", "Release de l'ancien client", true)]
-        [Autocomplete(typeof(CytrusReleaseAutocompleteProvider))]
+        [Parameter("old_release"), Description("Release de l'ancien client")]
+        [SlashAutoCompleteProvider<CytrusReleaseAutoCompleteProvider>]
         string oldRelease,
-        [Option("old_version", "Version de l'ancien client", true)]
-        [Autocomplete(typeof(CytrusOldVersionAutocompleteProvider))]
+        [Parameter("old_version"), Description("Version de l'ancien client")]
+        [SlashAutoCompleteProvider<CytrusOldVersionAutocompleteProvider>]
         string oldVersion,
-        [Option("new_release", "Release du nouveau client", true)]
-        [Autocomplete(typeof(CytrusReleaseAutocompleteProvider))]
+        [Parameter("new_release"), Description("Release du nouveau client")]
+        [SlashAutoCompleteProvider<CytrusReleaseAutoCompleteProvider>]
         string newRelease,
-        [Option("new_version", "Version du nouveau client", true)]
-        [Autocomplete(typeof(CytrusNewVersionAutocompleteProvider))]
+        [Parameter("new_version"), Description("Version du nouveau client")]
+        [SlashAutoCompleteProvider<CytrusNewVersionAutocompleteProvider>]
         string newVersion)
     {
-        await ctx.CreateResponseAsync("👷", true);
+        //TODO: Change this piece of shit to use DeferResponseAsync
+        await ctx.RespondAsync("👷", true);
 
         await ctx.Channel.SendCytrusManifestDiffMessageAsync(game, platform.ToLower(), oldRelease.ToLower(), oldVersion, newRelease.ToLower(), newVersion);
     }

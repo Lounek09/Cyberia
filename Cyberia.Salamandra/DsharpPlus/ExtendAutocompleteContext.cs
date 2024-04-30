@@ -1,14 +1,13 @@
-﻿using DSharpPlus.SlashCommands;
+﻿using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.DsharpPlus;
 
 public static class ExtendAutocompleteContext
 {
-    public static T? GetOption<T>(this AutocompleteContext ctx, string name)
+    public static T? GetArgument<T>(this AutoCompleteContext ctx, string name)
     {
-        var option = ctx.Options.FirstOrDefault(x => x.Name.Equals(name));
-
-        if (option is not null && option.Value is T value)
+        var argument = ctx.Arguments.FirstOrDefault(x => x.Key.Name.Equals(name));
+        if (argument.Value is T value)
         {
             return value;
         }

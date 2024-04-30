@@ -3,16 +3,24 @@ using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
+using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Admin;
+using System.ComponentModel;
 
-[SlashCommandGroup("parse", "PArse")]
-public sealed class ParseCommandModule : ApplicationCommandModule
+namespace Cyberia.Salamandra.Commands.Admin.Parse;
+
+[Command("parse")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+public sealed class ParseCommandModule
 {
-    [SlashCommand("effects", "Parse the effects of an item")]
-    public async Task ItemParserCommand(InteractionContext ctx,
-        [Option("value", "Effects of an item")]
+    [Command("effects"), Description("Parse the effects of an item")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    public static async Task EffectsExecuteAsync(SlashCommandContext ctx,
+        [Parameter("value"), Description("Effects of an item")]
         string value)
     {
         var effects = EffectFactory.CreateMany(value);
@@ -23,16 +31,17 @@ public sealed class ParseCommandModule : ApplicationCommandModule
                 .WithTitle("Item effects parser")
                 .AddEffectFields("Effets :", effects);
 
-            await ctx.CreateResponseAsync(embed);
+            await ctx.RespondAsync(embed);
             return;
         }
 
-        await ctx.CreateResponseAsync("Incorrect value");
+        await ctx.RespondAsync("Incorrect value");
     }
 
-    [SlashCommand("criteria", "Parse the critera")]
-    public async Task CriteriaParserCommand(InteractionContext ctx,
-        [Option("value", "Criteria")]
+    [Command("criteria"), Description("Parse the critera")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    public static async Task CriteriaExecuteAsync(SlashCommandContext ctx,
+        [Parameter("value"), Description("Criteria")]
         string value)
     {
         var criteria = CriterionFactory.CreateMany(value);
@@ -43,10 +52,10 @@ public sealed class ParseCommandModule : ApplicationCommandModule
                 .WithTitle("Criteria parser")
                 .AddCriteriaFields("Criteria :", criteria);
 
-            await ctx.CreateResponseAsync(embed);
+            await ctx.RespondAsync(embed);
             return;
         }
 
-        await ctx.CreateResponseAsync("Incorrect value");
+        await ctx.RespondAsync("Incorrect value");
     }
 }

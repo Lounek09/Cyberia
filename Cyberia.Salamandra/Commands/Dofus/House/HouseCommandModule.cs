@@ -1,20 +1,30 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Maps;
+using Cyberia.Salamandra.Commands.Dofus.Map;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+using System.ComponentModel;
 
-[SlashCommandGroup("maison", "Retourne les informations d'une maison")]
-public sealed class HouseCommandModule : ApplicationCommandModule
+namespace Cyberia.Salamandra.Commands.Dofus.House;
+
+[Command("maison"), Description("Retourne les informations d'une maison")]
+[InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+[InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+public sealed class HouseCommandModule
 {
-    [SlashCommand("nom", "Retourne les informations d'une maison à partir de son nom")]
-    public async Task NameCommand(InteractionContext ctx,
-        [Option("nom", "Nom de la maison", true)]
-        [Autocomplete(typeof(HouseAutocompleteProvider))]
+    [Command("nom"), Description("Retourne les informations d'une maison à partir de son nom")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    public static async Task NameExecuteAsync(SlashCommandContext ctx,
+        [Parameter("nom"), Description("Nom de la maison")]
+        [SlashAutoCompleteProvider<HouseAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;
@@ -41,40 +51,44 @@ public sealed class HouseCommandModule : ApplicationCommandModule
         }
 
         response ??= new DiscordInteractionResponseBuilder().WithContent("Maison introuvable");
-        await ctx.CreateResponseAsync(response);
+        await ctx.RespondAsync(response);
     }
 
 
-    [SlashCommand("coordonnees", "Retourne une liste de maisons à partir de leurs coordonnées")]
-    public async Task CoordinateCommand(InteractionContext ctx,
-        [Option("x", "Coordonnée x de la map de la maison")]
-        [Minimum(-666), Maximum(666)]
-        long xCoord,
-        [Option("y", "Coordonnée y de la map de la maison")]
-        [Minimum(-666), Maximum(666)]
-        long yCoord)
+    [Command("coordonnees"), Description("Retourne une liste de maisons à partir de leurs coordonnées")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
+        [Parameter("x"), Description("Coordonnée x de la map de la maison")]
+        [SlashMinMaxValue(MinValue = -666, MaxValue = 666)]
+        int xCoord,
+        [Parameter("y"), Description("Coordonnée y de la map de la maison")]
+        [SlashMinMaxValue(MinValue = -666, MaxValue = 666)]
+        int yCoord)
     {
-        var housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate((int)xCoord, (int)yCoord).ToList();
+        var housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate(xCoord, yCoord).ToList();
 
         if (housesData.Count == 0)
         {
-            await ctx.CreateResponseAsync($"Il n'y a aucune maison en [{xCoord}, {yCoord}]");
+            await ctx.RespondAsync($"Il n'y a aucune maison en [{xCoord}, {yCoord}]");
         }
         else if (housesData.Count == 1)
         {
-            await ctx.CreateResponseAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+            await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
         else
         {
-            await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PacketParameterSeparator}{yCoord}").GetMessageAsync<DiscordInteractionResponseBuilder>());
+            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PacketParameterSeparator}{yCoord}")
+                .GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
     }
 
 
-    [SlashCommand("sous-zone", "Retourne une liste de maisons à partir de leur sous-zone")]
-    public async Task MapSubAreaCommand(InteractionContext ctx,
-        [Option("nom", "Nom de la sous-zone")]
-        [Autocomplete(typeof(MapSubAreaAutocompleteProvider))]
+    [Command("sous-zone"), Description("Retourne une liste de maisons à partir de leur sous-zone")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    public static async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
+        [Parameter("nom"), Description("Nom de la sous-zone")]
+        [SlashAutoCompleteProvider<MapSubAreaAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         MapSubAreaData? mapSubAreaData = null;
@@ -86,7 +100,7 @@ public sealed class HouseCommandModule : ApplicationCommandModule
 
         if (mapSubAreaData is null)
         {
-            await ctx.CreateResponseAsync("Sous-zone introuvable");
+            await ctx.RespondAsync("Sous-zone introuvable");
         }
         else
         {
@@ -94,24 +108,27 @@ public sealed class HouseCommandModule : ApplicationCommandModule
 
             if (housesData.Count == 0)
             {
-                await ctx.CreateResponseAsync($"La sous-zone {Formatter.Bold(mapSubAreaData.Name)} ne contient aucune maison");
+                await ctx.RespondAsync($"La sous-zone {Formatter.Bold(mapSubAreaData.Name)} ne contient aucune maison");
             }
             else if (housesData.Count == 1)
             {
-                await ctx.CreateResponseAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
             else
             {
-                await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapSubArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapSubArea, value)
+                    .GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }
 
 
-    [SlashCommand("zone", "Retourne une liste de maisons à partir de leur zone")]
-    public async Task MapAreaCommand(InteractionContext ctx,
-        [Option("nom", "Nom de la zone")]
-        [Autocomplete(typeof(MapAreaAutocompleteProvider))]
+    [Command("zone"), Description("Retourne une liste de maisons à partir de leur zone")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    public static async Task MapAreaExecuteAsync(SlashCommandContext ctx,
+        [Parameter("nom"), Description("Nom de la zone")]
+        [SlashAutoCompleteProvider<MapAreaAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         MapAreaData? mapAreaData = null;
@@ -123,7 +140,7 @@ public sealed class HouseCommandModule : ApplicationCommandModule
 
         if (mapAreaData is null)
         {
-            await ctx.CreateResponseAsync("Zone introuvable");
+            await ctx.RespondAsync("Zone introuvable");
         }
         else
         {
@@ -131,15 +148,16 @@ public sealed class HouseCommandModule : ApplicationCommandModule
 
             if (housesData.Count == 0)
             {
-                await ctx.CreateResponseAsync($"La zone {Formatter.Bold(mapAreaData.Name)} ne contient aucune maison");
+                await ctx.RespondAsync($"La zone {Formatter.Bold(mapAreaData.Name)} ne contient aucune maison");
             }
             else if (housesData.Count == 1)
             {
-                await ctx.CreateResponseAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
             else
             {
-                await ctx.CreateResponseAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapArea, value)
+                    .GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }

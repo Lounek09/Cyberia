@@ -102,12 +102,12 @@ public static class LangsWatcher
     /// </remarks>
     public static async Task CheckAsync(LangRepository repository, bool force = false)
     {
-        CheckLangStarted?.Invoke(null, new CheckLangStartedEventArgs(repository.Type, repository.Language));
+        CheckLangStarted?.Invoke(null, new CheckLangStartedEventArgs(repository));
 
         var versions = await repository.FetchVersionsAsync(force);
         if (string.IsNullOrEmpty(versions))
         {
-            CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(repository.Type, repository.Language, []));
+            CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(repository, []));
             return;
         }
 
@@ -128,14 +128,14 @@ public static class LangsWatcher
                 continue;
             }
 
-            if (!updatedLang.Diff())
+            if (!updatedLang.SelfDiff())
             {
                 Log.Error("Failed to diff {LangType} {LangName} lang in {LangLanguage}",
                     repository.Type, updatedLang.Name, repository.Language);
             }
         }
 
-        CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(repository.Type, repository.Language, updatedLangs));
+        CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(repository, updatedLangs));
     }
 
     /// <summary>

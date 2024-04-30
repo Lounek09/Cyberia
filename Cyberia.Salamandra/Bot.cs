@@ -3,9 +3,12 @@ using Cyberia.Langzilla;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.UserCommands;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Cyberia.Salamandra;
@@ -16,9 +19,9 @@ public static class Bot
 
     public static BotConfig Config { get; private set; } = default!;
     public static DiscordClient Client { get; private set; } = default!;
-    public static SlashCommandsExtension SlashCommands { get; private set; } = default!;
+    public static CommandsExtension Commands { get; private set; } = default!;
 
-    public static void Initialize(BotConfig config)
+    public static async Task InitializeAsync(BotConfig config)
     {
         Directory.CreateDirectory(OutputPath);
 
@@ -32,15 +35,24 @@ public static class Bot
             LogUnknownEvents = false,
             Intents = DiscordIntents.Guilds | DiscordIntents.GuildMessages
         });
-        Client.GuildDownloadCompleted += ChannelManager.OnGuildDownloadCompleted;
+        Client.GuildDownloadCompleted += ClientManager.OnGuildDownloadCompleted;
         Client.GuildCreated += GuildManager.OnGuildCreated;
         Client.GuildDeleted += GuildManager.OnGuildDeleted;
         Client.MessageCreated += MessageManager.OnMessageCreated;
         Client.ComponentInteractionCreated += InteractionManager.OnComponentInteractionCreated;
 
-        SlashCommands = Client.UseSlashCommands();
-        SlashCommands.RegisterCommands();
-        SlashCommands.SlashCommandErrored += CommandManager.OnSlashCommandErrored;
+        Commands = Client.UseCommands(new CommandsConfiguration()
+        {
+            ServiceProvider = new ServiceCollection()
+                .AddLogging(x => x.AddSerilog(Log.Logger))
+                .BuildServiceProvider(),
+            UseDefaultCommandErrorHandler = false,
+            RegisterDefaultCommandProcessors = false
+        });
+        Commands.CommandErrored += CommandManager.OnCommandErrored;
+        await Commands.AddProcessorAsync(new SlashCommandProcessor());
+        await Commands.AddProcessorAsync(new UserCommandProcessor());
+        Commands.RegisterCommands(Config.AdminGuildId);
 
         CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
 

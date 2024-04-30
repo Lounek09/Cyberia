@@ -1,12 +1,20 @@
-﻿using DSharpPlus.SlashCommands;
+﻿using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
+using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Other;
+using System.ComponentModel;
 
-public sealed class DiscordCommandModule : ApplicationCommandModule
+namespace Cyberia.Salamandra.Commands.Other.Discord;
+
+public sealed class DiscordCommandModule
 {
-    [SlashCommand("discord", "Lien d'invitation du serveur Discord de support")]
-    public async Task Command(InteractionContext ctx)
+    [Command("discord"), Description("Lien d'invitation du serveur Discord de support")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.CreateResponseAsync(Bot.Config.DiscordGuildInviteUrl, true);
+        await ctx.RespondAsync(Bot.Config.DiscordGuildInviteUrl, true);
     }
 }

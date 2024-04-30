@@ -1,16 +1,15 @@
 ﻿using Cyberia.Api;
 
-using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Item;
 
-public sealed class ItemAutocompleteProvider : AutocompleteProvider
+public sealed class ItemAutocompleteProvider : AutoCompleteProvider
 {
-    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
+    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.ItemsData.GetItemsDataByName(value)
+        return DofusApi.Datacenter.ItemsData.GetItemsDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
-            .Select(x => new DiscordAutoCompleteChoice($"{x.Name.WithMaxLength(90)} ({x.Id})", x.Id.ToString()));
+            .ToDictionary(x => $"{x.Name.WithMaxLength(90)} ({x.Id})", x => (object)x.Id.ToString());
     }
 }

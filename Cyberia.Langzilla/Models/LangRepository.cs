@@ -23,8 +23,9 @@ public sealed class LangRepository
     public LangLanguage Language { get; init; }
 
     /// <summary>
-    /// Gets or sets the date and time of the last change.
+    /// Gets the last modified datetime of the langs.
     /// </summary>
+    // TODO: Change the name to LastModified (in the JSON too)
     [JsonInclude]
     public DateTime LastChange { get; internal set; }
 

@@ -2,6 +2,8 @@
 using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.Spells;
+using Cyberia.Salamandra.Commands.Dofus.ItemSet;
+using Cyberia.Salamandra.Commands.Dofus.Spell;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
@@ -10,7 +12,7 @@ using DSharpPlus.Entities;
 
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 
 public sealed class BreedMessageBuilder : ICustomMessageBuilder
 {

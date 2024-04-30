@@ -7,7 +7,7 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.House;
 
 public sealed class HouseMessageBuilder : ICustomMessageBuilder
 {

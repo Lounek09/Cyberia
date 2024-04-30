@@ -1,6 +1,7 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Cytrusaurus.EventArgs;
 using Cyberia.Cytrusaurus.Models;
+using Cyberia.Salamandra.DsharpPlus;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -25,14 +26,14 @@ public static class CytrusManager
         var modelManifest = await CytrusManifest.GetManifestAsync(game, platform, oldRelease, oldVersion);
         if (modelManifest is null)
         { 
-            await channel.SendMessage(messageBuilder.WithContent($"Nouveau client introuvable"));
+            await channel.SendMessageSafe(messageBuilder.WithContent($"Nouveau client introuvable"));
             return;
         }
 
         var currentManifest = await CytrusManifest.GetManifestAsync(game, platform, newRelease, newVersion);
         if (currentManifest is null)
         {
-            await channel.SendMessage(messageBuilder.WithContent($"Nouveau client introuvable"));
+            await channel.SendMessageSafe(messageBuilder.WithContent($"Nouveau client introuvable"));
             return;
         }
 
@@ -49,12 +50,12 @@ public static class CytrusManager
 
         if (mainContent.Length + diff.Length < 2000)
         {
-            await channel.SendMessage(messageBuilder.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
+            await channel.SendMessageSafe(messageBuilder.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
         }
         else
         {
             using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
-            await channel.SendMessage(messageBuilder.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
+            await channel.SendMessageSafe(messageBuilder.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
         }
     }
 
@@ -80,36 +81,36 @@ public static class CytrusManager
         var document = JsonDocument.Parse(args.Diff);
         var root = document.RootElement;
 
-        if (!root.TryGetProperty("games", out var games) &&
-            games.ValueKind == JsonValueKind.Object)
+        if (!root.TryGetProperty("games", out var games) ||
+            games.ValueKind != JsonValueKind.Object)
         {
             return;
         }
 
         foreach (var game in games.EnumerateObject())
         {
-            if (!game.Value.TryGetProperty("platforms", out var platforms) &&
-                platforms.ValueKind == JsonValueKind.Object)
+            if (!game.Value.TryGetProperty("platforms", out var platforms) ||
+                platforms.ValueKind != JsonValueKind.Object)
             {
                 return;
             }
 
-            if (!platforms.TryGetProperty(CytrusGame.WindowsPlatform, out var platform) &&
-                platform.ValueKind == JsonValueKind.Object)
+            if (!platforms.TryGetProperty(CytrusGame.WindowsPlatform, out var platform) ||
+                platform.ValueKind != JsonValueKind.Object)
             {
                 return;
             }
 
             foreach (var release in platform.EnumerateObject())
             {
-                if (!release.Value.TryGetProperty("-", out var oldRelease) &&
-                    oldRelease.ValueKind == JsonValueKind.String)
+                if (!release.Value.TryGetProperty("-", out var oldRelease) ||
+                    oldRelease.ValueKind != JsonValueKind.String)
                 {
                     return;
                 }
 
-                if (!release.Value.TryGetProperty("+", out var newRelease) &&
-                    newRelease.ValueKind == JsonValueKind.String)
+                if (!release.Value.TryGetProperty("+", out var newRelease) ||
+                    newRelease.ValueKind != JsonValueKind.String)
                 {
                     return;
                 }

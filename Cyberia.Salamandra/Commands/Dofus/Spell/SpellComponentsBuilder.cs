@@ -4,7 +4,7 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 
 public static class SpellComponentsBuilder
 {

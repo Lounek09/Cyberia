@@ -3,42 +3,49 @@ using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
+using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+using System.ComponentModel;
 
-public sealed class CritCommandModule : ApplicationCommandModule
+namespace Cyberia.Salamandra.Commands.Dofus.Crit;
+
+public sealed class CritCommandModule
 {
-    [SlashCommand("crit", "Permet de calculer votre taux de crit")]
-    public async Task Command(InteractionContext ctx,
-        [Option("nombre", "Nombre de crit")]
-        [Minimum(1), Maximum(999)]
-        long number,
-        [Option("taux", "Taux de crit cible")]
-        [Minimum(1), Maximum(999)]
-        long target,
-        [Option("agilite", "Votre agilité")]
-        [Minimum(1), Maximum(99999)]
-        long agility)
+    [Command("crit"), Description("Permet de calculer votre taux de crit")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("nombre"), Description("Nombre de crit")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = 999)]
+        int number,
+        [Parameter("taux"), Description("Taux de crit cible")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = 999)]
+        int target,
+        [Parameter("agilite") , Description("Votre agilité")]
+        [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
+        int agility)
     {
-        var rate = Formulas.GetCriticalRate((int)number, (int)target, (int)agility);
-        var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate((int)number, (int)target);
-
-        if (rate > -1)
+        var rate = Formulas.GetCriticalRate(number, target, agility);
+        if (rate < 0)
         {
-            var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de coups critiques")
-                .WithDescription($"Tu seras {Formatter.Bold($"1/{rate}")} au {Formatter.Bold($"1/{target}")} avec {Formatter.Bold(number.ToString())}crit et {Formatter.Bold(agility.ToString())}agi");
-
-            if (rate != 2 && agilityNeeded > -1)
-            {
-                embed.Description += $"\nPour atteindre le 1/2 il te faudra au minimum {Formatter.Bold(agilityNeeded.ToString())}agi !";
-            }
-
-            await ctx.CreateResponseAsync(embed);
+            await ctx.RespondAsync("Paramètre incorrect");
+            return;
         }
-        else
+
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de coups critiques")
+            .WithDescription($"Tu seras {Formatter.Bold($"1/{rate}")} au {Formatter.Bold($"1/{target}")} avec {Formatter.Bold(number.ToString())}crit et {Formatter.Bold(agility.ToString())}agi");
+
+        var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, target);
+        if (rate != 2 && agilityNeeded > -1)
         {
-            await ctx.CreateResponseAsync("Paramètre incorrect");
+            embed.Description += $"\nPour atteindre le 1/2 il te faudra au minimum {Formatter.Bold(agilityNeeded.ToString())}agi !";
         }
+
+        await ctx.RespondAsync(embed);
     }
 }

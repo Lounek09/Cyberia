@@ -1,16 +1,25 @@
 ﻿using Cyberia.Api;
 
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+using System.ComponentModel;
 
-public sealed class ItemCommandModule : ApplicationCommandModule
+namespace Cyberia.Salamandra.Commands.Dofus.Item;
+
+public sealed class ItemCommandModule
 {
-    [SlashCommand("item", "Retourne les informations d'un item à partir de son nom")]
-    public async Task Command(InteractionContext ctx,
-        [Option("nom", "Nom de l'item", true)]
-        [Autocomplete(typeof(ItemAutocompleteProvider))]
+    [Command("item"), Description("Retourne les informations d'un item à partir de son nom")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("nom"), Description("Nom de l'item")]
+        [SlashAutoCompleteProvider<ItemAutocompleteProvider>]
+        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;
@@ -37,6 +46,6 @@ public sealed class ItemCommandModule : ApplicationCommandModule
         }
 
         response ??= new DiscordInteractionResponseBuilder().WithContent("Item introuvable");
-        await ctx.CreateResponseAsync(response);
+        await ctx.RespondAsync(response);
     }
 }

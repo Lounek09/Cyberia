@@ -2,17 +2,19 @@
 
 public sealed record UntranslatedCriterion : Criterion, ICriterion
 {
-    IReadOnlyList<string> Parameters { get; init; }
+    public IReadOnlyList<string> Parameters { get; init; }
+    public string CompressedCriterion { get; init; }
 
-    private UntranslatedCriterion(string id, char @operator, IReadOnlyList<string> parameters)
+    private UntranslatedCriterion(string id, char @operator, IReadOnlyList<string> parameters, string compressedCriterion)
         : base(id, @operator)
     {
         Parameters = parameters;
+        CompressedCriterion = compressedCriterion;
     }
 
-    internal static UntranslatedCriterion Create(string id, char @operator, params string[] parameters)
+    internal static UntranslatedCriterion Create(string id, char @operator, string compressedCriterion, params string[] parameters)
     {
-        return new(id, @operator, parameters);
+        return new(id, @operator, parameters, compressedCriterion);
     }
 
     protected override string GetDescriptionName()
@@ -22,6 +24,6 @@ public sealed record UntranslatedCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        return GetDescription(Parameters.ToArray());
+        return GetDescription(Id, CompressedCriterion);
     }
 }

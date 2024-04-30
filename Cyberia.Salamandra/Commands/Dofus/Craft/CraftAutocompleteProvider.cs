@@ -1,20 +1,20 @@
 ﻿using Cyberia.Api;
 
-using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
-public sealed class CraftAutocompleteProvider : AutocompleteProvider
+public sealed class CraftAutocompleteProvider : AutoCompleteProvider
 {
-    protected override IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value)
+    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value)
-            .Take(Constant.MaxChoice)
-            .Select(x =>
-            {
-                var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(x.Id);
-                return new DiscordAutoCompleteChoice($"{itemName.WithMaxLength(90)} ({x.Id})", x.Id.ToString());
-            });
+        return DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(ctx.UserInput)
+           .Take(Constant.MaxChoice)
+           .ToDictionary(x =>
+           {
+               var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(x.Id);
+               return $"{itemName.WithMaxLength(90)} ({x.Id})";
+           },
+           x => (object)x.Id.ToString());
     }
 }

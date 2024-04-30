@@ -2,7 +2,7 @@
 
 using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 
 public static class BreedComponentsBuilder
 {

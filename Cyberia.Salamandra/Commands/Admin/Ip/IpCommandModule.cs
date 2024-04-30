@@ -1,23 +1,33 @@
 ﻿using Cyberia.Api;
 
-using DSharpPlus.SlashCommands;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
+using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Admin;
+using System.ComponentModel;
 
-public sealed class IpCommandModule : ApplicationCommandModule
+namespace Cyberia.Salamandra.Commands.Admin.Ip;
+
+public sealed class IpCommandModule
 {
-    [SlashCommand("ip", "Decodes IPs sent from packets")]
-    public async Task Command(InteractionContext ctx,
-        [Option("value", "Encoded IP")]
+    [Command("ip"), Description("Decodes IPs sent from game packets")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("value"), Description("The encoded IP")]
+        [SlashMinMaxLength(MinLength = 11, MaxLength = 11)]
         string value)
     {
         try
         {
-            await ctx.CreateResponseAsync(PatternDecoder.Ip(value));
+            await ctx.RespondAsync(PatternDecoder.Ip(value));
         }
         catch (ArgumentException e)
         {
-            await ctx.CreateResponseAsync(e.Message);
+            await ctx.RespondAsync(e.Message);
         }
     }
 }

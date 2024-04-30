@@ -83,14 +83,14 @@ public static class CriterionFactory
                 return criterion;
             }
 
-            compressedCriterion = $"{id}{@operator}{string.Join(",", parameters)}";
+            compressedCriterion = $"{id}{@operator}{string.Join(',', parameters)}";
             Log.Error("Failed to create Criterion from {CompressedCriterion}", compressedCriterion);
             return ErroredCriterion.Create(compressedCriterion);
         }
 
-        compressedCriterion = $"{id}{@operator}{string.Join(",", parameters)}";
+        compressedCriterion = $"{id}{@operator}{string.Join(',', parameters)}";
         Log.Warning("Unknown Criterion {CompressedCriterion}", compressedCriterion);
-        return UntranslatedCriterion.Create(id, @operator, parameters);
+        return UntranslatedCriterion.Create(id, @operator, compressedCriterion, parameters);
     }
 
     public static ICriterion Create(string compressedCriterion)

@@ -6,6 +6,10 @@ using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.ItemStats;
 using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Factories.Effects.Templates;
+using Cyberia.Salamandra.Commands.Dofus.Craft;
+using Cyberia.Salamandra.Commands.Dofus.Incarnation;
+using Cyberia.Salamandra.Commands.Dofus.ItemSet;
+using Cyberia.Salamandra.Commands.Dofus.Rune;
 using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
@@ -15,7 +19,7 @@ using DSharpPlus.Entities;
 
 using System.Text;
 
-namespace Cyberia.Salamandra.Commands.Dofus;
+namespace Cyberia.Salamandra.Commands.Dofus.Item;
 
 public sealed class ItemMessageBuilder : ICustomMessageBuilder
 {

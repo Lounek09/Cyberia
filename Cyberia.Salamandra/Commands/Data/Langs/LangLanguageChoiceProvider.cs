@@ -1,15 +1,15 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Langzilla.Enums;
 
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Trees;
 
-namespace Cyberia.Salamandra.Commands.Dofus.Breed;
+namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
-public sealed class BreedChoiceProvider : IChoiceProvider
+internal class LangLanguageChoiceProvider : IChoiceProvider
 {
     public ValueTask<IReadOnlyDictionary<string, object>> ProvideAsync(CommandParameter parameter)
     {
         return new ValueTask<IReadOnlyDictionary<string, object>>(
-            DofusApi.Datacenter.BreedsData.Breeds.Values.ToDictionary(x => x.Name, x => (object)x.Id));
+            Enum.GetNames<LangLanguage>().ToDictionary(x => x, x => (object)x));
     }
 }

@@ -1,30 +1,40 @@
 ﻿using DSharpPlus;
-using DSharpPlus.SlashCommands;
-using DSharpPlus.SlashCommands.Attributes;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.ContextChecks;
+using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
+using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.Commands.Admin;
+using System.ComponentModel;
 
-public sealed class LeaveCommandModule : ApplicationCommandModule
+namespace Cyberia.Salamandra.Commands.Admin.Leave;
+
+public sealed class LeaveCommandModule
 {
-    [SlashCommand("leave", "[Owner] Leave a guild")]
-    [SlashRequireOwner]
-    public async Task LeaveCommand(InteractionContext ctx,
-        [Option("id", "Guild's id")]
-        long guildId)
+    [Command("leave"), Description("[Owner] Leave a guild")]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
+    [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [RequireApplicationOwner]
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("id"), Description("Guild's id")]
+        [SlashMinMaxValue(MinValue = 0)]
+        string guildId)
     {
         try
         {
-            var guild = await ctx.Client.GetGuildAsync((ulong)guildId);
+            var guild = await ctx.Client.GetGuildAsync(ulong.Parse(guildId));
             await guild.LeaveAsync();
 
-            if (guild.Id != ctx.Guild.Id)
+            if (ctx.Guild is null || guild.Id != ctx.Guild.Id)
             {
-                await ctx.CreateResponseAsync($"Bot kick from the guild {Formatter.Bold(guild.Name)} ({guild.Id}) !");
+                await ctx.RespondAsync($"Bot kick from the guild {Formatter.Bold(guild.Name)} ({guild.Id}) !");
             }
         }
         catch
         {
-            await ctx.CreateResponseAsync("Guild not found");
+            await ctx.RespondAsync("Guild not found");
         }
     }
 }

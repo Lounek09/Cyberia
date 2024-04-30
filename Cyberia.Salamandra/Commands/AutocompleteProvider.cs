@@ -1,20 +1,16 @@
-﻿using DSharpPlus.Entities;
-using DSharpPlus.SlashCommands;
+﻿using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 
 namespace Cyberia.Salamandra.Commands;
 
-public abstract class AutocompleteProvider : IAutocompleteProvider
+public abstract class AutoCompleteProvider : IAutoCompleteProvider
 {
-    public Task<IEnumerable<DiscordAutoCompleteChoice>> Provider(AutocompleteContext ctx)
-    {
-        var value = ctx.OptionValue.ToString();
-        if (value is null)
-        {
-            return Task.FromResult(Enumerable.Empty<DiscordAutoCompleteChoice>());
-        }
+    protected readonly static IReadOnlyDictionary<string, object> s_empty = new Dictionary<string, object>();
 
-        return Task.FromResult(InternalProvider(ctx, value));
+    public ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
+    {
+        return ValueTask.FromResult(InternalAutoComplete(ctx));
     }
 
-    protected abstract IEnumerable<DiscordAutoCompleteChoice> InternalProvider(AutocompleteContext ctx, string value);
+    protected abstract IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx);
 }
