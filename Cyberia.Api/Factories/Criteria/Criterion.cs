@@ -4,15 +4,7 @@ public abstract record Criterion(string Id, char Operator)
 {
     protected string GetOperatorDescriptionName()
     {
-        return Operator switch
-        {
-            '=' => "Equal",
-            '!' => "Different",
-            '>' => "Superior",
-            '<' => "Inferior",
-            '~' => "SoftEqual",
-            _ => Operator.ToString(),
-        };
+        return CriterionFactory.GetCriterionOperatorDescriptionName(Operator);
     }
 
     protected abstract string GetDescriptionName();

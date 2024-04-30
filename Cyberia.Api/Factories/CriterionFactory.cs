@@ -64,6 +64,8 @@ public static class CriterionFactory
             { "PZ", SubscribeCriterion.Create },
             { "Qa", QuestCriterion.Create },
             { "Qc", QuestAvailableCriterion.Create },
+            { "Qf", QuestFinishedCriterion.Create },
+            { "QF", QuestFinishedCountCriterion.Create },
             { "Qo", QuestObjectiveCriterion.Create },
             { "Qs", QuestStepCriterion.Create },
             { "Sc", ServerContentCriterion.Create },
@@ -172,5 +174,18 @@ public static class CriterionFactory
         }
 
         return (value[startIndex..endIndex], endIndex);
+    }
+
+    internal static string GetCriterionOperatorDescriptionName(char @operator)
+    {
+        return @operator switch
+        {
+            '=' => "Equal",
+            '!' => "Different",
+            '>' => "Superior",
+            '<' => "Inferior",
+            '~' => "SoftEqual",
+            _ => @operator.ToString(),
+        };
     }
 }

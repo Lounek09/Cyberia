@@ -1600,7 +1600,7 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quête #1 pas en cours.
+        ///   Looks up a localized string similar to Ne pas avoir commencé la quête #1.
         /// </summary>
         public static string Criterion_Quest_Different {
             get {
@@ -1614,24 +1614,6 @@ namespace Cyberia.Translation {
         public static string Criterion_Quest_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Quest.Equal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quête #1 non validée.
-        /// </summary>
-        public static string Criterion_Quest_Inferior {
-            get {
-                return ResourceManager.GetString("Criterion.Quest.Inferior", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quête #1 validée.
-        /// </summary>
-        public static string Criterion_Quest_Superior {
-            get {
-                return ResourceManager.GetString("Criterion.Quest.Superior", resourceCulture);
             }
         }
         
@@ -1650,6 +1632,42 @@ namespace Cyberia.Translation {
         public static string Criterion_QuestAvailable_Equal {
             get {
                 return ResourceManager.GetString("Criterion.QuestAvailable.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ne pas avoir achevé la quête #1.
+        /// </summary>
+        public static string Criterion_QuestFinished_Different {
+            get {
+                return ResourceManager.GetString("Criterion.QuestFinished.Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quête #1 achevée.
+        /// </summary>
+        public static string Criterion_QuestFinished_Equal {
+            get {
+                return ResourceManager.GetString("Criterion.QuestFinished.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quête #1 achevée moins de #2 fois.
+        /// </summary>
+        public static string Criterion_QuestFinishedCount_Inferior {
+            get {
+                return ResourceManager.GetString("Criterion.QuestFinishedCount.Inferior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quête #1 achevée plus de #2 fois.
+        /// </summary>
+        public static string Criterion_QuestFinishedCount_Superior {
+            get {
+                return ResourceManager.GetString("Criterion.QuestFinishedCount.Superior", resourceCulture);
             }
         }
         
