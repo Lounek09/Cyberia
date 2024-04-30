@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-02212" />
-    <!--PackageReference Include="DSharpPlus.Commands" Version="5.0.0-nightly-02212" /-->
-    <Reference Include="DSharpPlus.Commands">
-      <HintPath>DSharpPlus.Commands.dll</HintPath>
-    </Reference>
+    <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-02222" />
+    <PackageReference Include="DSharpPlus.Commands" Version="5.0.0-nightly-02222" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
   </ItemGroup>
 
@@ -31,12 +28,6 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>Cyberia.Tests</_Parameter1>
     </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="DSharpPlus.Commands.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
