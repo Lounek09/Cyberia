@@ -8,7 +8,7 @@ public sealed class IncarnationAutocompleteProvider : AutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.SpellsData.GetSpellsDataByName(ctx.UserInput)
+        return DofusApi.Datacenter.IncarnationsData.GetIncarnationsDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
             .ToDictionary(x => $"{x.Name.WithMaxLength(90)} ({x.Id})", x => (object)x.Id.ToString());
     }
