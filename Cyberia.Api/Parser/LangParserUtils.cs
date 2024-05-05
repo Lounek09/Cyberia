@@ -5,7 +5,7 @@ using System.Text.Json;
 namespace Cyberia.Api.Parser;
 
 /// <summary>
-/// Provides utility functions for parsing langs.
+/// Provides utility methods for parsing langs.
 /// </summary>
 public static class LangParserUtils
 {

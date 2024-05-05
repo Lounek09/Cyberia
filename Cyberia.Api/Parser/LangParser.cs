@@ -23,12 +23,14 @@ public sealed class LangParser : IDisposable
     /// Initializes a new instance of the <see cref="LangParser"/> class.
     /// </summary>
     /// <param name="filePath">The path to the lang file to parse.</param>
-    public LangParser(string filePath)
+    private LangParser(string filePath)
     {
         _fileStream = new(filePath, FileMode.Open, FileAccess.Read);
         _streamReader = new(_fileStream);
         _builder = new();
         _partBuilders = [];
+
+        Parse();
     }
 
     /// <summary>
@@ -49,10 +51,7 @@ public sealed class LangParser : IDisposable
             throw new FileNotFoundException($"The {lang.Name} lang has never been decompiled.");
         }
 
-        LangParser parser = new(filePath);
-        parser.Parse();
-
-        return parser;
+        return new LangParser(filePath);
     }
 
     /// <inheritdoc />
@@ -77,7 +76,7 @@ public sealed class LangParser : IDisposable
     /// <summary>
     /// Parses the lang data.
     /// </summary>
-    public void Parse()
+    private void Parse()
     {
         Span<Range> separatorRanges = stackalloc Range[2];
         var currentPartName = ReadOnlySpan<char>.Empty;
