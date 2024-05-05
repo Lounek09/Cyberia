@@ -15,7 +15,7 @@ public sealed class LangParser : IDisposable
 
     private readonly FileStream _fileStream;
     private readonly StreamReader _streamReader;
-    private StringBuilder _builder;
+    private readonly StringBuilder _builder;
     private readonly Dictionary<string, LangPartBuilder> _partBuilders;
     private bool _disposed;
 
