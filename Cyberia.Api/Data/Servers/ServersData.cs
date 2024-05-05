@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api.JsonConverters;
 
 using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Servers;
@@ -32,8 +33,7 @@ public sealed class ServersData : IDofusData
     public FrozenDictionary<int, DefaultServerSpecificTextData> DefaultServerSpecificTexts { get; init; }
 
     [JsonPropertyName("SRVC")]
-    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<string, ServerSpecificTextData>))]
-    public FrozenDictionary<string, ServerSpecificTextData> ServerSpecificTexts { get; init; }
+    public IReadOnlyDictionary<string, string> ServerSpecificTexts { get; init; }
 
     [JsonConstructor]
     internal ServersData()
@@ -43,7 +43,7 @@ public sealed class ServersData : IDofusData
         ServerPopulationsWeight = FrozenDictionary<int, ServerPopulationWeightData>.Empty;
         ServerCommunities = FrozenDictionary<int, ServerCommunityData>.Empty;
         DefaultServerSpecificTexts = FrozenDictionary<int, DefaultServerSpecificTextData>.Empty;
-        ServerSpecificTexts = FrozenDictionary<string, ServerSpecificTextData>.Empty;
+        ServerSpecificTexts = ReadOnlyDictionary<string, string>.Empty;
     }
 
     internal static async Task<ServersData> LoadAsync()
