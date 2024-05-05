@@ -1,171 +1,218 @@
 ﻿using Cyberia.Langzilla;
-using Cyberia.Langzilla.Enums;
 
 using System.Text;
-using System.Text.Json;
-using System.Text.RegularExpressions;
-using System.Web;
 
 namespace Cyberia.Api.Parser;
 
-public static partial class LangParser
+/// <summary>
+/// Parses lang data into JSON format.
+/// </summary>
+public sealed class LangParser : IDisposable
 {
-    private const string c_keyValueSeparator = " = ";
+    public static readonly IReadOnlyList<string> IgnoredLangs = ["dungeons", "effects", "lang"];
 
-    private static readonly IReadOnlyList<string> s_ignoredLangs = ["dungeons", "effects", "lang"];
-    private static readonly IReadOnlyList<string> s_ignoredLines = ["new Object();", "new Array();"];
+    private static readonly IReadOnlyList<string> s_ignoredEndingLines = ["new Object();", "new Array();"];
 
-    public static bool Launch(LangType type, LangLanguage language)
+    private readonly FileStream _fileStream;
+    private readonly StreamReader _streamReader;
+    private StringBuilder _builder;
+    private readonly Dictionary<string, LangPartBuilder> _partBuilders;
+    private bool _disposed;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LangParser"/> class.
+    /// </summary>
+    /// <param name="filePath">The path to the lang file to parse.</param>
+    public LangParser(string filePath)
     {
-        var langRepository = LangsWatcher.LangRepositories[(type, language)];
-        foreach (var lang in langRepository.Langs)
-        {
-            if (s_ignoredLangs.Contains(lang.Name))
-            {
-                continue;
-            }
-
-            if (!TryParseLang(lang))
-            {
-                Log.Error("An error occurred while parsing {LangName} lang", lang.Name);
-                return false;
-            }
-        }
-
-        return true;
+        _fileStream = new(filePath, FileMode.Open, FileAccess.Read);
+        _streamReader = new(_fileStream);
+        _builder = new();
+        _partBuilders = [];
     }
 
-    [GeneratedRegex(@"(?'name'[A-Z]+(?:\.[a-z]+|))(?:\[(?'intId'-?\d+)\]|\.(?'stringId'[\w|]+)|)", RegexOptions.Compiled)]
-    private static partial Regex KeyRegex();
-
-    [GeneratedRegex(@"(?<!\\)'", RegexOptions.Compiled)]
-    private static partial Regex EscapedQuoteRegex();
-
-    private static bool TryParseLang(Lang lang)
+    /// <summary>
+    /// Creates a new <see cref="LangParser"/> instance and parses the lang data.
+    /// </summary>
+    /// <param name="lang">The lang to parse.</param>
+    /// <returns>A new instance of <see cref="LangParser"/></returns>
+    public static LangParser Create(Lang lang)
     {
+        if (IgnoredLangs.Contains(lang.Name))
+        {
+            throw new InvalidOperationException($"The {lang.Name} lang is ignored.");
+        }
+
         var filePath = lang.CurrentDecompiledFilePath;
         if (!File.Exists(filePath))
         {
-            Log.Error("The lang {LangName} has never been decompiled", lang.Name);
-            return false;
+            throw new FileNotFoundException($"The {lang.Name} lang has never been decompiled.");
         }
 
-        Log.Debug("Start parsing {LangName} lang", lang.Name);
+        LangParser parser = new(filePath);
+        parser.Parse();
 
-        var lines = File.ReadLines(filePath);
-        var json = ParseLines(lines);
-
-        try
-        {
-            JsonDocument.Parse(json);
-        }
-        catch (Exception e)
-        {
-            Log.Error(e, "The JSON generated from {LangName} lang is not valid", lang.Name);
-            return false;
-        }
-
-        File.WriteAllText(Path.Join(DofusApi.OutputPath, $"{lang.Name}.json"), json);
-        return true;
+        return parser;
     }
 
-    private static string ParseLines(IEnumerable<string> lines)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        StringBuilder jsonBuilder = new(lines.Sum(x => x.Length));
+        return _builder.ToString();
+    }
 
-        var lastLineName = string.Empty;
-        var lastLineHasId = false;
-
-        foreach (var line in lines)
+    /// <summary>
+    /// Releases all resources used by the <see cref="LangParser"/>.
+    /// </summary>
+    public void Dispose()
+    {
+        if (!_disposed)
         {
-            if (s_ignoredLines.Any(x => line.EndsWith(x)))
+            _fileStream.Dispose();
+            _streamReader.Dispose();
+            _disposed = true;
+        }
+    }
+
+    /// <summary>
+    /// Parses the lang data.
+    /// </summary>
+    public void Parse()
+    {
+        Span<Range> separatorRanges = stackalloc Range[2];
+        var currentPartName = ReadOnlySpan<char>.Empty;
+        LangPartBuilder? currentBuilder = null;
+
+        while (!_streamReader.EndOfStream)
+        {
+            var currentLine = _streamReader.ReadLine().AsSpan();
+            if (IsLineIgnored(currentLine))
             {
                 continue;
             }
 
-            var lineSplit = line.Split(c_keyValueSeparator, 2);
-            if (lineSplit.Length < 2)
+            var splitCount = currentLine.Split(separatorRanges, " = ", StringSplitOptions.RemoveEmptyEntries);
+            if (splitCount != 2)
             {
                 continue;
             }
 
-            var key = KeyRegex().Match(lineSplit[0]);
-            var currentLineName = key.Groups["name"].Value;
-            var currentLineHasId = key.Groups["intId"].Success || key.Groups["stringId"].Success;
+            var keySegment = currentLine[separatorRanges[0]];
+            var valueSegment = currentLine[separatorRanges[1]];
 
-            if (!currentLineName.Equals(lastLineName))
+            var newPartName = FindName(keySegment);
+            if (currentPartName.IsEmpty || !currentPartName.Equals(newPartName, StringComparison.Ordinal))
             {
-                if (!string.IsNullOrEmpty(lastLineName))
-                {
-                    jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
-                    if (lastLineHasId)
-                    {
-                        jsonBuilder.Append(']');
-                    }
-
-                    jsonBuilder.Append(',');
-                }
-
-                jsonBuilder.Append('"');
-                jsonBuilder.Append(currentLineName);
-                jsonBuilder.Append("\":");
-
-                if (currentLineHasId)
-                {
-                    jsonBuilder.Append('[');
-                }
-
-                lastLineName = currentLineName;
-                lastLineHasId = currentLineHasId;
+                currentPartName = newPartName;
+                currentBuilder = GetOrCreateLangPartBuilder(currentPartName.ToString(), keySegment);
             }
 
-            if (key.Groups["intId"].Success)
-            {
-                jsonBuilder.Append("{\"id\":");
-                jsonBuilder.Append(key.Groups["intId"].Value);
-                jsonBuilder.Append(',');
-            }
-            else if (key.Groups["stringId"].Success)
-            {
-                jsonBuilder.Append("{\"id\":\"");
-                jsonBuilder.Append(key.Groups["stringId"].Value);
-                jsonBuilder.Append("\",");
-            }
-
-            var value = lineSplit[1].Replace("' + '\"' + '", @"\""");
-            value = EscapedQuoteRegex().Replace(value, "\"").Replace(@"\'", "'");
-            value = HttpUtility.JavaScriptStringEncode(value).Replace(@"\""", "\"").Replace(@"\\", @"\");
-
-            if (currentLineHasId)
-            {
-                if (value.StartsWith('{'))
-                {
-                    jsonBuilder.Append(value[1..^1]);
-                }
-                else
-                {
-                    jsonBuilder.Append("\"v\":");
-                    jsonBuilder.Append(value[..^1]);
-                    jsonBuilder.Append('}');
-                }
-            }
-            else
-            {
-                jsonBuilder.Append(value[..^1]);
-            }
-
-            jsonBuilder.Append(',');
+            currentBuilder?.Append(keySegment, valueSegment);
         }
 
-        if (jsonBuilder.Length > 0)
+        FinalizeParsing();
+    }
+
+    /// <summary>
+    /// Checks if a line should be ignored.
+    /// </summary>
+    /// <param name="line">The line to check.</param>
+    /// <returns>True if the line should be ignored.</returns>
+    private static bool IsLineIgnored(ReadOnlySpan<char> line)
+    {
+        if (line.IsEmpty || line.IsWhiteSpace())
         {
-            jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
-            if (lastLineHasId)
+            return true;
+        }
+
+        foreach (var ignoredEndingLine in s_ignoredEndingLines)
+        {
+            if (line.EndsWith(ignoredEndingLine, StringComparison.Ordinal))
             {
-                jsonBuilder.Append(']');
+                return true;
             }
         }
 
-        return "{" + jsonBuilder.ToString() + "}";
+        return false;
+    }
+
+    /// <summary>
+    /// Finds the name of a key segment.
+    /// </summary>
+    /// <param name="keySegment">The key segment to find the name of.</param>
+    /// <returns>The name found.</returns>
+    private static ReadOnlySpan<char> FindName(ReadOnlySpan<char> keySegment)
+    {
+        var indexOfOpenBracket = keySegment.IndexOf('[');
+        if (indexOfOpenBracket != -1)
+        {
+            return keySegment[..indexOfOpenBracket];
+        }
+
+        var indexOfDot = keySegment.IndexOf('.');
+        if (indexOfDot == -1 || indexOfDot + 1 == keySegment.Length)
+        {
+            return keySegment;
+        }
+
+        var afterDot = keySegment[(indexOfDot + 1)..];
+        if (afterDot.ContainsAny(LangParserUtils.LowerCaseLettersSearch))
+        {
+            return keySegment;
+        }
+
+        return keySegment[..indexOfDot];
+    }
+
+    /// <summary>
+    /// Gets or creates a builder.
+    /// </summary>
+    /// <param name="name">The name of the builder.</param>
+    /// <param name="keySegment">The key segment to determine if an array should be created.</param>
+    /// <returns>The builder.</returns>
+    private LangPartBuilder GetOrCreateLangPartBuilder(string name, ReadOnlySpan<char> keySegment)
+    {
+        if (!_partBuilders.TryGetValue(name, out var builder))
+        {
+            builder = LangPartBuilder.Create(name, keySegment);
+            _partBuilders.Add(name, builder);
+        }
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Finalizes the parsing.
+    /// </summary>
+    private void FinalizeParsing()
+    {
+        List<StringBuilder> builtParts = [];
+        var capacity = 1;
+
+        foreach (var partBuilder in _partBuilders.Values)
+        {
+            var builtPart = partBuilder.Build();
+            builtParts.Add(builtPart);
+            capacity += builtPart.Length + 1;
+        }
+
+        _builder.Capacity = capacity;
+
+        _builder.Append('{');
+
+        foreach (var builtPart in builtParts)
+        {
+            _builder.Append(builtPart);
+            _builder.Append(',');
+        }
+
+        if (_builder.Length > 1)
+        {
+            _builder[^1] = '}';
+        }
+        else
+        {
+            _builder.Append('}');
+        }
     }
 }

@@ -116,7 +116,27 @@ public sealed class LangsCommandModule
             : LangType.Official;
 
         var startTime = Stopwatch.GetTimestamp();
-        var success = LangParser.Launch(type, LangLanguage.FR);
+
+        var success = true;
+        try
+        {
+            foreach (var lang in LangsWatcher.LangRepositories[(type, LangLanguage.FR)].Langs)
+            {
+                if (LangParser.IgnoredLangs.Contains(lang.Name))
+                {
+                    continue;
+                }
+
+                using var parser = LangParser.Create(lang);
+                File.WriteAllText(Path.Join(DofusApi.OutputPath, $"{lang.Name}.json"), parser.ToString());
+            }
+        }
+        catch (Exception e)
+        {
+            success = false;
+            Log.Error(e, "Une erreur est survenue lors du parsing des langs");
+        }
+
         var elapsedTime = Stopwatch.GetElapsedTime(startTime);
 
         var content = success

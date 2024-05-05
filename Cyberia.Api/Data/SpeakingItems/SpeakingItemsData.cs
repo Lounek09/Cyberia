@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api.JsonConverters;
+using Cyberia.Api.Values;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -12,15 +13,18 @@ public sealed class SpeakingItemsData : IDofusData
     private static readonly string s_filePath = Path.Join(DofusApi.OutputPath, c_fileName);
 
     [JsonPropertyName("SIM")]
-    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SpeakingItemData>))]
-    public FrozenDictionary<int, SpeakingItemData> SpeakingItems { get; init; }
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SpeakingItemsMessageData>))]
+    public FrozenDictionary<int, SpeakingItemsMessageData> SpeakingItemsMessages { get; init; }
 
-    //TODO: SIT
+    [JsonPropertyName("SIT")]
+    public IReadOnlyList<SpeakingItemsTriggerData> SpeakingItemsTriggers { get; init; }
+
 
     [JsonConstructor]
     internal SpeakingItemsData()
     {
-        SpeakingItems = FrozenDictionary<int, SpeakingItemData>.Empty;
+        SpeakingItemsMessages = FrozenDictionary<int, SpeakingItemsMessageData>.Empty;
+        SpeakingItemsTriggers = [];
     }
 
     internal static async Task<SpeakingItemsData> LoadAsync()
@@ -28,9 +32,14 @@ public sealed class SpeakingItemsData : IDofusData
         return await Datacenter.LoadDataAsync<SpeakingItemsData>(s_filePath);
     }
 
-    public SpeakingItemData? GetSpeakingItemData(int id)
+    public SpeakingItemsMessageData? GetSpeakingItemsMessageData(int id)
     {
-        SpeakingItems.TryGetValue(id, out var speakingItemData);
+        SpeakingItemsMessages.TryGetValue(id, out var speakingItemData);
         return speakingItemData;
+    }
+
+    public SpeakingItemsTriggerData? GetSpeakingItemsTriggerData(int triggerId, Corpulence corpulence)
+    {
+        return SpeakingItemsTriggers.FirstOrDefault(x => x.TriggerId == triggerId && x.Corpulence == corpulence);
     }
 }

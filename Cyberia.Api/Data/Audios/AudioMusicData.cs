@@ -22,13 +22,9 @@ public sealed class AudioMusicData : IDofusData<int>
     [JsonPropertyName("o")]
     public int Offset { get; init; }
 
-    [JsonIgnore]
-    public string Name { get; internal set; }
-
     [JsonConstructor]
     internal AudioMusicData()
     {
         FileName = string.Empty;
-        Name = string.Empty;
     }
 }

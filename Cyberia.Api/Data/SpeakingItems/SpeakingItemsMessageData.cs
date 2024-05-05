@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Data.SpeakingItems;
 
-public sealed class SpeakingItemData : IDofusData<int>
+public sealed class SpeakingItemsMessageData : IDofusData<int>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -23,7 +23,7 @@ public sealed class SpeakingItemData : IDofusData<int>
     public double Probability { get; init; }
 
     [JsonConstructor]
-    internal SpeakingItemData()
+    internal SpeakingItemsMessageData()
     {
         Message = string.Empty;
         ItemsIdCanUse = string.Empty;
