@@ -5,18 +5,25 @@ namespace Cyberia.Api.Factories.Criteria;
 public sealed record ItemCriterion : Criterion, ICriterion
 {
     public int ItemId { get; init; }
+    public int Quantity { get; init; }
 
-    private ItemCriterion(string id, char @operator, int emoteId)
+    private ItemCriterion(string id, char @operator, int itemId, int quantity)
         : base(id, @operator)
     {
-        ItemId = emoteId;
+        ItemId = itemId;
+        Quantity = quantity;
     }
 
     internal static ItemCriterion? Create(string id, char @operator, params string[] parameters)
     {
-        if (parameters.Length > 0 && int.TryParse(parameters[0], out var itemId))
+        if (parameters.Length > 1 && int.TryParse(parameters[0], out var itemId) && int.TryParse(parameters[1], out var quantity))
         {
-            return new(id, @operator, itemId);
+            return new(id, @operator, itemId, quantity);
+        }
+
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out itemId))
+        {
+            return new(id, @operator, itemId, 0);
         }
 
         return null;
@@ -29,6 +36,11 @@ public sealed record ItemCriterion : Criterion, ICriterion
 
     protected override string GetDescriptionName()
     {
+        if (Quantity > 0)
+        {
+            return $"Criterion.Item.{GetOperatorDescriptionName()}.Quantity";
+        }
+
         return $"Criterion.Item.{GetOperatorDescriptionName()}";
     }
 
@@ -36,6 +48,6 @@ public sealed record ItemCriterion : Criterion, ICriterion
     {
         var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
 
-        return GetDescription(itemName);
+        return GetDescription(itemName, Quantity);
     }
 }

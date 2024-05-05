@@ -185,6 +185,8 @@ public static class CriterionFactory
             '>' => "Superior",
             '<' => "Inferior",
             '~' => "SoftEqual",
+            'E' => "Equiped",
+            'X' => "NotEquiped",
             _ => @operator.ToString(),
         };
     }

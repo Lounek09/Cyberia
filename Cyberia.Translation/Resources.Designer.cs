@@ -1078,11 +1078,11 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Avoir équipé l&apos;objet #1.
+        ///   Looks up a localized string similar to Ne pas posséder #2 fois l&apos;objet #1.
         /// </summary>
-        public static string Criterion_Item_E {
+        public static string Criterion_Item_Different_Quantity {
             get {
-                return ResourceManager.GetString("Criterion.Item.E", resourceCulture);
+                return ResourceManager.GetString("Criterion.Item.Different.Quantity", resourceCulture);
             }
         }
         
@@ -1096,11 +1096,83 @@ namespace Cyberia.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas avoir équipé l&apos;objet #1.
+        ///   Looks up a localized string similar to Posséder #2 fois l&apos;objet #1.
         /// </summary>
-        public static string Criterion_Item_X {
+        public static string Criterion_Item_Equal_Quantity {
             get {
-                return ResourceManager.GetString("Criterion.Item.X", resourceCulture);
+                return ResourceManager.GetString("Criterion.Item.Equal.Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etre équipé de l&apos;objet #1.
+        /// </summary>
+        public static string Criterion_Item_Equiped {
+            get {
+                return ResourceManager.GetString("Criterion.Item.Equiped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avoir #2 fois l&apos;objet #1 équipé.
+        /// </summary>
+        public static string Criterion_Item_Equiped_Quantity {
+            get {
+                return ResourceManager.GetString("Criterion.Item.Equiped.Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ne pas posséder l&apos;objet #1.
+        /// </summary>
+        public static string Criterion_Item_Inferior {
+            get {
+                return ResourceManager.GetString("Criterion.Item.Inferior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posséder #2 fois ou moins l&apos;objet #1.
+        /// </summary>
+        public static string Criterion_Item_Inferior_Quantity {
+            get {
+                return ResourceManager.GetString("Criterion.Item.Inferior.Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ne pas être équipé de l&apos;objet #1.
+        /// </summary>
+        public static string Criterion_Item_NotEquiped {
+            get {
+                return ResourceManager.GetString("Criterion.Item.NotEquiped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ne pas avoir l&apos;objet #1 équipé #2 fois.
+        /// </summary>
+        public static string Criterion_Item_NotEquiped_Quantity {
+            get {
+                return ResourceManager.GetString("Criterion.Item.NotEquiped.Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posséder l&apos;objet #1.
+        /// </summary>
+        public static string Criterion_Item_Superior {
+            get {
+                return ResourceManager.GetString("Criterion.Item.Superior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posséder #2 fois ou plus l&apos;objet #1.
+        /// </summary>
+        public static string Criterion_Item_Superior_Quantity {
+            get {
+                return ResourceManager.GetString("Criterion.Item.Superior.Quantity", resourceCulture);
             }
         }
         

@@ -5,9 +5,9 @@ namespace Cyberia.Api.Factories.Criteria;
 public sealed record JobCriterion : Criterion, ICriterion
 {
     public int JobId { get; init; }
-    public int? Level { get; init; }
+    public int Level { get; init; }
 
-    private JobCriterion(string id, char @operator, int jobId, int? level)
+    private JobCriterion(string id, char @operator, int jobId, int level)
         : base(id, @operator)
     {
         JobId = jobId;
@@ -23,7 +23,7 @@ public sealed record JobCriterion : Criterion, ICriterion
 
         if (parameters.Length > 0 && int.TryParse(parameters[0], out jobId))
         {
-            return new(id, @operator, jobId, null);
+            return new(id, @operator, jobId, 0);
         }
 
         return null;
@@ -36,7 +36,7 @@ public sealed record JobCriterion : Criterion, ICriterion
 
     protected override string GetDescriptionName()
     {
-        if (Level.HasValue)
+        if (Level > 0)
         {
             return $"Criterion.Job.{GetOperatorDescriptionName()}.Level";
         }
@@ -48,11 +48,6 @@ public sealed record JobCriterion : Criterion, ICriterion
     {
         var jobName = DofusApi.Datacenter.JobsData.GetJobNameById(JobId);
 
-        if (Level.HasValue)
-        {
-            return GetDescription(jobName, Level.Value);
-        }
-
-        return GetDescription(jobName);
+        return GetDescription(jobName, Level);
     }
 }

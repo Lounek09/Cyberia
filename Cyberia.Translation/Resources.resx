@@ -456,14 +456,38 @@
   <data name="Criterion.Item.Different" xml:space="preserve">
     <value>Ne pas posséder l'objet #1</value>
   </data>
-  <data name="Criterion.Item.E" xml:space="preserve">
-    <value>Avoir équipé l'objet #1</value>
+  <data name="Criterion.Item.Different.Quantity" xml:space="preserve">
+    <value>Ne pas posséder #2 fois l'objet #1</value>
   </data>
   <data name="Criterion.Item.Equal" xml:space="preserve">
     <value>Posséder l'objet #1</value>
   </data>
-  <data name="Criterion.Item.X" xml:space="preserve">
-    <value>Ne pas avoir équipé l'objet #1</value>
+  <data name="Criterion.Item.Equal.Quantity" xml:space="preserve">
+    <value>Posséder #2 fois l'objet #1</value>
+  </data>
+  <data name="Criterion.Item.Equiped" xml:space="preserve">
+    <value>Etre équipé de l'objet #1</value>
+  </data>
+  <data name="Criterion.Item.Equiped.Quantity" xml:space="preserve">
+    <value>Avoir #2 fois l'objet #1 équipé</value>
+  </data>
+  <data name="Criterion.Item.Inferior" xml:space="preserve">
+    <value>Ne pas posséder l'objet #1</value>
+  </data>
+  <data name="Criterion.Item.Inferior.Quantity" xml:space="preserve">
+    <value>Posséder #2 fois ou moins l'objet #1</value>
+  </data>
+  <data name="Criterion.Item.NotEquiped" xml:space="preserve">
+    <value>Ne pas être équipé de l'objet #1</value>
+  </data>
+  <data name="Criterion.Item.NotEquiped.Quantity" xml:space="preserve">
+    <value>Ne pas avoir l'objet #1 équipé #2 fois</value>
+  </data>
+  <data name="Criterion.Item.Superior" xml:space="preserve">
+    <value>Posséder l'objet #1</value>
+  </data>
+  <data name="Criterion.Item.Superior.Quantity" xml:space="preserve">
+    <value>Posséder #2 fois ou plus l'objet #1</value>
   </data>
   <data name="Criterion.Job.Different" xml:space="preserve">
     <value>Métier ≠ #1</value>
