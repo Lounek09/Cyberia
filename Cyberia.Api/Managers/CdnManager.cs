@@ -3,7 +3,7 @@ namespace Cyberia.Api.Managers;
 
 public static class CdnManager
 {
-    private static readonly Dictionary<string, bool> s_caschedUrl = [];
+    private static readonly Dictionary<string, bool> s_cachedUrl = [];
 
     /// <summary>
     /// Asynchronously retrieves the URL of the specified image in the given directory and size.
@@ -18,10 +18,10 @@ public static class CdnManager
     {
         var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{(int)size}/{id}.png";
 
-        if (!s_caschedUrl.TryGetValue(url, out var exists))
+        if (!s_cachedUrl.TryGetValue(url, out var exists))
         {
             exists = await DofusApi.HttpClient.ExistsAsync(url);
-            s_caschedUrl.Add(url, exists);
+            s_cachedUrl.Add(url, exists);
         }
 
         return exists ? url : $"{DofusApi.Config.CdnUrl}/images/dofus/others/{(int)size}/unknown.png";
@@ -39,10 +39,10 @@ public static class CdnManager
     {
         var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{id}.png";
 
-        if (!s_caschedUrl.TryGetValue(url, out var exists))
+        if (!s_cachedUrl.TryGetValue(url, out var exists))
         {
             exists = await DofusApi.HttpClient.ExistsAsync(url);
-            s_caschedUrl.Add(url, exists);
+            s_cachedUrl.Add(url, exists);
         }
 
         return exists ? url : $"{DofusApi.Config.CdnUrl}/images/dofus/others/{(int)CdnImageSize.Size128}/unknown.png";
