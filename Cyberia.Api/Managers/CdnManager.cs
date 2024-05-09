@@ -11,12 +11,13 @@ public static class CdnManager
     /// <param name="category">The directory path for the image.</param>
     /// <param name="id">The ID of the image.</param>
     /// <param name="size">The desired size of the image.</param>
+    /// <param name="ext">The file extension of the image.</param>
     /// <returns>
     /// The URL of the image if it exists; otherwise, the URL of the default image.
     /// </returns>
-    public static async Task<string> GetImagePathAsync(string category, int id, CdnImageSize size)
+    public static async Task<string> GetImagePathAsync(string category, int id, CdnImageSize size, string ext = "png")
     {
-        var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{(int)size}/{id}.png";
+        var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{(int)size}/{id}.{ext}";
 
         if (!s_cachedUrl.TryGetValue(url, out var exists))
         {
@@ -32,10 +33,11 @@ public static class CdnManager
     /// </summary>
     /// <param name="category">The directory path for the image.</param>
     /// <param name="id">The ID of the image.</param>
+    /// <param name="ext">The file extension of the image.</param>
     /// <returns>
     /// The URL of the image if it exists; otherwise, the URL of the default image.
     /// </returns>
-    public static async Task<string> GetImagePathAsync(string category, int id)
+    public static async Task<string> GetImagePathAsync(string category, int id, string ext = "png")
     {
         var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{id}.png";
 

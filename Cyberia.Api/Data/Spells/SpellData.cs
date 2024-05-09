@@ -67,7 +67,7 @@ public sealed class SpellData : IDofusData<int>
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("spells", Id, size);
+        return await CdnManager.GetImagePathAsync("spells", Id, size, "jpg");
     }
 
     public BreedData? GetBreedData()
