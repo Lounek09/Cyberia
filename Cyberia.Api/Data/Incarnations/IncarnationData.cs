@@ -2,6 +2,7 @@
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
+using Cyberia.Api.Managers;
 
 using System.Text.Json.Serialization;
 
@@ -33,16 +34,19 @@ public sealed class IncarnationData : IDofusData<int>
         Effects = [];
     }
 
-    public async Task<string> GetImgPath()
+    public async Task<string> GetBigImagePathAsync(CdnImageSize size)
     {
-        var url = $"{DofusApi.Config.CdnUrl}/images/artworks/{GfxId}.png";
+        return await CdnManager.GetImagePathAsync("artworks/big", GfxId, size);
+    }
 
-        if (await DofusApi.HttpClient.ExistsAsync(url))
-        {
-            return url;
-        }
+    public async Task<string> GetFaceImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("artworks/faces", GfxId, size);
+    }
 
-        return $"{DofusApi.Config.CdnUrl}/images/artworks/unknown.png";
+    public async Task<string> GetMiniImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("artworks/mini", GfxId, size);
     }
 
     public ItemData? GetItemData()

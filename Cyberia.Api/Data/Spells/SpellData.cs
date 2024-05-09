@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Incarnations;
+using Cyberia.Api.Managers;
 using Cyberia.Api.Values;
 
 using System.Text.Json.Serialization;
@@ -64,16 +65,9 @@ public sealed class SpellData : IDofusData<int>
         Icon = new();
     }
 
-    public async Task<string> GetImagePath()
+    public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        var url = $"{DofusApi.Config.CdnUrl}/images/spells/{Id}.jpg";
-
-        if (await DofusApi.HttpClient.ExistsAsync(url))
-        {
-            return url;
-        }
-
-        return $"{DofusApi.Config.CdnUrl}/images/spells/unknown.png";
+        return await CdnManager.GetImagePathAsync("spells", Id, size);
     }
 
     public BreedData? GetBreedData()

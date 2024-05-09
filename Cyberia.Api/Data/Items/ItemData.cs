@@ -5,6 +5,7 @@ using Cyberia.Api.Data.Npcs;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
+using Cyberia.Api.Managers;
 
 using System.Text.Json.Serialization;
 
@@ -88,16 +89,9 @@ public sealed class ItemData : IDofusData<int>
         Criteria = [];
     }
 
-    public async Task<string> GetImagePath()
+    public async Task<string> GetImagePathAsync(CdnImageSize size)
     {
-        var url = $"{DofusApi.Config.CdnUrl}/images/items/{ItemTypeId}/{GfxId}.png";
-
-        if (await DofusApi.HttpClient.ExistsAsync(url))
-        {
-            return url;
-        }
-
-        return $"{DofusApi.Config.CdnUrl}/images/items/unknown.png";
+        return await CdnManager.GetImagePathAsync($"items/{ItemTypeId}", GfxId, size);
     }
 
     public ItemTypeData? GetItemTypeData()

@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Managers;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Alignments;
 
@@ -20,6 +22,11 @@ public sealed class AlignmentFeatData : IDofusData<int>
     internal AlignmentFeatData()
     {
         Name = string.Empty;
+    }
+
+    public async Task<string> GetIconImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("alignments/feats", GfxId, size);
     }
 
     public AlignmentFeatEffectData? GetAlignmentFeatEffectData()

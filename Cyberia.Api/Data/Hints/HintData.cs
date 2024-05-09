@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api.Data.Maps;
+using Cyberia.Api.Managers;
 
 using System.Text.Json.Serialization;
 
@@ -22,6 +23,11 @@ public sealed class HintData : IDofusData
     internal HintData()
     {
         Name = string.Empty;
+    }
+
+    public async Task<string> GetIconImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("maps/hints", GfxId, size);
     }
 
     public HintCategoryData? GetHintCategory()

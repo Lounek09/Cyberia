@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Data.Items;
@@ -88,7 +89,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, "Items")
             .WithTitle($"{Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
             .WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description))
-            .WithThumbnail(await _itemData.GetImagePath())
+            .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128))
             .AddField("Niveau :", _itemData.Level.ToString(), true)
             .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true);
 

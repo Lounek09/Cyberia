@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Managers;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Emotes;
 
@@ -18,5 +20,10 @@ public sealed class EmoteData : IDofusData<int>
     {
         Name = string.Empty;
         Shortcut = string.Empty;
+    }
+
+    public async Task<string> GetIconImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("emotes", Id, size);
     }
 }

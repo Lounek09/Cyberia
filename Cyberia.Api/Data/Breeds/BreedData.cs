@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.Spells;
+using Cyberia.Api.Managers;
 using Cyberia.Api.Values;
 
 using System.Text.Json.Serialization;
@@ -91,14 +92,47 @@ public sealed class BreedData : IDofusData<int>
         IntelligenceBoostCost = [];
     }
 
-    public string GetIconImagePath()
+    public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return $"{DofusApi.Config.CdnUrl}/images/breeds/icons/{Id}.png";
+        return await CdnManager.GetImagePathAsync("artworks/breeds", Id, size);
     }
 
-    public string GetPreferenceWeaponsImagePath()
+    public async Task<string> GetBackImagePathAsync(CdnImageSize size)
     {
-        return $"{DofusApi.Config.CdnUrl}/images/breeds/preference_weapons/weapons_{Id}.png";
+        return await CdnManager.GetImagePathAsync("artworks/breeds/back", Id, size);
+    }
+
+    public async Task<string> GetSlideImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("artworks/breeds/slide", Id, size);
+    }
+
+    public async Task<string> GetWeaponsPreferenceImagePathAsync()
+    {
+        return await CdnManager.GetImagePathAsync("artworks/breeds/weapons_preference", Id);
+    }
+
+    public async Task<string> GetSymbolsImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("artworks/symbols", Id, size);
+    }
+
+    public async Task<string> GetBigImagePathAsync(Gender gender, CdnImageSize size)
+    {
+        var id = int.Parse($"{Id}{(int)gender}");
+        return await CdnManager.GetImagePathAsync("artworks/big", id, size);
+    }
+
+    public async Task<string> GetFaceImagePathAsync(Gender gender, CdnImageSize size)
+    {
+        var id = int.Parse($"{Id}{(int)gender}");
+        return await CdnManager.GetImagePathAsync("artworks/faces", id, size);
+    }
+
+    public async Task<string> GetMiniImagePathAsync(Gender gender, CdnImageSize size)
+    {
+        var id = int.Parse($"{Id}{(int)gender}");
+        return await CdnManager.GetImagePathAsync("artworks/mini", id, size);
     }
 
     public IEnumerable<SpellData> GetSpellsData()

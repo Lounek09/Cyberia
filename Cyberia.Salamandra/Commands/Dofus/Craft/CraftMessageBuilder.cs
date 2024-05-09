@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.Items;
 using Cyberia.Salamandra.Commands.Dofus.Item;
@@ -77,7 +78,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
         if (_itemData is not null)
         {
             embed.WithTitle($"Craft : {_qte.ToFormattedString()}x {Formatter.Sanitize(_itemData.Name)} ({_craftData.Id})")
-                .WithThumbnail(await _itemData.GetImagePath());
+                .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128));
         }
 
         var weight = _recursive ? _craftData.GetWeightWithSubCraft() : _craftData.GetWeight();

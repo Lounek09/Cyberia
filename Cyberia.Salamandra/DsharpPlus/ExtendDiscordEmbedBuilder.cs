@@ -276,17 +276,11 @@ public static class ExtendDiscordEmbedBuilder
                 continue;
             }
 
-            var emoji = effect switch
-            {
-                StateEffect stateEffect => Emojis.State(stateEffect.StateId),
-                _ => Emojis.Effect(effect.Id)
-            };
-
             var effectDescription = parametersDecorator is null ? effect.GetDescription() : effect.GetDescription().ToString(parametersDecorator);
 
             var areaInfo = effect.EffectArea.Size == EffectArea.Default.Size ? string.Empty : $" - {Emojis.EffectArea(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
 
-            var effectParse = $"{emoji} {effectDescription}{areaInfo}";
+            var effectParse = $"{Emojis.Effect(effect.Id)} {effectDescription}{areaInfo}";
 
             if (effect.Criteria.Count > 0)
             {

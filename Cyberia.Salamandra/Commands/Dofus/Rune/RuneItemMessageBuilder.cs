@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Managers;
 using Cyberia.Salamandra.Commands.Dofus.Item;
@@ -64,7 +65,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de runes")
             .WithTitle($"Simulation de brisage : {_qte.ToFormattedString()}x {Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
-            .WithThumbnail(await _itemData.GetImagePath());
+            .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128));
 
         StringBuilder descriptionBuilder = new();
 

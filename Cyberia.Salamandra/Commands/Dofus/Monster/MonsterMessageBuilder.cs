@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Data.Alignments;
 using Cyberia.Api.Data.Monsters;
 using Cyberia.Salamandra.Enums;
@@ -79,7 +80,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Bestiary, "Bestiaire")
             .WithTitle($"{_monsterData.Name} ({_monsterData.Id}) - Grade " + _selectedGrade)
-            .WithThumbnail(await _monsterData.GetImagePath());
+            .WithThumbnail(await _monsterData.GetBigImagePathAsync(CdnImageSize.Size128));
 
         if (_monsterSuperRaceData is not null)
         {
@@ -106,47 +107,47 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
             if (_monsterGradeData.LifePoint is not null)
             {
-                caracBuilder.Append(Emojis.HEALTH);
+                caracBuilder.Append(Emojis.EffectHealthPoint);
                 caracBuilder.Append(Formatter.Bold(_monsterGradeData.LifePoint.Value.ToFormattedString()));
             }
 
             if (_monsterGradeData.ActionPoint is not null)
             {
-                caracBuilder.Append(Emojis.ACTION_POINTS);
+                caracBuilder.Append(Emojis.EffectAp);
                 caracBuilder.Append(Formatter.Bold(_monsterGradeData.ActionPoint.Value.ToFormattedString()));
             }
 
             if (_monsterGradeData.MovementPoint is not null)
             {
-                caracBuilder.Append(Emojis.MOVEMENT_POINTS);
+                caracBuilder.Append(Emojis.EffectMp);
                 caracBuilder.Append(Formatter.Bold(_monsterGradeData.MovementPoint.Value.ToFormattedString()));
             }
 
-            caracBuilder.Append(Emojis.DODGE_AP);
+            caracBuilder.Append(Emojis.EffectApResistance);
             caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetActionPointDodge().ToFormattedString()));
             caracBuilder.Append("% ");
 
-            caracBuilder.Append(Emojis.DODGE_MP);
+            caracBuilder.Append(Emojis.EffectMpResistance);
             caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetMovementPointDodge().ToFormattedString()));
             caracBuilder.Append("%\n");
 
-            caracBuilder.Append(Emojis.RES_NEUTRAL);
+            caracBuilder.Append(Emojis.EffectNeutralResistance);
             caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetNeutralResistance().ToFormattedString()));
             caracBuilder.Append("% ");
 
-            caracBuilder.Append(Emojis.RES_EARTH);
+            caracBuilder.Append(Emojis.EffectEarthResistance);
             caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetEarthResistance().ToFormattedString()));
             caracBuilder.Append("% ");
 
-            caracBuilder.Append(Emojis.RES_FIRE);
+            caracBuilder.Append(Emojis.EffectFireResistance);
             caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetFireResistance().ToFormattedString()));
             caracBuilder.Append("% ");
 
-            caracBuilder.Append(Emojis.RES_WATER);
+            caracBuilder.Append(Emojis.EffectWaterResistance);
             caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetWaterResistance().ToFormattedString()));
             caracBuilder.Append("% ");
 
-            caracBuilder.Append(Emojis.RES_AIR);
+            caracBuilder.Append(Emojis.EffectAirResistance);
             caracBuilder.Append(Formatter.Bold(_monsterGradeData.GetAirResistance().ToFormattedString()));
             caracBuilder.Append('%');
 

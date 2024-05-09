@@ -4,212 +4,422 @@ namespace Cyberia.Salamandra;
 
 public static class Emojis
 {
-    //TODO: Use a frozen dictionary for the emojis when the new Salamandra.Cdn is ready
-    //Effects
-    public const string TRAP_PERCENT = "<:trapPercent:801770569695232025>";
-    public const string TRAP_DAMAGE = "<:trapDamage:801770569556164678>";
-    public const string TITLE = "<:title:801770569213280297>";
-    public const string SUMMONABLE_CREATURES = "<:summonableCreatures:801770569242247218>";
-    public const string STRENGHT = "<:strength:801770568734081036>";
-    public const string STEAL_KAMAS = "<:stealsKamas:801770568834744382>";
-    public const string SPELL_DAMMAGE = "<:spellDamage:801770568436678687>";
-    public const string SIGHT = "<:sight:801770568282144789>";
-    public const string RETURN = "<:return:801770568319369217>";
-    public const string RES_WATER = "<:res_water:801770568348991498>";
-    public const string RES_NEUTRAL = "<:res_neutral:801770568306655272>";
-    public const string RES_FIRE = "<:res_fire:801770568453062716>";
-    public const string RES_EARTH = "<:res_earth:801770568004665344>";
-    public const string RES_AIR = "<:res_air:801770567954071602>";
-    public const string RANGE = "<:range:801770567937163264>";
-    public const string PUSH = "<:push:801770567585103912>";
-    public const string PROSPECTING = "<:prospecting:801770567589167145>";
-    public const string WEIGHT = "<:pods:801770567480770580>";
-    public const string NEUTRAL_DAMAGE = "<:neutralDamage:801770566963953727>";
-    public const string NEUTRAL = "<:neutral:801770567258603561>";
-    public const string MOVEMENT_POINTS = "<:movementPoints:801770567275511810>";
-    public const string LUCK = "<:luck:801770566863814677>";
-    public const string LANGUAGE = "<:language:801770566662357003>";
-    public const string INTELLIGENCE = "<:intelligence:801770566872203314>";
-    public const string INCARNATION = "<:incarnation:801770566695649290>";
-    public const string INITIATIVE = "<:initiative:801770566716489738>";
-    public const string HUNTING = "<:hunting:801770566625263638>";
-    public const string HEALTH = "<:health:801770566469156895>";
-    public const string HEAL = "<:heal:801770566389334056>";
-    public const string FOLLOWER = "<:follower:801770566192988180>";
-    public const string FIRE_DAMAGE = "<:fireDamage:801770565773819937>";
-    public const string ENHANCE_RANGE = "<:enhanceRange:801770566104907777>";
-    public const string ENERGY = "<:energy:801770565903843328>";
-    public const string ENABLE_RANGE = "<:enableRange:801770566121816114>";
-    public const string EMOTE = "<:emote:801770565605916692>";
-    public const string EARTH_DAMAGE = "<:earthDamage:801770565873827842>";
-    public const string DODGE_MP = "<:dodgeMP:801770565304188979>";
-    public const string DODGE_AP = "<:dodgeAP:801770565173772289>";
-    public const string DAMAGES_PERCENT = "<:damagesPercent:801770565344952331>";
-    public const string DAMAGE = "<:damage:801770564921982987>";
-    public const string CRIT = "<:crit:801770565059870720>";
-    public const string CAST_SPEED = "<:castSpeed:801770564627988490>";
-    public const string CAST_PER_TURN = "<:castPerTurn:801770564595351572>";
-    public const string AP_COST_REDUCTION = "<:apCostReduction:801770564238049290>";
-    public const string AIR_DAMAGE = "<:airDamage:801770564141973515>";
-    public const string AGILITY = "<:agility:801770564058349618>";
-    public const string ACTION_POINTS = "<:actionPoints:801770563751772201>";
-    public const string WISDOM = "<:wisdom:801770749190471680>";
-    public const string WEAPON_DAMAGE = "<:weaponDamage:801770749052190720>";
-    public const string WATER_DAMAGE = "<:waterDamage:801770748750331945>";
-    public const string VITALITY = "<:vitality:801770748820979723>";
-    public const string ATTACK_AP = "<:attackAP:804746110463508493>";
-    public const string ATTACK_MP = "<:attackMP:804746109976838196>";
-    public const string DEAD = "<:dead:804459730163597313>";
+    public const string EffectHealthPoint = "<:effect_healthPoint:1238099013102735411>";
+    public const string EffectAp = "<:effect_ap:1238098561363738715>";
+    public const string EffectMp = "<:effect_mp:1238099051862294568>";
+    public const string EffectApResistance = "<:effect_apResistance:1238098555315425383>";
+    public const string EffectMpResistance = "<:effect_mpResistance:1238099053028442133>";
+    public const string EffectNeutralResistance = "<:effect_neutralResistance:1238099064000614412>";
+    public const string EffectEarthResistance = "<:effect_earthResistance:1238098650270400512>";
+    public const string EffectFireResistance = "<:effect_fireResistance:1238098679739584582>";
+    public const string EffectWaterResistance = "<:effect_waterResistance:1238099579938013249>";
+    public const string EffectAirResistance = "<:effect_airResistance:1238098559451009146>";
+
+
+    public static readonly FrozenDictionary<int, string> s_effects = new Dictionary<int, string>()
+    {
+        { 5, "<:effect_push:1238099091196612629>" },
+        { 6, "<:effect_attract:1238098582914207784>" },
+        { 7, "<:effect_divorce:1238098631718862860>" },
+        { 10, "<:effect_emote:1238098646344400956>" },
+        { 13, "<:effect_hourglass:1238098779668746281>" },
+        { 34, "<:effect_book:1238098585292243015>" },
+        { 35, "<:effect_book:1238098585292243015>" },
+        { 50, "<:effect_carryThrow:1238098605538152488>" },
+        { 51, "<:effect_carryThrow:1238098605538152488>" },
+        { 77, EffectMp },
+        { 78, EffectMp },
+        { 79, "<:effect_dice:1238126936241209434>" },
+        { 81, "<:effect_healthGain:1238099012054155295>" },
+        { 84, EffectAp },
+        { 85, "<:effect_waterDammage:1238099578562281503>" },
+        { 86, "<:effect_earthDammage:1238098648710123565>" },
+        { 87, "<:effect_airDammage:1238098558230728707>" },
+        { 88, "<:effect_fireDammage:1238142424174301287>" },
+        { 89, "<:effect_neutralDammage:1238099049052373092>" },
+        { 90, "<:effect_healthGain:1238099012054155295>" },
+        { 91, "<:effect_waterDammage:1238099578562281503>" },
+        { 92, "<:effect_earthDammage:1238098648710123565>" },
+        { 93, "<:effect_airDammage:1238098558230728707>" },
+        { 94, "<:effect_fireDammage:1238142424174301287>" },
+        { 95, "<:effect_neutralDammage:1238099049052373092>" },
+        { 96, "<:effect_waterDammage:1238099578562281503>" },
+        { 97, "<:effect_earthDammage:1238098648710123565>" },
+        { 98, "<:effect_airDammage:1238098558230728707>" },
+        { 99, "<:effect_fireDammage:1238142424174301287>" },
+        { 100, "<:effect_neutralDammage:1238099049052373092>" },
+        { 101, EffectAp },
+        { 105, "<:effect_shield:1238099128437833809>" },
+        { 106, "<:effect_returnSpell:1238099113988460594>" },
+        { 107, "<:effect_returnDammage:1238099112839221278>" },
+        { 108, "<:effect_healthGain:1238099012054155295>" },
+        { 110, "<:effect_healthGain:1238099012054155295>" },
+        { 111, EffectAp },
+        { 112, "<:effect_dammage:1238098618670649355>" },
+        { 113, "<:effect_dice:1238126936241209434>" },
+        { 114, "<:effect_power:1238099068488781865>" },
+        { 115, "<:effect_crit:1238098622860623913>" },
+        { 116, "<:effect_range:1238099092018565281>" },
+        { 117, "<:effect_range:1238099092018565281>" },
+        { 118, "<:effect_strength:1238099544919506976>" },
+        { 119, "<:effect_agility:1238098556993147114>" },
+        { 120, EffectAp },
+        { 121, "<:effect_dammage:1238098618670649355>" },
+        { 122, "<:effect_critFailure:1238098624093749330>" },
+        { 123, "<:effect_chance:1238098600031031307>" },
+        { 124, "<:effect_wisdom:1238099588313911366>" },
+        { 125, "<:effect_health:1238099016428949574>" },
+        { 126, "<:effect_intelligence:1238098814024548393>" },
+        { 127, EffectMp },
+        { 128, EffectMp },
+        { 130, "<:effect_gold:1238098780956393605>" },
+        { 132, "<:effect_dispell:1238098638018707478>" },
+        { 133, EffectAp },
+        { 134, EffectMp },
+        { 135, "<:effect_range:1238099092018565281>" },
+        { 136, "<:effect_range:1238099092018565281>" },
+        { 137, "<:effect_physicalDammage:1238099065221283863>" },
+        { 138, "<:effect_power:1238099068488781865>" },
+        { 139, "<:effect_energy:1238098670717505537>" },
+        { 140, "<:effect_sleep:1238099529606103061>" },
+        { 141, "<:effect_kill:1238099015287967774>" },
+        { 142, "<:effect_physicalDammage:1238099065221283863>" },
+        { 143, "<:effect_healthGain:1238099012054155295>" },
+        { 145, "<:effect_dammage:1238098618670649355>" },
+        { 146, "<:effect_talk:1238099547259928646>" },
+        { 147, "<:effect_reborn:1238099093474246738>" },
+        { 148, "<:effect_follower:1238098721238155354>" },
+        { 152, "<:effect_chance:1238098600031031307>" },
+        { 153, "<:effect_health:1238099016428949574>" },
+        { 154, "<:effect_agility:1238098556993147114>" },
+        { 155, "<:effect_intelligence:1238098814024548393>" },
+        { 156, "<:effect_wisdom:1238099588313911366>" },
+        { 157, "<:effect_strength:1238099544919506976>" },
+        { 158, "<:effect_weight:1238099587240296480>" },
+        { 159, "<:effect_weight:1238099587240296480>" },
+        { 160, EffectApResistance },
+        { 161, EffectMpResistance },
+        { 162, EffectApResistance },
+        { 163, EffectMpResistance },
+        { 164, "<:effect_shield:1238099128437833809>" },
+        { 165, "<:effect_weapon:1238099574296674324>" },
+        { 166, EffectAp },
+        { 168, EffectAp },
+        { 169, EffectMp },
+        { 171, "<:effect_crit:1238098622860623913>" },
+        { 172, "<:effect_magicalResistance:1238099036263677983>" },
+        { 173, "<:effect_physicalResistance:1238099066559397978>" },
+        { 174, "<:effect_initiative:1238098795338928189>" },
+        { 175, "<:effect_initiative:1238098795338928189>" },
+        { 176, "<:effect_prospecting:1238099089787322428>" },
+        { 177, "<:effect_prospecting:1238099089787322428>" },
+        { 178, "<:effect_heal:1238098784651575317>" },
+        { 179, "<:effect_heal:1238098784651575317>" },
+        { 181, "<:effect_creature:1238098621317120051>" },
+        { 182, "<:effect_summon:1238099546035322990>" },
+        { 183, "<:effect_magicalResistance:1238099036263677983>" },
+        { 184, "<:effect_physicalResistance:1238099066559397978>" },
+        { 185, "<:effect_staticCreature:1238099528607993909>" },
+        { 186, "<:effect_power:1238099068488781865>" },
+        { 188, "<:effect_demonAngel:1238098633623076874>" },
+        { 192, "<:effect_bin:1238098583832629249>" },
+        { 194, "<:effect_kamas:1238098812632039425>" },
+        { 206, "<:effect_reborn:1238099093474246738>" },
+        { 208, "<:effect_spell:1238099532173283328>" },
+        { 210, EffectEarthResistance },
+        { 211, EffectWaterResistance },
+        { 212, EffectAirResistance },
+        { 213, EffectFireResistance },
+        { 214, EffectNeutralResistance },
+        { 215, EffectEarthResistance },
+        { 216, EffectWaterResistance },
+        { 217, EffectAirResistance },
+        { 218, EffectFireResistance },
+        { 219, EffectNeutralResistance },
+        { 220, "<:effect_returnDammage:1238099112839221278>" },
+        { 221, "<:effect_gift:1238098719967150212>" },
+        { 222, "<:effect_gift:1238098719967150212>" },
+        { 225, "<:effect_trapDammage:1238099560296091748>" },
+        { 226, "<:effect_trapPowerDammage:1238099561646522479>" },
+        { 228, "<:effect_spell:1238099532173283328>" },
+        { 229, "<:effect_ride:1238099108611489843>" },
+        { 230, "<:effect_energy:1238098670717505537>" },
+        { 233, "<:effect_bin:1238098583832629249>" },
+        { 240, EffectEarthResistance },
+        { 241, EffectWaterResistance },
+        { 242, EffectAirResistance },
+        { 243, EffectFireResistance },
+        { 244, EffectNeutralResistance },
+        { 245, EffectEarthResistance },
+        { 246, EffectWaterResistance },
+        { 247, EffectAirResistance },
+        { 248, EffectFireResistance },
+        { 249, EffectNeutralResistance },
+        { 250, EffectEarthResistance },
+        { 251, EffectWaterResistance },
+        { 252, EffectAirResistance },
+        { 253, EffectFireResistance },
+        { 254, EffectNeutralResistance },
+        { 255, EffectEarthResistance },
+        { 256, EffectWaterResistance },
+        { 257, EffectAirResistance },
+        { 258, EffectFireResistance },
+        { 259, EffectNeutralResistance },
+        { 260, EffectEarthResistance },
+        { 261, EffectWaterResistance },
+        { 262, EffectAirResistance },
+        { 263, EffectFireResistance },
+        { 264, EffectNeutralResistance },
+        { 265, "<:effect_shield:1238099128437833809>" },
+        { 266, "<:effect_chance:1238098600031031307>" },
+        { 267, "<:effect_health:1238099016428949574>" },
+        { 268, "<:effect_agility:1238098556993147114>" },
+        { 269, "<:effect_intelligence:1238098814024548393>" },
+        { 270, "<:effect_wisdom:1238099588313911366>" },
+        { 271, "<:effect_strength:1238099544919506976>" },
+        { 275, "<:effect_waterDammage:1238099578562281503>" },
+        { 276, "<:effect_earthDammage:1238098648710123565>" },
+        { 277, "<:effect_airDammage:1238098558230728707>" },
+        { 278, "<:effect_fireDammage:1238142424174301287>" },
+        { 279, "<:effect_neutralDammage:1238099049052373092>" },
+        { 280, "<:effect_enhanceRange:1238098664812183663>" },
+        { 281, "<:effect_enhanceRange:1238098664812183663>" },
+        { 282, "<:effect_enableRange:1238098666703552532>" },
+        { 283, "<:effect_boostDamage:1238098581852913674>" },
+        { 284, "<:effect_boostHeal:1238098601218146335>" },
+        { 285, "<:effect_reduceApCost:1238099088348807321>" },
+        { 286, "<:effect_enhanceCastSpeed:1238098683560460411>" },
+        { 287, "<:effect_boostCrit:1238098586986741900>" },
+        { 289, "<:effect_disableSight:1238098636710088724>" },
+        { 290, "<:effect_enhanceCastPerTurn:1238098682071486578>" },
+        { 291, "<:effect_enhanceCastPerTarget:1238098681106796666>" },
+        { 293, "<:effect_boostDamage:1238098581852913674>" },
+        { 294, "<:effect_reduceRange:1238099110167580692>" },
+        { 295, "<:effect_reduceRange:1238099110167580692>" },
+        { 296, "<:effect_increaseApCost:1238098800703307777>" },
+        { 300, "<:effect_spell:1238099532173283328>" },
+        { 320, "<:effect_range:1238099092018565281>" },
+        { 333, "<:effect_color:1238098619928674355>" },
+        { 335, "<:effect_color:1238098619928674355>" },
+        { 400, "<:effect_trap:1238099558681153597>" },
+        { 405, "<:effect_kill:1238099015287967774>" },
+        { 406, "<:effect_dispell:1238098638018707478>" },
+        { 513, "<:effect_prism:1238099062792912928>" },
+        { 600, "<:effect_zaap:1238099586086866994>" },
+        { 601, "<:effect_tpToMap:1238099543078469695>" },
+        { 602, "<:effect_zaap:1238099586086866994>" },
+        { 603, "<:effect_job:1238098816780079176>" },
+        { 604, "<:effect_spell:1238099532173283328>" },
+        { 605, "<:effect_xp:1238099604965429292>" },
+        { 606, "<:effect_wisdom:1238099588313911366>" },
+        { 607, "<:effect_strength:1238099544919506976>" },
+        { 608, "<:effect_chance:1238098600031031307>" },
+        { 609, "<:effect_agility:1238098556993147114>" },
+        { 610, "<:effect_health:1238099016428949574>" },
+        { 611, "<:effect_intelligence:1238098814024548393>" },
+        { 612, "<:effect_caracteristic:1238098602476441621>" },
+        { 613, "<:effect_spell:1238099532173283328>" },
+        { 614, "<:effect_jobXp:1238098818164064307>" },
+        { 615, "<:effect_forgotJob:1238098722244661259>" },
+        { 616, "<:effect_spell:1238099532173283328>" },
+        { 620, "<:effect_book:1238098585292243015>" },
+        { 621, "<:effect_egg:1238098651717570611>" },
+        { 622, "<:effect_house:1238098796815056937>" },
+        { 623, "<:effect_soul:1238099531086827622>" },
+        { 624, "<:effect_spell:1238099532173283328>" },
+        { 626, "<:effect_caracteristic:1238098602476441621>" },
+        { 627, "<:effect_map:1238099031557935134>" },
+        { 628, "<:effect_soul:1238099531086827622>" },
+        { 629, "<:effect_spell:1238099532173283328>" },
+        { 640, "<:effect_demonAngel:1238098633623076874>" },
+        { 641, "<:effect_demonAngel:1238098633623076874>" },
+        { 642, "<:effect_demonAngel:1238098633623076874>" },
+        { 643, "<:effect_demonAngel:1238098633623076874>" },
+        { 645, "<:effect_reborn:1238099093474246738>" },
+        { 646, "<:effect_healthGain:1238099012054155295>" },
+        { 647, "<:effect_ghost:1238098724152934511>" },
+        { 648, "<:effect_ghost:1238098724152934511>" },
+        { 649, "<:effect_demonAngel:1238098633623076874>" },
+        { 669, "<:effect_incarnation:1238098799570718720>" },
+        { 670, "<:effect_neutralDammage:1238099049052373092>" },
+        { 671, "<:effect_neutralDammage:1238099049052373092>" },
+        { 672, "<:effect_neutralDammage:1238099049052373092>" },
+        { 699, "<:effect_linkJob:1238099033189384262>" },
+        { 702, "<:effect_itemResistance:1238098815677108265>" },
+        { 705, "<:effect_soul:1238099531086827622>" },
+        { 706, "<:effect_ride:1238099108611489843>" },
+        { 721, "<:effect_ghoul:1238098725851889754>" },
+        { 722, "<:effect_spell:1238099532173283328>" },
+        { 723, "<:effect_emote:1238098646344400956>" },
+        { 724, "<:effect_title:1238099548090662996>" },
+        { 725, "<:effect_guild:1238098782009430056>" },
+        { 730, "<:effect_prism:1238099062792912928>" },
+        { 731, "<:effect_demonAngel:1238098633623076874>" },
+        { 740, "<:effect_shushu:1238099129763106826>" },
+        { 741, "<:effect_shushu:1238099129763106826>" },
+        { 742, "<:effect_shushu:1238099129763106826>" },
+        { 750, "<:effect_soul:1238099531086827622>" },
+        { 751, "<:effect_ride:1238099108611489843>" },
+        { 770, "<:effect_hourglass:1238098779668746281>" },
+        { 771, "<:effect_hourglass:1238098779668746281>" },
+        { 772, "<:effect_hourglass:1238098779668746281>" },
+        { 773, "<:effect_hourglass:1238098779668746281>" },
+        { 775, "<:effect_hourglass:1238098779668746281>" },
+        { 776, "<:effect_erosion:1238099111538987038>" },
+        { 780, "<:effect_reborn:1238099093474246738>" },
+        { 781, "<:effect_dice:1238126936241209434>" },
+        { 782, "<:effect_dice:1238126936241209434>" },
+        { 783, "<:effect_push:1238099091196612629>" },
+        { 786, "<:effect_healthGain:1238099012054155295>" },
+        { 787, "<:effect_spell:1238099532173283328>" },
+        { 791, "<:effect_scroll:1238099125686374511>" },
+        { 795, "<:effect_hunt:1238098798295650326>" },
+        { 800, EffectHealthPoint },
+        { 811, "<:effect_hourglass:1238098779668746281>" },
+        { 812, "<:effect_itemResistance:1238098815677108265>" },
+        { 814, "<:effect_key:1238099014310826005>" },
+        { 825, "<:effect_tpToMap:1238099543078469695>" },
+        { 826, "<:effect_tpToMap:1238099543078469695>" },
+        { 830, "<:effect_guild:1238098782009430056>" },
+        { 850, "<:effect_name:1238099054270087229>" },
+        { 851, "<:effect_color:1238098619928674355>" },
+        { 852, "<:effect_sex:1238099127016099891>" },
+        { 853, "<:effect_mimisymbic:1238099050587488326>" },
+        { 856, "<:effect_ttgBinder:1238099562657353860>" },
+        { 905, "<:effect_egg:1238098651717570611>" },
+        { 930, "<:effect_serenity:1238098537439559751>" },
+        { 931, "<:effect_aggressiveness:1238098539108634654>" },
+        { 932, "<:effect_stamina:1238098540379635712>" },
+        { 933, "<:effect_stamina:1238098540379635712>" },
+        { 934, "<:effect_love:1238098541520359516>" },
+        { 935, "<:effect_love:1238098541520359516>" },
+        { 936, "<:effect_maturity:1238098535623163985>" },
+        { 937, "<:effect_maturity:1238098535623163985>" },
+        { 939, "<:effect_dna:1238098647392981054>" },
+        { 940, "<:effect_dna:1238098647392981054>" },
+        { 945, "<:effect_dna:1238098647392981054>" },
+        { 946, "<:effect_enclosureAction:1238098669475987577>" },
+        { 947, "<:effect_enclosureAction:1238098669475987577>" },
+        { 948, "<:effect_enclosure:1238098667961847870>" },
+        { 949, "<:effect_ride:1238099108611489843>" },
+        { 950, "<:effect_state:1238099527404093440>" },
+        { 951, "<:effect_state:1238099527404093440>" },
+        { 960, "<:effect_demonAngel:1238098633623076874>" },
+        { 961, "<:effect_demonAngel:1238098633623076874>" },
+        { 969, "<:effect_mimisymbic:1238099050587488326>" },
+        { 974, "<:effect_xp:1238099604965429292>" },
+        { 983, "<:effect_lock:1238099034888077322>" },
+        { 985, "<:effect_sign:1238099123962380380>" },
+        { 986, "<:effect_scroll:1238099125686374511>" },
+        { 987, "<:effect_sign:1238099123962380380>" },
+        { 988, "<:effect_sign:1238099123962380380>" },
+        { 989, "<:effect_magnifier:1238099039149625405>" },
+        { 994, "<:effect_warning:1238099576917852231>" },
+        { 995, "<:effect_hand:1238098783209000991>" },
+        { 999, "<:effect_tpToMap:1238099543078469695>" },
+        { 2001, "<:effect_kamas:1238098812632039425>" },
+        { 2008, "<:effect_power:1238099068488781865>" },
+        { 2009, "<:effect_power:1238099068488781865>" },
+        { 2050, "<:effect_xp:1238099604965429292>" },
+        { 2100, EffectAp },
+        { 2101, "<:effect_ttgBooster:1238099557250891827>" },
+        { 2102, "<:effect_ttgCard:1238099575546581003>" },
+        { 2107, "<:effect_ttgBooster:1238099557250891827>" },
+        { 2111, "<:effect_returnDammage:1238099112839221278>" },
+        { 2112, "<:effect_summon:1238099546035322990>" },
+        { 2113, "<:effect_trapPowerDammage:1238099561646522479>" },
+        { 2114, "<:effect_trapDammage:1238099560296091748>" },
+        { 2118, "<:effect_healthGain:1238099012054155295>" },
+        { 2123, "<:effect_reduceApCost:1238099088348807321>" },
+        { 2124, "<:effect_enhanceRange:1238098664812183663>" },
+        { 2127, "<:effect_attract:1238098582914207784>" },
+        { 2128, "<:effect_state:1238099527404093440>" },
+        { 2129, "<:effect_state:1238099527404093440>" },
+        { 2130, "<:effect_zaap:1238099586086866994>" },
+        { 2132, "<:effect_card:1238098604174872648>" },
+        { 2133, "<:effect_card:1238098604174872648>" },
+        { 2136, "<:effect_neutralDammage:1238099049052373092>" },
+        { 2137, "<:effect_state:1238099527404093440>" },
+        { 2138, "<:effect_boostDamage:1238098581852913674>" },
+        { 2149, "<:effect_itemResistance:1238098815677108265>" },
+        { 2151, "<:effect_lock:1238099034888077322>" }
+    }.ToFrozenDictionary();
 
     public static string Effect(int id)
     {
-        return id switch
-        {
-            226 => TRAP_PERCENT,
-            225 => TRAP_DAMAGE,
-            724 => TITLE,
-            182 or 780 => SUMMONABLE_CREATURES,
-            118 or 157 or 271 or 607 => STRENGHT,
-            130 => STEAL_KAMAS,
-            283 or 293 => SPELL_DAMMAGE,
-            289 => SIGHT,
-            106 or 220 => RETURN,
-            211 or 216 or 241 or 246 or 251 or 256 or 261 => RES_WATER,
-            214 or 219 or 244 or 249 or 254 or 259 or 264 => RES_NEUTRAL,
-            213 or 218 or 243 or 248 or 253 or 258 or 263 => RES_FIRE,
-            210 or 215 or 240 or 245 or 250 or 255 or 260 => RES_EARTH,
-            212 or 217 or 242 or 247 or 252 or 257 or 262 => RES_AIR,
-            116 or 117 or 135 or 136 or 320 => RANGE,
-            5 or 6 or 783 => PUSH,
-            176 or 177 => PROSPECTING,
-            158 or 159 => WEIGHT,
-            89 or 95 or 100 or 279 or 670 or 671 or 672 => NEUTRAL_DAMAGE,
-            77 or 78 or 127 or 128 or 134 or 169 => MOVEMENT_POINTS,
-            123 or 152 or 266 or 608 => LUCK,
-            146 => LANGUAGE,
-            126 or 155 or 269 or 611 => INTELLIGENCE,
-            669 => INCARNATION,
-            174 or 175 => INITIATIVE,
-            795 => HUNTING,
-            110 or 800 => HEALTH,
-            81 or 108 or 143 or 178 or 179 or 284 or 646 => HEAL,
-            148 => FOLLOWER,
-            88 or 94 or 99 or 278 => FIRE_DAMAGE,
-            281 or 294 => ENHANCE_RANGE,
-            139 or 230 => ENERGY,
-            282 => ENABLE_RANGE,
-            10 => EMOTE,
-            86 or 92 or 97 or 276 => EARTH_DAMAGE,
-            161 => DODGE_MP,
-            160 => DODGE_AP,
-            138 or 186 => DAMAGES_PERCENT,
-            112 or 121 or 145 => DAMAGE,
-            115 or 171 or 287 => CRIT,
-            286 => CAST_SPEED,
-            290 => CAST_PER_TURN,
-            285 => AP_COST_REDUCTION,
-            87 or 93 or 98 or 277 => AIR_DAMAGE,
-            119 or 154 or 268 or 609 => AGILITY,
-            84 or 101 or 111 or 120 or 133 or 168 or 2100 => ACTION_POINTS,
-            124 or 156 or 270 or 606 => WISDOM,
-            165 => WEAPON_DAMAGE,
-            85 or 91 or 96 or 275 => WATER_DAMAGE,
-            125 or 153 or 267 or 610 => VITALITY,
-            141 => DEAD,
-            163 => ATTACK_MP,
-            162 or 166 => ATTACK_AP,
-            _ => Empty,
-        };
+        return s_effects.TryGetValue(id, out var emoji) ? emoji : Empty;
     }
 
 
-    //States
-    private static readonly FrozenDictionary<int, string> s_states = new Dictionary<int, string>()
+    //Areas
+    private static readonly FrozenDictionary<int, string> s_effectAreas = new SortedDictionary<int, string>()
     {
-        { 0, "<:state_neutral:1067793405855408128>" },
-        { 1, "<:state_drunk:1067793252717170748>" },
-        { 2, "<:state_soul_seeker:1067808312122413086>" },
-        { 3, "<:state_carrying:1067793148723597352>" },
-        { 5, "<:state_disorient:1067793251035271199>" },
-        { 6, "<:state_rooted:1067808274424004648>" },
-        { 7, "<:state_gravity:1067793310372069466>" },
-        { 8, "<:state_carried:1067793146467078255>" },
-        { 9, "<:state_sylvan_m:1067808314085359756>" },
-        { 10, "<:state_taming:1067808315230408745>" },
-        { 11, "<:state_riding:1067808272955998290>" },
-        { 12, "<:state_unruly:1067808319105933393>" },
-        { 13, "<:state_ext_disob:1067793256093597796>" },
-        { 14, "<:state_snowcover:1067808310474055701>" },
-        { 15, "<:state_awaken:1067793141719121920>" },
-        { 16, "<:state_vulnerable:1067808320448106617>" },
-        { 17, "<:state_parted:1067793410901159956>" },
-        { 18, "<:state_frozen:1067793307163443210>" },
-        { 19, "<:state_cracked:1067793245863694336>" },
-        { 27, "<:state_leopardo:1067793313672986634>" },
-        { 28, "<:state_free:1067793305850630184>" },
-        { 29, "<:state_odd_g:1067793407935778896>" },
-        { 30, "<:state_even_g:1067793254873055372>" },
-        { 31, "<:state_first_ink:1067793302365155348>" },
-        { 32, "<:state_second_ink:1067808307571589190>" },
-        { 33, "<:state_third_ink:1067808316492877834>" },
-        { 34, "<:state_fourth_ink:1067793304428761139>" },
-        { 35, "<:state_kill:1067793311605207050>" },
-        { 36, "<:state_paralyze:1067793409147932672>" },
-        { 37, "<:state_curse:1067793247210049598>" },
-        { 38, "<:state_poison:1067808245328138240>" },
-        { 39, "<:state_blurry:1067793142943854632>" },
-        { 40, "<:state_corrupted:1067793243548426371>" },
-        { 41, "<:state_silent:1067808309446443019>" },
-        { 42, "<:state_weakened:1067808321710587945>" },
-        { 48, "<:state_confused:1067793150237745172>" },
-        { 49, "<:state_ghoulified:1067793308996345936>" },
-        { 50, "<:state_altruistic:1067793139609387109>" },
-        { 55, "<:state_retired:1067808270456213544>" },
-        { 60, "<:state_devoted:1067793248833257614>" },
-        { 61, "<:state_aggressive:1067793137961013288>" },
-        { 73, "<:state_boggedown:1067793144801939497>" }
+        { 1, "<:effectarea_cross:1238078599144144956>" },
+        { 2, "<:effectarea_perpendicular_line:1238078621512503328>" },
+        { 3, "<:effectarea_circle:1238078596476702771>" },
+        { 4, "<:effectarea_dot:1238078601736491048>" },
+        { 5, "<:effectarea_line:1238078625547292735>" },
+        { 6, "<:effectarea_checked_patern:1238078595419738144>" },
+        { 7, "<:effectarea_ring:1238078624528203856>" },
+        { 8, "<:effectarea_square:1238078635689115738>" },
+        { 9, "<:effectarea_void_square:1238078644765851750>" },
+        { 10, "<:effectarea_cone:1238078598020075580>" },
+        { 11, "<:effectarea_diagonal_cross:1238078600360624158>" },
+        { 12, "<:effectarea_t:1238078638772064296>" },
+        { 13, "<:effectarea_t:1238078638772064296>" },
+        { 15, "<:effectarea_void_cross:1238078640571289622>" },
+        { 16, "<:effectarea_large_line:1238078594022903819>" },
+        { 17, "<:effectarea_point:1238078622829514772>" },
+        { 21, "<:effectarea_star:1238078637056725043>" },
+        { 23, "<:effectarea_fork:1238078592911675423>" },
+        { 67, "<:effectarea_circle:1238078596476702771>" },
+        { 68, "<:effectarea_checked_patern:1238078595419738144>" },
+        { 76, "<:effectarea_line:1238078625547292735>" },
+        { 79, "<:effectarea_ring:1238078624528203856>" },
+        { 80, "<:effectarea_dot:1238078601736491048>" },
+        { 84, "<:effectarea_perpendicular_line:1238078621512503328>" },
+        { 88, "<:effectarea_cross:1238078599144144956>" }
     }.ToFrozenDictionary();
 
-    public static string State(int id)
+    public static string EffectArea(int id)
     {
-        return s_states.TryGetValue(id, out var emoji) ? emoji : Empty;
+        return s_effectAreas.TryGetValue(id, out var emoji) ? emoji : Unknown;
     }
-
 
     //Runes
     private static readonly FrozenDictionary<int, string> s_baRunes = new Dictionary<int, string>()
     {
-        { 1, "<:rune_fo:971137161153884221>" },
-        { 2, "<:rune_sa:971137179432657017>" },
-        { 3, "<:rune_ine:971137162097606666>" },
-        { 4, "<:rune_vi:971137180191830116>" },
-        { 5, "<:rune_age:971137127670747207>" },
-        { 6, "<:rune_cha:971137156447883314>" },
-        { 7, "<:rune_ga_pa:971129483673341992>" },
-        { 8, "<:rune_ga_pme:971129485036490762>" },
-        { 9, "<:rune_cri:971137156670189578>" },
-        { 10, "<:rune_so:971137125443588146>" },
-        { 11, "<:rune_do:971137156926042182>" },
-        { 12, "<:rune_do_per:971137181127163905>" },
-        { 13, "<:rune_do_ren:971137158121398292>" },
-        { 14, "<:rune_po:971129485992804412>" },
-        { 15, "<:rune_summo:971137179642368001>" },
-        { 16, "<:rune_pod:971137173090885632>" },
-        { 17, "<:rune_pi:971137172210069504>" },
-        { 18, "<:rune_pi_per:971137186139365376>" },
-        { 19, "<:rune_ini:971137162470895636>" },
-        { 20, "<:rune_prospe:971137173216714752>" },
-        { 21, "<:rune_fire_re:971137182263820318>" },
-        { 22, "<:rune_air_re:971137166602301590>" },
-        { 23, "<:rune_water_re:971137188450414723>" },
-        { 24, "<:rune_earth_re:971137181890510958>" },
-        { 25, "<:rune_neutral_re:971137183316578385>" },
-        { 26, "<:rune_fire_re_per:971137182620323840>" },
-        { 27, "<:rune_air_re_per:971137181638869042>" },
-        { 28, "<:rune_earth_re_per:971137182003761162>" },
-        { 29, "<:rune_neutral_re_per:971137183576629368>" },
-        { 30, "<:rune_water_re_per:971137188899201124>" },
-        { 31, "<:rune_hunting:971137189087944795>" }
+        { 1, "<:rune_fo:1238075386387234847>" },
+        { 2, "<:rune_sa:1238075626095771699>" },
+        { 3, "<:rune_ine:1238075428510634036>" },
+        { 4, "<:rune_vi:1238075719238549504>" },
+        { 5, "<:rune_age:1238075332091838527>" },
+        { 6, "<:rune_cha:1238075336252457063>" },
+        { 7, "<:rune_ga_pa:1238075387800453130>" },
+        { 8, "<:rune_ga_pme:1238075389251944488>" },
+        { 9, "<:rune_cri:1238075330607054949>" },
+        { 10, "<:rune_so:1238075627714641990>" },
+        { 11, "<:rune_do:1238075357345878017>" },
+        { 12, "<:rune_do_per:1238075359799414905>" },
+        { 13, "<:rune_do_ren:1238075361426669629>" },
+        { 14, "<:rune_po:1238075528053919785>" },
+        { 15, "<:rune_summo:1238075622048403537>" },
+        { 16, "<:rune_pod:1238075560521891920>" },
+        { 17, "<:rune_pi:1238075531585519656>" },
+        { 18, "<:rune_pi_per:1238075526443307110>" },
+        { 19, "<:rune_ini:1238075429768925204>" },
+        { 20, "<:rune_prospe:1238075553911803924>" },
+        { 21, "<:rune_fire_re:1238075390468034590>" },
+        { 22, "<:rune_air_re:1238075333127831663>" },
+        { 23, "<:rune_water_re:1238075720429867008>" },
+        { 24, "<:rune_earth_re:1238075355374551110>" },
+        { 25, "<:rune_neutral_re:1238075431106908160>" },
+        { 26, "<:rune_fire_re_per:1238075391676121260>" },
+        { 27, "<:rune_air_re_per:1238075334885244928>" },
+        { 28, "<:rune_earth_re_per:1238075356502822924>" },
+        { 29, "<:rune_neutral_re_per:1238075432062947371>" },
+        { 30, "<:rune_water_re_per:1238075717959422002>" },
+        { 31, "<:rune_hunting:1238075433602256976>" }
     }.ToFrozenDictionary();
 
     public static string BaRune(int id)
@@ -219,18 +429,18 @@ public static class Emojis
 
     private static readonly FrozenDictionary<int, string> s_paRunes = new Dictionary<int, string>()
     {
-        { 1, "<:rune_pa_fo:971137184532922378>" },
-        { 2, "<:rune_pa_sa:971137185392767089>" },
-        { 3, "<:rune_pa_ine:971137184843300915>" },
-        { 4, "<:rune_pa_vi:971137171480248392>" },
-        { 5, "<:rune_pa_age:971137183798927430>" },
-        { 6, "<:rune_pa_cha:971137183912190032>" },
-        { 12, "<:rune_pa_do_per:971137189322838096>" },
-        { 16, "<:rune_pa_pod:971137169680924692>" },
-        { 17, "<:rune_pa_pi:971137185183072266>" },
-        { 18, "<:rune_pa_pi_per:971137185610891294>" },
-        { 19, "<:rune_pa_ini:971137167957032960>" },
-        { 20, "<:rune_pa_prospe:971137170217775104>" }
+        { 1, "<:rune_pa_fo:1238075466649309235>" },
+        { 2, "<:rune_pa_sa:1238075529060417567>" },
+        { 3, "<:rune_pa_ine:1238075461028806717>" },
+        { 4, "<:rune_pa_vi:1238075530453192756>" },
+        { 5, "<:rune_pa_age:1238075462295486464>" },
+        { 6, "<:rune_pa_cha:1238075463528747098>" },
+        { 12, "<:rune_pa_do_per:1238075465298608139>" },
+        { 16, "<:rune_pa_pod:1238075494843289640>" },
+        { 17, "<:rune_pa_pi:1238075499553488976>" },
+        { 18, "<:rune_pa_pi_per:1238075500648464414>" },
+        { 19, "<:rune_pa_ini:1238075497544548404>" },
+        { 20, "<:rune_pa_prospe:1238075496349171732>" }
     }.ToFrozenDictionary();
 
     public static string PaRune(int id)
@@ -240,16 +450,16 @@ public static class Emojis
 
     private static readonly FrozenDictionary<int, string> s_raRunes = new Dictionary<int, string>()
     {
-        { 1, "<:rune_ra_fo:971137186927898666>" },
-        { 2, "<:rune_ra_sa:971137188081307688>" },
-        { 3, "<:rune_ra_ine:971137187485720596>" },
-        { 4, "<:rune_ra_vi:971137188060340254>" },
-        { 5, "<:rune_ra_age:971137186072240240>" },
-        { 6, "<:rune_ra_cha:971137186739134525>" },
-        { 12, "<:rune_ra_do_per:971137189780025374>" },
-        { 16, "<:rune_ra_pod:971137178006618162>" },
-        { 18, "<:rune_ra_pi_per:971137187896766534>" },
-        { 19, "<:rune_ra_ini:971137177071272006>" }
+        { 1, "<:rune_ra_fo:1238075593220685866>" },
+        { 2, "<:rune_ra_sa:1238075626095771699>" },
+        { 3, "<:rune_ra_ine:1238075594537832549>" },
+        { 4, "<:rune_ra_vi:1238075624535621702>" },
+        { 5, "<:rune_ra_age:1238075556743086121>" },
+        { 6, "<:rune_ra_cha:1238075558051577967>" },
+        { 12, "<:rune_ra_do_per:1238075559339229194>" },
+        { 16, "<:rune_ra_pod:1238075591689900133>" },
+        { 18, "<:rune_ra_pi_per:1238075597658525826>" },
+        { 19, "<:rune_ra_ini:1238075596060364841>" }
     }.ToFrozenDictionary();
 
     public static string RaRune(int id)
@@ -257,63 +467,25 @@ public static class Emojis
         return s_raRunes.TryGetValue(id, out var emoji) ? emoji : Empty;
     }
 
-    //Areas
-    private static readonly FrozenDictionary<int, string> s_effectAreas = new Dictionary<int, string>()
-    {
-        { 1, "<:area_cross:1107731330999013456>" },
-        { 2, "<:area_perpendicular_line:1107731337886056521>" },
-        { 3, "<:area_circle:1107731328058806344>" },
-        { 4, "<:area_dot:1107731332160823346>" },
-        { 5, "<:area_line:1107731335910543382>" },
-        { 6, "<:area_checked_patern:1110877139810652261>" },
-        { 7, "<:area_ring:1107731517473562745>" },
-        { 8, "<:area_square:1107731519428112495>" },
-        { 9, "<:area_void_square:1107731523978932245>" },
-        { 10, "<:area_cone:1107731329929449642>" },
-        { 11, "<:area_diagonal_cross:1107744151098892400>" },
-        { 12, "<:area_t:1107731520883535942>" },
-        { 13, "<:area_t:1107731520883535942>" },
-        { 15, "<:area_void_cross:1107731522905198613>" },
-        { 16, "<:area_large_line:1107731334966820924>" },
-        { 17, "<:area_point:1107731516320129135>" },
-        { 21, "<:area_star:1107731341417660456>" },
-        { 23, "<:area_fork:1107731333867909280>" },
-        { 67, "<:area_circle:1107731328058806344>" },
-        { 68, "<:area_checked_patern:1110877139810652261>" },
-        { 76, "<:area_line:1107731335910543382>" },
-        { 79, "<:area_ring:1107731517473562745>" },
-        { 80, "<:area_dot:1107731332160823346>" },
-        { 84, "<:area_perpendicular_line:1107731337886056521>" },
-        { 88, "<:area_cross:1107731330999013456>" }
-    }.ToFrozenDictionary();
-
-    public static string EffectArea(int id)
-    {
-        return s_effectAreas.TryGetValue(id, out var emoji) ? emoji : Unknown;
-    }
-
-
     //Bool
-    private const string c_true = "<:true:971147169908289556>";
-    private const string c_false = "<:false:971147169966997514>";
+    private const string c_true = "<:true:1238073348672585758>";
+    private const string c_false = "<:false:1238073407845826681>";
 
     public static string Bool(bool value)
     {
         return value ? c_true : c_false;
     }
 
-
     //Quests
-    private const string c_quest = "<:quest:1095984758921625712>";
-    private const string c_repeatableQuest = "<:repeatable_quest:1095984761178165320>";
-    private const string c_accountQuest = "<:account_quest:1095984762482597888>";
-    private const string c_accoutRepeatableQuest = "<:account_repeatable_quest:1095984763812188201>";
+    private const string c_quest = "<:quest:1238073346391015474>";
+    private const string c_repeatableQuest = "<:repeatable_quest:1238073347187802174>";
+    private const string c_accountQuest = "<:account_quest:1238073485918605343>";
 
     public static string Quest(bool isRepeatable, bool isAccount)
     {
         if (isRepeatable && isAccount)
         {
-            return c_accoutRepeatableQuest;
+            return c_repeatableQuest + c_accountQuest;
         }
 
         if (isAccount)
@@ -329,12 +501,11 @@ public static class Emojis
         return c_quest;
     }
 
-
     //Others
-    public const string Empty = "<:empty:971146087572316230>";
-    public const string House = "<:house:971448610610884718>";
-    public const string Dungeon = "<:dungeon:971144890928996352>";
-    public const string Kamas = "<:kamas:971144891163885618>";
-    public const string Xp = "<:xp:971144890870300732>";
-    public const string Unknown = "<:unknown:1111058034941251695>";
+    public const string Empty = "<:empty:1238073357690343434>";
+    public const string House = "<:house:1238073343899598958>";
+    public const string Dungeon = "<:dungeon:1238073355039670312>";
+    public const string Kamas = "<:kamas:1238073345229193217>";
+    public const string Xp = "<:xp:1238073351025594408>";
+    public const string Unknown = "<:unknown:1238073349683544099>";
 }

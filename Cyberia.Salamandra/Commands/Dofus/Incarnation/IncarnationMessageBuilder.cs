@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Spells;
@@ -77,12 +78,12 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, "Incarnations")
             .WithTitle($"{_incarnationData.Name} ({_incarnationData.Id})")
-            .WithImageUrl(await _incarnationData.GetImgPath());
+            .WithImageUrl(await _incarnationData.GetBigImagePathAsync(CdnImageSize.Size512));
 
         if (_itemData is not null)
         {
             embed.WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description))
-                .WithThumbnail(await _itemData.GetImagePath())
+                .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128))
                 .AddField("Niveau :", _itemData.Level.ToString(), true)
                 .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true)
                 .AddEmptyField(true);

@@ -56,7 +56,7 @@ public sealed class MapData : IDofusData<int>
 
     public string GetImagePath()
     {
-        return $"{DofusApi.Config.CdnUrl}/images/maps/{Id}.jpg";
+        return $"{DofusApi.Config.CdnUrl}/images/dofus/maps/{Id}.jpg";
     }
 
     public MapSubAreaData? GetMapSubAreaData()

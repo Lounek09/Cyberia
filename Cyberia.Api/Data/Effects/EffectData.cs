@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Managers;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Effects;
 
@@ -31,5 +33,10 @@ public sealed class EffectData : IDofusData<int>
         Description = string.Empty;
         Operator = string.Empty;
         Element = string.Empty;
+    }
+
+    public async Task<string> GetIconImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("effects", Id, size);
     }
 }

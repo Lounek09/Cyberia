@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Managers;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.FightChallenges;
 
@@ -21,5 +23,10 @@ public sealed class FightChallengeData : IDofusData<int>
     {
         Name = string.Empty;
         Description = string.Empty;
+    }
+
+    public async Task<string> GetIconImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("challenges", GfxId, size);
     }
 }

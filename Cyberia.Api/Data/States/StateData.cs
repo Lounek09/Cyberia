@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Managers;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.States;
 
@@ -27,8 +29,8 @@ public sealed class StateData : IDofusData<int>
         ShortName = string.Empty;
     }
 
-    public string GetImagePath()
+    public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return $"{DofusApi.Config.CdnUrl}/images/states/{Id}.png";
+        return await CdnManager.GetImagePathAsync("states", Id, size);
     }
 }

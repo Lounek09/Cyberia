@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Managers;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Alignments;
 
@@ -17,6 +19,16 @@ public sealed class AlignmentData : IDofusData<int>
     internal AlignmentData()
     {
         Name = string.Empty;
+    }
+
+    public async Task<string> GetIconImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("alignments", Id, size);
+    }
+
+    public async Task<string> GetMiniImagePathAsync(CdnImageSize size)
+    {
+        return await CdnManager.GetImagePathAsync("alignments/mini", Id, size);
     }
 
     public bool CanJoin(int alignmentId)

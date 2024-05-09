@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.Spells;
@@ -72,13 +73,13 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
         return (T)message;
     }
 
-    private Task<DiscordEmbedBuilder> EmbedBuilder()
+    private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Breeds, "Classes")
             .WithTitle($"{_breedData.LongName} ({_breedData.Id})")
             .WithDescription(Formatter.Italic(_breedData.Description))
-            .WithThumbnail(_breedData.GetIconImagePath())
-            .WithImageUrl(_breedData.GetPreferenceWeaponsImagePath())
+            .WithThumbnail(await _breedData.GetIconImagePathAsync(CdnImageSize.Size128))
+            .WithImageUrl(await _breedData.GetWeaponsPreferenceImagePathAsync())
             .AddField("Caractérisques :", StatsBoostCostContent());
 
         if (_spellsData.Count > 0)
@@ -91,7 +92,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
             embed.AddField("Temporis :", $"{Formatter.Bold(_breedData.TemporisPassiveName)} :\n{_breedData.TemporisPassiveDescription}");
         }
 
-        return Task.FromResult(embed);
+        return embed;
     }
 
     private string StatsBoostCostContent()
