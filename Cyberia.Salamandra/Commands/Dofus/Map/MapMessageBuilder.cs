@@ -62,14 +62,14 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
         return (T)message;
     }
 
-    private Task<DiscordEmbedBuilder> EmbedBuilder()
+    private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Map, "Carte du monde")
             .WithTitle($"{_mapData.GetCoordinate()} ({_mapData.Id})")
             .WithDescription(_mapData.GetMapAreaName())
-            .WithImageUrl(_mapData.GetImagePath());
+            .WithImageUrl(await _mapData.GetImagePathAsync());
 
-        return Task.FromResult(embed);
+        return embed;
     }
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()

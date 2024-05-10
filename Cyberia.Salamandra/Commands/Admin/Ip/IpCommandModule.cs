@@ -1,8 +1,8 @@
 ﻿using Cyberia.Api;
 
 using DSharpPlus.Commands;
+using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
-using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -18,7 +18,7 @@ public sealed class IpCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("value"), Description("The encoded IP")]
-        [SlashMinMaxLength(MinLength = 11, MaxLength = 11)]
+        [MinMaxLength(11, 11)]
         string value)
     {
         try

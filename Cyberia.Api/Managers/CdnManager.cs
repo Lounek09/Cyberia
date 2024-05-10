@@ -39,7 +39,7 @@ public static class CdnManager
     /// </returns>
     public static async Task<string> GetImagePathAsync(string category, int id, string ext = "png")
     {
-        var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{id}.png";
+        var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{id}.{ext}";
 
         if (!s_cachedUrl.TryGetValue(url, out var exists))
         {

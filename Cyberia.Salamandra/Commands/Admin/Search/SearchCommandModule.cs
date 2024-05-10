@@ -5,8 +5,8 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
+using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
-using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -26,7 +26,7 @@ public sealed class SearchCommandModule
         [Parameter("where"), Description("Where to look for the effect")]
         SearchLocation where,
         [Parameter("id"), Description("Effect id")]
-        [SlashMinMaxValue(MinValue = 0, MaxValue = 9999)]
+        [MinMaxValue(0, 9999)]
         int effectId)
     {
         StringBuilder descriptionBuilder = new();
@@ -94,7 +94,7 @@ public sealed class SearchCommandModule
         [Parameter("where"), Description("Where to look for the criterion")]
         SearchLocation where,
         [Parameter("id"), Description("Criterion id")]
-        [SlashMinMaxLength(MinLength = 2, MaxLength = 2)]
+        [MinMaxLength(2, 2)]
         string criterionId)
     {
         StringBuilder descriptionBuilder = new();

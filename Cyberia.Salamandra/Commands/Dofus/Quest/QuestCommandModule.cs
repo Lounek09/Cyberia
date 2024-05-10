@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 
 using DSharpPlus.Commands;
+using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
@@ -19,7 +20,7 @@ public sealed class QuestCommandModule
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la quête")]
         [SlashAutoCompleteProvider<QuestAutocompleteProvider>]
-        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
+        [MinMaxLength(1, 70)]
         string value)
     {
         DiscordInteractionResponseBuilder? response = null;

@@ -4,8 +4,8 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
+using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
-using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -21,13 +21,13 @@ public sealed class CritCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("nombre"), Description("Nombre de crit")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = 999)]
+        [MinMaxValue(1, 999)]
         int number,
         [Parameter("taux"), Description("Taux de crit cible")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = 999)]
+        [MinMaxValue(1, 999)]
         int target,
         [Parameter("agilite") , Description("Votre agilité")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
+        [MinMaxValue(1, 99999)]
         int agility)
     {
         var rate = Formulas.GetCriticalRate(number, target, agility);

@@ -62,7 +62,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
         return (T)message;
     }
 
-    private Task<DiscordEmbedBuilder> EmbedBuilder()
+    private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Houses, "Agence immobilière")
             .WithTitle($"{_houseData.Name}{(string.IsNullOrEmpty(_houseData.GetCoordinate()) ? string.Empty : $" {_houseData.GetCoordinate()}")} ({_houseData.Id})")
@@ -74,10 +74,10 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
         var currentMapData = _selectedMapIndex == -1 ? _outdoorMapData : _mapsData[_selectedMapIndex];
         if (currentMapData is not null)
         {
-            embed.WithImageUrl(currentMapData.GetImagePath());
+            embed.WithImageUrl(await currentMapData.GetImagePathAsync());
         }
 
-        return Task.FromResult(embed);
+        return embed;
     }
 
     private DiscordSelectComponent HouseMapsSelectBuilder()

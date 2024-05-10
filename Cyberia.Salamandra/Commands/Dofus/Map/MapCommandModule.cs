@@ -4,6 +4,7 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
+using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
@@ -21,7 +22,7 @@ public sealed class MapCommandModule
     [Command("id"), Description("Retourne les informations d'une map à partir de son id")]
     public static async Task IdExecuteAsync(SlashCommandContext ctx,
         [Parameter("id"), Description("Id de la map")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
+        [MinMaxValue(1, 99999)]
         long id)
     {
         var mapData = DofusApi.Datacenter.MapsData.GetMapDataById((int)id);
@@ -39,10 +40,10 @@ public sealed class MapCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter("x"), Description("Coordonnée x de la map")]
-        [SlashMinMaxValue(MinValue = -666, MaxValue = 666)]
+        [MinMaxValue(-666, 666)]
         int xCoord,
         [Parameter("y"), Description("Coordonnée y de la map")]
-        [SlashMinMaxValue(MinValue = -666, MaxValue = 666)]
+        [MinMaxValue(-666, 666)]
         int yCoord)
     {
         var mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(xCoord, yCoord).ToList();
@@ -69,7 +70,7 @@ public sealed class MapCommandModule
     public static async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la sous-zone")]
         [SlashAutoCompleteProvider<MapSubAreaAutocompleteProvider>]
-        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
+        [MinMaxLength(1, 70)]
         string value)
     {
         MapSubAreaData? mapSubAreaData = null;
@@ -104,7 +105,7 @@ public sealed class MapCommandModule
     public static async Task MapAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la zone")]
         [SlashAutoCompleteProvider<MapAreaAutocompleteProvider>]
-        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
+        [MinMaxLength(1, 70)]
         string value)
     {
         MapAreaData? mapAreaData = null;

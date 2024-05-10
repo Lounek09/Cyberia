@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api.Data.Houses;
+using Cyberia.Api.Managers;
 
 using System.Text.Json.Serialization;
 
@@ -54,9 +55,9 @@ public sealed class MapData : IDofusData<int>
         return $"[{XCoord}, {YCoord}]";
     }
 
-    public string GetImagePath()
+    public async Task<string> GetImagePathAsync()
     {
-        return $"{DofusApi.Config.CdnUrl}/images/dofus/maps/{Id}.jpg";
+        return await CdnManager.GetImagePathAsync("maps", Id, "jpg");
     }
 
     public MapSubAreaData? GetMapSubAreaData()

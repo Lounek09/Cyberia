@@ -2,7 +2,6 @@
 using Cyberia.Api.Parser;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
-using Cyberia.Salamandra.DsharpPlus;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
@@ -15,7 +14,6 @@ using DSharpPlus.Entities;
 
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
@@ -31,14 +29,13 @@ public sealed class LangsCommandModule
         [Parameter("type"), Description("Type des langs à check")]
         LangType type,
         [Parameter("langue"), Description("Language des langs à check, si vide lance pour toutes les langues")]
-        [SlashChoiceProvider<LangLanguageChoiceProvider>]
-        string? languageStr = null,
+        LangLanguage? language = null,
         [Parameter("force"), Description("Force le check")]
         bool force = false)
     {
         DiscordFollowupMessageBuilder message = new();
 
-        if (languageStr is null)
+        if (language is null)
         {
             await ctx.RespondAsync($"Lancement du check des langs {Formatter.Bold(type.ToString())} dans toutes les langues...");
 
@@ -54,14 +51,12 @@ public sealed class LangsCommandModule
             return;
         }
 
-        var language = Enum.Parse<LangLanguage>(languageStr);
+        await ctx.RespondAsync($"Lancement du check des langs {Formatter.Bold(type.ToString())} en {Formatter.Bold(language.Value.ToString())}...");
 
-        await ctx.RespondAsync($"Lancement du check des langs {Formatter.Bold(type.ToString())} en {Formatter.Bold(languageStr)}...");
-
-        var repository = LangsWatcher.LangRepositories[(type, language)];
+        var repository = LangsWatcher.LangRepositories[(type, language.Value)];
         await LangsWatcher.CheckAsync(repository, force);
 
-        await ctx.FollowupAsync(message.WithContent($"Check des langs {Formatter.Bold(type.ToString())} en {Formatter.Bold(languageStr)} terminé"));
+        await ctx.FollowupAsync(message.WithContent($"Check des langs {Formatter.Bold(type.ToString())} en {Formatter.Bold(language.Value.ToString())} terminé"));
     }
 
     [Command("diff"), Description("[Owner] Lance un diff des langs entre différents types")]
@@ -73,8 +68,7 @@ public sealed class LangsCommandModule
         [Parameter("type_model"), Description("Type des langs models")]
         LangType modelType,
         [Parameter("langue"), Description("Language des langs à diff, si vide lance pour toutes les langues")]
-        [SlashChoiceProvider<LangLanguageChoiceProvider>]
-        string? languageStr = null)
+        LangLanguage? language = null)
     {
         if (type == modelType)
         {
@@ -90,15 +84,14 @@ public sealed class LangsCommandModule
 
         await ctx.DeferResponseAsync();
 
-        if (languageStr is null)
+        if (language is null)
         {
             await Task.WhenAll(Enum.GetValues<LangLanguage>()
                 .Select(x => LangsManager.LaunchManualDiff(type, modelType, x)));
         }
         else
         {
-            var language = Enum.Parse<LangLanguage>(languageStr);
-            await LangsManager.LaunchManualDiff(type, modelType, language);
+            await LangsManager.LaunchManualDiff(type, modelType, language.Value);
         }
 
         await ctx.EditResponseAsync("Done");

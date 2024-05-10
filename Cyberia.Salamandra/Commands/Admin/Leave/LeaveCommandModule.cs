@@ -1,8 +1,8 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Commands;
+using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
-using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -19,7 +19,7 @@ public sealed class LeaveCommandModule
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("id"), Description("Guild's id")]
-        [SlashMinMaxValue(MinValue = 0)]
+        [MinMaxValue(0)]
         string guildId)
     {
         try

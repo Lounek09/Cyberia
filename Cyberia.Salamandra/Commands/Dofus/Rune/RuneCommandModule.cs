@@ -6,6 +6,7 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
+using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
@@ -26,10 +27,10 @@ public sealed class RuneCommandModule
     public static async Task ItemExecuteAsync(SlashCommandContext ctx,
         [Parameter("item"), Description("Nom de l'item à briser")]
         [SlashAutoCompleteProvider<RuneItemAutocompleteProvider>]
-        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
+        [MinMaxLength(1, 70)]
         string value,
         [Parameter("quantite"), Description("Quantité d'item")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = RuneItemMessageBuilder.MaxQte)]
+        [MinMaxValue(1, RuneItemMessageBuilder.MaxQte)]
         int qte = 1)
     {
         DiscordInteractionResponseBuilder? response = null;
@@ -63,14 +64,14 @@ public sealed class RuneCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task StatExecuteAsync(SlashCommandContext ctx,
         [Parameter("niveau"), Description("Niveau de l'item")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = 200)]
+        [MinMaxValue(1, 200)]
         int itemLvl,
         [Parameter("montant") , Description("Montant de la stat")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = 9999)]
+        [MinMaxValue(1, 9999)]
         int statAmount,
         [Parameter("rune"), Description("Nom de la rune")]
         [SlashAutoCompleteProvider<RuneAutocompleteProvider>]
-        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
+        [MinMaxLength(1, 70)]
         string runeName)
     {
         var runeData = DofusApi.Datacenter.RunesData.GetRuneDataByName(runeName);

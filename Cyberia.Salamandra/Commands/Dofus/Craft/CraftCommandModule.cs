@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 
 using DSharpPlus.Commands;
+using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
@@ -19,10 +20,10 @@ public sealed class CraftCommandModule
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de l'item à craft")]
         [SlashAutoCompleteProvider<CraftAutocompleteProvider>]
-        [SlashMinMaxLength(MinLength = 1, MaxLength = 70)]
+        [MinMaxLength(1, 70)]
         string value,
         [Parameter("quantite"), Description("Quantité à craft")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = CraftMessageBuilder.MaxQte)]
+        [MinMaxValue(1, CraftMessageBuilder.MaxQte)]
         int qte = 1)
     {
         DiscordInteractionResponseBuilder? response = null;

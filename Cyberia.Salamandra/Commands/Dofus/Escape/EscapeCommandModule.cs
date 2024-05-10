@@ -4,8 +4,8 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
+using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
-using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -21,10 +21,10 @@ public sealed class EscapeCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("agilite"), Description("Votre agilité")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
+        [MinMaxValue(1, 99999)]
         int agility,
         [Parameter("agilite_ennemi"), Description("Agilité de l'ennemi à votre contact")]
-        [SlashMinMaxValue(MinValue = 1, MaxValue = 99999)]
+        [MinMaxValue(1, 99999)]
         int foeAgility)
     {
         var escapePercent = Formulas.GetEscapePercent(agility, foeAgility);
