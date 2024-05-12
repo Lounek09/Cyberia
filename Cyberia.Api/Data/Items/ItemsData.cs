@@ -92,7 +92,7 @@ public sealed class ItemsData : IDofusData
 
     public IEnumerable<ItemData> GetItemsDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         return Items.Values.Where(x =>
         {

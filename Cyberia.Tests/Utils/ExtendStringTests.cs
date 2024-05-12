@@ -200,7 +200,7 @@ public class ExtendStringTests
     {
         var value = "ÀÁÂÃÄÅ";
 
-        var result = value.NormalizeCustom();
+        var result = value.NormalizeToAscii();
 
         Assert.AreEqual("AAAAAA", result);
     }
@@ -210,7 +210,7 @@ public class ExtendStringTests
     {
         var value = "ȹ";
 
-        var result = value.NormalizeCustom();
+        var result = value.NormalizeToAscii();
 
         Assert.AreEqual("qp", result);
     }
@@ -220,7 +220,7 @@ public class ExtendStringTests
     {
         var value = "Féca ȹ";
 
-        var result = value.NormalizeCustom();
+        var result = value.NormalizeToAscii();
 
         Assert.AreEqual("Feca qp", result);
     }
@@ -230,7 +230,7 @@ public class ExtendStringTests
     {
         var value = "Feca FTW 69420";
 
-        var result = value.NormalizeCustom();
+        var result = value.NormalizeToAscii();
 
         Assert.AreEqual(value, result);
     }

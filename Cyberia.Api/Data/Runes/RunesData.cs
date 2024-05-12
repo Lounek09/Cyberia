@@ -34,23 +34,23 @@ public sealed class RunesData : IDofusData
 
     public RuneData? GetRuneDataByName(string name)
     {
-        name = name.NormalizeCustom();
+        name = name.NormalizeToAscii();
 
         return Runes.Values.FirstOrDefault(x =>
         {
-            return x.Name.NormalizeCustom().Equals(name, StringComparison.OrdinalIgnoreCase);
+            return x.Name.NormalizeToAscii().Equals(name, StringComparison.OrdinalIgnoreCase);
         });
     }
 
     public IEnumerable<RuneData> GetRunesDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         return Runes.Values.Where(x =>
         {
             return names.All(y =>
             {
-                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

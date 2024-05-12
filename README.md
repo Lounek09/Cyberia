@@ -6,7 +6,6 @@ A Discord Bot for the MMORPG Dofus Retro made with [DSharpPlus](https://github.c
 ## License
 Copyright (C) 2020-2024 Lounek
 
-
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
 by the Free Software Foundation, either version 3 of the License, or
@@ -29,3 +28,9 @@ For any inquiries or further information, please contact <a href="mailto:lounek0
 This project uses [Flare](http://www.nowrap.de/flare.html) for SWF decompilation. Please note that Flare is governed by its own licensing terms, which are separate and distinct from the licensing terms of this project under the AGPL-3.0. For the specific terms and conditions of Flare’s license, please refer to the [LICENSE](Cyberia.Langzilla/flare/LICENSE.TXT) file included in this distribution or visit the [official website](http://www.nowrap.de/flare.html) of Flare.
 
 **Important:** Flare is provided for use under specific terms that do not allow commercial use without prior permission. Users are responsible for adhering to these terms and should not assume that the commercial permissions granted under the AGPL-3.0 extend to the use of Flare.
+
+--
+
+Parts of this project incorporate code derived from the [Lucene.Net](https://github.com/apache/lucenenet) project. Such code is provided under the Apache License, Version 2.0. You can find a copy of this license at [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0). The files containing these materials are identified in the source code along with the original licensing information from the Lucene.Net project.
+
+**Important:** This licensing does not affect the usability of this software under the AGPL-3.0 for general purposes, but users must comply with the terms of the Apache License, Version 2.0, where applicable.

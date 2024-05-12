@@ -34,7 +34,7 @@ public sealed class CraftsData : IDofusData
 
     public IEnumerable<CraftData> GetCraftsDataByItemName(string itemName)
     {
-        var itemNames = itemName.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var itemNames = itemName.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var craftData in Crafts.Values)
         {

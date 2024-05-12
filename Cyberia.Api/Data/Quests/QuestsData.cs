@@ -93,13 +93,13 @@ public sealed class QuestsData : IDofusData
 
     public IEnumerable<QuestData> GetQuestsDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         return Quests.Values.Where(x =>
         {
             return names.All(y =>
             {
-                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

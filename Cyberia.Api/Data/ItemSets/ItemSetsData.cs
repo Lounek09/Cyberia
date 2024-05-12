@@ -48,13 +48,13 @@ public sealed class ItemSetsData : IDofusData
 
     public IEnumerable<ItemSetData> GetItemSetsDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         return ItemSets.Values.Where(x =>
         {
             return names.All(y =>
             {
-                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

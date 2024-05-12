@@ -124,11 +124,11 @@ public sealed class LangRepository
     /// <returns>An enumerable collection of langs that contain the specified name.</returns>
     public IEnumerable<Lang> GetAllByName(string name)
     {
-        name = name.NormalizeCustom();
+        name = name.NormalizeToAscii();
 
         return Langs.Where(x =>
         {
-            return x.Name.NormalizeCustom().Contains(name, StringComparison.OrdinalIgnoreCase);
+            return x.Name.NormalizeToAscii().Contains(name, StringComparison.OrdinalIgnoreCase);
         });
     }
 

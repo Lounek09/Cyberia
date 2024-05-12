@@ -99,13 +99,13 @@ public sealed class MonstersData : IDofusData
 
     public IEnumerable<MonsterData> GetMonstersDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         return Monsters.Values.Where(x =>
         {
             return names.All(y =>
             {
-                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

@@ -49,20 +49,20 @@ public sealed class BreedsData : IDofusData
 
     public BreedData? GetBreedDataByName(string name)
     {
-        name = name.NormalizeCustom();
+        name = name.NormalizeToAscii();
 
-        return Breeds.Values.FirstOrDefault(x => x.Name.NormalizeCustom().Equals(name));
+        return Breeds.Values.FirstOrDefault(x => x.Name.NormalizeToAscii().Equals(name));
     }
 
     public IEnumerable<BreedData> GetBreedsDataByName(string name)
     {
-        var names = name.NormalizeCustom().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         return Breeds.Values.Where(x =>
         {
             return names.All(y =>
             {
-                return x.Name.NormalizeCustom().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
