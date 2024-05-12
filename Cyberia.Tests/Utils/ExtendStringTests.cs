@@ -193,10 +193,10 @@ public class ExtendStringTests
 
     #endregion
 
-    #region NormalizeCustom
+    #region NormalizeToAscii
 
     [TestMethod]
-    public void NormalizeCustom_WithAccentedCharacters_ReturnsAsciiEquivalent()
+    public void NormalizeToAscii_WithAccentedCharacters_ReturnsAsciiEquivalent()
     {
         var value = "ÀÁÂÃÄÅ";
 
@@ -206,7 +206,7 @@ public class ExtendStringTests
     }
 
     [TestMethod]
-    public void NormalizeCustom_WithSpecialCharacters_MapsToDefinedCharacters()
+    public void NormalizeToAscii_WithSpecialCharacters_MapsToDefinedCharacters()
     {
         var value = "ȹ";
 
@@ -216,7 +216,7 @@ public class ExtendStringTests
     }
 
     [TestMethod]
-    public void NormalizeCustom_WithMixedContent_NormalizesCorrectly()
+    public void NormalizeToAscii_WithMixedContent_NormalizesCorrectly()
     {
         var value = "Féca ȹ";
 
@@ -226,7 +226,7 @@ public class ExtendStringTests
     }
 
     [TestMethod]
-    public void NormalizeCustom_WithNonTargetedCharacters_LeavesThemUnchanged()
+    public void NormalizeToAscii_WithNonTargetedCharacters_LeavesThemUnchanged()
     {
         var value = "Feca FTW 69420";
 
