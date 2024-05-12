@@ -56,26 +56,26 @@ public static class Program
 
             if (config.EnableCheckCytrus)
             {
-                Log.Information("Waching Cytrus each {CytrusInterval}",
+                Log.Information("Watching Cytrus each {CytrusInterval}",
                     config.CheckCytrusInterval);
                 CytrusWatcher.Watch(TimeSpan.FromSeconds(10), config.CheckCytrusInterval);
             }
 
             if (config.EnableCheckLang)
             {
-                Log.Information("Waching {LangType} Langs each {OfficialLangInterval}", LangType.Official, config.CheckLangInterval);
+                Log.Information("Watching {LangType} Langs each {OfficialLangInterval}", LangType.Official, config.CheckLangInterval);
                 LangsWatcher.Watch(LangType.Official, TimeSpan.FromSeconds(20), config.CheckLangInterval);
             }
 
             if (config.EnableCheckBetaLang)
             {
-                Log.Information("Waching {LangType} Langs each {BetaLangInterval}", LangType.Beta, config.CheckBetaLangInterval);
+                Log.Information("Watching {LangType} Langs each {BetaLangInterval}", LangType.Beta, config.CheckBetaLangInterval);
                 LangsWatcher.Watch(LangType.Beta, TimeSpan.FromSeconds(140), config.CheckBetaLangInterval);
             }
 
             if (config.EnableCheckTemporisLang)
             {
-                Log.Information("Waching {LangType} Langs each {TemporisLangInterval}", LangType.Temporis, config.CheckTemporisLangInterval);
+                Log.Information("Watching {LangType} Langs each {TemporisLangInterval}", LangType.Temporis, config.CheckTemporisLangInterval);
                 LangsWatcher.Watch(LangType.Temporis, TimeSpan.FromSeconds(260), config.CheckCytrusInterval);
             }
 
