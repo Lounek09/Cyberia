@@ -24,7 +24,7 @@ public sealed record MapSubAreaCriterion : Criterion, ICriterion
 
     public MapSubAreaData? GetMapSubAreaData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
+        return DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(MapSubAreaId);
     }
 
     protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ public sealed record MapSubAreaCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        var mapSubAreaName = DofusApi.Datacenter.MapsData.GetMapSubAreaNameById(MapSubAreaId);
+        var mapSubAreaName = DofusApi.Datacenter.MapsRepository.GetMapSubAreaNameById(MapSubAreaId);
 
         return GetDescription(mapSubAreaName);
     }

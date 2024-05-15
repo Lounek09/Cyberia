@@ -91,12 +91,12 @@ public sealed class MonsterData : IDofusData<int>
 
     public MonsterRaceData? GetMonsterRaceData()
     {
-        return DofusApi.Datacenter.MonstersData.GetMonsterRaceDataById(MonsterRaceId);
+        return DofusApi.Datacenter.MonstersRepository.GetMonsterRaceDataById(MonsterRaceId);
     }
 
     public AlignmentData? GetAlignmentData()
     {
-        return DofusApi.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
+        return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentDataById(AlignmentId);
     }
 
     public MonsterGradeData? GetMonsterGradeData(int grade = 1)

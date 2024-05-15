@@ -36,7 +36,7 @@ public sealed class HouseData : IDofusData<int>
 
     public IEnumerable<MapData> GetMapsData()
     {
-        foreach (var houseMapData in DofusApi.Datacenter.HousesData.GetHouseMapsDataByHouseId(Id))
+        foreach (var houseMapData in DofusApi.Datacenter.HousesRepository.GetHouseMapsDataByHouseId(Id))
         {
             var mapData = houseMapData.GetMapData();
             if (mapData is not null)
@@ -48,7 +48,7 @@ public sealed class HouseData : IDofusData<int>
 
     public MapData? GetOutdoorMapData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapDataById(OutdoorMapId);
+        return DofusApi.Datacenter.MapsRepository.GetMapDataById(OutdoorMapId);
     }
 
     public string GetCoordinate()

@@ -27,7 +27,7 @@ public sealed class ItemCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(id);
+            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(id);
             if (itemData is not null)
             {
                 response = await new ItemMessageBuilder(itemData).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -35,7 +35,7 @@ public sealed class ItemCommandModule
         }
         else
         {
-            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsDataByName(value).ToList();
+            var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(value).ToList();
             if (itemsData.Count == 1)
             {
                 response = await new ItemMessageBuilder(itemsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

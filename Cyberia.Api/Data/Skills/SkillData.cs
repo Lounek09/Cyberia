@@ -43,24 +43,24 @@ public sealed class SkillData : IDofusData<int>
 
     public JobData? GetJobData()
     {
-        return DofusApi.Datacenter.JobsData.GetJobDataById(JobId);
+        return DofusApi.Datacenter.JobsRepository.GetJobDataById(JobId);
     }
 
     public InteractiveObjectData? GetInteractiveObjectData()
     {
-        return DofusApi.Datacenter.InteractiveObjectsData.GetInteractiveObjectDataById(InteractiveObjectId);
+        return DofusApi.Datacenter.InteractiveObjectsRepository.GetInteractiveObjectDataById(InteractiveObjectId);
     }
 
     public ItemTypeData? GetItemTypeDataForgemagus()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeIdForgemagus);
+        return DofusApi.Datacenter.ItemsRepository.GetItemTypeDataById(ItemTypeIdForgemagus);
     }
 
     public IEnumerable<CraftData> GetCraftsData()
     {
         foreach (var craftId in CraftsId)
         {
-            var craftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(craftId);
+            var craftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(craftId);
             if (craftData is not null)
             {
                 yield return craftData;
@@ -70,6 +70,6 @@ public sealed class SkillData : IDofusData<int>
 
     public ItemData? GetHarvestedItemData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemDataById(HarvestedItemId);
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(HarvestedItemId);
     }
 }

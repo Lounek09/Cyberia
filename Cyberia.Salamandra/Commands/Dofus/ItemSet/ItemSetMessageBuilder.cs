@@ -38,7 +38,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var itemSetId) &&
             int.TryParse(parameters[1], out var nbItemSelected))
         {
-            var itemSetData = DofusApi.Datacenter.ItemSetsData.GetItemSetDataById(itemSetId);
+            var itemSetData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(itemSetId);
             if (itemSetData is not null)
             {
                 return new(itemSetData, nbItemSelected);

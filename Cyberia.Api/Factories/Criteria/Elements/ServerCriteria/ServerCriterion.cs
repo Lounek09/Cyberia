@@ -24,7 +24,7 @@ public sealed record ServerCriterion : Criterion, ICriterion
 
     public ServerData? GetServerData()
     {
-        return DofusApi.Datacenter.ServersData.GetServerDataById(ServerId);
+        return DofusApi.Datacenter.ServersRepository.GetServerDataById(ServerId);
     }
 
     protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ public sealed record ServerCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        var serverName = DofusApi.Datacenter.ServersData.GetServerNameById(ServerId);
+        var serverName = DofusApi.Datacenter.ServersRepository.GetServerNameById(ServerId);
 
         return GetDescription(serverName);
     }

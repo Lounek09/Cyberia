@@ -21,12 +21,12 @@ public sealed record QuestStartEffect : Effect, IEffect
 
     public QuestData? GetQuestData()
     {
-        return DofusApi.Datacenter.QuestsData.GetQuestDataById(QuestId);
+        return DofusApi.Datacenter.QuestsRepository.GetQuestDataById(QuestId);
     }
 
     public Description GetDescription()
     {
-        var questName = DofusApi.Datacenter.QuestsData.GetQuestNameById(QuestId);
+        var questName = DofusApi.Datacenter.QuestsRepository.GetQuestNameById(QuestId);
 
         return GetDescription(string.Empty, string.Empty, questName);
     }

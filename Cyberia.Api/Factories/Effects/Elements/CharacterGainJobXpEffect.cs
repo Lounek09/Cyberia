@@ -23,12 +23,12 @@ public sealed record CharacterGainJobXpEffect : Effect, IEffect
 
     public JobData? GetJobData()
     {
-        return DofusApi.Datacenter.JobsData.GetJobDataById(JobId);
+        return DofusApi.Datacenter.JobsRepository.GetJobDataById(JobId);
     }
 
     public Description GetDescription()
     {
-        var jobName = DofusApi.Datacenter.JobsData.GetJobNameById(JobId);
+        var jobName = DofusApi.Datacenter.JobsRepository.GetJobNameById(JobId);
 
         return GetDescription(XpAmount, jobName);
     }

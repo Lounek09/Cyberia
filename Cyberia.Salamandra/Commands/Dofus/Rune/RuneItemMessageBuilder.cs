@@ -35,7 +35,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var itemId) &&
             int.TryParse(parameters[1], out var qte))
         {
-            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemId);
+            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
                 return new(itemData, qte);

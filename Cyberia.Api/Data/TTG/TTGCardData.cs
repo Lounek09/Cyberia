@@ -29,11 +29,11 @@ public sealed class TTGCardData : IDofusData<int>
 
     public ItemData? GetItemData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
     public TTGEntityData? GetTTGEntityData()
     {
-        return DofusApi.Datacenter.TTGData.GetTTGEntityDataById(ItemId);
+        return DofusApi.Datacenter.TTGRepository.GetTTGEntityDataById(ItemId);
     }
 }

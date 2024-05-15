@@ -23,12 +23,12 @@ public sealed record SummonStaticCreatureEffect : Effect, IEffect
 
     public MonsterData? GetMonsterData()
     {
-        return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
+        return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
     public Description GetDescription()
     {
-        var monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
+        var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
 
         return GetDescription(monsterName, Grade);
     }

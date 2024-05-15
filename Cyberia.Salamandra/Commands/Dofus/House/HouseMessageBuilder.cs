@@ -34,7 +34,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var houseId) &&
             int.TryParse(parameters[1], out var selectedMapIndex))
         {
-            var houseData = DofusApi.Datacenter.HousesData.GetHouseDataById(houseId);
+            var houseData = DofusApi.Datacenter.HousesRepository.GetHouseDataById(houseId);
             if (houseData is not null)
             {
                 return new(houseData, selectedMapIndex);

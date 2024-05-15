@@ -8,7 +8,7 @@ public sealed class RuneAutocompleteProvider : AutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.RunesData.GetRunesDataByName(ctx.UserInput)
+        return DofusApi.Datacenter.RunesRepository.GetRunesDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
             .ToDictionary(x => x.Name, x => (object)x.Name);
     }

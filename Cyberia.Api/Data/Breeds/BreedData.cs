@@ -2,6 +2,7 @@
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Managers;
 using Cyberia.Api.Values;
+using Cyberia.Langzilla.Enums;
 
 using System.Text.Json.Serialization;
 
@@ -139,8 +140,9 @@ public sealed class BreedData : IDofusData<int>
     {
         foreach (var spellId in SpellsId)
         {
-            var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spellId);
-            if (spellData is not null && (!DofusApi.Config.Temporis || spellData.SpellCategory is SpellCategory.TemporisBreed))
+            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spellId);
+            if (spellData is not null &&
+                (DofusApi.Config.Type != LangType.Temporis || spellData.SpellCategory is SpellCategory.TemporisBreed))
             {
                 yield return spellData;
             }
@@ -149,11 +151,11 @@ public sealed class BreedData : IDofusData<int>
 
     public SpellData? GetSpecialSpellData()
     {
-        return DofusApi.Datacenter.SpellsData.GetSpellDataById(SpecialSpellId);
+        return DofusApi.Datacenter.SpellsRepository.GetSpellDataById(SpecialSpellId);
     }
 
     public ItemSetData? GetItemSetData()
     {
-        return DofusApi.Datacenter.ItemSetsData.GetItemSetDataById(ItemSetId);
+        return DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(ItemSetId);
     }
 }

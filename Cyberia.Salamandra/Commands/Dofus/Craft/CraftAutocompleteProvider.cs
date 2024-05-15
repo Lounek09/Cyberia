@@ -8,11 +8,11 @@ public sealed class CraftAutocompleteProvider : AutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(ctx.UserInput)
+        return DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(ctx.UserInput)
            .Take(Constant.MaxChoice)
            .ToDictionary(x =>
            {
-               var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(x.Id);
+               var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id);
                return $"{itemName.WithMaxLength(90)} ({x.Id})";
            },
            x => (object)x.Id.ToString());

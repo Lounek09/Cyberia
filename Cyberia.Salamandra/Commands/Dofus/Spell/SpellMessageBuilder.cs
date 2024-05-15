@@ -42,7 +42,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var spellId) &&
             int.TryParse(parameters[1], out var selectedLevel))
         {
-            var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spellId);
+            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spellId);
             if (spellData is not null)
             {
                 return new SpellMessageBuilder(spellData, selectedLevel);

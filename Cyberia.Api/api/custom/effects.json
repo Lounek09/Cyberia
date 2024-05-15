@@ -1,0 +1,503 @@
+﻿{
+  "CE": [
+    {
+      "id": 4,
+      "d": "Téléporte à une distance de #1 cases maximum"
+    },
+    {
+      "id": 10,
+      "d": "Permet d'utiliser l'attitude #3"
+    },
+    {
+      "id": 34,
+      "d": "Commence la quête #3",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 35,
+      "d": "Termine la quête #3",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 90,
+      "d": "Donne #1{~1~2 à }#2% de sa vie"
+    },
+    {
+      "id": 146,
+      "d": "Change les paroles (#3)"
+    },
+    {
+      "id": 148,
+      "d": "Quelqu'un vous suit ! (#3)"
+    },
+    {
+      "id": 149,
+      "d": "Change l'apparence (#3)"
+    },
+    {
+      "id": 160,
+      "d": "+#1{~1~2 à }#2% de chance d'esquiver les pertes de PA"
+    },
+    {
+      "id": 161,
+      "d": "+#1{~1~2 à }#2% de chance d'esquiver les pertes de PM"
+    },
+    {
+      "id": 162,
+      "d": "-#1{~1~2 à }#2% de chance d'esquiver les pertes de PA"
+    },
+    {
+      "id": 163,
+      "d": "-#1{~1~2 à }#2% de chance d'esquiver les pertes de PM"
+    },
+    {
+      "id": 168,
+      "d": "-#1{~1~2 à -}#2 PA inesquivable"
+    },
+    {
+      "id": 169,
+      "d": "-#1{~1~2 à -}#2 PM inesquivable"
+    },
+    {
+      "id": 181,
+      "d": "Invoque : #1 (grade #2)"
+    },
+    {
+      "id": 185,
+      "d": "Invoque une créature statique : #1 (grade #2)"
+    },
+    {
+      "id": 192,
+      "d": "Supprime l'objet #1",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 193,
+      "d": "Ajoute #2 #3 (#1)",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 194,
+      "d": "Gagne #1{~1~2 à }#2 kamas"
+    },
+    {
+      "id": 201,
+      "d": "Pose un objet au sol (#3)"
+    },
+    {
+      "id": 205,
+      "d": "Effet 205 inconnu (#1, #2, #3, #4)",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 206,
+      "d": "Ressuscite la cible avec #3 points d'énergie)"
+    },
+    {
+      "id": 208,
+      "d": "Lance l'animation de sort #3"
+    },
+    {
+      "id": 210,
+      "d": "#1{~1~2 à }#2% de résistance à la terre"
+    },
+    {
+      "id": 211,
+      "d": "#1{~1~2 à }#2% de résistance à l'eau"
+    },
+    {
+      "id": 212,
+      "d": "#1{~1~2 à }#2% de résistance à l'air"
+    },
+    {
+      "id": 213,
+      "d": "#1{~1~2 à }#2% de résistance au feu"
+    },
+    {
+      "id": 214,
+      "d": "#1{~1~2 à }#2% de résistance neutre"
+    },
+    {
+      "id": 215,
+      "d": "#1{~1~2 à }#2% de faiblesse face à la terre"
+    },
+    {
+      "id": 216,
+      "d": "#1{~1~2 à }#2% de faiblesse face à l'eau "
+    },
+    {
+      "id": 217,
+      "d": "#1{~1~2 à }#2% de faiblesse face à l'air"
+    },
+    {
+      "id": 218,
+      "d": "#1{~1~2 à }#2% de faiblesse face au feu"
+    },
+    {
+      "id": 219,
+      "d": "#1{~1~2 à }#2% de faiblesse neutre"
+    },
+    {
+      "id": 221,
+      "d": "Qu'y a-t-il là dedans ? (#2 #3)"
+    },
+    {
+      "id": 222,
+      "d": "Qu'y a-t-il là dedans ? (#1 item(s) du lot #3)"
+    },
+    {
+      "id": 228,
+      "d": "Lance l'animation de sort #3",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 229,
+      "d": "Récupère une monture ! (#1)"
+    },
+    {
+      "id": 233,
+      "d": "Retire #2 #3 aux personnages autour de vous",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 250,
+      "d": "#1{~1~2 à }#2% de res. terre face aux combattants"
+    },
+    {
+      "id": 251,
+      "d": "#1{~1~2 à }#2% de res. eau face aux combattants"
+    },
+    {
+      "id": 252,
+      "d": "#1{~1~2 à }#2% de res. air face aux combattants"
+    },
+    {
+      "id": 253,
+      "d": "#1{~1~2 à }#2% de res. feu face aux combattants"
+    },
+    {
+      "id": 254,
+      "d": "#1{~1~2 à }#2% de res. neutre face aux combattants"
+    },
+    {
+      "id": 255,
+      "d": "#1{~1~2 à }#2% de faiblesse terre face aux combattants"
+    },
+    {
+      "id": 256,
+      "d": "#1{~1~2 à }#2% de faiblesse eau face aux combattants"
+    },
+    {
+      "id": 257,
+      "d": "#1{~1~2 à }#2% de faiblesse air face aux combattants"
+    },
+    {
+      "id": 258,
+      "d": "#1{~1~2 à }#2% de faiblesse feu face aux combattants"
+    },
+    {
+      "id": 259,
+      "d": "#1{~1~2 à }#2% de faiblesse neutre face aux combattants"
+    },
+    {
+      "id": 260,
+      "d": "+#1{~1~2 à }#2 de res. terre face aux combattants"
+    },
+    {
+      "id": 261,
+      "d": "+#1{~1~2 à }#2 de res. eau face aux combattants"
+    },
+    {
+      "id": 280,
+      "d": "Diminue la portée minimale du sort #1 de #3",
+      "c": 0,
+      "o": "+",
+      "t": true
+    },
+    {
+      "id": 295,
+      "d": "Augmente la portée minimale du sort #1 de #3",
+      "c": 0,
+      "o": "-"
+    },
+    {
+      "id": 296,
+      "d": "Augmente le coût en PA du sort #1 de #3",
+      "c": 0,
+      "o": "-"
+    },
+    {
+      "id": 297,
+      "d": "Désactive le lancer du sort #1 sur une case occupée",
+      "c": 0,
+      "o": "-"
+    },
+    {
+      "id": 298,
+      "d": "Désactive le lancer du sort #1 sur une case libre",
+      "c": 0,
+      "o": "-"
+    },
+    {
+      "id": 299,
+      "d": "Active le lancer du sort #1 sur une case libre",
+      "c": 0,
+      "o": "+"
+    },
+    {
+      "id": 300,
+      "d": "Lance #1 au rang #2",
+      "c": 29,
+      "o": "/"
+    },
+    {
+      "id": 333,
+      "d": "Change la couleur #1 par #2"
+    },
+    {
+      "id": 401,
+      "d": "Pose un glyphe de début de tour de rang #2"
+    },
+    {
+      "id": 402,
+      "d": "Pose un glyphe de fin de tour de rang #2"
+    },
+    {
+      "id": 405,
+      "d": "Tue et remplace par #1 (grade #2)"
+    },
+    {
+      "id": 406,
+      "d": "Enlève les effets du sort #3"
+    },
+    {
+      "id": 521,
+      "d": "Indestructible",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 601,
+      "d": "Téléporte en #2 (#1)"
+    },
+    {
+      "id": 604,
+      "d": "Apprend le sort #3 au rang #2"
+    },
+    {
+      "id": 605,
+      "d": "+#1{~1~2 à }#2 points d'XP"
+    },
+    {
+      "id": 614,
+      "d": "+#1 d'XP dans le métier #2"
+    },
+    {
+      "id": 626,
+      "d": "Réinitialise les caractéristiques"
+    },
+    {
+      "id": 628,
+      "d": "Invoque : #3 (grade #1)"
+    },
+    {
+      "id": 629,
+      "d": "Apprend le sort #3"
+    },
+    {
+      "id": 645,
+      "d": "Ressuscite les alliés présents sur la carte avec #3 points d'énergie"
+    },
+    {
+      "id": 721,
+      "d": "Propriétaire de la goule",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 722,
+      "d": "Apprend temporairement le sort #3 au rang #1",
+      "c": 0,
+      "o": "",
+      "t": true
+    },
+    {
+      "id": 723,
+      "d": "Ajoute l'aura #3",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 724,
+      "d": "Affiche le titre : « #3 »"
+    },
+    {
+      "id": 725,
+      "d": "Ouvre l'interface de modification de blason et nom de guilde"
+    },
+    {
+      "id": 731,
+      "d": "Agresse les joueurs de l'alignement ennemi automatiquement à une distance de #1 case(s) maximum"
+    },
+    {
+      "id": 740,
+      "d": "Poids maximum de fragments ajoutable : #3"
+    },
+    {
+      "id": 741,
+      "d": "Poids total de fragments ajouté : #3"
+    },
+    {
+      "id": 742,
+      "d": "Fragment d'âme de Shushu"
+    },
+    {
+      "id": 780,
+      "d": "Invoque le dernier allié mort avec #1{~1~2 à }#2% de ses PDV"
+    },
+    {
+      "id": 785,
+      "d": "Force le déplacement dans 4 directions"
+    },
+    {
+      "id": 787,
+      "d": "Lance #1 au rang #2"
+    },
+    {
+      "id": 791,
+      "d": "Prépare #1{~1~2 à }#2 parchemins pour mercenaire"
+    },
+    {
+      "id": 810,
+      "d": "Taille : #3 poces (#1{~1~2 à }#2)"
+    },
+    {
+      "id": 826,
+      "d": "Téléporte",
+      "c": 0,
+      "o": "+",
+      "t": true
+    },
+    {
+      "id": 830,
+      "d": "Ouvre l'interface de guilde puis téléporte dans un/une #3",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 850,
+      "d": "Ouvre l'interface de changement de nom",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 851,
+      "d": "Ouvre l'interface de changement de couleurs",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 852,
+      "d": "Change de sexe",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 853,
+      "d": "Ouvre l'interface de mimibiotage",
+      "c": 0,
+      "o": ""
+    },
+    {
+      "id": 939,
+      "d": "Augmente les capacités du familier #3 (+#2 poids bonus)"
+    },
+    {
+      "id": 940,
+      "d": "Capacités accrues (+#3 stats bonus)"
+    },
+    {
+      "id": 945,
+      "d": "Donner un gène à une monture (#3)"
+    },
+    {
+      "id": 970,
+      "d": "Objet vivant : #3"
+    },
+    {
+      "id": 971,
+      "d": "Corpulence : #3"
+    },
+    {
+      "id": 972,
+      "d": "Niveau : #3"
+    },
+    {
+      "id": 973,
+      "d": "Compatible avec : #3"
+    },
+    {
+      "id": 974,
+      "d": "Expérience : #3"
+    },
+    {
+      "id": 975,
+      "d": "Niveau maximum : #3"
+    },
+    {
+      "id": 984,
+      "d": "Propriétaire légitime : #4"
+    },
+    {
+      "id": 995,
+      "d": "Consulter la fiche de la monture (#1), expire le #2"
+    },
+    {
+      "id": 999,
+      "d": "Téléporte en #2 (#1)"
+    },
+    {
+      "id": 2001,
+      "d": "Gagne #1{~1~2 à }#2 kamas"
+    },
+    {
+      "id": 2101,
+      "d": "Contient une carte Tragic The Gardening (#3)"
+    },
+    {
+      "id": 2102,
+      "d": "Ajoute la carte au classeur (#3)"
+    },
+    {
+      "id": 2107,
+      "d": "Contient une carte Tragic The Gardening (#3)"
+    },
+    {
+      "id": 2111,
+      "d": "Diminue de #1{~1~2 à }#2 le renvoi de dommages"
+    },
+    {
+      "id": 2135,
+      "d": "#1{~1~2 à }#2 vol dans toutes les caractéristiques"
+    },
+    {
+      "id": 2143,
+      "d": "Téléporte #3 à une distance de #1 cases maximum"
+    },
+    {
+      "id": 2144,
+      "d": "Ajoute #1 (grade #2) au combat"
+    },
+    {
+      "id": 2150,
+      "d": "Affiche les effets de #3"
+    }
+  ]
+}

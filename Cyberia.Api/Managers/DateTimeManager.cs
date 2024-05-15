@@ -22,13 +22,13 @@ public static class DateManager
 
     public static DateTime ToInGameDateTime(this DateTime dateTime)
     {
-        return dateTime.AddYears(DofusApi.Datacenter.TimeZonesData.YearLess);
+        return dateTime.AddYears(DofusApi.Datacenter.TimeZonesRepository.YearLess);
     }
 
     public static string ToRolePlayString(this DateTime dateTime)
     {
         dateTime = dateTime.ToInGameDateTime();
 
-        return $"{dateTime:dd} {DofusApi.Datacenter.TimeZonesData.GetMonth(dateTime.DayOfYear)} {dateTime:yyy}";
+        return $"{dateTime:dd} {DofusApi.Datacenter.TimeZonesRepository.GetMonth(dateTime.DayOfYear)} {dateTime:yyy}";
     }
 }

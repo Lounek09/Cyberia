@@ -3,6 +3,7 @@ using Cyberia.Api.Data;
 using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.Spells;
+using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.Commands.Dofus.ItemSet;
 using Cyberia.Salamandra.Commands.Dofus.Spell;
 using Cyberia.Salamandra.Enums;
@@ -39,7 +40,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
             parameters.Length > 0 &&
             int.TryParse(parameters[0], out var breedId))
         {
-            var breedData = DofusApi.Datacenter.BreedsData.GetBreedDataById(breedId);
+            var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
             if (breedData is not null)
             {
                 return new(breedData);
@@ -87,7 +88,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
             embed.AddField("Sorts :", string.Join('\n', _spellsData.Select(x => $"- Niv.{x.GetNeededLevel()} {Formatter.Bold(x.Name)}")));
         }
 
-        if (DofusApi.Config.Temporis)
+        if (DofusApi.Config.Type == LangType.Temporis)
         {
             embed.AddField("Temporis :", $"{Formatter.Bold(_breedData.TemporisPassiveName)} :\n{_breedData.TemporisPassiveDescription}");
         }

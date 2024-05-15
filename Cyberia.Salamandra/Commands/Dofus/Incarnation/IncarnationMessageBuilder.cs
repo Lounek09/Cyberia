@@ -41,7 +41,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
             parameters.Length > 0 &&
             int.TryParse(parameters[0], out var incarnationId))
         {
-            var incarnartionData = DofusApi.Datacenter.IncarnationsData.GetIncarnationDataByItemId(incarnationId);
+            var incarnartionData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(incarnationId);
             if (incarnartionData is not null)
             {
                 return new(incarnartionData);
@@ -85,7 +85,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
             embed.WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description))
                 .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128))
                 .AddField("Niveau :", _itemData.Level.ToString(), true)
-                .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true)
+                .AddField("Type :", DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(_itemData.ItemTypeId), true)
                 .AddEmptyField(true);
 
             IEnumerable<IEffect> effects = _incarnationData.GetRealEffects();

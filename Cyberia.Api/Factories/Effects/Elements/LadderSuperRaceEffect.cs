@@ -23,12 +23,12 @@ public sealed record LadderSuperRaceEffect : Effect, IEffect
 
     public MonsterSuperRaceData? GetMonsterSuperRaceData()
     {
-        return DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceDataById(MonsterSuperRaceId);
+        return DofusApi.Datacenter.MonstersRepository.GetMonsterSuperRaceDataById(MonsterSuperRaceId);
     }
 
     public Description GetDescription()
     {
-        var monsterSuperRace = DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceNameById(MonsterSuperRaceId);
+        var monsterSuperRace = DofusApi.Datacenter.MonstersRepository.GetMonsterSuperRaceNameById(MonsterSuperRaceId);
 
         return GetDescription(monsterSuperRace, string.Empty, Count);
     }

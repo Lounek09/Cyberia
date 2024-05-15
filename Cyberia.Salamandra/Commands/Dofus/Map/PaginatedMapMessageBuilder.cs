@@ -39,21 +39,21 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
                         int.TryParse(parameters[3], out var xCoord) &&
                         int.TryParse(parameters[4], out var yCoord))
                     {
-                        mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(xCoord, yCoord).ToList();
+                        mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(xCoord, yCoord).ToList();
                         search = $"{parameters[3]}{InteractionManager.PacketParameterSeparator}{parameters[4]}";
                     }
                     break;
                 case MapSearchCategory.MapSubArea:
                     if (int.TryParse(parameters[3], out var mapSubAreaId))
                     {
-                        mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByMapSubAreaId(mapSubAreaId).ToList();
+                        mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByMapSubAreaId(mapSubAreaId).ToList();
                         search = parameters[3];
                     }
                     break;
                 case MapSearchCategory.MapArea:
                     if (int.TryParse(parameters[3], out var mapAreaId))
                     {
-                        mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByMapAreaId(mapAreaId).ToList();
+                        mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByMapAreaId(mapAreaId).ToList();
                         search = parameters[3];
                     }
                     break;

@@ -19,7 +19,7 @@ public static class CraftComponentsBuilder
             .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
-                var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(x.Id);
+                var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id);
                 return new DiscordSelectComponentOption(
                     itemName.WithMaxLength(100),
                     CraftMessageBuilder.GetPacket(x.Id, qte),

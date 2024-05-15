@@ -21,7 +21,7 @@ public sealed record LaunchSpellLevelEffect : Effect, IEffect
 
     public SpellLevelData? GetSpellLevelData()
     {
-        return DofusApi.Datacenter.SpellsData.GetSpellLevelDataById(SpellLevelId);
+        return DofusApi.Datacenter.SpellsRepository.GetSpellLevelDataById(SpellLevelId);
     }
 
     public Description GetDescription()

@@ -24,7 +24,7 @@ public sealed record BreedCriterion : Criterion, ICriterion
 
     public BreedData? GetBreedData()
     {
-        return DofusApi.Datacenter.BreedsData.GetBreedDataById(BreedId);
+        return DofusApi.Datacenter.BreedsRepository.GetBreedDataById(BreedId);
     }
 
     protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ public sealed record BreedCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        var breedName = DofusApi.Datacenter.BreedsData.GetBreedNameById(BreedId);
+        var breedName = DofusApi.Datacenter.BreedsRepository.GetBreedNameById(BreedId);
 
         return GetDescription(breedName);
     }

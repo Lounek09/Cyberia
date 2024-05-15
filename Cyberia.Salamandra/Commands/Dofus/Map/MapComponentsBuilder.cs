@@ -55,7 +55,7 @@ public static class MapComponentsBuilder
                 return new DiscordSelectComponentOption(
                     x.Name.WithMaxLength(100),
                     PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, x.Id.ToString()),
-                    DofusApi.Datacenter.MapsData.GetMapAreaNameById(x.MapAreaId));
+                    DofusApi.Datacenter.MapsRepository.GetMapAreaNameById(x.MapAreaId));
             });
 
         return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une sous-zone pour afficher ses maps", options, disable);
@@ -70,7 +70,7 @@ public static class MapComponentsBuilder
                 return new DiscordSelectComponentOption(
                     x.Name.WithMaxLength(100),
                     PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, x.Id.ToString()),
-                    DofusApi.Datacenter.MapsData.GetMapSuperAreaNameById(x.MapSuperAreaId));
+                    DofusApi.Datacenter.MapsRepository.GetMapSuperAreaNameById(x.MapSuperAreaId));
             });
 
         return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une zone pour afficher ses maps", options, disable);

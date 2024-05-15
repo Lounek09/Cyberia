@@ -28,7 +28,7 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
             parameters.Length > 2 &&
             int.TryParse(parameters[1], out var selectedPageIndex))
         {
-            var questsData = DofusApi.Datacenter.QuestsData.GetQuestsDataByName(parameters[2]).ToList();
+            var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(parameters[2]).ToList();
             if (questsData.Count > 0)
             {
                 return new(questsData, parameters[2], selectedPageIndex);

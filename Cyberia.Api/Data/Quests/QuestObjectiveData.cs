@@ -30,7 +30,7 @@ public sealed class QuestObjectiveData : IDofusData<int>
 
     public QuestObjectiveTypeData? GetQuestObjectiveTypeData()
     {
-        return DofusApi.Datacenter.QuestsData.GetQuestObjectiveTypeDataById(QuestObjectiveTypeId);
+        return DofusApi.Datacenter.QuestsRepository.GetQuestObjectiveTypeDataById(QuestObjectiveTypeId);
     }
 
     public string GetCoordinate()

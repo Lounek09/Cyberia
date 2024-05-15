@@ -29,7 +29,7 @@ public sealed record CharacterSummonMonsterGroupEffect : Effect, IEffect
     {
         foreach (var monsterId in MonstersId)
         {
-            var monster = DofusApi.Datacenter.MonstersData.GetMonsterDataById(monsterId);
+            var monster = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(monsterId);
             if (monster is not null)
             {
                 yield return monster;
@@ -39,8 +39,8 @@ public sealed record CharacterSummonMonsterGroupEffect : Effect, IEffect
 
     public Description GetDescription()
     {
-        var monstersName = string.Join(", ", MonstersId.Select(x => DofusApi.Datacenter.MonstersData.GetMonsterNameById(x)));
+        var monstersName = string.Join(", ", MonstersId.Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(x)));
 
-        return GetDescription(monstersName);
+        return GetDescription(string.Empty, string.Empty, monstersName);
     }
 }

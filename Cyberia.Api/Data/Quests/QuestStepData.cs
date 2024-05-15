@@ -55,6 +55,6 @@ public sealed class QuestStepData : IDofusData<int>
 
     public DialogQuestionData? GetDialogQuestionData()
     {
-        return DofusApi.Datacenter.DialogsData.GetDialogQuestionDataById(DialogQuestionId);
+        return DofusApi.Datacenter.DialogsRepository.GetDialogQuestionDataById(DialogQuestionId);
     }
 }

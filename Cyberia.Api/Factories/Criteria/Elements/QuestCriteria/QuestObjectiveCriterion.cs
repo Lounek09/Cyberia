@@ -24,7 +24,7 @@ public sealed record QuestObjectiveCriterion : Criterion, ICriterion
 
     public QuestObjectiveData? GetQuestObjectiveData()
     {
-        return DofusApi.Datacenter.QuestsData.GetQuestObjectiveDataById(QuestObjectiveId);
+        return DofusApi.Datacenter.QuestsRepository.GetQuestObjectiveDataById(QuestObjectiveId);
     }
 
     protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ public sealed record QuestObjectiveCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        var questObjectiveDescription = DofusApi.Datacenter.QuestsData.GetQuestObjectiveDescriptionById(QuestObjectiveId);
+        var questObjectiveDescription = DofusApi.Datacenter.QuestsRepository.GetQuestObjectiveDescriptionById(QuestObjectiveId);
 
         return GetDescription(questObjectiveDescription);
     }

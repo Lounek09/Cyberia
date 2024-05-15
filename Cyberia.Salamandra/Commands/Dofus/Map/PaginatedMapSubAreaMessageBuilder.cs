@@ -27,7 +27,7 @@ public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<
             parameters.Length > 2 &&
             int.TryParse(parameters[1], out var selectedPageIndex))
         {
-            var mapSubAreasData = DofusApi.Datacenter.MapsData.GetMapSubAreasDataByName(parameters[2]).ToList();
+            var mapSubAreasData = DofusApi.Datacenter.MapsRepository.GetMapSubAreasDataByName(parameters[2]).ToList();
             if (mapSubAreasData.Count > 0)
             {
                 return new(mapSubAreasData, parameters[2], selectedPageIndex);

@@ -24,7 +24,7 @@ public sealed record StateCriterion : Criterion, ICriterion
 
     public StateData? GetStateData()
     {
-        return DofusApi.Datacenter.StatesData.GetStateDataById(StateId);
+        return DofusApi.Datacenter.StatesRepository.GetStateDataById(StateId);
     }
 
     protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ public sealed record StateCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        var stateName = DofusApi.Datacenter.StatesData.GetStateNameById(StateId);
+        var stateName = DofusApi.Datacenter.StatesRepository.GetStateNameById(StateId);
 
         return GetDescription(stateName);
     }

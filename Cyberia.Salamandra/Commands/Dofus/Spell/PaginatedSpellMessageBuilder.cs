@@ -27,7 +27,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
             parameters.Length > 2 &&
             int.TryParse(parameters[1], out var selectedPageIndex))
         {
-            var spellsData = DofusApi.Datacenter.SpellsData.GetSpellsDataByName(parameters[2]).ToList();
+            var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(parameters[2]).ToList();
             if (spellsData.Count > 0)
             {
                 return new(spellsData, parameters[2], selectedPageIndex);

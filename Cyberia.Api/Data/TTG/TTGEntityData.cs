@@ -29,6 +29,6 @@ public sealed class TTGEntityData : IDofusData<int>
 
     public TTGFamilyData? GetTTGFamilyData()
     {
-        return DofusApi.Datacenter.TTGData.GetTTGFamilyDataById(TTGFamilyId);
+        return DofusApi.Datacenter.TTGRepository.GetTTGFamilyDataById(TTGFamilyId);
     }
 }

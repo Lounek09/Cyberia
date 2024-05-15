@@ -62,7 +62,7 @@ public sealed class MapData : IDofusData<int>
 
     public MapSubAreaData? GetMapSubAreaData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
+        return DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(MapSubAreaId);
     }
 
     public string GetMapAreaName()
@@ -78,7 +78,7 @@ public sealed class MapData : IDofusData<int>
 
     public HouseData? GetHouseData()
     {
-        var houseMapData = DofusApi.Datacenter.HousesData.GetHouseMapDataById(Id);
+        var houseMapData = DofusApi.Datacenter.HousesRepository.GetHouseMapDataById(Id);
 
         return houseMapData?.GetHouseData();
     }

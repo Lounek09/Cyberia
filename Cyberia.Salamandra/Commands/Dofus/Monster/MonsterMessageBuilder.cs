@@ -41,7 +41,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var monsterId) &&
             int.TryParse(parameters[1], out var selectedGrade))
         {
-            var monsterData = DofusApi.Datacenter.MonstersData.GetMonsterDataById(monsterId);
+            var monsterData = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(monsterId);
             if (monsterData is not null)
             {
                 return new MonsterMessageBuilder(monsterData, selectedGrade);

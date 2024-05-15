@@ -21,12 +21,12 @@ public sealed record CharacterDispellSpellEffect : Effect, IEffect
 
     public SpellData? GetSpellData()
     {
-        return DofusApi.Datacenter.SpellsData.GetSpellDataById(SpellId);
+        return DofusApi.Datacenter.SpellsRepository.GetSpellDataById(SpellId);
     }
 
     public Description GetDescription()
     {
-        var spellName = DofusApi.Datacenter.SpellsData.GetSpellNameById(SpellId);
+        var spellName = DofusApi.Datacenter.SpellsRepository.GetSpellNameById(SpellId);
 
         return GetDescription(string.Empty, string.Empty, spellName);
     }

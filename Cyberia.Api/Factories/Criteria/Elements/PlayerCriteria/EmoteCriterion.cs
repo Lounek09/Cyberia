@@ -24,7 +24,7 @@ public sealed record EmoteCriterion : Criterion, ICriterion
 
     public EmoteData? GetEmoteData()
     {
-        return DofusApi.Datacenter.EmotesData.GetEmoteById(EmoteId);
+        return DofusApi.Datacenter.EmotesRepository.GetEmoteById(EmoteId);
     }
 
     protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ public sealed record EmoteCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        var emoteName = DofusApi.Datacenter.EmotesData.GetEmoteNameById(EmoteId);
+        var emoteName = DofusApi.Datacenter.EmotesRepository.GetEmoteNameById(EmoteId);
 
         return GetDescription(emoteName);
     }

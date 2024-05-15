@@ -72,8 +72,8 @@ public sealed class SpellData : IDofusData<int>
 
     public BreedData? GetBreedData()
     {
-        return DofusApi.Datacenter.BreedsData.GetBreedDataById(BreedId) ??
-            DofusApi.Datacenter.BreedsData.Breeds.Values.FirstOrDefault(x => x.SpecialSpellId == Id);
+        return DofusApi.Datacenter.BreedsRepository.GetBreedDataById(BreedId) ??
+            DofusApi.Datacenter.BreedsRepository.Breeds.Values.FirstOrDefault(x => x.SpecialSpellId == Id);
     }
 
     public SpellLevelData? GetSpellLevelData(int level = 1)
@@ -122,7 +122,7 @@ public sealed class SpellData : IDofusData<int>
 
     public IncarnationData? GetIncarnationData()
     {
-        foreach (var incarnation in DofusApi.Datacenter.IncarnationsData.Incarnations.Values)
+        foreach (var incarnation in DofusApi.Datacenter.IncarnationsRepository.Incarnations.Values)
         {
             if (incarnation.SpellsId.Contains(Id))
             {

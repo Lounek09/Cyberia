@@ -43,7 +43,7 @@ public sealed class NpcData : IDofusData<int>
     {
         foreach (var npcActionId in NpcActionsId)
         {
-            var npcActionData = DofusApi.Datacenter.NpcsData.GetNpcActionDataById(npcActionId);
+            var npcActionData = DofusApi.Datacenter.NpcsRepository.GetNpcActionDataById(npcActionId);
             if (npcActionData is not null)
             {
                 yield return npcActionData;

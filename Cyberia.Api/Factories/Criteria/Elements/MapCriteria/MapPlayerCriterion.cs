@@ -26,7 +26,7 @@ public sealed record MapPlayerCriterion : Criterion, ICriterion
 
     public MapData? GetMapData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
+        return DofusApi.Datacenter.MapsRepository.GetMapDataById(MapId);
     }
 
     protected override string GetDescriptionName()

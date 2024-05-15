@@ -21,12 +21,12 @@ public sealed record CharacterUnlearnJobEffect : Effect, IEffect
 
     public JobData? GetJobData()
     {
-        return DofusApi.Datacenter.JobsData.GetJobDataById(JobId);
+        return DofusApi.Datacenter.JobsRepository.GetJobDataById(JobId);
     }
 
     public Description GetDescription()
     {
-        var jobName = DofusApi.Datacenter.JobsData.GetJobNameById(JobId);
+        var jobName = DofusApi.Datacenter.JobsRepository.GetJobNameById(JobId);
 
         return GetDescription(string.Empty, string.Empty, jobName);
     }

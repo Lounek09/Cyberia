@@ -21,12 +21,12 @@ public sealed record GainTitleEffect : Effect, IEffect
 
     public TitleData? GetTitleData()
     {
-        return DofusApi.Datacenter.TitlesData.GetTitleDataById(TitleId);
+        return DofusApi.Datacenter.TitlesRepository.GetTitleDataById(TitleId);
     }
 
     public Description GetDescription()
     {
-        var titleName = DofusApi.Datacenter.TitlesData.GetTitleNameById(TitleId);
+        var titleName = DofusApi.Datacenter.TitlesRepository.GetTitleNameById(TitleId);
 
         return GetDescription(string.Empty, string.Empty, titleName);
     }

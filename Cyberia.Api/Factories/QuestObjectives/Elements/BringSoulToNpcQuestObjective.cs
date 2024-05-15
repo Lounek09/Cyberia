@@ -31,18 +31,18 @@ public sealed record BringSoulToNpcQuestObjective : QuestObjective, IQuestObject
 
     public NpcData? GetNpcData()
     {
-        return DofusApi.Datacenter.NpcsData.GetNpcDataById(NpcId);
+        return DofusApi.Datacenter.NpcsRepository.GetNpcDataById(NpcId);
     }
 
     public MonsterData? GetMonsterData()
     {
-        return DofusApi.Datacenter.MonstersData.GetMonsterDataById(MonsterId);
+        return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
     public Description GetDescription()
     {
-        var npcName = DofusApi.Datacenter.NpcsData.GetNpcNameById(NpcId);
-        var monsterName = DofusApi.Datacenter.MonstersData.GetMonsterNameById(MonsterId);
+        var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
+        var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
 
         return GetDescription(npcName, monsterName, Quantity);
     }

@@ -25,17 +25,17 @@ public sealed record CharacterGainRideEffect : Effect, IEffect
 
     public RideData? GetRideData()
     {
-        return DofusApi.Datacenter.RidesData.GetRideDataById(RideId);
+        return DofusApi.Datacenter.RidesRepository.GetRideDataById(RideId);
     }
 
     public RideAbilityData? GetRideAbilityData()
     {
-        return DofusApi.Datacenter.RidesData.GetRideAbilityDataById(RideAbilityId);
+        return DofusApi.Datacenter.RidesRepository.GetRideAbilityDataById(RideAbilityId);
     }
 
     public Description GetDescription()
     {
-        var value = DofusApi.Datacenter.RidesData.GetRideNameById(RideId);
+        var value = DofusApi.Datacenter.RidesRepository.GetRideNameById(RideId);
 
         var rideAbility = GetRideAbilityData();
         if (rideAbility is not null)

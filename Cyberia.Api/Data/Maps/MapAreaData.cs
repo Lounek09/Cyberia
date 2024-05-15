@@ -21,11 +21,11 @@ public sealed class MapAreaData : IDofusData<int>
 
     public MapSuperAreaData? GetMapSuperAreaData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapSuperAreaDataById(MapSuperAreaId);
+        return DofusApi.Datacenter.MapsRepository.GetMapSuperAreaDataById(MapSuperAreaId);
     }
 
     public IEnumerable<MapData> GetMapsData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapsDataByMapAreaId(Id);
+        return DofusApi.Datacenter.MapsRepository.GetMapsDataByMapAreaId(Id);
     }
 }

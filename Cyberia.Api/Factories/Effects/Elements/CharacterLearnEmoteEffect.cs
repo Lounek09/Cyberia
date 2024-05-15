@@ -21,12 +21,12 @@ public sealed record CharacterLearnEmoteEffect : Effect, IEffect
 
     public EmoteData? GetEmoteData()
     {
-        return DofusApi.Datacenter.EmotesData.GetEmoteById(EmoteId);
+        return DofusApi.Datacenter.EmotesRepository.GetEmoteById(EmoteId);
     }
 
     public Description GetDescription()
     {
-        var emoteName = DofusApi.Datacenter.EmotesData.GetEmoteNameById(EmoteId);
+        var emoteName = DofusApi.Datacenter.EmotesRepository.GetEmoteNameById(EmoteId);
 
         return GetDescription(string.Empty, string.Empty, emoteName);
     }

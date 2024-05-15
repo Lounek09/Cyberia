@@ -22,12 +22,12 @@ public sealed class CraftData : IDofusData<int>
 
     public ItemData? GetItemData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemDataById(Id);
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(Id);
     }
 
     public bool HasSubCraft()
     {
-        return Ingredients.Any(x => DofusApi.Datacenter.CraftsData.GetCraftDataById(x.Key) is not null);
+        return Ingredients.Any(x => DofusApi.Datacenter.CraftsRepository.GetCraftDataById(x.Key) is not null);
     }
 
     public IReadOnlyDictionary<ItemData, int> GetIngredients(int qte)
@@ -36,7 +36,7 @@ public sealed class CraftData : IDofusData<int>
 
         foreach (var ingredient in Ingredients)
         {
-            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(ingredient.Key);
+            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(ingredient.Key);
             if (itemData is not null)
             {
                 ingredients.Add(itemData, ingredient.Value * qte);
@@ -52,7 +52,7 @@ public sealed class CraftData : IDofusData<int>
 
         foreach (var ingredient in GetIngredients(qte))
         {
-            var subCraft = DofusApi.Datacenter.CraftsData.GetCraftDataById(ingredient.Key.Id);
+            var subCraft = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(ingredient.Key.Id);
             if (subCraft is not null)
             {
                 foreach (var subIngredient in subCraft.GetIngredientsWithSubCraft(ingredient.Value))
@@ -116,7 +116,7 @@ public sealed class CraftData : IDofusData<int>
 
         foreach (var ingredient in Ingredients)
         {
-            var subCraftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(ingredient.Key);
+            var subCraftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(ingredient.Key);
             if (subCraftData is not null)
             {
                 totalTime += subCraftData.GetTimePerCraftWithSubCraft(qte * ingredient.Value);

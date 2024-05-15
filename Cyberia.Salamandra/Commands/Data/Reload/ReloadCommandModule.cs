@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Langzilla.Enums;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ContextChecks;
@@ -17,11 +18,13 @@ public sealed class ReloadCommandModule
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     [RequireApplicationOwner]
-    public static async Task ExecuteAsync(SlashCommandContext ctx)
+    public static async Task ExecuteAsync(SlashCommandContext ctx,
+        [Parameter("type"), Description("Type des langs à load, si vide utilise la donnée stocké dans la config")]
+        LangType? type = null)
     {
         await ctx.DeferResponseAsync();
 
-        await DofusApi.ReloadAsync();
+        DofusApi.Reload(type ?? DofusApi.Config.Type);
 
         await ctx.EditResponseAsync("Api reload !");
     }

@@ -26,12 +26,12 @@ public sealed record GoToNpcQuestObjective : QuestObjective, IQuestObjective
 
     public NpcData? GetNpcData()
     {
-        return DofusApi.Datacenter.NpcsData.GetNpcDataById(NpcId);
+        return DofusApi.Datacenter.NpcsRepository.GetNpcDataById(NpcId);
     }
 
     public Description GetDescription()
     {
-        var npcName = DofusApi.Datacenter.NpcsData.GetNpcNameById(NpcId);
+        var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
 
         return GetDescription(npcName);
     }

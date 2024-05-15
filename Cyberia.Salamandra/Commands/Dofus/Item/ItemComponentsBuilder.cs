@@ -22,7 +22,7 @@ public static class ItemComponentsBuilder
                 return new DiscordSelectComponentOption(
                     x.Name.WithMaxLength(100),
                     ItemMessageBuilder.GetPacket(x.Id),
-                    DofusApi.Datacenter.ItemsData.GetItemTypeNameById(x.ItemTypeId));
+                    DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x.ItemTypeId));
             });
 
         return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne un item pour l'afficher", options, disable);

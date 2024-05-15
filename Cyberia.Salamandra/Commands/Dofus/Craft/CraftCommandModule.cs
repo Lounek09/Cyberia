@@ -30,7 +30,7 @@ public sealed class CraftCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var craftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(id);
+            var craftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(id);
             if (craftData is not null)
             {
                 response = await new CraftMessageBuilder(craftData, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -38,7 +38,7 @@ public sealed class CraftCommandModule
         }
         else
         {
-            var craftsData = DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(value).ToList();
+            var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(value).ToList();
             if (craftsData.Count == 1)
             {
                 response = await new CraftMessageBuilder(craftsData[0], qte).GetMessageAsync<DiscordInteractionResponseBuilder>();

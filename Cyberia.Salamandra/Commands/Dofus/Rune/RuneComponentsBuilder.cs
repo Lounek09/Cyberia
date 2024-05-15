@@ -22,7 +22,7 @@ public static class RuneComponentsBuilder
                 return new DiscordSelectComponentOption(
                     x.Name.WithMaxLength(100),
                     RuneItemMessageBuilder.GetPacket(x.Id, qte),
-                    DofusApi.Datacenter.ItemsData.GetItemTypeNameById(x.ItemTypeId));
+                    DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x.ItemTypeId));
             });
 
         return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne un item pour calculer les runes obtenable", options, disable);

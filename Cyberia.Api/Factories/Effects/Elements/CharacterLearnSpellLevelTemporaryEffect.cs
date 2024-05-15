@@ -21,7 +21,7 @@ public sealed record CharacterLearnSpellTemporaryEffect : Effect, IEffect
 
     public SpellLevelData? GetSpellLevelData()
     {
-        return DofusApi.Datacenter.SpellsData.GetSpellLevelDataById(SpellLevelId);
+        return DofusApi.Datacenter.SpellsRepository.GetSpellLevelDataById(SpellLevelId);
     }
 
     public Description GetDescription()
@@ -29,9 +29,9 @@ public sealed record CharacterLearnSpellTemporaryEffect : Effect, IEffect
         var spellLevelData = GetSpellLevelData();
         if (spellLevelData is null)
         {
-            return GetDescription($"{nameof(SpellLevelData)} {PatternDecoder.Description(Resources.Unknown_Data, SpellLevelId)}", 0);
+            return GetDescription(0, string.Empty, $"{nameof(SpellLevelData)} {PatternDecoder.Description(Resources.Unknown_Data, SpellLevelId)}");
         }
 
-        return GetDescription(string.Empty, spellLevelData.Rank, spellLevelData.SpellData.Name);
+        return GetDescription(spellLevelData.Rank, string.Empty, spellLevelData.SpellData.Name);
     }
 }

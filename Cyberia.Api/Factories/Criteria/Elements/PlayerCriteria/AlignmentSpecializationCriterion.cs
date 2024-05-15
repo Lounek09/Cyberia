@@ -24,7 +24,7 @@ public sealed record AlignmentSpecializationCriterion : Criterion, ICriterion
 
     public AlignmentSpecializationData? GetAlignmentSpecializationData()
     {
-        return DofusApi.Datacenter.AlignmentsData.GetAlignmentSpecializationDataById(AlignmentSpecializationId);
+        return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentSpecializationDataById(AlignmentSpecializationId);
     }
 
     protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ public sealed record AlignmentSpecializationCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        var alignmentSpecializationName = DofusApi.Datacenter.AlignmentsData.GetAlignmentSpecializationNameById(AlignmentSpecializationId);
+        var alignmentSpecializationName = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentSpecializationNameById(AlignmentSpecializationId);
 
         return GetDescription(alignmentSpecializationName);
     }

@@ -22,6 +22,6 @@ public sealed class MonsterRaceData : IDofusData<int>
 
     public MonsterSuperRaceData? GetMonsterSuperRaceData()
     {
-        return DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceDataById(MonsterSuperRaceId);
+        return DofusApi.Datacenter.MonstersRepository.GetMonsterSuperRaceDataById(MonsterSuperRaceId);
     }
 }

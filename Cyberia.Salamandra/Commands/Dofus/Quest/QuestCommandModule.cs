@@ -27,7 +27,7 @@ public sealed class QuestCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var questData = DofusApi.Datacenter.QuestsData.GetQuestDataById(id);
+            var questData = DofusApi.Datacenter.QuestsRepository.GetQuestDataById(id);
             if (questData is not null)
             {
                 response = await new QuestMessageBuilder(questData).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -35,7 +35,7 @@ public sealed class QuestCommandModule
         }
         else
         {
-            var questsData = DofusApi.Datacenter.QuestsData.GetQuestsDataByName(value).ToList();
+            var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(value).ToList();
             if (questsData.Count == 1)
             {
                 response = await new QuestMessageBuilder(questsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

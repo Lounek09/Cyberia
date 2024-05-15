@@ -26,6 +26,6 @@ public sealed class KnowledgeBookTriggerData : IDofusData<int>
 
     public KnowledgeBookTipData? GetKnowledgeBookTipData()
     {
-        return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookTipDataById(KnowledgeBookTipId);
+        return DofusApi.Datacenter.KnowledgeBookRepository.GetKnowledgeBookTipDataById(KnowledgeBookTipId);
     }
 }

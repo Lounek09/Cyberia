@@ -33,7 +33,7 @@ public sealed class QuestStepRewardsData : IDofusData
     {
         foreach (var pair in ItemsIdQuantities)
         {
-            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(pair.Key);
+            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(pair.Key);
             if (itemData is not null)
             {
                 yield return itemData;
@@ -47,7 +47,7 @@ public sealed class QuestStepRewardsData : IDofusData
 
         foreach (var pair in ItemsIdQuantities)
         {
-            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(pair.Key);
+            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(pair.Key);
             if (itemData is not null)
             {
                 itemsDataQuantities.Add(itemData, pair.Value);
@@ -61,7 +61,7 @@ public sealed class QuestStepRewardsData : IDofusData
     {
         foreach (var emoteId in EmotesId)
         {
-            var emoteData = DofusApi.Datacenter.EmotesData.GetEmoteById(emoteId);
+            var emoteData = DofusApi.Datacenter.EmotesRepository.GetEmoteById(emoteId);
             if (emoteData is not null)
             {
                 yield return emoteData;
@@ -73,7 +73,7 @@ public sealed class QuestStepRewardsData : IDofusData
     {
         foreach (var jobId in JobsId)
         {
-            var jobData = DofusApi.Datacenter.JobsData.GetJobDataById(jobId);
+            var jobData = DofusApi.Datacenter.JobsRepository.GetJobDataById(jobId);
             if (jobData is not null)
             {
                 yield return jobData;
@@ -85,7 +85,7 @@ public sealed class QuestStepRewardsData : IDofusData
     {
         foreach (var spellId in SpellsId)
         {
-            var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spellId);
+            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spellId);
             if (spellData is not null)
             {
                 yield return spellData;

@@ -8,7 +8,7 @@ public interface IRuneGeneratorEffect
 
     RuneData? GetRuneData()
     {
-        return DofusApi.Datacenter.RunesData.GetRuneDataById(RuneId);
+        return DofusApi.Datacenter.RunesRepository.GetRuneDataById(RuneId);
     }
 
     int GetRandomValue();

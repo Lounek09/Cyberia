@@ -24,7 +24,7 @@ public sealed record QuestStepCriterion : Criterion, ICriterion
 
     public QuestStepData? GetQuestStepData()
     {
-        return DofusApi.Datacenter.QuestsData.GetQuestStepDataById(QuestStepId);
+        return DofusApi.Datacenter.QuestsRepository.GetQuestStepDataById(QuestStepId);
     }
 
     protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ public sealed record QuestStepCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        var questStepName = DofusApi.Datacenter.QuestsData.GetQuestStepNameById(QuestStepId);
+        var questStepName = DofusApi.Datacenter.QuestsRepository.GetQuestStepNameById(QuestStepId);
 
         return GetDescription(questStepName);
     }

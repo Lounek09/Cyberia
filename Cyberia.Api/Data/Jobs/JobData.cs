@@ -31,6 +31,6 @@ public sealed class JobData : IDofusData<int>
 
     public JobData? GetJobDataSpecialization()
     {
-        return DofusApi.Datacenter.JobsData.GetJobDataById(JobSpecializationId);
+        return DofusApi.Datacenter.JobsRepository.GetJobDataById(JobSpecializationId);
     }
 }

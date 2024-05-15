@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Parser;
+using Cyberia.Api.Managers;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.Managers;
@@ -87,11 +87,11 @@ public sealed class LangsCommandModule
         if (language is null)
         {
             await Task.WhenAll(Enum.GetValues<LangLanguage>()
-                .Select(x => LangsManager.LaunchManualDiff(type, modelType, x)));
+                .Select(x => LangManager.LaunchManualDiff(type, modelType, x)));
         }
         else
         {
-            await LangsManager.LaunchManualDiff(type, modelType, language.Value);
+            await LangManager.LaunchManualDiff(type, modelType, language.Value);
         }
 
         await ctx.EditResponseAsync("Done");
@@ -100,41 +100,25 @@ public sealed class LangsCommandModule
     [Command("parse"), Description("[Owner] Lance le parsing des langs en json")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
-    public static async Task ParseExecuteAsync(SlashCommandContext ctx)
+    public static async Task ParseExecuteAsync(SlashCommandContext ctx,
+        [Parameter("type"), Description("Type des langs à parse")]
+        LangType type,
+        [Parameter("langue"), Description("Language des langs à parse, si vide lance pour toutes les langues")]
+        LangLanguage? language = null)
     {
         await ctx.DeferResponseAsync();
 
-        var type = DofusApi.Config.Temporis
-            ? LangType.Temporis
-            : LangType.Official;
-
         var startTime = Stopwatch.GetTimestamp();
 
-        var success = true;
-        try
-        {
-            foreach (var lang in LangsWatcher.LangRepositories[(type, LangLanguage.FR)].Langs)
-            {
-                if (LangParser.IgnoredLangs.Contains(lang.Name))
-                {
-                    continue;
-                }
-
-                using var parser = LangParser.Create(lang);
-                File.WriteAllText(Path.Join(DofusApi.OutputPath, $"{lang.Name}.json"), parser.ToString());
-            }
-        }
-        catch (Exception e)
-        {
-            success = false;
-            Log.Error(e, "Une erreur est survenue lors du parsing des langs");
-        }
+        var success = language is null
+            ? LangParserManager.ParseAll(type)
+            : LangParserManager.Parse(type, language.Value);
 
         var elapsedTime = Stopwatch.GetElapsedTime(startTime);
 
         var content = success
-            ? $"Les langs ont été parsées avec succès en {elapsedTime:s\\,ffff}s"
-            : "Une erreur est survenue, veuillez consulter les logs";
+            ? $"Les langs ont été parsées avec succès en {elapsedTime:s\\,ffff}s."
+            : "Une erreur est survenue, veuillez consulter les logs.";
 
         await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(content));
     }

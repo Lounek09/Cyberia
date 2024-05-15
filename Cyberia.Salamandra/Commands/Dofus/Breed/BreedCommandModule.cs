@@ -21,7 +21,7 @@ public sealed class BreedCommandModule
         [SlashChoiceProvider<BreedChoiceProvider>]
         int breedId)
     {
-        var breedData = DofusApi.Datacenter.BreedsData.GetBreedDataById(breedId);
+        var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
 
         if (breedData is null)
         {

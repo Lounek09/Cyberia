@@ -8,7 +8,7 @@ public sealed class ItemSetAutocompleteProvider : AutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.ItemSetsData.GetItemSetsDataByName(ctx.UserInput)
+        return DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
             .ToDictionary(x => $"{x.Name.WithMaxLength(90)} ({x.Id})", x => (object)x.Id.ToString());
     }

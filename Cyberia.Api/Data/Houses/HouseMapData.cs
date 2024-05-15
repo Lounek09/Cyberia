@@ -20,11 +20,11 @@ public sealed class HouseMapData : IDofusData<int>
 
     public MapData? GetMapData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapDataById(Id);
+        return DofusApi.Datacenter.MapsRepository.GetMapDataById(Id);
     }
 
     public HouseData? GetHouseData()
     {
-        return DofusApi.Datacenter.HousesData.GetHouseDataById(HouseId);
+        return DofusApi.Datacenter.HousesRepository.GetHouseDataById(HouseId);
     }
 }

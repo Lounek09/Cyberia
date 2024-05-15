@@ -16,12 +16,12 @@ public abstract record StateEffect : Effect
 
     public StateData? GetStateData()
     {
-        return DofusApi.Datacenter.StatesData.GetStateDataById(StateId);
+        return DofusApi.Datacenter.StatesRepository.GetStateDataById(StateId);
     }
 
     public Description GetDescription()
     {
-        var stateName = DofusApi.Datacenter.StatesData.GetStateNameById(StateId);
+        var stateName = DofusApi.Datacenter.StatesRepository.GetStateNameById(StateId);
 
         return GetDescription(string.Empty, string.Empty, stateName);
     }

@@ -33,7 +33,7 @@ public sealed class QuestData : IDofusData<int>
     {
         foreach (var questStepId in QuestStepsId)
         {
-            var questStepData = DofusApi.Datacenter.QuestsData.GetQuestStepDataById(questStepId);
+            var questStepData = DofusApi.Datacenter.QuestsRepository.GetQuestStepDataById(questStepId);
             if (questStepData is not null)
             {
                 yield return questStepData;

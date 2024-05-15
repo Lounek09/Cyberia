@@ -8,7 +8,7 @@ public sealed class QuestAutocompleteProvider : AutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.QuestsData.GetQuestsDataByName(ctx.UserInput)
+        return DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
             .ToDictionary(x => $"{x.Name.WithMaxLength(90)} ({x.Id})", x => (object)x.Id.ToString());
     }

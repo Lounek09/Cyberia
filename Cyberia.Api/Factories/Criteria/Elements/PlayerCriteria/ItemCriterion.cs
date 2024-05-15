@@ -31,7 +31,7 @@ public sealed record ItemCriterion : Criterion, ICriterion
 
     public ItemData? GetItemData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
     protected override string GetDescriptionName()
@@ -46,7 +46,7 @@ public sealed record ItemCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
+        var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 
         return GetDescription(itemName, Quantity);
     }

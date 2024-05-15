@@ -30,7 +30,7 @@ public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<It
             int.TryParse(parameters[1], out var selectedPageIndex) &&
             int.TryParse(parameters[3], out var qte))
         {
-            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsDataByName(parameters[2]).ToList();
+            var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(parameters[2]).ToList();
             if (itemsData.Count > 0)
             {
                 return new(itemsData, parameters[2], qte, selectedPageIndex);

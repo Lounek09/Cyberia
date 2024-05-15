@@ -31,18 +31,18 @@ public sealed record BringItemToNpcQuestObjective : QuestObjective, IQuestObject
 
     public NpcData? GetNpcData()
     {
-        return DofusApi.Datacenter.NpcsData.GetNpcDataById(NpcId);
+        return DofusApi.Datacenter.NpcsRepository.GetNpcDataById(NpcId);
     }
 
     public ItemData? GetItemData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
     public Description GetDescription()
     {
-        var npcName = DofusApi.Datacenter.NpcsData.GetNpcNameById(NpcId);
-        var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
+        var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
+        var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 
         return GetDescription(npcName, itemName, Quantity);
     }

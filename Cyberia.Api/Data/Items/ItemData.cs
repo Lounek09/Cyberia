@@ -96,12 +96,12 @@ public sealed class ItemData : IDofusData<int>
 
     public ItemTypeData? GetItemTypeData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeId);
+        return DofusApi.Datacenter.ItemsRepository.GetItemTypeDataById(ItemTypeId);
     }
 
     public ItemStatsData? GetItemStatsData()
     {
-        return DofusApi.Datacenter.ItemsStatsData.GetItemStatDataById(Id);
+        return DofusApi.Datacenter.ItemsStatsRepository.GetItemStatDataById(Id);
     }
 
     public bool IsReallyEnhanceable()
@@ -120,7 +120,7 @@ public sealed class ItemData : IDofusData<int>
 
     public ItemSetData? GetItemSetData()
     {
-        return DofusApi.Datacenter.ItemSetsData.GetItemSetDataById(ItemSetId);
+        return DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(ItemSetId);
     }
 
     public bool IsWeapon()
@@ -130,7 +130,7 @@ public sealed class ItemData : IDofusData<int>
 
     public CraftData? GetCraftData()
     {
-        return DofusApi.Datacenter.CraftsData.GetCraftDataById(Id);
+        return DofusApi.Datacenter.CraftsRepository.GetCraftDataById(Id);
     }
 
     public bool Tradeable()

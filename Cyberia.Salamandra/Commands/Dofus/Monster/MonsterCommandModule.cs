@@ -27,7 +27,7 @@ public sealed class MonsterCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var monsterData = DofusApi.Datacenter.MonstersData.GetMonsterDataById(id);
+            var monsterData = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(id);
             if (monsterData is not null)
             {
                 response = await new MonsterMessageBuilder(monsterData).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -35,7 +35,7 @@ public sealed class MonsterCommandModule
         }
         else
         {
-            var monstersData = DofusApi.Datacenter.MonstersData.GetMonstersDataByName(value).ToList();
+            var monstersData = DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(value).ToList();
             if (monstersData.Count == 1)
             {
                 response = await new MonsterMessageBuilder(monstersData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();

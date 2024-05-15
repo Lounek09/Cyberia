@@ -45,7 +45,7 @@ public sealed class PetFoodsData : IDofusData
     {
         foreach (var itemId in ItemTypesId)
         {
-            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemId);
+            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
                 yield return itemData;
@@ -57,7 +57,7 @@ public sealed class PetFoodsData : IDofusData
     {
         foreach (var itemTypeId in ItemTypesId)
         {
-            var itemTypeData = DofusApi.Datacenter.ItemsData.GetItemTypeDataById(itemTypeId);
+            var itemTypeData = DofusApi.Datacenter.ItemsRepository.GetItemTypeDataById(itemTypeId);
             if (itemTypeData is not null)
             {
                 yield return itemTypeData;
@@ -69,7 +69,7 @@ public sealed class PetFoodsData : IDofusData
     {
         foreach (var pair in MonstersIdQuantities)
         {
-            var monsterData = DofusApi.Datacenter.MonstersData.GetMonsterDataById(pair.Key);
+            var monsterData = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(pair.Key);
             if (monsterData is not null)
             {
                 yield return monsterData;
@@ -83,7 +83,7 @@ public sealed class PetFoodsData : IDofusData
 
         foreach (var pair in MonstersIdQuantities)
         {
-            var monsterData = DofusApi.Datacenter.MonstersData.GetMonsterDataById(pair.Key);
+            var monsterData = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(pair.Key);
             if (monsterData is not null)
             {
                 MonstersDataQuantities.Add(monsterData, pair.Value);
@@ -97,7 +97,7 @@ public sealed class PetFoodsData : IDofusData
     {
         foreach (var pair in MonsterRacesIdQuantities)
         {
-            var monsterRaceData = DofusApi.Datacenter.MonstersData.GetMonsterRaceDataById(pair.Key);
+            var monsterRaceData = DofusApi.Datacenter.MonstersRepository.GetMonsterRaceDataById(pair.Key);
             if (monsterRaceData is not null)
             {
                 yield return monsterRaceData;
@@ -111,7 +111,7 @@ public sealed class PetFoodsData : IDofusData
 
         foreach (var pair in MonsterRacesIdQuantities)
         {
-            var monsterRaceData = DofusApi.Datacenter.MonstersData.GetMonsterRaceDataById(pair.Key);
+            var monsterRaceData = DofusApi.Datacenter.MonstersRepository.GetMonsterRaceDataById(pair.Key);
             if (monsterRaceData is not null)
             {
                 MonsterRacesDataQuantities.Add(monsterRaceData, pair.Value);
@@ -125,7 +125,7 @@ public sealed class PetFoodsData : IDofusData
     {
         foreach (var pair in MonsterSuperRacesIdQuantities)
         {
-            var monsterSuperRaceData = DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceDataById(pair.Key);
+            var monsterSuperRaceData = DofusApi.Datacenter.MonstersRepository.GetMonsterSuperRaceDataById(pair.Key);
             if (monsterSuperRaceData is not null)
             {
                 yield return monsterSuperRaceData;
@@ -139,7 +139,7 @@ public sealed class PetFoodsData : IDofusData
 
         foreach (var pair in MonstersIdQuantities)
         {
-            var monsterSuperRaceData = DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceDataById(pair.Key);
+            var monsterSuperRaceData = DofusApi.Datacenter.MonstersRepository.GetMonsterSuperRaceDataById(pair.Key);
             if (monsterSuperRaceData is not null)
             {
                 MonsterSuperRacesDataQuantities.Add(monsterSuperRaceData, pair.Value);

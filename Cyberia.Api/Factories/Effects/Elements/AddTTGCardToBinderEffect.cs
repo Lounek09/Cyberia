@@ -21,13 +21,13 @@ public sealed record AddTTGCardToBinderEffect : Effect, IEffect
 
     public TTGCardData? GetTTGCardData()
     {
-        return DofusApi.Datacenter.TTGData.GetTTGCardDataById(TTGCardId);
+        return DofusApi.Datacenter.TTGRepository.GetTTGCardDataById(TTGCardId);
     }
 
     public Description GetDescription()
     {
         var ttgCard = GetTTGCardData();
-        var ttgEntityName = ttgCard is null ? $"{nameof(TTGCardData)} {PatternDecoder.Description(Resources.Unknown_Data, TTGCardId)}" : DofusApi.Datacenter.TTGData.GetTTGEntityNameById(ttgCard.TTGEntityId);
+        var ttgEntityName = ttgCard is null ? $"{nameof(TTGCardData)} {PatternDecoder.Description(Resources.Unknown_Data, TTGCardId)}" : DofusApi.Datacenter.TTGRepository.GetTTGEntityNameById(ttgCard.TTGEntityId);
 
         return GetDescription(string.Empty, string.Empty, ttgEntityName);
     }

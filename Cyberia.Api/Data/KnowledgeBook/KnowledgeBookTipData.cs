@@ -24,6 +24,6 @@ public sealed class KnowledgeBookTipData : IDofusData<int>
 
     public KnowledgeBookArticleData? GetKnowledgeBookArticleData()
     {
-        return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookArticleDataById(KnowledgeBookArticleId);
+        return DofusApi.Datacenter.KnowledgeBookRepository.GetKnowledgeBookArticleDataById(KnowledgeBookArticleId);
     }
 }

@@ -30,7 +30,7 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
             int.TryParse(parameters[1], out var selectedPageIndex) &&
             int.TryParse(parameters[3], out var qte))
         {
-            var craftsData = DofusApi.Datacenter.CraftsData.GetCraftsDataByItemName(parameters[2]).ToList();
+            var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(parameters[2]).ToList();
             if (craftsData.Count > 0)
             {
                 return new(craftsData, parameters[2], qte, selectedPageIndex);

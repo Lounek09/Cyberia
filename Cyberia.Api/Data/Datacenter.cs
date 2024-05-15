@@ -1,133 +1,92 @@
-﻿using System.Reflection;
+﻿using Cyberia.Api.Managers;
+using Cyberia.Langzilla.Enums;
+
+using System.Reflection;
 using System.Text.Json;
 
 namespace Cyberia.Api.Data;
 
 public sealed class Datacenter
 {
-    public required Alignments.AlignmentsData AlignmentsData { get; init; }
-    public required Audios.AudiosData AudiosData { get; init; }
-    public required Breeds.BreedsData BreedsData { get; init; }
-    public required Crafts.CraftsData CraftsData { get; init; }
-    public required Dialogs.DialogsData DialogsData { get; init; }
-    public required Effects.EffectsData EffectsData { get; init; }
-    public required Emotes.EmotesData EmotesData { get; init; }
-    public required FightChallenges.FightChallengesData FightChallengesData { get; init; }
-    public required Guilds.GuildsData GuildsData { get; init; }
-    public required Hints.HintsData HintsData { get; init; }
-    public required Houses.HousesData HousesData { get; init; }
-    public required Incarnations.IncarnationsData IncarnationsData { get; init; }
-    public required InteractiveObjects.InteractiveObjectsData InteractiveObjectsData { get; init; }
-    public required Items.ItemsData ItemsData { get; init; }
-    public required ItemSets.ItemSetsData ItemSetsData { get; init; }
-    public required ItemStats.ItemsStatsData ItemsStatsData { get; init; }
-    public required Jobs.JobsData JobsData { get; init; }
-    public required KnowledgeBook.KnowledgeBookData KnowledgeBookData { get; init; }
-    public required Maps.MapsData MapsData { get; init; }
-    public required Monsters.MonstersData MonstersData { get; init; }
-    public required Npcs.NpcsData NpcsData { get; init; }
-    public required Pets.PetsData PetsData { get; init; }
-    public required Pvp.PvpData PvpData { get; init; }
-    public required Quests.QuestsData QuestsData { get; init; }
-    public required Ranks.RanksData RanksData { get; init; }
-    public required Rides.RidesData RidesData { get; init; }
-    public required Runes.RunesData RunesData { get; init; }
-    public required Scripts.ScriptsData ScriptsData { get; init; }
-    public required Servers.ServersData ServersData { get; init; }
-    public required Skills.SkillsData SkillsData { get; init; }
-    public required SpeakingItems.SpeakingItemsData SpeakingItemsData { get; init; }
-    public required Spells.SpellsData SpellsData { get; init; }
-    public required States.StatesData StatesData { get; init; }
-    public required Names.TaxCollectorNamesData TaxCollectorNamesData { get; init; }
-    public required TimeZone.TimeZoneData TimeZonesData { get; init; }
-    public required Titles.TitlesData TitlesData { get; init; }
-    public required TTG.TTGData TTGData { get; init; }
+    public Alignments.AlignmentsRepository AlignmentsRepository { get; init; }
+    public Audios.AudiosRepository AudiosRepository { get; init; }
+    public Breeds.BreedsRepository BreedsRepository { get; init; }
+    public Crafts.CraftsRepository CraftsRepository { get; init; }
+    public Dialogs.DialogsRepository DialogsRepository { get; init; }
+    public Effects.EffectsRepository EffectsRepository { get; init; }
+    public Emotes.EmotesRepository EmotesRepository { get; init; }
+    public FightChallenges.FightChallengesRepository FightChallengesRepository { get; init; }
+    public Guilds.GuildsRepository GuildsRepository { get; init; }
+    public Hints.HintsRepository HintsRepository { get; init; }
+    public Houses.HousesRepository HousesRepository { get; init; }
+    public Incarnations.IncarnationsRepository IncarnationsRepository { get; init; }
+    public InteractiveObjects.InteractiveObjectsRepository InteractiveObjectsRepository { get; init; }
+    public Items.ItemsRepository ItemsRepository { get; init; }
+    public ItemSets.ItemSetsRepository ItemSetsRepository { get; init; }
+    public ItemStats.ItemsStatsRepository ItemsStatsRepository { get; init; }
+    public Jobs.JobsRepository JobsRepository { get; init; }
+    public KnowledgeBook.KnowledgeBookRepository KnowledgeBookRepository { get; init; }
+    public Maps.MapsRepository MapsRepository { get; init; }
+    public Monsters.MonstersRepository MonstersRepository { get; init; }
+    public Npcs.NpcsRepository NpcsRepository { get; init; }
+    public Pets.PetsRepository PetsRepository { get; init; }
+    public Pvp.PvpRepository PvpRepository { get; init; }
+    public Quests.QuestsRepository QuestsRepository { get; init; }
+    public Ranks.RanksRepository RanksRepository { get; init; }
+    public Rides.RidesRepository RidesRepository { get; init; }
+    public Runes.RunesRepository RunesRepository { get; init; }
+    public Scripts.ScriptsRepository ScriptsRepository { get; init; }
+    public Servers.ServersRepository ServersRepository { get; init; }
+    public Skills.SkillsRepository SkillsRepository { get; init; }
+    public SpeakingItems.SpeakingItemsRepository SpeakingItemsRepository { get; init; }
+    public Spells.SpellsRepository SpellsRepository { get; init; }
+    public States.StatesRepository StatesRepository { get; init; }
+    public Names.TaxCollectorNamesRepository TaxCollectorNamesRepository { get; init; }
+    public TimeZone.TimeZoneRepository TimeZonesRepository { get; init; }
+    public Titles.TitlesRepository TitlesRepository { get; init; }
+    public TTG.TTGRepository TTGRepository { get; init; }
 
-    private Datacenter()
+    internal Datacenter(LangType type)
     {
-        
-    }
+        var outputDirectoryPath = LangParserManager.GetOutputDirectoryPath(type, LangLanguage.FR);
 
-    public static async Task<Datacenter> LoadAsync()
-    {
-        var alignmentsDataTask = Alignments.AlignmentsData.LoadAsync();
-        var audiosDataTask = Audios.AudiosData.LoadAsync();
-        var breedsDataTask = Breeds.BreedsData.LoadAsync();
-        var craftsDataTask = Crafts.CraftsData.LoadAsync();
-        var dialogsDataTask = Dialogs.DialogsData.LoadAsync();
-        var effectsDataTask = Effects.EffectsData.LoadAsync();
-        var emotesDataTask = Emotes.EmotesData.LoadAsync();
-        var fightChallengesDataTask = FightChallenges.FightChallengesData.LoadAsync();
-        var guildsDataTask = Guilds.GuildsData.LoadAsync();
-        var hintsDataTask = Hints.HintsData.LoadAsync();
-        var housesDataTask = Houses.HousesData.LoadAsync();
-        var incarnationsDataTask = Incarnations.IncarnationsData.LoadAsync();
-        var interactiveObjectsDataTask = InteractiveObjects.InteractiveObjectsData.LoadAsync();
-        var itemsDataTask = Items.ItemsData.LoadAsync();
-        var itemSetsDataTask = ItemSets.ItemSetsData.LoadAsync();
-        var itemsStatsDataTask = ItemStats.ItemsStatsData.LoadAsync();
-        var jobsDataTask = Jobs.JobsData.LoadAsync();
-        var knowledgeBookDataTask = KnowledgeBook.KnowledgeBookData.LoadAsync();
-        var mapsDataTask = Maps.MapsData.LoadAsync();
-        var monstersDataTask = Monsters.MonstersData.LoadAsync();
-        var npcsDataTask = Npcs.NpcsData.LoadAsync();
-        var petsDataTask = Pets.PetsData.LoadAsync();
-        var pvpDataTask = Pvp.PvpData.LoadAsync();
-        var questsDataTask = Quests.QuestsData.LoadAsync();
-        var ranksDataTask = Ranks.RanksData.LoadAsync();
-        var ridesDataTask = Rides.RidesData.LoadAsync();
-        var runesDataTask = Runes.RunesData.LoadAsync();
-        var scriptsDataTask = Scripts.ScriptsData.LoadAsync();
-        var serversDataTask = Servers.ServersData.LoadAsync();
-        var skillsDataTask = Skills.SkillsData.LoadAsync();
-        var speakingItemsDataTask = SpeakingItems.SpeakingItemsData.LoadAsync();
-        var spellsDataTask = Spells.SpellsData.LoadAsync();
-        var statesDataTask = States.StatesData.LoadAsync();
-        var taxCollectorNamesDataTask = Names.TaxCollectorNamesData.LoadAsync();
-        var timeZonesDataTask = TimeZone.TimeZoneData.LoadAsync();
-        var titlesDataTask = Titles.TitlesData.LoadAsync();
-        var ttgDataTask = TTG.TTGData.LoadAsync();
-
-        return new Datacenter
-        {
-            AlignmentsData = await alignmentsDataTask,
-            AudiosData = await audiosDataTask,
-            BreedsData = await breedsDataTask,
-            CraftsData = await craftsDataTask,
-            DialogsData = await dialogsDataTask,
-            EffectsData = await effectsDataTask,
-            EmotesData = await emotesDataTask,
-            FightChallengesData = await fightChallengesDataTask,
-            GuildsData = await guildsDataTask,
-            HintsData = await hintsDataTask,
-            HousesData = await housesDataTask,
-            IncarnationsData = await incarnationsDataTask,
-            InteractiveObjectsData = await interactiveObjectsDataTask,
-            ItemsData = await itemsDataTask,
-            ItemSetsData = await itemSetsDataTask,
-            ItemsStatsData = await itemsStatsDataTask,
-            JobsData = await jobsDataTask,
-            KnowledgeBookData = await knowledgeBookDataTask,
-            MapsData = await mapsDataTask,
-            MonstersData = await monstersDataTask,
-            NpcsData = await npcsDataTask,
-            PetsData = await petsDataTask,
-            PvpData = await pvpDataTask,
-            QuestsData = await questsDataTask,
-            RanksData = await ranksDataTask,
-            RidesData = await ridesDataTask,
-            RunesData = await runesDataTask,
-            ScriptsData = await scriptsDataTask,
-            ServersData = await serversDataTask,
-            SkillsData = await skillsDataTask,
-            SpeakingItemsData = await speakingItemsDataTask,
-            SpellsData = await spellsDataTask,
-            StatesData = await statesDataTask,
-            TaxCollectorNamesData = await taxCollectorNamesDataTask,
-            TimeZonesData = await timeZonesDataTask,
-            TitlesData = await titlesDataTask,
-            TTGData = await ttgDataTask
-        };
+        AlignmentsRepository = Alignments.AlignmentsRepository.Load(outputDirectoryPath);
+        AudiosRepository = Audios.AudiosRepository.Load(outputDirectoryPath);
+        BreedsRepository = Breeds.BreedsRepository.Load(outputDirectoryPath);
+        CraftsRepository = Crafts.CraftsRepository.Load(outputDirectoryPath);
+        DialogsRepository = Dialogs.DialogsRepository.Load(outputDirectoryPath);
+        EffectsRepository = Effects.EffectsRepository.Load(outputDirectoryPath);
+        EmotesRepository = Emotes.EmotesRepository.Load(outputDirectoryPath);
+        FightChallengesRepository = FightChallenges.FightChallengesRepository.Load(outputDirectoryPath);
+        GuildsRepository = Guilds.GuildsRepository.Load(outputDirectoryPath);
+        HintsRepository = Hints.HintsRepository.Load(outputDirectoryPath);
+        HousesRepository = Houses.HousesRepository.Load(outputDirectoryPath);
+        IncarnationsRepository = Incarnations.IncarnationsRepository.Load(outputDirectoryPath);
+        InteractiveObjectsRepository = InteractiveObjects.InteractiveObjectsRepository.Load(outputDirectoryPath);
+        ItemsRepository = Items.ItemsRepository.Load(outputDirectoryPath);
+        ItemSetsRepository = ItemSets.ItemSetsRepository.Load(outputDirectoryPath);
+        ItemsStatsRepository = ItemStats.ItemsStatsRepository.Load(outputDirectoryPath);
+        JobsRepository = Jobs.JobsRepository.Load(outputDirectoryPath);
+        KnowledgeBookRepository = KnowledgeBook.KnowledgeBookRepository.Load(outputDirectoryPath);
+        MapsRepository = Maps.MapsRepository.Load(outputDirectoryPath);
+        MonstersRepository = Monsters.MonstersRepository.Load(outputDirectoryPath);
+        NpcsRepository = Npcs.NpcsRepository.Load(outputDirectoryPath);
+        PetsRepository = Pets.PetsRepository.Load(outputDirectoryPath);
+        PvpRepository = Pvp.PvpRepository.Load(outputDirectoryPath);
+        QuestsRepository = Quests.QuestsRepository.Load(outputDirectoryPath);
+        RanksRepository = Ranks.RanksRepository.Load(outputDirectoryPath);
+        RidesRepository = Rides.RidesRepository.Load(outputDirectoryPath);
+        RunesRepository = Runes.RunesRepository.Load(outputDirectoryPath);
+        ScriptsRepository = Scripts.ScriptsRepository.Load(outputDirectoryPath);
+        ServersRepository = Servers.ServersRepository.Load(outputDirectoryPath);
+        SkillsRepository = Skills.SkillsRepository.Load(outputDirectoryPath);
+        SpeakingItemsRepository = SpeakingItems.SpeakingItemsRepository.Load(outputDirectoryPath);
+        SpellsRepository = Spells.SpellsRepository.Load(outputDirectoryPath);
+        StatesRepository = States.StatesRepository.Load(outputDirectoryPath);
+        TaxCollectorNamesRepository = Names.TaxCollectorNamesRepository.Load(outputDirectoryPath);
+        TimeZonesRepository = TimeZone.TimeZoneRepository.Load(outputDirectoryPath);
+        TitlesRepository = Titles.TitlesRepository.Load(outputDirectoryPath);
+        TTGRepository = TTG.TTGRepository.Load(outputDirectoryPath);
     }
 
     public static (int boost, int cost) GetNextBoostCost(IReadOnlyList<IReadOnlyList<int>> boostCost, int currentAmout)
@@ -148,10 +107,11 @@ public sealed class Datacenter
         return (1, 1);
     }
 
-    internal static async Task<T> LoadDataAsync<T>(string filePath)
+    internal static T LoadRepository<T>(string filePath)
+        where T : class, IDofusRepository
     {
         var constructor = typeof(T).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.EmptyTypes) ??
-            throw new EntryPointNotFoundException($"Non public required parameter-less constructor for {typeof(T).Name} not found");
+            throw new EntryPointNotFoundException($"Non public parameter-less constructor for {typeof(T).Name} not found");
 
         if (!File.Exists(filePath))
         {
@@ -163,7 +123,7 @@ public sealed class Datacenter
 
         try
         {
-            return await JsonSerializer.DeserializeAsync<T>(json) ?? (T)constructor.Invoke(null);
+            return JsonSerializer.Deserialize<T>(json) ?? (T)constructor.Invoke(null);
         }
         catch (Exception e)
         {

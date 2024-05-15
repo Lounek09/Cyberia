@@ -32,7 +32,7 @@ public sealed class HouseCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var houseData = DofusApi.Datacenter.HousesData.GetHouseDataById(id);
+            var houseData = DofusApi.Datacenter.HousesRepository.GetHouseDataById(id);
             if (houseData is not null)
             {
                 response = await new HouseMessageBuilder(houseData).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -40,7 +40,7 @@ public sealed class HouseCommandModule
         }
         else
         {
-            var housesData = DofusApi.Datacenter.HousesData.GetHousesDataByName(value).ToList();
+            var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(value).ToList();
             if (housesData.Count == 1)
             {
                 response = await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -66,7 +66,7 @@ public sealed class HouseCommandModule
         [MinMaxValue(-666, 666)]
         int yCoord)
     {
-        var housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate(xCoord, yCoord).ToList();
+        var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(xCoord, yCoord).ToList();
 
         if (housesData.Count == 0)
         {
@@ -96,7 +96,7 @@ public sealed class HouseCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            mapSubAreaData = DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(id);
+            mapSubAreaData = DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(id);
         }
 
         if (mapSubAreaData is null)
@@ -105,7 +105,7 @@ public sealed class HouseCommandModule
         }
         else
         {
-            var housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapSubAreaId(id).ToList();
+            var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByMapSubAreaId(id).ToList();
 
             if (housesData.Count == 0)
             {
@@ -136,7 +136,7 @@ public sealed class HouseCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            mapAreaData = DofusApi.Datacenter.MapsData.GetMapAreaDataById(id);
+            mapAreaData = DofusApi.Datacenter.MapsRepository.GetMapAreaDataById(id);
         }
 
         if (mapAreaData is null)
@@ -145,7 +145,7 @@ public sealed class HouseCommandModule
         }
         else
         {
-            var housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapAreaId(id).ToList();
+            var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByMapAreaId(id).ToList();
 
             if (housesData.Count == 0)
             {

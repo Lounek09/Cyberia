@@ -38,6 +38,6 @@ public sealed class AlignmentSpecializationData : IDofusData<int>
 
     public AlignmentOrderData? GetAlignementOrderData()
     {
-        return DofusApi.Datacenter.AlignmentsData.GetAlignmentOrderDataById(AlignmentOrderId);
+        return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentOrderDataById(AlignmentOrderId);
     }
 }

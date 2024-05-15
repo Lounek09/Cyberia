@@ -39,7 +39,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var questId) &&
             int.TryParse(parameters[1], out var selectedQuestStepIndex))
         {
-            var questData = DofusApi.Datacenter.QuestsData.GetQuestDataById(questId);
+            var questData = DofusApi.Datacenter.QuestsRepository.GetQuestDataById(questId);
             if (questData is not null)
             {
                 return new QuestMessageBuilder(questData, selectedQuestStepIndex);

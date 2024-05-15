@@ -110,7 +110,7 @@ public sealed class SpellLevelData : IDofusData<int>
     {
         foreach (var stateId in RequiredStatesId)
         {
-            var stateData = DofusApi.Datacenter.StatesData.GetStateDataById(stateId);
+            var stateData = DofusApi.Datacenter.StatesRepository.GetStateDataById(stateId);
             if (stateData is not null)
             {
                 yield return stateData;
@@ -122,7 +122,7 @@ public sealed class SpellLevelData : IDofusData<int>
     {
         foreach (var stateId in ForbiddenStatesId)
         {
-            var stateData = DofusApi.Datacenter.StatesData.GetStateDataById(stateId);
+            var stateData = DofusApi.Datacenter.StatesRepository.GetStateDataById(stateId);
             if (stateData is not null)
             {
                 yield return stateData;

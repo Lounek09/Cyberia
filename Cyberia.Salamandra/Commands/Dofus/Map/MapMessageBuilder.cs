@@ -33,7 +33,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
             parameters.Length > 0 &&
             int.TryParse(parameters[0], out var mapId))
         {
-            var mapData = DofusApi.Datacenter.MapsData.GetMapDataById(mapId);
+            var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById(mapId);
             if (mapData is not null)
             {
                 return new(mapData);
@@ -74,7 +74,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
-        var mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord);
+        var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord);
         if (mapsData.Skip(1).Any())
         {
             yield return MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_mapData);

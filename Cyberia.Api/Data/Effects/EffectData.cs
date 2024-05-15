@@ -10,7 +10,8 @@ public sealed class EffectData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("d")]
-    public string Description { get; init; }
+    [JsonInclude]
+    public string Description { get; internal set; }
 
     [JsonPropertyName("c")]
     public int CharacteristicId { get; init; }

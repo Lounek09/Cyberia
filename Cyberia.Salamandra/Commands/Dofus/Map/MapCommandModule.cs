@@ -25,7 +25,7 @@ public sealed class MapCommandModule
         [MinMaxValue(1, 99999)]
         long id)
     {
-        var mapData = DofusApi.Datacenter.MapsData.GetMapDataById((int)id);
+        var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById((int)id);
         if (mapData is null)
         {
             await ctx.RespondAsync("Map introuvable");
@@ -46,7 +46,7 @@ public sealed class MapCommandModule
         [MinMaxValue(-666, 666)]
         int yCoord)
     {
-        var mapsData = DofusApi.Datacenter.MapsData.GetMapsDataByCoordinate(xCoord, yCoord).ToList();
+        var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(xCoord, yCoord).ToList();
 
         if (mapsData.Count == 0)
         {
@@ -77,7 +77,7 @@ public sealed class MapCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            mapSubAreaData = DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(id);
+            mapSubAreaData = DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(id);
         }
 
         if (mapSubAreaData is null)
@@ -112,7 +112,7 @@ public sealed class MapCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            mapAreaData = DofusApi.Datacenter.MapsData.GetMapAreaDataById(id);
+            mapAreaData = DofusApi.Datacenter.MapsRepository.GetMapAreaDataById(id);
         }
 
         if (mapAreaData is null)

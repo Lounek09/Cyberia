@@ -42,9 +42,9 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         _itemTypeData = itemData.GetItemTypeData();
         _itemSetData = itemData.GetItemSetData();
         _itemStatsData = itemData.GetItemStatsData();
-        _petData = _itemData.ItemTypeId == ItemTypeData.Pet ? DofusApi.Datacenter.PetsData.GetPetDataByItemId(_itemData.Id) : null;
+        _petData = _itemData.ItemTypeId == ItemTypeData.Pet ? DofusApi.Datacenter.PetsRepository.GetPetDataByItemId(_itemData.Id) : null;
         _craftData = itemData.GetCraftData();
-        _incarnationData = _itemData.IsWeapon() ? DofusApi.Datacenter.IncarnationsData.GetIncarnationDataByItemId(_itemData.Id) : null;
+        _incarnationData = _itemData.IsWeapon() ? DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(_itemData.Id) : null;
         _qte = qte;
     }
 
@@ -55,7 +55,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var itemId) &&
             int.TryParse(parameters[1], out var qte))
         {
-            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemId);
+            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
                 return new(itemData, qte);
@@ -91,7 +91,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             .WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description))
             .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128))
             .AddField("Niveau :", _itemData.Level.ToString(), true)
-            .AddField("Type :", DofusApi.Datacenter.ItemsData.GetItemTypeNameById(_itemData.ItemTypeId), true);
+            .AddField("Type :", DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(_itemData.ItemTypeId), true);
 
         if (_itemSetData is not null)
         {

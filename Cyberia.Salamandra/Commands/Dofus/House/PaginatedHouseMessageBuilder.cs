@@ -35,7 +35,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
             switch (searchCategory)
             {
                 case HouseSearchCategory.Name:
-                    housesData = DofusApi.Datacenter.HousesData.GetHousesDataByName(parameters[3]).ToList();
+                    housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(parameters[3]).ToList();
                     search = parameters[3];
                     break;
                 case HouseSearchCategory.Coordinate:
@@ -43,21 +43,21 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
                         int.TryParse(parameters[3], out var xCoord) &&
                         int.TryParse(parameters[4], out var yCoord))
                     {
-                        housesData = DofusApi.Datacenter.HousesData.GetHousesDataByCoordinate(xCoord, yCoord).ToList();
+                        housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(xCoord, yCoord).ToList();
                         search = $"{parameters[3]}{InteractionManager.PacketParameterSeparator}{parameters[4]}";
                     }
                     break;
                 case HouseSearchCategory.MapSubArea:
                     if (int.TryParse(parameters[3], out var mapSubAreaId))
                     {
-                        housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapSubAreaId(mapSubAreaId).ToList();
+                        housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByMapSubAreaId(mapSubAreaId).ToList();
                         search = parameters[3];
                     }
                     break;
                 case HouseSearchCategory.MapArea:
                     if (int.TryParse(parameters[3], out var mapAreaId))
                     {
-                        housesData = DofusApi.Datacenter.HousesData.GetHousesDataByMapAreaId(mapAreaId).ToList();
+                        housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByMapAreaId(mapAreaId).ToList();
                         search = parameters[3];
                     }
                     break;

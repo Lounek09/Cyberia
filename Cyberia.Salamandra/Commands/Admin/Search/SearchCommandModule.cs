@@ -34,13 +34,13 @@ public sealed class SearchCommandModule
         switch (where)
         {
             case SearchLocation.Item:
-                foreach (var itemStats in DofusApi.Datacenter.ItemsStatsData.ItemsStats)
+                foreach (var itemStats in DofusApi.Datacenter.ItemsStatsRepository.ItemsStats)
                 {
                     var itemHasEffect = itemStats.Value.Effects.Any(x => x.Id == effectId);
 
                     if (itemHasEffect)
                     {
-                        var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemStats.Key);
+                        var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemStats.Key);
                         if (itemData is not null)
                         {
                             descriptionBuilder.Append("- ");
@@ -53,7 +53,7 @@ public sealed class SearchCommandModule
                 }
                 break;
             case SearchLocation.Spell:
-                foreach (var spells in DofusApi.Datacenter.SpellsData.Spells)
+                foreach (var spells in DofusApi.Datacenter.SpellsRepository.Spells)
                 {
                     foreach (var spellLevelData in spells.Value.GetSpellLevelsData())
                     {
@@ -61,7 +61,7 @@ public sealed class SearchCommandModule
 
                         if (spellHasEffect)
                         {
-                            var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spells.Key);
+                            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spells.Key);
                             if (spellData is not null)
                             {
                                 descriptionBuilder.Append("- ");
@@ -102,7 +102,7 @@ public sealed class SearchCommandModule
         switch (where)
         {
             case SearchLocation.Item:
-                foreach (var items in DofusApi.Datacenter.ItemsData.Items)
+                foreach (var items in DofusApi.Datacenter.ItemsRepository.Items)
                 {
                     var itemHasCriterion = items.Value.Criteria.OfType<ICriterion>()
                         .Any(x => x.Id.Equals(criterionId));
@@ -118,7 +118,7 @@ public sealed class SearchCommandModule
                 }
                 break;
             case SearchLocation.Spell:
-                foreach (var spells in DofusApi.Datacenter.SpellsData.Spells)
+                foreach (var spells in DofusApi.Datacenter.SpellsRepository.Spells)
                 {
                     foreach (var spellLevelData in spells.Value.GetSpellLevelsData())
                     {
@@ -131,7 +131,7 @@ public sealed class SearchCommandModule
 
                         if (spellHasCriterion)
                         {
-                            var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spells.Key);
+                            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spells.Key);
                             if (spellData is not null)
                             {
                                 descriptionBuilder.Append("- ");

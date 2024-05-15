@@ -31,14 +31,14 @@ public sealed class MapSubAreaData : IDofusData<int>
 
     public MapAreaData? GetMapAreaData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapAreaDataById(MapAreaId);
+        return DofusApi.Datacenter.MapsRepository.GetMapAreaDataById(MapAreaId);
     }
 
     public IEnumerable<MapSubAreaData> GetNearMapSubAreasData()
     {
         foreach (var mapSubAreaId in NearMapSubAreasId)
         {
-            var mapSubAreaData = DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(mapSubAreaId);
+            var mapSubAreaData = DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(mapSubAreaId);
             if (mapSubAreaData is not null)
             {
                 yield return mapSubAreaData;
@@ -48,11 +48,11 @@ public sealed class MapSubAreaData : IDofusData<int>
 
     public AudioMusicData? GetFightAudioMusicData()
     {
-        return FightAudioMusicId[0] is null ? null : DofusApi.Datacenter.AudiosData.GetAudioMusicDataById(FightAudioMusicId[0]!.Value);
+        return FightAudioMusicId[0] is null ? null : DofusApi.Datacenter.AudiosRepository.GetAudioMusicDataById(FightAudioMusicId[0]!.Value);
     }
 
     public IEnumerable<MapData> GetMapsData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapsDataByMapSubAreaId(Id);
+        return DofusApi.Datacenter.MapsRepository.GetMapsDataByMapSubAreaId(Id);
     }
 }

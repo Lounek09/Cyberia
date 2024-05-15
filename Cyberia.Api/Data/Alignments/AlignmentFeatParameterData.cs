@@ -12,7 +12,7 @@ public sealed class AlignmentFeatParametersData
 
     public AlignmentFeatData? GetAlignmentFeatData()
     {
-        return DofusApi.Datacenter.AlignmentsData.GetAlignmentFeatDataById(AlignmentFeatId);
+        return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentFeatDataById(AlignmentFeatId);
     }
 
     public AlignmentFeatParametersData()

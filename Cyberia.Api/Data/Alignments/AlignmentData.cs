@@ -33,21 +33,21 @@ public sealed class AlignmentData : IDofusData<int>
 
     public bool CanJoin(int alignmentId)
     {
-        var alignmentJoinData = DofusApi.Datacenter.AlignmentsData.GetAlignmentJoinDataById(Id);
+        var alignmentJoinData = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentJoinDataById(Id);
 
         return alignmentJoinData is not null && alignmentJoinData.CanJoin(alignmentId);
     }
 
     public bool CanAttack(int alignmentId)
     {
-        var alignmentAttackData = DofusApi.Datacenter.AlignmentsData.GetAlignmentAttackDataById(Id);
+        var alignmentAttackData = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentAttackDataById(Id);
 
         return alignmentAttackData is not null && alignmentAttackData.CanAttack(alignmentId);
     }
 
     public bool CanViewPvpGain(int alignmentId)
     {
-        var alignmentViewPvpGainData = DofusApi.Datacenter.AlignmentsData.GetAlignmentViewPvpGainDataById(Id);
+        var alignmentViewPvpGainData = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentViewPvpGainDataById(Id);
 
         return alignmentViewPvpGainData is not null && alignmentViewPvpGainData.CanViewPvpGain(alignmentId);
     }

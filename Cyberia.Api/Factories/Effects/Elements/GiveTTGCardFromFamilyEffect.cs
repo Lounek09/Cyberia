@@ -21,12 +21,12 @@ public sealed record GiveTTGCardFromFamilyEffect : Effect, IEffect
 
     public TTGFamilyData? GetTTGFamilyData()
     {
-        return DofusApi.Datacenter.TTGData.GetTTGFamilyDataById(TTGFamilyId);
+        return DofusApi.Datacenter.TTGRepository.GetTTGFamilyDataById(TTGFamilyId);
     }
 
     public Description GetDescription()
     {
-        var ttgFamilyName = DofusApi.Datacenter.TTGData.GetTTGFamilyNameById(TTGFamilyId);
+        var ttgFamilyName = DofusApi.Datacenter.TTGRepository.GetTTGFamilyNameById(TTGFamilyId);
 
         return GetDescription(string.Empty, string.Empty, ttgFamilyName);
     }

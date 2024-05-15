@@ -51,14 +51,14 @@ public sealed class IncarnationData : IDofusData<int>
 
     public ItemData? GetItemData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemDataById(Id);
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(Id);
     }
 
     public IEnumerable<SpellData> GetSpellsData()
     {
         foreach (var spellId in SpellsId)
         {
-            var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(spellId);
+            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spellId);
             if (spellData is not null)
             {
                 yield return spellData;

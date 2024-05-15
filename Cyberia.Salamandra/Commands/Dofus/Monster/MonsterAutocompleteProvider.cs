@@ -8,7 +8,7 @@ public sealed class MonsterAutocompleteProvider : AutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.MonstersData.GetMonstersDataByName(ctx.UserInput)
+        return DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
             .ToDictionary(x => $"{$"{x.Name}{(x.BreedSummon ? " (invocation)" : string.Empty)}".WithMaxLength(90)} ({x.Id})", x => (object)x.Id.ToString());
     }

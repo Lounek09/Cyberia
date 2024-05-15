@@ -25,7 +25,7 @@ public sealed record CharacterPunishmentEffect : Effect, IEffect
 
     public EffectData? GetBoostEffectData()
     {
-        return DofusApi.Datacenter.EffectsData.GetEffectDataById(BoostEffectId);
+        return DofusApi.Datacenter.EffectsRepository.GetEffectDataById(BoostEffectId);
     }
 
     public Description GetDescription()

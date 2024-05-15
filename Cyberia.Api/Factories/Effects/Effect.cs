@@ -10,7 +10,7 @@ public abstract record Effect(int Id, int Duration, int Probability, CriteriaRea
 {
     public EffectData? GetEffectData()
     {
-        return DofusApi.Datacenter.EffectsData.GetEffectDataById(Id);
+        return DofusApi.Datacenter.EffectsRepository.GetEffectDataById(Id);
     }
 
     protected Description GetDescription<T>(T parameter)

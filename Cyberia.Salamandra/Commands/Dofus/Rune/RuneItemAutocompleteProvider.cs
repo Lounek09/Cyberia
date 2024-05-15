@@ -9,7 +9,7 @@ public sealed class RuneItemAutocompleteProvider : AutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
-        return DofusApi.Datacenter.ItemsData.GetItemsDataByName(ctx.UserInput)
+        return DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(ctx.UserInput)
             .Where(x =>
             {
                 var itemStatsData = x.GetItemStatsData();

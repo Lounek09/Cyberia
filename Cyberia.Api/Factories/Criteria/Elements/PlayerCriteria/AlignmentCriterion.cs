@@ -24,7 +24,7 @@ public sealed record AlignmentCriterion : Criterion, ICriterion
 
     public AlignmentData? GetAlignmentData()
     {
-        return DofusApi.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
+        return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentDataById(AlignmentId);
     }
 
     protected override string GetDescriptionName()
@@ -34,7 +34,7 @@ public sealed record AlignmentCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        var alignmentName = DofusApi.Datacenter.AlignmentsData.GetAlignmentNameById(AlignmentId);
+        var alignmentName = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentNameById(AlignmentId);
 
         return GetDescription(alignmentName);
     }

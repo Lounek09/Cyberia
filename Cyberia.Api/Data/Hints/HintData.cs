@@ -32,11 +32,11 @@ public sealed class HintData : IDofusData
 
     public HintCategoryData? GetHintCategory()
     {
-        return DofusApi.Datacenter.HintsData.GetHintCategory(HintCategoryId);
+        return DofusApi.Datacenter.HintsRepository.GetHintCategory(HintCategoryId);
     }
 
     public MapData? GetMap()
     {
-        return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
+        return DofusApi.Datacenter.MapsRepository.GetMapDataById(MapId);
     }
 }

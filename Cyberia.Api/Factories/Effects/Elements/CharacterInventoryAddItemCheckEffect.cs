@@ -26,12 +26,12 @@ public sealed record CharacterInventoryAddItemCheckEffect : Effect, IEffect
 
     public ItemData? GetItemData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
     public Description GetDescription()
     {
-        var itemName = DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
+        var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 
         return GetDescription(Target.GetDescription(), Qte, itemName);
     }

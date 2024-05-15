@@ -37,7 +37,7 @@ public sealed class RuneCommandModule
 
         if (int.TryParse(value, out var itemId))
         {
-            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(itemId);
+            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
                 response = await new RuneItemMessageBuilder(itemData, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -45,7 +45,7 @@ public sealed class RuneCommandModule
         }
         else
         {
-            var itemsData = DofusApi.Datacenter.ItemsData.GetItemsDataByName(value).ToList();
+            var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(value).ToList();
             if (itemsData.Count == 1)
             {
                 response = await new RuneItemMessageBuilder(itemsData[0], qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -74,10 +74,10 @@ public sealed class RuneCommandModule
         [MinMaxLength(1, 70)]
         string runeName)
     {
-        var runeData = DofusApi.Datacenter.RunesData.GetRuneDataByName(runeName);
+        var runeData = DofusApi.Datacenter.RunesRepository.GetRuneDataByName(runeName);
         if (runeData is null)
         {
-            await ctx.RespondAsync($"Paramètre incorrect\n{Formatter.Italic("Valeur possible :")} {Formatter.InlineCode(DofusApi.Datacenter.RunesData.GetAllRuneName())}");
+            await ctx.RespondAsync($"Paramètre incorrect\n{Formatter.Italic("Valeur possible :")} {Formatter.InlineCode(DofusApi.Datacenter.RunesRepository.GetAllRuneName())}");
             return;
         }
 

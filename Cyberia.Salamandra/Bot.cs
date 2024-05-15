@@ -56,7 +56,7 @@ public static class Bot
 
         CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
 
-        LangsWatcher.CheckLangFinished += LangsManager.OnCheckLangFinished;
+        LangsWatcher.CheckLangFinished += LangManager.OnCheckLangFinished;
     }
 
     public static async Task LaunchAsync()

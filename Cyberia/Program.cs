@@ -36,7 +36,7 @@ public static class Program
             LangsWatcher.Initialize();
 
             Log.Information("Initializing DofusApi");
-            await DofusApi.InitializeAsync(config.ApiConfig);
+            DofusApi.Initialize(config.ApiConfig);
 
             if (config.EnableSalamandra)
             {

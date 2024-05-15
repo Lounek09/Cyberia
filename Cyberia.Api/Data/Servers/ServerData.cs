@@ -45,11 +45,11 @@ public sealed class ServerData : IDofusData<int>
 
     public ServerPopulationData? GetServerPopulationData()
     {
-        return DofusApi.Datacenter.ServersData.GetServerPopulationDataById(ServerPopulationId);
+        return DofusApi.Datacenter.ServersRepository.GetServerPopulationDataById(ServerPopulationId);
     }
 
     public ServerCommunityData? GetServerCommunityData()
     {
-        return DofusApi.Datacenter.ServersData.GetServerCommunityDataById(ServerCommunityId);
+        return DofusApi.Datacenter.ServersRepository.GetServerCommunityDataById(ServerCommunityId);
     }
 }

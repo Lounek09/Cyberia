@@ -9,7 +9,7 @@ namespace Cyberia.Api.Parser;
 /// </summary>
 public sealed class LangParser : IDisposable
 {
-    public static readonly IReadOnlyList<string> IgnoredLangs = ["dungeons", "effects", "lang"];
+    public static readonly IReadOnlyList<string> IgnoredLangs = ["dungeons", "lang"];
 
     private static readonly IReadOnlyList<string> s_ignoredEndingLines = ["new Object();", "new Array();"];
 

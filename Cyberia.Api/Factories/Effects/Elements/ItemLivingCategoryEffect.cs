@@ -21,12 +21,12 @@ public sealed record ItemLivingCategoryEffect : Effect, IEffect
 
     public ItemTypeData? GetItemTypeData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemTypeDataById(ItemTypeId);
+        return DofusApi.Datacenter.ItemsRepository.GetItemTypeDataById(ItemTypeId);
     }
 
     public Description GetDescription()
     {
-        var itemTypeName = DofusApi.Datacenter.ItemsData.GetItemTypeNameById(ItemTypeId);
+        var itemTypeName = DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(ItemTypeId);
 
         return GetDescription(string.Empty, string.Empty, itemTypeName);
     }

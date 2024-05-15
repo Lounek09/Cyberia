@@ -26,6 +26,6 @@ public sealed class PetData : IDofusData<int>
 
     public ItemData? GetItemData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemDataById(Id);
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(Id);
     }
 }

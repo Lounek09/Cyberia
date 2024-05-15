@@ -84,7 +84,7 @@ public static class ExtendDiscordEmbedBuilder
 
             if (!recursive)
             {
-                var subCraftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(ingredient.Key.Id);
+                var subCraftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(ingredient.Key.Id);
                 if (subCraftData is not null)
                 {
                     itemName = Formatter.Bold(itemName);
@@ -196,7 +196,7 @@ public static class ExtendDiscordEmbedBuilder
                 if (petFoodsData.ItemsId.Count > 0)
                 {
                     var itemsName = petFoodsData.ItemsId
-                        .Select(x => DofusApi.Datacenter.ItemsData.GetItemNameById(x));
+                        .Select(x => DofusApi.Datacenter.ItemsRepository.GetItemNameById(x));
 
                     builder.Append(string.Join(", ", itemsName));
                     builder.Append('\n');
@@ -205,7 +205,7 @@ public static class ExtendDiscordEmbedBuilder
                 if (petFoodsData.ItemTypesId.Count > 0)
                 {
                     var itemTypesName = petFoodsData.ItemTypesId
-                        .Select(x => DofusApi.Datacenter.ItemsData.GetItemTypeNameById(x));
+                        .Select(x => DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x));
 
                     builder.Append(string.Join(", ", itemTypesName));
                     builder.Append('\n');
@@ -216,7 +216,7 @@ public static class ExtendDiscordEmbedBuilder
                     foreach (var group in petFoodsData.MonstersIdQuantities.GroupBy(x => x.Value))
                     {
                         var monstersName = group
-                            .Select(x => DofusApi.Datacenter.MonstersData.GetMonsterNameById(x.Key));
+                            .Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(x.Key));
 
                         builder.Append(Formatter.Bold(group.Key.ToString()));
                         builder.Append("x ");
@@ -230,7 +230,7 @@ public static class ExtendDiscordEmbedBuilder
                     foreach (var group in petFoodsData.MonsterRacesIdQuantities.GroupBy(x => x.Value))
                     {
                         var monsterRacesName = group
-                            .Select(x => DofusApi.Datacenter.MonstersData.GetMonsterRaceNameById(x.Key));
+                            .Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterRaceNameById(x.Key));
 
                         builder.Append(Formatter.Bold(group.Key.ToString()));
                         builder.Append("x ");
@@ -244,7 +244,7 @@ public static class ExtendDiscordEmbedBuilder
                     foreach (var group in petFoodsData.MonsterSuperRacesIdQuantities.GroupBy(x => x.Value))
                     {
                         var monsterSuperRacesName = group
-                            .Select(x => DofusApi.Datacenter.MonstersData.GetMonsterSuperRaceNameById(x.Key));
+                            .Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterSuperRaceNameById(x.Key));
 
                         builder.Append(Formatter.Bold(group.Key.ToString()));
                         builder.Append("x ");

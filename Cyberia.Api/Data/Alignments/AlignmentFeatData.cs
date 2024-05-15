@@ -31,6 +31,6 @@ public sealed class AlignmentFeatData : IDofusData<int>
 
     public AlignmentFeatEffectData? GetAlignmentFeatEffectData()
     {
-        return DofusApi.Datacenter.AlignmentsData.GetAlignmentFeatEffectDataById(AlignmentFeatEffectId);
+        return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentFeatEffectDataById(AlignmentFeatEffectId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api.Data;
+using Cyberia.Langzilla.Enums;
 
 namespace Cyberia.Api;
 
@@ -13,18 +14,17 @@ public static class DofusApi
 
     internal static HttpClient HttpClient { get; private set; } = default!;
 
-    public static async Task InitializeAsync(ApiConfig config)
+    public static void Initialize(ApiConfig config)
     {
-        Directory.CreateDirectory(OutputPath);
         Directory.CreateDirectory(CustomPath);
 
         Config = config;
         HttpClient = new();
-        Datacenter = await Datacenter.LoadAsync();
+        Datacenter = new Datacenter(config.Type);
     }
 
-    public static async Task ReloadAsync()
+    public static void Reload(LangType type)
     {
-        Datacenter = await Datacenter.LoadAsync();
+        Datacenter = new Datacenter(type);
     }
 }

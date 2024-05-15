@@ -6,7 +6,7 @@ public abstract record AlignmentFeatEffect(int Id)
 {
     public AlignmentFeatEffectData? GetAlignmentFeatEffectData()
     {
-        return DofusApi.Datacenter.AlignmentsData.GetAlignmentFeatEffectDataById(Id);
+        return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentFeatEffectDataById(Id);
     }
 
     protected Description GetDescription(params int[] parameters)

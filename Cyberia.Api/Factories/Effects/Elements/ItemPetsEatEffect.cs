@@ -21,12 +21,12 @@ public sealed record ItemPetsEatEffect : Effect, IEffect
 
     public ItemData? GetItemData()
     {
-        return DofusApi.Datacenter.ItemsData.GetItemDataById(ItemId);
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
     public Description GetDescription()
     {
-        var itemName = ItemId == 0 ? Resources.LastMeal_None : DofusApi.Datacenter.ItemsData.GetItemNameById(ItemId);
+        var itemName = ItemId == 0 ? Resources.LastMeal_None : DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 
         return GetDescription(itemName);
     }

@@ -27,7 +27,7 @@ public sealed class SpellCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var spellData = DofusApi.Datacenter.SpellsData.GetSpellDataById(id);
+            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(id);
             if (spellData is not null)
             {
                 response = await new SpellMessageBuilder(spellData, spellData.GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();
@@ -35,7 +35,7 @@ public sealed class SpellCommandModule
         }
         else
         {
-            var spellsData = DofusApi.Datacenter.SpellsData.GetSpellsDataByName(value).ToList();
+            var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(value).ToList();
             if (spellsData.Count == 1)
             {
                 response = await new SpellMessageBuilder(spellsData[0], spellsData[0].GetMaxLevelNumber()).GetMessageAsync<DiscordInteractionResponseBuilder>();

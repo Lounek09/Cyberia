@@ -21,12 +21,12 @@ public sealed record RideGainAbilityEffect : Effect, IEffect
 
     public RideAbilityData? GetRideAbilityData()
     {
-        return DofusApi.Datacenter.RidesData.GetRideAbilityDataById(RideAbilityId);
+        return DofusApi.Datacenter.RidesRepository.GetRideAbilityDataById(RideAbilityId);
     }
 
     public Description GetDescription()
     {
-        var rideAbilityName = DofusApi.Datacenter.RidesData.GetRideAbilityNameById(RideAbilityId);
+        var rideAbilityName = DofusApi.Datacenter.RidesRepository.GetRideAbilityNameById(RideAbilityId);
 
         return GetDescription(string.Empty, string.Empty, rideAbilityName);
     }

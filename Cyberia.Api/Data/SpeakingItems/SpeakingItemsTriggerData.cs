@@ -25,6 +25,6 @@ public sealed class SpeakingItemsTriggerData : IDofusData
     public SpeakingItemsMessageData? GetRandomSpeakingItemMessageData()
     {
         var id = SpeakingItemsMessageIds[Random.Shared.Next(SpeakingItemsMessageIds.Count - 1)];
-        return DofusApi.Datacenter.SpeakingItemsData.GetSpeakingItemsMessageData(id);
+        return DofusApi.Datacenter.SpeakingItemsRepository.GetSpeakingItemsMessageData(id);
     }
 }

@@ -23,7 +23,7 @@ public sealed record GotoMapEffect : Effect, IEffect
 
     public MapData? GetMapData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapDataById(MapId);
+        return DofusApi.Datacenter.MapsRepository.GetMapDataById(MapId);
     }
 
     public Description GetDescription()

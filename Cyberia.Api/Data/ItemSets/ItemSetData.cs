@@ -32,7 +32,7 @@ public sealed class ItemSetData : IDofusData<int>
     {
         foreach (var id in ItemsId)
         {
-            var itemData = DofusApi.Datacenter.ItemsData.GetItemDataById(id);
+            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(id);
             if (itemData is not null)
             {
                 yield return itemData;
@@ -60,6 +60,6 @@ public sealed class ItemSetData : IDofusData<int>
 
     public BreedData? GetBreedData()
     {
-        return DofusApi.Datacenter.BreedsData.Breeds.Values.FirstOrDefault(x => x.ItemSetId == Id);
+        return DofusApi.Datacenter.BreedsRepository.Breeds.Values.FirstOrDefault(x => x.ItemSetId == Id);
     }
 }

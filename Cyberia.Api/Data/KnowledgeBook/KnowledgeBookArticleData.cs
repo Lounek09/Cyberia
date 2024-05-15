@@ -38,6 +38,6 @@ public sealed class KnowledgeBookArticleData : IDofusData<int>
 
     public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryData()
     {
-        return DofusApi.Datacenter.KnowledgeBookData.GetKnowledgeBookCatagoryDataById(KnowledgeBookCatagoryId);
+        return DofusApi.Datacenter.KnowledgeBookRepository.GetKnowledgeBookCatagoryDataById(KnowledgeBookCatagoryId);
     }
 }

@@ -26,12 +26,12 @@ public sealed record DiscoverMapSubAreaQuestObjective : QuestObjective, IQuestOb
 
     public MapSubAreaData? GetMapSubAreaData()
     {
-        return DofusApi.Datacenter.MapsData.GetMapSubAreaDataById(MapSubAreaId);
+        return DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(MapSubAreaId);
     }
 
     public Description GetDescription()
     {
-        var mapSubAreaName = DofusApi.Datacenter.MapsData.GetMapSubAreaNameById(MapSubAreaId);
+        var mapSubAreaName = DofusApi.Datacenter.MapsRepository.GetMapSubAreaNameById(MapSubAreaId);
 
         return GetDescription(mapSubAreaName);
     }

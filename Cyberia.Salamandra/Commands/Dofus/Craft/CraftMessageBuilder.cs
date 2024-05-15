@@ -39,7 +39,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[1], out var qte) &&
             bool.TryParse(parameters[2], out var recursive))
         {
-            var craftData = DofusApi.Datacenter.CraftsData.GetCraftDataById(craftId);
+            var craftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(craftId);
             if (craftData is not null)
             {
                 return new(craftData, qte, recursive);

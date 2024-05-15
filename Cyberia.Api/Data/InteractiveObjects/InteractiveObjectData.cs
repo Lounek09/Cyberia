@@ -32,7 +32,7 @@ public sealed class InteractiveObjectData : IDofusData<int>
     {
         foreach (var skillId in SkillsId)
         {
-            var skillData = DofusApi.Datacenter.SkillsData.GetSkillDataById(skillId);
+            var skillData = DofusApi.Datacenter.SkillsRepository.GetSkillDataById(skillId);
             if (skillData is not null)
             {
                 yield return skillData;

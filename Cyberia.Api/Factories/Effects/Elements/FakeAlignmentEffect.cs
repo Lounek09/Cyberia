@@ -21,12 +21,12 @@ public sealed record FakeAlignmentEffect : Effect, IEffect
 
     public AlignmentData? GetAlignmentData()
     {
-        return DofusApi.Datacenter.AlignmentsData.GetAlignmentDataById(AlignmentId);
+        return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentDataById(AlignmentId);
     }
 
     public Description GetDescription()
     {
-        var alignmentName = DofusApi.Datacenter.AlignmentsData.GetAlignmentNameById(AlignmentId);
+        var alignmentName = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentNameById(AlignmentId);
 
         return GetDescription(string.Empty, string.Empty, alignmentName);
     }

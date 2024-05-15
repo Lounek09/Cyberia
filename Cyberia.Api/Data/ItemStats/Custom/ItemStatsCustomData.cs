@@ -19,13 +19,4 @@ internal sealed class ItemStatsCustomData : IDofusData<int>
     {
         Effects = [];
     }
-
-    public ItemStatsData ToItemStatsData()
-    {
-        return new()
-        {
-            Id = Id,
-            Effects = Effects
-        };
-    }
 }

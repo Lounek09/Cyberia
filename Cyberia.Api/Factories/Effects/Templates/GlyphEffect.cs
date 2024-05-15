@@ -18,12 +18,12 @@ public abstract record GlyphEffect : Effect
 
     public SpellData? GetSpellData()
     {
-        return DofusApi.Datacenter.SpellsData.GetSpellDataById(SpellId);
+        return DofusApi.Datacenter.SpellsRepository.GetSpellDataById(SpellId);
     }
 
     public Description GetDescription()
     {
-        var spellName = DofusApi.Datacenter.SpellsData.GetSpellNameById(SpellId);
+        var spellName = DofusApi.Datacenter.SpellsRepository.GetSpellNameById(SpellId);
 
         return GetDescription(spellName, Level);
     }

@@ -34,7 +34,7 @@ public sealed class AudioEnvironmentData : IDofusData<int>
     {
         foreach (var id in BackgroundAudioEffectIds)
         {
-            var audioEffectData = DofusApi.Datacenter.AudiosData.GetAudioEffectDataById(id);
+            var audioEffectData = DofusApi.Datacenter.AudiosRepository.GetAudioEffectDataById(id);
             if (audioEffectData is not null)
             {
                 yield return audioEffectData;
@@ -46,7 +46,7 @@ public sealed class AudioEnvironmentData : IDofusData<int>
     {
         foreach (var id in NoiseAudioEffectIds)
         {
-            var audioEffectData = DofusApi.Datacenter.AudiosData.GetAudioEffectDataById(id);
+            var audioEffectData = DofusApi.Datacenter.AudiosRepository.GetAudioEffectDataById(id);
             if (audioEffectData is not null)
             {
                 yield return audioEffectData;
