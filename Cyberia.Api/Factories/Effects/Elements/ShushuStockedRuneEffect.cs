@@ -20,6 +20,6 @@ public sealed record ShushuStockedRuneEffect : Effect, IEffect
 
     public Description GetDescription()
     {
-        return GetDescription(Amont);
+        return GetDescription(string.Empty, string.Empty, Amont);
     }
 }
