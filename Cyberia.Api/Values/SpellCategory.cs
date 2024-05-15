@@ -19,5 +19,9 @@ public enum SpellCategory
     TemporisLegendary,
     TemporisTriggeredSpell,
     TemporisMonster,
-    Event
+    Event,
+    Unknown_18,
+    Unknown_19,
+    Unknown_20,
+    Unknown_21
 }
