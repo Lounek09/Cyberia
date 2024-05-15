@@ -109,18 +109,21 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             {
                 caracBuilder.Append(Emojis.EffectHealthPoint);
                 caracBuilder.Append(Formatter.Bold(_monsterGradeData.LifePoint.Value.ToFormattedString()));
+                caracBuilder.Append(' ');
             }
 
             if (_monsterGradeData.ActionPoint is not null)
             {
                 caracBuilder.Append(Emojis.EffectAp);
                 caracBuilder.Append(Formatter.Bold(_monsterGradeData.ActionPoint.Value.ToFormattedString()));
+                caracBuilder.Append(' ');
             }
 
             if (_monsterGradeData.MovementPoint is not null)
             {
                 caracBuilder.Append(Emojis.EffectMp);
                 caracBuilder.Append(Formatter.Bold(_monsterGradeData.MovementPoint.Value.ToFormattedString()));
+                caracBuilder.Append(' ');
             }
 
             caracBuilder.Append(Emojis.EffectApResistance);
