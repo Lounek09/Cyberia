@@ -1,9 +1,4 @@
-﻿using Cyberia.Salamandra.Commands.Admin;
-using Cyberia.Salamandra.Commands.Data;
-using Cyberia.Salamandra.Commands.Dofus;
-using Cyberia.Salamandra.Commands.Other;
-
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.EventArgs;
@@ -20,7 +15,7 @@ public static class CommandManager
 {
     public static void RegisterCommands(this CommandsExtension extension, params ulong[] guildIds)
     {
-        var commandGroups = new Dictionary<string, bool>
+        Dictionary<string, bool> commandGroups = new()
         {
             { "Cyberia.Salamandra.Commands.Admin", true },
             { "Cyberia.Salamandra.Commands.Data", true },
@@ -101,11 +96,11 @@ public static class CommandManager
         await MessageManager.SendErrorMessage(embed);
 #endif
 
-        try
+        if (ctx.Interaction.ResponseState == DiscordInteractionResponseState.Unacknowledged)
         {
             await ctx.RespondAsync("La commande a rencontré un problème d'exécution, un rapport de bug a été envoyé automatiquement au propriétaire du bot.", true);
         }
-        catch
+        else
         {
             await ctx.FollowupAsync("La commande a rencontré un problème d'exécution, un rapport de bug a été envoyé automatiquement au propriétaire du bot.", true);
         }
