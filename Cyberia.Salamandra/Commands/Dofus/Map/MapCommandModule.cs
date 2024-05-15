@@ -23,7 +23,7 @@ public sealed class MapCommandModule
     public static async Task IdExecuteAsync(SlashCommandContext ctx,
         [Parameter("id"), Description("Id de la map")]
         [MinMaxValue(1, 99999)]
-        long id)
+        int id)
     {
         var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById((int)id);
         if (mapData is null)
