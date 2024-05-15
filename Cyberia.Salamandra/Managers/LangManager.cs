@@ -7,11 +7,10 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 
 using System.Text;
-using System;
 
 namespace Cyberia.Salamandra.Managers;
 
-public static class LangsManager
+public static class LangManager
 {
 	#region CheckLangFinished
 
@@ -48,7 +47,7 @@ public static class LangsManager
             .WithName($"{repository.Type} {repository.Language} {now:dd-MM-yyyy HH\\hmm}")
             .WithMessage(new DiscordMessageBuilder().WithContent(
                 $"Diff des langs {Formatter.Bold(repository.Type.ToString())} " +
-                $"de {repository.LastChange:HH\\hmm} le {repository.LastChange:dd/MM/yyyy} " +
+                $"de {repository.LastChange.ToLocalTime():dd/MM/yyyy HH:mmzzz} " +
                 $"en {Formatter.Bold(repository.Language.ToString())}"));
 
         var typeTag = forum.GetDiscordForumTagByName(repository.Type.ToString());
@@ -115,18 +114,12 @@ public static class LangsManager
 
     private static async Task<DiscordThreadChannel> CreateDiffThreadAsync(this DiscordForumChannel forum, LangRepository currentRepository, LangRepository modelRepository)
     {
-        var type = currentRepository.Type;
-        var modelType = modelRepository.Type;
-        var language = currentRepository.Language;
-        var lastChange = currentRepository.LastChange.ToLocalTime();
-        var modelLastChange = modelRepository.LastChange.ToLocalTime();
-
 		var postBuilder = new ForumPostBuilder()
-			.WithName($"Diff {type} -> {modelType} en {language} {DateTime.Now:dd-MM-yyyy HH\\hmm}")
+			.WithName($"Diff {currentRepository.Type} -> {modelRepository.Type} en {currentRepository.Language} {DateTime.Now:dd-MM-yyyy HH\\hmm}")
 			.WithMessage(new DiscordMessageBuilder().WithContent(
-				$"Diff des langs {Formatter.Bold(type.ToString())} de {lastChange:HH\\hmm} le {lastChange:dd/MM/yyyy} " +
-				$"et {Formatter.Bold(modelType.ToString())} de {modelLastChange:HH\\hmm} le {modelLastChange:dd/MM/yyyy} " +
-				$"en {Formatter.Bold(language.ToString())}"));
+				$"Diff des langs {Formatter.Bold(currentRepository.Type.ToString())} de {currentRepository.LastChange.ToLocalTime():dd/MM/yyyy HH:mmzzz} " +
+				$"et {Formatter.Bold(modelRepository.Type.ToString())} de {modelRepository.LastChange.ToLocalTime():dd/MM/yyyy HH:mmzzz} " +
+				$"en {Formatter.Bold(currentRepository.Language.ToString())}"));
 
 		var tag = ChannelManager.LangForumChannel!.GetDiscordForumTagByName("Diff manuel");
 		if (tag is not null)
