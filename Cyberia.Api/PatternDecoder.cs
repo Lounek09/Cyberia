@@ -75,6 +75,7 @@ public static class PatternDecoder
         return Description(value, Array.ConvertAll(parameters, x => x?.ToString() ?? string.Empty));
     }
 
+    //TODO: Use Span
     public static string Description(string value, params string[] parameters)
     {
         StringBuilder builder = new(value);

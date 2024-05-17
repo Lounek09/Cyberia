@@ -24,14 +24,14 @@ public sealed class SearchCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task EffectExecuteAsync(SlashCommandContext ctx,
         [Parameter("where"), Description("Where to look for the effect")]
-        SearchLocation where,
+        SearchLocation location,
         [Parameter("id"), Description("Effect id")]
         [MinMaxValue(0, 9999)]
         int effectId)
     {
         StringBuilder descriptionBuilder = new();
 
-        switch (where)
+        switch (location)
         {
             case SearchLocation.Item:
                 foreach (var itemStats in DofusApi.Datacenter.ItemsStatsRepository.ItemsStats)
@@ -77,12 +77,12 @@ public sealed class SearchCommandModule
                 }
                 break;
             default:
-                await ctx.RespondAsync($"Unknown {Formatter.Bold(where.ToString())}");
+                await ctx.RespondAsync($"Unknown {Formatter.Bold(location.ToString())}");
                 return;
         }
 
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
-            .WithTitle($"Search effect {effectId} in {where}")
+            .WithTitle($"Search effect {effectId} in {location}")
             .WithDescription(descriptionBuilder.ToString().WithMaxLength(4000));
 
         await ctx.RespondAsync(embed);
@@ -92,19 +92,20 @@ public sealed class SearchCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task CriterionExecuteAsync(SlashCommandContext ctx,
         [Parameter("where"), Description("Where to look for the criterion")]
-        SearchLocation where,
+        SearchLocation location,
         [Parameter("id"), Description("Criterion id")]
         [MinMaxLength(2, 2)]
         string criterionId)
     {
         StringBuilder descriptionBuilder = new();
 
-        switch (where)
+        switch (location)
         {
             case SearchLocation.Item:
                 foreach (var items in DofusApi.Datacenter.ItemsRepository.Items)
                 {
-                    var itemHasCriterion = items.Value.Criteria.OfType<ICriterion>()
+                    var itemHasCriterion = items.Value.Criteria
+                        .OfType<ICriterion>()
                         .Any(x => x.Id.Equals(criterionId));
 
                     if (itemHasCriterion)
@@ -147,11 +148,11 @@ public sealed class SearchCommandModule
                 }
                 break;
             default:
-                await ctx.RespondAsync($"Unknown {Formatter.Bold(where.ToString())}");
+                await ctx.RespondAsync($"Unknown {Formatter.Bold(location.ToString())}");
                 return;
         }
 
-        await ctx.RespondAsync(EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, $"Search criterion {criterionId} in {where}")
+        await ctx.RespondAsync(EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, $"Search criterion {criterionId} in {location}")
             .WithDescription(descriptionBuilder.ToString().WithMaxLength(4000)));
     }
 }
