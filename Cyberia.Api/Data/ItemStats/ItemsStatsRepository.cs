@@ -49,7 +49,7 @@ public sealed class ItemsStatsRepository : IDofusRepository
             ((List<IEffect>)itemStatsData.Effects).AddRange(itemStatsCustomData.Effects);
         }
 
-        data.ItemsStats = data.ItemsStatsCore.GroupBy(x => x.Id).ToFrozenDictionary(x => x.Key, x => x.ElementAt(0));
+        data.ItemsStats = data.ItemsStatsCore.ToFrozenDictionary(x => x.Id, x => x);
         return data;
     }
 
