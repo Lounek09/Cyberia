@@ -138,11 +138,13 @@ public sealed class ItemData : IDofusData<int>
         var itemTypeData = GetItemTypeData();
         var itemStatsData = GetItemStatsData();
 
-        var isQuestItem = itemTypeData is not null && itemTypeData.ItemSuperTypeId == ItemSuperTypeData.Quest;
-        var isLinkedToAccount = itemStatsData is not null && itemStatsData.Effects.OfType<MarkNotTradableEffect>().Any(x => x.IsLinkedToAccount());
-        var isUnbreakable = itemStatsData is not null && itemStatsData.Effects.Any(x => x is ItemUnbreakableEffect);
+        var isQuestItem = itemTypeData?.ItemSuperTypeId == ItemSuperTypeData.Quest;
+        var isLinked = itemStatsData?.Effects.Any(x =>
+            x is MarkNotTradableEffect markNotTradableEffect && markNotTradableEffect.IsLinkedToAccount() ||
+            x is MarkNeverTradableStrongEffect) ?? false;
+        var isUnbreakable = itemStatsData?.Effects.Any(x => x is ItemUnbreakableEffect) ?? false;
 
-        return !isQuestItem && !Cursed && !isLinkedToAccount && !isUnbreakable;
+        return !isQuestItem && !Cursed && !isLinked && !isUnbreakable;
     }
 
     public int GetNpcRetailPrice()
