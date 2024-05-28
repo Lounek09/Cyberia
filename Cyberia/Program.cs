@@ -14,7 +14,7 @@ public static class Program
     public static async Task Main()
     {
         var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
+            .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", false);
 
         var appConfig = builder.Build();
