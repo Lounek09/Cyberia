@@ -75,8 +75,7 @@ public static class PatternDecoder
         return Description(value, Array.ConvertAll(parameters, x => x?.ToString() ?? string.Empty));
     }
 
-    //TODO: Use Span
-    public static string Description(string value, params string[] parameters)
+    public static string Description(string value, params string[] parameters) //TODO: .NET9 Use ReadOnlySpan<string>
     {
         StringBuilder builder = new(value);
 

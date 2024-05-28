@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Values;
 
-public enum GuildStructure
+public enum GuildProperty
 {
     None,
     House,

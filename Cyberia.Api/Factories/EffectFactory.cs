@@ -319,7 +319,7 @@ public static class EffectFactory
             { 814, ItemDungeonKeyDateEffect.Create },
             { 825, ItemTeleportForceEffect.Create },
             { 826, ItemTeleportMapReferenceEffect.Create },
-            { 830, GotoGuildStructureEffect.Create },
+            { 830, GotoGuildPropertyEffect.Create },
             { 850, ChangeNameEffect.Create },
             { 851, ChangeColorsEffect.Create },
             { 852, ChangeSexeEffect.Create },

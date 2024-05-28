@@ -31,20 +31,13 @@ public sealed class CritCommandModule
         int agility)
     {
         var rate = Formulas.GetCriticalRate(number, target, agility);
-        if (rate < 0)
-        {
-            await ctx.RespondAsync("Paramètre incorrect");
-            return;
-        }
+        var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, target);
 
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de coups critiques")
-            .WithDescription($"Tu seras {Formatter.Bold($"1/{rate}")} au {Formatter.Bold($"1/{target}")} avec {Formatter.Bold(number.ToString())}crit et {Formatter.Bold(agility.ToString())}agi");
-
-        var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, target);
-        if (rate != 2 && agilityNeeded > -1)
-        {
-            embed.Description += $"\nPour atteindre le 1/2 il te faudra au minimum {Formatter.Bold(agilityNeeded.ToString())}agi !";
-        }
+            .WithDescription($"""
+                Tu seras {Formatter.Bold($"1/{rate}")} au {Formatter.Bold($"1/{target}")} avec {Formatter.Bold(number.ToString())}crit et {Formatter.Bold(agility.ToString())}agi
+                Pour atteindre le 1/2 il te faudra au minimum {Formatter.Bold(agilityNeeded.ToString())}agi !
+                """);
 
         await ctx.RespondAsync(embed);
     }

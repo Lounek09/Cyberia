@@ -1,12 +1,14 @@
-﻿namespace Cyberia.Api.Managers;
+﻿using Cyberia.Api.Data;
+
+namespace Cyberia.Api.Managers;
 
 public readonly record struct EffectArea(int Id, int Size)
 {
     public static readonly EffectArea Default = new(80, 0);
 
-    public string GetImagePath()
+    public Task<string> GetImagePathAsync(CdnImageSize size)
     {
-        return $"{DofusApi.Config.CdnUrl}/images/effectareas/{Id}.png";
+        return CdnManager.GetImagePathAsync("effectareas", Id, size);
     }
 
     public string GetSize()

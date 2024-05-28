@@ -28,7 +28,7 @@ public sealed class EscapeCommandModule
         int foeAgility)
     {
         var escapePercent = Formulas.GetEscapePercent(agility, foeAgility);
-        var agilityToEscapeForSure = Formulas.GetAgilityToEscape(foeAgility);
+        var agilityToEscapeForSure = Formulas.GetAgilityToEscapeForSure(foeAgility);
 
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de % de fuite")
             .WithDescription($"""
