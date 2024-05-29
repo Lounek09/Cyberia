@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.JsonConverters;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -53,6 +54,32 @@ public sealed class SpellsRepository : IDofusRepository
             return names.All(y =>
             {
                 return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
+            });
+        });
+    }
+
+    public IEnumerable<SpellData> GetSpellsDataWithEffectId(int effectId)
+    {
+        return Spells.Values.Where(x =>
+        {
+            return x.GetSpellLevelsData().Any(y =>
+            {
+                return y.Effects.Any(z => z.Id == effectId);
+            });
+        });
+    }
+
+    public IEnumerable<SpellData> GetSpellsDataWithCriterionId(string criterionId)
+    {
+        return Spells.Values.Where(x =>
+        {
+            return x.GetSpellLevelsData().Any(y =>
+            {
+                return y.Effects.Any(z =>
+                {
+                    return z.Criteria.OfType<ICriterion>()
+                        .Any(x => x.Id.Equals(criterionId, StringComparison.OrdinalIgnoreCase));
+                });
             });
         });
     }

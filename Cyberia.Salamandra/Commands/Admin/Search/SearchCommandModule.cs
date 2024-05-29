@@ -1,5 +1,4 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Factories.Criteria;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
@@ -34,46 +33,23 @@ public sealed class SearchCommandModule
         switch (location)
         {
             case SearchLocation.Item:
-                foreach (var itemStats in DofusApi.Datacenter.ItemsStatsRepository.ItemsStats)
+                foreach (var itemData in DofusApi.Datacenter.ItemsRepository.GetItemsDataWithEffectId(effectId))
                 {
-                    var itemHasEffect = itemStats.Value.Effects.Any(x => x.Id == effectId);
-
-                    if (itemHasEffect)
-                    {
-                        var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemStats.Key);
-                        if (itemData is not null)
-                        {
-                            descriptionBuilder.Append("- ");
-                            descriptionBuilder.Append(itemData.Name);
-                            descriptionBuilder.Append(" (");
-                            descriptionBuilder.Append(itemData.Id);
-                            descriptionBuilder.Append(")\n");
-                        }
-                    }
+                    descriptionBuilder.Append("- ");
+                    descriptionBuilder.Append(itemData.Name);
+                    descriptionBuilder.Append(" (");
+                    descriptionBuilder.Append(itemData.Id);
+                    descriptionBuilder.Append(")\n");
                 }
                 break;
             case SearchLocation.Spell:
-                foreach (var spells in DofusApi.Datacenter.SpellsRepository.Spells)
+                foreach (var spellData in DofusApi.Datacenter.SpellsRepository.GetSpellsDataWithEffectId(effectId))
                 {
-                    foreach (var spellLevelData in spells.Value.GetSpellLevelsData())
-                    {
-                        var spellHasEffect = spellLevelData.Effects.Any(x => x.Id == effectId);
-
-                        if (spellHasEffect)
-                        {
-                            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spells.Key);
-                            if (spellData is not null)
-                            {
-                                descriptionBuilder.Append("- ");
-                                descriptionBuilder.Append(spellData.Name);
-                                descriptionBuilder.Append(" (");
-                                descriptionBuilder.Append(spellData.Id);
-                                descriptionBuilder.Append(")\n");
-
-                                break;
-                            }
-                        }
-                    }
+                    descriptionBuilder.Append("- ");
+                    descriptionBuilder.Append(spellData.Name);
+                    descriptionBuilder.Append(" (");
+                    descriptionBuilder.Append(spellData.Id);
+                    descriptionBuilder.Append(")\n");
                 }
                 break;
             default:
@@ -102,49 +78,23 @@ public sealed class SearchCommandModule
         switch (location)
         {
             case SearchLocation.Item:
-                foreach (var items in DofusApi.Datacenter.ItemsRepository.Items)
+                foreach (var itemData in DofusApi.Datacenter.ItemsRepository.GetItemsDataWithCriterionId(criterionId))
                 {
-                    var itemHasCriterion = items.Value.Criteria
-                        .OfType<ICriterion>()
-                        .Any(x => x.Id.Equals(criterionId));
-
-                    if (itemHasCriterion)
-                    {
-                        descriptionBuilder.Append("- ");
-                        descriptionBuilder.Append(items.Value.Name);
-                        descriptionBuilder.Append(" (");
-                        descriptionBuilder.Append(items.Key);
-                        descriptionBuilder.Append(")\n");
-                    }
+                    descriptionBuilder.Append("- ");
+                    descriptionBuilder.Append(itemData.Name);
+                    descriptionBuilder.Append(" (");
+                    descriptionBuilder.Append(itemData.Id);
+                    descriptionBuilder.Append(")\n");
                 }
                 break;
             case SearchLocation.Spell:
-                foreach (var spells in DofusApi.Datacenter.SpellsRepository.Spells)
+                foreach (var spellData in DofusApi.Datacenter.SpellsRepository.GetSpellsDataWithCriterionId(criterionId))
                 {
-                    foreach (var spellLevelData in spells.Value.GetSpellLevelsData())
-                    {
-                        var spellHasCriterion = spellLevelData.Effects.Select(x => x.Criteria)
-                            .Any(x =>
-                            {
-                                return x.OfType<ICriterion>()
-                                    .Any(x => x.Id.Equals(criterionId));
-                            });
-
-                        if (spellHasCriterion)
-                        {
-                            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spells.Key);
-                            if (spellData is not null)
-                            {
-                                descriptionBuilder.Append("- ");
-                                descriptionBuilder.Append(spellData.Name);
-                                descriptionBuilder.Append(" (");
-                                descriptionBuilder.Append(spellData.Id);
-                                descriptionBuilder.Append(")\n");
-
-                                break;
-                            }
-                        }
-                    }
+                    descriptionBuilder.Append("- ");
+                    descriptionBuilder.Append(spellData.Name);
+                    descriptionBuilder.Append(" (");
+                    descriptionBuilder.Append(spellData.Id);
+                    descriptionBuilder.Append(")\n");
                 }
                 break;
             default:

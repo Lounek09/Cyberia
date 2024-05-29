@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.JsonConverters;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -93,6 +94,26 @@ public sealed class ItemsRepository : IDofusRepository
             {
                 return x.NormalizedName.Contains(y, StringComparison.OrdinalIgnoreCase);
             });
+        });
+    }
+
+    public IEnumerable<ItemData> GetItemsDataWithEffectId(int effectId)
+    {
+        return Items.Values.Where(x =>
+        {
+            var itemStatsData = x.GetItemStatsData();
+
+            return itemStatsData is not null &&
+                itemStatsData.Effects.Any(y => y.Id == effectId);
+        });
+    }
+
+    public IEnumerable<ItemData> GetItemsDataWithCriterionId(string criterionId)
+    {
+        return Items.Values.Where(x =>
+        {
+            return x.Criteria.OfType<ICriterion>()
+                .Any(y => y.Id.Equals(criterionId, StringComparison.OrdinalIgnoreCase));
         });
     }
 
