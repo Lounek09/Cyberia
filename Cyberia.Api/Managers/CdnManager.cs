@@ -1,9 +1,12 @@
 ﻿using Cyberia.Api.Data;
+
+using System.Collections.Concurrent;
 namespace Cyberia.Api.Managers;
 
 public static class CdnManager
 {
-    private static readonly Dictionary<string, (bool Exists, DateTime LastCheck)> s_cachedUrl = [];
+    private static readonly ConcurrentDictionary<string, (bool Exists, DateTime LastCheck)> s_cachedUrl = [];
+    private static readonly TimeSpan s_cacheDuration = TimeSpan.FromHours(24);
 
     public static async Task<string> GetImagePathAsync(string category, int id, CdnImageSize size, string ext = "png")
     {
@@ -23,12 +26,16 @@ public static class CdnManager
 
     private static async Task<bool> ExistsAsync(string url)
     {
-        if (!s_cachedUrl.TryGetValue(url, out var cacheEntry) || (DateTime.Now - cacheEntry.LastCheck).TotalHours > 24)
+        var now = DateTime.Now;
+
+        if (s_cachedUrl.TryGetValue(url, out var cacheEntry) && (now - cacheEntry.LastCheck) < s_cacheDuration)
         {
-            cacheEntry = (await DofusApi.HttpClient.ExistsAsync(url), DateTime.Now);
-            s_cachedUrl.Add(url, cacheEntry);
+            return cacheEntry.Exists;
         }
 
-        return cacheEntry.Exists;
+        var exists = await DofusApi.HttpClient.ExistsAsync(url);
+        s_cachedUrl.TryAdd(url, (exists, now));
+
+        return exists;
     }
 }
