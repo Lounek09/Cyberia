@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api.Data;
 
 using System.Collections.Concurrent;
+
 namespace Cyberia.Api.Managers;
 
 public static class CdnManager
