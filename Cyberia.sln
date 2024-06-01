@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia", "Cyberia\Cyberia.csproj", "{D8647CDE-B4EB-4A87-86F1-26B2E631EF03}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Amphibian", "Cyberia.Amphibian\Cyberia.Amphibian.csproj", "{D1FB7F71-1B7D-4088-9541-6B2EF4470B28}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Api", "Cyberia.Api\Cyberia.Api.csproj", "{6AE2EA0C-2F65-4CAD-B6C9-1CF01AC9E64D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Cytrusaurus", "Cyberia.Cytrusaurus\Cyberia.Cytrusaurus.csproj", "{02579824-672C-4F45-9C1A-1E913889A2AC}"
@@ -37,8 +39,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Translation", "Cybe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Utils", "Cyberia.Utils\Cyberia.Utils.csproj", "{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyberia.Amphibian", "Cyberia.Amphibian\Cyberia.Amphibian.csproj", "{D1FB7F71-1B7D-4088-9541-6B2EF4470B28}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +49,10 @@ Global
 		{D8647CDE-B4EB-4A87-86F1-26B2E631EF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8647CDE-B4EB-4A87-86F1-26B2E631EF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8647CDE-B4EB-4A87-86F1-26B2E631EF03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1FB7F71-1B7D-4088-9541-6B2EF4470B28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1FB7F71-1B7D-4088-9541-6B2EF4470B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1FB7F71-1B7D-4088-9541-6B2EF4470B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1FB7F71-1B7D-4088-9541-6B2EF4470B28}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6AE2EA0C-2F65-4CAD-B6C9-1CF01AC9E64D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6AE2EA0C-2F65-4CAD-B6C9-1CF01AC9E64D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AE2EA0C-2F65-4CAD-B6C9-1CF01AC9E64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,10 +81,6 @@ Global
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1FB7F71-1B7D-4088-9541-6B2EF4470B28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1FB7F71-1B7D-4088-9541-6B2EF4470B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1FB7F71-1B7D-4088-9541-6B2EF4470B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1FB7F71-1B7D-4088-9541-6B2EF4470B28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
