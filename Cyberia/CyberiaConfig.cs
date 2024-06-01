@@ -1,4 +1,5 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Amphibian;
+using Cyberia.Api;
 using Cyberia.Salamandra;
 
 namespace Cyberia;
@@ -59,14 +60,19 @@ public sealed class CyberiaConfig
     public TimeSpan CheckTemporisLangInterval { get; init; }
 
     /// <summary>
-    /// Gets the API configuration settings.
+    /// Gets the API configuration settings used by DofusApi.
     /// </summary>
     public ApiConfig ApiConfig { get; init; }
 
     /// <summary>
-    /// Gets the Bot configuration settings.
+    /// Gets the Bot configuration settings used by Salamandra.
     /// </summary>
     public BotConfig BotConfig { get; init; }
+
+    /// <summary>
+    /// Gets the Web configuration settings used by Amphibian.
+    /// </summary>
+    public WebConfig WebConfig { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CyberiaConfig"/> class.
@@ -75,5 +81,6 @@ public sealed class CyberiaConfig
     {
         ApiConfig = new();
         BotConfig = new();
+        WebConfig = new();
     }
 }

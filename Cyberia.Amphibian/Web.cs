@@ -1,41 +1,50 @@
-﻿using Microsoft.AspNetCore.HttpOverrides;
-
 namespace Cyberia.Amphibian;
 
 public static class Web
 {
-    public const string OutputPath = "wwwroot";
-
+    public static WebConfig Config { get; private set; } = default!;
     public static WebApplication Application { get; private set; } = default!;
 
-    public static void Initialize()
+    public static void Initialize(WebConfig config)
     {
-        var builder = WebApplication.CreateBuilder();
+        Config = config;
 
-        builder.Host.UseSerilog(Log.Logger);
-        builder.WebHost.UseUrls("https://localhost:5001", "http://localhost:5000");
-        builder.Services.AddRazorPages().AddApplicationPart(typeof(Web).Assembly);
+        Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", Config.Environment);
+
+        var builder = WebApplication.CreateBuilder(new WebApplicationOptions()
+        {
+            ApplicationName = "Cyberia.Amphibian",
+            EnvironmentName = Config.Environment,
+            ContentRootPath = AppContext.BaseDirectory,
+            WebRootPath = "wwwroot"           
+        });
+
+        builder.Logging.ClearProviders();
+        builder.Logging.AddSerilog(Log.Logger);
+
+        builder.WebHost.UseUrls(Config.Urls.ToArray());
+
+        builder.Services.AddAuthorization();
 
         Application = builder.Build();
 
-#if DEBUG
-        Application.UseDeveloperExceptionPage();
-#else
-        Application.UseExceptionHandler("/Error");
-        Application.UseHsts();
-        Application.UseForwardedHeaders(new ForwardedHeadersOptions
-        {
-            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-        });
-#endif
-
         Application.UseHttpsRedirection();
-        Application.UseStaticFiles();
-        Application.MapRazorPages();
+        Application.UseRouting();
+        Application.UseAuthorization();
+
+        Application.MapGet("/", (HttpContext httpContext) =>
+        {
+            return "Hello World!";
+        });
+
+        Application.MapGet("/test", (HttpContext httpContext) =>
+        {
+            throw new NotImplementedException();
+        });
     }
 
     public static async Task LaunchAsync()
     {
-        await Application.RunAsync();
+        await Task.Run(() => Application.RunAsync());
     }
 }

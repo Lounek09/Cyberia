@@ -13,6 +13,8 @@ public static class Program
 {
     public static async Task Main()
     {
+        Directory.SetCurrentDirectory(AppContext.BaseDirectory);
+
         var builder = new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", false);
@@ -49,9 +51,9 @@ public static class Program
             if (config.EnableAmphibian)
             {
                 Log.Information("Initializing Amphibian");
-                Web.Initialize();
+                Web.Initialize(config.WebConfig);
 
-                _ = Web.LaunchAsync();
+                await Web.LaunchAsync();
             }
 
             if (config.EnableCheckCytrus)

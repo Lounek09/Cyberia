@@ -5,9 +5,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>
@@ -18,10 +17,14 @@
     <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <Using Include="Cyberia.Utils" />
     <Using Include="Serilog" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
