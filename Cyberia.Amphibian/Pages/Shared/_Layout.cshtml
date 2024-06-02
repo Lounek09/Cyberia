@@ -1,0 +1,65 @@
+﻿@using Cyberia.Salamandra;
+
+@using System.Text
+
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="icon" href="~/favicon.ico">
+	<link rel="stylesheet" href="~/css/icons.css">
+	<link rel="stylesheet" href="~/css/layout.css">
+	<title>@ViewBag.Title - Amphibian</title>
+</head>
+<body>
+	<header>
+		<nav>
+			@Html.Raw(BuildNavItems())
+		</nav>
+	</header>
+	<main>
+		@RenderBody()
+	</main>
+	<footer>
+		<p class="left">
+			<a href="/">Accueil</a> | <a href="/privacy">Confidentialité</a>
+		</p>
+		<p class="right">
+			<a href="@Bot.Config.GuildInviteUrl"><span class="discord"></span></a>
+			<a href="@Web.Config.GitUrl"><span class="git"></span></a>
+		</p>
+	</footer>
+</body>
+</html>
+
+@functions {
+	private static readonly Dictionary<string, string> navItems = new()
+	{
+		{ "/breeds", "Classes" },
+		{ "/items", "Items" },
+		{ "/spells", "Sorts" },
+		{ "/monsters", "Monstres" },
+		{ "/dungeons", "Donjons" },
+		{ "/quests", "Quetes" },
+		{ "/tools", "Outils" }
+	};
+
+	private string BuildNavItems()
+	{
+		StringBuilder builder = new();
+
+		foreach (var item in navItems)
+		{
+			builder.AppendLine($"""<a href="{item.Key}" class="{IsSelected(item.Key)}">{item.Value}</a>""");
+		}
+
+		return builder.ToString();
+	}
+
+	private string IsSelected(string page)
+	{
+		return Context.Request.Path.StartsWithSegments(page, StringComparison.OrdinalIgnoreCase) ? "selected" : "";
+	}
+}

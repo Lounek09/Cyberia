@@ -13,11 +13,17 @@ public sealed class WebConfig
     public IReadOnlyList<string> Urls { get; init; }
 
     /// <summary>
+    /// Gets the Git URL of the repository.
+    /// </summary>
+    public string GitUrl { get; init; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="WebConfig"/> class.
     /// </summary>
     public WebConfig()
     {
         Environment = string.Empty;
         Urls = [];
+        GitUrl = string.Empty;
     }
 }

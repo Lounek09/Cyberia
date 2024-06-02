@@ -24,23 +24,18 @@ public static class Web
 
         builder.WebHost.UseUrls(Config.Urls.ToArray());
 
+        builder.Services.AddRouting(options => options.LowercaseUrls = true);
+        builder.Services.AddRazorPages();
         builder.Services.AddAuthorization();
 
         Application = builder.Build();
 
         Application.UseHttpsRedirection();
+        Application.UseStaticFiles();
         Application.UseRouting();
         Application.UseAuthorization();
 
-        Application.MapGet("/", (HttpContext httpContext) =>
-        {
-            return "Hello World!";
-        });
-
-        Application.MapGet("/test", (HttpContext httpContext) =>
-        {
-            throw new NotImplementedException();
-        });
+        Application.MapRazorPages();
     }
 
     public static async Task LaunchAsync()

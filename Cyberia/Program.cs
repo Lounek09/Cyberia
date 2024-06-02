@@ -40,19 +40,17 @@ public static class Program
             Log.Information("Initializing DofusApi");
             DofusApi.Initialize(config.ApiConfig);
 
+            Log.Information("Initializing Salamandra");
+            await Bot.InitializeAsync(config.BotConfig);
             if (config.EnableSalamandra)
             {
-                Log.Information("Initializing Salamandra");
-                await Bot.InitializeAsync(config.BotConfig);
-
                 await Bot.LaunchAsync();
             }
 
+            Log.Information("Initializing Amphibian");
+            Web.Initialize(config.WebConfig);
             if (config.EnableAmphibian)
             {
-                Log.Information("Initializing Amphibian");
-                Web.Initialize(config.WebConfig);
-
                 await Web.LaunchAsync();
             }
 
