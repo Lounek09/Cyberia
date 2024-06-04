@@ -9,7 +9,7 @@ public sealed class EffectAreaConverter : JsonConverter<EffectArea>
 {
     public override EffectArea Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return EffectAreaManager.Create(reader.GetString() ?? string.Empty);
+        return EffectAreaFactory.Create(reader.GetString() ?? string.Empty);
     }
 
     public override void Write(Utf8JsonWriter writer, EffectArea values, JsonSerializerOptions options)

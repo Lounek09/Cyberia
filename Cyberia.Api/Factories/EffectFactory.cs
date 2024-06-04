@@ -443,7 +443,7 @@ public static class EffectFactory
             Param4 = args.Length > 4 ? args[4] : string.Empty
         };
 
-        return Create(id, parameters, 0, 0, [], EffectArea.Default);
+        return Create(id, parameters, 0, 0, [], EffectAreaFactory.Default);
     }
 
     public static IEnumerable<IEffect> CreateMany(string compressedEffects)
@@ -494,7 +494,7 @@ public static class EffectFactory
     {
         for (var i = 0; i < compressedEffects.Count; i++)
         {
-            var effectArea = effectAreas.Count > i ? effectAreas[i] : EffectArea.Default;
+            var effectArea = effectAreas.Count > i ? effectAreas[i] : EffectAreaFactory.Default;
 
             yield return Create(compressedEffects[i], effectArea);
         }

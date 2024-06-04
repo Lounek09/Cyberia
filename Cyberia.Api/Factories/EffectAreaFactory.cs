@@ -4,8 +4,6 @@ namespace Cyberia.Api.Managers;
 
 public readonly record struct EffectArea(int Id, int Size)
 {
-    public static readonly EffectArea Default = new(80, 0);
-
     public Task<string> GetImagePathAsync(CdnImageSize size)
     {
         return CdnManager.GetImagePathAsync("effectareas", Id, size);
@@ -18,9 +16,9 @@ public readonly record struct EffectArea(int Id, int Size)
 
     public Description GetDescription()
     {
-        if (Id == Default.Id)
+        if (Id == EffectAreaFactory.Default.Id)
         {
-            return new();
+            return Description.Empty;
         }
 
         var effectAreaName = Resources.ResourceManager.GetString($"EffectArea.{Id}");
@@ -34,14 +32,16 @@ public readonly record struct EffectArea(int Id, int Size)
     }
 }
 
-public static class EffectAreaManager
+public static class EffectAreaFactory
 {
+    public static readonly EffectArea Default = new(80, 0);
+
     public static EffectArea Create(string compressedEffectArea)
     {
         if (compressedEffectArea.Length != 2)
         {
             Log.Warning("Failed to create EffectArea from {CompressedEffectArea}", compressedEffectArea);
-            return EffectArea.Default;
+            return Default;
         }
 
         return new(compressedEffectArea[0], PatternDecoder.Base64(compressedEffectArea[1]));

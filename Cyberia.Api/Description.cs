@@ -2,6 +2,8 @@
 
 public readonly record struct Description(string Value, params string[] Parameters)
 {
+    public static readonly Description Empty = new();
+
     public override string ToString()
     {
         return PatternDecoder.Description(Value, Parameters);

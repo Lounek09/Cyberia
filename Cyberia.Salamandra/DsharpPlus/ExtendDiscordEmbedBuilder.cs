@@ -4,7 +4,6 @@ using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.Factories.QuestObjectives;
 using Cyberia.Api.Managers;
 
@@ -160,7 +159,7 @@ public static class ExtendDiscordEmbedBuilder
 
         builder.Append(twoHanded ? "Arme à deux mains" : "Arme à une main");
 
-        if (itemTypeData is not null && itemTypeData.EffectArea != EffectArea.Default)
+        if (itemTypeData is not null && itemTypeData.EffectArea != EffectAreaFactory.Default)
         {
             builder.Append("\nZone : ");
             builder.Append(Emojis.EffectArea(itemTypeData.EffectArea.Id));
@@ -276,9 +275,13 @@ public static class ExtendDiscordEmbedBuilder
                 continue;
             }
 
-            var effectDescription = parametersDecorator is null ? effect.GetDescription() : effect.GetDescription().ToString(parametersDecorator);
+            var effectDescription = parametersDecorator is null
+                ? effect.GetDescription()
+                : effect.GetDescription().ToString(parametersDecorator);
 
-            var areaInfo = effect.EffectArea.Size == EffectArea.Default.Size ? string.Empty : $" - {Emojis.EffectArea(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
+            var areaInfo = effect.EffectArea.Size == EffectAreaFactory.Default.Size
+                ? string.Empty
+                : $" - {Emojis.EffectArea(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
 
             var effectParse = $"{Emojis.Effect(effect.Id)} {effectDescription}{areaInfo}";
 
