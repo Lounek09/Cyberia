@@ -23,13 +23,21 @@
 		@RenderBody()
 	</main>
 	<footer>
-		<p class="left">
-			<a href="/">Accueil</a> | <a href="/privacy">Confidentialité</a>
-		</p>
-		<p class="right">
-			<a href="@Bot.Config.GuildInviteUrl"><span class="discord"></span></a>
-			<a href="@Web.Config.GitUrl"><span class="git"></span></a>
-		</p>
+		<div class="left">
+			<pre><span class="icon-code"></span> Développé par Lounek</pre>
+			<pre class="dot"> • </pre>
+			<pre>@Context.Request.Host est un fansite non affilié à <a href="https://www.ankama.com">Ankama Games</a></pre>
+		</div>
+		<div class="right">
+			@if (!string.IsNullOrEmpty(@Bot.Config.GuildInviteUrl))
+			{
+				<a href="@Bot.Config.GuildInviteUrl"><span class="icon-discord"></span></a>
+			}
+			@if (!string.IsNullOrEmpty(@Web.Config.GitUrl))
+			{
+				<a href="@Web.Config.GitUrl"><span class="icon-git"></span></a>
+			}
+		</div>
 	</footer>
 </body>
 </html>

@@ -12,16 +12,17 @@ body {
     color: var(--main-text-color);
     font-family: monospace;
     font-size: calc(7px + 1vmin);
-    & a {
+    a {
         text-decoration: none;
         color: inherit;
     }
 }
 
 header {
-    margin: 2em auto;
+    padding: 1rem;
+    margin: 1rem;
     text-align: center;
-    & nav a {
+    nav a {
         display: inline-block;
         color: var(--nav-color);
         font-weight: bold;
@@ -36,11 +37,10 @@ header {
 }
 
 main {
-    margin: 2em auto;
-}
+    padding: 1rem;
+    margin: 1rem;
 
-@media only screen and (min-width : 834px) {
-    main {
+    @media only screen and (min-width : 667px) {
         max-width: 80%;
     }
 }
@@ -50,18 +50,38 @@ footer {
     left: 0;
     bottom: 0;
     right: 0;
-    padding: 0 1em;
-    background-color: var(--secondary-bg-color);
     display: flex;
     justify-content: space-between;
-    & p {
+    padding: 1rem;
+    background-color: var(--secondary-bg-color);
+
+    div {
         display: flex;
+        justify-content: center;
         align-items: center;
+
         &.left {
             font-size: 0.8em;
         }
+
         &.right {
             gap: 0.2em;
+        }
+
+        & > * {
+            margin: 0;
+        }
+    }
+
+    @media only screen and (max-width : 667px) {
+        flex-direction: column;
+
+        div.left {
+            flex-direction: column;
+        }
+
+        div .dot {
+            display: none;
         }
     }
 }
