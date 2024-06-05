@@ -31,6 +31,7 @@ public static class Emojis
         { 78, EffectMp },
         { 79, "<:effect_dice:1238126936241209434>" },
         { 81, "<:effect_healthGain:1238099012054155295>" },
+        { 82, "<:effect_neutralDammage:1238099049052373092>" },
         { 84, EffectAp },
         { 85, "<:effect_waterDammage:1238099578562281503>" },
         { 86, "<:effect_earthDammage:1238098648710123565>" },
