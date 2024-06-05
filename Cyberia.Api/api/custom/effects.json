@@ -25,6 +25,14 @@
       "d": "Donne #1{~1~2 à }#2% de sa vie"
     },
     {
+      "id": 143,
+      "d": "PDV rendus : #1{~1~2 à }#2 (fixe)"
+    },
+    {
+      "id": 144,
+      "d": "Dommages : #1{~1~2 à }#2 (fixe)"
+    },
+    {
       "id": 146,
       "d": "Change les paroles (#3)"
     },
