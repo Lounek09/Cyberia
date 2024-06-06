@@ -2,9 +2,24 @@
     --main-bg-color: #241e1e;
     --secondary-bg-color: #272525;
     --main-text-color: #bdc7b8;
-    --nav-color: #66ccff;
-    --nav-hover-color: #b5bd68;
-    --nav-active-bg-color: #b5bd6840;
+    --menu-link-color: #66ccff;
+    --menu-hover-color: #b5bd68;
+    --menu-active-bg-color: #b5bd6840;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ol, ul {
+    list-style: none;
 }
 
 body {
@@ -12,33 +27,54 @@ body {
     color: var(--main-text-color);
     font-family: monospace;
     font-size: calc(7px + 1vmin);
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
 }
 
 header {
     padding: 1rem;
     margin: 1rem;
     text-align: center;
-    nav a {
-        display: inline-block;
-        color: var(--nav-color);
-        font-weight: bold;
-        text-decoration: underline;
-        &:hover, &.selected {
-            color: var(--nav-hover-color);
-        }
-        &:active {
-            background-color: var(--nav-active-bg-color);
+
+    nav {
+        li {
+            display: inline-block;
+            color: var(--menu-link-color);
+
+            a {
+                font-weight: bold;
+                text-decoration: underline;
+
+                &:hover, &.selected {
+                    color: var(--menu-hover-color);
+                }
+
+                &:active {
+                    background-color: var(--menu-active-bg-color);
+                }
+            }
         }
     }
 }
 
 main {
     padding: 1rem;
-    margin: 1rem;
+    margin: 1rem auto;
+
+    nav.breadcrumbs {
+        margin-bottom: 1em;
+
+        li {
+            display: inline-block;
+
+            & + li::before {
+                content: '>';
+                margin: auto 0.5em;
+            }
+        }
+
+        a {
+            text-decoration: underline;
+        }
+    }
 
     @media only screen and (min-width : 667px) {
         max-width: 80%;
@@ -62,26 +98,30 @@ footer {
 
         &.left {
             font-size: 0.8em;
+
+            p + p::before {
+                content: "•";
+                margin: 0 0.5em;
+            }
         }
 
         &.right {
             gap: 0.2em;
-        }
-
-        & > * {
-            margin: 0;
         }
     }
 
     @media only screen and (max-width : 667px) {
         flex-direction: column;
 
-        div.left {
-            flex-direction: column;
-        }
+        div {
+            &.left {
+                flex-direction: column;
 
-        div .dot {
-            display: none;
+                p + p::before {
+                    content: "";
+                    margin: 0;
+                }
+            }
         }
     }
 }

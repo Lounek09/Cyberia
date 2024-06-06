@@ -11,22 +11,33 @@
 	<link rel="icon" href="~/favicon.ico">
 	<link rel="stylesheet" href="~/css/icons.css">
 	<link rel="stylesheet" href="~/css/layout.css">
-	<title>@ViewBag.Title - Amphibian</title>
+	<title>@ViewBag.Title - @Context.Request.Host</title>
 </head>
 <body>
 	<header>
 		<nav>
-			@Html.Raw(BuildNavItems())
+			<ul>
+				<li><a asp-page="Breeds" class="@IsSelected("/breeds")">Classes</a></li>
+				<li><a asp-page="Items" class="@IsSelected("/items")">Items</a></li>
+				<li><a asp-page="Spells" class="@IsSelected("/spells")">Sorts</a></li>
+				<li><a asp-page="Monsters" class="@IsSelected("/monsters")">Monstres</a></li>
+				<li><a asp-page="Dungeons" class="@IsSelected("/dungeons")">Donjons</a></li>
+				<li><a asp-page="Quests" class="@IsSelected("/quests")">Quetes</a></li>
+				<li><a asp-page="Tools" class="@IsSelected("/tools")">Outils</a></li>
+			</ul>
 		</nav>
 	</header>
+
 	<main>
+		@(await Html.RenderComponentAsync<Breadcrumbs>(RenderMode.Static))
+
 		@RenderBody()
 	</main>
+
 	<footer>
 		<div class="left">
-			<pre><span class="icon-code"></span> Développé par Lounek</pre>
-			<pre class="dot"> • </pre>
-			<pre>@Context.Request.Host est un fansite non affilié à <a href="https://www.ankama.com">Ankama Games</a></pre>
+			<p><span class="icon-code"></span>&nbsp;Développé par Lounek</p>
+			<p><a href="@Context.Request.Host">@Context.Request.Host</a>&nbsp;est un fansite non affilié à&nbsp;<a href="https://www.ankama.com">Ankama Games</a></p>
 		</div>
 		<div class="right">
 			@if (!string.IsNullOrEmpty(@Bot.Config.GuildInviteUrl))
@@ -43,29 +54,6 @@
 </html>
 
 @functions {
-	private static readonly Dictionary<string, string> navItems = new()
-	{
-		{ "/breeds", "Classes" },
-		{ "/items", "Items" },
-		{ "/spells", "Sorts" },
-		{ "/monsters", "Monstres" },
-		{ "/dungeons", "Donjons" },
-		{ "/quests", "Quetes" },
-		{ "/tools", "Outils" }
-	};
-
-	private string BuildNavItems()
-	{
-		StringBuilder builder = new();
-
-		foreach (var item in navItems)
-		{
-			builder.AppendLine($"""<a href="{item.Key}" class="{IsSelected(item.Key)}">{item.Value}</a>""");
-		}
-
-		return builder.ToString();
-	}
-
 	private string IsSelected(string page)
 	{
 		return Context.Request.Path.StartsWithSegments(page, StringComparison.OrdinalIgnoreCase) ? "selected" : "";
