@@ -26,7 +26,6 @@ public static class Web
 
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
         builder.Services.AddRazorPages();
-        builder.Services.AddServerSideBlazor();
         builder.Services.AddAuthorization();
 
         Application = builder.Build();

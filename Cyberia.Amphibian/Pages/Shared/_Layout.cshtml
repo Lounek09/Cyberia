@@ -29,8 +29,7 @@
 	</header>
 
 	<main>
-		@(await Html.RenderComponentAsync<Breadcrumbs>(RenderMode.Static))
-
+		<vc:breadcrumbs />
 		@RenderBody()
 	</main>
 
@@ -54,8 +53,8 @@
 </html>
 
 @functions {
-	private string IsSelected(string page)
+	private string IsSelected(PathString path)
 	{
-		return Context.Request.Path.StartsWithSegments(page, StringComparison.OrdinalIgnoreCase) ? "selected" : "";
+		return Context.Request.Path.StartsWithSegments(path, StringComparison.OrdinalIgnoreCase) ? "selected" : "";
 	}
 }

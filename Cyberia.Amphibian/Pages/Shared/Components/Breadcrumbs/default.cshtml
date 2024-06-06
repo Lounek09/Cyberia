@@ -1,0 +1,13 @@
+﻿@model IReadOnlyList<BreadCrumbsItem>
+
+<nav class="breadcrumbs">
+	<ul>
+		@if (Model.Count > 1)
+		{
+			@for (var i = 0; i < Model.Count - 1; i++)
+			{
+				<li><a href="@Model[i].Route">@Model[i].Name</a></li>
+			}
+		}
+	</ul>
+</nav>
