@@ -9,9 +9,9 @@ public sealed class CulturePageRouteModelConvention : IPageRouteModelConvention
         foreach (var selector in model.Selectors)
         {
             var attributeRouteModel = selector.AttributeRouteModel;
-            if (attributeRouteModel != null)
+            if (attributeRouteModel is not null)
             {
-                attributeRouteModel.Template = "{culture?}/" + attributeRouteModel.Template;
+                attributeRouteModel.Template = "{culture}/" + attributeRouteModel.Template;
             }
         }
     }

@@ -1,6 +1,7 @@
 using Cyberia.Amphibian.Conventions;
 using Cyberia.Amphibian.Middlewares;
 
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Localization.Routing;
 
 namespace Cyberia.Amphibian;
@@ -36,7 +37,12 @@ public static class Web
             options.SetDefaultCulture(supportedCultures[0]);
             options.AddSupportedCultures(supportedCultures);
             options.AddSupportedUICultures(supportedCultures);
-            options.RequestCultureProviders.Insert(0, new RouteDataRequestCultureProvider());
+            options.RequestCultureProviders =
+            [
+                new RouteDataRequestCultureProvider(),
+                new CookieRequestCultureProvider(),
+                new AcceptLanguageHeaderRequestCultureProvider()
+            ]; 
         });
 
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
