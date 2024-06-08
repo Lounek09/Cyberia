@@ -1,5 +1,5 @@
+using Cyberia.Amphibian.Conventions;
 using Cyberia.Amphibian.Middlewares;
-using Cyberia.Amphibian.wwwroot;
 
 using Microsoft.AspNetCore.Localization.Routing;
 

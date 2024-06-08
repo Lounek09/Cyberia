@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace Cyberia.Amphibian.wwwroot;
+namespace Cyberia.Amphibian.Conventions;
 
 public sealed class CulturePageRouteModelConvention : IPageRouteModelConvention
 {
