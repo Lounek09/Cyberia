@@ -6,12 +6,12 @@ public readonly record struct Description(string Value, params string[] Paramete
 
     public override string ToString()
     {
-        return PatternDecoder.Description(Value, Parameters);
+        return Translation.Format(Value, Parameters);
     }
 
     public string ToString(Func<string, string> decorator)
     {
-        return PatternDecoder.Description(Value, Array.ConvertAll(Parameters, x => string.IsNullOrEmpty(x) ? x : decorator(x)));
+        return Translation.Format(Value, Array.ConvertAll(Parameters, x => string.IsNullOrEmpty(x) ? x : decorator(x)));
     }
 
     public static implicit operator string(Description description)

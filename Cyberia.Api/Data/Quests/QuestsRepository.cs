@@ -109,7 +109,7 @@ public sealed class QuestsRepository : IDofusRepository
         var questData = GetQuestDataById(id);
 
         return questData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : questData.Name;
     }
 
@@ -124,7 +124,7 @@ public sealed class QuestsRepository : IDofusRepository
         var questStepData = GetQuestStepDataById(id);
 
         return questStepData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : questStepData.Name;
     }
 
@@ -139,7 +139,7 @@ public sealed class QuestsRepository : IDofusRepository
         var questObjectiveData = GetQuestObjectiveDataById(id);
 
         return questObjectiveData is null
-            ? new Description(Resources.Unknown_Data, id.ToString())
+            ? new Description(ApiTranslations.Unknown_Data, id.ToString())
             : QuestObjectiveFactory.Create(questObjectiveData).GetDescription();
     }
 

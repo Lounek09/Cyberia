@@ -73,7 +73,7 @@ public sealed class ServersRepository : IDofusRepository
         var serverData = GetServerDataById(id);
 
         return serverData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : serverData.Name;
     }
 

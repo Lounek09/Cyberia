@@ -48,7 +48,7 @@ public abstract record Effect(int Id, int Duration, int Probability, CriteriaRea
         if (effectData is null)
         {
             Log.Information("Unknown EffectData {@Effect}", this);
-            return new(Resources.Effect_Unknown,
+            return new(ApiTranslations.Effect_Unknown,
                 Id.ToString(),
                 string.Join(',', parameters));
         }
@@ -57,7 +57,7 @@ public abstract record Effect(int Id, int Duration, int Probability, CriteriaRea
 
         if (Probability > 0)
         {
-            builder.Append(PatternDecoder.Description(Resources.Effect_Probability, Probability));
+            builder.Append(Translation.Format(ApiTranslations.Effect_Probability, Probability));
             builder.Append(" : ");
         }
 
@@ -66,13 +66,13 @@ public abstract record Effect(int Id, int Duration, int Probability, CriteriaRea
         if (Duration <= -1 || Duration >= 63)
         {
             builder.Append(" (");
-            builder.Append(Resources.Infinity);
+            builder.Append(ApiTranslations.Infinity);
             builder.Append(')');
         }
         else if (Duration != 0)
         {
             builder.Append(" (");
-            builder.Append(PatternDecoder.Description(Resources.Effect_Turn, Duration));
+            builder.Append(Translation.Format(ApiTranslations.Effect_Turn, Duration));
             builder.Append(')');
         }
 

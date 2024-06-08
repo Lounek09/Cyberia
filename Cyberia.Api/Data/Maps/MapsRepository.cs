@@ -73,7 +73,7 @@ public sealed class MapsRepository : IDofusRepository
         var mapSuperAreaData = GetMapSuperAreaDataById(id);
 
         return mapSuperAreaData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : mapSuperAreaData.Name;
     }
 
@@ -101,7 +101,7 @@ public sealed class MapsRepository : IDofusRepository
         var mapAreaData = GetMapAreaDataById(id);
 
         return mapAreaData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : mapAreaData.Name;
     }
 
@@ -129,7 +129,7 @@ public sealed class MapsRepository : IDofusRepository
         var mapSubAreaData = GetMapSubAreaDataById(id);
 
         return mapSubAreaData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : mapSubAreaData.Name.TrimStart('/');
     }
 }

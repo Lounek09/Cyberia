@@ -111,7 +111,7 @@ public sealed class AlignmentsRepository : IDofusRepository
         var alignmentData = GetAlignmentDataById(id);
 
         return alignmentData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : alignmentData.Name;
     }
 
@@ -150,7 +150,7 @@ public sealed class AlignmentsRepository : IDofusRepository
         var alignmentFeatData = GetAlignmentFeatDataById(id);
 
         return alignmentFeatData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : alignmentFeatData.Name;
     }
 
@@ -171,7 +171,7 @@ public sealed class AlignmentsRepository : IDofusRepository
         var alignmentSpecializationData = GetAlignmentSpecializationDataById(id);
 
         return alignmentSpecializationData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : alignmentSpecializationData.Name;
     }
 }

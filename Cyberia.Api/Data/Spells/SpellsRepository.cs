@@ -90,7 +90,7 @@ public sealed class SpellsRepository : IDofusRepository
         var spellData = GetSpellDataById(id);
 
         return spellData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : spellData.Name;
     }
 

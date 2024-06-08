@@ -29,7 +29,7 @@ public sealed record CharacterLearnSpellLevelEffect : Effect, IEffect
         var spellLevelData = GetSpellLevelData();
         if (spellLevelData is null)
         {
-            return GetDescription(string.Empty, 0, $"{nameof(SpellLevelData)} {PatternDecoder.Description(Resources.Unknown_Data, SpellLevelId)}");
+            return GetDescription(string.Empty, 0, $"{nameof(SpellLevelData)} {Translation.Format(ApiTranslations.Unknown_Data, SpellLevelId)}");
         }
 
         return GetDescription(string.Empty, spellLevelData.Rank, spellLevelData.SpellData.Name);

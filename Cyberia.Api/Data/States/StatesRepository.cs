@@ -37,7 +37,7 @@ public sealed class StatesRepository : IDofusRepository
         var stateData = GetStateDataById(id);
 
         return stateData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : stateData.Name;
     }
 }

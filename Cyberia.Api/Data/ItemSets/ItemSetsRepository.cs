@@ -64,7 +64,7 @@ public sealed class ItemSetsRepository : IDofusRepository
         var itemSetData = GetItemSetDataById(id);
 
         return itemSetData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : itemSetData.Name;
     }
 }

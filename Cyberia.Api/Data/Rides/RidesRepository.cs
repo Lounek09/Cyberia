@@ -42,7 +42,7 @@ public sealed class RidesRepository : IDofusRepository
         var rideData = GetRideDataById(id);
 
         return rideData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : rideData.Name;
     }
 
@@ -56,6 +56,6 @@ public sealed class RidesRepository : IDofusRepository
     {
         var rideAbilityData = GetRideAbilityDataById(id);
 
-        return rideAbilityData is null ? PatternDecoder.Description(Resources.Unknown_Data, id) : rideAbilityData.Name;
+        return rideAbilityData is null ? Translation.Format(ApiTranslations.Unknown_Data, id) : rideAbilityData.Name;
     }
 }

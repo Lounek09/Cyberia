@@ -72,7 +72,7 @@ public sealed class BreedsRepository : IDofusRepository
         var breed = GetBreedDataById(id);
 
         return breed is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : breed.Name;
     }
 }

@@ -17,10 +17,12 @@
     <ProjectReference Include="..\Cyberia.Cytrusaurus\Cyberia.Cytrusaurus.csproj" />
     <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
     <ProjectReference Include="..\Cyberia.Salamandra\Cyberia.Salamandra.csproj" />
+    <ProjectReference Include="..\Cyberia.Translations\Cyberia.Translations.csproj" />
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
   </ItemGroup>
   
   <ItemGroup>
+    <Using Include="Cyberia.Translations" />
     <Using Include="Cyberia.Utils" />
     <Using Include="Serilog" />
   </ItemGroup>
@@ -29,6 +31,10 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>Cyberia.Tests</_Parameter1>
     </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Conventions\CulturePageRouteModelConvention.cs" />
   </ItemGroup>
 
   <ItemGroup>

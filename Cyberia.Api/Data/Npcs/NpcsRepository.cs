@@ -48,7 +48,7 @@ public sealed class NpcsRepository : IDofusRepository
         var npc = GetNpcDataById(id);
 
         return npc is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : npc.Name;
     }
 }

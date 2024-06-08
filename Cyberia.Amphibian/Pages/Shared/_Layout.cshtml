@@ -1,10 +1,23 @@
 ﻿@using Cyberia.Salamandra;
 
 @using System.Text
+@using System.Globalization
+
+@{
+	ViewBag.Culture = Context.Request.RouteValues["culture"];
+}
+
+@functions {
+	private string IsSelected(string name)
+	{
+		var path = $"/{ViewBag.Culture}/{name}";
+		return Context.Request.Path.StartsWithSegments(path, StringComparison.OrdinalIgnoreCase) ? "selected" : "";
+	}
+}
 
 <!DOCTYPE html>
 
-<html lang="fr">
+<html lang="@ViewBag.Culture">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
@@ -17,13 +30,13 @@
 	<header>
 		<nav>
 			<ul>
-				<li><a asp-page="Breeds" class="@IsSelected("/breeds")">Classes</a></li>
-				<li><a asp-page="Items" class="@IsSelected("/items")">Items</a></li>
-				<li><a asp-page="Spells" class="@IsSelected("/spells")">Sorts</a></li>
-				<li><a asp-page="Monsters" class="@IsSelected("/monsters")">Monstres</a></li>
-				<li><a asp-page="Dungeons" class="@IsSelected("/dungeons")">Donjons</a></li>
-				<li><a asp-page="Quests" class="@IsSelected("/quests")">Quetes</a></li>
-				<li><a asp-page="Tools" class="@IsSelected("/tools")">Outils</a></li>
+				<li><a asp-route-culture="@ViewBag.Culture" asp-page="/breeds" class="@IsSelected("breeds")">@WebTranslations.Page_Breeds_Title</a></li>
+				<li><a asp-route-culture="@ViewBag.Culture"  asp-page="/items" class="@IsSelected("items")">@WebTranslations.Page_Items_Title</a></li>
+				<li><a asp-route-culture="@ViewBag.Culture"  asp-page="/spells" class="@IsSelected("spells")">@WebTranslations.Page_Spells_Title</a></li>
+				<li><a asp-route-culture="@ViewBag.Culture" asp-page="/monsters" class="@IsSelected("monsters")">@WebTranslations.Page_Monsters_Title</a></li>
+				<li><a asp-route-culture="@ViewBag.Culture" asp-page="/dungeons" class="@IsSelected("dungeons")">@WebTranslations.Page_Dungeons_Title</a></li>
+				<li><a asp-route-culture="@ViewBag.Culture" asp-page="/quests" class="@IsSelected("quests")">@WebTranslations.Page_Quests_Title</a></li>
+				<li><a asp-route-culture="@ViewBag.Culture"  asp-page="/tools" class="@IsSelected("tools")">@WebTranslations.Page_Tools_Title</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -31,19 +44,24 @@
 	<main>
 		<vc:breadcrumbs />
 		@RenderBody()
+		CurrentUICulture=@CultureInfo.CurrentUICulture.DisplayName
+		<br>
+		Header Accept-Language=@Context.Request.Headers["Accept-Language"]
+		<br>
+		Cookie culture=@Context.Request.Cookies["culture"]
 	</main>
 
 	<footer>
 		<div class="left">
-			<p><span class="icon-code"></span>&nbsp;Développé par Lounek</p>
-			<p><a href="@Context.Request.Host">@Context.Request.Host</a>&nbsp;est un fansite non affilié à&nbsp;<a href="https://www.ankama.com">Ankama Games</a></p>
+			<p><span class="icon-code"></span>&nbsp;@Translation.Format(WebTranslations.Layout_DevelopedBy, "Lounek")</p>
+			<p><a href="@Context.Request.Host">@Context.Request.Host</a>&nbsp;@WebTranslations.Layout_NotAffiliated&nbsp;<a href="https://www.ankama.com">Ankama Games</a></p>
 		</div>
 		<div class="right">
-			@if (!string.IsNullOrEmpty(@Bot.Config.GuildInviteUrl))
+			@if (!string.IsNullOrEmpty(Bot.Config.GuildInviteUrl))
 			{
 				<a href="@Bot.Config.GuildInviteUrl"><span class="icon-discord"></span></a>
 			}
-			@if (!string.IsNullOrEmpty(@Web.Config.GitUrl))
+			@if (!string.IsNullOrEmpty(Web.Config.GitUrl))
 			{
 				<a href="@Web.Config.GitUrl"><span class="icon-git"></span></a>
 			}
@@ -51,10 +69,3 @@
 	</footer>
 </body>
 </html>
-
-@functions {
-	private string IsSelected(PathString path)
-	{
-		return Context.Request.Path.StartsWithSegments(path, StringComparison.OrdinalIgnoreCase) ? "selected" : "";
-	}
-}

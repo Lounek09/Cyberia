@@ -11,7 +11,7 @@ public readonly record struct EffectArea(int Id, int Size)
 
     public string GetSize()
     {
-        return Size >= 63 ? Resources.Infinity : Size.ToString();
+        return Size >= 63 ? ApiTranslations.Infinity : Size.ToString();
     }
 
     public Description GetDescription()
@@ -21,11 +21,11 @@ public readonly record struct EffectArea(int Id, int Size)
             return Description.Empty;
         }
 
-        var effectAreaName = Resources.ResourceManager.GetString($"EffectArea.{Id}");
+        var effectAreaName = ApiTranslations.ResourceManager.GetString($"EffectArea.{Id}");
         if (effectAreaName is null)
         {
             Log.Warning("Unknown {EffectArea} {EffectAreaId}", nameof(EffectArea), Id);
-            effectAreaName = PatternDecoder.Description(Resources.Unknown_Data, Id);
+            effectAreaName = Translation.Format(ApiTranslations.Unknown_Data, Id);
         }
 
         return new($"#1 {effectAreaName}", GetSize());

@@ -17,7 +17,7 @@ public sealed record ErroredAlignmentFeatEffect : AlignmentFeatEffect, IAlignmen
 
     public Description GetDescription()
     {
-        return new(Resources.AlignmentFeatEffect_Errored,
+        return new(ApiTranslations.AlignmentFeatEffect_Errored,
             Id.ToString(),
             string.Join(", ", Parameters));
     }

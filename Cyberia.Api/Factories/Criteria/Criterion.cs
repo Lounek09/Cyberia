@@ -33,11 +33,11 @@ public abstract record Criterion(string Id, char Operator)
     {
         var descriptionName = GetDescriptionName();
 
-        var descriptionValue = Resources.ResourceManager.GetString(descriptionName);
+        var descriptionValue = ApiTranslations.ResourceManager.GetString(descriptionName);
         if (descriptionValue is null)
         {
             Log.Warning("Unknown {@Criterion}", this);
-            return new(Resources.Criterion_Unknown,
+            return new(ApiTranslations.Criterion_Unknown,
                 Id,
                 $"{Id}{Operator}{string.Join(',', parameters)}");
         }

@@ -1,3 +1,8 @@
+using Cyberia.Amphibian.Middlewares;
+using Cyberia.Amphibian.wwwroot;
+
+using Microsoft.AspNetCore.Localization.Routing;
+
 namespace Cyberia.Amphibian;
 
 public static class Web
@@ -24,9 +29,20 @@ public static class Web
 
         builder.WebHost.UseUrls(Config.Urls.ToArray());
 
+        builder.Services.Configure<RequestLocalizationOptions>(options =>
+        {
+            string[] supportedCultures = ["en", "fr", "es", "de", "it", "nl", "pt"];
+
+            options.SetDefaultCulture(supportedCultures[0]);
+            options.AddSupportedCultures(supportedCultures);
+            options.AddSupportedUICultures(supportedCultures);
+            options.RequestCultureProviders.Insert(0, new RouteDataRequestCultureProvider());
+        });
+
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
-        builder.Services.AddRazorPages();
         builder.Services.AddAuthorization();
+        builder.Services.AddRazorPages(options => options.Conventions.Add(new CulturePageRouteModelConvention()));
+
 
         Application = builder.Build();
 
@@ -34,6 +50,8 @@ public static class Web
         Application.UseStaticFiles();
         Application.UseRouting();
         Application.UseAuthorization();
+        Application.UseRequestLocalization();
+        Application.UseMiddleware<CultureRedirectMiddleware>();
 
         Application.MapRazorPages();
     }

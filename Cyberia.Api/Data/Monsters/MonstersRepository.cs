@@ -72,7 +72,7 @@ public sealed class MonstersRepository : IDofusRepository
         var monsterSuperRaceData = GetMonsterSuperRaceDataById(id);
 
         return monsterSuperRaceData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : monsterSuperRaceData.Name;
     }
 
@@ -87,7 +87,7 @@ public sealed class MonstersRepository : IDofusRepository
         var monsterRaceData = GetMonsterRaceDataById(id);
 
         return monsterRaceData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : monsterRaceData.Name;
     }
 
@@ -115,7 +115,7 @@ public sealed class MonstersRepository : IDofusRepository
         var monsterData = GetMonsterDataById(id);
 
         return monsterData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : monsterData.Name;
     }
 }

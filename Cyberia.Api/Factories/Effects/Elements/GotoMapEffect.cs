@@ -29,7 +29,7 @@ public sealed record GotoMapEffect : Effect, IEffect
     public Description GetDescription()
     {
         var map = GetMapData();
-        var mapAreaSubAreaName = map is null ? PatternDecoder.Description(Resources.Unknown_Data, MapId) : map.GetMapAreaName();
+        var mapAreaSubAreaName = map is null ? Translation.Format(ApiTranslations.Unknown_Data, MapId) : map.GetMapAreaName();
         var coordinate = map is null ? "[x, x]" : map.GetCoordinate();
 
         return GetDescription(mapAreaSubAreaName, coordinate);

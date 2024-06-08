@@ -17,7 +17,7 @@ public sealed record ErroredQuestObjective : QuestObjective, IQuestObjective
 
     public Description GetDescription()
     {
-        return new Description(Resources.QuestObjectiveType_Errored,
+        return new Description(ApiTranslations.QuestObjectiveType_Errored,
             QuestObjectiveData.QuestObjectiveTypeId.ToString(),
             string.Join(", ", QuestObjectiveData.Parameters));
     }

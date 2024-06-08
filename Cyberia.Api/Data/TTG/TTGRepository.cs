@@ -53,7 +53,7 @@ public sealed class TTGRepository : IDofusRepository
         var ttgEntityData = GetTTGEntityDataById(id);
 
         return ttgEntityData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : ttgEntityData.Name;
     }
 
@@ -68,7 +68,7 @@ public sealed class TTGRepository : IDofusRepository
         var ttgFamilyData = GetTTGFamilyDataById(id);
 
         return ttgFamilyData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : ttgFamilyData.Name;
     }
 }

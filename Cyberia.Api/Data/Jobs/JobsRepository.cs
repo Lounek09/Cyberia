@@ -37,7 +37,7 @@ public sealed class JobsRepository : IDofusRepository
         var jobData = GetJobDataById(id);
 
         return jobData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : jobData.Name;
     }
 }

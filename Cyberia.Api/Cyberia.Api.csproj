@@ -8,12 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
-    <ProjectReference Include="..\Cyberia.Translation\Cyberia.Translation.csproj" />
+    <ProjectReference Include="..\Cyberia.Translations\Cyberia.Translations.csproj" />
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Cyberia.Translation" />
+    <Using Include="Cyberia.Translations" />
     <Using Include="Cyberia.Utils" />
     <Using Include="Serilog" />
   </ItemGroup>

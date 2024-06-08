@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Salamandra", "Cyber
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Tests", "Cyberia.Tests\Cyberia.Tests.csproj", "{F40DF066-19C9-4BC5-94BA-05A1EC70FA9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Translation", "Cyberia.Translation\Cyberia.Translation.csproj", "{E3B15058-6C91-4468-B11F-4B9A200F526E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Translations", "Cyberia.Translations\Cyberia.Translations.csproj", "{E3B15058-6C91-4468-B11F-4B9A200F526E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Utils", "Cyberia.Utils\Cyberia.Utils.csproj", "{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}"
 EndProject
@@ -91,5 +91,6 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2C25FFF3-90BE-4A1B-9B80-F18CE8A94B1F}
+		RESX_NeutralResourcesLanguage = en-US
 	EndGlobalSection
 EndGlobal

@@ -68,10 +68,10 @@ public sealed class MapData : IDofusData<int>
     public string GetMapAreaName()
     {
         var mapSubAreaData = GetMapSubAreaData();
-        var mapSubAreaName = mapSubAreaData is null ? $"{nameof(MapSubAreaData)} {PatternDecoder.Description(Resources.Unknown_Data, MapSubAreaId)}" : mapSubAreaData.Name.TrimStart("//");
+        var mapSubAreaName = mapSubAreaData is null ? $"{nameof(MapSubAreaData)} {Translation.Format(ApiTranslations.Unknown_Data, MapSubAreaId)}" : mapSubAreaData.Name.TrimStart("//");
 
         var mapAreaData = mapSubAreaData?.GetMapAreaData();
-        var mapAreaName = mapAreaData is null ? $"{nameof(MapAreaData)} {PatternDecoder.Description(Resources.Unknown_Data, mapSubAreaData?.MapAreaId ?? 0)}" : mapAreaData.Name;
+        var mapAreaName = mapAreaData is null ? $"{nameof(MapAreaData)} {Translation.Format(ApiTranslations.Unknown_Data, mapSubAreaData?.MapAreaId ?? 0)}" : mapAreaData.Name;
 
         return mapAreaName + (mapAreaName.Equals(mapSubAreaName) ? string.Empty : $" ({mapSubAreaName})");
     }

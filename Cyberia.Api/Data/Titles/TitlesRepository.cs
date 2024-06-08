@@ -37,7 +37,7 @@ public sealed class TitlesRepository : IDofusRepository
         var titleData = GetTitleDataById(id);
 
         return titleData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : titleData.Name;
     }
 }

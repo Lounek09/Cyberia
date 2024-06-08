@@ -33,7 +33,7 @@ public abstract record QuestObjective(QuestObjectiveData QuestObjectiveData)
         {
             Log.Warning("Unknown QuestObjectiveTypeData {@QuestObjective}", this);
 
-            return new(Resources.QuestObjectiveType_Unknown,
+            return new(ApiTranslations.QuestObjectiveType_Unknown,
                 QuestObjectiveData.QuestObjectiveTypeId.ToString(),
                 string.Join(',', QuestObjectiveData.Parameters));
         }

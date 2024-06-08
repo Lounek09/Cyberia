@@ -66,8 +66,7 @@ main {
             display: inline-block;
 
             & + li::before {
-                content: '>';
-                margin: auto 0.5em;
+                content: '> ';
             }
         }
 

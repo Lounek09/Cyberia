@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\ApiTranslations.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ApiTranslations.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\BotTranslations.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BotTranslations.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\WebTranslations.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WebTranslations.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\ApiTranslations.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApiTranslations.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Cyberia.Translations</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\BotTranslations.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BotTranslations.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Cyberia.Translations</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\WebTranslations.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WebTranslations.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Cyberia.Translations</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

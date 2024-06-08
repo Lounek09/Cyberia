@@ -37,7 +37,7 @@ public sealed class EmotesRepository : IDofusRepository
         var emoteData = GetEmoteById(id);
 
         return emoteData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : emoteData.Name;
     }
 }

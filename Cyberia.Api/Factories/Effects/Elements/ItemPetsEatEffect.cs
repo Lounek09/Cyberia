@@ -26,7 +26,7 @@ public sealed record ItemPetsEatEffect : Effect, IEffect
 
     public Description GetDescription()
     {
-        var itemName = ItemId == 0 ? Resources.LastMeal_None : DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
+        var itemName = ItemId == 0 ? ApiTranslations.LastMeal_None : DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 
         return GetDescription(itemName);
     }

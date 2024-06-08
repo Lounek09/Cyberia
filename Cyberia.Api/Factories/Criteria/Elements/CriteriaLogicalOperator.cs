@@ -13,8 +13,8 @@ public sealed record CriteriaLogicalOperator : ICriteriaElement
     {
         return Operator switch
         {
-            '&' => Resources.Criterion_And,
-            '|' => Resources.Criterion_Or,
+            '&' => ApiTranslations.Criterion_And,
+            '|' => ApiTranslations.Criterion_Or,
             _ => Operator.ToString()
         };
     }

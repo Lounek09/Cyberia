@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace Cyberia.Api;
+﻿namespace Cyberia.Api;
 
 public static class PatternDecoder
 {
@@ -47,79 +45,5 @@ public static class PatternDecoder
     public static int Base64(char value)
     {
         return Array.IndexOf(s_hash, value);
-    }
-
-    public static string Description<T>(string value, T parameter)
-    {
-        return Description(value,
-            parameter?.ToString() ?? string.Empty);
-    }
-
-    public static string Description<T0, T1>(string value, T0 parameter0, T1 parameter1)
-    {
-        return Description(value,
-            parameter0?.ToString() ?? string.Empty,
-            parameter1?.ToString() ?? string.Empty);
-    }
-
-    public static string Description<T0, T1, T2>(string value, T0 parameter0, T1 parameter1, T2 parameter2)
-    {
-        return Description(value,
-            parameter0?.ToString() ?? string.Empty,
-            parameter1?.ToString() ?? string.Empty,
-            parameter2?.ToString() ?? string.Empty);
-    }
-
-    public static string Description(string value, params object?[] parameters)
-    {
-        return Description(value, Array.ConvertAll(parameters, x => x?.ToString() ?? string.Empty));
-    }
-
-    public static string Description(string value, params string[] parameters) //TODO: .NET9 Use ReadOnlySpan<string>
-    {
-        StringBuilder builder = new(value);
-
-        for (var i = 0; i < parameters.Length; i++)
-        {
-            builder.Replace($"#{i + 1}", parameters[i]);
-        }
-
-        var indexOfOpenBrace = value.IndexOf('{');
-        while (indexOfOpenBrace != -1)
-        {
-            var indexOfCloseBrace = value.IndexOf('}', indexOfOpenBrace);
-            if (indexOfCloseBrace == -1)
-            {
-                break;
-            }
-
-            var replacement = value[(indexOfOpenBrace + 1)..indexOfCloseBrace];
-            for (var i = 0; i < parameters.Length; i++)
-            {
-                if (!value[(indexOfOpenBrace + 1)..indexOfCloseBrace].Contains($"~{i + 1}"))
-                {
-                    continue;
-                }
-
-                if (string.IsNullOrEmpty(parameters[i]))
-                {
-                    replacement = string.Empty;
-                    break;
-                }
-
-                replacement = replacement.Replace($"~{i + 1}", string.Empty);
-            }
-
-            if (replacement.Contains('~'))
-            {
-                replacement = string.Empty;
-            }
-
-            builder.Replace(value[indexOfOpenBrace..(indexOfCloseBrace + 1)], replacement);
-
-            indexOfOpenBrace = value.IndexOf('{', indexOfCloseBrace);
-        }
-
-        return builder.ToString();
     }
 }

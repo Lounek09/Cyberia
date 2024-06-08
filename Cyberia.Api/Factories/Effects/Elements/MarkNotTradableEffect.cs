@@ -27,7 +27,7 @@ public sealed record MarkNotTradableEffect : Effect, IEffect
     {
         if (IsLinkedToAccount())
         {
-            return GetDescription(Resources.Effect_LinkedToAccount);
+            return GetDescription(ApiTranslations.Effect_LinkedToAccount);
         }
 
         return GetDescription(DateTime.ToString("dd/MM/yyy HH:mm"));

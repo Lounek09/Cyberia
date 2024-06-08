@@ -19,6 +19,6 @@ public sealed record ErroredEffect : Effect, IEffect
 
     public Description GetDescription()
     {
-        return new(Resources.Effect_Errored, CompressedEffect);
+        return new(ApiTranslations.Effect_Errored, CompressedEffect);
     }
 }

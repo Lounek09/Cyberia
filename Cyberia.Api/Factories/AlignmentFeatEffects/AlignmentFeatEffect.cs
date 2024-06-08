@@ -15,7 +15,7 @@ public abstract record AlignmentFeatEffect(int Id)
         if (alignmentFeatEffect is null)
         {
             Log.Information("Unknown AlignmentFeatEffectData {@AlignmentFeatEffect}", this);
-            return new(Resources.AlignmentFeatEffect_Unknown,
+            return new(ApiTranslations.AlignmentFeatEffect_Unknown,
                 Id.ToString(),
                 string.Join(',', parameters));
         }

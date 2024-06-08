@@ -45,7 +45,7 @@ public sealed record CharacterGainRideEffect : Effect, IEffect
 
         if (Infertile)
         {
-            value += $" {Resources.Infertile}";
+            value += $" {ApiTranslations.Infertile}";
         }
 
         return GetDescription(value);

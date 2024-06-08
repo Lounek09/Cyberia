@@ -74,7 +74,7 @@ public sealed class ItemsRepository : IDofusRepository
         var itemTypeData = GetItemTypeDataById(id);
 
         return itemTypeData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : itemTypeData.Name;
     }
 
@@ -122,7 +122,7 @@ public sealed class ItemsRepository : IDofusRepository
         var itemData = GetItemDataById(id);
 
         return itemData is null
-            ? PatternDecoder.Description(Resources.Unknown_Data, id)
+            ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : itemData.Name;
     }
 }
