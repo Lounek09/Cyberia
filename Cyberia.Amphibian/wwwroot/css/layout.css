@@ -48,7 +48,7 @@ html, body {
     }
 
     main {
-        margin: 1em 10%;
+        margin: 0 10% 1em 10%;
     }
 }
 
@@ -58,7 +58,7 @@ html, body {
     }
 
     main {
-        margin: 1em;
+        margin: 0 1em 1em 1em;
     }
 }
 
