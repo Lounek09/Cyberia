@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 using System.Globalization;
 
@@ -17,6 +18,13 @@ public sealed class CultureRedirectMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
+        var endpoint = context.GetEndpoint();
+        if (endpoint is not null && endpoint.Metadata.GetMetadata<ControllerAttribute>() is not null)
+        {
+            await _next(context);
+            return;
+        }
+
         var path = context.Request.Path.ToString().AsMemory();
         if (path.Length < 2)
         {
@@ -24,7 +32,6 @@ public sealed class CultureRedirectMiddleware
             return;
         }
 
-        // Handle first slash
         path = path[1..];
 
         var index = path.Span.IndexOf('/');

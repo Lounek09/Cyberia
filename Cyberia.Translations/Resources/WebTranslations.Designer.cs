@@ -61,6 +61,15 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language selection.
+        /// </summary>
+        public static string Layout_CultureSelection {
+            get {
+                return ResourceManager.GetString("Layout.CultureSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Developed by #1.
         /// </summary>
         public static string Layout_DevelopedBy {

@@ -6,7 +6,7 @@
 		{
 			@for (var i = 0; i < Model.Count - 1; i++)
 			{
-				<li><a asp-route-culture="@ViewBag.Culture" asp-page="@Model[i].Route">@Model[i].Name</a></li>
+				<li><a asp-culture-page="@Model[i].Route" htmx-menu-item>@Model[i].Name</a></li>
 			}
 		}
 	</ul>

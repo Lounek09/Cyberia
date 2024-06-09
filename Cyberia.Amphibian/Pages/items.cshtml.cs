@@ -4,7 +4,7 @@ namespace Cyberia.Amphibian.Pages;
 
 public class ItemsModel : PageModel
 {
-    public void OnGet()
+    public virtual void OnGet()
     {
 
     }

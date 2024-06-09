@@ -6,7 +6,7 @@ namespace Cyberia.Amphibian.ViewComponents;
 
 public readonly record struct BreadCrumbsItem(string Name, string Route);
 
-public sealed class BreadcrumbsViewComponent : ViewComponent
+public sealed class BreadcrumbsNavViewComponent : ViewComponent
 {
     public IViewComponentResult Invoke()
     {

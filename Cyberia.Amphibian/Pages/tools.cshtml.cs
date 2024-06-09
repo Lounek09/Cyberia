@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Cyberia.Amphibian.Pages;
 
-public class ToolsModel : PageModel
+public class ToolsPageModel : PageModel
 {
-    public void OnGet()
+    public virtual void OnGet()
     {
 
     }

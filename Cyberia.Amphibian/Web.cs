@@ -59,6 +59,7 @@ public static class Web
         Application.UseRequestLocalization();
         Application.UseMiddleware<CultureRedirectMiddleware>();
 
+        Application.MapDefaultControllerRoute();
         Application.MapRazorPages();
     }
 

@@ -127,4 +127,7 @@
   <data name="Page.Quests.Title" xml:space="preserve">
     <value>Quêtes</value>
   </data>
+  <data name="Layout.CultureSelection" xml:space="preserve">
+    <value>Sélection de la langue</value>
+  </data>
 </root>
