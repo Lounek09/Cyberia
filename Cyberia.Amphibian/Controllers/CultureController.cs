@@ -12,6 +12,11 @@ public sealed class CultureController : Controller
             CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
             new CookieOptions { Expires = DateTimeOffset.MaxValue });
 
+        if (returnPath.Length < 2)
+        {
+            return LocalRedirect($"/{culture}");
+        }
+
         var path = returnPath.AsSpan()[1..];
         var index = path.IndexOf('/');
 
