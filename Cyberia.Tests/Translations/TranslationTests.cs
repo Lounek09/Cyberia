@@ -10,29 +10,37 @@ public sealed class TranslationTests
     [TestMethod]
     public void Format_WithOneParameter_ReturnFormatedString()
     {
-        var result = Translation.Format("Hello, #1!", "World");
+        var result = Translation.Format("Hello, #1!", 1);
 
-        Assert.AreEqual("Hello, World!", result);
+        Assert.AreEqual("Hello, 1!", result);
     }
 
     [TestMethod]
     public void Format_WithTwoParameters_ReturnFormatedString()
     {
-        var result = Translation.Format("Hello, #1 #2!", "John", "Doe");
+        var result = Translation.Format("Hello, #1 #2!", "John", 2);
 
-        Assert.AreEqual("Hello, John Doe!", result);
+        Assert.AreEqual("Hello, John 2!", result);
     }
 
     [TestMethod]
     public void Format_WithThreeParameters_ReturnFormatedString()
     {
-        var result = Translation.Format("Hello, #1 #2 #3!", "Mr.", "John", "Doe");
+        var result = Translation.Format("Hello, #1 #2 #3!", "John", "Doe", 3);
 
-        Assert.AreEqual("Hello, Mr. John Doe!", result);
+        Assert.AreEqual("Hello, John Doe 3!", result);
     }
 
     [TestMethod]
     public void Format_WithMultipleParameters_ReturnFormatedString()
+    {
+        var result = Translation.Format("Hello, #1 #2 #3 #4!", "Mr.", "John", "Doe", 4);
+
+        Assert.AreEqual("Hello, Mr. John Doe 4!", result);
+    }
+
+    [TestMethod]
+    public void Format_WithMultipleStringParameters_ReturnFormatedString()
     {
         var result = Translation.Format("Hello, #1 #2 #3 #4!", "Mr.", "John", "Doe", "Jr.");
 
