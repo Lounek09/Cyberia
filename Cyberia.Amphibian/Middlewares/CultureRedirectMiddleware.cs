@@ -19,7 +19,7 @@ public sealed class CultureRedirectMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         var endpoint = context.GetEndpoint();
-        if (endpoint is not null && endpoint.Metadata.GetMetadata<ControllerAttribute>() is not null)
+        if (endpoint?.Metadata.GetMetadata<ControllerAttribute>() is not null)
         {
             await _next(context);
             return;
@@ -39,7 +39,7 @@ public sealed class CultureRedirectMiddleware
 
         if (!_requestLocalizationOptions.SupportedCultures!.Any(x => firstSegment.Span.SequenceEqual(x.Name)))
         {
-            context.Response.Redirect($"/{CultureInfo.CurrentCulture.Name}{path.TrimStart(firstSegment.Span)}");
+            context.Response.Redirect($"/{CultureInfo.CurrentCulture.Name}{path[firstSegment.Length..]}");
             return;
         }
 
