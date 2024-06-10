@@ -11,6 +11,7 @@ public sealed class LangParser : IDisposable
 {
     public static readonly IReadOnlyList<string> IgnoredLangs = ["dungeons", "lang"];
 
+    private const string c_lineSeparator = " = ";
     private static readonly IReadOnlyList<string> s_ignoredEndingLines = ["new Object();", "new Array();"];
 
     private readonly FileStream _fileStream;
@@ -78,7 +79,6 @@ public sealed class LangParser : IDisposable
     /// </summary>
     private void Parse()
     {
-        Span<Range> separatorRanges = stackalloc Range[2];
         var currentPartName = ReadOnlySpan<char>.Empty;
         LangPartBuilder? currentBuilder = null;
 
@@ -90,14 +90,14 @@ public sealed class LangParser : IDisposable
                 continue;
             }
 
-            var splitCount = currentLine.Split(separatorRanges, " = ", StringSplitOptions.RemoveEmptyEntries);
-            if (splitCount != 2)
+            var indexOfSeparator = currentLine.IndexOf(c_lineSeparator);
+            if (indexOfSeparator == -1)
             {
                 continue;
             }
 
-            var keySegment = currentLine[separatorRanges[0]];
-            var valueSegment = currentLine[separatorRanges[1]];
+            var keySegment = currentLine[..indexOfSeparator];
+            var valueSegment = currentLine[(indexOfSeparator + c_lineSeparator.Length)..];
 
             var newPartName = FindName(keySegment);
             if (currentPartName.IsEmpty || !currentPartName.Equals(newPartName, StringComparison.Ordinal))
