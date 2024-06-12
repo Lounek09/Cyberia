@@ -142,7 +142,7 @@ public sealed class BreedData : IDofusData<int>
         {
             var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spellId);
             if (spellData is not null &&
-                (DofusApi.Config.Type != LangType.Temporis || spellData.SpellCategory is SpellCategory.TemporisBreed))
+                (DofusApi.Config.Type != LangType.Temporis || spellData.SpellCategory is SpellCategory.Temporis3Breed))
             {
                 yield return spellData;
             }
