@@ -975,26 +975,26 @@
   <data name="SpellCategory.Summon" xml:space="preserve">
     <value>Invocation</value>
   </data>
-  <data name="SpellCategory.TemporisBreed" xml:space="preserve">
-    <value>Classe - Temporis</value>
+  <data name="SpellCategory.Temporis2Breed" xml:space="preserve">
+    <value>Classe - Temporis 2</value>
   </data>
-  <data name="SpellCategory.TemporisCommon" xml:space="preserve">
-    <value>Commun - Temporis</value>
+  <data name="SpellCategory.Temporis2Common" xml:space="preserve">
+    <value>Commun - Temporis 2</value>
   </data>
-  <data name="SpellCategory.TemporisEpic" xml:space="preserve">
-    <value>Epic - Temporis</value>
+  <data name="SpellCategory.Temporis2Epic" xml:space="preserve">
+    <value>Epic - Temporis 2</value>
   </data>
-  <data name="SpellCategory.TemporisLegendary" xml:space="preserve">
-    <value>Legendaire - Temporis</value>
+  <data name="SpellCategory.Temporis2Legendary" xml:space="preserve">
+    <value>Legendaire - Temporis 2</value>
   </data>
-  <data name="SpellCategory.TemporisMonster" xml:space="preserve">
-    <value>Monstre - Temporis</value>
+  <data name="SpellCategory.Temporis2Monster" xml:space="preserve">
+    <value>Monstre - Temporis 2</value>
   </data>
-  <data name="SpellCategory.TemporisRare" xml:space="preserve">
-    <value>Rare - Temporis</value>
+  <data name="SpellCategory.Temporis2Rare" xml:space="preserve">
+    <value>Rare - Temporis 2</value>
   </data>
-  <data name="SpellCategory.TemporisTriggeredSpell" xml:space="preserve">
-    <value>Sort déclenché - Temporis</value>
+  <data name="SpellCategory.Temporis2Triggered" xml:space="preserve">
+    <value>Sort déclenché - Temporis 2</value>
   </data>
   <data name="SpellCategory.WeaponSkill" xml:space="preserve">
     <value>Maîtrise</value>
@@ -1088,5 +1088,14 @@
   </data>
   <data name="Criterion.LevelModulation.Different" xml:space="preserve">
     <value>Niveau modulé ≠ #1</value>
+  </data>
+  <data name="SpellCategory.Temporis3Breed" xml:space="preserve">
+    <value>Classe - Temporis 3</value>
+  </data>
+  <data name="SpellCategory.Temporis3Monster" xml:space="preserve">
+    <value>Monstre - Temporis 3</value>
+  </data>
+  <data name="SpellCategory.Temporis3Triggered" xml:space="preserve">
+    <value>Sort déclenché - Temporis 3</value>
   </data>
 </root>

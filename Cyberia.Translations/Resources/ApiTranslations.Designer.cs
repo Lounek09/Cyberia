@@ -2689,65 +2689,92 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classe - Temporis.
+        ///   Looks up a localized string similar to Classe - Temporis 2.
         /// </summary>
-        public static string SpellCategory_TemporisBreed {
+        public static string SpellCategory_Temporis2Breed {
             get {
-                return ResourceManager.GetString("SpellCategory.TemporisBreed", resourceCulture);
+                return ResourceManager.GetString("SpellCategory.Temporis2Breed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Commun - Temporis.
+        ///   Looks up a localized string similar to Commun - Temporis 2.
         /// </summary>
-        public static string SpellCategory_TemporisCommon {
+        public static string SpellCategory_Temporis2Common {
             get {
-                return ResourceManager.GetString("SpellCategory.TemporisCommon", resourceCulture);
+                return ResourceManager.GetString("SpellCategory.Temporis2Common", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Epic - Temporis.
+        ///   Looks up a localized string similar to Epic - Temporis 2.
         /// </summary>
-        public static string SpellCategory_TemporisEpic {
+        public static string SpellCategory_Temporis2Epic {
             get {
-                return ResourceManager.GetString("SpellCategory.TemporisEpic", resourceCulture);
+                return ResourceManager.GetString("SpellCategory.Temporis2Epic", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Legendaire - Temporis.
+        ///   Looks up a localized string similar to Legendaire - Temporis 2.
         /// </summary>
-        public static string SpellCategory_TemporisLegendary {
+        public static string SpellCategory_Temporis2Legendary {
             get {
-                return ResourceManager.GetString("SpellCategory.TemporisLegendary", resourceCulture);
+                return ResourceManager.GetString("SpellCategory.Temporis2Legendary", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Monstre - Temporis.
+        ///   Looks up a localized string similar to Monstre - Temporis 2.
         /// </summary>
-        public static string SpellCategory_TemporisMonster {
+        public static string SpellCategory_Temporis2Monster {
             get {
-                return ResourceManager.GetString("SpellCategory.TemporisMonster", resourceCulture);
+                return ResourceManager.GetString("SpellCategory.Temporis2Monster", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare - Temporis.
+        ///   Looks up a localized string similar to Rare - Temporis 2.
         /// </summary>
-        public static string SpellCategory_TemporisRare {
+        public static string SpellCategory_Temporis2Rare {
             get {
-                return ResourceManager.GetString("SpellCategory.TemporisRare", resourceCulture);
+                return ResourceManager.GetString("SpellCategory.Temporis2Rare", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sort déclenché - Temporis.
+        ///   Looks up a localized string similar to Sort déclenché - Temporis 2.
         /// </summary>
-        public static string SpellCategory_TemporisTriggeredSpell {
+        public static string SpellCategory_Temporis2Triggered {
             get {
-                return ResourceManager.GetString("SpellCategory.TemporisTriggeredSpell", resourceCulture);
+                return ResourceManager.GetString("SpellCategory.Temporis2Triggered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classe - Temporis 3.
+        /// </summary>
+        public static string SpellCategory_Temporis3Breed {
+            get {
+                return ResourceManager.GetString("SpellCategory.Temporis3Breed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monstre - Temporis 3.
+        /// </summary>
+        public static string SpellCategory_Temporis3Monster {
+            get {
+                return ResourceManager.GetString("SpellCategory.Temporis3Monster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort déclenché - Temporis 3.
+        /// </summary>
+        public static string SpellCategory_Temporis3Triggered {
+            get {
+                return ResourceManager.GetString("SpellCategory.Temporis3Triggered", resourceCulture);
             }
         }
         
