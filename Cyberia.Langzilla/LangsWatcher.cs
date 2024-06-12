@@ -144,7 +144,7 @@ public static class LangsWatcher
         return type switch
         {
             LangType.Beta => "betaenv/lang",
-            LangType.Temporis => "ephemeris2releasebucket/lang",
+            LangType.Temporis => "t3mporis-release/lang",
             _ => "lang",
         };
     }
