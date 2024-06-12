@@ -39,6 +39,7 @@ public static class CriterionFactory
             { "FT", TurnCriterion.Create },
             { "Fz", MonsterSummonCriterion.Create },
             { "MK", MapPlayerCriterion.Create },
+            { "Mt", DungeonCriterion.Create },
             { "Pa", AlignmentLevelCriterion.Create },
             { "PB", MapSubAreaCriterion.Create },
             { "PE", EmoteCriterion.Create },

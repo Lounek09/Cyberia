@@ -1071,4 +1071,10 @@
   <data name="Unknown.Data" xml:space="preserve">
     <value>Inconnu (#1)</value>
   </data>
+  <data name="Criterion.Dungeon.Equal.True" xml:space="preserve">
+    <value>Etre dans un donjon</value>
+  </data>
+  <data name="Criterion.Dungeon.Equal.False" xml:space="preserve">
+    <value>Ne pas être dans un donjon</value>
+  </data>
 </root>

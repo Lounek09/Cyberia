@@ -27,6 +27,6 @@ public sealed record HomeownerCriterion : Criterion, ICriterion
 
     public Description GetDescription()
     {
-        return GetDescription(IsHomeowner);
+        return base.GetDescription();
     }
 }

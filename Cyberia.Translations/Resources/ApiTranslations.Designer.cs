@@ -862,6 +862,24 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ne pas être dans un donjon.
+        /// </summary>
+        public static string Criterion_Dungeon_Equal_False {
+            get {
+                return ResourceManager.GetString("Criterion.Dungeon.Equal.False", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etre dans un donjon.
+        /// </summary>
+        public static string Criterion_Dungeon_Equal_True {
+            get {
+                return ResourceManager.GetString("Criterion.Dungeon.Equal.True", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ne pas connaître l&apos;attitude #1.
         /// </summary>
         public static string Criterion_Emote_Different {
