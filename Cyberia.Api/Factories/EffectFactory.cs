@@ -410,7 +410,11 @@ public static class EffectFactory
             { 2148, ItemMaxSoulEaterEffect.Create },
             { 2149, ItemCeremonialChangeDurabilityEffect.Create },
             { 2150, ReplaceEffect.Create },
-            { 2151, MarkNeverTradableStrongEffect.Create }
+            { 2151, MarkNeverTradableStrongEffect.Create },
+            { 2152, CharacterInventoryAddItemRandomQuantityEffect.Create },
+            { 2153, TeleportGroupMemberEffect.Create },
+            { 2154, LockToAccountEffect.Create },
+            { 2155, LockToAccountUntilEffect.Create }
         }.ToFrozenDictionary();
 
     public static IEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)

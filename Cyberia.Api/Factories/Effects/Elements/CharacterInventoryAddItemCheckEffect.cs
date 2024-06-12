@@ -8,14 +8,14 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record CharacterInventoryAddItemCheckEffect : Effect, IEffect
 {
     public int ItemId { get; init; }
-    public int Qte { get; init; }
+    public int Quantity { get; init; }
     public GiveItemTarget Target { get; init; }
 
-    private CharacterInventoryAddItemCheckEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemId, int qte, GiveItemTarget giveItemTarget)
+    private CharacterInventoryAddItemCheckEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemId, int quantity, GiveItemTarget giveItemTarget)
         : base(id, duration, probability, criteria, effectArea)
     {
         ItemId = itemId;
-        Qte = qte;
+        Quantity = quantity;
         Target = giveItemTarget;
     }
 
@@ -33,6 +33,6 @@ public sealed record CharacterInventoryAddItemCheckEffect : Effect, IEffect
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 
-        return GetDescription(Target.GetDescription(), Qte, itemName);
+        return GetDescription(Target.GetDescription(), Quantity, itemName);
     }
 }

@@ -7,13 +7,13 @@ namespace Cyberia.Api.Factories.Effects;
 public sealed record CharacterInventoryAddItemRandomNoCheckEffect : Effect, IEffect
 {
     public int ItemId { get; init; }
-    public int Qte { get; init; }
+    public int Quantity { get; init; }
 
-    private CharacterInventoryAddItemRandomNoCheckEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemId, int qte)
+    private CharacterInventoryAddItemRandomNoCheckEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemId, int quantity)
         : base(id, duration, probability, criteria, effectArea)
     {
         ItemId = itemId;
-        Qte = qte;
+        Quantity = quantity;
     }
 
     internal static CharacterInventoryAddItemRandomNoCheckEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
@@ -30,6 +30,6 @@ public sealed record CharacterInventoryAddItemRandomNoCheckEffect : Effect, IEff
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 
-        return GetDescription(string.Empty, Qte, itemName);
+        return GetDescription(string.Empty, Quantity, itemName);
     }
 }
