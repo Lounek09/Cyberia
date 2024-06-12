@@ -128,11 +128,7 @@ public static class LangsWatcher
                 continue;
             }
 
-            if (!updatedLang.SelfDiff())
-            {
-                Log.Error("Failed to diff {LangType} {LangName} lang in {LangLanguage}",
-                    repository.Type, updatedLang.Name, repository.Language);
-            }
+            updatedLang.SelfDiff();
         }
 
         CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(repository, updatedLangs));
