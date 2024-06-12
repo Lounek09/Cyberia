@@ -25,7 +25,7 @@ public sealed class SearchCommandModule
         [Parameter("where"), Description("Where to look for the effect")]
         SearchLocation location,
         [Parameter("id"), Description("Effect id")]
-        [MinMaxValue(0, 9999)]
+        [MinMaxValue(-1, 9999)]
         int effectId)
     {
         StringBuilder descriptionBuilder = new();

@@ -14,6 +14,7 @@ public static class EffectFactory
     private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, EffectArea, IEffect>> s_factory =
         new Dictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, EffectArea, IEffect>>()
         {
+            { -1, FarmObjectEfficacityEffect.Create }, //TODO: Remove after Tempo 3
             { 4, CharacterTeleportOnSameMapEffect.Create },
             { 5, CharacterPushEffect.Create },
             { 6, CharacterPullEffect.Create },
