@@ -48,6 +48,7 @@ public static class CriterionFactory
             { "PJ", JobCriterion.Create },
             { "Pj", JobCriterion.Create },
             { "PK", KamasCriterion.Create },
+            { "Pk", LevelModulationCriterion.Create },
             { "PL", LevelCriterion.Create },
             { "PM", LookCriterion.Create },
             { "Pm", MapCriterion.Create },

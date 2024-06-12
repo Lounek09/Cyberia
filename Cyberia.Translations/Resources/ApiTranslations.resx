@@ -1077,4 +1077,16 @@
   <data name="Criterion.Dungeon.Equal.False" xml:space="preserve">
     <value>Ne pas être dans un donjon</value>
   </data>
+  <data name="Criterion.LevelModulation.Superior" xml:space="preserve">
+    <value>Niveau modulé &gt; #1</value>
+  </data>
+  <data name="Criterion.LevelModulation.Inferior" xml:space="preserve">
+    <value>Niveau modulé &lt; #1</value>
+  </data>
+  <data name="Criterion.LevelModulation.Equal" xml:space="preserve">
+    <value>Niveau modulé = #1</value>
+  </data>
+  <data name="Criterion.LevelModulation.Different" xml:space="preserve">
+    <value>Niveau modulé ≠ #1</value>
+  </data>
 </root>

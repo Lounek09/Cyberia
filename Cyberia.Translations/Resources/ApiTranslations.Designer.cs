@@ -1339,6 +1339,42 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Niveau modulé ≠ #1.
+        /// </summary>
+        public static string Criterion_LevelModulation_Different {
+            get {
+                return ResourceManager.GetString("Criterion.LevelModulation.Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Niveau modulé = #1.
+        /// </summary>
+        public static string Criterion_LevelModulation_Equal {
+            get {
+                return ResourceManager.GetString("Criterion.LevelModulation.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Niveau modulé &lt; #1.
+        /// </summary>
+        public static string Criterion_LevelModulation_Inferior {
+            get {
+                return ResourceManager.GetString("Criterion.LevelModulation.Inferior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Niveau modulé &gt; #1.
+        /// </summary>
+        public static string Criterion_LevelModulation_Superior {
+            get {
+                return ResourceManager.GetString("Criterion.LevelModulation.Superior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apparence ≠ #1.
         /// </summary>
         public static string Criterion_Look_Different {
