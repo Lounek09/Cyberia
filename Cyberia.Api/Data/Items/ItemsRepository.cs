@@ -113,7 +113,7 @@ public sealed class ItemsRepository : IDofusRepository
         return Items.Values.Where(x =>
         {
             return x.Criteria.OfType<ICriterion>()
-                .Any(y => y.Id.Equals(criterionId, StringComparison.OrdinalIgnoreCase));
+                .Any(y => y.Id.Equals(criterionId));
         });
     }
 

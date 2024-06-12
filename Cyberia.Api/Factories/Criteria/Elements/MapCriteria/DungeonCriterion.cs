@@ -14,7 +14,7 @@ public sealed record DungeonCriterion : Criterion, ICriterion
     {
         if (parameters.Length > 1)
         {
-            return new(id, @operator, parameters[0].Equals("1")));
+            return new(id, @operator, parameters[0].Equals("1"));
         }
 
         return null;

@@ -79,7 +79,7 @@ public sealed class SpellsRepository : IDofusRepository
                 return y.Effects.Any(z =>
                 {
                     return z.Criteria.OfType<ICriterion>()
-                        .Any(x => x.Id.Equals(criterionId, StringComparison.OrdinalIgnoreCase));
+                        .Any(x => x.Id.Equals(criterionId));
                 });
             });
         });
