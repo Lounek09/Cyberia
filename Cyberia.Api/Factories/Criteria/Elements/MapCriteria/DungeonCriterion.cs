@@ -12,7 +12,7 @@ public sealed record DungeonCriterion : Criterion, ICriterion
 
     internal static DungeonCriterion? Create(string id, char @operator, params string[] parameters)
     {
-        if (parameters.Length > 1)
+        if (parameters.Length > 0)
         {
             return new(id, @operator, parameters[0].Equals("1"));
         }
