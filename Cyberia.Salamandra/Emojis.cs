@@ -356,7 +356,6 @@ public static class Emojis
         return s_effects.TryGetValue(id, out var emoji) ? emoji : Empty;
     }
 
-
     //Areas
     private static readonly FrozenDictionary<int, string> s_effectAreas = new SortedDictionary<int, string>()
     {
