@@ -20,10 +20,10 @@ public sealed class EffectData : IDofusData<int>
     public string Operator { get; init; }
 
     [JsonPropertyName("t")]
-    public bool ShowInTooltip { get; init; }
+    public bool VisibleInTooltips { get; init; }
 
     [JsonPropertyName("j")]
-    public bool ShowInDiceModePossible { get; init; }
+    public bool DisplayableInDiceMode { get; init; }
 
     [JsonPropertyName("e")]
     public string Element { get; init; }

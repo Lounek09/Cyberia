@@ -42,8 +42,8 @@ public sealed class EffectsRepository : IDofusRepository
                     Description = effectCustomData.Description,
                     CharacteristicId = effectCustomData.CharacteristicId,
                     Operator = effectCustomData.Operator,
-                    ShowInTooltip = effectCustomData.ShowInTooltip,
-                    ShowInDiceModePossible = effectCustomData.ShowInDiceModePossible,
+                    VisibleInTooltips = effectCustomData.ShowInTooltip,
+                    DisplayableInDiceMode = effectCustomData.ShowInDiceModePossible,
                     Element = effectCustomData.Element
                 });
 
