@@ -71,46 +71,6 @@ public class ExtendStringTests
 
     #endregion
 
-    #region SplitByLength
-
-    [TestMethod]
-    public void SplitByLength_WithLengthShorterThanString_SplitsCorrectly()
-    {
-        var value = "Bouftou";
-
-        var result = value.SplitByLength(2).ToList();
-
-        Assert.AreEqual(4, result.Count);
-        Assert.AreEqual("Bo", result[0]);
-        Assert.AreEqual("uf", result[1]);
-        Assert.AreEqual("to", result[2]);
-        Assert.AreEqual("u", result[3]);
-    }
-
-    [TestMethod]
-    public void SplitByLength_WithLengthLongerThanString_ReturnsSinglePart()
-    {
-        var value = "Bouftou";
-
-        var result = value.SplitByLength(10).ToList();
-
-        Assert.AreEqual(1, result.Count);
-        Assert.AreEqual(value, result[0]);
-    }
-
-    [TestMethod]
-    public void SplitByLength_WithNonPositiveLength_ReturnsSinglePart()
-    {
-        var value = "Bouftou";
-
-        var result = value.SplitByLength(-1).ToList();
-
-        Assert.AreEqual(1, result.Count);
-        Assert.AreEqual(value, result[0]);
-    }
-
-    #endregion
-
     #region TrimStart
 
     [TestMethod]

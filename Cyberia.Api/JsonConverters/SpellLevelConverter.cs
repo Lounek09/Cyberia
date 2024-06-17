@@ -21,7 +21,7 @@ public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
 
         var effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0], options) ?? [];
         var criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1], options) ?? [];
-        var effectAreas = EffectAreaFactory.CreateMany(elements[15].GetStringOrEmpty()).ToList();
+        var effectAreas = EffectAreaFactory.CreateMany(elements[15].GetStringOrEmpty());
 
         var effectParse = EffectFactory.CreateMany(effects, effectAreas).ToList();
         effectAreas.RemoveRange(0, effectParse.Count);

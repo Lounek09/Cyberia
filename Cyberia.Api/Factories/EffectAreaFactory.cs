@@ -36,22 +36,33 @@ public static class EffectAreaFactory
 {
     public static readonly EffectArea Default = new(80, 0);
 
-    public static EffectArea Create(string compressedEffectArea)
+    public static EffectArea Create(ReadOnlySpan<char> compressedEffectArea)
     {
         if (compressedEffectArea.Length != 2)
         {
-            Log.Warning("Failed to create EffectArea from {CompressedEffectArea}", compressedEffectArea);
+            Log.Warning("Failed to create EffectArea from {CompressedEffectArea}", compressedEffectArea.ToString());
             return Default;
         }
 
         return new(compressedEffectArea[0], PatternDecoder.Base64(compressedEffectArea[1]));
     }
 
-    public static IEnumerable<EffectArea> CreateMany(string compressedEffectAreas)
+    public static List<EffectArea> CreateMany(ReadOnlySpan<char> compressedEffectAreas)
     {
-        foreach (var value in compressedEffectAreas.SplitByLength(2))
+        List<EffectArea> effectAreas = new(compressedEffectAreas.Length / 2);
+
+        var length = compressedEffectAreas.Length - 1;
+        for (var i = 0; i < length; i += 2)
         {
-            yield return Create(value);
+            effectAreas.Add(new EffectArea()
+            {
+                Id = compressedEffectAreas[i],
+                Size = PatternDecoder.Base64(compressedEffectAreas[i + 1])
+            });
         }
+
+        return effectAreas;
     }
 }
+
+
