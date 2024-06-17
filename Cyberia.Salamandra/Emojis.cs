@@ -344,7 +344,11 @@ public static class Emojis
         { 2137, "<:effect_state:1238099527404093440>" },
         { 2138, "<:effect_boostDamage:1238098581852913674>" },
         { 2149, "<:effect_itemResistance:1238098815677108265>" },
-        { 2151, "<:effect_lock:1238099034888077322>" }
+        { 2151, "<:effect_lock:1238099034888077322>" },
+        { 2152, "<:effect_bag:1240405208685609080>" },
+        { 2153, "<:effect_lock2:1252190910213787650>" },
+        { 2154, "<:effect_lock2:1252190910213787650>" },
+        { 2155, "<:effect_lock2:1252190910213787650>" }
     }.ToFrozenDictionary();
 
     public static string Effect(int id)
