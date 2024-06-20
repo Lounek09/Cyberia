@@ -40,7 +40,7 @@ public static class EffectAreaFactory
         var length = compressedEffectAreas.Length - 1;
         for (var i = 0; i < length; i += 2)
         {
-            var effectArea = ;
+            var effectArea = new EffectArea(compressedEffectAreas[i], PatternDecoder.CharToBase64Index(compressedEffectAreas[i + 1]));
             effectAreas.Add(effectArea);
         }
 
