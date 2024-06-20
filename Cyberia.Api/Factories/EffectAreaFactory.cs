@@ -1,36 +1,6 @@
-﻿using Cyberia.Api.Data;
+﻿using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Managers;
-
-public readonly record struct EffectArea(int Id, int Size)
-{
-    public Task<string> GetImagePathAsync(CdnImageSize size)
-    {
-        return CdnManager.GetImagePathAsync("effectareas", Id, size);
-    }
-
-    public string GetSize()
-    {
-        return Size >= 63 ? ApiTranslations.Infinity : Size.ToString();
-    }
-
-    public Description GetDescription()
-    {
-        if (Id == EffectAreaFactory.Default.Id)
-        {
-            return Description.Empty;
-        }
-
-        var effectAreaName = ApiTranslations.ResourceManager.GetString($"EffectArea.{Id}");
-        if (effectAreaName is null)
-        {
-            Log.Warning("Unknown {EffectArea} {EffectAreaId}", nameof(EffectArea), Id);
-            effectAreaName = Translation.Format(ApiTranslations.Unknown_Data, Id);
-        }
-
-        return new($"#1 {effectAreaName}", GetSize());
-    }
-}
+namespace Cyberia.Api.Factories;
 
 public static class EffectAreaFactory
 {
@@ -44,7 +14,7 @@ public static class EffectAreaFactory
             return Default;
         }
 
-        return new(compressedEffectArea[0], PatternDecoder.Base64(compressedEffectArea[1]));
+        return new EffectArea(compressedEffectArea[0], PatternDecoder.CharToBase64Index(compressedEffectArea[1]));
     }
 
     public static List<EffectArea> CreateMany(ReadOnlySpan<char> compressedEffectAreas)
@@ -54,15 +24,10 @@ public static class EffectAreaFactory
         var length = compressedEffectAreas.Length - 1;
         for (var i = 0; i < length; i += 2)
         {
-            effectAreas.Add(new EffectArea()
-            {
-                Id = compressedEffectAreas[i],
-                Size = PatternDecoder.Base64(compressedEffectAreas[i + 1])
-            });
+            var effectArea = ;
+            effectAreas.Add(effectArea);
         }
 
         return effectAreas;
     }
 }
-
-

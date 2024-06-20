@@ -2,10 +2,10 @@
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Pets;
+using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.QuestObjectives;
-using Cyberia.Api.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;

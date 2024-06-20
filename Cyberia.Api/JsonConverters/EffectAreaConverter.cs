@@ -1,5 +1,5 @@
-﻿using Cyberia.Api.Factories.EffectAreas;
-using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Factories;
+using Cyberia.Api.Factories.EffectAreas;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -15,7 +15,7 @@ public sealed class EffectAreaConverter : JsonConverter<EffectArea>
 
     public override void Write(Utf8JsonWriter writer, EffectArea value, JsonSerializerOptions options)
     {
-        var encodedValue = $"{(char)value.Id}{PatternDecoder.Base64IndexToChar(value.Size)}";
-        writer.WriteStringValue(encodedValue);
+        var compressedValue = $"{(char)value.Id}{PatternDecoder.Base64IndexToChar(value.Size)}";
+        writer.WriteStringValue(compressedValue);
     }
 }

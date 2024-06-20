@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.Items;
 using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects;
