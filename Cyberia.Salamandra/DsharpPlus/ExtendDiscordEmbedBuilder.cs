@@ -164,7 +164,7 @@ public static class ExtendDiscordEmbedBuilder
             builder.Append("\nZone : ");
             builder.Append(Emojis.EffectArea(itemTypeData.EffectArea.Id));
             builder.Append(' ');
-            builder.Append(itemTypeData.EffectArea.GetDescription());
+            builder.Append(itemTypeData.EffectArea.GetDescription().ToString(Formatter.Bold));
         }
 
         return embed.AddField("Caractéristiques :", builder.ToString(), inline);
