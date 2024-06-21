@@ -4,7 +4,6 @@ using Cyberia.Api.Data.ItemStats;
 using Cyberia.Api.Data.Npcs;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Managers;
 
 using System.Text.Json.Serialization;
@@ -59,7 +58,6 @@ public sealed class ItemData : IDofusData<int>
     public ItemWeaponData? WeaponData { get; init; }
 
     [JsonPropertyName("c")]
-    [JsonConverter(typeof(CriteriaReadOnlyCollectionConverter))]
     public CriteriaReadOnlyCollection Criteria { get; init; }
 
     [JsonPropertyName("s")]

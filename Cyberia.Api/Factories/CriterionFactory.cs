@@ -99,10 +99,11 @@ public static class CriterionFactory
 
     public static ICriterion Create(string compressedCriterion)
     {
-        if (string.IsNullOrEmpty(compressedCriterion) || compressedCriterion.Length < 4)
+        if (compressedCriterion.Length < 4)
         {
-            Log.Error("Failed to create Criterion from {CompressedCriterion}", compressedCriterion);
-            return ErroredCriterion.Create(compressedCriterion);
+            var compressedCriterionStr = compressedCriterion.ToString();
+            Log.Error("Failed to create Criterion from {CompressedCriterion}", compressedCriterionStr);
+            return ErroredCriterion.Create(compressedCriterionStr);
         }
 
         var id = compressedCriterion[0..2];
@@ -112,70 +113,59 @@ public static class CriterionFactory
         return Create(id, @operator, parameters);
     }
 
-    public static CriteriaReadOnlyCollection CreateMany(string compressedCriteria)
+    public static CriteriaReadOnlyCollection CreateMany(ReadOnlySpan<char> compressedCriteria)
     {
         List<ICriteriaElement> criteria = [];
 
-        var index = 0;
-        while (index < compressedCriteria.Length)
+        var nesting = 0;
+        var startTokenIndex = 0;
+
+        var length = compressedCriteria.Length;
+        for (var i = 0; i < length; i++)
         {
-            switch (compressedCriteria[index])
+            var currentChar = compressedCriteria[i];
+
+            switch (currentChar)
             {
                 case '(':
-                    (var token, index) = ExtractToken(compressedCriteria, index + 1, ')');
+                    if (nesting == 0)
+                    {
+                        startTokenIndex = i + 1;
+                    }
 
-                    criteria.Add(CreateMany(token));
+                    nesting++;
                     break;
-                case '&' or '|':
-                    criteria.Add(new CriteriaLogicalOperator(compressedCriteria[index]));
+                case ')':
+                    nesting--;
+
+                    if (nesting == 0)
+                    {
+                        var token = compressedCriteria[startTokenIndex..i];
+                        criteria.Add(CreateMany(token));
+                        startTokenIndex = i + 1;
+                    }
+                    break;
+                case '&' or '|' when nesting == 0:
+                    if (i > startTokenIndex)
+                    {
+                        var token = compressedCriteria[startTokenIndex..i];
+                        criteria.Add(Create(token.ToString()));
+                    }
+
+                    criteria.Add(new CriteriaLogicalOperator(currentChar));
+                    startTokenIndex = i + 1;
                     break;
                 default:
-                    (token, index) = ExtractToken(compressedCriteria, index, '&', '|', ')');
-                    index--;
-
-                    criteria.Add(Create(token));
+                    if (i == length - 1)
+                    {
+                        var token = compressedCriteria[startTokenIndex..(i + 1)];
+                        criteria.Add(Create(token.ToString()));
+                    }
                     break;
             }
-
-            index++;
         }
 
         return new CriteriaReadOnlyCollection(criteria);
-    }
-
-    public static (string, int) ExtractToken(string value, int startIndex, params char[] endChars)
-    {
-        var endIndex = startIndex;
-        var openParenthesesCount = 0;
-
-        while (endIndex < value.Length)
-        {
-            switch (value[endIndex])
-            {
-                case '(':
-                    openParenthesesCount++;
-                    break;
-                case ')':
-                    if (openParenthesesCount == 0)
-                    {
-                        return (value[startIndex..endIndex], endIndex);
-                    }
-
-                    openParenthesesCount--;
-                    break;
-                default:
-                    if (openParenthesesCount == 0 && endChars.Contains(value[endIndex]))
-                    {
-                        return (value[startIndex..endIndex], endIndex);
-                    }
-
-                    break;
-            }
-
-            endIndex++;
-        }
-
-        return (value[startIndex..endIndex], endIndex);
     }
 
     internal static string GetCriterionOperatorDescriptionName(char @operator)
