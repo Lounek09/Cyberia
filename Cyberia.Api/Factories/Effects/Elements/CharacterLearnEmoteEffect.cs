@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterLearnEmoteEffect : Effect, IEffect
+public sealed record CharacterLearnEmoteEffect : Effect
 {
     public int EmoteId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record CharacterLearnEmoteEffect : Effect, IEffect
         return DofusApi.Datacenter.EmotesRepository.GetEmoteById(EmoteId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var emoteName = DofusApi.Datacenter.EmotesRepository.GetEmoteNameById(EmoteId);
 

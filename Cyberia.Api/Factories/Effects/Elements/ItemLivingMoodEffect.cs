@@ -4,7 +4,7 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemLivingMoodEffect : Effect, IEffect
+public sealed record ItemLivingMoodEffect : Effect
 {
     public Corpulence Corpulence { get; init; }
 
@@ -19,7 +19,7 @@ public sealed record ItemLivingMoodEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (Corpulence)parameters.Param3);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(string.Empty, string.Empty, Corpulence.GetDescription());
     }

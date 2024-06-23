@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterInventoryGainKamasEffect : MinMaxEffect, IEffect
+public sealed record CharacterInventoryGainKamasEffect : MinMaxEffect
 {
     private CharacterInventoryGainKamasEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)

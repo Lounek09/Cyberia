@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostOneWeaponDamagePercentEffect : Effect, IEffect
+public sealed record CharacterBoostOneWeaponDamagePercentEffect : Effect
 {
     public int ItemTypeId { get; init; }
     public int PercentDamage { get; init; }
@@ -26,7 +26,7 @@ public sealed record CharacterBoostOneWeaponDamagePercentEffect : Effect, IEffec
         return DofusApi.Datacenter.ItemsRepository.GetItemTypeDataById(ItemTypeId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var itemTypeName = DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(ItemTypeId);
 

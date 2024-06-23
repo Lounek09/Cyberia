@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CaptureSoulEffect : Effect, IEffect
+public sealed record CaptureSoulEffect : Effect
 {
     public int CapturePercent { get; init; }
     public int Power { get; init; }
@@ -20,7 +20,7 @@ public sealed record CaptureSoulEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(CapturePercent, Power);
     }

@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterInventoryAddItemFromRandomDropEffect : Effect, IEffect
+public sealed record CharacterInventoryAddItemFromRandomDropEffect : Effect
 {
     public int Quantity { get; init; }
     public int BundleId { get; init; }
@@ -20,7 +20,7 @@ public sealed record CharacterInventoryAddItemFromRandomDropEffect : Effect, IEf
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Quantity, string.Empty, BundleId);
     }

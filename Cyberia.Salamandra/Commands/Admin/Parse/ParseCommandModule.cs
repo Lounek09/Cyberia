@@ -25,7 +25,7 @@ public sealed class ParseCommandModule
     {
         var effects = EffectFactory.CreateMany(value);
 
-        if (effects.Any())
+        if (effects.Count > 0)
         {
             var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
                 .WithTitle("Item effects parser")

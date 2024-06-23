@@ -4,7 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record LockToAccountUntilEffect : Effect, IEffect
+public sealed record LockToAccountUntilEffect : Effect
 {
     public DateTime DateTime { get; init; }
 
@@ -19,7 +19,7 @@ public sealed record LockToAccountUntilEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, DateManager.CreateDateTimeFromEffectParameters(parameters));
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(DateTime.ToString("dd/MM/yyy HH:mm"));
     }

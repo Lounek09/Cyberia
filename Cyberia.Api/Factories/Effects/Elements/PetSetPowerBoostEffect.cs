@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record PetSetPowerBoostEffect : Effect, IEffect
+public sealed record PetSetPowerBoostEffect : Effect
 {
     public int StatsWeightBonus { get; init; }
     public int ItemId { get; init; }
@@ -26,7 +26,7 @@ public sealed record PetSetPowerBoostEffect : Effect, IEffect
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 

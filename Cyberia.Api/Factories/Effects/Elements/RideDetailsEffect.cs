@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record RideDetailsEffect : Effect, IEffect
+public sealed record RideDetailsEffect : Effect
 {
     public int ItemUuid { get; init; }
     public DateTime ExpirationDate { get; init; }
@@ -20,7 +20,7 @@ public sealed record RideDetailsEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, DateTimeOffset.FromUnixTimeMilliseconds(parameters.Param2).UtcDateTime);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(ItemUuid, ExpirationDate.ToString("dd/MM/yyyy HH:mm"));
     }

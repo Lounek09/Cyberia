@@ -4,7 +4,7 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GiveTTGCardFromRarityEffect : Effect, IEffect
+public sealed record GiveTTGCardFromRarityEffect : Effect
 {
     public TTGCardRarity Rarity { get; init; }
 
@@ -19,7 +19,7 @@ public sealed record GiveTTGCardFromRarityEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (TTGCardRarity)parameters.Param3);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(string.Empty, string.Empty, Rarity.GetDescription());
     }

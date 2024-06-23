@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterInventoryRemoveItemAroundEffect : Effect, IEffect
+public sealed record CharacterInventoryRemoveItemAroundEffect : Effect
 {
     public int ItemId { get; init; }
     public int Qte { get; init; }
@@ -26,7 +26,7 @@ public sealed record CharacterInventoryRemoveItemAroundEffect : Effect, IEffect
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 

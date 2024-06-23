@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterMultiplyReceivedDamageOrGiveLifeWithRatioEffect : Effect, IEffect
+public sealed record CharacterMultiplyReceivedDamageOrGiveLifeWithRatioEffect : Effect
 {
     public int DamageRatio { get; init; }
     public int HealRatio { get; init; }
@@ -22,7 +22,7 @@ public sealed record CharacterMultiplyReceivedDamageOrGiveLifeWithRatioEffect : 
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2, (int)parameters.Param3);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(DamageRatio, HealRatio, DamageProbability);
     }

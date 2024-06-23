@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterEnergyLossBoostEffect : Effect, IEffect
+public sealed record CharacterEnergyLossBoostEffect : Effect
 {
     public int EnergyLoss { get; init; }
 
@@ -18,7 +18,7 @@ public sealed record CharacterEnergyLossBoostEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(EnergyLoss);
     }

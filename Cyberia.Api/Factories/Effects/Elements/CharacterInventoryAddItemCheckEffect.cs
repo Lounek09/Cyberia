@@ -5,7 +5,7 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterInventoryAddItemCheckEffect : Effect, IEffect
+public sealed record CharacterInventoryAddItemCheckEffect : Effect
 {
     public int ItemId { get; init; }
     public int Quantity { get; init; }
@@ -29,7 +29,7 @@ public sealed record CharacterInventoryAddItemCheckEffect : Effect, IEffect
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 

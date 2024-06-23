@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record QuestEndEffect : Effect, IEffect
+public sealed record QuestEndEffect : Effect
 {
     public int QuestId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record QuestEndEffect : Effect, IEffect
         return DofusApi.Datacenter.QuestsRepository.GetQuestDataById(QuestId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var questName = DofusApi.Datacenter.QuestsRepository.GetQuestNameById(QuestId);
 

@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record FightAddTrapCastingSpellEffect : TrapEffect, IEffect
+public sealed record FightAddTrapCastingSpellEffect : TrapEffect
 {
     private FightAddTrapCastingSpellEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId, int level)
         : base(id, duration, probability, criteria, effectArea, spellId, level)

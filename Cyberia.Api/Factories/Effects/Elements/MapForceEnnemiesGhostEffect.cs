@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record MapForceEnnemiesGhostEffect : ParameterlessEffect, IEffect
+public sealed record MapForceEnnemiesGhostEffect : ParameterlessEffect
 {
     private MapForceEnnemiesGhostEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)

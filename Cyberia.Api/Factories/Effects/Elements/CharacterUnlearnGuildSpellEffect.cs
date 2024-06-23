@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterUnlearnGuildSpellEffect : Effect, IEffect
+public sealed record CharacterUnlearnGuildSpellEffect : Effect
 {
     public int SpellId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record CharacterUnlearnGuildSpellEffect : Effect, IEffect
         return DofusApi.Datacenter.SpellsRepository.GetSpellDataById(SpellId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var spellName = DofusApi.Datacenter.SpellsRepository.GetSpellNameById(SpellId);
 

@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterInventoryAddItemRandomNoCheckEffect : Effect, IEffect
+public sealed record CharacterInventoryAddItemRandomNoCheckEffect : Effect
 {
     public int ItemId { get; init; }
     public int Quantity { get; init; }
@@ -26,7 +26,7 @@ public sealed record CharacterInventoryAddItemRandomNoCheckEffect : Effect, IEff
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 

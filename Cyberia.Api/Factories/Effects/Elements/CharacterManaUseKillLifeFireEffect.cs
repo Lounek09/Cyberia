@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterManaUseKillLifeFireEffect : Effect, IEffect
+public sealed record CharacterManaUseKillLifeFireEffect : Effect
 {
     public int ActionPoints { get; init; }
     public int Damage { get; init; }
@@ -20,7 +20,7 @@ public sealed record CharacterManaUseKillLifeFireEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(ActionPoints, Damage);
     }

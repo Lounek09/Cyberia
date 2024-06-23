@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterUnlearnJobEffect : Effect, IEffect
+public sealed record CharacterUnlearnJobEffect : Effect
 {
     public int JobId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record CharacterUnlearnJobEffect : Effect, IEffect
         return DofusApi.Datacenter.JobsRepository.GetJobDataById(JobId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var jobName = DofusApi.Datacenter.JobsRepository.GetJobNameById(JobId);
 

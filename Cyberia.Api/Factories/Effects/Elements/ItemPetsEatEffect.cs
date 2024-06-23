@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemPetsEatEffect : Effect, IEffect
+public sealed record ItemPetsEatEffect : Effect
 {
     public int ItemId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record ItemPetsEatEffect : Effect, IEffect
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var itemName = ItemId == 0 ? ApiTranslations.LastMeal_None : DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 

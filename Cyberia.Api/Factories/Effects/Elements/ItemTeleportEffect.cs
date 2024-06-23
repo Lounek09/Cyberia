@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemTeleportEffect : Effect, IEffect
+public sealed record ItemTeleportEffect : Effect
 {
     public int MapId { get; init; }
     public int Cell { get; init; }
@@ -33,7 +33,7 @@ public sealed record ItemTeleportEffect : Effect, IEffect
         return DofusApi.Datacenter.MapsRepository.GetMapDataById(MapId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var map = GetMapData();
         var mapAreaSubAreaName = map is null ? Translation.Format(ApiTranslations.Unknown_Data, MapId) : map.GetMapAreaName();

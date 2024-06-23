@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterSummonMonsterGroupEffect : Effect, IEffect
+public sealed record CharacterSummonMonsterGroupEffect : Effect
 {
     public IReadOnlyList<int> MonstersId { get; init; }
 
@@ -37,7 +37,7 @@ public sealed record CharacterSummonMonsterGroupEffect : Effect, IEffect
         }
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var monstersName = string.Join(", ", MonstersId.Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(x)));
 

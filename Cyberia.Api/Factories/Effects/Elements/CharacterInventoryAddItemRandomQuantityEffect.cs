@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterInventoryAddItemRandomQuantityEffect : Effect, IEffect
+public sealed record CharacterInventoryAddItemRandomQuantityEffect : Effect
 {
     public int ItemId { get; init; }
     public int MinQuantity { get; init; }
@@ -29,7 +29,7 @@ public sealed record CharacterInventoryAddItemRandomQuantityEffect : Effect, IEf
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 

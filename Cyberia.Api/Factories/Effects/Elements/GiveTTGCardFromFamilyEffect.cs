@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GiveTTGCardFromFamilyEffect : Effect, IEffect
+public sealed record GiveTTGCardFromFamilyEffect : Effect
 {
     public int TTGFamilyId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record GiveTTGCardFromFamilyEffect : Effect, IEffect
         return DofusApi.Datacenter.TTGRepository.GetTTGFamilyDataById(TTGFamilyId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var ttgFamilyName = DofusApi.Datacenter.TTGRepository.GetTTGFamilyNameById(TTGFamilyId);
 

@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GainTitleEffect : Effect, IEffect
+public sealed record GainTitleEffect : Effect
 {
     public int TitleId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record GainTitleEffect : Effect, IEffect
         return DofusApi.Datacenter.TitlesRepository.GetTitleDataById(TitleId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var titleName = DofusApi.Datacenter.TitlesRepository.GetTitleNameById(TitleId);
 

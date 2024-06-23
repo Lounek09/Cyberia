@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record TeleportCreatureOnSameMapEffect : Effect, IEffect
+public sealed record TeleportCreatureOnSameMapEffect : Effect
 {
     public int MonsterId { get; init; }
     public int MaximumDistance { get; init; }
@@ -26,7 +26,7 @@ public sealed record TeleportCreatureOnSameMapEffect : Effect, IEffect
         return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
 

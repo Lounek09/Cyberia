@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemCeremonialChangeDurabilityEffect : Effect, IEffect
+public sealed record ItemCeremonialChangeDurabilityEffect : Effect
 {
     public int CurrentDurability { get; init; }
     public int MaxDurability { get; init; }
@@ -20,7 +20,7 @@ public sealed record ItemCeremonialChangeDurabilityEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2, (int)parameters.Param3);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(string.Empty, CurrentDurability, MaxDurability);
     }

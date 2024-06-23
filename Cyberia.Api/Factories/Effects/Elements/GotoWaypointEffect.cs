@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GotoWaypointEffect : ParameterlessEffect, IEffect
+public sealed record GotoWaypointEffect : ParameterlessEffect
 {
     private GotoWaypointEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)

@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterDodgeHitEffect : Effect, IEffect
+public sealed record CharacterDodgeHitEffect : Effect
 {
     public int DodgePercent { get; init; }
     public int CasePushed { get; init; }
@@ -20,7 +20,7 @@ public sealed record CharacterDodgeHitEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(DodgePercent, CasePushed);
     }

@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record FakeAlignmentEffect : Effect, IEffect
+public sealed record FakeAlignmentEffect : Effect
 {
     public int AlignmentId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record FakeAlignmentEffect : Effect, IEffect
         return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentDataById(AlignmentId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var alignmentName = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentNameById(AlignmentId);
 

@@ -1,18 +1,32 @@
 ﻿using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Managers;
 
 using System.Collections.Frozen;
 using System.Text.Json;
 
 namespace Cyberia.Api.Factories;
 
-public readonly record struct EffectParameters(long Param1, long Param2, long Param3, string Param4);
+/// <summary>
+/// Represents the parameters of an effect.
+/// </summary>
+public readonly record struct EffectParameters(long Param1, long Param2, long Param3, string Param4)
+{
+    /// <summary>
+    /// The max number of parameters expected by an effect.
+    /// </summary>
+    internal const int ParameterCount = 4;
+};
 
+/// <summary>
+/// Provides factory methods for creating <see cref="IEffect"/>.
+/// </summary>
 public static class EffectFactory
 {
-    private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, EffectArea, IEffect>> s_factory =
+    /// <summary>
+    /// A dictionary mapping effect identifiers to their factory methods.
+    /// </summary>
+    private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, EffectArea, IEffect>> s_factories =
         new Dictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, EffectArea, IEffect>>()
         {
             { -1, FarmObjectEfficacityEffect.Create }, //TODO: Remove after Tempo 3
@@ -419,67 +433,125 @@ public static class EffectFactory
             { 2155, LockToAccountUntilEffect.Create }
         }.ToFrozenDictionary();
 
-    public static IEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    /// <summary>
+    /// Creates an <see cref="IEffect"/>.
+    /// </summary>
+    /// <param name="id">The unique identifier of the effect.</param>
+    /// <param name="parameters">The parameters of the effect.</param>
+    /// <param name="duration">The duration of the effect.</param>
+    /// <param name="probability">The probability (as a percentage) that the effect will occur.</param>
+    /// <param name="criteria">The criteria where the effect is applicable</param>
+    /// <param name="effectArea">The area of the effect.</param>
+    /// <returns>The created <see cref="IEffect"/> if the effect is known; otherwise, an <see cref="UntranslatedEffect"/> instance.</returns>
+    public static IEffect Create(int id, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
-        if (s_factory.TryGetValue(effectId, out var builder))
+        if (s_factories.TryGetValue(id, out var builder))
         {
-            return builder(effectId, parameters, duration, probability, criteria, effectArea);
+            return builder(id, parameters, duration, probability, criteria, effectArea);
         }
 
-        Log.Warning("Unknown Effect {EffectId} with {@EffectParameters}", effectId, parameters);
-        return UntranslatedEffect.Create(effectId, parameters, duration, probability, criteria, effectArea);
+        Log.Warning("Unknown Effect {EffectId} with {@EffectParameters}", id, parameters);
+        return new UntranslatedEffect(id, duration, probability, criteria, effectArea, parameters);
     }
 
-    public static IEffect Create(string compressedEffect)
+    /// <summary>
+    /// Creates an <see cref="IEffect"/> from a compressed string representation.
+    /// </summary>
+    /// <param name="compressedEffect">The compressed string representation of the effect.</param>
+    /// <returns>The created <see cref="IEffect"/> if successful; otherwise, an <see cref="ErroredEffect"/> or <see cref="UntranslatedEffect"/> instance.</returns>
+    public static IEffect Create(ReadOnlySpan<char> compressedEffect)
     {
-        var args = compressedEffect.Split('#');
-
-        if (args.Length == 0)
+        var count = compressedEffect.Count('#');
+        if (count > EffectParameters.ParameterCount)
         {
-            Log.Error("Failed to create Effect from {CompressedEffect}", compressedEffect);
-            return ErroredEffect.Create(compressedEffect);
+            var compressedEffectStr = compressedEffect.ToString();
+            Log.Error("Failed to create Effect from {CompressedEffect}", compressedEffectStr);
+            return new ErroredEffect(compressedEffectStr);
         }
 
-        var id = (int)args[0].ToInt64OrDefaultFromHex();
-        EffectParameters parameters = new()
-        {
-            Param1 = args.Length > 1 ? args[1].ToInt64OrDefaultFromHex() : 0,
-            Param2 = args.Length > 2 ? args[2].ToInt64OrDefaultFromHex() : 0,
-            Param3 = args.Length > 3 ? args[3].ToInt64OrDefaultFromHex() : 0,
-            Param4 = args.Length > 4 ? args[4] : string.Empty
-        };
+        var index = compressedEffect.IndexOf('#');
+        var id = (index == -1 ? compressedEffect : compressedEffect[..index]).ToInt64OrDefaultFromHex();
 
-        return Create(id, parameters, 0, 0, [], EffectAreaFactory.Default);
-    }
+        compressedEffect = compressedEffect[(index + 1)..];
 
-    public static IEnumerable<IEffect> CreateMany(string compressedEffects)
-    {
-        foreach (var compressedEffect in compressedEffects.Split(',', StringSplitOptions.RemoveEmptyEntries))
+        var param4 = string.Empty;
+        if (count == EffectParameters.ParameterCount)
         {
-            yield return Create(compressedEffect);
+            index = compressedEffect.LastIndexOf('#');
+            param4 = compressedEffect[(index + 1)..].ToString();
+
+            compressedEffect = compressedEffect[..index];
+            count--;
         }
+
+        Span<long> parameters = stackalloc long[EffectParameters.ParameterCount - 1];
+        for (var i = 0; i < count; i++)
+        {
+            index = compressedEffect.IndexOf('#');
+            var parameter = index == -1 ? compressedEffect : compressedEffect[..index];
+            parameters[i] = parameter.ToInt64OrDefaultFromHex();
+
+            compressedEffect = compressedEffect[(index + 1)..];
+        }
+
+        EffectParameters effectParameters = new(parameters[0], parameters[1], parameters[2], param4);
+
+        return Create((int)id, effectParameters, 0, 0, [], EffectAreaFactory.Default);
     }
 
+    /// <summary>
+    /// Creates a list of <see cref="IEffect"/> from a compressed string representation.
+    /// </summary>
+    /// <param name="compressedEffects">The compressed string representation of the effects.</param>
+    /// <returns>The list of created <see cref="IEffect"/>.</returns>
+    public static List<IEffect> CreateMany(ReadOnlySpan<char> compressedEffects)
+    {
+        var count = compressedEffects.Count(',') + 1;
+        List<IEffect> effects = new(count);
+
+        for (var i = 0; i < count; i++)
+        {
+            var index = compressedEffects.IndexOf(',');
+            var compressedEffect = index == -1 ? compressedEffects : compressedEffects[..index];
+
+            if (!compressedEffect.IsEmpty)
+            {
+                var effect = Create(compressedEffect);
+                effects.Add(effect);
+            }
+
+            compressedEffects = compressedEffects[(index + 1)..];
+        }
+
+        return effects;
+    }
+
+    /// <summary>
+    /// Creates an <see cref="IEffect"/> from a compressed json representation.
+    /// </summary>
+    /// <param name="compressedEffect">The compressed json representation of the effect.</param>
+    /// <param name="effectArea">The area of the effect.</param>
+    /// <returns>The created <see cref="IEffect"/>.</returns>
     public static IEffect Create(JsonElement compressedEffect, EffectArea effectArea)
     {
         if (compressedEffect.ValueKind is not JsonValueKind.Array)
         {
             Log.Error("Failed to create Effect from {@CompressedEffect}", compressedEffect);
-            return ErroredEffect.Create(compressedEffect.ToString());
+            return new ErroredEffect(compressedEffect.ToString());
         }
 
         var length = compressedEffect.GetArrayLength();
         if (length < 7)
         {
             Log.Error("Failed to create Effect from {@CompressedEffect}", compressedEffect);
-            return ErroredEffect.Create(compressedEffect.ToString());
+            return new ErroredEffect(compressedEffect.ToString());
         }
 
         var id = compressedEffect[0].GetInt32OrDefault();
         if (id == default)
         {
             Log.Error("Failed to create Effect from {@CompressedEffect}", compressedEffect);
-            return ErroredEffect.Create(compressedEffect.ToString());
+            return new ErroredEffect(compressedEffect.ToString());
         }
 
         var parameters = new EffectParameters()
@@ -496,13 +568,25 @@ public static class EffectFactory
         return Create(id, parameters, duration, probability, criteria, effectArea);
     }
 
-    public static IEnumerable<IEffect> CreateMany(IReadOnlyList<JsonElement> compressedEffects, IReadOnlyList<EffectArea> effectAreas)
+    /// <summary>
+    /// Creates a list of <see cref="IEffect"/> from a compressed json representation.
+    /// </summary>
+    /// <param name="compressedEffects">The compressed json representation of the effects.</param>
+    /// <param name="effectAreas">The areas of the effects.</param>
+    /// <returns>The list of created <see cref="IEffect"/>.</returns>
+    public static List<IEffect> CreateMany(IReadOnlyList<JsonElement> compressedEffects, IReadOnlyList<EffectArea> effectAreas)
     {
-        for (var i = 0; i < compressedEffects.Count; i++)
+        var count = compressedEffects.Count;
+        List<IEffect> effects = new(count);
+
+        for (var i = 0; i < count; i++)
         {
             var effectArea = effectAreas.Count > i ? effectAreas[i] : EffectAreaFactory.Default;
+            var effect = Create(compressedEffects[i], effectArea);
 
-            yield return Create(compressedEffects[i], effectArea);
+            effects.Add(effect);
         }
+
+        return effects;
     }
 }

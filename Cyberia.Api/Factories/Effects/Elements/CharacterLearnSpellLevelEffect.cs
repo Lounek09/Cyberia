@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterLearnSpellLevelEffect : Effect, IEffect
+public sealed record CharacterLearnSpellLevelEffect : Effect
 {
     public int SpellLevelId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record CharacterLearnSpellLevelEffect : Effect, IEffect
         return DofusApi.Datacenter.SpellsRepository.GetSpellLevelDataById(SpellLevelId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var spellLevelData = GetSpellLevelData();
         if (spellLevelData is null)

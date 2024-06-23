@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record HuntToolEffect : ParameterlessEffect, IEffect, IRuneGeneratorEffect
+public sealed record HuntToolEffect : ParameterlessEffect, IRuneGeneratorEffect
 {
     public int RuneId { get; init; }
 

@@ -19,7 +19,7 @@ public abstract record StateEffect : Effect
         return DofusApi.Datacenter.StatesRepository.GetStateDataById(StateId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var stateName = DofusApi.Datacenter.StatesRepository.GetStateNameById(StateId);
 

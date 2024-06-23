@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record LadderRaceEffect : Effect, IEffect
+public sealed record LadderRaceEffect : Effect
 {
     public int MonsterRaceId { get; init; }
     public int Count { get; init; }
@@ -27,7 +27,7 @@ public sealed record LadderRaceEffect : Effect, IEffect
         return DofusApi.Datacenter.MonstersRepository.GetMonsterRaceDataById(MonsterRaceId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var monsterRaceName = DofusApi.Datacenter.MonstersRepository.GetMonsterRaceNameById(MonsterRaceId);
 

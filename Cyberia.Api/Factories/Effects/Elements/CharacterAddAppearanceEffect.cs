@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterAddAppearanceEffect : Effect, IEffect
+public sealed record CharacterAddAppearanceEffect : Effect
 {
     public int SpriteId { get; init; }
 
@@ -18,7 +18,7 @@ public sealed record CharacterAddAppearanceEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(SpriteId);
     }

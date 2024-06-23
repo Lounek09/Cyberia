@@ -1,23 +1,16 @@
-﻿using Cyberia.Api.Managers;
+﻿namespace Cyberia.Api.Factories.Effects;
 
-namespace Cyberia.Api.Factories.Effects;
-
-public sealed record ErroredEffect : Effect, IEffect
+public sealed record ErroredEffect : Effect
 {
     public string CompressedEffect { get; init; }
 
-    private ErroredEffect(string compressedEffect)
+    internal ErroredEffect(string compressedEffect)
         : base(0, 0, 0, [], EffectAreaFactory.Default)
     {
         CompressedEffect = compressedEffect;
     }
 
-    internal static ErroredEffect Create(string compressedEffect)
-    {
-        return new(compressedEffect);
-    }
-
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return new(ApiTranslations.Effect_Errored, CompressedEffect);
     }

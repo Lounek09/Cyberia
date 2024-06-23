@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record RideNameEffect : Effect, IEffect
+public sealed record RideNameEffect : Effect
 {
     public string Name { get; init; }
 
@@ -18,7 +18,7 @@ public sealed record RideNameEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, parameters.Param4);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(string.Empty, string.Empty, string.Empty, Name);
     }

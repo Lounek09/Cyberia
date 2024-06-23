@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record PvpLadderEffect : Effect, IEffect
+public sealed record PvpLadderEffect : Effect
 {
     public int Count { get; init; }
 
@@ -18,7 +18,7 @@ public sealed record PvpLadderEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(string.Empty, Count);
     }

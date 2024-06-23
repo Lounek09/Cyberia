@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record DecorsAddObjectEffect : Effect, IEffect
+public sealed record DecorsAddObjectEffect : Effect
 {
     public int GfxId { get; init; }
 
@@ -19,7 +19,7 @@ public sealed record DecorsAddObjectEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(string.Empty, string.Empty, GfxId);
     }

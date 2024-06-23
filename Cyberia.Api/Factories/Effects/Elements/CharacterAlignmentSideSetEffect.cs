@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterAlignmentSideSetEffect : ParameterlessEffect, IEffect
+public sealed record CharacterAlignmentSideSetEffect : ParameterlessEffect
 {
     private CharacterAlignmentSideSetEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)

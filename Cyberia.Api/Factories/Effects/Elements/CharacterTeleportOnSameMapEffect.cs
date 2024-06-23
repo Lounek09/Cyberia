@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterTeleportOnSameMapEffect : Effect, IEffect
+public sealed record CharacterTeleportOnSameMapEffect : Effect
 {
     public int Distance { get; init; }
 
@@ -18,7 +18,7 @@ public sealed record CharacterTeleportOnSameMapEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Distance);
     }

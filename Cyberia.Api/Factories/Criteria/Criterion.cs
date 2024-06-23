@@ -4,7 +4,6 @@
 public abstract record Criterion : ICriterion
 {
     public string Id { get; init; }
-
     public char Operator { get; init; }
 
     /// <summary>

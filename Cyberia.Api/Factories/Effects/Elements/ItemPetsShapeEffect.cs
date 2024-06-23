@@ -4,7 +4,7 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemPetsShapeEffect : Effect, IEffect
+public sealed record ItemPetsShapeEffect : Effect
 {
     public Corpulence Corpulence { get; init; }
 
@@ -21,7 +21,7 @@ public sealed record ItemPetsShapeEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, corpulence);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Corpulence.GetDescription());
     }

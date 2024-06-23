@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record DeboostSpellActionPointsCostEffect : SpellModifierEffect, IEffect
+public sealed record DeboostSpellActionPointsCostEffect : SpellModifierEffect
 {
     private DeboostSpellActionPointsCostEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId, int value)
         : base(id, duration, probability, criteria, effectArea, spellId, value)

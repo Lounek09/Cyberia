@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ShushuStackRuneEffect : ParameterlessEffect, IEffect
+public sealed record ShushuStackRuneEffect : ParameterlessEffect
 {
     private ShushuStackRuneEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)

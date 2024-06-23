@@ -4,7 +4,7 @@ using Cyberia.Api.Managers;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record MarkNotTradableEffect : Effect, IEffect
+public sealed record MarkNotTradableEffect : Effect
 {
     public DateTime DateTime { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record MarkNotTradableEffect : Effect, IEffect
         return DateTime == DateTime.MaxValue;
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         if (IsLinkedToAccount())
         {

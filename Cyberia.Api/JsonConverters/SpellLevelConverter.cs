@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories;
-using Cyberia.Api.Managers;
 using Cyberia.Api.Values;
 
 using System.Text.Json;
@@ -23,9 +22,9 @@ public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
         var criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1], options) ?? [];
         var effectAreas = EffectAreaFactory.CreateMany(elements[15].GetStringOrEmpty());
 
-        var effectParse = EffectFactory.CreateMany(effects, effectAreas).ToList();
+        var effectParse = EffectFactory.CreateMany(effects, effectAreas);
         effectAreas.RemoveRange(0, effectParse.Count);
-        var criticalEffectParse = EffectFactory.CreateMany(criticalEffects, effectAreas).ToList();
+        var criticalEffectParse = EffectFactory.CreateMany(criticalEffects, effectAreas);
 
         return new SpellLevelData
         {

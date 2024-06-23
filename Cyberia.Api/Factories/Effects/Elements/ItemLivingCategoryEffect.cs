@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemLivingCategoryEffect : Effect, IEffect
+public sealed record ItemLivingCategoryEffect : Effect
 {
     public int ItemTypeId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record ItemLivingCategoryEffect : Effect, IEffect
         return DofusApi.Datacenter.ItemsRepository.GetItemTypeDataById(ItemTypeId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var itemTypeName = DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(ItemTypeId);
 

@@ -3,7 +3,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record SizeEffect : Effect, IEffect
+public sealed record SizeEffect : Effect
 {
     public int MinSize { get; init; }
     public int MaxSize { get; init; }
@@ -22,7 +22,7 @@ public sealed record SizeEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2, (int)parameters.Param3);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(MinSize, MaxSize, ActualSize);
     }

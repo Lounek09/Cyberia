@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record BoostSpellRangeMinEffect : SpellModifierEffect, IEffect
+public sealed record BoostSpellRangeMinEffect : SpellModifierEffect
 {
     private BoostSpellRangeMinEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId, int value)
         : base(id, duration, probability, criteria, effectArea, spellId, value)

@@ -4,7 +4,7 @@ using Cyberia.Api.Values;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record GotoGuildPropertyEffect : Effect, IEffect
+public sealed record GotoGuildPropertyEffect : Effect
 {
     public GuildProperty GuildProperty { get; init; }
 
@@ -19,7 +19,7 @@ public sealed record GotoGuildPropertyEffect : Effect, IEffect
         return new(effectId, duration, probability, criteria, effectArea, (GuildProperty)parameters.Param3);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(string.Empty, string.Empty, GuildProperty.GetDescription());
     }

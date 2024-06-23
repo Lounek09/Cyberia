@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterGainJobXpEffect : Effect, IEffect
+public sealed record CharacterGainJobXpEffect : Effect
 {
     public int JobId { get; init; }
     public int XpAmount { get; init; }
@@ -26,7 +26,7 @@ public sealed record CharacterGainJobXpEffect : Effect, IEffect
         return DofusApi.Datacenter.JobsRepository.GetJobDataById(JobId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var jobName = DofusApi.Datacenter.JobsRepository.GetJobNameById(JobId);
 

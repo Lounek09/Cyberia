@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterPunishmentEffect : Effect, IEffect
+public sealed record CharacterPunishmentEffect : Effect
 {
     public int BoostEffectId { get; init; }
     public int MaxBoost { get; init; }
@@ -28,7 +28,7 @@ public sealed record CharacterPunishmentEffect : Effect, IEffect
         return DofusApi.Datacenter.EffectsRepository.GetEffectDataById(BoostEffectId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(string.Empty, MaxBoost, Turn);
     }

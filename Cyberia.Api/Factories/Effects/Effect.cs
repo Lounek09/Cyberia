@@ -6,18 +6,46 @@ using System.Text;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public abstract record Effect(int Id, int Duration, int Probability, CriteriaReadOnlyCollection Criteria, EffectArea EffectArea)
+/// <inheritdoc cref="IEffect"/>
+public abstract record Effect : IEffect
 {
+    public int Id { get; init; }
+    public int Duration { get; init; }
+    public int Probability { get; init; }
+    public CriteriaReadOnlyCollection Criteria { get; init; }
+    public EffectArea EffectArea { get; init; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Effect"/> record.
+    /// </summary>
+    /// <param name="id">The unique identifier of the effect.</param>
+    /// <param name="duration">The duration of the effect.</param>
+    /// <param name="probability">The probability (as a percentage) that the effect will occur.</param>
+    /// <param name="criteria">The criteria where the effect is applicable</param>
+    /// <param name="effectArea">The area of the effect.</param>
+    public Effect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    {
+        Id = id;
+        Duration = duration;
+        Probability = probability;
+        Criteria = criteria;
+        EffectArea = effectArea;
+    }
+
     public EffectData? GetEffectData()
     {
         return DofusApi.Datacenter.EffectsRepository.GetEffectDataById(Id);
     }
 
+    public abstract Description GetDescription();
+
+    /// <inheritdoc cref="IEffect.GetDescription"/>
     protected Description GetDescription<T>(T parameter)
     {
         return GetDescription(parameter?.ToString() ?? string.Empty);
     }
 
+    /// <inheritdoc cref="IEffect.GetDescription"/>
     protected Description GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
     {
         return GetDescription(
@@ -25,6 +53,7 @@ public abstract record Effect(int Id, int Duration, int Probability, CriteriaRea
             parameter1?.ToString() ?? string.Empty);
     }
 
+    /// <inheritdoc cref="IEffect.GetDescription"/>
     protected Description GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
     {
         return GetDescription(
@@ -33,6 +62,7 @@ public abstract record Effect(int Id, int Duration, int Probability, CriteriaRea
             parameter2?.ToString() ?? string.Empty);
     }
 
+    /// <inheritdoc cref="IEffect.GetDescription"/>
     protected Description GetDescription<T0, T1, T2, T3>(T0 parameter0, T1 parameter1, T2 parameter2, T3 parameter3)
     {
         return GetDescription(
@@ -42,6 +72,7 @@ public abstract record Effect(int Id, int Duration, int Probability, CriteriaRea
             parameter3?.ToString() ?? string.Empty);
     }
 
+    /// <inheritdoc cref="IEffect.GetDescription"/>
     protected Description GetDescription(params string[] parameters)
     {
         var effectData = GetEffectData();

@@ -99,7 +99,7 @@ public static class CriterionFactory
     /// <summary>
     /// Creates an <see cref="ICriterion"/>.
     /// </summary>
-    /// <param name="id">The identifier of the criterion to create.</param>
+    /// <param name="id">The unique identifier of the criterion to create.</param>
     /// <param name="operator">The operator character indicating the type of comparison or operation.</param>
     /// <param name="parameters">The parameters of the criterion.</param>
     /// <returns>The created <see cref="ICriterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
@@ -126,9 +126,9 @@ public static class CriterionFactory
     }
 
     /// <summary>
-    /// Creates an <see cref="ICriterion"/> from a compressed representation.
+    /// Creates an <see cref="ICriterion"/> from a compressed string representation.
     /// </summary>
-    /// <param name="compressedCriterion">The compressed representation of the criterion.</param>
+    /// <param name="compressedCriterion">The compressed string representation of the criterion.</param>
     /// <returns>The created <see cref="ICriterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
     public static ICriterion Create(string compressedCriterion)
     {
@@ -147,12 +147,17 @@ public static class CriterionFactory
     }
 
     /// <summary>
-    /// Creates a <see cref="CriteriaReadOnlyCollection"/> from a compressed representation.
+    /// Creates a <see cref="CriteriaReadOnlyCollection"/> from a compressed string representation.
     /// </summary>
-    /// <param name="compressedCriteria">The compressed representation of the criteria.</param>
+    /// <param name="compressedCriteria">The compressed string representation of the criteria.</param>
     /// <returns>The <see cref="CriteriaReadOnlyCollection"/> containing the parsed <see cref="ICriteriaElement"/>.</returns>
     public static CriteriaReadOnlyCollection CreateMany(ReadOnlySpan<char> compressedCriteria)
     {
+        if (compressedCriteria.IsEmpty)
+        {
+            return [];
+        }
+
         List<ICriteriaElement> criteria = [];
 
         var nesting = 0;

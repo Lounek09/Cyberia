@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostTrapPercentEffect : MinMaxEffect, IEffect, IRuneGeneratorEffect
+public sealed record CharacterBoostTrapPercentEffect : MinMaxEffect, IRuneGeneratorEffect
 {
     public int RuneId { get; init; }
 

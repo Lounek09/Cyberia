@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterGainRideEffect : Effect, IEffect
+public sealed record CharacterGainRideEffect : Effect
 {
     public int RideId { get; init; }
     public int RideAbilityId { get; init; }
@@ -33,7 +33,7 @@ public sealed record CharacterGainRideEffect : Effect, IEffect
         return DofusApi.Datacenter.RidesRepository.GetRideAbilityDataById(RideAbilityId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var value = DofusApi.Datacenter.RidesRepository.GetRideNameById(RideId);
 

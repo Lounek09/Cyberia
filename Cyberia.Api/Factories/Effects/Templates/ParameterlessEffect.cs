@@ -11,8 +11,8 @@ public abstract record ParameterlessEffect : Effect
 
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
-        return base.GetDescription();
+        return GetDescription([]);
     }
 }

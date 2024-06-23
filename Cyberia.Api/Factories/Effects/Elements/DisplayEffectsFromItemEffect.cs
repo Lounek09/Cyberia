@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ReplaceEffect : Effect, IEffect
+public sealed record ReplaceEffect : Effect
 {
     public int ItemId { get; init; }
 
@@ -24,7 +24,7 @@ public sealed record ReplaceEffect : Effect, IEffect
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 

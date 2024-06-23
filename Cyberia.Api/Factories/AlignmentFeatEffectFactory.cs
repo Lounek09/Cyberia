@@ -59,7 +59,7 @@ public static class AlignmentFeatEffectFactory
     /// <summary>
     /// Creates an <see cref="IAlignmentFeatEffect"/>.
     /// </summary>
-    /// <param name="id">The identifier of the alignment feat effect.</param>
+    /// <param name="id">The unique identifier of the alignment feat effect.</param>
     /// <param name="parameters">The parameters of the alignment feat effect.</param>
     /// <returns>The created <see cref="IAlignmentFeatEffect"/> if successful; otherwise, an <see cref="ErroredAlignmentFeatEffect"/> or <see cref="UntranslatedAlignmentFeatEffect"/> instance.</returns>
     public static IAlignmentFeatEffect Create(int id, params int[] parameters)

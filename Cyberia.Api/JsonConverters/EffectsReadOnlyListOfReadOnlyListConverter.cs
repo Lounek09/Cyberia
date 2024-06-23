@@ -13,7 +13,7 @@ public sealed class EffectsReadOnlyListOfReadOnlyListConverter : JsonConverter<I
         var compressedEffects = JsonSerializer.Deserialize<string[]>(ref reader, options) ?? [];
 
         return compressedEffects
-            .Select(x => EffectFactory.CreateMany(x).ToList())
+            .Select(x => EffectFactory.CreateMany(x))
             .ToList();
     }
 

@@ -1,7 +1,7 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
 /// <summary>
-/// Represents a criterion of an in game mechanic (to equip an item, a spell effect to proc, etc).
+/// Represents a criterion of an in game mechanic (to equip an item, if a spell effect is applicable, etc).
 /// </summary>
 public interface ICriterion : ICriteriaElement
 {

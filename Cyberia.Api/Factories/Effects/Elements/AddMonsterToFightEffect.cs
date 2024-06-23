@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record AddMonsterToFightEffect : Effect, IEffect
+public sealed record AddMonsterToFightEffect : Effect
 {
     public int MonsterId { get; init; }
     public int Grade { get; init; }
@@ -26,7 +26,7 @@ public sealed record AddMonsterToFightEffect : Effect, IEffect
         return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
 

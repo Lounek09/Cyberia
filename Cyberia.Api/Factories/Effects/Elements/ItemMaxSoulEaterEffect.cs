@@ -4,7 +4,7 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemMaxSoulEaterEffect : ParameterlessEffect, IEffect
+public sealed record ItemMaxSoulEaterEffect : ParameterlessEffect
 {
     private ItemMaxSoulEaterEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
         : base(id, duration, probability, criteria, effectArea)

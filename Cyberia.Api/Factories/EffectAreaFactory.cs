@@ -13,9 +13,9 @@ public static class EffectAreaFactory
     public static readonly EffectArea Default = new(80, 0);
 
     /// <summary>
-    /// Creates an <see cref="EffectArea"/> from a compressed representation.
+    /// Creates an <see cref="EffectArea"/> from a compressed string representation.
     /// </summary>
-    /// <param name="compressedEffectArea">The compressed representation of the effect area.</param>
+    /// <param name="compressedEffectArea">The compressed string representation of the effect area.</param>
     /// <returns>The created <see cref="EffectArea"/>.</returns>
     public static EffectArea Create(ReadOnlySpan<char> compressedEffectArea)
     {
@@ -29,9 +29,9 @@ public static class EffectAreaFactory
     }
 
     /// <summary>
-    /// Creates a list of <see cref="EffectArea"/> from a compressed representation.
+    /// Creates a list of <see cref="EffectArea"/> from a compressed string representation.
     /// </summary>
-    /// <param name="compressedEffectAreas">The compressed representation of multiple effect areas.</param>
+    /// <param name="compressedEffectAreas">The compressed string representation of multiple effect areas.</param>
     /// <returns>The list of created <see cref="EffectArea"/>.</returns>
     public static List<EffectArea> CreateMany(ReadOnlySpan<char> compressedEffectAreas)
     {
