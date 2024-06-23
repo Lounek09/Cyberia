@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record MinuteCriterion : Criterion, ICriterion
+public sealed record MinuteCriterion : Criterion
 {
     public int Value { get; init; }
 
@@ -17,16 +17,15 @@ public sealed record MinuteCriterion : Criterion, ICriterion
             return new(id, @operator, value);
         }
 
-
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.Minute.{GetOperatorDescriptionName()}";
+        return $"Criterion.Minute.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Value);
     }

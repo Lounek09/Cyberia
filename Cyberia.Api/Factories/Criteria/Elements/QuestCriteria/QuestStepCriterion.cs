@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record QuestStepCriterion : Criterion, ICriterion
+public sealed record QuestStepCriterion : Criterion
 {
     public int QuestStepId { get; init; }
 
@@ -27,12 +27,12 @@ public sealed record QuestStepCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.QuestsRepository.GetQuestStepDataById(QuestStepId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.QuestStep.{GetOperatorDescriptionName()}";
+        return $"Criterion.QuestStep.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var questStepName = DofusApi.Datacenter.QuestsRepository.GetQuestStepNameById(QuestStepId);
 

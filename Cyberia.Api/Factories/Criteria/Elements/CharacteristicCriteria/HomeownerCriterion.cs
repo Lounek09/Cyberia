@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record HomeownerCriterion : Criterion, ICriterion
+public sealed record HomeownerCriterion : Criterion
 {
     public bool IsHomeowner { get; init; }
 
@@ -20,13 +20,13 @@ public sealed record HomeownerCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.Homeowner.{GetOperatorDescriptionName()}.{IsHomeowner}";
+        return $"Criterion.Homeowner.{GetOperatorDescriptionKey()}.{IsHomeowner}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
-        return base.GetDescription();
+        return GetDescription([]);
     }
 }

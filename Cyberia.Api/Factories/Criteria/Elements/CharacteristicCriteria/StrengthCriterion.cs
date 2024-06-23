@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record StrengthCriterion : Criterion, ICriterion
+public sealed record StrengthCriterion : Criterion
 {
     public int Value { get; init; }
 
@@ -20,12 +20,12 @@ public sealed record StrengthCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.Strength.{GetOperatorDescriptionName()}";
+        return $"Criterion.Strength.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Value);
     }

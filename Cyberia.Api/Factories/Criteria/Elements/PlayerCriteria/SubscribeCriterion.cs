@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record SubscribeCriterion : Criterion, ICriterion
+public sealed record SubscribeCriterion : Criterion
 {
     public bool Subscribed { get; init; }
 
@@ -20,12 +20,12 @@ public sealed record SubscribeCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.Subscribe.{GetOperatorDescriptionName()}.{Subscribed}";
+        return $"Criterion.Subscribe.{GetOperatorDescriptionKey()}.{Subscribed}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Subscribed);
     }

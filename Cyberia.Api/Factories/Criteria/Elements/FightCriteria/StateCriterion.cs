@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record StateCriterion : Criterion, ICriterion
+public sealed record StateCriterion : Criterion
 {
     public int StateId { get; init; }
 
@@ -27,12 +27,12 @@ public sealed record StateCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.StatesRepository.GetStateDataById(StateId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.State.{GetOperatorDescriptionName()}";
+        return $"Criterion.State.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var stateName = DofusApi.Datacenter.StatesRepository.GetStateNameById(StateId);
 

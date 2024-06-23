@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record BestElementCriterion : Criterion, ICriterion
+public sealed record BestElementCriterion : Criterion
 {
     public Element Element { get; init; }
 
@@ -22,12 +22,12 @@ public sealed record BestElementCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.BestElement.{GetOperatorDescriptionName()}";
+        return $"Criterion.BestElement.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Element.GetDescription());
     }

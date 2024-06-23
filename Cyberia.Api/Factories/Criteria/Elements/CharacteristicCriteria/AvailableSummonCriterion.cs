@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record AvailableSummonCriterion : Criterion, ICriterion
+public sealed record AvailableSummonCriterion : Criterion
 {
     public int Value { get; init; }
 
@@ -20,12 +20,12 @@ public sealed record AvailableSummonCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.AvailableSummon.{GetOperatorDescriptionName()}";
+        return $"Criterion.AvailableSummon.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Value);
     }

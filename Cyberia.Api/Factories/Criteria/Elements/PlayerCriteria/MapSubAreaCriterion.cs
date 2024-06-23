@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record MapSubAreaCriterion : Criterion, ICriterion
+public sealed record MapSubAreaCriterion : Criterion
 {
     public int MapSubAreaId { get; init; }
 
@@ -27,12 +27,12 @@ public sealed record MapSubAreaCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(MapSubAreaId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.MapSubArea.{GetOperatorDescriptionName()}";
+        return $"Criterion.MapSubArea.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var mapSubAreaName = DofusApi.Datacenter.MapsRepository.GetMapSubAreaNameById(MapSubAreaId);
 

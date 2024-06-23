@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record BaseWisdomCriterion : Criterion, ICriterion
+public sealed record BaseWisdomCriterion : Criterion
 {
     public int Value { get; init; }
 
@@ -20,12 +20,12 @@ public sealed record BaseWisdomCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.BaseWisdom.{GetOperatorDescriptionName()}";
+        return $"Criterion.BaseWisdom.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Value);
     }

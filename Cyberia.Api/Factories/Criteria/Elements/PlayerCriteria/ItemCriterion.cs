@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record ItemCriterion : Criterion, ICriterion
+public sealed record ItemCriterion : Criterion
 {
     public int ItemId { get; init; }
     public int Quantity { get; init; }
@@ -34,17 +34,17 @@ public sealed record ItemCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
         if (Quantity > 0)
         {
-            return $"Criterion.Item.{GetOperatorDescriptionName()}.Quantity";
+            return $"Criterion.Item.{GetOperatorDescriptionKey()}.Quantity";
         }
 
-        return $"Criterion.Item.{GetOperatorDescriptionName()}";
+        return $"Criterion.Item.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 

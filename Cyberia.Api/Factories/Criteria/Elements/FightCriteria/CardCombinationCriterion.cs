@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record CardCombinationCriterion : Criterion, ICriterion
+public sealed record CardCombinationCriterion : Criterion
 {
     public CardCombination CardCombination { get; init; }
 
@@ -22,12 +22,12 @@ public sealed record CardCombinationCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.CardCombination.{GetOperatorDescriptionName()}";
+        return $"Criterion.CardCombination.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(CardCombination.GetDescription());
     }

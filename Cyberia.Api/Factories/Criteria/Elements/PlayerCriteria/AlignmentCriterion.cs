@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record AlignmentCriterion : Criterion, ICriterion
+public sealed record AlignmentCriterion : Criterion
 {
     public int AlignmentId { get; init; }
 
@@ -27,12 +27,12 @@ public sealed record AlignmentCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentDataById(AlignmentId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.Alignment.{GetOperatorDescriptionName()}";
+        return $"Criterion.Alignment.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var alignmentName = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentNameById(AlignmentId);
 

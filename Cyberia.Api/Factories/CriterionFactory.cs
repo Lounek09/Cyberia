@@ -4,9 +4,15 @@ using System.Collections.Frozen;
 
 namespace Cyberia.Api.Factories;
 
+/// <summary>
+/// Provides factory methods for creating <see cref="ICriterion"/> or <see cref="CriteriaReadOnlyCollection"/>.
+/// </summary>
 public static class CriterionFactory
 {
-    private static readonly FrozenDictionary<string, Func<string, char, string[], ICriterion?>> s_factory =
+    /// <summary>
+    /// A dictionary mapping criterion identifiers to their factory methods.
+    /// </summary>
+    private static readonly FrozenDictionary<string, Func<string, char, string[], ICriterion?>> s_factories =
         new Dictionary<string, Func<string, char, string[], ICriterion?>>()
         {
             { "BI", UnusableItemCriterion.Create },
@@ -75,11 +81,33 @@ public static class CriterionFactory
             { "SM", MinuteCriterion.Create }
         }.ToFrozenDictionary();
 
+    /// <summary>
+    /// A dictionary mapping criterion operators to their value used in the criterion description key.
+    /// </summary>
+    private static readonly FrozenDictionary<char, string> s_operators =
+        new Dictionary<char, string>()
+        {
+            { '=', "Equal" },
+            { '!', "Different" },
+            { '>', "Superior" },
+            { '<', "Inferior" },
+            { '~', "SoftEqual" },
+            { 'E', "Equiped" },
+            { 'X', "NotEquiped" }
+        }.ToFrozenDictionary();
+
+    /// <summary>
+    /// Creates an <see cref="ICriterion"/>.
+    /// </summary>
+    /// <param name="id">The identifier of the criterion to create.</param>
+    /// <param name="operator">The operator character indicating the type of comparison or operation.</param>
+    /// <param name="parameters">The parameters of the criterion.</param>
+    /// <returns>The created <see cref="ICriterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
     public static ICriterion Create(string id, char @operator, params string[] parameters)
     {
         string compressedCriterion;
 
-        if (s_factory.TryGetValue(id, out var builder))
+        if (s_factories.TryGetValue(id, out var builder))
         {
             var criterion = builder(id, @operator, parameters);
             if (criterion is not null)
@@ -89,21 +117,26 @@ public static class CriterionFactory
 
             compressedCriterion = $"{id}{@operator}{string.Join(',', parameters)}";
             Log.Error("Failed to create Criterion from {CompressedCriterion}", compressedCriterion);
-            return ErroredCriterion.Create(compressedCriterion);
+            return new ErroredCriterion(id, @operator, parameters, compressedCriterion);
         }
 
         compressedCriterion = $"{id}{@operator}{string.Join(',', parameters)}";
         Log.Warning("Unknown Criterion {CompressedCriterion}", compressedCriterion);
-        return UntranslatedCriterion.Create(id, @operator, compressedCriterion, parameters);
+        return new UntranslatedCriterion(id, @operator, parameters, compressedCriterion);
     }
 
+    /// <summary>
+    /// Creates an <see cref="ICriterion"/> from a compressed representation.
+    /// </summary>
+    /// <param name="compressedCriterion">The compressed representation of the criterion.</param>
+    /// <returns>The created <see cref="ICriterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
     public static ICriterion Create(string compressedCriterion)
     {
         if (compressedCriterion.Length < 4)
         {
             var compressedCriterionStr = compressedCriterion.ToString();
             Log.Error("Failed to create Criterion from {CompressedCriterion}", compressedCriterionStr);
-            return ErroredCriterion.Create(compressedCriterionStr);
+            return new ErroredCriterion(compressedCriterionStr);
         }
 
         var id = compressedCriterion[0..2];
@@ -113,6 +146,11 @@ public static class CriterionFactory
         return Create(id, @operator, parameters);
     }
 
+    /// <summary>
+    /// Creates a <see cref="CriteriaReadOnlyCollection"/> from a compressed representation.
+    /// </summary>
+    /// <param name="compressedCriteria">The compressed representation of the criteria.</param>
+    /// <returns>A <see cref="CriteriaReadOnlyCollection"/> containing the parsed criteria elements.</returns>
     public static CriteriaReadOnlyCollection CreateMany(ReadOnlySpan<char> compressedCriteria)
     {
         List<ICriteriaElement> criteria = [];
@@ -168,18 +206,15 @@ public static class CriterionFactory
         return new CriteriaReadOnlyCollection(criteria);
     }
 
-    internal static string GetCriterionOperatorDescriptionName(char @operator)
+    /// <summary>
+    /// Gets the value of the operator used in the criterion description key.
+    /// </summary>
+    /// <param name="operator">The operator character.</param>
+    /// <returns>The human-readable description of the operator.</returns>
+    internal static string GetOperatorDescriptionKey(char @operator)
     {
-        return @operator switch
-        {
-            '=' => "Equal",
-            '!' => "Different",
-            '>' => "Superior",
-            '<' => "Inferior",
-            '~' => "SoftEqual",
-            'E' => "Equiped",
-            'X' => "NotEquiped",
-            _ => @operator.ToString(),
-        };
+        return s_operators.TryGetValue(@operator, out var description)
+            ? description
+            : @operator.ToString();
     }
 }

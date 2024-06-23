@@ -53,9 +53,9 @@ public readonly record struct EffectArea
     }
 
     /// <summary>
-    /// Gets the description of the effect area.
+    /// Generates a human-readable description of the effect area.
     /// </summary>
-    /// <returns>A <see cref="Description"/> object containing the name and size of the effect area.</returns>
+    /// <returns>The <see cref="Description"/> object containing the description of the effect area.</returns>
     public Description GetDescription()
     {
         if (Id == EffectAreaFactory.Default.Id)

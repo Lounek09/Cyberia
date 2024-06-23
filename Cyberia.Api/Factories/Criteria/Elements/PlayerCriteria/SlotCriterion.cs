@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record SlotCriterion : Criterion, ICriterion
+public sealed record SlotCriterion : Criterion
 {
     public int SlotId { get; init; }
 
@@ -20,12 +20,12 @@ public sealed record SlotCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.Slot.{GetOperatorDescriptionName()}";
+        return $"Criterion.Slot.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(SlotId);
     }

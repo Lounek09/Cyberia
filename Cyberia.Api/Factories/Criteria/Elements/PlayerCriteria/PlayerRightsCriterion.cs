@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record PlayerRightsCriterion : Criterion, ICriterion
+public sealed record PlayerRightsCriterion : Criterion
 {
     public int RightsLevel { get; init; }
 
@@ -20,12 +20,12 @@ public sealed record PlayerRightsCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.PlayerRights.{GetOperatorDescriptionName()}";
+        return $"Criterion.PlayerRights.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(RightsLevel);
     }

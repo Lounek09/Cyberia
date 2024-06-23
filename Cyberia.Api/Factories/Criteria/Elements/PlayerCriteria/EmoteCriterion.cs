@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record EmoteCriterion : Criterion, ICriterion
+public sealed record EmoteCriterion : Criterion
 {
     public int EmoteId { get; init; }
 
@@ -27,12 +27,12 @@ public sealed record EmoteCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.EmotesRepository.GetEmoteById(EmoteId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.Emote.{GetOperatorDescriptionName()}";
+        return $"Criterion.Emote.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var emoteName = DofusApi.Datacenter.EmotesRepository.GetEmoteNameById(EmoteId);
 

@@ -1,26 +1,30 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record ErroredCriterion : Criterion, ICriterion
+public sealed record ErroredCriterion : Criterion
 {
+    public IReadOnlyList<string> Parameters { get; init; }
     public string CompressedCriterion { get; init; }
 
-    private ErroredCriterion(string compressedCriterion)
+    internal ErroredCriterion(string compressedCriterion)
         : base(string.Empty, char.MinValue)
     {
+        Parameters = [];
         CompressedCriterion = compressedCriterion;
     }
 
-    internal static ErroredCriterion Create(string compressedCriterion)
+    internal ErroredCriterion(string id, char @operator, IReadOnlyList<string> parameters, string compressedCriterion)
+        : base(id, @operator)
     {
-        return new(compressedCriterion);
+        Parameters = parameters;
+        CompressedCriterion = compressedCriterion;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
         return "Criterion.Errored";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(CompressedCriterion);
     }

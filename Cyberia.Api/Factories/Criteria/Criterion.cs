@@ -1,19 +1,44 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public abstract record Criterion(string Id, char Operator)
+/// <inheritdoc cref="ICriterion"/>
+public abstract record Criterion : ICriterion
 {
-    protected string GetOperatorDescriptionName()
+    public string Id { get; init; }
+
+    public char Operator { get; init; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Criterion"/> record.
+    /// </summary>
+    /// <param name="id">The unique identifier of the criterion.</param>
+    /// <param name="operator">The operator of the criterion.</param>
+    public Criterion(string id, char @operator)
     {
-        return CriterionFactory.GetCriterionOperatorDescriptionName(Operator);
+        Id = id;
+        Operator = @operator;
     }
 
-    protected abstract string GetDescriptionName();
+    public abstract Description GetDescription();
 
+    /// <inheritdoc cref="CriterionFactory.GetOperatorDescriptionKey"/>
+    protected string GetOperatorDescriptionKey()
+    {
+        return CriterionFactory.GetOperatorDescriptionKey(Operator);
+    }
+
+    /// <summary>
+    /// Gets the key of the description in the resource file.
+    /// </summary>
+    /// <returns>The key of the description in the resource file.</returns>
+    protected abstract string GetDescriptionKey();
+
+    /// <inheritdoc cref="ICriterion.GetDescription"/>
     protected Description GetDescription<T>(T parameter)
     {
         return GetDescription(parameter?.ToString() ?? string.Empty);
     }
 
+    /// <inheritdoc cref="ICriterion.GetDescription"/>
     protected Description GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
     {
         return GetDescription(
@@ -21,6 +46,7 @@ public abstract record Criterion(string Id, char Operator)
             parameter1?.ToString() ?? string.Empty);
     }
 
+    /// <inheritdoc cref="ICriterion.GetDescription"/>
     protected Description GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
     {
         return GetDescription(
@@ -29,11 +55,12 @@ public abstract record Criterion(string Id, char Operator)
             parameter2?.ToString() ?? string.Empty);
     }
 
+    /// <inheritdoc cref="ICriterion.GetDescription"/>
     protected Description GetDescription(params string[] parameters)
     {
-        var descriptionName = GetDescriptionName();
+        var descriptionKey = GetDescriptionKey();
 
-        var descriptionValue = ApiTranslations.ResourceManager.GetString(descriptionName);
+        var descriptionValue = ApiTranslations.ResourceManager.GetString(descriptionKey);
         if (descriptionValue is null)
         {
             Log.Warning("Unknown {@Criterion}", this);

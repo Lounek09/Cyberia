@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record BreedCriterion : Criterion, ICriterion
+public sealed record BreedCriterion : Criterion
 {
     public int BreedId { get; init; }
 
@@ -27,12 +27,12 @@ public sealed record BreedCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.BreedsRepository.GetBreedDataById(BreedId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.Breed.{GetOperatorDescriptionName()}";
+        return $"Criterion.Breed.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var breedName = DofusApi.Datacenter.BreedsRepository.GetBreedNameById(BreedId);
 

@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record AlignmentLevelCriterion : Criterion, ICriterion
+public sealed record AlignmentLevelCriterion : Criterion
 {
     public int Level { get; init; }
 
@@ -20,12 +20,12 @@ public sealed record AlignmentLevelCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.AlignmentLevel.{GetOperatorDescriptionName()}";
+        return $"Criterion.AlignmentLevel.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Level);
     }

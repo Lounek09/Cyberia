@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record ServerCriterion : Criterion, ICriterion
+public sealed record ServerCriterion : Criterion
 {
     public int ServerId { get; init; }
 
@@ -27,12 +27,12 @@ public sealed record ServerCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.ServersRepository.GetServerDataById(ServerId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.Server.{GetOperatorDescriptionName()}";
+        return $"Criterion.Server.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var serverName = DofusApi.Datacenter.ServersRepository.GetServerNameById(ServerId);
 

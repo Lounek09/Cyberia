@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record QuestFinishedCriterion : Criterion, ICriterion
+public sealed record QuestFinishedCriterion : Criterion
 {
     public int QuestId { get; init; }
 
@@ -27,12 +27,12 @@ public sealed record QuestFinishedCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.QuestsRepository.GetQuestDataById(QuestId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.QuestFinished.{GetOperatorDescriptionName()}";
+        return $"Criterion.QuestFinished.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var questName = DofusApi.Datacenter.QuestsRepository.GetQuestNameById(QuestId);
 

@@ -1,28 +1,23 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record UntranslatedCriterion : Criterion, ICriterion
+public sealed record UntranslatedCriterion : Criterion
 {
     public IReadOnlyList<string> Parameters { get; init; }
     public string CompressedCriterion { get; init; }
 
-    private UntranslatedCriterion(string id, char @operator, IReadOnlyList<string> parameters, string compressedCriterion)
+    internal UntranslatedCriterion(string id, char @operator, IReadOnlyList<string> parameters, string compressedCriterion)
         : base(id, @operator)
     {
         Parameters = parameters;
         CompressedCriterion = compressedCriterion;
     }
 
-    internal static UntranslatedCriterion Create(string id, char @operator, string compressedCriterion, params string[] parameters)
-    {
-        return new(id, @operator, parameters, compressedCriterion);
-    }
-
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
         return "Criterion.Unknown";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Id, CompressedCriterion);
     }

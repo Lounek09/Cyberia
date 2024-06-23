@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record UnusableItemCriterion : Criterion, ICriterion
+public sealed record UnusableItemCriterion : Criterion
 {
     public string Value { get; init; }
 
@@ -20,13 +20,13 @@ public sealed record UnusableItemCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.UnusableItem.{GetOperatorDescriptionName()}";
+        return $"Criterion.UnusableItem.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
-        return base.GetDescription();
+        return GetDescription([]);
     }
 }

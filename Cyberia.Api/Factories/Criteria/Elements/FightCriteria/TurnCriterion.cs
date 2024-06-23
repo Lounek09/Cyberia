@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record TurnCriterion : Criterion, ICriterion
+public sealed record TurnCriterion : Criterion
 {
     public string Value { get; init; }
 
@@ -20,7 +20,7 @@ public sealed record TurnCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
         if (Operator == '%')
         {
@@ -34,10 +34,10 @@ public sealed record TurnCriterion : Criterion, ICriterion
             }
         }
 
-        return $"Criterion.Turn.{GetOperatorDescriptionName()}";
+        return $"Criterion.Turn.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Value);
     }

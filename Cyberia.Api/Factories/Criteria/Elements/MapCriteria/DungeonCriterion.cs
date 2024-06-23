@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record DungeonCriterion : Criterion, ICriterion
+public sealed record DungeonCriterion : Criterion
 {
     public bool InDungeon { get; init; }
 
@@ -20,13 +20,13 @@ public sealed record DungeonCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.Dungeon.{GetOperatorDescriptionName()}.{InDungeon}";
+        return $"Criterion.Dungeon.{GetOperatorDescriptionKey()}.{InDungeon}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
-        return base.GetDescription();
+        return GetDescription([]);
     }
 }

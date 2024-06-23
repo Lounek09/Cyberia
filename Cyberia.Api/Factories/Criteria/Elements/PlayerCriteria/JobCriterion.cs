@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record JobCriterion : Criterion, ICriterion
+public sealed record JobCriterion : Criterion
 {
     public int JobId { get; init; }
     public int Level { get; init; }
@@ -34,17 +34,17 @@ public sealed record JobCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.JobsRepository.GetJobDataById(JobId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
         if (Level > 0)
         {
-            return $"Criterion.Job.{GetOperatorDescriptionName()}.Level";
+            return $"Criterion.Job.{GetOperatorDescriptionKey()}.Level";
         }
 
-        return $"Criterion.Job.{GetOperatorDescriptionName()}";
+        return $"Criterion.Job.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var jobName = DofusApi.Datacenter.JobsRepository.GetJobNameById(JobId);
 

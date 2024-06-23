@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record MonsterSummonCriterion : Criterion, ICriterion
+public sealed record MonsterSummonCriterion : Criterion
 {
     public int MonsterId { get; init; }
 
@@ -27,12 +27,12 @@ public sealed record MonsterSummonCriterion : Criterion, ICriterion
         return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.MonsterSummon.{GetOperatorDescriptionName()}";
+        return $"Criterion.MonsterSummon.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
 

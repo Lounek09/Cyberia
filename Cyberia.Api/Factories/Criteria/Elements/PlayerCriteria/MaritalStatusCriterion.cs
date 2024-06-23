@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Criteria;
 
-public sealed record MaritalStatusCriterion : Criterion, ICriterion
+public sealed record MaritalStatusCriterion : Criterion
 {
     public MaritalStatus MaritalStatus { get; init; }
 
@@ -22,12 +22,12 @@ public sealed record MaritalStatusCriterion : Criterion, ICriterion
         return null;
     }
 
-    protected override string GetDescriptionName()
+    protected override string GetDescriptionKey()
     {
-        return $"Criterion.MaritalStatus.{GetOperatorDescriptionName()}";
+        return $"Criterion.MaritalStatus.{GetOperatorDescriptionKey()}";
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(MaritalStatus.GetDescription());
     }
