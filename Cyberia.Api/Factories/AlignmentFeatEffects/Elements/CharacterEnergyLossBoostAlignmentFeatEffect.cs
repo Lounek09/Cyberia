@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
-public sealed record CharacterEnergyLossBoostAlignmentFeatEffect : AlignmentFeatEffect, IAlignmentFeatEffect
+public sealed record CharacterEnergyLossBoostAlignmentFeatEffect : AlignmentFeatEffect
 {
     public int Value { get; init; }
 
@@ -20,7 +20,7 @@ public sealed record CharacterEnergyLossBoostAlignmentFeatEffect : AlignmentFeat
         return null;
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Value);
     }

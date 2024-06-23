@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
-public sealed record StoreDiscountAlignmentFeatEffect : AlignmentFeatEffect, IAlignmentFeatEffect
+public sealed record StoreDiscountAlignmentFeatEffect : AlignmentFeatEffect
 {
     public int DiscountPercent { get; init; }
 
@@ -20,7 +20,7 @@ public sealed record StoreDiscountAlignmentFeatEffect : AlignmentFeatEffect, IAl
         return null;
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(DiscountPercent);
     }

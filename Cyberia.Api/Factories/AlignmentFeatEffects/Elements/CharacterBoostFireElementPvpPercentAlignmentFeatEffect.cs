@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
-public sealed record CharacterBoostFireElementPvpPercentAlignmentFeatEffect : AlignmentFeatEffect, IAlignmentFeatEffect
+public sealed record CharacterBoostFireElementPvpPercentAlignmentFeatEffect : AlignmentFeatEffect
 {
     public int Value { get; init; }
 
@@ -20,7 +20,7 @@ public sealed record CharacterBoostFireElementPvpPercentAlignmentFeatEffect : Al
         return null;
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Value);
     }

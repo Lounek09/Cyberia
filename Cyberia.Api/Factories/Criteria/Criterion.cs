@@ -12,7 +12,7 @@ public abstract record Criterion : ICriterion
     /// </summary>
     /// <param name="id">The unique identifier of the criterion.</param>
     /// <param name="operator">The operator of the criterion.</param>
-    public Criterion(string id, char @operator)
+    protected Criterion(string id, char @operator)
     {
         Id = id;
         Operator = @operator;

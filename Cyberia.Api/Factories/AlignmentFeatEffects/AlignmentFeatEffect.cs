@@ -2,13 +2,28 @@
 
 namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
-public abstract record AlignmentFeatEffect(int Id)
+/// <inheritdoc cref="IAlignmentFeatEffect"/>/>
+public abstract record AlignmentFeatEffect : IAlignmentFeatEffect
 {
+    public int Id { get; init; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AlignmentFeatEffect"/> record.
+    /// </summary>
+    /// <param name="id">The unique identifier of the alignment feat effect.</param>
+    protected AlignmentFeatEffect(int id)
+    {
+        Id = id;
+    }
+
     public AlignmentFeatEffectData? GetAlignmentFeatEffectData()
     {
         return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentFeatEffectDataById(Id);
     }
 
+    public abstract Description GetDescription();
+
+    /// <inheritdoc cref="IAlignmentFeatEffect.GetDescription"/>/>
     protected Description GetDescription(params int[] parameters)
     {
         var alignmentFeatEffect = GetAlignmentFeatEffectData();

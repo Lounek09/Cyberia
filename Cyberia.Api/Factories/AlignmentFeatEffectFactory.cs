@@ -4,9 +4,15 @@ using System.Collections.Frozen;
 
 namespace Cyberia.Api.Factories;
 
+/// <summary>
+/// Provides factory methods for creating <see cref="IAlignmentFeatEffect"/>.
+/// </summary>
 public static class AlignmentFeatEffectFactory
 {
-    private static readonly FrozenDictionary<int, Func<int, int[], IAlignmentFeatEffect?>> s_factory =
+    /// <summary>
+    /// A dictionary mapping alignment feat effect identifiers to their factory methods.
+    /// </summary>
+    private static readonly FrozenDictionary<int, Func<int, int[], IAlignmentFeatEffect?>> s_factories =
        new Dictionary<int, Func<int, int[], IAlignmentFeatEffect?>>()
        {
            { 1, CharacterBoostRangeAlignmentFeatEffect.Create },
@@ -50,9 +56,15 @@ public static class AlignmentFeatEffectFactory
            { 40, CharacterBoostMagicFindAlignmentFeatEffect.Create }
        }.ToFrozenDictionary();
 
+    /// <summary>
+    /// Creates an <see cref="IAlignmentFeatEffect"/>.
+    /// </summary>
+    /// <param name="id">The identifier of the alignment feat effect.</param>
+    /// <param name="parameters">The parameters of the alignment feat effect.</param>
+    /// <returns>The created <see cref="IAlignmentFeatEffect"/> if successful; otherwise, an <see cref="ErroredAlignmentFeatEffect"/> or <see cref="UntranslatedAlignmentFeatEffect"/> instance.</returns>
     public static IAlignmentFeatEffect Create(int id, params int[] parameters)
     {
-        if (s_factory.TryGetValue(id, out var builder))
+        if (s_factories.TryGetValue(id, out var builder))
         {
             var alignmentFeatEffect = builder(id, parameters);
             if (alignmentFeatEffect is not null)
@@ -63,12 +75,12 @@ public static class AlignmentFeatEffectFactory
             Log.Error("Failed to create AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}",
                 id,
                 parameters);
-            return ErroredAlignmentFeatEffect.Create(id, parameters);
+            return new ErroredAlignmentFeatEffect(id, parameters);
         }
 
         Log.Warning("Unknown AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}",
             id,
             parameters);
-        return UntranslatedAlignmentFeatEffect.Create(id, parameters);
+        return new UntranslatedAlignmentFeatEffect(id, parameters);
     }
 }

@@ -1,21 +1,16 @@
 ﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
-public sealed record UntranslatedAlignmentFeatEffect : AlignmentFeatEffect, IAlignmentFeatEffect
+public sealed record UntranslatedAlignmentFeatEffect : AlignmentFeatEffect
 {
     public IReadOnlyList<int> Parameters { get; init; }
 
-    private UntranslatedAlignmentFeatEffect(int id, IReadOnlyList<int> parameters)
+    internal UntranslatedAlignmentFeatEffect(int id, IReadOnlyList<int> parameters)
         : base(id)
     {
         Parameters = parameters;
     }
 
-    internal static UntranslatedAlignmentFeatEffect Create(int id, params int[] parameters)
-    {
-        return new(id, parameters);
-    }
-
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Parameters.ToArray());
     }
