@@ -2,21 +2,16 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record UntranslatedQuestObjective : QuestObjective, IQuestObjective
+public sealed record UntranslatedQuestObjective : QuestObjective
 {
-    private UntranslatedQuestObjective(QuestObjectiveData questObjectiveData)
+    internal UntranslatedQuestObjective(QuestObjectiveData questObjectiveData)
         : base(questObjectiveData)
     {
 
     }
 
-    internal static UntranslatedQuestObjective Create(QuestObjectiveData questObjectiveData)
+    public override Description GetDescription()
     {
-        return new(questObjectiveData);
-    }
-
-    public Description GetDescription()
-    {
-        return base.GetDescription();
+        return GetDescription([]);
     }
 }

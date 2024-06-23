@@ -150,7 +150,7 @@ public static class CriterionFactory
     /// Creates a <see cref="CriteriaReadOnlyCollection"/> from a compressed representation.
     /// </summary>
     /// <param name="compressedCriteria">The compressed representation of the criteria.</param>
-    /// <returns>A <see cref="CriteriaReadOnlyCollection"/> containing the parsed criteria elements.</returns>
+    /// <returns>The <see cref="CriteriaReadOnlyCollection"/> containing the parsed <see cref="ICriteriaElement"/>.</returns>
     public static CriteriaReadOnlyCollection CreateMany(ReadOnlySpan<char> compressedCriteria)
     {
         List<ICriteriaElement> criteria = [];

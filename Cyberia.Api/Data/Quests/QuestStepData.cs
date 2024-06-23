@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api.Data.Dialogs;
 using Cyberia.Api.Factories.QuestObjectives;
-using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;
 
@@ -18,7 +17,6 @@ public sealed class QuestStepData : IDofusData<int>
     public string Description { get; init; }
 
     [JsonPropertyName("r")]
-    [JsonConverter(typeof(QuestStepRewardsDataConverter))]
     public QuestStepRewardsData RewardsData { get; init; }
 
     [JsonIgnore]

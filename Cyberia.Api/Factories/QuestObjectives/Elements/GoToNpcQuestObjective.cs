@@ -3,7 +3,7 @@ using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record GoToNpcQuestObjective : QuestObjective, IQuestObjective
+public sealed record GoToNpcQuestObjective : QuestObjective
 {
     public int NpcId { get; init; }
 
@@ -29,7 +29,7 @@ public sealed record GoToNpcQuestObjective : QuestObjective, IQuestObjective
         return DofusApi.Datacenter.NpcsRepository.GetNpcDataById(NpcId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
 

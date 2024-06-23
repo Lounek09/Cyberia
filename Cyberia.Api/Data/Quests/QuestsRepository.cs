@@ -70,6 +70,7 @@ public sealed class QuestsRepository : IDofusRepository
         foreach (var questStepData in data.QuestSteps.Values)
         {
             List<QuestObjectiveData> questObjectivesData = [];
+
             foreach (var questObjectiveId in questStepData.QuestObjectivesId)
             {
                 var questObjectiveData = data.GetQuestObjectiveDataById(questObjectiveId);
@@ -79,7 +80,7 @@ public sealed class QuestsRepository : IDofusRepository
                 }
             }
 
-            questStepData.QuestObjectives = QuestObjectiveFactory.CreateMany(questObjectivesData).ToList();
+            questStepData.QuestObjectives = QuestObjectiveFactory.CreateMany(questObjectivesData);
         }
 
         return data;

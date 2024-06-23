@@ -3,7 +3,7 @@ using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record DiscoverMapSubAreaQuestObjective : QuestObjective, IQuestObjective
+public sealed record DiscoverMapSubAreaQuestObjective : QuestObjective
 {
     public int MapSubAreaId { get; init; }
 
@@ -29,7 +29,7 @@ public sealed record DiscoverMapSubAreaQuestObjective : QuestObjective, IQuestOb
         return DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(MapSubAreaId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var mapSubAreaName = DofusApi.Datacenter.MapsRepository.GetMapSubAreaNameById(MapSubAreaId);
 

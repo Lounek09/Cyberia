@@ -3,7 +3,7 @@ using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record FightMonsterQuestObjective : QuestObjective, IQuestObjective
+public sealed record FightMonsterQuestObjective : QuestObjective
 {
     public int MonsterId { get; init; }
 
@@ -29,7 +29,7 @@ public sealed record FightMonsterQuestObjective : QuestObjective, IQuestObjectiv
         return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
 

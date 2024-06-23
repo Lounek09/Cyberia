@@ -2,11 +2,14 @@
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Jobs;
 using Cyberia.Api.Data.Spells;
+using Cyberia.Api.JsonConverters;
 
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests;
 
+[JsonConverter(typeof(QuestStepRewardsDataConverter))]
 public sealed class QuestStepRewardsData : IDofusData
 {
     public int Experience { get; init; }

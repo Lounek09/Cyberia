@@ -2,20 +2,15 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record ErroredQuestObjective : QuestObjective, IQuestObjective
+public sealed record ErroredQuestObjective : QuestObjective
 {
-    private ErroredQuestObjective(QuestObjectiveData questObjectiveData)
+    internal ErroredQuestObjective(QuestObjectiveData questObjectiveData)
         : base(questObjectiveData)
     {
 
     }
 
-    internal static ErroredQuestObjective Create(QuestObjectiveData questObjectiveData)
-    {
-        return new(questObjectiveData);
-    }
-
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return new Description(ApiTranslations.QuestObjectiveType_Errored,
             QuestObjectiveData.QuestObjectiveTypeId.ToString(),

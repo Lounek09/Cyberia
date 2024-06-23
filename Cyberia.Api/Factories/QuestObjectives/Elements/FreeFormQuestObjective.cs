@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record FreeFormQuestObjective : QuestObjective, IQuestObjective
+public sealed record FreeFormQuestObjective : QuestObjective
 {
     public string Description { get; init; }
 
@@ -23,7 +23,7 @@ public sealed record FreeFormQuestObjective : QuestObjective, IQuestObjective
         return null;
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(Description);
     }

@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record DiscoverMapQuestObjective : QuestObjective, IQuestObjective
+public sealed record DiscoverMapQuestObjective : QuestObjective
 {
     public string MapDescription { get; init; }
 
@@ -23,7 +23,7 @@ public sealed record DiscoverMapQuestObjective : QuestObjective, IQuestObjective
         return null;
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         return GetDescription(MapDescription);
     }

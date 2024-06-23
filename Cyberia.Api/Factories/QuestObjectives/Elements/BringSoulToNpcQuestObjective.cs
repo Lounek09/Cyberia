@@ -4,7 +4,7 @@ using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record BringSoulToNpcQuestObjective : QuestObjective, IQuestObjective
+public sealed record BringSoulToNpcQuestObjective : QuestObjective
 {
     public int NpcId { get; init; }
     public int MonsterId { get; init; }
@@ -39,7 +39,7 @@ public sealed record BringSoulToNpcQuestObjective : QuestObjective, IQuestObject
         return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
         var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);

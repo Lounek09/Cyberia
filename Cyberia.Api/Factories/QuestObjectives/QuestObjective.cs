@@ -4,13 +4,29 @@ using System.Text;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public abstract record QuestObjective(QuestObjectiveData QuestObjectiveData)
+/// <inheritdoc cref="IQuestObjective"/>
+public abstract record QuestObjective : IQuestObjective
 {
+    public QuestObjectiveData QuestObjectiveData { get; init; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="QuestObjective"/> record.
+    /// </summary>
+    /// <param name="questObjectiveData">The data of the quest objective.</param>
+    protected QuestObjective(QuestObjectiveData questObjectiveData)
+    {
+        QuestObjectiveData = questObjectiveData;
+    }
+
+    public abstract Description GetDescription();
+
+    /// <inheritdoc cref="IQuestObjective.GetDescription"/>
     protected Description GetDescription<T>(T parameter)
     {
         return GetDescription(parameter?.ToString() ?? string.Empty);
     }
 
+    /// <inheritdoc cref="IQuestObjective.GetDescription"/>
     protected Description GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
     {
         return GetDescription(
@@ -18,6 +34,7 @@ public abstract record QuestObjective(QuestObjectiveData QuestObjectiveData)
             parameter1?.ToString() ?? string.Empty);
     }
 
+    /// <inheritdoc cref="IQuestObjective.GetDescription"/>
     protected Description GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
     {
         return GetDescription(
@@ -26,6 +43,7 @@ public abstract record QuestObjective(QuestObjectiveData QuestObjectiveData)
             parameter2?.ToString() ?? string.Empty);
     }
 
+    /// <inheritdoc cref="IQuestObjective.GetDescription"/>
     protected Description GetDescription(params string[] parameters)
     {
         var questObjectiveTypeData = QuestObjectiveData.GetQuestObjectiveTypeData();

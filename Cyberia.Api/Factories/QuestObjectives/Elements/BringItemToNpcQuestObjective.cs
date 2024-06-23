@@ -4,7 +4,7 @@ using Cyberia.Api.Data.Quests;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
-public sealed record BringItemToNpcQuestObjective : QuestObjective, IQuestObjective
+public sealed record BringItemToNpcQuestObjective : QuestObjective
 {
     public int NpcId { get; init; }
     public int ItemId { get; init; }
@@ -39,7 +39,7 @@ public sealed record BringItemToNpcQuestObjective : QuestObjective, IQuestObject
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public Description GetDescription()
+    public override Description GetDescription()
     {
         var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
