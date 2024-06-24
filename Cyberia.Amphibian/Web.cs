@@ -63,8 +63,8 @@ public static class Web
         Application.MapRazorPages();
     }
 
-    public static async Task LaunchAsync()
+    public static Task LaunchAsync()
     {
-        await Task.Run(() => Application.RunAsync());
+        return Application.RunAsync();
     }
 }

@@ -51,7 +51,7 @@ public static class Program
             Web.Initialize(config.WebConfig);
             if (config.EnableAmphibian)
             {
-                await Web.LaunchAsync();
+                _ = Web.LaunchAsync();
             }
 
             if (config.EnableCheckCytrus)
