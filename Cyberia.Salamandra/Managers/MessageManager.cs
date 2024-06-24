@@ -20,7 +20,7 @@ public static class MessageManager
         { "monkeychan", Path.Join(Bot.OutputPath, "onMonkeyChan.mp4") }
     }.ToFrozenDictionary();
 
-    public static async Task OnMessageCreated(DiscordClient _, MessageCreateEventArgs args)
+    public static async Task OnMessageCreated(DiscordClient _, MessageCreatedEventArgs args)
     {
         if (args.Author.IsBot || args.Channel.IsPrivate)
         {

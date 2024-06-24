@@ -8,9 +8,6 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.UserCommands;
 using DSharpPlus.Entities;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
 namespace Cyberia.Salamandra;
 
 public static class Bot
@@ -27,25 +24,26 @@ public static class Bot
 
         Config = config;
 
-        Client = new(new DiscordConfiguration()
-        {
-            Token = Config.Token,
-            LoggerFactory = new LoggerFactory().AddSerilog(Log.Logger),
-            LogUnknownAuditlogs = false,
-            LogUnknownEvents = false,
-            Intents = DiscordIntents.Guilds | DiscordIntents.GuildMessages
-        });
-        Client.GuildDownloadCompleted += ClientManager.OnGuildDownloadCompleted;
-        Client.GuildCreated += GuildManager.OnGuildCreated;
-        Client.GuildDeleted += GuildManager.OnGuildDeleted;
-        Client.MessageCreated += MessageManager.OnMessageCreated;
-        Client.ComponentInteractionCreated += InteractionManager.OnComponentInteractionCreated;
+        Client = DiscordClientBuilder.CreateDefault(Config.Token, DiscordIntents.Guilds | DiscordIntents.GuildMessages)
+            .ConfigureLogging(logger => logger.AddSerilog(Log.Logger))
+            .ConfigureGatewayClient(config =>
+            {
+                config.GatewayCompressionLevel = GatewayCompressionLevel.Stream;
+                config.LogUnknownAuditlogs = false;
+                config.LogUnknownEvents = false;
+            })
+            .ConfigureEventHandlers(eventHandler =>
+            {
+                eventHandler.HandleGuildDownloadCompleted(ClientManager.OnGuildDownloadCompleted);
+                eventHandler.HandleGuildCreated(GuildManager.OnGuildCreated);
+                eventHandler.HandleGuildDeleted(GuildManager.OnGuildDeleted);
+                eventHandler.HandleMessageCreated(MessageManager.OnMessageCreated);
+                eventHandler.HandleComponentInteractionCreated(InteractionManager.OnComponentInteractionCreated);
+            })
+            .Build();
 
         Commands = Client.UseCommands(new CommandsConfiguration()
         {
-            ServiceProvider = new ServiceCollection()
-                .AddLogging(x => x.AddSerilog(Log.Logger))
-                .BuildServiceProvider(),
             UseDefaultCommandErrorHandler = false,
             RegisterDefaultCommandProcessors = false
         });

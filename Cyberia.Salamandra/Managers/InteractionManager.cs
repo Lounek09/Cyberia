@@ -79,7 +79,7 @@ public static partial class InteractionManager
         return $"SELECT{uniqueIndex}";
     }
 
-    public static async Task OnComponentInteractionCreated(DiscordClient _, ComponentInteractionCreateEventArgs args)
+    public static async Task OnComponentInteractionCreated(DiscordClient _, ComponentInteractionCreatedEventArgs args)
     {
         if (args.User.IsBot || string.IsNullOrEmpty(args.Id))
         {

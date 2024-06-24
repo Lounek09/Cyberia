@@ -5,7 +5,7 @@ namespace Cyberia.Salamandra.Managers;
 
 public static class GuildManager
 {
-    public static async Task OnGuildCreated(DiscordClient _, GuildCreateEventArgs args)
+    public static async Task OnGuildCreated(DiscordClient _, GuildCreatedEventArgs args)
     {
         await MessageManager.SendLogMessage(
             $"""
@@ -15,7 +15,7 @@ public static class GuildManager
             """);
     }
 
-    public static async Task OnGuildDeleted(DiscordClient _, GuildDeleteEventArgs args)
+    public static async Task OnGuildDeleted(DiscordClient _, GuildDeletedEventArgs args)
     {
         await MessageManager.SendLogMessage($"[LOSE] {Formatter.Bold(args.Guild.Name)} ({args.Guild.Id})");
     }
