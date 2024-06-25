@@ -34,10 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Conventions\CulturePageRouteModelConvention.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="wwwroot\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
