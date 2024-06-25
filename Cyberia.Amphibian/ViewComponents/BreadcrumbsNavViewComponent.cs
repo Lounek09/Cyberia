@@ -32,15 +32,18 @@ public sealed class BreadcrumbsNavViewComponent : ViewComponent
 
         // Handle remaining segments
         StringBuilder routeBuilder = new();
+        StringBuilder translationKeyBuilder = new();
         while (!path.IsEmpty)
         {
             index = path.IndexOf('/');
             var segment = (index == -1 ? path : path[..index]).ToString();
 
-            //TODO: Need a more robust way to handle this
-            var name = WebTranslations.ResourceManager.GetString($"Page.{segment.Capitalize()}.Title") ?? segment; 
+            translationKeyBuilder.Append(segment.Capitalize());
             routeBuilder.Append('/').Append(segment);
-            
+
+            //TODO: Need a more robust way to handle this
+            var name = WebTranslations.ResourceManager.GetString($"Page.{translationKeyBuilder}.Title") ?? segment;
+
             items.Add(new BreadCrumbsItem(name, routeBuilder.ToString()));
 
             path = index == -1 ? ReadOnlySpan<char>.Empty : path[(index + 1)..];
