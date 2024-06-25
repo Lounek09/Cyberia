@@ -43,7 +43,7 @@
 	<footer>
 		<div class="left">
 			<p><span class="icon-code"></span>&nbsp;@Translation.Format(WebTranslations.Layout_DevelopedBy, "Lounek")</p>
-			<p><a href="@Context.Request.Host">@Context.Request.Host</a>&nbsp;@WebTranslations.Layout_NotAffiliated&nbsp;<a href="https://www.ankama.com">Ankama Games</a></p>
+			<p><a href="@($"{Context.Request.Scheme}://{Context.Request.Host}")">@Context.Request.Host</a>&nbsp;@WebTranslations.Layout_NotAffiliated&nbsp;<a href="https://www.ankama.com">Ankama Games</a></p>
 		</div>
 		<div class="right">
 			@if (!string.IsNullOrEmpty(Bot.Config.GuildInviteUrl))
