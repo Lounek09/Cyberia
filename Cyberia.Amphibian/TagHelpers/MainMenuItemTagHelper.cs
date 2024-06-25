@@ -7,10 +7,10 @@ using System.Text.Encodings.Web;
 
 namespace Cyberia.Amphibian.TagHelpers;
 
-[HtmlTargetElement("a", Attributes = c_htmxMenuItemAttributeName)]
-public sealed class HtmxMenuItemTagHelper : TagHelper
+[HtmlTargetElement("a", Attributes = c_MainMenuItemAttributeName)]
+public sealed class MainMenuItemTagHelper : TagHelper
 {
-    private const string c_htmxMenuItemAttributeName = "htmx-menu-item";
+    private const string c_MainMenuItemAttributeName = "main-menu-item";
 
     public override int Order => -999; //Run just after the default anchor tag helper
 
@@ -22,13 +22,10 @@ public sealed class HtmxMenuItemTagHelper : TagHelper
     {
         if (output.Attributes.TryGetAttribute("href", out var hrefAttribute))
         {
-            output.Attributes.SetAttribute("hx-get", hrefAttribute.Value);
-            output.Attributes.SetAttribute("hx-target", "body");
-            output.Attributes.SetAttribute("hx-push-url", "true");
             output.AddClass(IsSelected(hrefAttribute.Value.ToString()), HtmlEncoder.Default);
         }
 
-        output.Attributes.RemoveAll(c_htmxMenuItemAttributeName);
+        output.Attributes.RemoveAll(c_MainMenuItemAttributeName);
     }
 
     private string IsSelected(string? href)

@@ -7,23 +7,30 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="icon" href="~/favicon.ico">
-	<link rel="stylesheet" href="~/css/icons.css">
-	<link rel="stylesheet" href="~/css/layout.css">
-	<script src="~/lib/htmx/htmx.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="~/css/icons.css" type="text/css">
+	<link rel="stylesheet" href="~/css/layout.css" type="text/css">
+	@if (!string.IsNullOrEmpty(ViewBag.PageStyle))
+	{
+		<link rel="stylesheet" href="~/css/@ViewBag.PageStyle" type="text/css">
+	}
+	<script src="~/lib/htmx/dist/htmx.min.js" type="text/javascript"></script>
+	<script src="~/lib/htmx/head-support.js" type="text/javascript"></script>
 	<title>@ViewBag.Title - @Context.Request.Host</title>
 </head>
-<body>
+<body hx-boost="true" hx-ext="head-support">
 	<header>
 		<vc:culture-form />
 		<nav class="menu">
 			<ul>
-				<li><a asp-culture-page="/breeds" htmx-menu-item>@WebTranslations.Page_Breeds_Title</a></li>
-				<li><a asp-culture-page="/items" htmx-menu-item>@WebTranslations.Page_Items_Title</a></li>
-				<li><a asp-culture-page="/spells" htmx-menu-item>@WebTranslations.Page_Spells_Title</a></li>
-				<li><a asp-culture-page="/monsters" htmx-menu-item>@WebTranslations.Page_Monsters_Title</a></li>
-				<li><a asp-culture-page="/dungeons" htmx-menu-item>@WebTranslations.Page_Dungeons_Title</a></li>
-				<li><a asp-culture-page="/quests" htmx-menu-item>@WebTranslations.Page_Quests_Title</a></li>
-				<li><a asp-culture-page="/tools" htmx-menu-item>@WebTranslations.Page_Tools_Title</a></li>
+				<li><a asp-culture-page="/breeds" main-menu-item>@WebTranslations.Page_Breeds_Title</a></li>
+				<li><a asp-culture-page="/items" main-menu-item>@WebTranslations.Page_Items_Title</a></li>
+				<li><a asp-culture-page="/spells" main-menu-item>@WebTranslations.Page_Spells_Title</a></li>
+				<li><a asp-culture-page="/monsters" main-menu-item>@WebTranslations.Page_Monsters_Title</a></li>
+				<li><a asp-culture-page="/dungeons" main-menu-item>@WebTranslations.Page_Dungeons_Title</a></li>
+				<li><a asp-culture-page="/quests" main-menu-item>@WebTranslations.Page_Quests_Title</a></li>
+				<li><a asp-culture-page="/tools" main-menu-item>@WebTranslations.Page_Tools_Title</a></li>
+				<li></li>
+				<li><a asp-culture-page="/salamandra" main-menu-item>@WebTranslations.Page_Salamandra_Title</a></li>
 			</ul>
 		</nav>
 		<vc:breadcrumbs-nav />
