@@ -15,12 +15,9 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8
-        
-      - name: Build
-        run: dotnet build -c Release
 
       - name: Publish
-        run: dotnet publish Cyberia/Cyberia.csproj --no-build -c Release -o ./Cyberia
+        run: dotnet publish Cyberia/Cyberia.csproj -c Release -o ./Cyberia
     
       - name: Deploy
         uses: appleboy/scp-action@master
