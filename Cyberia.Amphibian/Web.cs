@@ -52,7 +52,6 @@ public static class Web
 
         Application = builder.Build();
 
-        Application.UseHttpsRedirection();
         Application.UseStaticFiles();
         Application.UseRouting();
         Application.UseAuthorization();
