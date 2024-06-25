@@ -30,7 +30,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           source: ./Cyberia
-          target: /var/www/cyberia/Cyberia
+          target: /var/www/cyberia
 
       - name: Add execution right on Flare
         uses: appleboy/ssh-action@master
