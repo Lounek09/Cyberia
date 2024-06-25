@@ -130,4 +130,41 @@
   <data name="Layout.CultureSelection" xml:space="preserve">
     <value>Sélection de la langue</value>
   </data>
+  <data name="Page.SalamandraTos.Title" xml:space="preserve">
+    <value>Conditions d'utilisation</value>
+  </data>
+  <data name="Page.SalamandraPrivacy.Title" xml:space="preserve">
+    <value>Politique de confidentialité</value>
+  </data>
+  <data name="Page.SalamandraPrivacy.Content" xml:space="preserve">
+    <value>&lt;h3&gt;1. Consentement&lt;/h3&gt;
+&lt;p&gt;En utilisant Salamandra, vous acceptez la politique de confidentialité suivante.
+&lt;h3&gt;2. Quelles sont les informations stockées&lt;/h3&gt;
+&lt;p&gt;Aucune.&lt;/p&gt;
+&lt;h3&gt;3. Comment nous utilisons vos informations&lt;/h3&gt;
+&lt;p&gt;Nous n'utilisons pas vos informations.&lt;/p&gt;
+&lt;h3&gt;4. information stockée temporairement&lt;/h3&gt;
+&lt;p&gt;Salamandra peut conserver des informations dans un mécanisme de cache interne pendant un certain temps.&lt;br&gt;
+Après cette période, les informations mises en cache seront supprimées et ne seront réajoutées qu'en cas de besoin.&lt;/p&gt;
+&lt;h3&gt;5. Question et préoccupations&lt;/h3&gt;
+&lt;p&gt;Si vous avez des questions et/ou des préoccupations concernant les données stockées, veuillez me contacter sur Discord à Lounek#3562.&lt;/p&gt;
+&lt;hr&gt;
+&lt;small&gt;Remarque : *Nous nous réservons le droit de modifier ces informations sans en avertir nos utilisateurs.*&lt;/small&gt;</value>
+  </data>
+  <data name="Page.SalamandraTos.Content" xml:space="preserve">
+    <value>&lt;h3&gt;1. Conditions&lt;/h3&gt;
+&lt;p&gt;En utilisant ce Bot, vous acceptez d'être lié par ces Conditions d'utilisation et acceptez que vous êtes responsable de l'accord avec toutes les lois locales applicables. Si vous n'êtes pas d'accord avec l'un de ces termes, il vous est interdit d'utiliser ce bot.&lt;/p&gt;
+&lt;h3&gt;2. Avis de non-responsabilité&lt;/h3&gt;
+&lt;p&gt;Tous les documents Salamandra sont fournis "tels quels". Salamandra ne donne aucune garantie, expresse ou implicite, et décline donc toute autre garantie. De plus, Salamandra ne fait aucune déclaration concernant l'exactitude ou la fiabilité de l'utilisation des matériaux ou concernant tout matériel lié à Salamandra.&lt;/p&gt;
+&lt;h3&gt;3. Limites&lt;/h3&gt;
+&lt;p&gt;Salamandra ou ses fournisseurs ne seront pas tenus responsables de tout dommage qui résulterait de l'utilisation ou de l'impossibilité d'utiliser le matériel sur Salamandra, même si Salamandra ou un représentant autorisé de ce Bot a été informé, oralement ou par écrit, de la possibilité de tels dommages. Certaines juridictions n'autorisent pas les limitations des garanties implicites ou les limitations de responsabilité pour les dommages accidentels, ces limitations peuvent ne pas s'appliquer à vous.&lt;/p&gt;
+&lt;h3&gt;4. Révisions et erreurs&lt;/h3&gt;
+&lt;p&gt;Les documents de Salamandra peuvent contenir des erreurs techniques, typographiques ou photographiques. Salamandra ne garantit pas que les documents soient exacts, complets ou à jour. Salamandra se réserve le droit d'apporter des modifications aux éléments contenus à tout moment et sans préavis. Salamandra ne s'engage pas à mettre à jour le matériel.&lt;/p&gt;
+&lt;h3&gt;5. Liens&lt;/h3&gt;
+&lt;p&gt;Salamandra n'a pas examiné tous les sites liés et n'est pas responsable du contenu de ces sites liés. L'existence d'un lien n'implique pas l'adhésion de Salamandra au site. L'utilisation d'un site Web lié est aux propres risques de l'utilisateur.&lt;/p&gt;
+&lt;h3&gt;6. Modifications des conditions d'utilisation&lt;/h3&gt;
+&lt;p&gt;Salamandra peut réviser ces conditions générales d'utilisation à tout moment et sans préavis. En utilisant ce Bot, vous acceptez d'être lié par la version la plus récente de ces Conditions d'utilisation.&lt;/p&gt;
+&lt;h3&gt;7. Loi applicable&lt;/h3&gt;
+&lt;p&gt;Toute réclamation relative à Salamandra sera régie par les lois françaises sans égard à ses dispositions en matière de conflits de lois.&lt;/p&gt;</value>
+  </data>
 </root>

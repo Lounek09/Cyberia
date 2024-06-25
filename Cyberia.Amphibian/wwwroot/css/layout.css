@@ -1,22 +1,44 @@
-﻿
+﻿/* Theme */
 :root {
     --main-bg-color: #241e1e;
     --secondary-bg-color: #272525;
     --main-text-color: #bdc7b8;
+    --disabled-text-color: #8c9389;
     --menu-link-color: #66ccff;
     --menu-hover-color: #b5bd68;
     --menu-active-bg-color: #b5bd6840;
 }
 
+/* Default */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main-bg-color);
+    color: var(--main-text-color);
+    font-family: monospace;
+    font-size: calc(7px + 1vmin);
+}
+
 a {
     text-decoration: none;
     color: inherit;
+
+    &[disabled] {
+        pointer-events: none;
+        color: var(--disabled-text-color);
+    }
+}
+
+nav a {
+    text-decoration: underline;
+    font-weight: bold;
 }
 
 ol, ul {
@@ -32,16 +54,16 @@ select, option {
     border: none;
 }
 
-html, body {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--main-bg-color);
-    color: var(--main-text-color);
-    font-family: monospace;
-    font-size: calc(7px + 1vmin);
+hr {
+    margin: 0.5em 0;
+    border: none;
+
+    &::after {
+   	    content: "---";
+    }
 }
 
+/* Layout */
 @media only screen and (min-width : 667px) {
     header {
         margin: 0 10%;
@@ -61,7 +83,6 @@ html, body {
         margin: 0 1em 1em 1em;
     }
 }
-
 
 header {
     display: flex;
@@ -87,9 +108,8 @@ header {
             color: var(--menu-link-color);
         }
 
-        a {
-            font-weight: bold;
-            text-decoration: underline;
+        li:empty {
+            display: block;
         }
 
         a:hover, a.selected {

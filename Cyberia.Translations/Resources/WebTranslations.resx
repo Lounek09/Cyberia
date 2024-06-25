@@ -130,4 +130,47 @@
   <data name="Layout.CultureSelection" xml:space="preserve">
     <value>Language selection</value>
   </data>
+  <data name="Page.Salamandra.Title" xml:space="preserve">
+    <value>Salamandra</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="Page.SalamandraTos.Title" xml:space="preserve">
+    <value>Terms of service</value>
+  </data>
+  <data name="Page.SalamandraPrivacy.Title" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
+  <data name="Page.SalamandraPrivacy.Content" xml:space="preserve">
+    <value>&lt;h3&gt;1. Consent&lt;/h3&gt;
+&lt;p&gt;By using Salamandra, you agree to the following privacy policy.&lt;/p&gt;
+&lt;h3&gt;2. What information is stored&lt;/h3&gt;
+&lt;p&gt;None.&lt;/p&gt;
+&lt;h3&gt;3. How we use your information&lt;/h3&gt;
+&lt;p&gt;We don't use your information.&lt;/p&gt;
+&lt;h3&gt;4. Temporarily stored Information&lt;/h3&gt;
+&lt;p&gt;Salamandra may keep information in an internal caching mechanic for a certain amount of time.&lt;br&gt;
+After this time period, the cached information will be dropped and only be re-added when required.&lt;/p&gt;
+&lt;h3&gt;5. Questions and Concerns&lt;/h3&gt;
+&lt;p&gt;If you have questions and/or concerns about the data stored, please contact me on Discord at Lounek#3562.&lt;/p&gt;
+&lt;hr&gt;
+&lt;small&gt;Note: *We reserve the right to change this without notifying our users.*&lt;/small&gt;</value>
+    <comment>Raw Html</comment>
+  </data>
+  <data name="Page.SalamandraTos.Content" xml:space="preserve">
+    <value>&lt;h3&gt;1. Terms&lt;/h3&gt;
+&lt;p&gt;By using this Bot you are agreeing to be bound by these Terms of service and agree that you are responsible for the agreement with any applicable local laws. If you disagree with any of these terms, you are prohibited from using this bot.&lt;/p&gt;
+&lt;h3&gt;2. Disclaimer&lt;/h3&gt;
+&lt;p&gt;All Salamandra materials are provided "as is". Salamandra makes no warranties, expressed or implied, and therefore disclaims all other warranties. Further, Salamandra makes no representations concerning the accuracy or reliability of the use of the materials or concerning any such materials linked to Salamandra.&lt;/p&gt;
+&lt;h3&gt;3. Limitations&lt;/h3&gt;
+&lt;p&gt;Salamandra or its suppliers will not be hold accountable for any damages that will arise with the use or inability to use the materials on Salamandra, even if Salamandra or an authorize representative of this Bot has been notified, orally or written, of the possibility of such damage. Some jurisdiction does not allow limitations on implied warranties or limitations of liability for incidental damages, these limitations may not apply to you.&lt;/p&gt;
+&lt;h3&gt;4. Revisions and Errors&lt;/h3&gt;
+&lt;p&gt;Salamandra's materials could include technical, typographical, or photographic errors. Salamandra does not warrant that any of the materials are accurate, complete, or current. Salamandra reserves the right to make changes to the materials contained at any time without notice. Salamandra does not make any commitment to update the materials.&lt;/p&gt;
+&lt;h3&gt;5. Links&lt;/h3&gt;
+&lt;p&gt;Salamandra has not reviewed all of the linked sites and is not responsible for the contents of any such linked site. The existence of a link does not imply endorsement by Salamandra of the site. Use of a linked website is at the user's own risk.&lt;/p&gt;
+&lt;h3&gt;6. Terms of service Modifications&lt;/h3&gt;
+&lt;p&gt;Salamandra may revise these Terms and Conditions of Use for its use at any time without notice. By using this Bot, you agree to be bound by the most current version of these Terms of service.&lt;/p&gt;
+&lt;h3&gt;7. Applicable law&lt;/h3&gt;
+&lt;p&gt;Any claim relating to Salamandra shall be governed by the laws of France without regard to its conflict of law provisions.&lt;/p&gt;</value>
+    <comment>Raw Html</comment>
+  </data>
 </root>

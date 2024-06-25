@@ -1,0 +1,21 @@
+﻿@page
+@using Cyberia.Api
+@model IndexModel
+@{
+	ViewBag.Title = @WebTranslations.Page_Salamandra_Title;
+	ViewBag.PageStyle = "salamandra.css";
+}
+
+<div class="logo">
+	<img src="@DofusApi.Config.CdnUrl/images/web/salamandra-left.png">
+</div>
+
+<div class="content">
+	<h1>@WebTranslations.Page_Salamandra_Title</h1>
+
+	<nav>
+		<a asp-culture-page="/salamandra/tos">@WebTranslations.Page_SalamandraTos_Title</a>
+		<span> - </span>
+		<a asp-culture-page="/salamandra/privacy">@WebTranslations.Page_SalamandraPrivacy_Title</a>
+	</nav>
+</div>

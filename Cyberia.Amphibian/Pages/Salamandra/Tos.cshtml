@@ -1,0 +1,18 @@
+﻿@page
+@model TosModel
+@{
+	ViewBag.Title = $"{WebTranslations.Page_Salamandra_Title} - {WebTranslations.Page_SalamandraTos_Title}";
+	ViewBag.PageStyle = "salamandra.css";
+}
+
+<div class="content">
+	<h1>@WebTranslations.Page_SalamandraTos_Title</h1>
+
+	@Html.Raw(WebTranslations.Page_SalamandraTos_Content)
+
+	<nav>
+		<a asp-culture-page="/salamandra/tos" disabled>@WebTranslations.Page_SalamandraPrivacy_Title</a>
+		<span> - </span>
+		<a asp-culture-page="/salamandra/privacy">@WebTranslations.Page_SalamandraTos_Title</a>
+	</nav>
+</div>

@@ -142,6 +142,63 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Salamandra.
+        /// </summary>
+        public static string Page_Salamandra_Title {
+            get {
+                return ResourceManager.GetString("Page.Salamandra.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;h3&gt;1. Consent&lt;/h3&gt;
+        ///&lt;p&gt;By using Salamandra, you agree to the following privacy policy.&lt;/p&gt;
+        ///&lt;h3&gt;2. What information is stored&lt;/h3&gt;
+        ///&lt;p&gt;None.&lt;/p&gt;
+        ///&lt;h3&gt;3. How we use your information&lt;/h3&gt;
+        ///&lt;p&gt;We don&apos;t use your information.&lt;/p&gt;
+        ///&lt;h3&gt;4. Temporarily stored Information&lt;/h3&gt;
+        ///&lt;p&gt;Salamandra may keep information in an internal caching mechanic for a certain amount of time.&lt;br&gt;
+        ///After this time period, the cached information will be dropped and only be re-added when required.&lt;/p&gt;
+        ///&lt;h3&gt;5. Questions and Concerns&lt;/h3&gt;        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Page_SalamandraPrivacy_Content {
+            get {
+                return ResourceManager.GetString("Page.SalamandraPrivacy.Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy policy.
+        /// </summary>
+        public static string Page_SalamandraPrivacy_Title {
+            get {
+                return ResourceManager.GetString("Page.SalamandraPrivacy.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;h3&gt;1. Terms&lt;/h3&gt;
+        ///&lt;p&gt;By using this Bot you are agreeing to be bound by these Terms of service and agree that you are responsible for the agreement with any applicable local laws. If you disagree with any of these terms, you are prohibited from using this bot.&lt;/p&gt;
+        ///&lt;h3&gt;2. Disclaimer&lt;/h3&gt;
+        ///&lt;p&gt;All Salamandra materials are provided &quot;as is&quot;. Salamandra makes no warranties, expressed or implied, and therefore disclaims all other warranties. Further, Salamandra makes no representations concerning the accuracy or  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Page_SalamandraTos_Content {
+            get {
+                return ResourceManager.GetString("Page.SalamandraTos.Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms of service.
+        /// </summary>
+        public static string Page_SalamandraTos_Title {
+            get {
+                return ResourceManager.GetString("Page.SalamandraTos.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spells.
         /// </summary>
         public static string Page_Spells_Title {
