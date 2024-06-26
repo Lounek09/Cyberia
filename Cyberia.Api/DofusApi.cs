@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api.Data;
+using Cyberia.Api.Managers;
 using Cyberia.Langzilla.Enums;
 
 namespace Cyberia.Api;
@@ -26,5 +27,6 @@ public static class DofusApi
     public static void Reload(LangType type)
     {
         Datacenter = new Datacenter(type);
+        CdnManager.ClearCache();
     }
 }

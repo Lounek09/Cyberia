@@ -25,6 +25,11 @@ public static class CdnManager
         return exists ? url : $"{DofusApi.Config.CdnUrl}/images/dofus/others/{(int)CdnImageSize.Size128}/unknown.png";
     }
 
+    public static void ClearCache()
+    {
+        s_cachedUrl.Clear();
+    }
+
     private static async Task<bool> ExistsAsync(string url)
     {
         var now = DateTime.Now;
