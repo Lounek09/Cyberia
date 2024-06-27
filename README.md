@@ -62,7 +62,7 @@ Ensure you have the following prerequisites installed:
 ## Support
 If you encounter any issues or have questions, please:
 - Open an issue on GitHub.
-- Join our [Discord server](https://discord.gg/gfsPNqGXdD) for real-time support.
+- Join my [Discord server](https://discord.gg/gfsPNqGXdD) for real-time support.
 
 ## License
 
