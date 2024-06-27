@@ -68,3 +68,4 @@
 *.exe      binary
 *.dll      binary
 *.manifest binary
+*.png      binary
