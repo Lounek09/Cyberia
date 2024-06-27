@@ -136,7 +136,7 @@ Below are the detailed descriptions of each variable of the [configuration](/Cyb
 | Variable                  | Description                                                                              | Type    |
 | :------------------------ | :--------------------------------------------------------------------------------------- | :------ |
 | `Token`                   | The Discord bot token                                                                    | String  |
-| `EmbedColor`              | The color of the embed (e.g., `#FFFFF`)                                                  | String  |
+| `EmbedColor`              | The color of the embed (e.g., `#CD853F`)                                                 | String  |
 | `AdminGuildId`            | The guild ID where the admin commands will be registered                                 | UInt64  |
 | `BotInviteUrl`            | The invitation URL of the bot                                                            | String  |
 | `GuildInviteUrl`          | The invitation URL of the support Discord guild                                          | String  |
