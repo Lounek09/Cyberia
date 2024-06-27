@@ -25,25 +25,28 @@ Ensure you have the following prerequisites installed:
 > [!IMPORTANT]  
 > From this point forward, I will assume that all steps from the Cyberia.Cdn setup have been completed.
 
-1. **Build the project:**
+1. **Build the project:**  
    You have two options for building the project: manually from the server or by setting up the publish action in your fork.
-   - **Manual Build:**
+   
+   - **Manual Build:**  
      ```bash
      git clone git@github.com:Lounek09/Cyberia.git
      cd Cyberia
      dotnet build Cyberia/Cyberia.csproj -c Release -o output
      mv output /var/www/cyberia/App
      ```
-   - Setup the publish action in your fork:
-     You will need to configure four secrets in your GitHub repository settings:
-     - **SSH_HOST** - The ip of your server
-     - **SSH_KEY** - Your private SSH key configured for your user
+     
+   - **Setup the publish action in your fork:**  
+     You will need to configure four secrets in your GitHub repository settings.
+     - **SSH_HOST** - The IP of your server
+     - **SSH_KEY** - Your private SSH key configured in the user `authorized_keys`
      - **SSH_PORT** - The port of your SSH
-     - **SSH_USER** - The user it will connect to  
+     - **SSH_USER** - The user it will connect to
+     
      After configuring these secrets, you can manually trigger the publish action by following [GitHub's guide on manually running a workflow](https://docs.github.com/en/actions/using-workflows/manually-running-a-workflow).
 
-2. **Configure Caddy:**
-   Edit the Caddy configuration file `/etc/caddy/Caddyfile` to include the following block. Replace *your-domain.com* with your actual domain:
+2. **Configure Caddy:**  
+   Edit the Caddy configuration file located at `/etc/caddy/Caddyfile` to include the following block. Replace *your-domain.com* with your actual domain:
    ```caddy
    your-domain.com {
      import common
@@ -52,12 +55,101 @@ Ensure you have the following prerequisites installed:
      encode gzip
    }
    ```
+   For more information, see the [Caddiyfile documentation](https://caddyserver.com/docs/caddyfile).  
 
 3. **Restart Caddy:**  
    Restart the Caddy service to apply the new configuration[^1]:
    ```bash
    sudo systemctl restart caddy
    ```
+
+4. **Create a systemd service:**  
+   To launch the app in the background, a systemd service is a good approach. Go to `/etc/systemd/system` and create a new file called `cyberia.service` with this content. Replace *salamandra* with your user:
+   ```service
+   [Unit]
+   Description=Cyberia Service
+   After=network.target
+   
+   [Service]
+   Type=simple
+   User=salamandra
+   WorkingDirectory=/var/www/cyberia/App
+   ExecStart=dotnet Cyberia.dll
+   ExecStop=/bin/bash -c 'ps aux | grep Cyberia.dll | grep -v grep | awk \'{print $2}\' | xargs kill -9'
+   Restart=on-failure
+   RestartSec=10
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+   For more information, see the [systemd.service documentation](https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html).  
+
+5. **Reload the systemd manager configuration:**  
+   Reload the systemd manager configuration to apply the new service:
+   ```bash
+   sudo systemctl daemon-reload
+   ```
+
+6. **Configure the app:**  
+   Inside the App directory, you will need to rename the `appsettings.sample.json` to `appsettings.json` and fill in the required configuration. See [Configuration](#configuration) for more detail about each variable.
+
+8. **Launch the App:**  
+   Start the service:
+   ```bash
+   sudo systemctl start cyberia
+   ```
+
+## Configuration
+
+Below are the detailed descriptions of each variable of the [configuration](/Cyberia/appsettings.sample.json) of the App :
+
+### Main Configuration
+
+| Variable                    | Description                                       | Type     |
+| :-------------------------- | :------------------------------------------------ | :------- |
+| `EnableSalamandra`          | Launch the Discord bot at startup                 | Boolean  |
+| `EnableAmphibian`           | Launch the website at startup                     | Boolean  |
+| `EnableCheckCytrus`         | Activate the automatic check of Cytrus            | Boolean  |
+| `CheckCytrusInterval`       | Interval between each Cytrus check                | Timespan |
+| `EnableCheckLang`           | Activate the automatic check of the Official Lang | Boolean  |
+| `CheckLangInterval`         | Interval between each Official Lang check         | Timespan |
+| `EnableCheckBetaLang`       | Activate the automatic check of the Beta Lang     | Boolean  |
+| `CheckBetaLangInterval`     | Interval between each Beta Lang check             | Timespan |
+| `EnableCheckTemporisLang`   | Activate the automatic check of the Temporis Lang | Boolean  |
+| `CheckTemporisLangInterval` | Interval between each Temporis Lang check         | Timespan |
+| `ApiConfig`                 | The configuration related to the API              | [ApiConfig](#api-configuration) |
+| `BotConfig`                 | The configuration related to the bot              | [BotConfig](#bot-configuration) |
+| `WebConfig`                 | The configuration related to the website          | [WebConfig](#web-configuration) |
+
+### API Configuration
+
+| Variable | Description                                                   | Type   |
+| :------- | :------------------------------------------------------------ | :----- |
+| `CdnUrl` | The URL of the [Cdn](https://github.com/Lounek09/Cyberia.Cdn) | String |
+| `Type`   | The type of lang loaded at startup                            | [LangType](/Cyberia.Langzilla/Enums/LangType.cs) |
+
+### Bot Configuration
+
+| Variable                  | Description                                                                              | Type    |
+| :------------------------ | :--------------------------------------------------------------------------------------- | :------ |
+| `Token`                   | The Discord bot token                                                                    | String  |
+| `EmbedColor`              | The color of the embed (e.g., `#FFFFF`)                                                  | String  |
+| `AdminGuildId`            | The guild ID where the admin commands will be registered                                 | UInt64  |
+| `BotInviteUrl`            | The invitation URL of the bot                                                            | String  |
+| `GuildInviteUrl`          | The invitation URL of the support Discord guild                                          | String  |
+| `LogChannelId`            | The channel where logs from certain events (e.g., guild added/removed) will be displayed | UInt64  |
+| `ErrorChannelId`          | The channel ID where errors related to command execution will be displayed               | UInt64  |
+| `LangForumChannelId`      | The forum channel ID where the automatic lang diff will be displayed                     | UInt64  |
+| `CytrusChannelId`         | The channel ID where the Cytrus diff will be displayed                                   | UInt64  |
+| `CytrusManifestChannelId` | The channel ID where the game manifest diff from Cytrus will be displayed                | UInt64  |
+
+### Web Configuration
+
+| Variable     | Description                                                      | Type     |
+| :----------- | :--------------------------------------------------------------- | :------- |
+| `Environment`| The environment of the website (`Production` or `Development`)   | String   |
+| `Urls`       | The URLs the host will listen on                                 | String[] |
+| `GitUrl`     | The URL of the repository (displayed in the footer if specified) | String   |
 
 ## Support
 If you encounter any issues or have questions, please:
