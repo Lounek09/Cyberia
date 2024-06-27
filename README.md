@@ -192,6 +192,6 @@ Parts of this project incorporate code derived from the [Lucene.Net](https://git
 
 --
 
-For any inquiries or further information, please contact <a href="mailto:lounek09@proton.me">lounek09@proton.me</a>.
+For any inquiries or further information, please contact [lounek09@proton.me](mailto:lounek09@proton.me).
 
 [^1]: If the service fails to start due to missing permissions, it's likely because Caddy creates certain directories without the correct permissions. Try the following command after each restart until it works: `sudo chmod -R 755 /var/lib/caddy/.local`
