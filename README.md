@@ -99,6 +99,9 @@ Ensure you have the following prerequisites installed:
    sudo systemctl start cyberia
    ```
 
+9. **First-time Launch:**  
+   If this is your first time launching the application, you need to generate the JSON data used by the API. You can either wait for the automatic Lang check to occur or manually trigger it using the `/langs check` command in Discord. After the check is complete, use the `/langs parse` command to parse the data to JSON. Finally, either restart the application or use the `/reload` command to hot reload the data.
+
 ## Configuration
 
 Below are the detailed descriptions of each variable of the [configuration](/Cyberia/appsettings.sample.json) of the App :
