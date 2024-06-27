@@ -52,6 +52,7 @@ public static class Web
 
         Application = builder.Build();
 
+        Application.UseHttpsRedirectionIfNeeded();
         Application.UseStaticFiles();
         Application.UseRouting();
         Application.UseAuthorization();
@@ -65,5 +66,18 @@ public static class Web
     public static Task LaunchAsync()
     {
         return Application.RunAsync();
+    }
+
+    public static IApplicationBuilder UseHttpsRedirectionIfNeeded(this IApplicationBuilder builder)
+    {
+        var hasHttps = Config.Urls.Any(url => url.StartsWith("https://"));
+        var hasHttp = Config.Urls.Any(url => url.StartsWith("http://"));
+
+        if (hasHttps && hasHttp)
+        {
+            builder.UseHttpsRedirection();
+        }
+
+        return builder;
     }
 }
