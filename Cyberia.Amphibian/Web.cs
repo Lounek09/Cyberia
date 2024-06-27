@@ -68,7 +68,7 @@ public static class Web
         return Application.RunAsync();
     }
 
-    public static IApplicationBuilder UseHttpsRedirectionIfNeeded(this IApplicationBuilder builder)
+    private static IApplicationBuilder UseHttpsRedirectionIfNeeded(this IApplicationBuilder builder)
     {
         var hasHttps = Config.Urls.Any(url => url.StartsWith("https://"));
         var hasHttp = Config.Urls.Any(url => url.StartsWith("http://"));
