@@ -1,5 +1,8 @@
 ﻿namespace Cyberia.Amphibian;
 
+/// <summary>
+/// Represents the configuration settings for the Cyberia website.
+/// </summary>
 public sealed class WebConfig
 {
     /// <summary>
@@ -8,14 +11,9 @@ public sealed class WebConfig
     public string Environment { get; init; }
 
     /// <summary>
-    /// Gets the base URL.
+    /// Gets the URLs the host will listen on.
     /// </summary>
     public IReadOnlyList<string> Urls { get; init; }
-
-    /// <summary>
-    /// Gets the Git URL of the repository.
-    /// </summary>
-    public string GitUrl { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WebConfig"/> class.
@@ -24,6 +22,5 @@ public sealed class WebConfig
     {
         Environment = string.Empty;
         Urls = [];
-        GitUrl = string.Empty;
     }
 }

@@ -126,25 +126,26 @@ Below are the detailed descriptions of each variable of the [configuration](/Cyb
 
 ### API Configuration
 
-| Variable | Description                                                   | Type   |
-| :------- | :------------------------------------------------------------ | :----- |
-| `CdnUrl` | The URL of the [Cdn](https://github.com/Lounek09/Cyberia.Cdn) | String |
-| `Type`   | The type of lang loaded at startup                            | [LangType](/Cyberia.Langzilla/Enums/LangType.cs) |
+| Variable           | Description                                                      | Type   |
+| :----------------- | :--------------------------------------------------------------- | :----- |
+| `CdnUrl`           | The URL of the [CDN](https://github.com/Lounek09/Cyberia.Cdn)    | String |
+| `Type`             | The type of lang loaded at startup                               | [LangType](/Cyberia.Langzilla/Enums/LangType.cs) |
+| `DiscordInviteUrl` | The invitation URL of the support Discord guild                  | String |
+| `GitRepositoryUrl` | The URL of the repository                                        | String |
 
 ### Bot Configuration
 
-| Variable                  | Description                                                                              | Type    |
-| :------------------------ | :--------------------------------------------------------------------------------------- | :------ |
-| `Token`                   | The Discord bot token                                                                    | String  |
-| `EmbedColor`              | The color of the embed (e.g., `#CD853F`)                                                 | String  |
-| `AdminGuildId`            | The guild ID where the admin commands will be registered                                 | UInt64  |
-| `BotInviteUrl`            | The invitation URL of the bot                                                            | String  |
-| `GuildInviteUrl`          | The invitation URL of the support Discord guild                                          | String  |
-| `LogChannelId`            | The channel where logs from certain events (e.g., guild added/removed) will be displayed | UInt64  |
-| `ErrorChannelId`          | The channel ID where errors related to command execution will be displayed               | UInt64  |
-| `LangForumChannelId`      | The forum channel ID where the automatic lang diff will be displayed                     | UInt64  |
-| `CytrusChannelId`         | The channel ID where the Cytrus diff will be displayed                                   | UInt64  |
-| `CytrusManifestChannelId` | The channel ID where the game manifest diff from Cytrus will be displayed                | UInt64  |
+| Variable                  | Description                                                                        | Type   |
+| :------------------------ | :--------------------------------------------------------------------------------- | :----- |
+| `Token`                   | The Discord bot token                                                              | String |
+| `EmbedColor`              | The color of the embed (e.g. `#CD853F`)                                            | String |
+| `AdminGuildId`            | The guild ID where the admin commands will be registered                           | UInt64 |
+| `BotInviteUrl`            | The invitation URL of the bot                                                      | String |
+| `LogChannelId`            | The channel where logs from certain events (e.g. guild added/removed) will be sent | UInt64 |
+| `ErrorChannelId`          | The channel ID where errors related to command execution will be sent              | UInt64 |
+| `LangForumChannelId`      | The forum channel ID where the automatic lang diff will be sent                    | UInt64 |
+| `CytrusChannelId`         | The channel ID where the Cytrus diff will be sent                                  | UInt64 |
+| `CytrusManifestChannelId` | The channel ID where the game manifest diff from Cytrus will be sent               | UInt64 |
 
 ### Web Configuration
 
@@ -152,7 +153,6 @@ Below are the detailed descriptions of each variable of the [configuration](/Cyb
 | :----------- | :--------------------------------------------------------------- | :------- |
 | `Environment`| The environment of the website (`Production` or `Development`)   | String   |
 | `Urls`       | The URLs the host will listen on                                 | String[] |
-| `GitUrl`     | The URL of the repository (displayed in the footer if specified) | String   |
 
 ## Support
 If you encounter any issues or have questions, please:
