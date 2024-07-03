@@ -430,7 +430,8 @@ public static class EffectFactory
             { 2152, CharacterInventoryAddItemRandomQuantityEffect.Create },
             { 2153, TeleportGroupMemberEffect.Create },
             { 2154, LockToAccountEffect.Create },
-            { 2155, LockToAccountUntilEffect.Create }
+            { 2155, LockToAccountUntilEffect.Create },
+            { 2156, RadiantEffect.Create }
         }.ToFrozenDictionary();
 
     /// <summary>
