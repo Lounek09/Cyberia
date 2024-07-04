@@ -34,6 +34,7 @@ Ensure you have the following prerequisites installed:
      cd Cyberia
      dotnet build Cyberia/Cyberia.csproj -c Release -o output
      mv output /var/www/cyberia/App
+     chmod -R 755 /var/www/cyberia/App/flare
      ```
      
    - **Setup the publish action in your fork:**  
