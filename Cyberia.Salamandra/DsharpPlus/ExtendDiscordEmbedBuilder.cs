@@ -64,7 +64,10 @@ public static class ExtendDiscordEmbedBuilder
 
         foreach (var questObjective in questObjectives)
         {
-            var questObjectiveDescription = questObjective.GetDescription().ToString(x => Formatter.Bold(Formatter.Sanitize(x)));
+            var questObjectiveDescription = questObjective is FreeFormQuestObjective
+                ? questObjective.GetDescription()
+                : questObjective.GetDescription().ToString(x => Formatter.Bold(Formatter.Sanitize(x)));
+
             questObjectivesParse.Add(questObjectiveDescription);
         }
 
