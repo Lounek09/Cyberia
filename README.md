@@ -16,6 +16,7 @@
 ### Prerequisites
 
 Ensure you have the following prerequisites installed:
+- An x64 or x86 processor architecture, [Flare](http://www.nowrap.de/flare.html) does not support ARM.
 - **.NET**: [Install .NET](https://learn.microsoft.com/en-us/dotnet/core/install/linux)
 - **Cyberia.Cdn**: Follow the [Cyberia.Cdn setup](https://github.com/Lounek09/Cyberia.Cdn#setup)
 - **Caddy**: [Install Caddy](https://caddyserver.com/docs/install)
