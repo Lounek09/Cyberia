@@ -20,6 +20,10 @@ public sealed record CharacterChangeLookEffect : Effect
 
     public override Description GetDescription()
     {
-        return GetDescription(string.Empty, string.Empty, SpriteId);
+        var spriteName = SpriteId == -1
+            ? ApiTranslations.OriginalAppearance
+            : SpriteId.ToString();
+
+        return GetDescription(string.Empty, string.Empty, spriteName);
     }
 }

@@ -2590,6 +2590,15 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apparence d&apos;origine.
+        /// </summary>
+        public static string OriginalAppearance {
+            get {
+                return ResourceManager.GetString("OriginalAppearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to QuestObjectiveType #1 erroné (#2).
         /// </summary>
         public static string QuestObjectiveType_Errored {
