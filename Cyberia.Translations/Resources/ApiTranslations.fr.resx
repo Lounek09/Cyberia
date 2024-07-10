@@ -1098,4 +1098,7 @@
   <data name="SpellCategory.Temporis3Triggered" xml:space="preserve">
     <value>Sort déclenché - Temporis 3</value>
   </data>
+  <data name="Weapons" xml:space="preserve">
+    <value>Armes</value>
+  </data>
 </root>

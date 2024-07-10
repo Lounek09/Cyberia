@@ -122,7 +122,7 @@ public static class EffectFactory
             { 162, CharacterDeboostActionPointsLostDodgeEffect.Create },
             { 163, CharacterDeboostMovementPointsLostDodgeEffect.Create },
             { 164, CharacterLifeLostPercentReductorEffect.Create },
-            { 165, CharacterBoostOneWeaponDamagePercentEffect.Create },
+            { 165, CharacterBoostWeaponDamagePercentEffect.Create },
             { 166, CharacterActionPointsReflectorEffect.Create },
             { 168, CharacterDeboostActionPointsEffect.Create },
             { 169, CharacterDeboostMovementPointsEffect.Create },

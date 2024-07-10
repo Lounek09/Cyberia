@@ -3002,5 +3002,14 @@ namespace Cyberia.Translations {
                 return ResourceManager.GetString("Unknown.Data", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Armes.
+        /// </summary>
+        public static string Weapons {
+            get {
+                return ResourceManager.GetString("Weapons", resourceCulture);
+            }
+        }
     }
 }

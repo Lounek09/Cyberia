@@ -4,19 +4,19 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterBoostOneWeaponDamagePercentEffect : Effect
+public sealed record CharacterBoostWeaponDamagePercentEffect : Effect
 {
     public int ItemTypeId { get; init; }
     public int PercentDamage { get; init; }
 
-    private CharacterBoostOneWeaponDamagePercentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemTypeId, int percentDamage)
+    private CharacterBoostWeaponDamagePercentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemTypeId, int percentDamage)
         : base(id, duration, probability, criteria, effectArea)
     {
         ItemTypeId = itemTypeId;
         PercentDamage = percentDamage;
     }
 
-    internal static CharacterBoostOneWeaponDamagePercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterBoostWeaponDamagePercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }
@@ -28,7 +28,9 @@ public sealed record CharacterBoostOneWeaponDamagePercentEffect : Effect
 
     public override Description GetDescription()
     {
-        var itemTypeName = DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(ItemTypeId);
+        var itemTypeName = ItemTypeId == 0
+            ? ApiTranslations.Weapons
+            : DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(ItemTypeId);
 
         return GetDescription(itemTypeName, PercentDamage);
     }
