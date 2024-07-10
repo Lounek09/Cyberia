@@ -5,6 +5,7 @@ using Cyberia.Salamandra.DsharpPlus;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+using DSharpPlus.Exceptions;
 
 using System.Text;
 
@@ -62,8 +63,18 @@ public static class LangManager
             postBuilder.AddTag(languageTag);
         }
 
-        var post = await forum.CreateForumPostAsync(postBuilder);
-        return post.Channel;
+        while (true)
+        {
+            try
+            {
+                var post = await forum.CreateForumPostAsync(postBuilder);
+                return post.Channel;
+            }
+            catch (RateLimitException)
+            {
+                await Task.Delay(1000);
+            }
+        }
     }
 
     private static async Task SendCheckLangMessageAsync(this DiscordThreadChannel thread, Lang lang)
