@@ -70,12 +70,6 @@ public sealed class LangsCommandModule
         [Parameter("langue"), Description("Language des langs à diff, si vide lance pour toutes les langues")]
         LangLanguage? language = null)
     {
-        if (type == modelType)
-        {
-            await ctx.RespondAsync($"Les langs de même type sont déjà diff automatiquement");
-            return;
-        }
-
         if (ChannelManager.LangForumChannel is null)
         {
             await ctx.RespondAsync("Le channel des langs n'est pas défini");
