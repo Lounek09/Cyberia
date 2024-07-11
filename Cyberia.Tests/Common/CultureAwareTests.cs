@@ -3,6 +3,7 @@
 using System.Reflection;
 
 namespace Cyberia.Tests.Common;
+
 public abstract class CultureAwareTest
 {
     private CultureAttribute? _cultureAttribute;
