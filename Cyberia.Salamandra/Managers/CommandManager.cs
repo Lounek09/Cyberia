@@ -74,7 +74,7 @@ public static class CommandManager
             Log.Error("With JsonMessage:\n{JsonMessage}", discordException.JsonMessage);
         }
 
-        if (exception is TaskCanceledException taskCanceledException && taskCanceledException.InnerException is TimeoutException)
+        if (exception is TaskCanceledException && exception.InnerException is TimeoutException)
         {
             return;
         }
