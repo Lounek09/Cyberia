@@ -26,18 +26,18 @@ public static class Bot
 
         Client = DiscordClientBuilder.CreateDefault(Config.Token, DiscordIntents.Guilds)
             .ConfigureLogging(logger => logger.AddSerilog(Log.Logger))
-            .ConfigureGatewayClient(config =>
-            {
-                config.GatewayCompressionLevel = GatewayCompressionLevel.Stream;
-                config.LogUnknownAuditlogs = false;
-                config.LogUnknownEvents = false;
-            })
             .ConfigureEventHandlers(eventHandler =>
             {
                 eventHandler.HandleGuildDownloadCompleted(ClientManager.OnGuildDownloadCompleted);
                 eventHandler.HandleGuildCreated(GuildManager.OnGuildCreated);
                 eventHandler.HandleGuildDeleted(GuildManager.OnGuildDeleted);
                 eventHandler.HandleComponentInteractionCreated(InteractionManager.OnComponentInteractionCreated);
+            })
+            .ConfigureExtraFeatures(config =>
+            {
+                config.GatewayCompressionLevel = GatewayCompressionLevel.Stream;
+                config.LogUnknownAuditlogs = false;
+                config.LogUnknownEvents = false;
             })
             .Build();
 
