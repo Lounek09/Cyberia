@@ -102,6 +102,26 @@ public sealed class ItemData : IDofusData<int>
         return DofusApi.Datacenter.ItemsStatsRepository.GetItemStatDataById(Id);
     }
 
+    public ItemSetData? GetItemSetData()
+    {
+        return DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(ItemSetId);
+    }
+
+    public CraftData? GetCraftData()
+    {
+        return DofusApi.Datacenter.CraftsRepository.GetCraftDataById(Id);
+    }
+
+    public bool IsWeapon()
+    {
+        return WeaponData is not null;
+    }
+
+    public bool IsQuestItem()
+    {
+        return GetItemTypeData()?.ItemSuperTypeId == ItemSuperTypeData.Quest;
+    }
+
     public bool IsReallyEnhanceable()
     {
         var itemTypeData = GetItemTypeData();
@@ -116,33 +136,16 @@ public sealed class ItemData : IDofusData<int>
         return false;
     }
 
-    public ItemSetData? GetItemSetData()
-    {
-        return DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(ItemSetId);
-    }
-
-    public bool IsWeapon()
-    {
-        return WeaponData is not null;
-    }
-
-    public CraftData? GetCraftData()
-    {
-        return DofusApi.Datacenter.CraftsRepository.GetCraftDataById(Id);
-    }
-
     public bool Tradeable()
     {
-        var itemTypeData = GetItemTypeData();
-        var itemStatsData = GetItemStatsData();
+        var hasEffectPreventingTrade = GetItemStatsData()?.Effects.Any(x =>
+            (x is MarkNotTradableEffect markNotTradableEffect && markNotTradableEffect.IsLinkedToAccount()) ||
+            x is MarkNeverTradableStrongEffect ||
+            x is LockToAccountEffect ||
+            (x is LockToAccountUntilEffect lockToAccountUntilEffect && lockToAccountUntilEffect.DateTime > DateTime.Now) ||
+            x is ItemUnbreakableEffect) ?? false;
 
-        var isQuestItem = itemTypeData?.ItemSuperTypeId == ItemSuperTypeData.Quest;
-        var isLinked = itemStatsData?.Effects.Any(x =>
-            x is MarkNotTradableEffect markNotTradableEffect && markNotTradableEffect.IsLinkedToAccount() ||
-            x is MarkNeverTradableStrongEffect) ?? false;
-        var isUnbreakable = itemStatsData?.Effects.Any(x => x is ItemUnbreakableEffect) ?? false;
-
-        return !isQuestItem && !Cursed && !isLinked && !isUnbreakable;
+        return !IsQuestItem() && !Cursed && !hasEffectPreventingTrade;
     }
 
     public int GetNpcRetailPrice()
