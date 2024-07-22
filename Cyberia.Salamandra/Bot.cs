@@ -35,7 +35,6 @@ public static class Bot
             })
             .ConfigureExtraFeatures(config =>
             {
-                config.GatewayCompressionLevel = GatewayCompressionLevel.Stream;
                 config.LogUnknownAuditlogs = false;
                 config.LogUnknownEvents = false;
             })
