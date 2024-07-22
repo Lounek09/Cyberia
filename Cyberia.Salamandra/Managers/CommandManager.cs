@@ -44,16 +44,16 @@ public static class CommandManager
     public static async Task OnCommandErrored(CommandsExtension _, CommandErroredEventArgs args)
     {
         var ctx = args.Context.As<SlashCommandContext>();
+        var exception = args.Exception;
 
-        if (args.Exception is ChecksFailedException checkFailedException)
+        if (exception is ChecksFailedException checkFailedException)
         {
-            var message = string.Join(
-                '\n',
+            var message = string.Join('\n',
                 checkFailedException.Errors.Select(x => x.ContextCheckAttribute switch
                 {
                     RequireApplicationOwnerAttribute => "Cette commande n'est utilisable que par le propriétaire du bot.",
                     RequireGuildAttribute => "Cette commande n'est utilisable que dans un serveur.",
-                    _ => $"Le contrôle de type {x.ContextCheckAttribute.GetType().Name} pour cette commande a raté."
+                    _ => $"Le contrôle de type {x.ContextCheckAttribute.GetType().Name} pour cette commande a échoué."
                 }));
 
             await ctx.RespondAsync(message, true);
@@ -63,15 +63,20 @@ public static class CommandManager
         var commandName = ctx.Command?.FullName ?? "Command NotFound";
 
         Log.Error(
-            args.Exception,
+            exception,
             "An error occurred when {UserName} ({UserId}) used the {CommandName} command",
             ctx.User.Username,
             ctx.User.Id,
             commandName);
 
-        if (args.Exception is DiscordException discordException)
+        if (exception is DiscordException discordException)
         {
             Log.Error("With JsonMessage:\n{JsonMessage}", discordException.JsonMessage);
+        }
+
+        if (exception is TaskCanceledException taskCanceledException && taskCanceledException.InnerException is TimeoutException)
+        {
+            return;
         }
 
         var commandArgs = string.Join('\n',
