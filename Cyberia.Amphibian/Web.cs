@@ -19,7 +19,7 @@ public static class Web
 
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions()
         {
-            ApplicationName = "Cyberia.Amphibian",
+            ApplicationName = typeof(Web).Namespace,
             EnvironmentName = Config.Environment,
             ContentRootPath = AppContext.BaseDirectory,
             WebRootPath = "wwwroot"           
