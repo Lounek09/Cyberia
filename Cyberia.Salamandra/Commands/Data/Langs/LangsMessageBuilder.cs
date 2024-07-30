@@ -82,7 +82,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         }
         else
         {
-            embed.WithDescription($"Aucun lang {Formatter.Bold(_type.ToString())} en {Formatter.Bold(_language.ToString())} n'a été trouvé");
+            embed.WithDescription($"Aucun lang {Formatter.Bold(_type.ToStringFast())} en {Formatter.Bold(_language.ToStringFast())} n'a été trouvé");
         }
 
         return Task.FromResult(embed);
@@ -94,7 +94,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
             InteractionManager.SelectComponentPacketBuilder(0),
             "Sélectionne un type pour l'afficher",
             Enum.GetValues<LangType>()
-                .Select(x => new DiscordSelectComponentOption(x.ToString(), GetPacket(x, _language), isDefault: x == _type)));
+                .Select(x => new DiscordSelectComponentOption(x.ToStringFast(), GetPacket(x, _language), isDefault: x == _type)));
     }
 
     private DiscordSelectComponent LanguageSelectBuilder()
@@ -103,6 +103,6 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
             InteractionManager.SelectComponentPacketBuilder(1),
             "Sélectionne une langue pour l'afficher",
             Enum.GetValues<LangLanguage>()
-                .Select(x => new DiscordSelectComponentOption(x.ToString(), GetPacket(_type, x), isDefault: x == _language)));
+                .Select(x => new DiscordSelectComponentOption(x.ToStringFast(), GetPacket(_type, x), isDefault: x == _language)));
     }
 }

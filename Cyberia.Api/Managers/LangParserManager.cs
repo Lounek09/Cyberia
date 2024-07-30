@@ -8,7 +8,7 @@ public static class LangParserManager
 {
     public static string GetOutputDirectoryPath(LangType type, LangLanguage language)
     {
-        return Path.Join(DofusApi.OutputPath, type.ToString().ToLower(), language.ToString().ToLower());
+        return Path.Join(DofusApi.OutputPath, type.ToStringFast().ToLower(), language.ToStringFast());
     }
 
     public static bool Parse(LangType type, LangLanguage language)

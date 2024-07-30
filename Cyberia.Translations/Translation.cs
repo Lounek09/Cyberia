@@ -7,7 +7,6 @@ namespace Cyberia.Translations;
 /// </summary>
 public static class Translation
 {
-
     /// <summary>
     /// Formats the specified template using the provided parameter.
     /// </summary>

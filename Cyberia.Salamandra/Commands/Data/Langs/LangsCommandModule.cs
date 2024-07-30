@@ -123,7 +123,7 @@ public sealed class LangsCommandModule
         [Parameter("type"), Description("Type des langs à afficher")]
         LangType type = LangType.Official,
         [Parameter("langue"), Description("Language des langs à afficher")]
-        LangLanguage language = LangLanguage.FR)
+        LangLanguage language = LangLanguage.fr)
     {
         await ctx.RespondAsync(await new LangsMessageBuilder(type, language)
             .GetMessageAsync<DiscordInteractionResponseBuilder>());

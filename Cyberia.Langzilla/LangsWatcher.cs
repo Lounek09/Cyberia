@@ -157,6 +157,6 @@ public static class LangsWatcher
     /// <returns>The output path of the langs.</returns>
     internal static string GetOutputPath(LangType type, LangLanguage language)
     {
-        return Path.Join(OutputPath, type.ToString().ToLower(), language.ToString().ToLower());
+        return Path.Join(OutputPath, type.ToStringFast().ToLower(), language.ToStringFast());
     }
 }
