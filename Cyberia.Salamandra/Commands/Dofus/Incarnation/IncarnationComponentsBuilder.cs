@@ -19,7 +19,7 @@ public static class IncarnationComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(x.Name, 100),
                     IncarnationMessageBuilder.GetPacket(x.Id),
                     x.Id.ToString());
             });

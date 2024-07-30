@@ -87,7 +87,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Spells, "Livre de sorts")
             .WithTitle($"{_spellData.Name} ({_spellData.Id}) - Rang {_selectedLevel}")
-            .WithDescription(string.IsNullOrEmpty(_spellData.Description) ? string.Empty : Formatter.Italic(_spellData.Description.Trim()))
+            .WithDescription(string.IsNullOrEmpty(_spellData.Description) ? string.Empty : Formatter.Italic(_spellData.Description.ToString().Trim()))
             .WithThumbnail(await _spellData.GetIconImagePathAsync(CdnImageSize.Size128));
 
         if (_spellLevelData is not null)

@@ -9,10 +9,10 @@ public sealed class AlignmentSpecializationData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("d")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonPropertyName("o")]
     public int AlignmentOrderId { get; init; }
@@ -30,8 +30,8 @@ public sealed class AlignmentSpecializationData : IDofusData<int>
     [JsonConstructor]
     internal AlignmentSpecializationData()
     {
-        Name = string.Empty;
-        Description = string.Empty;
+        Name = LocalizedString.Empty;
+        Description = LocalizedString.Empty;
         CompressedAlignmentFeatsParameters = [];
         AlignmentFeatsParametersData = [];
     }

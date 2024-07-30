@@ -14,7 +14,7 @@ public sealed class ItemTypeData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("t")]
     public int ItemSuperTypeId { get; init; }
@@ -25,6 +25,6 @@ public sealed class ItemTypeData : IDofusData<int>
     [JsonConstructor]
     internal ItemTypeData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 }

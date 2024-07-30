@@ -170,7 +170,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 yield return new DiscordSelectComponentOption(
                     $"Etape {i + 1}",
                     GetPacket(_questData.Id, i),
-                    _questStepsData[i].Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(_questStepsData[i].Name, 100),
                     isDefault: i == _selectedQuestStepIndex);
             }
         }

@@ -14,15 +14,15 @@ public sealed class AlignmentBalanceData : IDofusData<int>
     public int End { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("d")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonConstructor]
     internal AlignmentBalanceData()
     {
-        Name = string.Empty;
-        Description = string.Empty;
+        Name = LocalizedString.Empty;
+        Description = LocalizedString.Empty;
     }
 }

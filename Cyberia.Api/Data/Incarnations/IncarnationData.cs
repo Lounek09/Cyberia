@@ -14,7 +14,7 @@ public sealed class IncarnationData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("g")]
     public int GfxId { get; init; }
@@ -29,7 +29,7 @@ public sealed class IncarnationData : IDofusData<int>
     [JsonConstructor]
     internal IncarnationData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
         SpellsId = [];
         Effects = [];
     }

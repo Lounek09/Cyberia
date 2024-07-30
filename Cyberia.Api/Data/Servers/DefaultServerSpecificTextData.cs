@@ -11,12 +11,12 @@ public sealed class DefaultServerSpecificTextData : IDofusData<int>
     public string Label { get; init; }
 
     [JsonPropertyName("d")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonConstructor]
     internal DefaultServerSpecificTextData()
     {
         Label = string.Empty;
-        Description = string.Empty;
+        Description = LocalizedString.Empty;
     }
 }

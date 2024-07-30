@@ -8,7 +8,7 @@ public sealed class ServerCommunityData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("d")]
     public bool Visible { get; init; }
@@ -23,7 +23,7 @@ public sealed class ServerCommunityData : IDofusData<int>
     [JsonConstructor]
     internal ServerCommunityData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
         Countries = [];
     }
 }

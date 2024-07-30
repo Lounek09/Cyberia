@@ -10,6 +10,6 @@ public sealed class IncarnationAutocompleteProvider : AutoCompleteProvider
     {
         return DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
-            .ToDictionary(x => $"{x.Name.WithMaxLength(90)} ({x.Id})", x => (object)x.Id.ToString());
+            .ToDictionary(x => $"{ExtendString.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());
     }
 }

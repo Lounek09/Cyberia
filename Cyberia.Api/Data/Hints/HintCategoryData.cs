@@ -8,7 +8,7 @@ public sealed class HintCategoryData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("c")]
     public string Color { get; init; }
@@ -16,7 +16,7 @@ public sealed class HintCategoryData : IDofusData<int>
     [JsonConstructor]
     internal HintCategoryData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
         Color = string.Empty;
     }
 }

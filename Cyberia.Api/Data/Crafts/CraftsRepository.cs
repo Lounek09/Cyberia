@@ -40,7 +40,7 @@ public sealed class CraftsRepository : IDofusRepository
         {
             var itemData = craftData.GetItemData();
             if (itemData is not null &&
-                itemNames.All(x => itemData.NormalizedName.Contains(x, StringComparison.OrdinalIgnoreCase)))
+                itemNames.All(x => itemData.NormalizedName.ToString().Contains(x, StringComparison.OrdinalIgnoreCase)))
             {
                 yield return craftData;
             }

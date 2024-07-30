@@ -16,16 +16,16 @@ public sealed class ItemData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("nn")]
-    public string NormalizedName { get; init; }
+    public LocalizedString NormalizedName { get; init; }
 
     [JsonPropertyName("t")]
     public int ItemTypeId { get; init; }
 
     [JsonPropertyName("d")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonPropertyName("ep")]
     public int Episode { get; init; }
@@ -81,9 +81,9 @@ public sealed class ItemData : IDofusData<int>
     [JsonConstructor]
     internal ItemData()
     {
-        Name = string.Empty;
-        NormalizedName = string.Empty;
-        Description = string.Empty;
+        Name = LocalizedString.Empty;
+        NormalizedName = LocalizedString.Empty;
+        Description = LocalizedString.Empty;
         Criteria = [];
     }
 

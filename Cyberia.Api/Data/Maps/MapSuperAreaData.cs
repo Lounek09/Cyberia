@@ -8,11 +8,11 @@ public sealed class MapSuperAreaData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonConstructor]
     internal MapSuperAreaData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 }

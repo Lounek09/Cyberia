@@ -19,7 +19,7 @@ public static class HouseComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(x.Name, 100),
                     HouseMessageBuilder.GetPacket(x.Id),
                     x.Id.ToString());
             });

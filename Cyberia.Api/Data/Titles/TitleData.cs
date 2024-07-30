@@ -8,7 +8,7 @@ public sealed class TitleData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("t")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("c")]
     public int Color { get; init; }
@@ -19,6 +19,6 @@ public sealed class TitleData : IDofusData<int>
     [JsonConstructor]
     internal TitleData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 }

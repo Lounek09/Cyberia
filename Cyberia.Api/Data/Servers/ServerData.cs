@@ -8,10 +8,10 @@ public sealed class ServerData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("d")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonPropertyName("l")]
     public string Language { get; init; }
@@ -37,8 +37,8 @@ public sealed class ServerData : IDofusData<int>
     [JsonConstructor]
     internal ServerData()
     {
-        Name = string.Empty;
-        Description = string.Empty;
+        Name = LocalizedString.Empty;
+        Description = LocalizedString.Empty;
         Language = string.Empty;
         RealLanguages = [];
     }

@@ -25,6 +25,15 @@ public readonly record struct Description
     /// <summary>
     /// Initializes a new instance of the <see cref="Description"/> struct.
     /// </summary>
+    public Description()
+    {
+        Template = string.Empty;
+        _parameters = [];
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Description"/> struct.
+    /// </summary>
     /// <param name="template">The template.</param>
     /// <param name="parameters">The parameters.</param>
     public Description(string template, params string[] parameters)

@@ -8,7 +8,7 @@ public sealed class SpeakingItemsMessageData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("m")]
-    public string Message { get; init; }
+    public LocalizedString Message { get; init; }
 
     [JsonPropertyName("s")]
     public int SoundId { get; init; }
@@ -25,7 +25,7 @@ public sealed class SpeakingItemsMessageData : IDofusData<int>
     [JsonConstructor]
     internal SpeakingItemsMessageData()
     {
-        Message = string.Empty;
+        Message = LocalizedString.Empty;
         ItemsIdCanUse = string.Empty;
     }
 }

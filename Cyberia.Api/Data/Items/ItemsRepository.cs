@@ -92,7 +92,7 @@ public sealed class ItemsRepository : IDofusRepository
         {
             return names.All(y =>
             {
-                return x.NormalizedName.Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.NormalizedName.ToString().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

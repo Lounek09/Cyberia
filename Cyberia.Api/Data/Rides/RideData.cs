@@ -8,7 +8,7 @@ public sealed class RideData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("g")]
     [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
@@ -29,6 +29,6 @@ public sealed class RideData : IDofusData<int>
     [JsonConstructor]
     internal RideData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 }

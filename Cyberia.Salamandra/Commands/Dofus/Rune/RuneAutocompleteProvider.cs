@@ -10,6 +10,6 @@ public sealed class RuneAutocompleteProvider : AutoCompleteProvider
     {
         return DofusApi.Datacenter.RunesRepository.GetRunesDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
-            .ToDictionary(x => x.Name, x => (object)x.Name);
+            .ToDictionary(x => x.Name.ToString(), x => (object)x.Name);
     }
 }

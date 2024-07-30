@@ -8,7 +8,7 @@ public sealed class ServerPopulationData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonIgnore]
     public int Weight { get; internal set; }
@@ -16,6 +16,6 @@ public sealed class ServerPopulationData : IDofusData<int>
     [JsonConstructor]
     internal ServerPopulationData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 }

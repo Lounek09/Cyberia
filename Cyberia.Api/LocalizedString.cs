@@ -12,6 +12,8 @@ namespace Cyberia.Api;
 [JsonConverter(typeof(LocalizedStringConverter))]
 public readonly record struct LocalizedString
 {
+    public static readonly LocalizedString Empty = new();
+
     private readonly Dictionary<string, string> _translations;
 
     /// <summary>
@@ -23,6 +25,15 @@ public readonly record struct LocalizedString
     /// Gets the translations.
     /// </summary>
     public IReadOnlyDictionary<string, string> Translations => _translations.AsReadOnly();
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LocalizedString"/> struct.
+    /// </summary>
+    public LocalizedString()
+    {
+        Default = string.Empty;
+        _translations = [];
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LocalizedString"/> struct.

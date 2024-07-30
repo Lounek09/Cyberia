@@ -38,7 +38,7 @@ public sealed class RunesRepository : IDofusRepository
 
         return Runes.Values.FirstOrDefault(x =>
         {
-            return x.Name.NormalizeToAscii().Equals(name, StringComparison.OrdinalIgnoreCase);
+            return ExtendString.NormalizeToAscii(x.Name).Equals(name, StringComparison.OrdinalIgnoreCase);
         });
     }
 
@@ -50,7 +50,7 @@ public sealed class RunesRepository : IDofusRepository
         {
             return names.All(y =>
             {
-                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

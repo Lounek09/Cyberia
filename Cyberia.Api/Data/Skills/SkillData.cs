@@ -13,7 +13,7 @@ public sealed class SkillData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("d")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonPropertyName("j")]
     public int JobId { get; init; }
@@ -36,7 +36,7 @@ public sealed class SkillData : IDofusData<int>
     [JsonConstructor]
     internal SkillData()
     {
-        Description = string.Empty;
+        Description = LocalizedString.Empty;
         Criterion = string.Empty;
         CraftsId = [];
     }

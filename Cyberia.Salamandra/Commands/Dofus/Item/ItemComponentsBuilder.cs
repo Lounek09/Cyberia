@@ -20,7 +20,7 @@ public static class ItemComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(x.Name, 100),
                     ItemMessageBuilder.GetPacket(x.Id),
                     DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x.ItemTypeId));
             });

@@ -10,7 +10,7 @@ public sealed class InteractiveObjectData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("t")]
     public int Type { get; init; }
@@ -24,7 +24,7 @@ public sealed class InteractiveObjectData : IDofusData<int>
     [JsonConstructor]
     internal InteractiveObjectData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
         SkillsId = [];
     }
 

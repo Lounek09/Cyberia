@@ -39,7 +39,7 @@ public sealed class EffectsRepository : IDofusRepository
                 data.EffectsCore.Add(new EffectData()
                 {
                     Id = effectCustomData.Id,
-                    Description = effectCustomData.Description,
+                    Description = new LocalizedString(effectCustomData.Description),
                     CharacteristicId = effectCustomData.CharacteristicId,
                     Operator = effectCustomData.Operator,
                     VisibleInTooltips = effectCustomData.ShowInTooltip,
@@ -50,7 +50,8 @@ public sealed class EffectsRepository : IDofusRepository
                 continue;
             }
 
-            effectData.Description = effectCustomData.Description;
+            //TODO: Merge translations instead of replacing and losing the original ones
+            effectData.Description = new LocalizedString(effectCustomData.Description); 
         }
 
         data.Effects = data.EffectsCore.ToFrozenDictionary(x => x.Id, x => x);

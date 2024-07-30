@@ -11,7 +11,7 @@ public sealed class EffectData : IDofusData<int>
 
     [JsonPropertyName("d")]
     [JsonInclude]
-    public string Description { get; internal set; }
+    public LocalizedString Description { get; internal set; }
 
     [JsonPropertyName("c")]
     public int CharacteristicId { get; init; }
@@ -31,7 +31,7 @@ public sealed class EffectData : IDofusData<int>
     [JsonConstructor]
     internal EffectData()
     {
-        Description = string.Empty;
+        Description = LocalizedString.Empty;
         Operator = string.Empty;
         Element = string.Empty;
     }

@@ -10,10 +10,10 @@ public sealed class HouseData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("d")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonIgnore]
     public int OutdoorMapId { get; internal set; }
@@ -30,8 +30,8 @@ public sealed class HouseData : IDofusData<int>
     [JsonConstructor]
     internal HouseData()
     {
-        Name = string.Empty;
-        Description = string.Empty;
+        Name = LocalizedString.Empty;
+        Description = LocalizedString.Empty;
     }
 
     public IEnumerable<MapData> GetMapsData()

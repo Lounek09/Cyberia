@@ -10,7 +10,7 @@ public sealed class AlignmentData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("c")]
     public bool CanConquest { get; init; }
@@ -18,7 +18,7 @@ public sealed class AlignmentData : IDofusData<int>
     [JsonConstructor]
     internal AlignmentData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)

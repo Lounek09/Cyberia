@@ -18,13 +18,13 @@ public sealed class TimeZoneRepository : IDofusRepository
     public int YearLess { get; set; }
 
     [JsonPropertyName("T.m")]
-    [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, string>))]
-    public IReadOnlyDictionary<int, string> StartDayOfMonths { get; set; }
+    [JsonConverter(typeof(ReadOnlyDictionaryFromArrayConverter<int, LocalizedString>))]
+    public IReadOnlyDictionary<int, LocalizedString> StartDayOfMonths { get; set; }
 
     [JsonConstructor]
     internal TimeZoneRepository()
     {
-        StartDayOfMonths = new Dictionary<int, string>();
+        StartDayOfMonths = new Dictionary<int, LocalizedString>();
     }
 
     internal static TimeZoneRepository Load(string directoryPath)

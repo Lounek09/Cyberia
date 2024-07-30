@@ -8,12 +8,12 @@ public sealed class NpcActionData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonConstructor]
     internal NpcActionData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 }
 
