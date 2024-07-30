@@ -33,7 +33,7 @@ internal sealed class LangPartBuilder
     /// Creates a new <see cref="LangPartBuilder"/> instance.
     /// </summary>
     /// <param name="name">The name of the part.</param>
-    /// <param name="keySegment">The key segment to determine if an array should be created.</param>
+    /// <param name="keySegment">The key segment used to determine the value kind of the part.</param>
     /// <returns>A new instance of <see cref="LangPartBuilder"/>.</returns>
     public static LangPartBuilder Create(string name, ReadOnlySpan<char> keySegment)
     {

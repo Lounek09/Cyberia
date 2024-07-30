@@ -45,8 +45,7 @@ public static class LangParserManager
 
     public static bool ParseAll(LangType type)
     {
-        var languages = Enum.GetValues<LangLanguage>();
-
-        return languages.All(x => Parse(type, x));
+        return Enum.GetValues<LangLanguage>()
+            .All(x => Parse(type, x));
     }
 }
