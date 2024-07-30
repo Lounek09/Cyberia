@@ -36,7 +36,7 @@ public static class LangParserManager
         }
         catch (Exception e)
         {
-            Log.Error(e, "Une erreur est survenue lors du parsing des langs {LangType} en {LangLanguage}", type, language);
+            Log.Error(e, "An error occurred while parsing langs {LangType} in {LangLanguage}", type, language);
             return false;
         }
 
