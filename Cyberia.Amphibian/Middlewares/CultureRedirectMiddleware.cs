@@ -28,7 +28,7 @@ public sealed class CultureRedirectMiddleware
         var path = context.Request.Path.ToString().AsMemory();
         if (path.Length < 2)
         {
-            context.Response.Redirect($"/{CultureInfo.CurrentCulture.Name}");
+            context.Response.Redirect($"/{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}");
             return;
         }
 
@@ -37,9 +37,9 @@ public sealed class CultureRedirectMiddleware
         var index = path.Span.IndexOf('/');
         var firstSegment = index == -1 ? path : path[..index];
 
-        if (!_requestLocalizationOptions.SupportedCultures!.Any(x => firstSegment.Span.SequenceEqual(x.Name)))
+        if (!_requestLocalizationOptions.SupportedCultures!.Any(x => firstSegment.Span.SequenceEqual(x.TwoLetterISOLanguageName)))
         {
-            context.Response.Redirect($"/{CultureInfo.CurrentCulture.Name}{path[firstSegment.Length..]}");
+            context.Response.Redirect($"/{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}{path[firstSegment.Length..]}");
             return;
         }
 

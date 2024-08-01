@@ -22,7 +22,8 @@ public sealed class CultureFormViewComponent : ViewComponent
 
         foreach (var cultureInfo in _requestLocalizationOptions.SupportedCultures!)
         {
-            items.Add(new CultureOption(cultureInfo, cultureInfo.Name.Equals(CultureInfo.CurrentCulture.Name) ? "selected" : null));
+            CultureOption option = new(cultureInfo, cultureInfo.TwoLetterISOLanguageName.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName) ? "selected" : null);
+            items.Add(option);
         }
 
         return View(items);

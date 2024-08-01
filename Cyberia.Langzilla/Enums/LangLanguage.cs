@@ -76,6 +76,6 @@ public static class ExtendLangLanguage
     /// <returns>The corresponding <see cref="LangLanguage"/>; if not found, <see cref="LangLanguage.en"/>.</returns>
     public static LangLanguage ToLangLanguage(this CultureInfo culture)
     {
-        return Enum.TryParse<LangLanguage>(culture.Name, out var result) ? result : LangLanguage.en;
+        return Enum.TryParse<LangLanguage>(culture.TwoLetterISOLanguageName, out var result) ? result : LangLanguage.en;
     }
 }
