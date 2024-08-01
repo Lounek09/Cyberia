@@ -2527,7 +2527,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown property.
+        ///   Looks up a localized string similar to None.
         /// </summary>
         public static string GuildProperty_None {
             get {

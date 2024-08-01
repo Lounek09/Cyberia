@@ -550,7 +550,7 @@
     <value>Stérile</value>
   </data>
   <data name="GuildProperty.None" xml:space="preserve">
-    <value>Property inconnu</value>
+    <value>Aucune</value>
   </data>
   <data name="GuildProperty.House" xml:space="preserve">
     <value>Maison</value>

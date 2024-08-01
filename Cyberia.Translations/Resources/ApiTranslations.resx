@@ -925,7 +925,7 @@
     <value>House</value>
   </data>
   <data name="GuildProperty.None" xml:space="preserve">
-    <value>Unknown property</value>
+    <value>None</value>
   </data>
   <data name="Infertile" xml:space="preserve">
     <value>Infertile</value>
