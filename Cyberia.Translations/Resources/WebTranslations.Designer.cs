@@ -88,7 +88,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Breeds.
+        ///   Looks up a localized string similar to Classes.
         /// </summary>
         public static string Page_Breeds_Title {
             get {

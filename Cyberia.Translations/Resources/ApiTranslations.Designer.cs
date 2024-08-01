@@ -61,7 +61,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AlignmentFeatEffect #1 erroné (#1).
+        ///   Looks up a localized string similar to Errored AlignmentFeatEffect #1 (#1).
         /// </summary>
         public static string AlignmentFeatEffect_Errored {
             get {
@@ -70,7 +70,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AlignmentFeatEffect #1 inconnu (#2).
+        ///   Looks up a localized string similar to Unknown AlignmentFeatEffect #1 (#2).
         /// </summary>
         public static string AlignmentFeatEffect_Unknown {
             get {
@@ -79,7 +79,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Carré.
+        ///   Looks up a localized string similar to Four of a kind.
         /// </summary>
         public static string CardCombination_FourOfAKind {
             get {
@@ -88,7 +88,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aucune.
+        ///   Looks up a localized string similar to None.
         /// </summary>
         public static string CardCombination_None {
             get {
@@ -97,7 +97,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Une paire.
+        ///   Looks up a localized string similar to Pair.
         /// </summary>
         public static string CardCombination_Pair {
             get {
@@ -106,7 +106,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Brelan.
+        ///   Looks up a localized string similar to Thee of a kind.
         /// </summary>
         public static string CardCombination_ThreeOfAKind {
             get {
@@ -115,7 +115,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Double paire.
+        ///   Looks up a localized string similar to Two pair.
         /// </summary>
         public static string CardCombination_TwoPair {
             get {
@@ -124,7 +124,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Obèse.
+        ///   Looks up a localized string similar to Obese.
         /// </summary>
         public static string Corpulence_Obese {
             get {
@@ -133,7 +133,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rassasié.
+        ///   Looks up a localized string similar to Satisfied.
         /// </summary>
         public static string Corpulence_Satisfied {
             get {
@@ -142,7 +142,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maigrichon.
+        ///   Looks up a localized string similar to Skinny.
         /// </summary>
         public static string Corpulence_Skinny {
             get {
@@ -151,7 +151,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PA ≠ #1.
+        ///   Looks up a localized string similar to AP ≠ #1.
         /// </summary>
         public static string Criterion_ActionPoint_Different {
             get {
@@ -160,7 +160,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PA = #1.
+        ///   Looks up a localized string similar to AP = #1.
         /// </summary>
         public static string Criterion_ActionPoint_Equal {
             get {
@@ -169,7 +169,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PA &lt; #1.
+        ///   Looks up a localized string similar to AP &lt; #1.
         /// </summary>
         public static string Criterion_ActionPoint_Inferior {
             get {
@@ -178,7 +178,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PA &gt; #1.
+        ///   Looks up a localized string similar to AP &gt; #1.
         /// </summary>
         public static string Criterion_ActionPoint_Superior {
             get {
@@ -187,7 +187,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agilité ≠ #1.
+        ///   Looks up a localized string similar to Agility ≠ #1.
         /// </summary>
         public static string Criterion_Agility_Different {
             get {
@@ -196,7 +196,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agilité = #1.
+        ///   Looks up a localized string similar to Agility = #1.
         /// </summary>
         public static string Criterion_Agility_Equal {
             get {
@@ -205,7 +205,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agilité &lt; #1.
+        ///   Looks up a localized string similar to Agility &lt; #1.
         /// </summary>
         public static string Criterion_Agility_Inferior {
             get {
@@ -214,7 +214,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agilité &gt; #1.
+        ///   Looks up a localized string similar to Agility &gt; #1.
         /// </summary>
         public static string Criterion_Agility_Superior {
             get {
@@ -223,7 +223,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alignement ≠ #1.
+        ///   Looks up a localized string similar to Alignment ≠ #1.
         /// </summary>
         public static string Criterion_Alignment_Different {
             get {
@@ -232,7 +232,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alignement = #1.
+        ///   Looks up a localized string similar to Alignment = #1.
         /// </summary>
         public static string Criterion_Alignment_Equal {
             get {
@@ -241,7 +241,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don ≠ #1.
+        ///   Looks up a localized string similar to Gift ≠ #1.
         /// </summary>
         public static string Criterion_AlignmentFeat_Different {
             get {
@@ -250,7 +250,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don #1 ≠ #2.
+        ///   Looks up a localized string similar to Gift #1 ≠ #2.
         /// </summary>
         public static string Criterion_AlignmentFeat_Different_Level {
             get {
@@ -259,7 +259,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don = #1.
+        ///   Looks up a localized string similar to Gift = #1.
         /// </summary>
         public static string Criterion_AlignmentFeat_Equal {
             get {
@@ -268,7 +268,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don #1 = #2.
+        ///   Looks up a localized string similar to Gift #1 = #2.
         /// </summary>
         public static string Criterion_AlignmentFeat_Equal_Level {
             get {
@@ -277,7 +277,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don &lt; #1.
+        ///   Looks up a localized string similar to Gift &lt; #1.
         /// </summary>
         public static string Criterion_AlignmentFeat_Inferior {
             get {
@@ -286,7 +286,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don #1 &lt; #2.
+        ///   Looks up a localized string similar to Gift #1 &lt; #2.
         /// </summary>
         public static string Criterion_AlignmentFeat_Inferior_Level {
             get {
@@ -295,7 +295,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don &gt; #1.
+        ///   Looks up a localized string similar to Gift &gt; #1.
         /// </summary>
         public static string Criterion_AlignmentFeat_Superior {
             get {
@@ -304,7 +304,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don #1 &gt; #2.
+        ///   Looks up a localized string similar to Gift #1 &gt; #2.
         /// </summary>
         public static string Criterion_AlignmentFeat_Superior_Level {
             get {
@@ -313,7 +313,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau d&apos;alignement ≠ #1.
+        ///   Looks up a localized string similar to Alignment level ≠ #1.
         /// </summary>
         public static string Criterion_AlignmentLevel_Different {
             get {
@@ -322,7 +322,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau d&apos;alignement = #1.
+        ///   Looks up a localized string similar to Alignment level = #1.
         /// </summary>
         public static string Criterion_AlignmentLevel_Equal {
             get {
@@ -331,7 +331,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau d&apos;alignement &lt; #1.
+        ///   Looks up a localized string similar to Alignment level &lt; #1.
         /// </summary>
         public static string Criterion_AlignmentLevel_Inferior {
             get {
@@ -340,7 +340,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau d&apos;alignement &gt; #1.
+        ///   Looks up a localized string similar to Alignment level &gt; #1.
         /// </summary>
         public static string Criterion_AlignmentLevel_Superior {
             get {
@@ -349,7 +349,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Grade ≠ #1.
+        ///   Looks up a localized string similar to Rank ≠ #1.
         /// </summary>
         public static string Criterion_AlignmentRank_Different {
             get {
@@ -358,7 +358,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Grade = #1.
+        ///   Looks up a localized string similar to Rank = #1.
         /// </summary>
         public static string Criterion_AlignmentRank_Equal {
             get {
@@ -367,7 +367,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Grade &lt; #1.
+        ///   Looks up a localized string similar to Rank &lt; #1.
         /// </summary>
         public static string Criterion_AlignmentRank_Inferior {
             get {
@@ -376,7 +376,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Grade &gt; #1.
+        ///   Looks up a localized string similar to Rank &gt; #1.
         /// </summary>
         public static string Criterion_AlignmentRank_Superior {
             get {
@@ -385,7 +385,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spécialisation ≠ #1.
+        ///   Looks up a localized string similar to Specialization ≠ #1.
         /// </summary>
         public static string Criterion_AlignmentSpecialization_Different {
             get {
@@ -394,7 +394,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spécialisation = #1.
+        ///   Looks up a localized string similar to Specialization = #1.
         /// </summary>
         public static string Criterion_AlignmentSpecialization_Equal {
             get {
@@ -403,7 +403,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to et.
+        ///   Looks up a localized string similar to and.
         /// </summary>
         public static string Criterion_And {
             get {
@@ -412,7 +412,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Créature invocable disponible ≠ #1.
+        ///   Looks up a localized string similar to Summonable creature available ≠ #1.
         /// </summary>
         public static string Criterion_AvailableSummon_Different {
             get {
@@ -421,7 +421,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Créature invocable disponible = #1.
+        ///   Looks up a localized string similar to Summonable creature available = #1.
         /// </summary>
         public static string Criterion_AvailableSummon_Equal {
             get {
@@ -430,7 +430,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Créature invocable disponible &lt; #1.
+        ///   Looks up a localized string similar to Summonable creature available &lt; #1.
         /// </summary>
         public static string Criterion_AvailableSummon_Inferior {
             get {
@@ -439,7 +439,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Créature invocable disponible &gt; #1.
+        ///   Looks up a localized string similar to Summonable creature available &gt; #1.
         /// </summary>
         public static string Criterion_AvailableSummon_Superior {
             get {
@@ -448,7 +448,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agilité de base ≠ #1.
+        ///   Looks up a localized string similar to Agility additional ≠ #1.
         /// </summary>
         public static string Criterion_BaseAgility_Different {
             get {
@@ -457,7 +457,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agilité de base = #1.
+        ///   Looks up a localized string similar to Agility additional = #1.
         /// </summary>
         public static string Criterion_BaseAgility_Equal {
             get {
@@ -466,7 +466,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agilité de base &lt; #1.
+        ///   Looks up a localized string similar to Agility additional &lt; #1.
         /// </summary>
         public static string Criterion_BaseAgility_Inferior {
             get {
@@ -475,7 +475,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agilité de base &gt; #1.
+        ///   Looks up a localized string similar to Agility additional &gt; #1.
         /// </summary>
         public static string Criterion_BaseAgility_Superior {
             get {
@@ -484,7 +484,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chance de base ≠ #1.
+        ///   Looks up a localized string similar to Chance additional ≠ #1.
         /// </summary>
         public static string Criterion_BaseChance_Different {
             get {
@@ -493,7 +493,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chance de base = #1.
+        ///   Looks up a localized string similar to Chance additional = #1.
         /// </summary>
         public static string Criterion_BaseChance_Equal {
             get {
@@ -502,7 +502,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chance de base &lt; #1.
+        ///   Looks up a localized string similar to Chance additional &lt; #1.
         /// </summary>
         public static string Criterion_BaseChance_Inferior {
             get {
@@ -511,7 +511,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chance de base &gt; #1.
+        ///   Looks up a localized string similar to Chance additional &gt; #1.
         /// </summary>
         public static string Criterion_BaseChance_Superior {
             get {
@@ -520,7 +520,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Intelligence de base ≠ #1.
+        ///   Looks up a localized string similar to Intelligence additional ≠ #1.
         /// </summary>
         public static string Criterion_BaseIntelligence_Different {
             get {
@@ -529,7 +529,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Intelligence de base = #1.
+        ///   Looks up a localized string similar to Intelligence additional = #1.
         /// </summary>
         public static string Criterion_BaseIntelligence_Equal {
             get {
@@ -538,7 +538,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Intelligence de base &lt; #1.
+        ///   Looks up a localized string similar to Intelligence additional &lt; #1.
         /// </summary>
         public static string Criterion_BaseIntelligence_Inferior {
             get {
@@ -547,7 +547,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Intelligence de base &gt; #1.
+        ///   Looks up a localized string similar to Intelligence additional &gt; #1.
         /// </summary>
         public static string Criterion_BaseIntelligence_Superior {
             get {
@@ -556,7 +556,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force de base ≠ #1.
+        ///   Looks up a localized string similar to Strength additional ≠ #1.
         /// </summary>
         public static string Criterion_BaseStrength_Different {
             get {
@@ -565,7 +565,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force de base = #1.
+        ///   Looks up a localized string similar to Strength additional = #1.
         /// </summary>
         public static string Criterion_BaseStrength_Equal {
             get {
@@ -574,7 +574,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force de base &lt; #1.
+        ///   Looks up a localized string similar to Strength additional &lt; #1.
         /// </summary>
         public static string Criterion_BaseStrength_Inferior {
             get {
@@ -583,7 +583,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force de base &gt; #1.
+        ///   Looks up a localized string similar to Strength additional &gt; #1.
         /// </summary>
         public static string Criterion_BaseStrength_Superior {
             get {
@@ -592,7 +592,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité de base ≠ #1.
+        ///   Looks up a localized string similar to Vitality additional ≠ #1.
         /// </summary>
         public static string Criterion_BaseVitality_Different {
             get {
@@ -601,7 +601,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité de base = #1.
+        ///   Looks up a localized string similar to Vitality additional = #1.
         /// </summary>
         public static string Criterion_BaseVitality_Equal {
             get {
@@ -610,7 +610,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité de base &lt; #1.
+        ///   Looks up a localized string similar to Vitality additional &lt; #1.
         /// </summary>
         public static string Criterion_BaseVitality_Inferior {
             get {
@@ -619,7 +619,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité de base &gt; #1.
+        ///   Looks up a localized string similar to Vitality additional &gt; #1.
         /// </summary>
         public static string Criterion_BaseVitality_Superior {
             get {
@@ -628,7 +628,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sagesse de base ≠ #1.
+        ///   Looks up a localized string similar to Wisdom additional ≠ #1.
         /// </summary>
         public static string Criterion_BaseWisdom_Different {
             get {
@@ -637,7 +637,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sagesse de base = #1.
+        ///   Looks up a localized string similar to Wisdom additional = #1.
         /// </summary>
         public static string Criterion_BaseWisdom_Equal {
             get {
@@ -646,7 +646,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sagesse de base &lt; #1.
+        ///   Looks up a localized string similar to Wisdom additional &lt; #1.
         /// </summary>
         public static string Criterion_BaseWisdom_Inferior {
             get {
@@ -655,7 +655,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sagesse de base &gt; #1.
+        ///   Looks up a localized string similar to Wisdom additional &gt; #1.
         /// </summary>
         public static string Criterion_BaseWisdom_Superior {
             get {
@@ -664,7 +664,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Meilleur élément ≠ #1.
+        ///   Looks up a localized string similar to Best element ≠ #1.
         /// </summary>
         public static string Criterion_BestElement_Different {
             get {
@@ -673,7 +673,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Meilleur élément = #1.
+        ///   Looks up a localized string similar to Best element = #1.
         /// </summary>
         public static string Criterion_BestElement_Equal {
             get {
@@ -682,7 +682,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classe ≠ #1.
+        ///   Looks up a localized string similar to Class ≠ #1.
         /// </summary>
         public static string Criterion_Breed_Different {
             get {
@@ -691,7 +691,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classe = #1.
+        ///   Looks up a localized string similar to Class = #1.
         /// </summary>
         public static string Criterion_Breed_Equal {
             get {
@@ -700,7 +700,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main ≠ #1.
+        ///   Looks up a localized string similar to Hand ≠ #1.
         /// </summary>
         public static string Criterion_CardCombination_Different {
             get {
@@ -709,7 +709,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main = #1.
+        ///   Looks up a localized string similar to Hand = #1.
         /// </summary>
         public static string Criterion_CardCombination_Equal {
             get {
@@ -754,7 +754,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PA ≠ #1.
+        ///   Looks up a localized string similar to AP ≠ #1.
         /// </summary>
         public static string Criterion_CurrentActionPoint_Different {
             get {
@@ -763,7 +763,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PA = #1.
+        ///   Looks up a localized string similar to AP = #1.
         /// </summary>
         public static string Criterion_CurrentActionPoint_Equal {
             get {
@@ -772,7 +772,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PA &lt; #1.
+        ///   Looks up a localized string similar to AP &lt; #1.
         /// </summary>
         public static string Criterion_CurrentActionPoint_Inferior {
             get {
@@ -781,7 +781,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PA &gt; #1.
+        ///   Looks up a localized string similar to AP &gt; #1.
         /// </summary>
         public static string Criterion_CurrentActionPoint_Superior {
             get {
@@ -790,7 +790,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PM ≠ #1.
+        ///   Looks up a localized string similar to MP ≠ #1.
         /// </summary>
         public static string Criterion_CurrentMovementPoint_Different {
             get {
@@ -799,7 +799,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PM = #1.
+        ///   Looks up a localized string similar to MP = #1.
         /// </summary>
         public static string Criterion_CurrentMovementPoint_Equal {
             get {
@@ -808,7 +808,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PM &lt; #1.
+        ///   Looks up a localized string similar to MP &lt; #1.
         /// </summary>
         public static string Criterion_CurrentMovementPoint_Inferior {
             get {
@@ -817,7 +817,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PM &gt; #1.
+        ///   Looks up a localized string similar to MP &gt; #1.
         /// </summary>
         public static string Criterion_CurrentMovementPoint_Superior {
             get {
@@ -826,7 +826,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points de déshonneur ≠ #1.
+        ///   Looks up a localized string similar to Disgrace points ≠ #1.
         /// </summary>
         public static string Criterion_DisgracePoint_Different {
             get {
@@ -835,7 +835,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points de déshonneur = #1.
+        ///   Looks up a localized string similar to Disgrace points = #1.
         /// </summary>
         public static string Criterion_DisgracePoint_Equal {
             get {
@@ -844,7 +844,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points de déshonneur &lt; #1.
+        ///   Looks up a localized string similar to Disgrace points &lt; #1.
         /// </summary>
         public static string Criterion_DisgracePoint_Inferior {
             get {
@@ -853,7 +853,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points de déshonneur &gt; #1.
+        ///   Looks up a localized string similar to Disgrace points &gt; #1.
         /// </summary>
         public static string Criterion_DisgracePoint_Superior {
             get {
@@ -862,7 +862,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être dans un donjon.
+        ///   Looks up a localized string similar to Do not be in a dungeon.
         /// </summary>
         public static string Criterion_Dungeon_Equal_False {
             get {
@@ -871,7 +871,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etre dans un donjon.
+        ///   Looks up a localized string similar to Be in a dungeon.
         /// </summary>
         public static string Criterion_Dungeon_Equal_True {
             get {
@@ -880,7 +880,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas connaître l&apos;attitude #1.
+        ///   Looks up a localized string similar to Not knowing the emote #1.
         /// </summary>
         public static string Criterion_Emote_Different {
             get {
@@ -889,7 +889,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connaître l&apos;attitude #1.
+        ///   Looks up a localized string similar to Know the emote #1.
         /// </summary>
         public static string Criterion_Emote_Equal {
             get {
@@ -898,7 +898,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;énergie ≠ #1.
+        ///   Looks up a localized string similar to Energy points ≠ #1.
         /// </summary>
         public static string Criterion_EnergyPoints_Different {
             get {
@@ -907,7 +907,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;énergie = #1.
+        ///   Looks up a localized string similar to Energy points = #1.
         /// </summary>
         public static string Criterion_EnergyPoints_Equal {
             get {
@@ -916,7 +916,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;énergie &lt; #1.
+        ///   Looks up a localized string similar to Energy points &lt; #1.
         /// </summary>
         public static string Criterion_EnergyPoints_Inferior {
             get {
@@ -925,7 +925,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;énergie &gt; #1.
+        ///   Looks up a localized string similar to Energy points &gt; #1.
         /// </summary>
         public static string Criterion_EnergyPoints_Superior {
             get {
@@ -934,7 +934,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Criterion éronné (#1).
+        ///   Looks up a localized string similar to Errored criterion (#1).
         /// </summary>
         public static string Criterion_Errored {
             get {
@@ -943,7 +943,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pods libre ≠ #1.
+        ///   Looks up a localized string similar to Free pods ≠ #1.
         /// </summary>
         public static string Criterion_FreeWeight_Different {
             get {
@@ -952,7 +952,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pods libre = #1.
+        ///   Looks up a localized string similar to Free pods = #1.
         /// </summary>
         public static string Criterion_FreeWeight_Equal {
             get {
@@ -961,7 +961,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pods libre &lt; #1.
+        ///   Looks up a localized string similar to Free pods &lt; #1.
         /// </summary>
         public static string Criterion_FreeWeight_Inferior {
             get {
@@ -970,7 +970,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pods libre &gt; #1.
+        ///   Looks up a localized string similar to Free pods &gt; #1.
         /// </summary>
         public static string Criterion_FreeWeight_Superior {
             get {
@@ -979,7 +979,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sexe ≠ #1.
+        ///   Looks up a localized string similar to Sex ≠ #1.
         /// </summary>
         public static string Criterion_Gender_Different {
             get {
@@ -988,7 +988,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sexe = #1.
+        ///   Looks up a localized string similar to Sex = #1.
         /// </summary>
         public static string Criterion_Gender_Equal {
             get {
@@ -997,7 +997,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être propriétaire d&apos;une maison.
+        ///   Looks up a localized string similar to Do not own a house.
         /// </summary>
         public static string Criterion_Homeowner_Equal_False {
             get {
@@ -1006,7 +1006,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etre propriétaire d&apos;une maison.
+        ///   Looks up a localized string similar to Own a house.
         /// </summary>
         public static string Criterion_Homeowner_Equal_True {
             get {
@@ -1015,7 +1015,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;honneur ≠ #1.
+        ///   Looks up a localized string similar to Honor points ≠ #1.
         /// </summary>
         public static string Criterion_HonorPoint_Different {
             get {
@@ -1024,7 +1024,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;honneur = #1.
+        ///   Looks up a localized string similar to Honor points = #1.
         /// </summary>
         public static string Criterion_HonorPoint_Equal {
             get {
@@ -1033,7 +1033,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;honneur &lt; #1.
+        ///   Looks up a localized string similar to Honor points &lt; #1.
         /// </summary>
         public static string Criterion_HonorPoint_Inferior {
             get {
@@ -1042,7 +1042,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;honneur &gt; #1.
+        ///   Looks up a localized string similar to Honor points &gt; #1.
         /// </summary>
         public static string Criterion_HonorPoint_Superior {
             get {
@@ -1087,7 +1087,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas posséder l&apos;objet #1.
+        ///   Looks up a localized string similar to Do not possess the item #1.
         /// </summary>
         public static string Criterion_Item_Different {
             get {
@@ -1096,7 +1096,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas posséder #2 fois l&apos;objet #1.
+        ///   Looks up a localized string similar to Do not possess #2 time(s) the item #1.
         /// </summary>
         public static string Criterion_Item_Different_Quantity {
             get {
@@ -1105,7 +1105,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Posséder l&apos;objet #1.
+        ///   Looks up a localized string similar to Possess the item #1.
         /// </summary>
         public static string Criterion_Item_Equal {
             get {
@@ -1114,7 +1114,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Posséder #2 fois l&apos;objet #1.
+        ///   Looks up a localized string similar to Possess #2 time(s) the item #1.
         /// </summary>
         public static string Criterion_Item_Equal_Quantity {
             get {
@@ -1123,7 +1123,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etre équipé de l&apos;objet #1.
+        ///   Looks up a localized string similar to Be equipped with the item #1.
         /// </summary>
         public static string Criterion_Item_Equiped {
             get {
@@ -1132,7 +1132,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Avoir #2 fois l&apos;objet #1 équipé.
+        ///   Looks up a localized string similar to Have the item #1 equipped #2 time(s).
         /// </summary>
         public static string Criterion_Item_Equiped_Quantity {
             get {
@@ -1141,7 +1141,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas posséder l&apos;objet #1.
+        ///   Looks up a localized string similar to Do not possess the item #1.
         /// </summary>
         public static string Criterion_Item_Inferior {
             get {
@@ -1150,7 +1150,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Posséder #2 fois ou moins l&apos;objet #1.
+        ///   Looks up a localized string similar to Possess #2 time(s) or less the item #1.
         /// </summary>
         public static string Criterion_Item_Inferior_Quantity {
             get {
@@ -1159,7 +1159,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être équipé de l&apos;objet #1.
+        ///   Looks up a localized string similar to Not being equipped with the item #1.
         /// </summary>
         public static string Criterion_Item_NotEquiped {
             get {
@@ -1168,7 +1168,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas avoir l&apos;objet #1 équipé #2 fois.
+        ///   Looks up a localized string similar to Not being equipped with the item #1 #2 time(s).
         /// </summary>
         public static string Criterion_Item_NotEquiped_Quantity {
             get {
@@ -1177,7 +1177,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Posséder l&apos;objet #1.
+        ///   Looks up a localized string similar to Possess the item #1.
         /// </summary>
         public static string Criterion_Item_Superior {
             get {
@@ -1186,7 +1186,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Posséder #2 fois ou plus l&apos;objet #1.
+        ///   Looks up a localized string similar to Possess #2 time(s) or more the item #1.
         /// </summary>
         public static string Criterion_Item_Superior_Quantity {
             get {
@@ -1195,7 +1195,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Métier ≠ #1.
+        ///   Looks up a localized string similar to Job ≠ #1.
         /// </summary>
         public static string Criterion_Job_Different {
             get {
@@ -1204,7 +1204,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Métier #1 ≠ #2.
+        ///   Looks up a localized string similar to Job #1 ≠ #2.
         /// </summary>
         public static string Criterion_Job_Different_Level {
             get {
@@ -1213,7 +1213,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Métier = #1.
+        ///   Looks up a localized string similar to Job = #1.
         /// </summary>
         public static string Criterion_Job_Equal {
             get {
@@ -1222,7 +1222,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Métier #1 = #2.
+        ///   Looks up a localized string similar to Job #1 = #2.
         /// </summary>
         public static string Criterion_Job_Equal_Level {
             get {
@@ -1231,7 +1231,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Métier &lt; #1.
+        ///   Looks up a localized string similar to Job &lt; #1.
         /// </summary>
         public static string Criterion_Job_Inferior {
             get {
@@ -1240,7 +1240,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Métier #1 &lt; #2.
+        ///   Looks up a localized string similar to Job #1 &lt; #2.
         /// </summary>
         public static string Criterion_Job_Inferior_Level {
             get {
@@ -1249,7 +1249,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Métier &gt; #1.
+        ///   Looks up a localized string similar to Job &gt; #1.
         /// </summary>
         public static string Criterion_Job_Superior {
             get {
@@ -1258,7 +1258,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Métier #1 &gt; #2.
+        ///   Looks up a localized string similar to Job #1 &gt; #2.
         /// </summary>
         public static string Criterion_Job_Superior_Level {
             get {
@@ -1303,7 +1303,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau ≠ #1.
+        ///   Looks up a localized string similar to Level ≠ #1.
         /// </summary>
         public static string Criterion_Level_Different {
             get {
@@ -1312,7 +1312,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau = #1.
+        ///   Looks up a localized string similar to Level = #1.
         /// </summary>
         public static string Criterion_Level_Equal {
             get {
@@ -1321,7 +1321,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau &lt; #1.
+        ///   Looks up a localized string similar to Level &lt; #1.
         /// </summary>
         public static string Criterion_Level_Inferior {
             get {
@@ -1330,7 +1330,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau &gt; #1.
+        ///   Looks up a localized string similar to Level &gt; #1.
         /// </summary>
         public static string Criterion_Level_Superior {
             get {
@@ -1339,7 +1339,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau modulé ≠ #1.
+        ///   Looks up a localized string similar to Modulated level ≠ #1.
         /// </summary>
         public static string Criterion_LevelModulation_Different {
             get {
@@ -1348,7 +1348,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau modulé = #1.
+        ///   Looks up a localized string similar to Modulated level = #1.
         /// </summary>
         public static string Criterion_LevelModulation_Equal {
             get {
@@ -1357,7 +1357,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau modulé &lt; #1.
+        ///   Looks up a localized string similar to Modulated level &lt; #1.
         /// </summary>
         public static string Criterion_LevelModulation_Inferior {
             get {
@@ -1366,7 +1366,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau modulé &gt; #1.
+        ///   Looks up a localized string similar to Modulated level &gt; #1.
         /// </summary>
         public static string Criterion_LevelModulation_Superior {
             get {
@@ -1375,7 +1375,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apparence ≠ #1.
+        ///   Looks up a localized string similar to Look ≠ #1.
         /// </summary>
         public static string Criterion_Look_Different {
             get {
@@ -1384,7 +1384,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apparence = #1.
+        ///   Looks up a localized string similar to Look = #1.
         /// </summary>
         public static string Criterion_Look_Equal {
             get {
@@ -1393,7 +1393,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être sur la map #1 (#2).
+        ///   Looks up a localized string similar to Do not be on the map #1 (#2).
         /// </summary>
         public static string Criterion_Map_Different {
             get {
@@ -1402,7 +1402,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etre sur la map #1 (#2).
+        ///   Looks up a localized string similar to Be on the map #1 (#2).
         /// </summary>
         public static string Criterion_Map_Equal {
             get {
@@ -1411,7 +1411,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être dans la zone #1.
+        ///   Looks up a localized string similar to Dot not be in the area #1.
         /// </summary>
         public static string Criterion_MapArea_Different {
             get {
@@ -1420,7 +1420,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etre dans la zone #1.
+        ///   Looks up a localized string similar to Be in the are #1.
         /// </summary>
         public static string Criterion_MapArea_Equal {
             get {
@@ -1429,7 +1429,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nombre de joueurs sur la map #1 (#2) ≠ #3.
+        ///   Looks up a localized string similar to Number of players on the map #1 (#2) ≠ #3.
         /// </summary>
         public static string Criterion_MapPlayer_Different {
             get {
@@ -1438,7 +1438,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nombre de joueurs sur la map #1 (#2) = #3.
+        ///   Looks up a localized string similar to Number of players on the map #1 (#2) = #3.
         /// </summary>
         public static string Criterion_MapPlayer_Equal {
             get {
@@ -1447,7 +1447,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nombre de joueurs sur la map #1 (#2) &lt; #3.
+        ///   Looks up a localized string similar to Number of players on the map #1 (#2) &lt; #3.
         /// </summary>
         public static string Criterion_MapPlayer_Inferior {
             get {
@@ -1456,7 +1456,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nombre de joueurs sur la map #1 (#2) &gt; #3.
+        ///   Looks up a localized string similar to Number of players on the map #1 (#2) &gt; #3.
         /// </summary>
         public static string Criterion_MapPlayer_Superior {
             get {
@@ -1465,7 +1465,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être dans la sous-zone #1.
+        ///   Looks up a localized string similar to Do not be in the subarea #1.
         /// </summary>
         public static string Criterion_MapSubArea_Different {
             get {
@@ -1474,7 +1474,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etre dans la sous-zone #1.
+        ///   Looks up a localized string similar to Be in the subarea #1.
         /// </summary>
         public static string Criterion_MapSubArea_Equal {
             get {
@@ -1483,7 +1483,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etre #1.
+        ///   Looks up a localized string similar to Be #1.
         /// </summary>
         public static string Criterion_MaritalStatus_Equal {
             get {
@@ -1492,7 +1492,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;énergie maximum ≠ #1.
+        ///   Looks up a localized string similar to Max energy points ≠ #1.
         /// </summary>
         public static string Criterion_MaxEnergyPoints_Different {
             get {
@@ -1501,7 +1501,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;énergie maximum = #1.
+        ///   Looks up a localized string similar to Max energy points = #1.
         /// </summary>
         public static string Criterion_MaxEnergyPoints_Equal {
             get {
@@ -1510,7 +1510,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;énergie maximum &lt; #1.
+        ///   Looks up a localized string similar to Max energy points &lt; #1.
         /// </summary>
         public static string Criterion_MaxEnergyPoints_Inferior {
             get {
@@ -1519,7 +1519,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points d&apos;énergie maximum &gt; #1.
+        ///   Looks up a localized string similar to Max energy points &gt; #1.
         /// </summary>
         public static string Criterion_MaxEnergyPoints_Superior {
             get {
@@ -1564,7 +1564,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Le monstre #1 n&apos;est pas invoqué dans l&apos;équipe alliée.
+        ///   Looks up a localized string similar to The monster #1 is not summoned in the friendly team.
         /// </summary>
         public static string Criterion_MonsterSummon_Different {
             get {
@@ -1573,7 +1573,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Le monstre #1 est invoqué dans l&apos;équipe alliée.
+        ///   Looks up a localized string similar to The monster #1 is summoned in the friendly team.
         /// </summary>
         public static string Criterion_MonsterSummon_Equal {
             get {
@@ -1582,7 +1582,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PM ≠ #1.
+        ///   Looks up a localized string similar to MP ≠ #1.
         /// </summary>
         public static string Criterion_MovementPoint_Different {
             get {
@@ -1591,7 +1591,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PM = #1.
+        ///   Looks up a localized string similar to MP = #1.
         /// </summary>
         public static string Criterion_MovementPoint_Equal {
             get {
@@ -1600,7 +1600,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PM &lt; #1.
+        ///   Looks up a localized string similar to MP &lt; #1.
         /// </summary>
         public static string Criterion_MovementPoint_Inferior {
             get {
@@ -1609,7 +1609,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PM &gt; #1.
+        ///   Looks up a localized string similar to MP &gt; #1.
         /// </summary>
         public static string Criterion_MovementPoint_Superior {
             get {
@@ -1618,7 +1618,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nom ≠ #1.
+        ///   Looks up a localized string similar to Name ≠ #1.
         /// </summary>
         public static string Criterion_Name_Different {
             get {
@@ -1627,7 +1627,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nom = #1.
+        ///   Looks up a localized string similar to Name = #1.
         /// </summary>
         public static string Criterion_Name_Equal {
             get {
@@ -1636,7 +1636,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nom ≈ #1.
+        ///   Looks up a localized string similar to Name ≈ #1.
         /// </summary>
         public static string Criterion_Name_SoftEqual {
             get {
@@ -1645,7 +1645,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ou.
+        ///   Looks up a localized string similar to or.
         /// </summary>
         public static string Criterion_Or {
             get {
@@ -1654,7 +1654,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité ≠ #1%.
+        ///   Looks up a localized string similar to Vitality ≠ #1%.
         /// </summary>
         public static string Criterion_PercentVitality_Different {
             get {
@@ -1663,7 +1663,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité = #1%.
+        ///   Looks up a localized string similar to Vitality = #1%.
         /// </summary>
         public static string Criterion_PercentVitality_Equal {
             get {
@@ -1672,7 +1672,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité &lt; #1%.
+        ///   Looks up a localized string similar to Vitality &lt; #1%.
         /// </summary>
         public static string Criterion_PercentVitality_Inferior {
             get {
@@ -1681,7 +1681,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité &gt; #1%.
+        ///   Looks up a localized string similar to Vitality &gt; #1%.
         /// </summary>
         public static string Criterion_PercentVitality_Superior {
             get {
@@ -1690,7 +1690,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau admin ≠ #1.
+        ///   Looks up a localized string similar to Admin level ≠ #1.
         /// </summary>
         public static string Criterion_PlayerRights_Different {
             get {
@@ -1699,7 +1699,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau admin = #1.
+        ///   Looks up a localized string similar to Admin level = #1.
         /// </summary>
         public static string Criterion_PlayerRights_Equal {
             get {
@@ -1708,7 +1708,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau admin &lt; #1.
+        ///   Looks up a localized string similar to Admin level &lt; #1.
         /// </summary>
         public static string Criterion_PlayerRights_Inferior {
             get {
@@ -1717,7 +1717,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau admin &gt; #1.
+        ///   Looks up a localized string similar to Admin level &gt; #1.
         /// </summary>
         public static string Criterion_PlayerRights_Superior {
             get {
@@ -1726,7 +1726,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas avoir commencé la quête #1.
+        ///   Looks up a localized string similar to Do not have started the quest #1.
         /// </summary>
         public static string Criterion_Quest_Different {
             get {
@@ -1735,7 +1735,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quête #1 en cours.
+        ///   Looks up a localized string similar to Quest #1 in progress.
         /// </summary>
         public static string Criterion_Quest_Equal {
             get {
@@ -1744,7 +1744,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quête #1 indisponible.
+        ///   Looks up a localized string similar to Quest #1 unavailable.
         /// </summary>
         public static string Criterion_QuestAvailable_Different {
             get {
@@ -1753,7 +1753,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quête #1 disponible.
+        ///   Looks up a localized string similar to Quest #1 available.
         /// </summary>
         public static string Criterion_QuestAvailable_Equal {
             get {
@@ -1762,7 +1762,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas avoir achevé la quête #1.
+        ///   Looks up a localized string similar to Do not have finished the quest #1.
         /// </summary>
         public static string Criterion_QuestFinished_Different {
             get {
@@ -1771,7 +1771,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quête #1 achevée.
+        ///   Looks up a localized string similar to Quest #1 finished.
         /// </summary>
         public static string Criterion_QuestFinished_Equal {
             get {
@@ -1780,7 +1780,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quête #1 achevée moins de #2 fois.
+        ///   Looks up a localized string similar to Quest #1 finished less than #2 time(s).
         /// </summary>
         public static string Criterion_QuestFinishedCount_Inferior {
             get {
@@ -1789,7 +1789,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quête #1 achevée plus de #2 fois.
+        ///   Looks up a localized string similar to Quest #1 finished more than #2 time(s).
         /// </summary>
         public static string Criterion_QuestFinishedCount_Superior {
             get {
@@ -1798,7 +1798,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Objectif de quête #1 pas en cours.
+        ///   Looks up a localized string similar to Quest objective #1 not in progress.
         /// </summary>
         public static string Criterion_QuestObjective_Different {
             get {
@@ -1807,7 +1807,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Objectif de quête #1 en cours.
+        ///   Looks up a localized string similar to Quest objective #1 in progress.
         /// </summary>
         public static string Criterion_QuestObjective_Equal {
             get {
@@ -1816,7 +1816,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Objectif de quête #1 non validé.
+        ///   Looks up a localized string similar to Quest objective #1 not completed.
         /// </summary>
         public static string Criterion_QuestObjective_Inferior {
             get {
@@ -1825,7 +1825,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Objectif de quête #1 validé.
+        ///   Looks up a localized string similar to Quest objective #1 completed.
         /// </summary>
         public static string Criterion_QuestObjective_Superior {
             get {
@@ -1834,7 +1834,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etape de quête #1 pas en cours.
+        ///   Looks up a localized string similar to Quest step #1 not in progress.
         /// </summary>
         public static string Criterion_QuestStep_Different {
             get {
@@ -1843,7 +1843,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etape de quête #1 en cours.
+        ///   Looks up a localized string similar to Quest step #1 in progress.
         /// </summary>
         public static string Criterion_QuestStep_Equal {
             get {
@@ -1852,7 +1852,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etape de quête #1 non validée.
+        ///   Looks up a localized string similar to Quest step #1 not completed.
         /// </summary>
         public static string Criterion_QuestStep_Inferior {
             get {
@@ -1861,7 +1861,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etape de quête #1 validée.
+        ///   Looks up a localized string similar to Quest step #1 completed.
         /// </summary>
         public static string Criterion_QuestStep_Superior {
             get {
@@ -1870,7 +1870,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être sur le serveur #1.
+        ///   Looks up a localized string similar to Do not be on the server #1.
         /// </summary>
         public static string Criterion_Server_Different {
             get {
@@ -1879,7 +1879,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etre sur le serveur #1.
+        ///   Looks up a localized string similar to Be on the server #1.
         /// </summary>
         public static string Criterion_Server_Equal {
             get {
@@ -1888,7 +1888,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contenu n°#1 désactivé.
+        ///   Looks up a localized string similar to Content no.#1 disabled.
         /// </summary>
         public static string Criterion_ServerContent_Different {
             get {
@@ -1897,7 +1897,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contenu n°#1 activé.
+        ///   Looks up a localized string similar to content no.#1 enabled.
         /// </summary>
         public static string Criterion_ServerContent_Equal {
             get {
@@ -1906,7 +1906,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Emplacement #1 libre.
+        ///   Looks up a localized string similar to Slot #1 free.
         /// </summary>
         public static string Criterion_Slot_Different {
             get {
@@ -1915,7 +1915,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Emplacement #1 occupé.
+        ///   Looks up a localized string similar to Slot #1 occupied.
         /// </summary>
         public static string Criterion_Slot_Equal {
             get {
@@ -1924,7 +1924,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être dans l&apos;état #1.
+        ///   Looks up a localized string similar to Do not be in the state #1.
         /// </summary>
         public static string Criterion_State_Different {
             get {
@@ -1933,7 +1933,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etre dans l&apos;état #1.
+        ///   Looks up a localized string similar to Be in the state #1.
         /// </summary>
         public static string Criterion_State_Equal {
             get {
@@ -1942,7 +1942,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force ≠ #1.
+        ///   Looks up a localized string similar to Strength ≠ #1.
         /// </summary>
         public static string Criterion_Strength_Different {
             get {
@@ -1951,7 +1951,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force = #1.
+        ///   Looks up a localized string similar to Strength = #1.
         /// </summary>
         public static string Criterion_Strength_Equal {
             get {
@@ -1960,7 +1960,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force &lt; #1.
+        ///   Looks up a localized string similar to Strength &lt; #1.
         /// </summary>
         public static string Criterion_Strength_Inferior {
             get {
@@ -1969,7 +1969,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force &gt; #1.
+        ///   Looks up a localized string similar to Strength &gt; #1.
         /// </summary>
         public static string Criterion_Strength_Superior {
             get {
@@ -1978,7 +1978,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ne pas être abonné.
+        ///   Looks up a localized string similar to Do not be subscribe.
         /// </summary>
         public static string Criterion_Subscribe_Equal_False {
             get {
@@ -1987,7 +1987,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etre abonné.
+        ///   Looks up a localized string similar to Be subscribe.
         /// </summary>
         public static string Criterion_Subscribe_Equal_True {
             get {
@@ -1996,7 +1996,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tour ≠ #1.
+        ///   Looks up a localized string similar to Turn ≠ #1.
         /// </summary>
         public static string Criterion_Turn_Different {
             get {
@@ -2005,7 +2005,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tour = #1.
+        ///   Looks up a localized string similar to Turn = #1.
         /// </summary>
         public static string Criterion_Turn_Equal {
             get {
@@ -2014,7 +2014,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tour pair.
+        ///   Looks up a localized string similar to Even turn.
         /// </summary>
         public static string Criterion_Turn_Even {
             get {
@@ -2023,7 +2023,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tour &lt; #1.
+        ///   Looks up a localized string similar to Turn &lt; #1.
         /// </summary>
         public static string Criterion_Turn_Inferior {
             get {
@@ -2032,7 +2032,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tour impair.
+        ///   Looks up a localized string similar to Odd turn.
         /// </summary>
         public static string Criterion_Turn_Odd {
             get {
@@ -2041,7 +2041,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tour &gt; #1.
+        ///   Looks up a localized string similar to Turn &gt; #1.
         /// </summary>
         public static string Criterion_Turn_Superior {
             get {
@@ -2050,7 +2050,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Criterion #1 inconnu (#2).
+        ///   Looks up a localized string similar to Unknown criterion #1 (#2).
         /// </summary>
         public static string Criterion_Unknown {
             get {
@@ -2059,7 +2059,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inutilisable.
+        ///   Looks up a localized string similar to Unusable.
         /// </summary>
         public static string Criterion_UnusableItem_Equal {
             get {
@@ -2068,7 +2068,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité ≠ #1.
+        ///   Looks up a localized string similar to Vitality ≠ #1.
         /// </summary>
         public static string Criterion_Vitality_Different {
             get {
@@ -2077,7 +2077,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité = #1.
+        ///   Looks up a localized string similar to Vitality = #1.
         /// </summary>
         public static string Criterion_Vitality_Equal {
             get {
@@ -2086,7 +2086,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité &lt; #1.
+        ///   Looks up a localized string similar to Vitality &lt; #1.
         /// </summary>
         public static string Criterion_Vitality_Inferior {
             get {
@@ -2095,7 +2095,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vitalité &gt; #1.
+        ///   Looks up a localized string similar to Vitality &gt; #1.
         /// </summary>
         public static string Criterion_Vitality_Superior {
             get {
@@ -2104,7 +2104,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sagesse ≠ #1.
+        ///   Looks up a localized string similar to Wisdom ≠ #1.
         /// </summary>
         public static string Criterion_Wisdom_Different {
             get {
@@ -2113,7 +2113,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sagesse = #1.
+        ///   Looks up a localized string similar to Wisdom = #1.
         /// </summary>
         public static string Criterion_Wisdom_Equal {
             get {
@@ -2122,7 +2122,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sagesse &lt; #1.
+        ///   Looks up a localized string similar to Wisdom &lt; #1.
         /// </summary>
         public static string Criterion_Wisdom_Inferior {
             get {
@@ -2131,7 +2131,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sagesse &gt; #1.
+        ///   Looks up a localized string similar to Wisdom &gt; #1.
         /// </summary>
         public static string Criterion_Wisdom_Superior {
             get {
@@ -2140,7 +2140,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Effect erroné (#1).
+        ///   Looks up a localized string similar to Errored effect (#1).
         /// </summary>
         public static string Effect_Errored {
             get {
@@ -2149,7 +2149,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lié au compte.
+        ///   Looks up a localized string similar to Linked to account.
         /// </summary>
         public static string Effect_LinkedToAccount {
             get {
@@ -2158,7 +2158,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dans #1% des cas.
+        ///   Looks up a localized string similar to In #1% of cases.
         /// </summary>
         public static string Effect_Probability {
             get {
@@ -2167,7 +2167,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to #1 tour(s).
+        ///   Looks up a localized string similar to #1 turn(s).
         /// </summary>
         public static string Effect_Turn {
             get {
@@ -2176,7 +2176,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Effect #1 inconnu (#2).
+        ///   Looks up a localized string similar to Unknown effect #1 (#2).
         /// </summary>
         public static string Effect_Unknown {
             get {
@@ -2185,7 +2185,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Croix.
+        ///   Looks up a localized string similar to Cross.
         /// </summary>
         public static string EffectArea_1 {
             get {
@@ -2203,7 +2203,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Croix diagonale.
+        ///   Looks up a localized string similar to Diagonal cross.
         /// </summary>
         public static string EffectArea_11 {
             get {
@@ -2212,7 +2212,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to En T.
+        ///   Looks up a localized string similar to In T.
         /// </summary>
         public static string EffectArea_12 {
             get {
@@ -2221,7 +2221,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to En T.
+        ///   Looks up a localized string similar to In T.
         /// </summary>
         public static string EffectArea_13 {
             get {
@@ -2230,7 +2230,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inconnu (14).
+        ///   Looks up a localized string similar to Unknown (14).
         /// </summary>
         public static string EffectArea_14 {
             get {
@@ -2239,7 +2239,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Croix vide.
+        ///   Looks up a localized string similar to Void cross.
         /// </summary>
         public static string EffectArea_15 {
             get {
@@ -2248,7 +2248,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ligne large.
+        ///   Looks up a localized string similar to Wide line.
         /// </summary>
         public static string EffectArea_16 {
             get {
@@ -2257,7 +2257,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pointe.
+        ///   Looks up a localized string similar to Point.
         /// </summary>
         public static string EffectArea_17 {
             get {
@@ -2266,7 +2266,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ligne perpendiculaire.
+        ///   Looks up a localized string similar to Perpendicular line.
         /// </summary>
         public static string EffectArea_2 {
             get {
@@ -2275,7 +2275,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etoile.
+        ///   Looks up a localized string similar to Star.
         /// </summary>
         public static string EffectArea_21 {
             get {
@@ -2284,7 +2284,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inconnu (22).
+        ///   Looks up a localized string similar to Unknown (22).
         /// </summary>
         public static string EffectArea_22 {
             get {
@@ -2293,7 +2293,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fourche.
+        ///   Looks up a localized string similar to Fork.
         /// </summary>
         public static string EffectArea_23 {
             get {
@@ -2302,7 +2302,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cercle.
+        ///   Looks up a localized string similar to Circle.
         /// </summary>
         public static string EffectArea_3 {
             get {
@@ -2311,7 +2311,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Point.
+        ///   Looks up a localized string similar to Dot.
         /// </summary>
         public static string EffectArea_4 {
             get {
@@ -2320,7 +2320,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ligne.
+        ///   Looks up a localized string similar to Line.
         /// </summary>
         public static string EffectArea_5 {
             get {
@@ -2329,7 +2329,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Damier.
+        ///   Looks up a localized string similar to Checked patern.
         /// </summary>
         public static string EffectArea_6 {
             get {
@@ -2338,7 +2338,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cercle.
+        ///   Looks up a localized string similar to Circle.
         /// </summary>
         public static string EffectArea_67 {
             get {
@@ -2347,7 +2347,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Damier.
+        ///   Looks up a localized string similar to Checked patern.
         /// </summary>
         public static string EffectArea_68 {
             get {
@@ -2356,7 +2356,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anneau.
+        ///   Looks up a localized string similar to Ring.
         /// </summary>
         public static string EffectArea_7 {
             get {
@@ -2365,7 +2365,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ligne.
+        ///   Looks up a localized string similar to Line.
         /// </summary>
         public static string EffectArea_76 {
             get {
@@ -2374,7 +2374,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anneau.
+        ///   Looks up a localized string similar to Ring.
         /// </summary>
         public static string EffectArea_79 {
             get {
@@ -2383,7 +2383,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Carré.
+        ///   Looks up a localized string similar to Square.
         /// </summary>
         public static string EffectArea_8 {
             get {
@@ -2392,7 +2392,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Point.
+        ///   Looks up a localized string similar to Dot.
         /// </summary>
         public static string EffectArea_80 {
             get {
@@ -2401,7 +2401,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ligne perpendiculaire.
+        ///   Looks up a localized string similar to Perpendicular line.
         /// </summary>
         public static string EffectArea_84 {
             get {
@@ -2410,7 +2410,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Croix.
+        ///   Looks up a localized string similar to Cross.
         /// </summary>
         public static string EffectArea_88 {
             get {
@@ -2419,7 +2419,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Carré vide.
+        ///   Looks up a localized string similar to Void square.
         /// </summary>
         public static string EffectArea_9 {
             get {
@@ -2428,7 +2428,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agilité.
+        ///   Looks up a localized string similar to Agility.
         /// </summary>
         public static string Element_Agility {
             get {
@@ -2455,7 +2455,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Neutre.
+        ///   Looks up a localized string similar to Neutral.
         /// </summary>
         public static string Element_Neutral {
             get {
@@ -2464,7 +2464,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force.
+        ///   Looks up a localized string similar to Strength.
         /// </summary>
         public static string Element_Strength {
             get {
@@ -2473,7 +2473,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Femme.
+        ///   Looks up a localized string similar to Women.
         /// </summary>
         public static string Gender_Female {
             get {
@@ -2482,7 +2482,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Homme.
+        ///   Looks up a localized string similar to Man.
         /// </summary>
         public static string Gender_Male {
             get {
@@ -2491,7 +2491,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lanceur, check lanceur.
+        ///   Looks up a localized string similar to Thrower, check lanceur.
         /// </summary>
         public static string GiveItemTarget_CasterCheckCaster {
             get {
@@ -2500,7 +2500,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lanceur, check cible.
+        ///   Looks up a localized string similar to Thrower, check thrower.
         /// </summary>
         public static string GiveItemTarget_CasterCheckTarget {
             get {
@@ -2509,7 +2509,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cible, check cible.
+        ///   Looks up a localized string similar to Target, check target.
         /// </summary>
         public static string GiveItemTarget_TargetCheckTarget {
             get {
@@ -2518,34 +2518,34 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enclos.
+        ///   Looks up a localized string similar to House.
         /// </summary>
-        public static string GuildStructure_Enclosure {
+        public static string GuildProperty_House {
             get {
-                return ResourceManager.GetString("GuildStructure.Enclosure", resourceCulture);
+                return ResourceManager.GetString("GuildProperty.House", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maison.
+        ///   Looks up a localized string similar to Unknown property.
         /// </summary>
-        public static string GuildStructure_House {
+        public static string GuildProperty_None {
             get {
-                return ResourceManager.GetString("GuildStructure.House", resourceCulture);
+                return ResourceManager.GetString("GuildProperty.None", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Structure inconnu.
+        ///   Looks up a localized string similar to Paddock.
         /// </summary>
-        public static string GuildStructure_None {
+        public static string GuildProperty_Paddock {
             get {
-                return ResourceManager.GetString("GuildStructure.None", resourceCulture);
+                return ResourceManager.GetString("GuildProperty.Paddock", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stérile.
+        ///   Looks up a localized string similar to Infertile.
         /// </summary>
         public static string Infertile {
             get {
@@ -2563,7 +2563,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aucun.
+        ///   Looks up a localized string similar to None.
         /// </summary>
         public static string LastMeal_None {
             get {
@@ -2572,7 +2572,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Marié(e).
+        ///   Looks up a localized string similar to Married.
         /// </summary>
         public static string MaritalStatus_Married {
             get {
@@ -2581,7 +2581,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Célibataire.
+        ///   Looks up a localized string similar to Single.
         /// </summary>
         public static string MaritalStatus_Single {
             get {
@@ -2590,7 +2590,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apparence d&apos;origine.
+        ///   Looks up a localized string similar to Original appearance.
         /// </summary>
         public static string OriginalAppearance {
             get {
@@ -2599,7 +2599,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to QuestObjectiveType #1 erroné (#2).
+        ///   Looks up a localized string similar to Errored questObjectiveType #1 (#2).
         /// </summary>
         public static string QuestObjectiveType_Errored {
             get {
@@ -2608,7 +2608,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to QuestObjectiveType #1 inconnu (#2).
+        ///   Looks up a localized string similar to Unknown questObjectiveType #1 (#2).
         /// </summary>
         public static string QuestObjectiveType_Unknown {
             get {
@@ -2626,7 +2626,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classe.
+        ///   Looks up a localized string similar to Class.
         /// </summary>
         public static string SpellCategory_Breed {
             get {
@@ -2635,7 +2635,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Elémentaire.
+        ///   Looks up a localized string similar to Elementary.
         /// </summary>
         public static string SpellCategory_Elementary {
             get {
@@ -2644,7 +2644,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Evenement.
+        ///   Looks up a localized string similar to Event.
         /// </summary>
         public static string SpellCategory_Event {
             get {
@@ -2653,7 +2653,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fée d&apos;artifice.
+        ///   Looks up a localized string similar to Fairywork.
         /// </summary>
         public static string SpellCategory_Fairywork {
             get {
@@ -2662,7 +2662,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aucune.
+        ///   Looks up a localized string similar to None.
         /// </summary>
         public static string SpellCategory_None {
             get {
@@ -2671,7 +2671,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Percepteur.
+        ///   Looks up a localized string similar to Perceptor.
         /// </summary>
         public static string SpellCategory_Perceptor {
             get {
@@ -2680,7 +2680,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spécial.
+        ///   Looks up a localized string similar to Special.
         /// </summary>
         public static string SpellCategory_Special {
             get {
@@ -2689,7 +2689,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invocation.
+        ///   Looks up a localized string similar to Summon.
         /// </summary>
         public static string SpellCategory_Summon {
             get {
@@ -2698,7 +2698,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classe - Temporis 2.
+        ///   Looks up a localized string similar to Class - Temporis 2.
         /// </summary>
         public static string SpellCategory_Temporis2Breed {
             get {
@@ -2707,7 +2707,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Commun - Temporis 2.
+        ///   Looks up a localized string similar to Common - Temporis 2.
         /// </summary>
         public static string SpellCategory_Temporis2Common {
             get {
@@ -2725,7 +2725,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Legendaire - Temporis 2.
+        ///   Looks up a localized string similar to Legendary - Temporis 2.
         /// </summary>
         public static string SpellCategory_Temporis2Legendary {
             get {
@@ -2734,7 +2734,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Monstre - Temporis 2.
+        ///   Looks up a localized string similar to Monster - Temporis 2.
         /// </summary>
         public static string SpellCategory_Temporis2Monster {
             get {
@@ -2752,7 +2752,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sort déclenché - Temporis 2.
+        ///   Looks up a localized string similar to Triggered spell - Temporis 2.
         /// </summary>
         public static string SpellCategory_Temporis2Triggered {
             get {
@@ -2761,7 +2761,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classe - Temporis 3.
+        ///   Looks up a localized string similar to Class - Temporis 3.
         /// </summary>
         public static string SpellCategory_Temporis3Breed {
             get {
@@ -2770,7 +2770,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Monstre - Temporis 3.
+        ///   Looks up a localized string similar to Monster - Temporis 3.
         /// </summary>
         public static string SpellCategory_Temporis3Monster {
             get {
@@ -2779,7 +2779,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sort déclenché - Temporis 3.
+        ///   Looks up a localized string similar to Triggered spell - Temporis 3.
         /// </summary>
         public static string SpellCategory_Temporis3Triggered {
             get {
@@ -2788,7 +2788,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maîtrise.
+        ///   Looks up a localized string similar to Weapon skill.
         /// </summary>
         public static string SpellCategory_WeaponSkill {
             get {
@@ -2797,7 +2797,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classe.
+        ///   Looks up a localized string similar to Class.
         /// </summary>
         public static string SpellLevelCategory_Breed {
             get {
@@ -2806,7 +2806,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Elémentaire.
+        ///   Looks up a localized string similar to Elementary.
         /// </summary>
         public static string SpellLevelCategory_Elementary {
             get {
@@ -2815,7 +2815,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spécial.
+        ///   Looks up a localized string similar to Special.
         /// </summary>
         public static string SpellLevelCategory_Special {
             get {
@@ -2824,7 +2824,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invocation.
+        ///   Looks up a localized string similar to Summon.
         /// </summary>
         public static string SpellLevelCategory_Summon {
             get {
@@ -2833,7 +2833,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maîtrise.
+        ///   Looks up a localized string similar to Weapon skill.
         /// </summary>
         public static string SpellLevelCategory_WeaponSkill {
             get {
@@ -2860,7 +2860,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aucune.
+        ///   Looks up a localized string similar to None.
         /// </summary>
         public static string SpellOrigin_None {
             get {
@@ -2869,7 +2869,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inconnu.
+        ///   Looks up a localized string similar to Unknown.
         /// </summary>
         public static string SpellOrigin_Unknown {
             get {
@@ -2878,7 +2878,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agilité.
+        ///   Looks up a localized string similar to Agility.
         /// </summary>
         public static string SpellType_Agility {
             get {
@@ -2896,7 +2896,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Soin.
+        ///   Looks up a localized string similar to Heal.
         /// </summary>
         public static string SpellType_Heal {
             get {
@@ -2914,7 +2914,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multi-élément.
+        ///   Looks up a localized string similar to Multi element.
         /// </summary>
         public static string SpellType_MultiElement {
             get {
@@ -2923,7 +2923,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Neutre.
+        ///   Looks up a localized string similar to Neutral.
         /// </summary>
         public static string SpellType_Neutral {
             get {
@@ -2932,7 +2932,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aucun.
+        ///   Looks up a localized string similar to None.
         /// </summary>
         public static string SpellType_None {
             get {
@@ -2941,7 +2941,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force.
+        ///   Looks up a localized string similar to Strength.
         /// </summary>
         public static string SpellType_Strength {
             get {
@@ -2950,7 +2950,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invocation.
+        ///   Looks up a localized string similar to Summon.
         /// </summary>
         public static string SpellType_Summon {
             get {
@@ -2959,7 +2959,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Utilitaire.
+        ///   Looks up a localized string similar to Utility.
         /// </summary>
         public static string SpellType_Utility {
             get {
@@ -2968,7 +2968,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Commune.
+        ///   Looks up a localized string similar to Common.
         /// </summary>
         public static string TTGCardRarity_Common {
             get {
@@ -2977,7 +2977,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Épique.
+        ///   Looks up a localized string similar to Epic.
         /// </summary>
         public static string TTGCardRarity_Epic {
             get {
@@ -2995,7 +2995,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ultime.
+        ///   Looks up a localized string similar to Ultimate.
         /// </summary>
         public static string TTGCardRarity_Ultimate {
             get {
@@ -3004,7 +3004,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inconnu (#1).
+        ///   Looks up a localized string similar to Unknown (#1).
         /// </summary>
         public static string Unknown_Data {
             get {
@@ -3013,7 +3013,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Armes.
+        ///   Looks up a localized string similar to Weapons.
         /// </summary>
         public static string Weapons {
             get {
