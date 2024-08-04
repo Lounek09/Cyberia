@@ -14,7 +14,7 @@ public static class MessageManager
             return;
         }
 
-        await channel.SendMessageSafe(new DiscordMessageBuilder().WithContent(content));
+        await channel.SendMessageSafeAsync(new DiscordMessageBuilder().WithContent(content));
     }
 
     public static async Task SendErrorMessage(DiscordEmbed embed)
@@ -25,6 +25,6 @@ public static class MessageManager
             return;
         }
 
-        await channel.SendMessageSafe(new DiscordMessageBuilder().AddEmbed(embed));
+        await channel.SendMessageSafeAsync(new DiscordMessageBuilder().AddEmbed(embed));
     }
 }

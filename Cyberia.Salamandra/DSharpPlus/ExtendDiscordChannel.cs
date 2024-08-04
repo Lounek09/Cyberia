@@ -12,7 +12,7 @@ public static class ExtendDiscordChannel
     /// </summary>
     /// <param name="channel">The channel to send the message to.</param>
     /// <param name="message">The message to send.</param>
-    public static async Task SendMessageSafe(this DiscordChannel channel, DiscordMessageBuilder message)
+    public static async Task SendMessageSafeAsync(this DiscordChannel channel, DiscordMessageBuilder message)
     {
         var permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
 
