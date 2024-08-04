@@ -73,7 +73,7 @@ public sealed class Cytrus
     /// Retrieves a game by its name.
     /// </summary>
     /// <param name="name">The name of the game.</param>
-    /// <returns>The game if found; otherwise, null.</returns>
+    /// <returns>The <see cref="CytrusGame"/> if found; otherwise, <see langword="null"/>.</returns>
     public CytrusGame? GetGameByName(string name)
     {
         Games.TryGetValue(name, out var cytrusGame);

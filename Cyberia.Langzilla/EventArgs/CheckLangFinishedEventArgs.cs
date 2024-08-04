@@ -1,6 +1,4 @@
-﻿using Cyberia.Langzilla.Enums;
-
-namespace Cyberia.Langzilla.EventArgs;
+﻿namespace Cyberia.Langzilla.EventArgs;
 
 /// <summary>
 /// Represents the event arguments for when a check of the langs is finished.
@@ -13,7 +11,7 @@ public sealed class CheckLangFinishedEventArgs : System.EventArgs
     public LangRepository Repository { get; init; }
 
     /// <summary>
-    /// The list of the updated checked langs.
+    /// The list of the updated langs.
     /// </summary>
     public IReadOnlyList<Lang> UpdatedLangs { get; init; }
 

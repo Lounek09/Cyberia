@@ -12,8 +12,8 @@ public static class ExecuteCmd
     /// </summary>
     /// <param name="command">The command to execute.</param>
     /// <param name="args">The arguments for the command.</param>
-    /// <param name="workingDirectory">The working directory for the command. Default is empty string.</param>
-    /// <returns>True if the command executed successfully; otherwise, false.</returns>
+    /// <param name="workingDirectory">The working directory for the command. If empty, the current directory is used.</param>
+    /// <returns><see langword="true"/> if the command executed successfully; otherwise, <see langword="false"/>.</returns>
     public static bool Execute(string command, string args, string workingDirectory = "")
     {
         ProcessStartInfo startInfo = new()

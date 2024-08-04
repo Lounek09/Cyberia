@@ -71,14 +71,16 @@ public static class CytrusWatcher
     /// </summary>
     /// <remarks>
     /// This method performs the following steps:
-    /// 1. Sends a GET request to the Cytrus file URL.
-    /// 2. If the request is successful, it reads the response content as a string.
-    /// 3. If a previous Cytrus file exists, it reads the file content as a string, otherwise it uses an empty JSON object string.
-    /// 4. Calculates the difference between the new and old Cytrus data.
-    /// 5. If there is no difference, it returns.
-    /// 6. Replaces the old Cytrus data by the new Cytrus data.
-    /// 7. Loads the new Cytrus data from the response content.
-    /// 8. Triggers the <see cref="NewCytrusDetected"/> event.
+    /// <list type="number">
+    ///     <item>Sends a GET request to the Cytrus file URL.</item>
+    ///     <item>If the request is successful, it reads the response content as a string.</item>
+    ///     <item>If a previous Cytrus file exists, it reads the file content as a string, otherwise it uses an empty JSON object string.</item>
+    ///     <item>Calculates the difference between the new and old Cytrus data.</item>
+    ///     <item>If there is no difference, it returns.</item>
+    ///     <item>Replaces the old Cytrus data by the new Cytrus data.</item>
+    ///     <item>Loads the new Cytrus data from the response content.</item>
+    ///     <item>Triggers the <see cref="NewCytrusDetected"/> event with the difference.</item>
+    /// </list>
     /// </remarks>
     public static async Task CheckAsync()
     {

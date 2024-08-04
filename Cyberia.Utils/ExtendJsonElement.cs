@@ -8,10 +8,10 @@ namespace Cyberia.Utils;
 public static class ExtendJsonElement
 {
     /// <summary>
-    /// Gets the integer value of the JsonElement, or the default value if it's not a number.
+    /// Gets the integer value of the <see cref="JsonElement"/>, or the <see langword="default"/> value if it's not a number.
     /// </summary>
     /// <param name="element">The JsonElement instance.</param>
-    /// <returns>The integer value or default.</returns>
+    /// <returns>The integer value.</returns>
     public static int GetInt32OrDefault(this JsonElement element)
     {
         if (element.ValueKind is not JsonValueKind.Number)
@@ -28,10 +28,10 @@ public static class ExtendJsonElement
     }
 
     /// <summary>
-    /// Gets the long integer value of the JsonElement, or the default value if it's not a number.
+    /// Gets the long integer value of the <see cref="JsonElement"/>, or the <see langword="default"/> value if it's not a number.
     /// </summary>
     /// <param name="element">The JsonElement instance.</param>
-    /// <returns>The long integer value or default.</returns>
+    /// <returns>The long integer value.</returns>
     public static long GetInt64OrDefault(this JsonElement element)
     {
         if (element.ValueKind is not JsonValueKind.Number)
@@ -48,10 +48,10 @@ public static class ExtendJsonElement
     }
 
     /// <summary>
-    /// Gets the string value of the JsonElement, or an empty string if it's not a string.
+    /// Gets the string value of the <see cref="JsonElement">, or <see cref="string.Empty"/> if it's not a string.
     /// </summary>
     /// <param name="element">The JsonElement instance.</param>
-    /// <returns>The string value or an empty string.</returns>
+    /// <returns>The string value.</returns>
     public static string GetStringOrEmpty(this JsonElement element)
     {
         if (element.ValueKind is not JsonValueKind.String)

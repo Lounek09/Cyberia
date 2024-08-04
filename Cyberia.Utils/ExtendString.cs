@@ -120,7 +120,7 @@ public static partial class ExtendString
     }
 
     /// <summary>
-    /// Converts a hexadecimal string to a long integer, or returns the default value if the conversion fails.
+    /// Converts an hexadecimal string to a long integer, or returns the <see langword="default"/> value if the conversion fails.
     /// </summary>
     /// <param name="value">The hexadecimal string to convert.</param>
     /// <returns>The converted long integer, or the default value if the conversion fails.</returns>

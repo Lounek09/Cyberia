@@ -111,7 +111,7 @@ public sealed class LangRepository
     /// Gets a lang by name.
     /// </summary>
     /// <param name="name">The name of the lang.</param>
-    /// <returns>A <see cref="Lang"/>, or null if the lang is not found.</returns>
+    /// <returns>A <see cref="Lang"/>, or <see langword="null"/> if the lang is not found.</returns>
     public Lang? GetByName(string name)
     {
         return Langs.FirstOrDefault(x => x.Name.Equals(name));
@@ -171,7 +171,7 @@ public sealed class LangRepository
     /// Gets the updated langs from the provided versions string.
     /// </summary>
     /// <param name="versions">The versions string, which contains information about the langs.</param>
-    /// <returns>An enumerable collection of updated lang.</returns>
+    /// <returns>An enumerable collection of updated <see cref="Lang"/>.</returns>
     internal IEnumerable<Lang> GetUpdatedLangsFromVersions(string versions)
     {
         if (versions.Length < 4)

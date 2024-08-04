@@ -10,7 +10,7 @@ public static class ExtendDictionary
     /// </summary>
     /// <param name="source">The source dictionary.</param>
     /// <param name="value">The value to remove.</param>
-    /// <returns>True if at least one element was removed; otherwise, false.</returns>
+    /// <returns><see langword="true"/> if at least one element was removed; otherwise, <see langword="false"/>.</returns>
     public static bool RemoveByValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TValue value)
     {
         var keyToRemove = default(TKey);
@@ -39,7 +39,7 @@ public static class ExtendDictionary
     /// </summary>
     /// <param name="source">The source dictionary.</param>
     /// <param name="value">The value to remove.</param>
-    /// <returns>True if at least one element was removed; otherwise, false.</returns>
+    /// <returns><see langword="true"/> if at least one element was removed; otherwise, <see langword="false"/>.</returns>
     public static bool RemoveAllByValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TValue value)
     {
         List<TKey> keysToRemove = [];

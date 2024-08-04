@@ -18,7 +18,7 @@ public static class CytrusManifest
     /// <param name="platform">The platform for which the game is released.</param>
     /// <param name="release">The release version of the game.</param>
     /// <param name="version">The version of the game.</param>
-    /// <returns>The Manifest object or null if the operation fails.</returns>
+    /// <returns>The Manifest object or <see langword="null"/> if the operation fails.</returns>
     public static async Task<Manifest?> GetManifestAsync(string game, string platform, string release, string version)
     {
         var route = GetManifestRoute(game, platform, release, version);
@@ -181,7 +181,7 @@ public static class CytrusManifest
     /// Gets the fragments from the manifest.
     /// </summary>
     /// <param name="manifest">The manifest from which to get the fragments.</param>
-    /// <returns>An IEnumerable of Fragment objects.</returns>
+    /// <returns>An IEnumerable containing all the <see cref="Fragment"/>.</returns>
     internal static IEnumerable<Fragment> GetFragments(this Manifest manifest)
     {
         for (var i = 0; i < manifest.FragmentsLength; i++)
@@ -198,7 +198,7 @@ public static class CytrusManifest
     /// Gets the game files from the fragment.
     /// </summary>
     /// <param name="fragment">The fragment from which to get the game files.</param>
-    /// <returns>An IEnumerable of GameFile objects.</returns>
+    /// <returns>An IEnumerable containing all the <see cref="GameFile"/>.</returns>
     internal static IEnumerable<GameFile> GetGameFiles(this Fragment fragment)
     {
         for (var i = 0; i < fragment.FilesLength; i++)

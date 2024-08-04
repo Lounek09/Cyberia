@@ -73,7 +73,7 @@ public sealed class CytrusGame
     /// </summary>
     /// <param name="assetsName">The name of the asset.</param>
     /// <param name="releaseName">The name of the release.</param>
-    /// <returns>The hash if found; otherwise, an empty string.</returns>
+    /// <returns>The hash if found; otherwise, <see cref="string.Empty"/>.</returns>
     public string GetAssetHashByNameAndReleaseName(string assetName, string releaseName)
     {
         if (!Assets.TryGetValue(assetName, out var asset))
@@ -105,7 +105,7 @@ public sealed class CytrusGame
     /// </summary>
     /// <param name="platformName">The name of the platform.</param>
     /// <param name="releaseName">The name of the release.</param>
-    /// <returns>The version if found; otherwise, an empty string.</returns>
+    /// <returns>The version if found; otherwise, <see cref="string.Empty"/>.</returns>
     public string GetVersionByPlatformNameAndReleaseName(string platformName, string releaseName)
     {
         if (!Platforms.TryGetValue(platformName, out var platform))

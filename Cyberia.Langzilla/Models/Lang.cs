@@ -162,7 +162,7 @@ public sealed class Lang
     /// <summary>
     /// Asynchronously downloads the lang file.
     /// </summary>
-    /// <returns>A value indicating whether the download was successful.</returns>
+    /// <returns><see langword="true"/> if the download was successful; otherwise, <see langword="false"/>.</returns>
     internal async Task<bool> DownloadAsync()
     {
         Array.ForEach(Directory.GetFiles(OutputPath, "*.swf"), File.Delete);
@@ -190,7 +190,7 @@ public sealed class Lang
     /// <summary>
     /// Extracts the lang file.
     /// </summary>
-    /// <returns>A value indicating whether the extraction was successful.</returns>
+    /// <returns><see langword="true"/> if the extraction was successful; otherwise, <see langword="false"/>.</returns>
     internal bool Extract()
     {
         var filePath = FilePath;
@@ -226,7 +226,7 @@ public sealed class Lang
     /// <summary>
     /// Compares the current decompiled lang file with the old one and generates a diff file.
     /// </summary>
-    /// <returns>True if the diff file was generated; otherwise, false.</returns>
+    /// <returns><see langword="true"/> if the diff file was generated; otherwise, <see langword="false"/>.</returns>
     internal bool SelfDiff()
     {
         var diff = Diff(this);

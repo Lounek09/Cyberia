@@ -86,19 +86,20 @@ public static class LangsWatcher
     }
 
     /// <summary>
-    /// Asynchronously checks for updates of langs by type and language.
+    /// Asynchronously checks for updates of langs for the specified repository.
     /// </summary>
-    /// <param name="type">The type of the langs to check.</param>
-    /// <param name="language">The language of the langs to check.</param>
-    /// <param name="force">true to force the update; otherwise, false.</param>
+    /// <param name="repository">The repository to check.</param>
+    /// <param name="force">Force the check without checking the last update time.</param>
     /// <remarks>
     /// This method performs the following steps:
-    /// 1. Triggers the <see cref="CheckLangStarted"/> event.
-    /// 2. Fetches the version of the langs.
-    /// 3. If the version is empty, triggers the <see cref="CheckLangFinished"/> event and returns.
-    /// 4. Gets the updated langs from the versions.
-    /// 5. Downloads, extracts, and diffs the updated langs.
-    /// 6. Triggers the <see cref="CheckLangFinished"/> event.
+    /// <list type="number">
+    ///     <item>Triggers the <see cref="CheckLangStarted"/> event.</item>
+    ///     <item>Fetches the version of the langs.</item>
+    ///     <item>If the version is empty, triggers the <see cref="CheckLangFinished"/> event and returns.</item>
+    ///     <item>Gets the updated langs from the versions.</item>
+    ///     <item>Downloads, extracts, and diffs the updated langs.</item>
+    ///     <item>Triggers the <see cref="CheckLangFinished"/> event.</item>
+    /// </list>
     /// </remarks>
     public static async Task CheckAsync(LangRepository repository, bool force = false)
     {

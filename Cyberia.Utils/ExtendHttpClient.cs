@@ -10,7 +10,7 @@ public static class ExtendHttpClient
     /// </summary>
     /// <param name="httpClient">The HttpClient instance.</param>
     /// <param name="url">The URL to check.</param>
-    /// <returns>True if the URL exists (response is successful); otherwise, false.</returns>
+    /// <returns><see langword="true"/> if the URL return a success status code; otherwise, <see langword="false"/>.</returns>
     public static async Task<bool> ExistsAsync(this HttpClient httpClient, string url)
     {
         try

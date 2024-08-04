@@ -15,7 +15,7 @@ internal static class Flare
     /// </summary>
     /// <param name="inputFilePath">The input SWF file path.</param>
     /// <param name="outputFilePath">The output extracted file path.</param>
-    /// <returns>A value indicating whether the extraction was successful.</returns>
+    /// <returns><see langword="true"/> if the extraction was successful; otherwise, <see langword="false"/>.</returns>
     internal static bool TryExtract(string inputFilePath, [NotNullWhen(true)] out string? outputFilePath)
     {
         if (!inputFilePath.EndsWith(".swf") ||
@@ -66,7 +66,7 @@ internal static class Flare
         }
 
         var exception = new PlatformNotSupportedException();
-        Log.Fatal(exception, "Flare is only available in Windows or Linux (it's false but fuck mac)");
+        Log.Fatal(exception, "Flare is only available in Windows, Linux or Mac but only in 32bits which is no longer supported");
         throw exception;
     }
 }
