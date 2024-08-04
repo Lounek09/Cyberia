@@ -47,7 +47,7 @@ public static class Program
             DofusApi.Initialize(config.ApiConfig);
 
             Log.Information("Initializing Salamandra");
-            await Bot.InitializeAsync(config.BotConfig);
+            Bot.Initialize(config.BotConfig);
             if (config.EnableSalamandra)
             {
                 await Bot.LaunchAsync();

@@ -18,7 +18,7 @@ public static class Bot
     public static DiscordClient Client { get; private set; } = default!;
     public static CommandsExtension Commands { get; private set; } = default!;
 
-    public static async Task InitializeAsync(BotConfig config)
+    public static void Initialize(BotConfig config)
     {
         Directory.CreateDirectory(OutputPath);
 
@@ -46,8 +46,8 @@ public static class Bot
             RegisterDefaultCommandProcessors = false
         });
         Commands.CommandErrored += CommandManager.OnCommandErrored;
-        await Commands.AddProcessorAsync(new SlashCommandProcessor());
-        await Commands.AddProcessorAsync(new UserCommandProcessor());
+        Commands.AddProcessor(new SlashCommandProcessor());
+        Commands.AddProcessor(new UserCommandProcessor());
         Commands.RegisterCommands(Config.AdminGuildId);
 
         CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
