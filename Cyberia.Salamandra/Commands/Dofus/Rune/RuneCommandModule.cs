@@ -33,6 +33,8 @@ public sealed class RuneCommandModule
         [MinMaxValue(1, RuneItemMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
+        CommandManager.SetCulture();
+
         DiscordInteractionResponseBuilder? response = null;
 
         if (int.TryParse(value, out var itemId))
@@ -74,6 +76,8 @@ public sealed class RuneCommandModule
         [MinMaxLength(1, 70)]
         string runeName)
     {
+        CommandManager.SetCulture();
+
         var runeData = DofusApi.Datacenter.RunesRepository.GetRuneDataByName(runeName);
         if (runeData is null)
         {

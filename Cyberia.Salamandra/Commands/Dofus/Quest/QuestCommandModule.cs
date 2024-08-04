@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -23,6 +24,8 @@ public sealed class QuestCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
+        CommandManager.SetCulture();
+
         DiscordInteractionResponseBuilder? response = null;
 
         if (int.TryParse(value, out var id))

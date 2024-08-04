@@ -1,4 +1,7 @@
-﻿using DSharpPlus;
+﻿using Cyberia.Api;
+using Cyberia.Langzilla.Enums;
+
+using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.EventArgs;
@@ -7,6 +10,7 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Entities;
 using DSharpPlus.Exceptions;
 
+using System.Globalization;
 using System.Reflection;
 
 namespace Cyberia.Salamandra.Managers;
@@ -39,6 +43,13 @@ public static class CommandManager
                 extension.AddCommands(commandModules);
             }
         }
+    }
+
+    public static void SetCulture()
+    {
+        var culture = DofusApi.Config.BaseLanguage.ToCulture();
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
     }
 
     public static async Task OnCommandErrored(CommandsExtension _, CommandErroredEventArgs args)

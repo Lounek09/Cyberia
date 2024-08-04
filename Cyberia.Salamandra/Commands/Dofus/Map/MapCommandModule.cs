@@ -25,6 +25,8 @@ public sealed class MapCommandModule
         [MinMaxValue(1, 99999)]
         int id)
     {
+        CommandManager.SetCulture();
+
         var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById((int)id);
         if (mapData is null)
         {
@@ -46,6 +48,8 @@ public sealed class MapCommandModule
         [MinMaxValue(-666, 666)]
         int y)
     {
+        CommandManager.SetCulture();
+
         var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
 
         if (mapsData.Count == 0)
@@ -73,6 +77,8 @@ public sealed class MapCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
+        CommandManager.SetCulture();
+
         MapSubAreaData? mapSubAreaData = null;
 
         if (int.TryParse(value, out var id))
@@ -109,6 +115,8 @@ public sealed class MapCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
+        CommandManager.SetCulture();
+
         MapAreaData? mapAreaData = null;
 
         if (int.TryParse(value, out var id))

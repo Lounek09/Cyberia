@@ -30,6 +30,8 @@ public sealed class CritCommandModule
         [MinMaxValue(1, 99999)]
         int agility)
     {
+        CommandManager.SetCulture();
+
         var rate = Formulas.GetCriticalRate(number, target, agility);
         var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, target);
 

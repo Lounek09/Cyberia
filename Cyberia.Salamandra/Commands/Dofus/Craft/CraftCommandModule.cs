@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -26,6 +27,8 @@ public sealed class CraftCommandModule
         [MinMaxValue(1, CraftMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
+        CommandManager.SetCulture();
+
         DiscordInteractionResponseBuilder? response = null;
 
         if (int.TryParse(value, out var id))

@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -21,6 +22,8 @@ public sealed class BreedCommandModule
         [SlashChoiceProvider<BreedChoiceProvider>]
         int breedId)
     {
+        CommandManager.SetCulture();
+
         var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
 
         if (breedData is null)
