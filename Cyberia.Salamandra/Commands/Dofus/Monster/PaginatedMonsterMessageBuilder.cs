@@ -16,7 +16,7 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
     private readonly string _search;
 
     public PaginatedMonsterMessageBuilder(List<MonsterData> monstersData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Bestiary, "Bestiaire", "Plusieurs monstres trouvés :", monstersData, selectedPageIndex)
+        : base(EmbedCategory.Bestiary, BotTranslations.Embed_Monster_Author, BotTranslations.Embed_PaginatedMonster_Title, monstersData, selectedPageIndex)
     {
         _search = search;
     }
@@ -49,7 +49,8 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
             var minLevel = monsterData.GetMinLevel();
             var maxLevel = monsterData.GetMaxLevel();
 
-            yield return $"- Niv.{minLevel}{(minLevel == maxLevel ? string.Empty : $"-{maxLevel}")} {Formatter.Bold($"{monsterData.Name} {(monsterData.BreedSummon ? "(invocation)" : string.Empty)}")} ({monsterData.Id})";
+            yield return $"- {BotTranslations.ShortLevel}{minLevel}{(minLevel == maxLevel ? string.Empty : $"-{maxLevel}")} " +
+                $"{Formatter.Bold($"{monsterData.Name}{(monsterData.BreedSummon ? $" ({BotTranslations.Summon})" : string.Empty)}")} ({monsterData.Id})";
         }
     }
 

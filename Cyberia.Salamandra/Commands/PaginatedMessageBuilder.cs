@@ -22,7 +22,7 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
 
     protected readonly int _selectedPageIndex;
     protected readonly int _totalPage;
-    protected readonly List<T> _data;
+    protected readonly IReadOnlyList<T> _data;
 
     public PaginatedMessageBuilder(EmbedCategory category, string authorText, string title, List<T> data, int selectedPageIndex)
     {
@@ -75,14 +75,23 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
         var embed = EmbedManager.CreateEmbedBuilder(_category, _authorText)
             .WithTitle(_title)
             .WithDescription(string.Join('\n', GetContent()))
-            .AddField(Constant.ZeroWidthSpace, $"Page {_selectedPageIndex + 1}/{_totalPage}");
+            .AddField(Constant.ZeroWidthSpace, $"{BotTranslations.Embed_Field_Page_Content}{_selectedPageIndex + 1}/{_totalPage}");
 
         return Task.FromResult(embed);
     }
 
     private IEnumerable<DiscordButtonComponent> PaginationButtonsBuilder()
     {
-        yield return new(DiscordButtonStyle.Primary, $"{PreviousPacketBuilder()}{InteractionManager.PacketParameterSeparator}P", "Précédent", _totalPage == 1);
-        yield return new(DiscordButtonStyle.Primary, $"{NextPacketBuilder()}{InteractionManager.PacketParameterSeparator}N", "Suivant", _totalPage == 1);
+        var disabled = _totalPage == 1;
+
+        yield return new(DiscordButtonStyle.Primary,
+            $"{PreviousPacketBuilder()}{InteractionManager.PacketParameterSeparator}P",
+            BotTranslations.Button_Previous,
+            disabled);
+
+        yield return new(DiscordButtonStyle.Primary,
+            $"{NextPacketBuilder()}{InteractionManager.PacketParameterSeparator}N",
+            BotTranslations.Button_Next,
+            disabled);
     }
 }

@@ -28,7 +28,7 @@ public sealed class MapCommandModule
         var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById((int)id);
         if (mapData is null)
         {
-            await ctx.RespondAsync("Map introuvable");
+            await ctx.RespondAsync(BotTranslations.Map_NotFound);
             return;
         }
 
@@ -41,16 +41,16 @@ public sealed class MapCommandModule
     public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter("x"), Description("Coordonnée x de la map")]
         [MinMaxValue(-666, 666)]
-        int xCoord,
+        int x,
         [Parameter("y"), Description("Coordonnée y de la map")]
         [MinMaxValue(-666, 666)]
-        int yCoord)
+        int y)
     {
-        var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(xCoord, yCoord).ToList();
+        var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
 
         if (mapsData.Count == 0)
         {
-            await ctx.RespondAsync($"Il n'y a aucune map en [{xCoord}, {yCoord}]");
+            await ctx.RespondAsync(Translation.Format(BotTranslations.Map_NotFound_Coordinate, x, y));
             return;
         }
 
@@ -60,7 +60,7 @@ public sealed class MapCommandModule
             return;
         }
         
-        await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PacketParameterSeparator}{yCoord}")
+        await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.Coordinate, $"{x}{InteractionManager.PacketParameterSeparator}{y}")
             .GetMessageAsync<DiscordInteractionResponseBuilder>());
     }
 
@@ -82,7 +82,7 @@ public sealed class MapCommandModule
 
         if (mapSubAreaData is null)
         {
-            await ctx.RespondAsync("Sous-zone introuvable");
+            await ctx.RespondAsync(BotTranslations.MapSubArea_NotFound);
         }
         else
         {
@@ -90,11 +90,12 @@ public sealed class MapCommandModule
 
             if (mapsData.Count == 0)
             {
-                await ctx.RespondAsync($"La sous-zone {Formatter.Bold(mapSubAreaData.Name)} ne contient aucune map");
+                await ctx.RespondAsync(Translation.Format(BotTranslations.Map_NotFound_MapSubArea, Formatter.Bold(mapSubAreaData.Name)));
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapSubArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapSubArea, value)
+                    .GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }
@@ -117,7 +118,7 @@ public sealed class MapCommandModule
 
         if (mapAreaData is null)
         {
-            await ctx.RespondAsync("Zone introuvable");
+            await ctx.RespondAsync(BotTranslations.MapArea_NotFound);
         }
         else
         {
@@ -125,11 +126,12 @@ public sealed class MapCommandModule
 
             if (mapsData.Count == 0)
             {
-                await ctx.RespondAsync($"La zone {Formatter.Bold(mapAreaData.Name)} ne contient aucune map");
+                await ctx.RespondAsync(Translation.Format(BotTranslations.Map_NotFound_MapSubArea, Formatter.Bold(mapAreaData.Name)));
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapArea, value).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapArea, value)
+                    .GetMessageAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }

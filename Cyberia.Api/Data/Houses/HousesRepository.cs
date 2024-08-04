@@ -78,7 +78,7 @@ public sealed class HousesRepository : IDofusRepository
         foreach (var houseData in Houses.Values)
         {
             var map = houseData.GetOutdoorMapData();
-            if (map is not null && map.XCoord == x && map.YCoord == y)
+            if (map is not null && map.X == x && map.Y == y)
             {
                 yield return houseData;
             }

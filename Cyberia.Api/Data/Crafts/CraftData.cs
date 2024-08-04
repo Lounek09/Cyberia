@@ -30,7 +30,7 @@ public sealed class CraftData : IDofusData<int>
         return Ingredients.Any(x => DofusApi.Datacenter.CraftsRepository.GetCraftDataById(x.Key) is not null);
     }
 
-    public IReadOnlyDictionary<ItemData, int> GetIngredients(int qte)
+    public IReadOnlyDictionary<ItemData, int> GetIngredients(int quantity)
     {
         Dictionary<ItemData, int> ingredients = [];
 
@@ -39,18 +39,18 @@ public sealed class CraftData : IDofusData<int>
             var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(ingredient.Key);
             if (itemData is not null)
             {
-                ingredients.Add(itemData, ingredient.Value * qte);
+                ingredients.Add(itemData, ingredient.Value * quantity);
             }
         }
 
         return ingredients;
     }
 
-    public IReadOnlyDictionary<ItemData, int> GetIngredientsWithSubCraft(int qte)
+    public IReadOnlyDictionary<ItemData, int> GetIngredientsWithSubCraft(int quantity)
     {
         Dictionary<ItemData, int> ingredients = [];
 
-        foreach (var ingredient in GetIngredients(qte))
+        foreach (var ingredient in GetIngredients(quantity))
         {
             var subCraft = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(ingredient.Key.Id);
             if (subCraft is not null)
@@ -105,12 +105,12 @@ public sealed class CraftData : IDofusData<int>
         return pods;
     }
 
-    public TimeSpan GetTimePerCraft(int qte)
+    public TimeSpan GetTimePerCraft(int quantity)
     {
-        return Formulas.GetTimePerCraft(qte, Ingredients.Count);
+        return Formulas.GetTimePerCraft(quantity, Ingredients.Count);
     }
 
-    public TimeSpan GetTimePerCraftWithSubCraft(int qte)
+    public TimeSpan GetTimePerCraftWithSubCraft(int quantity)
     {
         var totalTime = TimeSpan.Zero;
 
@@ -119,10 +119,10 @@ public sealed class CraftData : IDofusData<int>
             var subCraftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(ingredient.Key);
             if (subCraftData is not null)
             {
-                totalTime += subCraftData.GetTimePerCraftWithSubCraft(qte * ingredient.Value);
+                totalTime += subCraftData.GetTimePerCraftWithSubCraft(quantity * ingredient.Value);
             }
         }
 
-        return totalTime + GetTimePerCraft(qte);
+        return totalTime + GetTimePerCraft(quantity);
     }
 }

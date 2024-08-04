@@ -46,7 +46,7 @@ public sealed class QuestCommandModule
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent("Quête introuvable");
+        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Quest_NotFound);
         await ctx.RespondAsync(response);
     }
 }

@@ -23,8 +23,8 @@ public sealed class CraftCommandModule
         [MinMaxLength(1, 70)]
         string value,
         [Parameter("quantite"), Description("Quantité à craft")]
-        [MinMaxValue(1, CraftMessageBuilder.MaxQte)]
-        int qte = 1)
+        [MinMaxValue(1, CraftMessageBuilder.MaxQuantity)]
+        int quantity = 1)
     {
         DiscordInteractionResponseBuilder? response = null;
 
@@ -33,7 +33,7 @@ public sealed class CraftCommandModule
             var craftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(id);
             if (craftData is not null)
             {
-                response = await new CraftMessageBuilder(craftData, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(craftData, quantity).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -41,15 +41,15 @@ public sealed class CraftCommandModule
             var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(value).ToList();
             if (craftsData.Count == 1)
             {
-                response = await new CraftMessageBuilder(craftsData[0], qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(craftsData[0], quantity).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
             else if (craftsData.Count > 1)
             {
-                response = await new PaginatedCraftMessageBuilder(craftsData, value, qte).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedCraftMessageBuilder(craftsData, value, quantity).GetMessageAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent("Craft introuvable");
+        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Craft_NotFound);
         await ctx.RespondAsync(response);
     }
 }

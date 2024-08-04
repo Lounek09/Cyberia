@@ -27,21 +27,21 @@ public sealed class SpellLevelData : IDofusData<int>
 
     public int CriticalFailureRate { get; init; }
 
-    public bool LineOnly { get; init; }
+    public bool Linear { get; init; }
 
     public bool LineOfSight { get; init; }
 
     public bool NeedFreeCell { get; init; }
 
-    public bool CanBoostRange { get; init; }
+    public bool AdjustableRange { get; init; }
 
     public SpellLevelCategory SpellLevelCategory { get; init; }
 
-    public int LaunchCountByTurn { get; init; }
+    public int CastPerTurn { get; init; }
 
-    public int LaunchCountByPlayerByTurn { get; init; }
+    public int CastPerPlayer { get; init; }
 
-    public int DelayBetweenLaunch { get; init; }
+    public int TurnsBetweenCast { get; init; }
 
     public IReadOnlyList<int> RequiredStatesId { get; init; }
 

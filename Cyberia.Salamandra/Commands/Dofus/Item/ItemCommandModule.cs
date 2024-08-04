@@ -46,7 +46,7 @@ public sealed class ItemCommandModule
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent("Item introuvable");
+        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Item_NotFound);
         await ctx.RespondAsync(response);
     }
 }

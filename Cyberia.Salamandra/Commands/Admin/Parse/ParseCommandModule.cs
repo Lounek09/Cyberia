@@ -29,7 +29,7 @@ public sealed class ParseCommandModule
         {
             var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
                 .WithTitle("Item effects parser")
-                .AddEffectFields("Effets :", effects);
+                .AddEffectFields("Effects :", effects);
 
             await ctx.RespondAsync(embed);
             return;
@@ -50,7 +50,7 @@ public sealed class ParseCommandModule
         {
             var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
                 .WithTitle("Criteria parser")
-                .AddCriteriaFields("Criteria :", criteria);
+                .AddCriteriaFields(criteria);
 
             await ctx.RespondAsync(embed);
             return;

@@ -51,7 +51,7 @@ public sealed class HouseCommandModule
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent("Maison introuvable");
+        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.House_NotFound);
         await ctx.RespondAsync(response);
     }
 
@@ -61,16 +61,16 @@ public sealed class HouseCommandModule
     public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter("x"), Description("Coordonnée x de la map de la maison")]
         [MinMaxValue(-666, 666)]
-        int xCoord,
+        int x,
         [Parameter("y"), Description("Coordonnée y de la map de la maison")]
         [MinMaxValue(-666, 666)]
-        int yCoord)
+        int y)
     {
-        var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(xCoord, yCoord).ToList();
+        var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(x, y).ToList();
 
         if (housesData.Count == 0)
         {
-            await ctx.RespondAsync($"Il n'y a aucune maison en [{xCoord}, {yCoord}]");
+            await ctx.RespondAsync(Translation.Format(BotTranslations.House_NotFound_Coordinate, x, y));
         }
         else if (housesData.Count == 1)
         {
@@ -78,7 +78,7 @@ public sealed class HouseCommandModule
         }
         else
         {
-            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{xCoord}{InteractionManager.PacketParameterSeparator}{yCoord}")
+            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{x}{InteractionManager.PacketParameterSeparator}{y}")
                 .GetMessageAsync<DiscordInteractionResponseBuilder>());
         }
     }
@@ -101,7 +101,7 @@ public sealed class HouseCommandModule
 
         if (mapSubAreaData is null)
         {
-            await ctx.RespondAsync("Sous-zone introuvable");
+            await ctx.RespondAsync(BotTranslations.MapSubArea_NotFound);
         }
         else
         {
@@ -109,7 +109,7 @@ public sealed class HouseCommandModule
 
             if (housesData.Count == 0)
             {
-                await ctx.RespondAsync($"La sous-zone {Formatter.Bold(mapSubAreaData.Name)} ne contient aucune maison");
+                await ctx.RespondAsync(Translation.Format(BotTranslations.House_NotFound_MapSubArea, Formatter.Bold(mapSubAreaData.Name)));
             }
             else if (housesData.Count == 1)
             {
@@ -141,7 +141,7 @@ public sealed class HouseCommandModule
 
         if (mapAreaData is null)
         {
-            await ctx.RespondAsync("Zone introuvable");
+            await ctx.RespondAsync(BotTranslations.MapArea_NotFound);
         }
         else
         {
@@ -149,7 +149,7 @@ public sealed class HouseCommandModule
 
             if (housesData.Count == 0)
             {
-                await ctx.RespondAsync($"La zone {Formatter.Bold(mapAreaData.Name)} ne contient aucune maison");
+                await ctx.RespondAsync(Translation.Format(BotTranslations.House_NotFound_MapArea, Formatter.Bold(mapAreaData.Name)));
             }
             else if (housesData.Count == 1)
             {

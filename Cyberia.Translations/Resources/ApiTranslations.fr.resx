@@ -543,7 +543,7 @@
   <data name="LastMeal.None" xml:space="preserve">
     <value>Aucun</value>
   </data>
-  <data name="Infinity" xml:space="preserve">
+  <data name="ShortInfinity" xml:space="preserve">
     <value>inf.</value>
   </data>
   <data name="Infertile" xml:space="preserve">

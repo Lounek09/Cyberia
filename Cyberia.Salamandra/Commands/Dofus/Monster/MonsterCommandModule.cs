@@ -46,7 +46,7 @@ public sealed class MonsterCommandModule
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent("Monstre introuvable");
+        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Monster_NotFound);
         await ctx.RespondAsync(response);
     }
 }

@@ -34,9 +34,9 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
     private readonly PetData? _petData;
     private readonly CraftData? _craftData;
     private readonly IncarnationData? _incarnationData;
-    private readonly int _qte;
+    private readonly int _quantity;
 
-    public ItemMessageBuilder(ItemData itemData, int qte = 1)
+    public ItemMessageBuilder(ItemData itemData, int quantity = 1)
     {
         _itemData = itemData;
         _itemTypeData = itemData.GetItemTypeData();
@@ -45,7 +45,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         _petData = _itemData.ItemTypeId == ItemTypeData.Pet ? DofusApi.Datacenter.PetsRepository.GetPetDataByItemId(_itemData.Id) : null;
         _craftData = itemData.GetCraftData();
         _incarnationData = _itemData.IsWeapon() ? DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(_itemData.Id) : null;
-        _qte = qte;
+        _quantity = quantity;
     }
 
     public static ItemMessageBuilder? Create(int version, string[] parameters)
@@ -53,21 +53,21 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var itemId) &&
-            int.TryParse(parameters[1], out var qte))
+            int.TryParse(parameters[1], out var quantity))
         {
             var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                return new(itemData, qte);
+                return new(itemData, quantity);
             }
         }
 
         return null;
     }
 
-    public static string GetPacket(int itemId, int craftQte = 1)
+    public static string GetPacket(int itemId, int quantity = 1)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, itemId, craftQte);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, itemId, quantity);
     }
 
     public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -86,26 +86,26 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, "Items")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Item_Author)
             .WithTitle($"{Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
             .WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description))
             .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128))
-            .AddField("Niveau :", _itemData.Level.ToString(), true)
-            .AddField("Type :", DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(_itemData.ItemTypeId), true);
+            .AddField(BotTranslations.Embed_Field_Level_Title, _itemData.Level.ToString(), true)
+            .AddField(BotTranslations.Embed_Field_ItemType_Title, DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(_itemData.ItemTypeId), true);
 
         if (_itemSetData is not null)
         {
-            embed.AddField("Panoplie :", _itemSetData.Name, true);
+            embed.AddField(BotTranslations.Embed_Field_ItemSet_Title, _itemSetData.Name, true);
         }
 
         if (_itemStatsData is not null)
         {
-            embed.AddEffectFields("Effets :", _itemStatsData.Effects);
+            embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, _itemStatsData.Effects);
         }
 
         if (_itemData.Criteria.Count > 0)
         {
-            embed.AddCriteriaFields("Conditions : ", _itemData.Criteria);
+            embed.AddCriteriaFields(_itemData.Criteria);
         }
 
         if (_itemData.WeaponData is not null)
@@ -126,47 +126,54 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         StringBuilder miscellaneousBuilder = new();
 
         miscellaneousBuilder.Append(_itemData.Weight.ToFormattedString());
-        miscellaneousBuilder.Append(" pod(s)");
+        miscellaneousBuilder.Append(BotTranslations.Embed_Field_Miscellaneous_Content_Weight);
 
         if (_itemData.Tradeable())
         {
-            miscellaneousBuilder.Append(", se vend ");
-            miscellaneousBuilder.Append(_itemData.GetNpcRetailPrice().ToFormattedString());
-            miscellaneousBuilder.Append(Emojis.Kamas);
-            miscellaneousBuilder.Append(" aux pnj");
+            miscellaneousBuilder.Append(", ");
+            miscellaneousBuilder.Append(Translation.Format(
+                BotTranslations.Embed_Field_Miscellaneous_Content_Price,
+                _itemData.GetNpcRetailPrice().ToFormattedString(),
+                Emojis.Kamas));
         }
 
         if (_itemData.Ceremonial)
         {
-            miscellaneousBuilder.Append(", objet d'apparat");
+            miscellaneousBuilder.Append(", ");
+            miscellaneousBuilder.Append(BotTranslations.Embed_Field_Miscellaneous_Content_Ceremonial);
         }
 
         if (_itemData.IsReallyEnhanceable())
         {
-            miscellaneousBuilder.Append(", forgemageable");
+            miscellaneousBuilder.Append(", ");
+            miscellaneousBuilder.Append(BotTranslations.Embed_Field_Miscellaneous_Content_Enhanceable);
         }
 
         if (_itemData.Ethereal)
         {
-            miscellaneousBuilder.Append(", item éthéré");
+            miscellaneousBuilder.Append(", ");
+            miscellaneousBuilder.Append(BotTranslations.Embed_Field_Miscellaneous_Content_Ethereal);
         }
 
         if (_itemData.Usable)
         {
-            miscellaneousBuilder.Append(", est consommable");
+            miscellaneousBuilder.Append(", ");
+            miscellaneousBuilder.Append(BotTranslations.Embed_Field_Miscellaneous_Content_Usable);
         }
 
         if (_itemData.Targetable)
         {
-            miscellaneousBuilder.Append(", est ciblable");
+            miscellaneousBuilder.Append(", ");
+            miscellaneousBuilder.Append(BotTranslations.Embed_Field_Miscellaneous_Content_Targetable);
         }
 
         if (_itemData.Cursed)
         {
-            miscellaneousBuilder.Append(", malédiction");
+            miscellaneousBuilder.Append(", ");
+            miscellaneousBuilder.Append(BotTranslations.Embed_Field_Miscellaneous_Content_Cursed);
         }
 
-        embed.AddField("Divers :", miscellaneousBuilder.ToString());
+        embed.AddField(BotTranslations.Embed_Field_Miscellaneous_Title, miscellaneousBuilder.ToString());
 
         return embed;
     }
@@ -185,12 +192,12 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
         if (_craftData is not null)
         {
-            yield return CraftComponentsBuilder.CraftButtonBuilder(_craftData, _qte);
+            yield return CraftComponentsBuilder.CraftButtonBuilder(_craftData, _quantity);
         }
 
         if (_itemStatsData is not null && _itemStatsData.Effects.Any(x => x is IRuneGeneratorEffect))
         {
-            yield return RuneComponentsBuilder.RuneItemButtonBuilder(_itemData, _qte);
+            yield return RuneComponentsBuilder.RuneItemButtonBuilder(_itemData, _quantity);
         }
     }
 }

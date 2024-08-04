@@ -46,7 +46,7 @@ public sealed class ItemSetCommandModule
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent("Panoplie introuvable");
+        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.ItemSet_NotFound);
         await ctx.RespondAsync(response);
     }
 }

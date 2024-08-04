@@ -46,7 +46,7 @@ public sealed class SpellCommandModule
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent("Sort introuvable");
+        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Spell_NotFound);
         await ctx.RespondAsync(response);
     }
 }

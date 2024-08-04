@@ -51,16 +51,16 @@ public static class CommandManager
                 '\n',
                 checkFailedException.Errors.Select(x => x.ContextCheckAttribute switch
                 {
-                    RequireApplicationOwnerAttribute => "Cette commande n'est utilisable que par le propriétaire du bot.",
-                    RequireGuildAttribute => "Cette commande n'est utilisable que dans un serveur.",
-                    _ => $"Le contrôle de type {x.ContextCheckAttribute.GetType().Name} pour cette commande a raté."
+                    RequireApplicationOwnerAttribute => BotTranslations.Command_Error_Check_RequireApplicationOwner,
+                    RequireGuildAttribute => BotTranslations.Command_Error_Check_RequireGuild,
+                    _ => Translation.Format(BotTranslations.Command_Error_Check_Unknown, x.ContextCheckAttribute.GetType().Name)
                 }));
 
             await ctx.RespondAsync(message, true);
             return;
         }
 
-        var commandName = ctx.Command?.FullName ?? "Command NotFound";
+        var commandName = ctx.Command?.FullName ?? "NotFound";
 
         Log.Error(
             args.Exception,
@@ -80,8 +80,7 @@ public static class CommandManager
         DiscordEmbedBuilder embed = new()
         {
             Title = "An error occurred when executing a slash command",
-            Description =
-            $"""
+            Description = $"""
             An error occurred when {Formatter.Sanitize(ctx.User.Username)} ({ctx.User.Mention}) used the {Formatter.Bold(commandName)} command.
             {(commandArgs.Length > 0 ? $"\n{Formatter.Bold("Arguments :")}\n{commandArgs}\n" : string.Empty)}
             {Formatter.Bold($"{args.Exception.GetType().Name} :")}
@@ -98,11 +97,11 @@ public static class CommandManager
 
         if (ctx.Interaction.ResponseState == DiscordInteractionResponseState.Unacknowledged)
         {
-            await ctx.RespondAsync("La commande a rencontré un problème d'exécution, un rapport de bug a été envoyé automatiquement au propriétaire du bot.", true);
+            await ctx.RespondAsync(BotTranslations.Command_Error_UserResponse, true);
         }
         else
         {
-            await ctx.FollowupAsync("La commande a rencontré un problème d'exécution, un rapport de bug a été envoyé automatiquement au propriétaire du bot.", true);
+            await ctx.FollowupAsync(BotTranslations.Command_Error_UserResponse, true);
         }
     }
 }

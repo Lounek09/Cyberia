@@ -16,7 +16,7 @@ public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<
     private readonly string _search;
 
     public PaginatedMapSubAreaMessageBuilder(List<MapSubAreaData> mapSubAreasData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Map, "Carte du monde", "Plusieurs sous-zones trouvées :", mapSubAreasData, selectedPageIndex)
+        : base(EmbedCategory.Map, BotTranslations.Embed_Map_Author, BotTranslations.Embed_PaginatedMapSubArea_Title, mapSubAreasData, selectedPageIndex)
     {
         _search = search;
     }

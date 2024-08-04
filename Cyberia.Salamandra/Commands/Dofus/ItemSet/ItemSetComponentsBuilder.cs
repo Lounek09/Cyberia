@@ -24,6 +24,6 @@ public static class ItemSetComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une panoplie pour l'afficher", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_ItemSet_Placeholder, options, disable);
     }
 }

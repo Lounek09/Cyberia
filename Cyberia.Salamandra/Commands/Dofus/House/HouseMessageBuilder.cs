@@ -64,12 +64,12 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Houses, "Agence immobilière")
-            .WithTitle($"{_houseData.Name}{(string.IsNullOrEmpty(_houseData.GetCoordinate()) ? string.Empty : $" {_houseData.GetCoordinate()}")} ({_houseData.Id})")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Houses, BotTranslations.Embed_House_Author)
+            .WithTitle($"{_houseData.Name} {_houseData.GetCoordinate()} ({_houseData.Id})")
             .WithDescription(string.IsNullOrEmpty(_houseData.Description) ? string.Empty : Formatter.Italic(_houseData.Description))
-            .AddField("Pièce :", _houseData.RoomNumber == 0 ? "?" : _houseData.RoomNumber.ToString(), true)
-            .AddField("Coffre :", _houseData.ChestNumber == 0 ? "?" : _houseData.ChestNumber.ToString(), true)
-            .AddField("Prix :", _houseData.Price == 0 ? "?" : _houseData.Price.ToFormattedString(), true);
+            .AddField(BotTranslations.Embed_Field_Room_Title, _houseData.RoomNumber == 0 ? "?" : _houseData.RoomNumber.ToString(), true)
+            .AddField(BotTranslations.Embed_Field_Chest_Title, _houseData.ChestNumber == 0 ? "?" : _houseData.ChestNumber.ToString(), true)
+            .AddField(BotTranslations.Embed_Field_Price_Title, _houseData.Price == 0 ? "?" : _houseData.Price.ToFormattedString(), true);
 
         var currentMapData = _selectedMapIndex == -1 ? _outdoorMapData : _mapsData[_selectedMapIndex];
         if (currentMapData is not null)
@@ -86,15 +86,15 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
         {
             if (_outdoorMapData is not null)
             {
-                yield return new DiscordSelectComponentOption("Extérieur", GetPacket(_houseData.Id), isDefault: _selectedMapIndex == -1);
+                yield return new DiscordSelectComponentOption(BotTranslations.Select_HouseMap_Option_Outdoors, GetPacket(_houseData.Id), isDefault: _selectedMapIndex == -1);
             }
 
             for (var i = 0; i < _mapsData.Count; i++)
             {
-                yield return new DiscordSelectComponentOption($"Pièce {i + 1}", GetPacket(_houseData.Id, i), isDefault: i == _selectedMapIndex);
+                yield return new DiscordSelectComponentOption($"{BotTranslations.Select_HouseMap_Option_Room}{i + 1}", GetPacket(_houseData.Id, i), isDefault: i == _selectedMapIndex);
             }
         }
 
-        return new DiscordSelectComponent(InteractionManager.SelectComponentPacketBuilder(0), "Sélectionne une pièce pour l'afficher", OptionsGenerator());
+        return new DiscordSelectComponent(InteractionManager.SelectComponentPacketBuilder(0), BotTranslations.Select_HouseMap_Placeholder, OptionsGenerator());
     }
 }

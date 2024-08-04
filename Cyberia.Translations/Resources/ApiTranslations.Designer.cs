@@ -2554,15 +2554,6 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to inf..
-        /// </summary>
-        public static string Infinity {
-            get {
-                return ResourceManager.GetString("Infinity", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
         public static string LastMeal_None {
@@ -2622,6 +2613,15 @@ namespace Cyberia.Translations {
         public static string Rune {
             get {
                 return ResourceManager.GetString("Rune", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to inf..
+        /// </summary>
+        public static string ShortInfinity {
+            get {
+                return ResourceManager.GetString("ShortInfinity", resourceCulture);
             }
         }
         

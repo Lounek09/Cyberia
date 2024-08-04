@@ -930,7 +930,7 @@
   <data name="Infertile" xml:space="preserve">
     <value>Infertile</value>
   </data>
-  <data name="Infinity" xml:space="preserve">
+  <data name="ShortInfinity" xml:space="preserve">
     <value>inf.</value>
   </data>
   <data name="LastMeal.None" xml:space="preserve">

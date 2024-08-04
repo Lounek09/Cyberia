@@ -110,7 +110,7 @@
     <value>Items</value>
   </data>
   <data name="Layout.DevelopedBy" xml:space="preserve">
-    <value>Developed by #1</value>
+    <value>Developed by </value>
   </data>
   <data name="Layout.NotAffiliated" xml:space="preserve">
     <value>is a fansite not affiliated with</value>
@@ -151,7 +151,7 @@
 &lt;p&gt;Salamandra may keep information in an internal caching mechanic for a certain amount of time.&lt;br&gt;
 After this time period, the cached information will be dropped and only be re-added when required.&lt;/p&gt;
 &lt;h3&gt;5. Questions and Concerns&lt;/h3&gt;
-&lt;p&gt;If you have questions and/or concerns about the data stored, please contact me on Discord at Lounek#3562.&lt;/p&gt;
+&lt;p&gt;If you have questions and/or concerns about the data stored, please contact me on Discord at lounek.&lt;/p&gt;
 &lt;hr&gt;
 &lt;small&gt;Note: *We reserve the right to change this without notifying our users.*&lt;/small&gt;</value>
     <comment>Raw Html</comment>

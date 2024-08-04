@@ -11,10 +11,10 @@ public sealed class MapData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("x")]
-    public int XCoord { get; init; }
+    public int X { get; init; }
 
     [JsonPropertyName("y")]
-    public int YCoord { get; init; }
+    public int Y { get; init; }
 
     [JsonPropertyName("sa")]
     public int MapSubAreaId { get; init; }
@@ -53,7 +53,7 @@ public sealed class MapData : IDofusData<int>
 
     public string GetCoordinate()
     {
-        return $"[{XCoord}, {YCoord}]";
+        return $"[{X}, {Y}]";
     }
 
     public async Task<string> GetImagePathAsync()

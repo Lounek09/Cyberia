@@ -64,7 +64,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Map, "Carte du monde")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Map, BotTranslations.Embed_Map_Author)
             .WithTitle($"{_mapData.GetCoordinate()} ({_mapData.Id})")
             .WithDescription(_mapData.GetMapAreaName())
             .WithImageUrl(await _mapData.GetImagePathAsync());
@@ -74,7 +74,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
-        var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(_mapData.XCoord, _mapData.YCoord);
+        var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(_mapData.X, _mapData.Y);
         if (mapsData.Skip(1).Any())
         {
             yield return MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_mapData);

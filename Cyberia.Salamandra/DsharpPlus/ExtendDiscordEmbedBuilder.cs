@@ -14,27 +14,44 @@ using System.Text;
 
 namespace Cyberia.Salamandra.DsharpPlus;
 
+/// <summary>
+/// Provides extension methods for <see cref="DiscordEmbedBuilder"/>.
+/// </summary>
 public static class ExtendDiscordEmbedBuilder
 {
+    /// <summary>
+    /// Adds an empty field to the embed.
+    /// </summary>
+    /// <param name="embed">The embed.</param>
+    /// <param name="inline">Whether the field is to be inline or not.</param>
+    /// <returns>The embed builder.</returns>
     public static DiscordEmbedBuilder AddEmptyField(this DiscordEmbedBuilder embed, bool inline = false)
     {
         return embed.AddField(Constant.ZeroWidthSpace, Constant.ZeroWidthSpace, inline);
     }
 
+    /// <summary>
+    /// Adds fields to the embed splitting the content if it exceeds 1024 characters.
+    /// </summary>
+    /// <param name="embed">The embed.</param>
+    /// <param name="name">The name of the field.</param>
+    /// <param name="rows">The content of the field.</param>
+    /// <param name="inline">Whether the field is to be inline or not.</param>
+    /// <returns>The embed builder.</returns>
+    /// <exception cref="ArgumentException">Thrown if one row exceeds 1024 characters.</exception>
     public static DiscordEmbedBuilder AddFields(this DiscordEmbedBuilder embed, string name, IEnumerable<string> rows, bool inline = false)
     {
         StringBuilder builder = new();
 
         foreach (var row in rows)
         {
-            if (row.Length > 1024)
+            if (row.Length > Constant.MaxEmbedFieldSize)
             {
-                throw new ArgumentException("One row exceeds 1024 characters and embed field value cannot exceed this length.");
+                throw new ArgumentException($"One row exceeds {Constant.MaxEmbedFieldSize} characters and embed field value cannot exceed this length.");
             }
 
             if (builder.Length + row.Length > 1024)
             {
-                builder.Length--;
                 embed.AddField(name, builder.ToString(), inline);
                 builder.Clear();
             }
@@ -43,19 +60,19 @@ public static class ExtendDiscordEmbedBuilder
             builder.Append('\n');
         }
 
-        builder.Length--;
         return embed.AddField(name, builder.ToString(), inline);
     }
 
     public static DiscordEmbedBuilder AddEffectFields(this DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool inline = false)
     {
-        return embed.AddFields(name, GetEffectsParse(effects, x => Formatter.Bold(Formatter.Sanitize(x))), inline);
+        var effectsParse = GetEffectsParse(effects, x => Formatter.Bold(Formatter.Sanitize(x)));
+        return embed.AddFields(name, effectsParse, inline);
     }
 
-    public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, string name, CriteriaReadOnlyCollection criteria, bool inline = false)
+    public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, CriteriaReadOnlyCollection criteria, bool inline = false)
     {
         var criteriaParse = GetCriteriaParse(criteria, x => Formatter.Bold(Formatter.Sanitize(x)));
-        return embed.AddFields(name, criteriaParse, inline);
+        return embed.AddFields(BotTranslations.Embed_Field_Criteria_Title, criteriaParse, inline);
     }
 
     public static DiscordEmbedBuilder AddQuestObjectiveFields(this DiscordEmbedBuilder embed, IEnumerable<IQuestObjective> questObjectives, bool inline = false)
@@ -71,17 +88,17 @@ public static class ExtendDiscordEmbedBuilder
             questObjectivesParse.Add(questObjectiveDescription);
         }
 
-        return embed.AddFields("Objectifs :", questObjectivesParse, inline);
+        return embed.AddFields(BotTranslations.Embed_Field_QuestObjectives_Title, questObjectivesParse, inline);
     }
 
-    public static DiscordEmbedBuilder WithCraftDescription(this DiscordEmbedBuilder embed, CraftData craftData, int qte, bool recursive)
+    public static DiscordEmbedBuilder WithCraftDescription(this DiscordEmbedBuilder embed, CraftData craftData, int quantity, bool recursive)
     {
         List<string> result = [];
 
-        var ingredients = recursive ? craftData.GetIngredientsWithSubCraft(qte) : craftData.GetIngredients(qte);
+        var ingredients = recursive ? craftData.GetIngredientsWithSubCraft(quantity) : craftData.GetIngredients(quantity);
         foreach (var ingredient in ingredients)
         {
-            var quantity = Formatter.Bold(ingredient.Value.ToFormattedString());
+            var quantityFormatted = Formatter.Bold(ingredient.Value.ToFormattedString());
             var itemName = Formatter.Sanitize(ingredient.Key.Name);
 
             if (!recursive)
@@ -93,84 +110,92 @@ public static class ExtendDiscordEmbedBuilder
                 }
             }
 
-            result.Add($"{quantity}x {itemName}");
+            result.Add($"{quantityFormatted}x {itemName}");
         }
 
         return embed.WithDescription(string.Join('\n', result));
     }
 
-    public static DiscordEmbedBuilder AddCraftField(this DiscordEmbedBuilder embed, CraftData craftData, int qte, bool inline = false)
+    public static DiscordEmbedBuilder AddCraftField(this DiscordEmbedBuilder embed, CraftData craftData, int quantity, bool inline = false)
     {
         List<string> result = [];
 
-        foreach (var ingredient in craftData.GetIngredients(qte))
+        foreach (var ingredient in craftData.GetIngredients(quantity))
         {
-            var quantity = Formatter.Bold(ingredient.Value.ToFormattedString());
+            var quantityFormatted = Formatter.Bold(ingredient.Value.ToFormattedString());
             var itemName = Formatter.Sanitize(ingredient.Key.Name);
 
             result.Add($"{quantity}x {itemName}");
         }
 
-        return embed.AddField("Craft :", string.Join(" + ", result), inline);
+        return embed.AddField(BotTranslations.Embed_Field_Craft_Title, string.Join(" + ", result), inline);
     }
 
     public static DiscordEmbedBuilder AddWeaponInfosField(this DiscordEmbedBuilder embed, ItemWeaponData itemWeaponData, bool twoHanded, ItemTypeData? itemTypeData, bool inline = false)
     {
         StringBuilder builder = new();
 
-        builder.Append("PA : ");
+        builder.Append(BotTranslations.Embed_Field_Weapon_AP);
         builder.Append(Formatter.Bold(itemWeaponData.ActionPointCost.ToString()));
         builder.Append('\n');
 
-        builder.Append("Portée : ");
+        builder.Append(BotTranslations.Embed_Field_Weapon_Range);
         builder.Append(Formatter.Bold(itemWeaponData.MinRange.ToString()));
-        builder.Append(" à ");
+        builder.Append(BotTranslations.to);
         builder.Append(Formatter.Bold(itemWeaponData.MaxRange.ToString()));
         builder.Append('\n');
 
         if (itemWeaponData.CriticalBonus != 0)
         {
-            builder.Append("Bonus coups critique : ");
+            builder.Append(BotTranslations.Embed_Field_Weapon_CriticalHitBonus);
             builder.Append(Formatter.Bold(itemWeaponData.CriticalBonus.ToString()));
             builder.Append('\n');
         }
 
         if (itemWeaponData.CriticalHitRate != 0)
         {
-            builder.Append("Critique : 1/");
+            builder.Append(BotTranslations.Embed_Field_Weapon_CriticalHit);
+            builder.Append("1/");
             builder.Append(Formatter.Bold(itemWeaponData.CriticalHitRate.ToString()));
-            builder.Append(itemWeaponData.CriticalFailureRate != 0 ? " - " : "\n");
         }
 
         if (itemWeaponData.CriticalFailureRate != 0)
         {
-            builder.Append("Échec : 1/");
+            builder.Append(" - ");
+            builder.Append(BotTranslations.Embed_Field_Weapon_CriticalFailure);
+            builder.Append("1/");
             builder.Append(Formatter.Bold(itemWeaponData.CriticalFailureRate.ToString()));
+            builder.Append('\n');
+        }
+        else
+        {
             builder.Append('\n');
         }
 
         if (itemWeaponData.LineOnly)
         {
-            builder.Append("Lancer en ligne uniquement\n");
+            builder.Append(BotTranslations.Embed_Field_Weapon_LineOnly);
+            builder.Append('\n');
         }
 
         if (!itemWeaponData.LineOfSight && itemWeaponData.MaxRange > 1)
         {
-            builder.Append("Ne possède pas de ligne de vue\n");
-
+            builder.Append(BotTranslations.Embed_Field_Weapon_LineOfSight);
+            builder.Append('\n');
         }
 
-        builder.Append(twoHanded ? "Arme à deux mains" : "Arme à une main");
+        builder.Append(twoHanded ? BotTranslations.Embed_Field_Weapon_OneHanded : BotTranslations.Embed_Field_Weapon_TwoHanded);
 
         if (itemTypeData is not null && itemTypeData.EffectArea != EffectAreaFactory.Default)
         {
-            builder.Append("\nZone : ");
+            builder.Append('\n');
+            builder.Append(BotTranslations.Embed_Field_Weapon_Area);
             builder.Append(Emojis.EffectArea(itemTypeData.EffectArea.Id));
             builder.Append(' ');
             builder.Append(itemTypeData.EffectArea.GetDescription().ToString(Formatter.Bold));
         }
 
-        return embed.AddField("Caractéristiques :", builder.ToString(), inline);
+        return embed.AddField(BotTranslations.Embed_Field_Weapon_Title, builder.ToString(), inline);
     }
 
     public static DiscordEmbedBuilder AddPetField(this DiscordEmbedBuilder embed, PetData petData, bool inline = false)
@@ -179,9 +204,10 @@ public static class ExtendDiscordEmbedBuilder
 
         if (petData.MinFoodInterval.HasValue && petData.MaxFoodInterval.HasValue)
         {
-            builder.Append("Repas entre ");
+            builder.Append(BotTranslations.Embed_Field_Pet_MealBetween);
             builder.Append(Formatter.Bold(petData.MinFoodInterval.Value.TotalHours.ToString()));
-            builder.Append("h et ");
+            builder.Append('h');
+            builder.Append(BotTranslations.and);
             builder.Append(Formatter.Bold(petData.MaxFoodInterval.Value.TotalHours.ToString()));
             builder.Append("h\n");
         }
@@ -258,7 +284,7 @@ public static class ExtendDiscordEmbedBuilder
             }
         }
 
-        return embed.AddField("Familier :", builder.ToString(), inline);
+        return embed.AddField(BotTranslations.Embed_Field_Pet_Title, builder.ToString(), inline);
     }
 
     private static List<string> GetEffectsParse(IEnumerable<IEffect> effects, Func<string, string>? parametersDecorator = null)
@@ -313,14 +339,14 @@ public static class ExtendDiscordEmbedBuilder
                     break;
                 case CriteriaReadOnlyCollection subCriteria:
                     var subCriteriaParse = GetCriteriaParse(subCriteria, parametersDecorator);
-                    criteriaParse[^1] += "(" + subCriteriaParse[0];
+                    criteriaParse[^1] += '(' + subCriteriaParse[0];
 
                     if (subCriteriaParse.Count > 1)
                     {
                         criteriaParse.AddRange(subCriteriaParse.GetRange(1, subCriteriaParse.Count - 1));
                     }
 
-                    criteriaParse[^1] += ")";
+                    criteriaParse[^1] += ')';
                     criteriaParse.Add(string.Empty);
                     break;
                 case ICriterion criterion:

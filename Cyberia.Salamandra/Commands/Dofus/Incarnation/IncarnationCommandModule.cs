@@ -46,7 +46,7 @@ public sealed class IncarnationCommandModule
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent("Incarnation introuvable");
+        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Incarnation_NotFound);
         await ctx.RespondAsync(response);
     }
 }

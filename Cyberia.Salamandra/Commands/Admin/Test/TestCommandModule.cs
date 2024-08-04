@@ -15,10 +15,8 @@ public sealed class TestCommandModule
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     [RequireApplicationOwner]
-    public static async Task ExecuteAsync(SlashCommandContext _)
+    public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        await Task.Delay(0);
-
-        throw new NotImplementedException();
+        await ctx.RespondAsync("test");
     }
 }

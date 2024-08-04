@@ -8,12 +8,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
 public static class CraftComponentsBuilder
 {
-    public static DiscordButtonComponent CraftButtonBuilder(CraftData craftData, int qte = 1, bool disable = false)
+    public static DiscordButtonComponent CraftButtonBuilder(CraftData craftData, int quantity = 1, bool disable = false)
     {
-        return new(DiscordButtonStyle.Success, CraftMessageBuilder.GetPacket(craftData.Id, qte), "Craft", disable);
+        return new(DiscordButtonStyle.Success, CraftMessageBuilder.GetPacket(craftData.Id, quantity), BotTranslations.Button_Craft, disable);
     }
 
-    public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, IEnumerable<CraftData> craftsData, int qte = 1, bool disable = false)
+    public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, IEnumerable<CraftData> craftsData, int quantity = 1, bool disable = false)
     {
         var options = craftsData
             .Take(Constant.MaxSelectOption)
@@ -22,10 +22,10 @@ public static class CraftComponentsBuilder
                 var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id);
                 return new DiscordSelectComponentOption(
                     itemName.WithMaxLength(100),
-                    CraftMessageBuilder.GetPacket(x.Id, qte),
+                    CraftMessageBuilder.GetPacket(x.Id, quantity),
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne un item pour calculer son craft", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_Craft_Placeholder, options, disable);
     }
 }

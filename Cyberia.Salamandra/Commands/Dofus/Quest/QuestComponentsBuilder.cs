@@ -24,6 +24,6 @@ public static class QuestComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne une quête pour l'afficher", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_Quest_Placeholder, options, disable);
     }
 }

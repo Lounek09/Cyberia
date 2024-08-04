@@ -24,6 +24,6 @@ public static class IncarnationComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne une incarnation pour l'afficher", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_Incarnation_Placeholder, options, disable);
     }
 }

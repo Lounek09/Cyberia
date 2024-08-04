@@ -18,13 +18,13 @@ public static class SpellComponentsBuilder
         var options = spells
             .Take(Constant.MaxSelectOption)
             .Select(x =>
-        {
-            return new DiscordSelectComponentOption(
-                ExtendString.WithMaxLength(x.Name, 100),
-                SpellMessageBuilder.GetPacket(x.Id, x.GetMaxLevelNumber()),
-                x.SpellCategory.GetDescription());
-        });
+            {
+                return new DiscordSelectComponentOption(
+                    ExtendString.WithMaxLength(x.Name, 100),
+                    SpellMessageBuilder.GetPacket(x.Id, x.GetMaxLevelNumber()),
+                    x.SpellCategory.GetDescription());
+            });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne un sort pour l'afficher", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_Spell_Placeholder, options, disable);
     }
 }

@@ -56,15 +56,18 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
+        var type = _type.ToStringFast();
+        var language = _language.ToStringFast();
+
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Langs")
-            .WithTitle($"Langs {_type} en {_language}");
+            .WithTitle($"Langs {type} in {language}");
 
         if (_langRepository.Langs.Count > 0)
         {
             StringBuilder descriptionBuilder = new();
 
-            descriptionBuilder.Append("Dernière modification le : ");
-            descriptionBuilder.Append(_langRepository.LastChange.ToLocalTime().ToString("dd/MM/yyyy HH:mmzzz"));
+            descriptionBuilder.Append("Last modification : ");
+            descriptionBuilder.Append(_langRepository.LastChange.ToLocalTime().ToString("yyyy-mm-dd HH:mmzzz"));
             descriptionBuilder.Append('\n');
             descriptionBuilder.Append(Formatter.MaskedUrl(Formatter.Bold(_langRepository.VersionFileName), new Uri(LangsWatcher.BaseUrl + _langRepository.VersionFileRoute)));
             descriptionBuilder.Append('\n');
@@ -82,7 +85,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         }
         else
         {
-            embed.WithDescription($"Aucun lang {Formatter.Bold(_type.ToStringFast())} en {Formatter.Bold(_language.ToStringFast())} n'a été trouvé");
+            embed.WithDescription($"No {Formatter.Bold(type)} lang in {Formatter.Bold(language)} has been found.");
         }
 
         return Task.FromResult(embed);
@@ -92,7 +95,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     {
         return new DiscordSelectComponent(
             InteractionManager.SelectComponentPacketBuilder(0),
-            "Sélectionne un type pour l'afficher",
+            "Select a type to display",
             Enum.GetValues<LangType>()
                 .Select(x => new DiscordSelectComponentOption(x.ToStringFast(), GetPacket(x, _language), isDefault: x == _type)));
     }
@@ -101,7 +104,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     {
         return new DiscordSelectComponent(
             InteractionManager.SelectComponentPacketBuilder(1),
-            "Sélectionne une langue pour l'afficher",
+            "Select a language to display",
             Enum.GetValues<LangLanguage>()
                 .Select(x => new DiscordSelectComponentOption(x.ToStringFast(), GetPacket(_type, x), isDefault: x == _language)));
     }

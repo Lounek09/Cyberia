@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
 		Microsoft ResX Schema
 
 		Version 1.3
@@ -58,44 +58,553 @@
 			: using a System.ComponentModel.TypeConverter
 			: and then encoded with base64 encoding.
 	-->
-	
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>1.3</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Command.Error.Check.RequireApplicationOwner" xml:space="preserve">
+    <value>This command can only be used by the bot owner.</value>
+  </data>
+  <data name="Command.Error.Check.RequireGuild" xml:space="preserve">
+    <value>This command can only be used in a server.</value>
+  </data>
+  <data name="Command.Error.Check.Unknown" xml:space="preserve">
+    <value>The control of type #1 for this command failed.</value>
+  </data>
+  <data name="Command.Error.UserResponse" xml:space="preserve">
+    <value>The command has run into a problem, a bug report has been sent automatically to the bot owner.</value>
+  </data>
+  <data name="Command.Error.Component" xml:space="preserve">
+    <value>There was a problem creating the reply, the message is probably too old.</value>
+  </data>
+  <data name="Embed.Field.Criteria.Title" xml:space="preserve">
+    <value>Criteria :</value>
+  </data>
+  <data name="Embed.Field.QuestObjectives.Title" xml:space="preserve">
+    <value>Objectives :</value>
+  </data>
+  <data name="Embed.Field.Craft.Title" xml:space="preserve">
+    <value>Craft :</value>
+  </data>
+  <data name="Embed.Field.Weapon.AP" xml:space="preserve">
+    <value>AP : </value>
+  </data>
+  <data name="Embed.Field.Weapon.Range" xml:space="preserve">
+    <value>Range : </value>
+  </data>
+  <data name="Embed.Field.Weapon.CriticalHitBonus" xml:space="preserve">
+    <value>Critical hit bonus : </value>
+  </data>
+  <data name="Embed.Field.Weapon.CriticalHit" xml:space="preserve">
+    <value>Critical hit : </value>
+  </data>
+  <data name="Embed.Field.Weapon.CriticalFailure" xml:space="preserve">
+    <value>Failure : </value>
+  </data>
+  <data name="Embed.Field.Weapon.LineOnly" xml:space="preserve">
+    <value>Linear only</value>
+  </data>
+  <data name="Embed.Field.Weapon.LineOfSight" xml:space="preserve">
+    <value>No line of sight</value>
+  </data>
+  <data name="Embed.Field.Weapon.OneHanded" xml:space="preserve">
+    <value>One-handed weapon</value>
+  </data>
+  <data name="Embed.Field.Weapon.TwoHanded" xml:space="preserve">
+    <value>Two-handed weapon</value>
+  </data>
+  <data name="Embed.Field.Weapon.Title" xml:space="preserve">
+    <value>Characteristics :</value>
+  </data>
+  <data name="Embed.Field.Weapon.Area" xml:space="preserve">
+    <value>Area : </value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value> to </value>
+  </data>
+  <data name="and" xml:space="preserve">
+    <value> and </value>
+  </data>
+  <data name="Embed.Field.Pet.MealBetween" xml:space="preserve">
+    <value>Meal between </value>
+  </data>
+  <data name="Embed.Field.Pet.Title" xml:space="preserve">
+    <value>Pet :</value>
+  </data>
+  <data name="Embed.Field.Page.Content" xml:space="preserve">
+    <value>Page </value>
+  </data>
+  <data name="Button.Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Button.Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Breed.NotFound" xml:space="preserve">
+    <value>Class not found.</value>
+  </data>
+  <data name="Embed.Breed.Author" xml:space="preserve">
+    <value>Classes</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Title" xml:space="preserve">
+    <value>Characteristics :</value>
+  </data>
+  <data name="Embed.Field.Spells.Title" xml:space="preserve">
+    <value>Spells :</value>
+  </data>
+  <data name="ShortLevel" xml:space="preserve">
+    <value>Lv.</value>
+  </data>
+  <data name="Vitality" xml:space="preserve">
+    <value>Vitality</value>
+  </data>
+  <data name="Wisdom" xml:space="preserve">
+    <value>Wisdom</value>
+  </data>
+  <data name="Strength" xml:space="preserve">
+    <value>Strength</value>
+  </data>
+  <data name="Intelligence" xml:space="preserve">
+    <value>Intelligence</value>
+  </data>
+  <data name="Chance" xml:space="preserve">
+    <value>Chance</value>
+  </data>
+  <data name="Agility" xml:space="preserve">
+    <value>Agility</value>
+  </data>
+  <data name="for" xml:space="preserve">
+    <value> for </value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value> from </value>
+  </data>
+  <data name="Craft.NotFound" xml:space="preserve">
+    <value>Craft not found.</value>
+  </data>
+  <data name="Button.Craft" xml:space="preserve">
+    <value>Craft</value>
+  </data>
+  <data name="Select.Craft.Placeholder" xml:space="preserve">
+    <value>Select an item to calculate its craft</value>
+  </data>
+  <data name="Embed.Craft.Author" xml:space="preserve">
+    <value>Crafts calculator</value>
+  </data>
+  <data name="Embed.Craft.Title" xml:space="preserve">
+    <value>Craft : </value>
+  </data>
+  <data name="Embed.Field.Weight.Title" xml:space="preserve">
+    <value>Weight :</value>
+  </data>
+  <data name="Embed.Field.Weight.Content" xml:space="preserve">
+    <value>#1 pod(s) per craft{~2, }#2{~2 in total}</value>
+  </data>
+  <data name="Embed.Field.CraftTime.Title" xml:space="preserve">
+    <value>Approximated craft time :</value>
+  </data>
+  <data name="Embed.Field.CraftTime.Content" xml:space="preserve">
+    <value>#1 per craft{~2
+}#2{~2 in total}</value>
+  </data>
+  <data name="Button.SubCraft.Hide" xml:space="preserve">
+    <value>Hide subcrafts</value>
+  </data>
+  <data name="Button.SubCraft.Display" xml:space="preserve">
+    <value>Display subcrafts</value>
+  </data>
+  <data name="Embed.PaginatedCraft.Title" xml:space="preserve">
+    <value>Multiple crafts found :</value>
+  </data>
+  <data name="Embed.Crit.Author" xml:space="preserve">
+    <value>Critical hit calculator</value>
+  </data>
+  <data name="Embed.Crit.Description" xml:space="preserve">
+    <value>You will be #1 at #2 with #3 crit and #4 agi.
+To reach 1/2, you will need at least #5 agi.</value>
+  </data>
+  <data name="Embed.Escape.Author" xml:space="preserve">
+    <value>Escape % calculator</value>
+  </data>
+  <data name="Embed.Escape.Description" xml:space="preserve">
+    <value>With #1 agi, you will have a #2% chance of escape against #3 agi.
+To escape at 100%, you will need at minimum #4 agi.</value>
+  </data>
+  <data name="House.NotFound" xml:space="preserve">
+    <value>House not found.</value>
+  </data>
+  <data name="House.NotFound.Coordinate" xml:space="preserve">
+    <value>There is no house at [#1, #2].</value>
+  </data>
+  <data name="MapSubArea.NotFound" xml:space="preserve">
+    <value>Subarea not found.</value>
+  </data>
+  <data name="House.NotFound.MapSubArea" xml:space="preserve">
+    <value>The #1 subarea does not contain any house.</value>
+  </data>
+  <data name="MapArea.NotFound" xml:space="preserve">
+    <value>Area not found.</value>
+  </data>
+  <data name="House.NotFound.MapArea" xml:space="preserve">
+    <value>The #1 area does not contain any house.</value>
+  </data>
+  <data name="Select.House.Placeholder" xml:space="preserve">
+    <value>Select a house to display it</value>
+  </data>
+  <data name="Embed.House.Author" xml:space="preserve">
+    <value>Estate agency</value>
+  </data>
+  <data name="Embed.Field.Room.Title" xml:space="preserve">
+    <value>Room :</value>
+  </data>
+  <data name="Embed.Field.Chest.Title" xml:space="preserve">
+    <value>Chest :</value>
+  </data>
+  <data name="Embed.Field.Price.Title" xml:space="preserve">
+    <value>Price :</value>
+  </data>
+  <data name="Select.HouseMap.Placeholder" xml:space="preserve">
+    <value>Select a room do display it</value>
+  </data>
+  <data name="Select.HouseMap.Option.Outdoors" xml:space="preserve">
+    <value>Outdoors</value>
+  </data>
+  <data name="Select.HouseMap.Option.Room" xml:space="preserve">
+    <value>Room </value>
+  </data>
+  <data name="Embed.PaginatedHouse.Title" xml:space="preserve">
+    <value>Multiple houses found :</value>
+  </data>
+  <data name="Incarnation.NotFound" xml:space="preserve">
+    <value>Incarnation not found.</value>
+  </data>
+  <data name="Select.Incarnation.Placeholder" xml:space="preserve">
+    <value>Select an incarnation to display it</value>
+  </data>
+  <data name="Embed.Incarnation.Author" xml:space="preserve">
+    <value>Incarnations</value>
+  </data>
+  <data name="Embed.Field.Level.Title" xml:space="preserve">
+    <value>Level :</value>
+  </data>
+  <data name="Embed.Field.ItemType.Title" xml:space="preserve">
+    <value>Type :</value>
+  </data>
+  <data name="Embed.Field.Effects.Title" xml:space="preserve">
+    <value>Effects :</value>
+  </data>
+  <data name="Embed.Incarnation.Description.NotFound" xml:space="preserve">
+    <value>Incarnation not existing in the game data.</value>
+  </data>
+  <data name="Embed.PaginatedIncarnation.Title" xml:space="preserve">
+    <value>Multiple incarnations found :</value>
+  </data>
+  <data name="Item.NotFound" xml:space="preserve">
+    <value>Item not found.</value>
+  </data>
+  <data name="Select.Item.Placeholder" xml:space="preserve">
+    <value>Select an item to display it</value>
+  </data>
+  <data name="Embed.Item.Author" xml:space="preserve">
+    <value>Items</value>
+  </data>
+  <data name="Embed.Field.ItemSet.Title" xml:space="preserve">
+    <value>Set :</value>
+  </data>
+  <data name="Embed.Field.Miscellaneous.Title" xml:space="preserve">
+    <value>Miscellaneous :</value>
+  </data>
+  <data name="Embed.Field.Miscellaneous.Content.Weight" xml:space="preserve">
+    <value> pod(s)</value>
+  </data>
+  <data name="Embed.Field.Miscellaneous.Content.Price" xml:space="preserve">
+    <value>sells for #1 #2 at npcs</value>
+  </data>
+  <data name="Embed.Field.Miscellaneous.Content.Ceremonial" xml:space="preserve">
+    <value>ceremonial item</value>
+  </data>
+  <data name="Embed.Field.Miscellaneous.Content.Enhanceable" xml:space="preserve">
+    <value>smithmageable</value>
+  </data>
+  <data name="Embed.Field.Miscellaneous.Content.Ethereal" xml:space="preserve">
+    <value>ethereal item</value>
+  </data>
+  <data name="Embed.Field.Miscellaneous.Content.Usable" xml:space="preserve">
+    <value>is usable</value>
+  </data>
+  <data name="Embed.Field.Miscellaneous.Content.Targetable" xml:space="preserve">
+    <value>is targetable</value>
+  </data>
+  <data name="Embed.Field.Miscellaneous.Content.Cursed" xml:space="preserve">
+    <value>cursed</value>
+  </data>
+  <data name="Embed.PaginatedItem.Title" xml:space="preserve">
+    <value>Multiple items found :</value>
+  </data>
+  <data name="ItemSet.NotFound" xml:space="preserve">
+    <value>Set not found.</value>
+  </data>
+  <data name="Select.ItemSet.Placeholder" xml:space="preserve">
+    <value>Select a set to display it</value>
+  </data>
+  <data name="Embed.ItemSet.Author" xml:space="preserve">
+    <value>Sets</value>
+  </data>
+  <data name="Embed.Field.Items.Title" xml:space="preserve">
+    <value>Items :</value>
+  </data>
+  <data name="Embed.PaginatedItemSet.Title" xml:space="preserve">
+    <value>Multiple sets found :</value>
+  </data>
+  <data name="Map.NotFound" xml:space="preserve">
+    <value>Map not found.</value>
+  </data>
+  <data name="Map.NotFound.Coordinate" xml:space="preserve">
+    <value>There is no map at [#1, #2].</value>
+  </data>
+  <data name="Map.NotFound.MapSubArea" xml:space="preserve">
+    <value>The #1 subarea does not contain any map.</value>
+  </data>
+  <data name="Map.NotFound.MapArea" xml:space="preserve">
+    <value>The #1 area does not contain any map.</value>
+  </data>
+  <data name="Select.Map.Placeholder" xml:space="preserve">
+    <value>Select a map to display it</value>
+  </data>
+  <data name="Select.MapSubArea.Placeholder" xml:space="preserve">
+    <value>Select a subarea to display its maps</value>
+  </data>
+  <data name="Select.MapArea.Placeholder" xml:space="preserve">
+    <value>Select an area to display its maps</value>
+  </data>
+  <data name="Embed.Map.Author" xml:space="preserve">
+    <value>World map</value>
+  </data>
+  <data name="Embed.PaginatedMapArea.Title" xml:space="preserve">
+    <value>Multiple areas found :</value>
+  </data>
+  <data name="Embed.PaginatedMap.Title" xml:space="preserve">
+    <value>Multiple maps found :</value>
+  </data>
+  <data name="Embed.PaginatedMapSubArea.Title" xml:space="preserve">
+    <value>Multiple subareas found :</value>
+  </data>
+  <data name="Summon" xml:space="preserve">
+    <value>Summon</value>
+  </data>
+  <data name="Monster.NotFound" xml:space="preserve">
+    <value>Monster not found.</value>
+  </data>
+  <data name="Select.Monster.Placeholder" xml:space="preserve">
+    <value>Select a monster to display it</value>
+  </data>
+  <data name="Embed.Monster.Author" xml:space="preserve">
+    <value>Bestiary</value>
+  </data>
+  <data name="Rank" xml:space="preserve">
+    <value>Rank</value>
+  </data>
+  <data name="Embed.Field.MonsterSuperRaceData.Title" xml:space="preserve">
+    <value>Ecosystem :</value>
+  </data>
+  <data name="Embed.Field.MonsterRaceData.Title" xml:space="preserve">
+    <value>Breed :</value>
+  </data>
+  <data name="Embed.Field.Alignment.Title" xml:space="preserve">
+    <value>Alignment :</value>
+  </data>
+  <data name="Embed.PaginatedMonster.Title" xml:space="preserve">
+    <value>Multiple monsters found :</value>
+  </data>
+  <data name="Quest.NotFound" xml:space="preserve">
+    <value>Quest not found.</value>
+  </data>
+  <data name="Select.Quest.Placeholder" xml:space="preserve">
+    <value>Select a quest to display it</value>
+  </data>
+  <data name="Embed.Quest.Author" xml:space="preserve">
+    <value>Quest book</value>
+  </data>
+  <data name="Embed.Field.OptimalLevel.Title" xml:space="preserve">
+    <value>Optimal level :</value>
+  </data>
+  <data name="Embed.Field.Dialog.Title" xml:space="preserve">
+    <value>Dialog :</value>
+  </data>
+  <data name="Embed.Field.Rewards.Title" xml:space="preserve">
+    <value>Rewards :</value>
+  </data>
+  <data name="Embed.Field.Rewards.Content.Emotes" xml:space="preserve">
+    <value>Emotes : </value>
+  </data>
+  <data name="Embed.Field.Rewards.Content.Jobs" xml:space="preserve">
+    <value>Jobs : </value>
+  </data>
+  <data name="Embed.Field.Rewards.Content.Spells" xml:space="preserve">
+    <value>Spells : </value>
+  </data>
+  <data name="Select.QuestStep.Placeholder" xml:space="preserve">
+    <value>Select a step to display it</value>
+  </data>
+  <data name="Select.QuestStep.Content.Step" xml:space="preserve">
+    <value>Step </value>
+  </data>
+  <data name="Embed.PaginatedQuest.Title" xml:space="preserve">
+    <value>Multiple quests found :</value>
+  </data>
+  <data name="IncorrectParameter" xml:space="preserve">
+    <value>Incorrect parameter</value>
+  </data>
+  <data name="PossibleValues" xml:space="preserve">
+    <value>Possible values :</value>
+  </data>
+  <data name="Embed.Rune.Author" xml:space="preserve">
+    <value>Runes calculator</value>
+  </data>
+  <data name="Embed.Rune.Description.One" xml:space="preserve">
+    <value>#1 #2% chance on a level #3 item.</value>
+  </data>
+  <data name="Embed.Rune.Description.Multiple" xml:space="preserve">
+    <value>#1 #2% chance on a level #3 item with #4 stats.</value>
+  </data>
+  <data name="ShortMinimum" xml:space="preserve">
+    <value>Min.</value>
+  </data>
+  <data name="ShortAverage" xml:space="preserve">
+    <value>Avg.</value>
+  </data>
+  <data name="ShortMaximum" xml:space="preserve">
+    <value>Max.</value>
+  </data>
+  <data name="Embed.Field.RuneRaRate.Title" xml:space="preserve">
+    <value>Ra rate :</value>
+  </data>
+  <data name="Embed.Field.RunePaRate.Title" xml:space="preserve">
+    <value>Pa rate :</value>
+  </data>
+  <data name="Embed.Field.Source.Title" xml:space="preserve">
+    <value>Source :</value>
+  </data>
+  <data name="Button.RuneItem" xml:space="preserve">
+    <value>Runes calculator</value>
+  </data>
+  <data name="Select.RuneItem.Splaceholder" xml:space="preserve">
+    <value>Select an item to calculate the runes that can be obtained</value>
+  </data>
+  <data name="Embed.RuneITem.Description" xml:space="preserve">
+    <value>Rune generation simulation : </value>
+  </data>
+  <data name="Button.Resimulate" xml:space="preserve">
+    <value>Resimulate</value>
+  </data>
+  <data name="Spell.NotFound" xml:space="preserve">
+    <value>Spell not found.</value>
+  </data>
+  <data name="Select.Spell.Placeholder" xml:space="preserve">
+    <value>Select a spell to display it</value>
+  </data>
+  <data name="Embed.Spell.Author" xml:space="preserve">
+    <value>Spells book</value>
+  </data>
+  <data name="Embed.Field.RequiredLevel.Title" xml:space="preserve">
+    <value>Required level :</value>
+  </data>
+  <data name="ShortRange" xml:space="preserve">
+    <value>RA</value>
+  </data>
+  <data name="ShortActionPoint" xml:space="preserve">
+    <value>AP</value>
+  </data>
+  <data name="Embed.Field.Category.Title" xml:space="preserve">
+    <value>Category :</value>
+  </data>
+  <data name="Embed.Field.RequiredStates.Title" xml:space="preserve">
+    <value>Required states :</value>
+  </data>
+  <data name="Embed.Field.ForbiddenStates.Title" xml:space="preserve">
+    <value>Forbidden states :</value>
+  </data>
+  <data name="Embed.Field.TrapEffects.Title" xml:space="preserve">
+    <value>Trap effects :</value>
+  </data>
+  <data name="Embed.Field.GlyphEffects.Title" xml:space="preserve">
+    <value>Glyph effects :</value>
+  </data>
+  <data name="Embed.Field.CriticalEffects.Title" xml:space="preserve">
+    <value>Critical effects :</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.CriticalHit" xml:space="preserve">
+    <value>Critical hit probability :</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.CriticalFailure" xml:space="preserve">
+    <value>Failure probability :</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.CastPerTurn" xml:space="preserve">
+    <value>Nb. of casts per turn :</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.CastPerPlayer" xml:space="preserve">
+    <value>Nb. of casts per turn and per player :</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.TurnsBetweenCast" xml:space="preserve">
+    <value>Nb. of turns between two casts :</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.AdjustableRange" xml:space="preserve">
+    <value>Adjustable range</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.LineOfSight" xml:space="preserve">
+    <value>Line of sight</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.Linear" xml:space="preserve">
+    <value>Linear</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.NeedFreeCell" xml:space="preserve">
+    <value>Free squares</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.CriticalFailureEndTurn" xml:space="preserve">
+    <value>CF ends turn</value>
+  </data>
+  <data name="Embed.Field.Characteristics.Content.GlobalRecast" xml:space="preserve">
+    <value>Global recast interval</value>
+  </data>
+  <data name="ShortInfinity" xml:space="preserve">
+    <value>inf.</value>
+  </data>
+  <data name="Embed.PaginatedSpell.Title" xml:space="preserve">
+    <value>Multiple spells found :</value>
+  </data>
 </root>

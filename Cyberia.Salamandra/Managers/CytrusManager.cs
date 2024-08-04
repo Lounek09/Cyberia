@@ -26,14 +26,14 @@ public static class CytrusManager
         var modelManifest = await CytrusManifest.GetManifestAsync(game, platform, oldRelease, oldVersion);
         if (modelManifest is null)
         { 
-            await channel.SendMessageSafe(messageBuilder.WithContent($"Nouveau client introuvable"));
+            await channel.SendMessageSafe(messageBuilder.WithContent($"Old client not found."));
             return;
         }
 
         var currentManifest = await CytrusManifest.GetManifestAsync(game, platform, newRelease, newVersion);
         if (currentManifest is null)
         {
-            await channel.SendMessageSafe(messageBuilder.WithContent($"Nouveau client introuvable"));
+            await channel.SendMessageSafe(messageBuilder.WithContent($"New client not found."));
             return;
         }
 
@@ -44,7 +44,7 @@ public static class CytrusManager
         }
 
         var mainContent = $"""
-             Diff de {Formatter.Bold(game.Capitalize())} sur {Formatter.Bold(platform)}
+             Diff of {Formatter.Bold(game.Capitalize())} on {Formatter.Bold(platform)}
              {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
              """;
 

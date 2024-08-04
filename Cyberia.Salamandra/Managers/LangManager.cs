@@ -75,22 +75,22 @@ public static class LangManager
 
     private static async Task<DiscordThreadChannel> CreateAutoDiffPostAsync(this DiscordForumChannel forum, LangRepository repository)
     {
-        var now = DateTime.Now;
+        var lastChange = repository.LastChange.ToLocalTime();
+        var type = repository.Type.ToStringFast();
+        var language = repository.Language.ToStringFast();
 
         var postBuilder = new ForumPostBuilder()
-            .WithName($"{repository.Type} {repository.Language} {now:dd-MM-yyyy HH\\hmm}")
+            .WithName($"{type} {language} {DateTime.Now:yyyy-mm-dd HH:mm}")
             .WithMessage(new DiscordMessageBuilder().WithContent(
-                $"Diff des langs {Formatter.Bold(repository.Type.ToString())} " +
-                $"de {repository.LastChange.ToLocalTime():dd/MM/yyyy HH:mmzzz} " +
-                $"en {Formatter.Bold(repository.Language.ToString())}"));
+                $"Diff of langs {Formatter.Bold(type)} from {lastChange:yyyy-mm-dd HH:mmzzz} in {Formatter.Bold(language)}"));
 
-        var typeTag = forum.GetDiscordForumTagByName(repository.Type.ToString());
+        var typeTag = forum.GetDiscordForumTagByName(type);
         if (typeTag is not null)
         {
             postBuilder.AddTag(typeTag);
         }
 
-        var languageTag = forum.GetDiscordForumTagByName(repository.Language.ToString());
+        var languageTag = forum.GetDiscordForumTagByName(language);
         if (languageTag is not null)
         {
             postBuilder.AddTag(languageTag);
@@ -112,14 +112,20 @@ public static class LangManager
 
     private static async Task<DiscordThreadChannel> CreateManualDiffPostAsync(this DiscordForumChannel forum, LangRepository currentRepository, LangRepository modelRepository)
     {
-		var postBuilder = new ForumPostBuilder()
-			.WithName($"Diff {currentRepository.Type} -> {modelRepository.Type} en {currentRepository.Language} {DateTime.Now:dd-MM-yyyy HH\\hmm}")
-			.WithMessage(new DiscordMessageBuilder().WithContent(
-				$"Diff des langs {Formatter.Bold(currentRepository.Type.ToString())} de {currentRepository.LastChange.ToLocalTime():dd/MM/yyyy HH:mmzzz} " +
-				$"et {Formatter.Bold(modelRepository.Type.ToString())} de {modelRepository.LastChange.ToLocalTime():dd/MM/yyyy HH:mmzzz} " +
-				$"en {Formatter.Bold(currentRepository.Language.ToString())}"));
+        var currentLastChange = currentRepository.LastChange.ToLocalTime();
+        var currentType = currentRepository.Type.ToStringFast();
+        var currentLanguage = currentRepository.Language.ToStringFast();
 
-		var tag = ChannelManager.LangForumChannel!.GetDiscordForumTagByName("Diff manuel");
+        var modelLastChange = modelRepository.LastChange.ToLocalTime();
+        var modelType = modelRepository.Type.ToStringFast();
+
+        var postBuilder = new ForumPostBuilder()
+			.WithName($"Diff {currentType} ➜ {modelType} in {currentLanguage} {DateTime.Now:yyyy-mm-dd HH:mm}")
+			.WithMessage(new DiscordMessageBuilder().WithContent(
+				$"Diff of langs {Formatter.Bold(currentType)} from {currentLastChange:yyyy-mm-dd HH:mmzzz} " +
+				$"and {Formatter.Bold(modelType)} from {modelLastChange:yyyy-mm-dd HH:mmzzz} in {Formatter.Bold(currentLanguage)}"));
+
+		var tag = forum.GetDiscordForumTagByName("Diff manuel"); //TODO: Change tag to a constant and translate it to english after the culture PR
 		if (tag is not null)
 		{
 			postBuilder.AddTag(tag);
@@ -127,25 +133,6 @@ public static class LangManager
 
 		var post = await forum.CreateForumPostAsync(postBuilder);
 		return post.Channel;
-	}
-
-    private static async Task SendManualDiffLangMessageAsync(this DiscordThreadChannel thread, Lang currentLang, Lang? modelLang)
-    {
-		var message = new DiscordMessageBuilder()
-			.WithContent(
-				$"{(currentLang.New ? $"{Formatter.Bold("New")} lang" : "Lang")} " +
-				$"{Formatter.Bold(currentLang.Name)} version {Formatter.Bold(currentLang.Version.ToString())}" +
-				(modelLang is null ? $", non présent dans les langs {modelLang}" : string.Empty));
-
-		var diff = currentLang.Diff(modelLang);
-		if (string.IsNullOrEmpty(diff))
-		{
-			await thread.SendMessageAsync(message);
-            return;
-		}
-
-		using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(diff));
-		await thread.SendMessageAsync(message.AddFile($"{currentLang.Name}.as", memoryStream));
 	}
 
     private static async Task SendAutoDiffLangMessageAsync(this DiscordThreadChannel thread, Lang lang)
@@ -164,5 +151,24 @@ public static class LangManager
 
         using var fileStream = File.OpenRead(diffFilePath);
         await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", fileStream));
+    }
+
+    private static async Task SendManualDiffLangMessageAsync(this DiscordThreadChannel thread, Lang currentLang, Lang? modelLang)
+    {
+        var message = new DiscordMessageBuilder()
+            .WithContent(
+                $"{(currentLang.New ? $"{Formatter.Bold("New")} lang" : "Lang")} " +
+                $"{Formatter.Bold(currentLang.Name)} version {Formatter.Bold(currentLang.Version.ToString())}" +
+                (modelLang is null ? $", not present in langs {modelLang}" : string.Empty));
+
+        var diff = currentLang.Diff(modelLang);
+        if (string.IsNullOrEmpty(diff))
+        {
+            await thread.SendMessageAsync(message);
+            return;
+        }
+
+        using MemoryStream memoryStream = new(Encoding.UTF8.GetBytes(diff));
+        await thread.SendMessageAsync(message.AddFile($"{currentLang.Name}.as", memoryStream));
     }
 }

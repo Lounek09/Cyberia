@@ -20,14 +20,14 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 
     private readonly ItemSetData _itemSetData;
     private readonly int _nbItemSelected;
-    private readonly List<ItemData> _itemsData;
+    private readonly IEnumerable<ItemData> _itemsData;
     private readonly BreedData? _breedData;
 
     public ItemSetMessageBuilder(ItemSetData itemSetData, int nbItemSelected)
     {
         _itemSetData = itemSetData;
         _nbItemSelected = nbItemSelected;
-        _itemsData = itemSetData.GetItemsData().ToList();
+        _itemsData = itemSetData.GetItemsData();
         _breedData = itemSetData.GetBreedData();
     }
 
@@ -76,7 +76,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
             message.AddComponents(buttons);
         }
 
-        if (_itemsData.Count > 0)
+        if (_itemsData.Any())
         {
             message.AddComponents(ItemComponentsBuilder.ItemsSelectBuilder(0, _itemsData));
         }
@@ -86,19 +86,20 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, "Panoplies")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_ItemSet_Author)
             .WithTitle($"{_itemSetData.Name} ({_itemSetData.Id})")
-            .AddField("Niveau :", _itemSetData.GetLevel().ToString());
+            .AddField(BotTranslations.Embed_Field_Level_Title, _itemSetData.GetLevel().ToString());
 
-        if (_itemsData.Count > 0)
+        if (_itemsData.Any())
         {
-            embed.AddField("Items :", string.Join('\n', _itemsData.Select(x => $"- Niv.{x.Level} {Formatter.Bold(x.Name)}")));
+            embed.AddField(BotTranslations.Embed_Field_Items_Title,
+                string.Join('\n', _itemsData.Select(x => $"- {BotTranslations.ShortLevel}{x.Level} {Formatter.Bold(x.Name)}")));
         }
 
         var effects = _itemSetData.GetEffects(_nbItemSelected);
         if (effects.Any())
         {
-            embed.AddEffectFields("Effets :", effects);
+            embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects);
         }
 
         return Task.FromResult(embed);

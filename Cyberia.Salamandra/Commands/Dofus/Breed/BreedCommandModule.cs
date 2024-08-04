@@ -25,12 +25,10 @@ public sealed class BreedCommandModule
 
         if (breedData is null)
         {
-            await ctx.RespondAsync("Classe introuvable");
+            await ctx.RespondAsync(BotTranslations.Breed_NotFound);
+            return;
         }
-        else
-        {
-            await ctx.RespondAsync(await new BreedMessageBuilder(breedData)
-                .GetMessageAsync<DiscordInteractionResponseBuilder>());
-        }
+
+        await ctx.RespondAsync(await new BreedMessageBuilder(breedData).GetMessageAsync<DiscordInteractionResponseBuilder>());
     }
 }

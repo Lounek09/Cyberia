@@ -76,7 +76,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Quests, "Livre de quêtes")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Quests, BotTranslations.Embed_Quest_Author)
             .WithTitle($"{_questData.Name} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.Dungeon : string.Empty)}");
 
         if (_questStepData is not null)
@@ -86,12 +86,12 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             var optimalLevel = _questStepData.OptimalLevel;
             if (optimalLevel > 0)
             {
-                embed.AddField("Niveau optimal :", optimalLevel.ToString());
+                embed.AddField(BotTranslations.Embed_Field_OptimalLevel_Title, optimalLevel.ToString());
             }
 
             if (_dialogQuestionData is not null)
             {
-                embed.AddField("Dialogue :", _dialogQuestionData.Question);
+                embed.AddField(BotTranslations.Embed_Field_Dialog_Title, _dialogQuestionData.Question);
             }
 
             if (_questStepData.QuestObjectives.Count > 0)
@@ -129,7 +129,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 var emotesReward = _questStepData.RewardsData.GetEmotesData().ToList();
                 if (emotesReward.Count > 0)
                 {
-                    rewardsBuilder.Append("Emotes : ");
+                    rewardsBuilder.Append(BotTranslations.Embed_Field_Rewards_Content_Emotes);
                     rewardsBuilder.Append(string.Join(", ", emotesReward.Select(x => x.Name)));
                     rewardsBuilder.Append('\n');
                 }
@@ -137,7 +137,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 var jobsReward = _questStepData.RewardsData.GetJobsData().ToList();
                 if (jobsReward.Count > 0)
                 {
-                    rewardsBuilder.Append("Métiers : ");
+                    rewardsBuilder.Append(BotTranslations.Embed_Field_Rewards_Content_Jobs);
                     rewardsBuilder.Append(string.Join(", ", jobsReward.Select(x => x.Name)));
                     rewardsBuilder.Append('\n');
                 }
@@ -145,14 +145,14 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 var spellsReward = _questStepData.RewardsData.GetSpellsData().ToList();
                 if (emotesReward.Count > 0)
                 {
-                    rewardsBuilder.Append("Sorts : ");
+                    rewardsBuilder.Append(BotTranslations.Embed_Field_Rewards_Content_Spells);
                     rewardsBuilder.Append(string.Join(", ", spellsReward.Select(x => x.Name)));
                     rewardsBuilder.Append('\n');
                 }
 
                 if (rewardsBuilder.Length > 0)
                 {
-                    embed.AddField("Récompenses :", rewardsBuilder.ToString());
+                    embed.AddField(BotTranslations.Embed_Field_Rewards_Title, rewardsBuilder.ToString());
                 }
             }
         }
@@ -168,13 +168,13 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             for (var i = startIndex; i < endIndex; i++)
             {
                 yield return new DiscordSelectComponentOption(
-                    $"Etape {i + 1}",
+                    $"{BotTranslations.Select_QuestStep_Content_Step}{i + 1}",
                     GetPacket(_questData.Id, i),
                     ExtendString.WithMaxLength(_questStepsData[i].Name, 100),
                     isDefault: i == _selectedQuestStepIndex);
             }
         }
 
-        return new(InteractionManager.SelectComponentPacketBuilder(selectIndex), "Sélectionne une étape pour l'afficher", OptionsGenerator(startIndex));
+        return new(InteractionManager.SelectComponentPacketBuilder(selectIndex), BotTranslations.Select_QuestStep_Placeholder, OptionsGenerator(startIndex));
     }
 }
