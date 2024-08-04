@@ -2167,7 +2167,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to #1 turn(s).
+        ///   Looks up a localized string similar to 1# turn(s).
         /// </summary>
         public static string Effect_Turn {
             get {
@@ -2608,7 +2608,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rune #1.
+        ///   Looks up a localized string similar to Rune.
         /// </summary>
         public static string Rune {
             get {

@@ -118,38 +118,38 @@
   <data name="Embed.Field.Craft.Title" xml:space="preserve">
     <value>Craft :</value>
   </data>
-  <data name="Embed.Field.Weapon.AP" xml:space="preserve">
-    <value>PA : </value>
+  <data name="Embed.Field.Weapon.Content.AP" xml:space="preserve">
+    <value>PA :</value>
   </data>
-  <data name="Embed.Field.Weapon.Range" xml:space="preserve">
-    <value>Portée : </value>
+  <data name="Embed.Field.Weapon.Content.Range" xml:space="preserve">
+    <value>Portée :</value>
   </data>
-  <data name="Embed.Field.Weapon.CriticalHitBonus" xml:space="preserve">
-    <value>Bonus coups critique : </value>
+  <data name="Embed.Field.Weapon.Content.CriticalHitBonus" xml:space="preserve">
+    <value>Bonus coups critique :</value>
   </data>
-  <data name="Embed.Field.Weapon.CriticalHit" xml:space="preserve">
-    <value>Critique : </value>
+  <data name="Embed.Field.Weapon.Content.CriticalHit" xml:space="preserve">
+    <value>Critique :</value>
   </data>
-  <data name="Embed.Field.Weapon.CriticalFailure" xml:space="preserve">
-    <value>Echec : </value>
+  <data name="Embed.Field.Weapon.Content.CriticalFailure" xml:space="preserve">
+    <value>Echec :</value>
   </data>
-  <data name="Embed.Field.Weapon.LineOnly" xml:space="preserve">
+  <data name="Embed.Field.Weapon.Content.Linear" xml:space="preserve">
     <value>Lancer en ligne uniquement</value>
   </data>
-  <data name="Embed.Field.Weapon.LineOfSight" xml:space="preserve">
+  <data name="Embed.Field.Weapon.Content.LineOfSight" xml:space="preserve">
     <value>Ne possède pas de ligne de vue</value>
   </data>
   <data name="Embed.Field.Weapon.Title" xml:space="preserve">
     <value>Caractéristiques :</value>
   </data>
-  <data name="Embed.Field.Weapon.TwoHanded" xml:space="preserve">
+  <data name="Embed.Field.Weapon.Content.TwoHanded" xml:space="preserve">
     <value>Arme à deux mains</value>
   </data>
-  <data name="Embed.Field.Weapon.OneHanded" xml:space="preserve">
+  <data name="Embed.Field.Weapon.Content.OneHanded" xml:space="preserve">
     <value>Arme à une main</value>
   </data>
-  <data name="Embed.Field.Weapon.Area" xml:space="preserve">
-    <value>Zone : </value>
+  <data name="Embed.Field.Weapon.Content.Area" xml:space="preserve">
+    <value>Zone :</value>
   </data>
   <data name="to" xml:space="preserve">
     <value> à </value>
@@ -157,14 +157,14 @@
   <data name="and" xml:space="preserve">
     <value> et </value>
   </data>
-  <data name="Embed.Field.Pet.MealBetween" xml:space="preserve">
-    <value>Repas entre </value>
+  <data name="Embed.Field.Pet.Content.MealBetween" xml:space="preserve">
+    <value>Repas entre</value>
   </data>
   <data name="Embed.Field.Pet.Title" xml:space="preserve">
     <value>Familier :</value>
   </data>
   <data name="Embed.Field.Page.Content" xml:space="preserve">
-    <value>Page </value>
+    <value>Page</value>
   </data>
   <data name="Button.Previous" xml:space="preserve">
     <value>Précédent</value>
@@ -224,7 +224,7 @@
     <value>Calculateur de crafts</value>
   </data>
   <data name="Embed.Craft.Title" xml:space="preserve">
-    <value>Craft : </value>
+    <value>Craft :</value>
   </data>
   <data name="Embed.Field.Weight.Title" xml:space="preserve">
     <value>Poids :</value>
@@ -302,7 +302,7 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
     <value>Extérieur</value>
   </data>
   <data name="Select.HouseMap.Option.Room" xml:space="preserve">
-    <value>Pièce </value>
+    <value>Pièce</value>
   </data>
   <data name="Embed.PaginatedHouse.Title" xml:space="preserve">
     <value>Plusieurs maisons trouvées :</value>
@@ -350,7 +350,7 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
     <value>Divers :</value>
   </data>
   <data name="Embed.Field.Miscellaneous.Content.Weight" xml:space="preserve">
-    <value> pod(s)</value>
+    <value>pod(s)</value>
   </data>
   <data name="Embed.Field.Miscellaneous.Content.Price" xml:space="preserve">
     <value>se vend #1 #2 aux pnjs</value>
@@ -470,19 +470,19 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
     <value>Récompenses :</value>
   </data>
   <data name="Embed.Field.Rewards.Content.Emotes" xml:space="preserve">
-    <value>Emotes : </value>
+    <value>Emotes :</value>
   </data>
   <data name="Embed.Field.Rewards.Content.Jobs" xml:space="preserve">
-    <value>Métiers : </value>
+    <value>Métiers :</value>
   </data>
   <data name="Embed.Field.Rewards.Content.Spells" xml:space="preserve">
-    <value>Sorts : </value>
+    <value>Sorts :</value>
   </data>
   <data name="Select.QuestStep.Placeholder" xml:space="preserve">
     <value>Sélectionne une étape pour l'afficher</value>
   </data>
   <data name="Select.QuestStep.Content.Step" xml:space="preserve">
-    <value>Etape </value>
+    <value>Etape</value>
   </data>
   <data name="Embed.PaginatedQuest.Title" xml:space="preserve">
     <value>Plusieurs quêtes trouvées :</value>
@@ -526,8 +526,8 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
   <data name="Select.RuneItem.Splaceholder" xml:space="preserve">
     <value>Sélectionne un item pour calculer les runes obtenable</value>
   </data>
-  <data name="Embed.RuneITem.Description" xml:space="preserve">
-    <value>Simulation de brisage : </value>
+  <data name="Embed.RuneItem.Description" xml:space="preserve">
+    <value>Simulation de brisage :</value>
   </data>
   <data name="Button.Resimulate" xml:space="preserve">
     <value>Resimuler</value>

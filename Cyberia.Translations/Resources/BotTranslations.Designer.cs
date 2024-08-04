@@ -241,7 +241,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Craft : .
+        ///   Looks up a localized string similar to Craft :.
         /// </summary>
         public static string Embed_Craft_Title {
             get {
@@ -604,7 +604,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  pod(s).
+        ///   Looks up a localized string similar to pod(s).
         /// </summary>
         public static string Embed_Field_Miscellaneous_Content_Weight {
             get {
@@ -649,7 +649,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page .
+        ///   Looks up a localized string similar to Page.
         /// </summary>
         public static string Embed_Field_Page_Content {
             get {
@@ -658,11 +658,11 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Meal between .
+        ///   Looks up a localized string similar to Meal between.
         /// </summary>
-        public static string Embed_Field_Pet_MealBetween {
+        public static string Embed_Field_Pet_Content_MealBetween {
             get {
-                return ResourceManager.GetString("Embed.Field.Pet.MealBetween", resourceCulture);
+                return ResourceManager.GetString("Embed.Field.Pet.Content.MealBetween", resourceCulture);
             }
         }
         
@@ -712,7 +712,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Emotes : .
+        ///   Looks up a localized string similar to Emotes :.
         /// </summary>
         public static string Embed_Field_Rewards_Content_Emotes {
             get {
@@ -721,7 +721,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jobs : .
+        ///   Looks up a localized string similar to Jobs :.
         /// </summary>
         public static string Embed_Field_Rewards_Content_Jobs {
             get {
@@ -730,7 +730,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spells : .
+        ///   Looks up a localized string similar to Spells :.
         /// </summary>
         public static string Embed_Field_Rewards_Content_Spells {
             get {
@@ -802,83 +802,92 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AP : .
+        ///   Looks up a localized string similar to AP :.
         /// </summary>
-        public static string Embed_Field_Weapon_AP {
+        public static string Embed_Field_Weapon_Content_AP {
             get {
-                return ResourceManager.GetString("Embed.Field.Weapon.AP", resourceCulture);
+                return ResourceManager.GetString("Embed.Field.Weapon.Content.AP", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Area : .
+        ///   Looks up a localized string similar to Area :.
         /// </summary>
-        public static string Embed_Field_Weapon_Area {
+        public static string Embed_Field_Weapon_Content_Area {
             get {
-                return ResourceManager.GetString("Embed.Field.Weapon.Area", resourceCulture);
+                return ResourceManager.GetString("Embed.Field.Weapon.Content.Area", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failure : .
+        ///   Looks up a localized string similar to Failure :.
         /// </summary>
-        public static string Embed_Field_Weapon_CriticalFailure {
+        public static string Embed_Field_Weapon_Content_CriticalFailure {
             get {
-                return ResourceManager.GetString("Embed.Field.Weapon.CriticalFailure", resourceCulture);
+                return ResourceManager.GetString("Embed.Field.Weapon.Content.CriticalFailure", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Critical hit : .
+        ///   Looks up a localized string similar to Critical hit :.
         /// </summary>
-        public static string Embed_Field_Weapon_CriticalHit {
+        public static string Embed_Field_Weapon_Content_CriticalHit {
             get {
-                return ResourceManager.GetString("Embed.Field.Weapon.CriticalHit", resourceCulture);
+                return ResourceManager.GetString("Embed.Field.Weapon.Content.CriticalHit", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Critical hit bonus : .
+        ///   Looks up a localized string similar to Critical hit bonus :.
         /// </summary>
-        public static string Embed_Field_Weapon_CriticalHitBonus {
+        public static string Embed_Field_Weapon_Content_CriticalHitBonus {
             get {
-                return ResourceManager.GetString("Embed.Field.Weapon.CriticalHitBonus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No line of sight.
-        /// </summary>
-        public static string Embed_Field_Weapon_LineOfSight {
-            get {
-                return ResourceManager.GetString("Embed.Field.Weapon.LineOfSight", resourceCulture);
+                return ResourceManager.GetString("Embed.Field.Weapon.Content.CriticalHitBonus", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Linear only.
         /// </summary>
-        public static string Embed_Field_Weapon_LineOnly {
+        public static string Embed_Field_Weapon_Content_Linear {
             get {
-                return ResourceManager.GetString("Embed.Field.Weapon.LineOnly", resourceCulture);
+                return ResourceManager.GetString("Embed.Field.Weapon.Content.Linear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No line of sight.
+        /// </summary>
+        public static string Embed_Field_Weapon_Content_LineOfSight {
+            get {
+                return ResourceManager.GetString("Embed.Field.Weapon.Content.LineOfSight", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to One-handed weapon.
         /// </summary>
-        public static string Embed_Field_Weapon_OneHanded {
+        public static string Embed_Field_Weapon_Content_OneHanded {
             get {
-                return ResourceManager.GetString("Embed.Field.Weapon.OneHanded", resourceCulture);
+                return ResourceManager.GetString("Embed.Field.Weapon.Content.OneHanded", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Range : .
+        ///   Looks up a localized string similar to Range :.
         /// </summary>
-        public static string Embed_Field_Weapon_Range {
+        public static string Embed_Field_Weapon_Content_Range {
             get {
-                return ResourceManager.GetString("Embed.Field.Weapon.Range", resourceCulture);
+                return ResourceManager.GetString("Embed.Field.Weapon.Content.Range", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Two-handed weapon.
+        /// </summary>
+        public static string Embed_Field_Weapon_Content_TwoHanded {
+            get {
+                return ResourceManager.GetString("Embed.Field.Weapon.Content.TwoHanded", resourceCulture);
             }
         }
         
@@ -888,15 +897,6 @@ namespace Cyberia.Translations {
         public static string Embed_Field_Weapon_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Two-handed weapon.
-        /// </summary>
-        public static string Embed_Field_Weapon_TwoHanded {
-            get {
-                return ResourceManager.GetString("Embed.Field.Weapon.TwoHanded", resourceCulture);
             }
         }
         
@@ -1117,11 +1117,11 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rune generation simulation : .
+        ///   Looks up a localized string similar to Rune generation simulation :.
         /// </summary>
-        public static string Embed_RuneITem_Description {
+        public static string Embed_RuneItem_Description {
             get {
-                return ResourceManager.GetString("Embed.RuneITem.Description", resourceCulture);
+                return ResourceManager.GetString("Embed.RuneItem.Description", resourceCulture);
             }
         }
         
@@ -1342,7 +1342,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Room .
+        ///   Looks up a localized string similar to Room.
         /// </summary>
         public static string Select_HouseMap_Option_Room {
             get {
@@ -1432,7 +1432,7 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Step .
+        ///   Looks up a localized string similar to Step.
         /// </summary>
         public static string Select_QuestStep_Content_Step {
             get {

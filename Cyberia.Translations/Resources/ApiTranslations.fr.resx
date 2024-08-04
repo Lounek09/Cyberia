@@ -526,7 +526,7 @@
     <value>Classe</value>
   </data>
   <data name="Rune" xml:space="preserve">
-    <value>Rune #1</value>
+    <value>Rune</value>
   </data>
   <data name="QuestObjectiveType.Unknown" xml:space="preserve">
     <value>QuestObjectiveType #1 inconnu (#2)</value>
@@ -673,7 +673,7 @@
     <value>Effect #1 inconnu (#2)</value>
   </data>
   <data name="Effect.Turn" xml:space="preserve">
-    <value>#1 tour(s)</value>
+    <value>1# tour(s)</value>
   </data>
   <data name="Effect.Probability" xml:space="preserve">
     <value>Dans #1% des cas</value>

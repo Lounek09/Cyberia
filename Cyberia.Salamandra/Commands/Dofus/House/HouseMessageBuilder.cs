@@ -91,7 +91,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
             for (var i = 0; i < _mapsData.Count; i++)
             {
-                yield return new DiscordSelectComponentOption($"{BotTranslations.Select_HouseMap_Option_Room}{i + 1}", GetPacket(_houseData.Id, i), isDefault: i == _selectedMapIndex);
+                yield return new DiscordSelectComponentOption($"{BotTranslations.Select_HouseMap_Option_Room} {i + 1}", GetPacket(_houseData.Id, i), isDefault: i == _selectedMapIndex);
             }
         }
 

@@ -97,7 +97,7 @@ public abstract record Effect : IEffect
         if (Duration <= -1 || Duration >= 63)
         {
             builder.Append(" (");
-            builder.Append(ApiTranslations.Infinity);
+            builder.Append(ApiTranslations.ShortInfinity);
             builder.Append(')');
         }
         else if (Duration != 0)

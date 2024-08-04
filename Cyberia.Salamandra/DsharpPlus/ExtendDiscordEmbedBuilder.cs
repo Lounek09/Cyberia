@@ -125,7 +125,7 @@ public static class ExtendDiscordEmbedBuilder
             var quantityFormatted = Formatter.Bold(ingredient.Value.ToFormattedString());
             var itemName = Formatter.Sanitize(ingredient.Key.Name);
 
-            result.Add($"{quantity}x {itemName}");
+            result.Add($"{quantityFormatted}x {itemName}");
         }
 
         return embed.AddField(BotTranslations.Embed_Field_Craft_Title, string.Join(" + ", result), inline);
@@ -135,11 +135,13 @@ public static class ExtendDiscordEmbedBuilder
     {
         StringBuilder builder = new();
 
-        builder.Append(BotTranslations.Embed_Field_Weapon_AP);
+        builder.Append(BotTranslations.Embed_Field_Weapon_Content_AP);
+        builder.Append(' ');
         builder.Append(Formatter.Bold(itemWeaponData.ActionPointCost.ToString()));
         builder.Append('\n');
 
-        builder.Append(BotTranslations.Embed_Field_Weapon_Range);
+        builder.Append(BotTranslations.Embed_Field_Weapon_Content_Range);
+        builder.Append(' ');
         builder.Append(Formatter.Bold(itemWeaponData.MinRange.ToString()));
         builder.Append(BotTranslations.to);
         builder.Append(Formatter.Bold(itemWeaponData.MaxRange.ToString()));
@@ -147,23 +149,24 @@ public static class ExtendDiscordEmbedBuilder
 
         if (itemWeaponData.CriticalBonus != 0)
         {
-            builder.Append(BotTranslations.Embed_Field_Weapon_CriticalHitBonus);
+            builder.Append(BotTranslations.Embed_Field_Weapon_Content_CriticalHitBonus);
+            builder.Append(' ');
             builder.Append(Formatter.Bold(itemWeaponData.CriticalBonus.ToString()));
             builder.Append('\n');
         }
 
         if (itemWeaponData.CriticalHitRate != 0)
         {
-            builder.Append(BotTranslations.Embed_Field_Weapon_CriticalHit);
-            builder.Append("1/");
+            builder.Append(BotTranslations.Embed_Field_Weapon_Content_CriticalHit);
+            builder.Append(" 1/");
             builder.Append(Formatter.Bold(itemWeaponData.CriticalHitRate.ToString()));
         }
 
         if (itemWeaponData.CriticalFailureRate != 0)
         {
             builder.Append(" - ");
-            builder.Append(BotTranslations.Embed_Field_Weapon_CriticalFailure);
-            builder.Append("1/");
+            builder.Append(BotTranslations.Embed_Field_Weapon_Content_CriticalFailure);
+            builder.Append(" 1/");
             builder.Append(Formatter.Bold(itemWeaponData.CriticalFailureRate.ToString()));
             builder.Append('\n');
         }
@@ -172,24 +175,25 @@ public static class ExtendDiscordEmbedBuilder
             builder.Append('\n');
         }
 
-        if (itemWeaponData.LineOnly)
+        if (itemWeaponData.Linear)
         {
-            builder.Append(BotTranslations.Embed_Field_Weapon_LineOnly);
+            builder.Append(BotTranslations.Embed_Field_Weapon_Content_Linear);
             builder.Append('\n');
         }
 
         if (!itemWeaponData.LineOfSight && itemWeaponData.MaxRange > 1)
         {
-            builder.Append(BotTranslations.Embed_Field_Weapon_LineOfSight);
+            builder.Append(BotTranslations.Embed_Field_Weapon_Content_LineOfSight);
             builder.Append('\n');
         }
 
-        builder.Append(twoHanded ? BotTranslations.Embed_Field_Weapon_OneHanded : BotTranslations.Embed_Field_Weapon_TwoHanded);
+        builder.Append(twoHanded ? BotTranslations.Embed_Field_Weapon_Content_OneHanded : BotTranslations.Embed_Field_Weapon_Content_TwoHanded);
 
         if (itemTypeData is not null && itemTypeData.EffectArea != EffectAreaFactory.Default)
         {
             builder.Append('\n');
-            builder.Append(BotTranslations.Embed_Field_Weapon_Area);
+            builder.Append(BotTranslations.Embed_Field_Weapon_Content_Area);
+            builder.Append(' ');
             builder.Append(Emojis.EffectArea(itemTypeData.EffectArea.Id));
             builder.Append(' ');
             builder.Append(itemTypeData.EffectArea.GetDescription().ToString(Formatter.Bold));
@@ -204,7 +208,8 @@ public static class ExtendDiscordEmbedBuilder
 
         if (petData.MinFoodInterval.HasValue && petData.MaxFoodInterval.HasValue)
         {
-            builder.Append(BotTranslations.Embed_Field_Pet_MealBetween);
+            builder.Append(BotTranslations.Embed_Field_Pet_Content_MealBetween);
+            builder.Append(' ');
             builder.Append(Formatter.Bold(petData.MinFoodInterval.Value.TotalHours.ToString()));
             builder.Append('h');
             builder.Append(BotTranslations.and);

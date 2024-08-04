@@ -19,7 +19,7 @@ public sealed class ItemWeaponData : IDofusData
 
     public int CriticalFailureRate { get; init; }
 
-    public bool LineOnly { get; init; }
+    public bool Linear { get; init; }
 
     public bool LineOfSight { get; init; }
 

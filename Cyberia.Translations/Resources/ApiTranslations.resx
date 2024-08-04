@@ -802,7 +802,7 @@
     <value>In #1% of cases</value>
   </data>
   <data name="Effect.Turn" xml:space="preserve">
-    <value>#1 turn(s)</value>
+    <value>1# turn(s)</value>
   </data>
   <data name="Effect.Unknown" xml:space="preserve">
     <value>Unknown effect #1 (#2)</value>
@@ -949,7 +949,7 @@
     <value>Unknown questObjectiveType #1 (#2)</value>
   </data>
   <data name="Rune" xml:space="preserve">
-    <value>Rune #1</value>
+    <value>Rune</value>
   </data>
   <data name="SpellCategory.Breed" xml:space="preserve">
     <value>Class</value>

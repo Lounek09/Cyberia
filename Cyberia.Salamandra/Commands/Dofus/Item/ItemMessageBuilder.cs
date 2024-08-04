@@ -126,6 +126,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         StringBuilder miscellaneousBuilder = new();
 
         miscellaneousBuilder.Append(_itemData.Weight.ToFormattedString());
+        miscellaneousBuilder.Append(' ');
         miscellaneousBuilder.Append(BotTranslations.Embed_Field_Miscellaneous_Content_Weight);
 
         if (_itemData.Tradeable())

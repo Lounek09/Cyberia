@@ -130,6 +130,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 if (emotesReward.Count > 0)
                 {
                     rewardsBuilder.Append(BotTranslations.Embed_Field_Rewards_Content_Emotes);
+                    rewardsBuilder.Append(' ');
                     rewardsBuilder.Append(string.Join(", ", emotesReward.Select(x => x.Name)));
                     rewardsBuilder.Append('\n');
                 }
@@ -138,6 +139,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 if (jobsReward.Count > 0)
                 {
                     rewardsBuilder.Append(BotTranslations.Embed_Field_Rewards_Content_Jobs);
+                    rewardsBuilder.Append(' ');
                     rewardsBuilder.Append(string.Join(", ", jobsReward.Select(x => x.Name)));
                     rewardsBuilder.Append('\n');
                 }
@@ -146,6 +148,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 if (emotesReward.Count > 0)
                 {
                     rewardsBuilder.Append(BotTranslations.Embed_Field_Rewards_Content_Spells);
+                    rewardsBuilder.Append(' ');
                     rewardsBuilder.Append(string.Join(", ", spellsReward.Select(x => x.Name)));
                     rewardsBuilder.Append('\n');
                 }
@@ -168,7 +171,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             for (var i = startIndex; i < endIndex; i++)
             {
                 yield return new DiscordSelectComponentOption(
-                    $"{BotTranslations.Select_QuestStep_Content_Step}{i + 1}",
+                    $"{BotTranslations.Select_QuestStep_Content_Step} {i + 1}",
                     GetPacket(_questData.Id, i),
                     ExtendString.WithMaxLength(_questStepsData[i].Name, 100),
                     isDefault: i == _selectedQuestStepIndex);

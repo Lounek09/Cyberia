@@ -75,7 +75,7 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
         var embed = EmbedManager.CreateEmbedBuilder(_category, _authorText)
             .WithTitle(_title)
             .WithDescription(string.Join('\n', GetContent()))
-            .AddField(Constant.ZeroWidthSpace, $"{BotTranslations.Embed_Field_Page_Content}{_selectedPageIndex + 1}/{_totalPage}");
+            .AddField(Constant.ZeroWidthSpace, $"{BotTranslations.Embed_Field_Page_Content} {_selectedPageIndex + 1}/{_totalPage}");
 
         return Task.FromResult(embed);
     }

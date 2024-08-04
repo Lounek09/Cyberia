@@ -121,38 +121,38 @@
   <data name="Embed.Field.Craft.Title" xml:space="preserve">
     <value>Craft :</value>
   </data>
-  <data name="Embed.Field.Weapon.AP" xml:space="preserve">
-    <value>AP : </value>
+  <data name="Embed.Field.Weapon.Content.AP" xml:space="preserve">
+    <value>AP :</value>
   </data>
-  <data name="Embed.Field.Weapon.Range" xml:space="preserve">
-    <value>Range : </value>
+  <data name="Embed.Field.Weapon.Content.Range" xml:space="preserve">
+    <value>Range :</value>
   </data>
-  <data name="Embed.Field.Weapon.CriticalHitBonus" xml:space="preserve">
-    <value>Critical hit bonus : </value>
+  <data name="Embed.Field.Weapon.Content.CriticalHitBonus" xml:space="preserve">
+    <value>Critical hit bonus :</value>
   </data>
-  <data name="Embed.Field.Weapon.CriticalHit" xml:space="preserve">
-    <value>Critical hit : </value>
+  <data name="Embed.Field.Weapon.Content.CriticalHit" xml:space="preserve">
+    <value>Critical hit :</value>
   </data>
-  <data name="Embed.Field.Weapon.CriticalFailure" xml:space="preserve">
-    <value>Failure : </value>
+  <data name="Embed.Field.Weapon.Content.CriticalFailure" xml:space="preserve">
+    <value>Failure :</value>
   </data>
-  <data name="Embed.Field.Weapon.LineOnly" xml:space="preserve">
+  <data name="Embed.Field.Weapon.Content.Linear" xml:space="preserve">
     <value>Linear only</value>
   </data>
-  <data name="Embed.Field.Weapon.LineOfSight" xml:space="preserve">
+  <data name="Embed.Field.Weapon.Content.LineOfSight" xml:space="preserve">
     <value>No line of sight</value>
   </data>
-  <data name="Embed.Field.Weapon.OneHanded" xml:space="preserve">
+  <data name="Embed.Field.Weapon.Content.OneHanded" xml:space="preserve">
     <value>One-handed weapon</value>
   </data>
-  <data name="Embed.Field.Weapon.TwoHanded" xml:space="preserve">
+  <data name="Embed.Field.Weapon.Content.TwoHanded" xml:space="preserve">
     <value>Two-handed weapon</value>
   </data>
   <data name="Embed.Field.Weapon.Title" xml:space="preserve">
     <value>Characteristics :</value>
   </data>
-  <data name="Embed.Field.Weapon.Area" xml:space="preserve">
-    <value>Area : </value>
+  <data name="Embed.Field.Weapon.Content.Area" xml:space="preserve">
+    <value>Area :</value>
   </data>
   <data name="to" xml:space="preserve">
     <value> to </value>
@@ -160,14 +160,14 @@
   <data name="and" xml:space="preserve">
     <value> and </value>
   </data>
-  <data name="Embed.Field.Pet.MealBetween" xml:space="preserve">
-    <value>Meal between </value>
+  <data name="Embed.Field.Pet.Content.MealBetween" xml:space="preserve">
+    <value>Meal between</value>
   </data>
   <data name="Embed.Field.Pet.Title" xml:space="preserve">
     <value>Pet :</value>
   </data>
   <data name="Embed.Field.Page.Content" xml:space="preserve">
-    <value>Page </value>
+    <value>Page</value>
   </data>
   <data name="Button.Previous" xml:space="preserve">
     <value>Previous</value>
@@ -227,7 +227,7 @@
     <value>Crafts calculator</value>
   </data>
   <data name="Embed.Craft.Title" xml:space="preserve">
-    <value>Craft : </value>
+    <value>Craft :</value>
   </data>
   <data name="Embed.Field.Weight.Title" xml:space="preserve">
     <value>Weight :</value>
@@ -305,7 +305,7 @@ To escape at 100%, you will need at minimum #4 agi.</value>
     <value>Outdoors</value>
   </data>
   <data name="Select.HouseMap.Option.Room" xml:space="preserve">
-    <value>Room </value>
+    <value>Room</value>
   </data>
   <data name="Embed.PaginatedHouse.Title" xml:space="preserve">
     <value>Multiple houses found :</value>
@@ -350,7 +350,7 @@ To escape at 100%, you will need at minimum #4 agi.</value>
     <value>Miscellaneous :</value>
   </data>
   <data name="Embed.Field.Miscellaneous.Content.Weight" xml:space="preserve">
-    <value> pod(s)</value>
+    <value>pod(s)</value>
   </data>
   <data name="Embed.Field.Miscellaneous.Content.Price" xml:space="preserve">
     <value>sells for #1 #2 at npcs</value>
@@ -470,19 +470,19 @@ To escape at 100%, you will need at minimum #4 agi.</value>
     <value>Rewards :</value>
   </data>
   <data name="Embed.Field.Rewards.Content.Emotes" xml:space="preserve">
-    <value>Emotes : </value>
+    <value>Emotes :</value>
   </data>
   <data name="Embed.Field.Rewards.Content.Jobs" xml:space="preserve">
-    <value>Jobs : </value>
+    <value>Jobs :</value>
   </data>
   <data name="Embed.Field.Rewards.Content.Spells" xml:space="preserve">
-    <value>Spells : </value>
+    <value>Spells :</value>
   </data>
   <data name="Select.QuestStep.Placeholder" xml:space="preserve">
     <value>Select a step to display it</value>
   </data>
   <data name="Select.QuestStep.Content.Step" xml:space="preserve">
-    <value>Step </value>
+    <value>Step</value>
   </data>
   <data name="Embed.PaginatedQuest.Title" xml:space="preserve">
     <value>Multiple quests found :</value>
@@ -526,8 +526,8 @@ To escape at 100%, you will need at minimum #4 agi.</value>
   <data name="Select.RuneItem.Splaceholder" xml:space="preserve">
     <value>Select an item to calculate the runes that can be obtained</value>
   </data>
-  <data name="Embed.RuneITem.Description" xml:space="preserve">
-    <value>Rune generation simulation : </value>
+  <data name="Embed.RuneItem.Description" xml:space="preserve">
+    <value>Rune generation simulation :</value>
   </data>
   <data name="Button.Resimulate" xml:space="preserve">
     <value>Resimulate</value>
