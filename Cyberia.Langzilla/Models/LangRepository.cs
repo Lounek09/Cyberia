@@ -45,7 +45,7 @@ public sealed class LangRepository
     /// Gets the route to the version file.
     /// </summary>
     [JsonIgnore]
-    public string VersionFileName => $"versions_{Language.ToString().ToLower()}.txt";
+    public string VersionFileName => $"versions_{Language.ToStringFast()}.txt";
 
     /// <summary>
     /// Gets the route to the version file.

@@ -49,7 +49,7 @@ public readonly record struct EffectArea
     /// <returns>A string representing the size of the effect area. Returns "Infinity" if the size is greater than or equal to 63.</returns>
     public string GetSize()
     {
-        return Size >= 63 ? ApiTranslations.Infinity : Size.ToString();
+        return Size >= 63 ? ApiTranslations.ShortInfinity : Size.ToString();
     }
 
     /// <summary>

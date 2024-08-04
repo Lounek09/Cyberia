@@ -10,7 +10,7 @@ public sealed class MapSubAreaData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("a")]
     public int MapAreaId { get; init; }
@@ -24,7 +24,7 @@ public sealed class MapSubAreaData : IDofusData<int>
     [JsonConstructor]
     internal MapSubAreaData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
         FightAudioMusicId = [];
         NearMapSubAreasId = [];
     }

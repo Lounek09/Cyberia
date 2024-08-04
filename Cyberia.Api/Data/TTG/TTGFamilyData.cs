@@ -16,12 +16,12 @@ public sealed class TTGFamilyData : IDofusData<int>
     public int ItemId { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonConstructor]
     internal TTGFamilyData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 
     public ItemData? GetItemData()

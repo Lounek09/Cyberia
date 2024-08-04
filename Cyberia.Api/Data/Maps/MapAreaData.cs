@@ -8,7 +8,7 @@ public sealed class MapAreaData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("sua")]
     public int MapSuperAreaId { get; init; }
@@ -16,7 +16,7 @@ public sealed class MapAreaData : IDofusData<int>
     [JsonConstructor]
     internal MapAreaData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 
     public MapSuperAreaData? GetMapSuperAreaData()

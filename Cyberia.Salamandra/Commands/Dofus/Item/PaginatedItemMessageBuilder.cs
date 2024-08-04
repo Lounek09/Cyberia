@@ -16,7 +16,7 @@ public sealed class PaginatedItemMessageBuilder : PaginatedMessageBuilder<ItemDa
     private readonly string _search;
 
     public PaginatedItemMessageBuilder(List<ItemData> itemsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Inventory, "Items", "Plusieurs objets trouvés :", itemsData, selectedPageIndex)
+        : base(EmbedCategory.Inventory, BotTranslations.Embed_Item_Author, BotTranslations.Embed_PaginatedItem_Title, itemsData, selectedPageIndex)
     {
         _search = search;
     }
@@ -44,7 +44,7 @@ public sealed class PaginatedItemMessageBuilder : PaginatedMessageBuilder<ItemDa
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- Niv.{x.Level} {Formatter.Bold(Formatter.Sanitize(x.Name))} ({x.Id})");
+        return _data.Select(x => $"- {BotTranslations.ShortLevel}{x.Level} {Formatter.Bold(Formatter.Sanitize(x.Name))} ({x.Id})");
     }
 
     protected override DiscordSelectComponent SelectBuilder()

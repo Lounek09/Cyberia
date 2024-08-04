@@ -4,6 +4,8 @@ using Cyberia.Salamandra.Enums;
 
 using DSharpPlus.Entities;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Managers;
 
 public static class EmbedManager
@@ -14,10 +16,14 @@ public static class EmbedManager
 
     public static DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText)
     {
+        var now = DateTime.Now;
+        var date = now.ToRolePlayString();
+        var time = now.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
+
         return new DiscordEmbedBuilder()
             .WithColor(s_embedColor)
             .WithAuthor(authorText, iconUrl: GetIconUrl(category))
-            .WithFooter($"{Bot.Client.CurrentUser.Username} • {DateTime.Now.ToRolePlayString()} - {DateTime.Now:HH:mm}", s_footerIconUrl);
+            .WithFooter($"{Bot.Client.CurrentUser.Username} • {date} - {time}", s_footerIconUrl);
     }
 
     private static string GetIconUrl(EmbedCategory category)

@@ -12,7 +12,7 @@ public sealed class NpcData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("a")]
     public IReadOnlyList<int> NpcActionsId { get; init; }
@@ -20,7 +20,7 @@ public sealed class NpcData : IDofusData<int>
     [JsonConstructor]
     internal NpcData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
         NpcActionsId = [];
     }
 

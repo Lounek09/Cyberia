@@ -10,10 +10,10 @@ public sealed class FightChallengeData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("d")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonPropertyName("g")]
     public int GfxId { get; init; }
@@ -21,8 +21,8 @@ public sealed class FightChallengeData : IDofusData<int>
     [JsonConstructor]
     internal FightChallengeData()
     {
-        Name = string.Empty;
-        Description = string.Empty;
+        Name = LocalizedString.Empty;
+        Description = LocalizedString.Empty;
     }
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)

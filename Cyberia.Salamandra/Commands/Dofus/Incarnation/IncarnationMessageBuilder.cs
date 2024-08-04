@@ -23,14 +23,14 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     private readonly IncarnationData _incarnationData;
     private readonly ItemData? _itemData;
     private readonly ItemTypeData? _itemTypeData;
-    private readonly List<SpellData> _spellsData;
+    private readonly IEnumerable<SpellData> _spellsData;
 
     public IncarnationMessageBuilder(IncarnationData incarnationData)
     {
         _incarnationData = incarnationData;
         _itemData = incarnationData.GetItemData();
         _itemTypeData = _itemData?.GetItemTypeData();
-        _spellsData = incarnationData.GetSpellsData().ToList();
+        _spellsData = incarnationData.GetSpellsData();
     }
 
     public ItemTypeData? ItemTypeData => _itemTypeData;
@@ -61,7 +61,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
         var message = new T()
             .AddEmbed(await EmbedBuilder());
 
-        if (_spellsData.Count > 0)
+        if (_spellsData.Any())
         {
             message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData));
         }
@@ -76,7 +76,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, "Incarnations")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author)
             .WithTitle($"{_incarnationData.Name} ({_incarnationData.Id})")
             .WithImageUrl(await _incarnationData.GetBigImagePathAsync(CdnImageSize.Size512));
 
@@ -84,14 +84,14 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
         {
             embed.WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description))
                 .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128))
-                .AddField("Niveau :", _itemData.Level.ToString(), true)
-                .AddField("Type :", DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(_itemData.ItemTypeId), true)
+                .AddField(BotTranslations.Embed_Field_Level_Title, _itemData.Level.ToString(), true)
+                .AddField(BotTranslations.Embed_Field_ItemType_Title, DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(_itemData.ItemTypeId), true)
                 .AddEmptyField(true);
 
             IEnumerable<IEffect> effects = _incarnationData.GetRealEffects();
             if (effects.Any())
             {
-                embed.AddEffectFields("Effets :", effects);
+                embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects);
             }
 
             if (_itemData.WeaponData is not null)
@@ -101,13 +101,13 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
         }
         else
         {
-            embed.WithDescription(Formatter.Italic("Incarnation non existante dans les données du jeu"))
+            embed.WithDescription(Formatter.Italic(BotTranslations.Embed_Incarnation_Description_NotFound))
                 .WithThumbnail($"{DofusApi.Config.CdnUrl}/images/items/unknown.png");
         }
 
-        if (_spellsData.Count > 0)
+        if (_spellsData.Any())
         {
-            embed.AddField("Sorts :", string.Join('\n', _spellsData.Select(x => $"- {Formatter.Bold(x.Name)}")));
+            embed.AddField(BotTranslations.Embed_Field_Spells_Title, string.Join('\n', _spellsData.Select(x => $"- {Formatter.Bold(x.Name)}")));
         }
 
         return embed;

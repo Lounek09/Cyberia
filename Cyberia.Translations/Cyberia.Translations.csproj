@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Resources\ApiTranslations.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

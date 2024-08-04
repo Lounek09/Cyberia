@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -23,6 +24,8 @@ public sealed class ItemSetCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
+        CommandManager.SetCulture();
+
         DiscordInteractionResponseBuilder? response = null;
 
         if (int.TryParse(value, out var id))
@@ -46,7 +49,7 @@ public sealed class ItemSetCommandModule
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent("Panoplie introuvable");
+        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.ItemSet_NotFound);
         await ctx.RespondAsync(response);
     }
 }

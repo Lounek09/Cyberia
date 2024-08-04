@@ -19,3 +19,11 @@ public enum LangType
     /// </summary>
     Temporis
 }
+
+public static class ExtendLangType
+{
+    public static string ToStringFast(this LangType type)
+    {
+        return Enum.GetName(type) ?? type.ToString();
+    }
+}

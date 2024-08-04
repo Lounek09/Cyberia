@@ -16,7 +16,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
     private readonly string _search;
 
     public PaginatedSpellMessageBuilder(List<SpellData> spellsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Spells, "Livre de sorts", "Plusieurs sorts trouvés :", spellsData, selectedPageIndex)
+        : base(EmbedCategory.Spells, BotTranslations.Embed_Spell_Author, BotTranslations.Embed_PaginatedSpell_Title, spellsData, selectedPageIndex)
     {
         _search = search;
     }
@@ -44,7 +44,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {(x.GetNeededLevel() == 0 ? string.Empty : $"Niv.{x.GetNeededLevel()}")} {Formatter.Bold(x.Name)} ({x.Id})");
+        return _data.Select(x => $"- {(x.GetNeededLevel() == 0 ? string.Empty : $"{BotTranslations.ShortLevel}{x.GetNeededLevel()}")} {Formatter.Bold(x.Name)} ({x.Id})");
     }
 
     protected override DiscordSelectComponent SelectBuilder()

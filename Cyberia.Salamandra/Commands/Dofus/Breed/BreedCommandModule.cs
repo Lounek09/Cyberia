@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -21,16 +22,16 @@ public sealed class BreedCommandModule
         [SlashChoiceProvider<BreedChoiceProvider>]
         int breedId)
     {
+        CommandManager.SetCulture();
+
         var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
 
         if (breedData is null)
         {
-            await ctx.RespondAsync("Classe introuvable");
+            await ctx.RespondAsync(BotTranslations.Breed_NotFound);
+            return;
         }
-        else
-        {
-            await ctx.RespondAsync(await new BreedMessageBuilder(breedData)
-                .GetMessageAsync<DiscordInteractionResponseBuilder>());
-        }
+
+        await ctx.RespondAsync(await new BreedMessageBuilder(breedData).GetMessageAsync<DiscordInteractionResponseBuilder>());
     }
 }

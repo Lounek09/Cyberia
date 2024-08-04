@@ -100,7 +100,7 @@ public sealed class QuestsRepository : IDofusRepository
         {
             return names.All(y =>
             {
-                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

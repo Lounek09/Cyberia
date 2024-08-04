@@ -17,7 +17,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
     private readonly string _search;
 
     public PaginatedHouseMessageBuilder(List<HouseData> housesData, HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Houses, "Agence immobilière", "Plusieurs maisons trouvées :", housesData, selectedPageIndex)
+        : base(EmbedCategory.Houses, BotTranslations.Embed_House_Author, BotTranslations.Embed_PaginatedHouse_Title, housesData, selectedPageIndex)
     {
         _searchCategory = searchCategory;
         _search = search;
@@ -79,7 +79,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {Formatter.Bold(x.Name)}{(string.IsNullOrEmpty(x.GetCoordinate()) ? string.Empty : $" {x.GetCoordinate()}")} ({x.Id})");
+        return _data.Select(x => $"- {Formatter.Bold(x.Name)} {x.GetCoordinate()} ({x.Id})");
     }
 
     protected override DiscordSelectComponent SelectBuilder()

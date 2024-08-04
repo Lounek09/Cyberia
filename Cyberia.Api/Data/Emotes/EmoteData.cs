@@ -10,7 +10,7 @@ public sealed class EmoteData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("s")]
     public string Shortcut { get; init; }
@@ -18,7 +18,7 @@ public sealed class EmoteData : IDofusData<int>
     [JsonConstructor]
     internal EmoteData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
         Shortcut = string.Empty;
     }
 

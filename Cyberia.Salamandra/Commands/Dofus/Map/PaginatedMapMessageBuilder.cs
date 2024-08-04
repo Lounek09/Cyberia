@@ -17,7 +17,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
     private readonly string _search;
 
     public PaginatedMapMessageBuilder(List<MapData> mapsData, MapSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Map, "Carte du monde", "Plusieurs maps trouvées :", mapsData.OrderBy(x => x.Id).ToList(), selectedPageIndex)
+        : base(EmbedCategory.Map, BotTranslations.Embed_Map_Author, BotTranslations.Embed_PaginatedMap_Title, mapsData.OrderBy(x => x.Id).ToList(), selectedPageIndex)
     {
         _searchCategory = searchCategory;
         _search = search;
@@ -36,10 +36,10 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
             {
                 case MapSearchCategory.Coordinate:
                     if (parameters.Length > 4 &&
-                        int.TryParse(parameters[3], out var xCoord) &&
-                        int.TryParse(parameters[4], out var yCoord))
+                        int.TryParse(parameters[3], out var x) &&
+                        int.TryParse(parameters[4], out var y))
                     {
-                        mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(xCoord, yCoord).ToList();
+                        mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
                         search = $"{parameters[3]}{InteractionManager.PacketParameterSeparator}{parameters[4]}";
                     }
                     break;

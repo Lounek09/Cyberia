@@ -11,7 +11,7 @@ public sealed class KnowledgeBookTipData : IDofusData<int>
     public int Index { get; init; }
 
     [JsonPropertyName("c")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonPropertyName("l")]
     public int KnowledgeBookArticleId { get; init; }
@@ -19,7 +19,7 @@ public sealed class KnowledgeBookTipData : IDofusData<int>
     [JsonConstructor]
     internal KnowledgeBookTipData()
     {
-        Description = string.Empty;
+        Description = LocalizedString.Empty;
     }
 
     public KnowledgeBookArticleData? GetKnowledgeBookArticleData()

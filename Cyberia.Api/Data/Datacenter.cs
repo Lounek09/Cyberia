@@ -48,7 +48,7 @@ public sealed class Datacenter
 
     internal Datacenter(LangType type)
     {
-        var outputDirectoryPath = LangParserManager.GetOutputDirectoryPath(type, LangLanguage.FR);
+        var outputDirectoryPath = LangParserManager.GetOutputDirectoryPath(type, DofusApi.Config.BaseLanguage);
 
         AlignmentsRepository = Alignments.AlignmentsRepository.Load(outputDirectoryPath);
         AudiosRepository = Audios.AudiosRepository.Load(outputDirectoryPath);

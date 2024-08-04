@@ -9,7 +9,7 @@ public sealed class BreedChoiceProvider : IChoiceProvider
 {
     public ValueTask<IReadOnlyDictionary<string, object>> ProvideAsync(CommandParameter parameter)
     {
-        return new ValueTask<IReadOnlyDictionary<string, object>>(
-            DofusApi.Datacenter.BreedsRepository.Breeds.Values.ToDictionary(x => x.Name, x => (object)x.Id));
+        return ValueTask.FromResult<IReadOnlyDictionary<string, object>>(
+            DofusApi.Datacenter.BreedsRepository.Breeds.Values.ToDictionary(x => x.Name.ToString(), x => (object)x.Id));
     }
 }

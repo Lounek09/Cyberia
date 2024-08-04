@@ -8,11 +8,11 @@ public sealed class ItemUnicStringData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    public string Value { get; init; }
+    public LocalizedString Value { get; init; }
 
     [JsonConstructor]
     internal ItemUnicStringData()
     {
-        Value = string.Empty;
+        Value = LocalizedString.Empty;
     }
 }

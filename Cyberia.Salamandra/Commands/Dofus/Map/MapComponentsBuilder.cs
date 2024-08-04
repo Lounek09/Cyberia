@@ -16,14 +16,18 @@ public static class MapComponentsBuilder
     public static DiscordButtonComponent PaginatedMapCoordinateButtonBuilder(MapData mapData, bool disable = false)
     {
         return new(DiscordButtonStyle.Success,
-            PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.XCoord}{InteractionManager.PacketParameterSeparator}{mapData.YCoord}"),
+            PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.X}{InteractionManager.PacketParameterSeparator}{mapData.Y}"),
             mapData.GetCoordinate(),
             disable);
     }
 
     public static DiscordButtonComponent PaginatedMapMapSubAreaButtonBuilder(MapSubAreaData mapSubAreaData, bool disable = false)
     {
-        return new(DiscordButtonStyle.Success, PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, mapSubAreaData.Id.ToString()), mapSubAreaData.Name, disable);
+        return new(DiscordButtonStyle.Success,
+            PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea,
+            mapSubAreaData.Id.ToString()),
+            mapSubAreaData.Name,
+            disable);
     }
 
     public static DiscordButtonComponent PaginatedMapMapAreaButtonBuilder(MapAreaData mapAreaData, bool disable = false)
@@ -43,7 +47,7 @@ public static class MapComponentsBuilder
                     x.GetMapAreaName().WithMaxLength(50));
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une map pour l'afficher", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_Map_Placeholder, options, disable);
     }
 
     public static DiscordSelectComponent MapSubAreasSelectBuilder(int uniqueIndex, IEnumerable<MapSubAreaData> mapSubAreasData, bool disable = false)
@@ -53,12 +57,12 @@ public static class MapComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(x.Name, 100),
                     PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, x.Id.ToString()),
                     DofusApi.Datacenter.MapsRepository.GetMapAreaNameById(x.MapAreaId));
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une sous-zone pour afficher ses maps", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_MapSubArea_Placeholder, options, disable);
     }
 
     public static DiscordSelectComponent MapAreasSelectBuilder(int uniqueIndex, IEnumerable<MapAreaData> mapAreasData, bool disable = false)
@@ -68,11 +72,11 @@ public static class MapComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(x.Name, 100),
                     PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, x.Id.ToString()),
                     DofusApi.Datacenter.MapsRepository.GetMapSuperAreaNameById(x.MapSuperAreaId));
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une zone pour afficher ses maps", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_MapArea_Placeholder, options, disable);
     }
 }

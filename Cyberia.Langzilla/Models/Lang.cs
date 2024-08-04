@@ -50,7 +50,7 @@ public sealed class Lang
     /// Gets the file name of the lang file.
     /// </summary>
     [JsonIgnore]
-    public string FileName => $"{Name}_{Language.ToString().ToLower()}_{Version}.swf";
+    public string FileName => $"{Name}_{Language.ToStringFast()}_{Version}.swf";
 
     /// <summary>
     /// Gets the route of the lang file.

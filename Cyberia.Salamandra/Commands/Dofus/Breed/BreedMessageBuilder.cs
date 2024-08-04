@@ -21,14 +21,14 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
     public const int PacketVersion = 1;
 
     private readonly BreedData _breedData;
-    private readonly List<SpellData> _spellsData;
+    private readonly IEnumerable<SpellData> _spellsData;
     private readonly SpellData? _specialSpellData;
     private readonly ItemSetData? _itemSetData;
 
     public BreedMessageBuilder(BreedData breedData)
     {
         _breedData = breedData;
-        _spellsData = breedData.GetSpellsData().ToList();
+        _spellsData = breedData.GetSpellsData();
         _specialSpellData = breedData.GetSpecialSpellData();
         _itemSetData = breedData.GetItemSetData();
     }
@@ -59,7 +59,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
         var message = new T()
             .AddEmbed(await EmbedBuilder());
 
-        if (_spellsData.Count > 0)
+        if (_spellsData.Any())
         {
             message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData));
         }
@@ -75,52 +75,53 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Breeds, "Classes")
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Breeds, BotTranslations.Embed_Breed_Author)
             .WithTitle($"{_breedData.LongName} ({_breedData.Id})")
             .WithDescription(Formatter.Italic(_breedData.Description))
             .WithThumbnail(await _breedData.GetIconImagePathAsync(CdnImageSize.Size128))
             .WithImageUrl(await _breedData.GetWeaponsPreferenceImagePathAsync())
-            .AddField("Caractérisques :", StatsBoostCostContent());
+            .AddField(BotTranslations.Embed_Field_Characteristics_Title, CharacteristicsFieldContent());
 
-        if (_spellsData.Count > 0)
+        if (_spellsData.Any())
         {
-            embed.AddField("Sorts :", string.Join('\n', _spellsData.Select(x => $"- Niv.{x.GetNeededLevel()} {Formatter.Bold(x.Name)}")));
+            embed.AddField(BotTranslations.Embed_Field_Spells_Title,
+                string.Join('\n', _spellsData.Select(x => $"- {BotTranslations.ShortLevel}{x.GetNeededLevel()} {Formatter.Bold(x.Name)}")));
         }
 
         return embed;
     }
 
-    private string StatsBoostCostContent()
+    private string CharacteristicsFieldContent()
     {
         StringBuilder builder = new();
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold("Vitalité"));
+        builder.Append(Formatter.Bold(BotTranslations.Vitality));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.VitalityBoostCost);
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold("Sagesse"));
+        builder.Append(Formatter.Bold(BotTranslations.Wisdom));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.WisdomBoostCost);
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold("Force"));
+        builder.Append(Formatter.Bold(BotTranslations.Strength));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.StrengthBoostCost);
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold("Intelligence"));
+        builder.Append(Formatter.Bold(BotTranslations.Intelligence));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.IntelligenceBoostCost);
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold("Chance"));
+        builder.Append(Formatter.Bold(BotTranslations.Chance));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.ChanceBoostCost);
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold("Agilité"));
+        builder.Append(Formatter.Bold(BotTranslations.Agility));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.AgilityBoostCost);
 
@@ -138,9 +139,9 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
             builder.Append(" - ");
             builder.Append(boostCost[i].Count > 2 ? boostCost[i][2] : 1);
-            builder.Append(" pour ");
+            builder.Append(BotTranslations._for);
             builder.Append(boostCost[i][1]);
-            builder.Append(" à partir de ");
+            builder.Append(BotTranslations.from);
             builder.Append(boostCost[i][0]);
             builder.Append('\n');
         }

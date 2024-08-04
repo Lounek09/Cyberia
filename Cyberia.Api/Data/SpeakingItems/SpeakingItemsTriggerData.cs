@@ -1,5 +1,4 @@
-﻿using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Values;
+﻿using Cyberia.Api.Values;
 
 using System.Text.Json.Serialization;
 
@@ -19,7 +18,7 @@ public sealed class SpeakingItemsTriggerData : IDofusData
     [JsonConstructor]
     internal SpeakingItemsTriggerData()
     {
-        SpeakingItemsMessageIds = Array.Empty<int>();
+        SpeakingItemsMessageIds = [];
     }
 
     public SpeakingItemsMessageData? GetRandomSpeakingItemMessageData()

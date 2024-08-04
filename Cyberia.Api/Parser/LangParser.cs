@@ -5,7 +5,7 @@ using System.Text;
 namespace Cyberia.Api.Parser;
 
 /// <summary>
-/// Parses lang data into JSON format.
+/// Parses lang data into JSON.
 /// </summary>
 public sealed class LangParser : IDisposable
 {
@@ -30,8 +30,6 @@ public sealed class LangParser : IDisposable
         _streamReader = new(_fileStream);
         _builder = new();
         _partBuilders = [];
-
-        Parse();
     }
 
     /// <summary>
@@ -52,10 +50,16 @@ public sealed class LangParser : IDisposable
             throw new FileNotFoundException($"The {lang.Name} lang has never been decompiled.");
         }
 
-        return new LangParser(filePath);
+        LangParser langParser = new(filePath);
+        langParser.Parse();
+
+        return langParser;
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Returns the string from the internal <see cref="StringBuilder"/> that represents the lang data parsed to JSON.
+    /// </summary>
+    /// <returns>The JSON representation of the lang data.</returns>
     public override string ToString()
     {
         return _builder.ToString();
@@ -164,10 +168,10 @@ public sealed class LangParser : IDisposable
     }
 
     /// <summary>
-    /// Gets or creates a builder.
+    /// Gets or creates a builder that represents a part of the lang.
     /// </summary>
     /// <param name="name">The name of the builder.</param>
-    /// <param name="keySegment">The key segment to determine if an array should be created.</param>
+    /// <param name="keySegment">The key segment used to determine the value kind of the created part.</param>
     /// <returns>The builder.</returns>
     private LangPartBuilder GetOrCreateLangPartBuilder(string name, ReadOnlySpan<char> keySegment)
     {

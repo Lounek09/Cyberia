@@ -51,7 +51,7 @@ public sealed class BreedsRepository : IDofusRepository
     {
         name = name.NormalizeToAscii();
 
-        return Breeds.Values.FirstOrDefault(x => x.Name.NormalizeToAscii().Equals(name));
+        return Breeds.Values.FirstOrDefault(x => ExtendString.NormalizeToAscii(x.Name).Equals(name));
     }
 
     public IEnumerable<BreedData> GetBreedsDataByName(string name)
@@ -62,7 +62,7 @@ public sealed class BreedsRepository : IDofusRepository
         {
             return names.All(y =>
             {
-                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

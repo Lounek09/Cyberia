@@ -23,19 +23,19 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class CytrusCommandModule
 {
-    [Command("check"), Description("[Owner] Lance un check de cytrus")]
+    [Command("check"), Description("[Owner] Launch a check to see if there is a new version of Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
     public static async Task CheckExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.RespondAsync("Lancement du check de Cytrus...");
+        await ctx.RespondAsync("Starting the check of Cytrus...");
 
         await CytrusWatcher.CheckAsync();
 
-        await ctx.FollowupAsync("Check de Cytrus terminé");
+        await ctx.EditResponseAsync("Cytrus check completed");
     }
 
-    [Command("show"), Description("Affiche les informations du cytrus actuellement en ligne")]
+    [Command("show"), Description("Display the information of the currently online Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ShowExecuteAsync(SlashCommandContext ctx)
     {
@@ -69,25 +69,25 @@ public sealed class CytrusCommandModule
         await ctx.RespondAsync(embed);
     }
 
-    [Command("diff"), Description("Liste les différences entre les fichiers de deux versions d'un jeu sur Cytrus")]
+    [Command("diff"), Description("List the differences between the files of two versions of a game on Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task DiffExecuteAsync(SlashCommandContext ctx,
-        [Parameter("game"), Description("Nom du jeu")]
+        [Parameter("game"), Description("Name of the game")]
         [SlashChoiceProvider<CytrusGameChoiceProvider>]
         string game,
         [Parameter("platform"), Description("Platform")]
         [SlashAutoCompleteProvider<CytrusPlatformAutoCompleteProvider>]
         string platform,
-        [Parameter("old_release"), Description("Release de l'ancien client")]
+        [Parameter("old_release"), Description("Release of the old client")]
         [SlashAutoCompleteProvider<CytrusReleaseAutoCompleteProvider>]
         string oldRelease,
-        [Parameter("old_version"), Description("Version de l'ancien client")]
+        [Parameter("old_version"), Description("Version of the old client")]
         [SlashAutoCompleteProvider<CytrusOldVersionAutocompleteProvider>]
         string oldVersion,
-        [Parameter("new_release"), Description("Release du nouveau client")]
+        [Parameter("new_release"), Description("Release of the new client")]
         [SlashAutoCompleteProvider<CytrusReleaseAutoCompleteProvider>]
         string newRelease,
-        [Parameter("new_version"), Description("Version du nouveau client")]
+        [Parameter("new_version"), Description("Version of the new client")]
         [SlashAutoCompleteProvider<CytrusNewVersionAutocompleteProvider>]
         string newVersion)
     {

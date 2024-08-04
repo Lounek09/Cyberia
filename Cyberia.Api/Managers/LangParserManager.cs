@@ -8,7 +8,7 @@ public static class LangParserManager
 {
     public static string GetOutputDirectoryPath(LangType type, LangLanguage language)
     {
-        return Path.Join(DofusApi.OutputPath, type.ToString().ToLower(), language.ToString().ToLower());
+        return Path.Join(DofusApi.OutputPath, type.ToStringFast().ToLower(), language.ToStringFast());
     }
 
     public static bool Parse(LangType type, LangLanguage language)
@@ -36,7 +36,7 @@ public static class LangParserManager
         }
         catch (Exception e)
         {
-            Log.Error(e, "Une erreur est survenue lors du parsing des langs {LangType} en {LangLanguage}", type, language);
+            Log.Error(e, "An error occurred while parsing langs {LangType} in {LangLanguage}", type, language);
             return false;
         }
 
@@ -45,8 +45,7 @@ public static class LangParserManager
 
     public static bool ParseAll(LangType type)
     {
-        var languages = Enum.GetValues<LangLanguage>();
-
-        return languages.All(x => Parse(type, x));
+        return Enum.GetValues<LangLanguage>()
+                   .All(x => Parse(type, x));
     }
 }

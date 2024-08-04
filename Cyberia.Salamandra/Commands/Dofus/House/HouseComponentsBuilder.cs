@@ -19,11 +19,11 @@ public static class HouseComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(x.Name, 100),
                     HouseMessageBuilder.GetPacket(x.Id),
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une maison pour l'afficher", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_House_Placeholder, options, disable);
     }
 }

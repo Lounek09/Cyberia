@@ -24,7 +24,7 @@ public sealed class ItemWeaponDataConverter : JsonConverter<ItemWeaponData>
             MaxRange = elements[3].GetInt32(),
             CriticalHitRate = elements[4].GetInt32(),
             CriticalFailureRate = elements[5].GetInt32(),
-            LineOnly = elements[6].GetBoolean(),
+            Linear = elements[6].GetBoolean(),
             LineOfSight = elements[7].GetBoolean()
         };
     }
@@ -39,7 +39,7 @@ public sealed class ItemWeaponDataConverter : JsonConverter<ItemWeaponData>
         writer.WriteNumberValue(value.MaxRange);
         writer.WriteNumberValue(value.CriticalHitRate);
         writer.WriteNumberValue(value.CriticalFailureRate);
-        writer.WriteBooleanValue(value.LineOnly);
+        writer.WriteBooleanValue(value.Linear);
         writer.WriteBooleanValue(value.LineOfSight);
 
         writer.WriteEndArray();

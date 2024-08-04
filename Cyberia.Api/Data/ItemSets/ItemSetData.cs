@@ -12,7 +12,7 @@ public sealed class ItemSetData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("i")]
     public IReadOnlyList<int> ItemsId { get; init; }
@@ -23,7 +23,7 @@ public sealed class ItemSetData : IDofusData<int>
     [JsonConstructor]
     internal ItemSetData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
         ItemsId = [];
         Effects = [];
     }

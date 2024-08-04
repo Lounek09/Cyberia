@@ -30,14 +30,19 @@ public sealed class CritCommandModule
         [MinMaxValue(1, 99999)]
         int agility)
     {
+        CommandManager.SetCulture();
+
         var rate = Formulas.GetCriticalRate(number, target, agility);
         var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, target);
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de coups critiques")
-            .WithDescription($"""
-                Tu seras {Formatter.Bold($"1/{rate}")} au {Formatter.Bold($"1/{target}")} avec {Formatter.Bold(number.ToString())}crit et {Formatter.Bold(agility.ToString())}agi
-                Pour atteindre le 1/2 il te faudra au minimum {Formatter.Bold(agilityNeeded.ToString())}agi !
-                """);
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Crit_Author)
+            .WithDescription(Translation.Format(
+                BotTranslations.Embed_Crit_Description,
+                Formatter.Bold($"1/{rate}"),
+                Formatter.Bold($"1/{target}"),
+                Formatter.Bold(number.ToString()),
+                Formatter.Bold(agility.ToString()),
+                Formatter.Bold(agilityNeeded.ToString())));
 
         await ctx.RespondAsync(embed);
     }

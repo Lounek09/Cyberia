@@ -85,88 +85,80 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Spells, "Livre de sorts")
-            .WithTitle($"{_spellData.Name} ({_spellData.Id}) - Rang {_selectedLevel}")
-            .WithDescription(string.IsNullOrEmpty(_spellData.Description) ? string.Empty : Formatter.Italic(_spellData.Description.Trim()))
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Spells, BotTranslations.Embed_Spell_Author)
+            .WithTitle($"{_spellData.Name} ({_spellData.Id}) - {BotTranslations.ShortLevel} {_selectedLevel}")
+            .WithDescription(string.IsNullOrEmpty(_spellData.Description) ? string.Empty : Formatter.Italic(_spellData.Description.ToString().Trim()))
             .WithThumbnail(await _spellData.GetIconImagePathAsync(CdnImageSize.Size128));
 
         if (_spellLevelData is not null)
         {
-            embed.AddField(Constant.ZeroWidthSpace, $"Niveau requis : {Formatter.Bold(_spellLevelData.NeededLevel.ToString())}", true);
+            embed.AddField(Constant.ZeroWidthSpace, $"{BotTranslations.Embed_Field_RequiredLevel_Title} {Formatter.Bold(_spellLevelData.NeededLevel.ToString())}", true);
 
-            var range = $"{Formatter.Bold(_spellLevelData.MinRange.ToString())}{(_spellLevelData.MinRange == _spellLevelData.MaxRange ? string.Empty : $" à {Formatter.Bold(_spellLevelData.MaxRange.ToString())}")} PO";
-            var apCost = $"{Formatter.Bold(_spellLevelData.ActionPointCost.ToString())} PA";
+            var range = $"{Formatter.Bold(_spellLevelData.MinRange.ToString())}{(_spellLevelData.MinRange == _spellLevelData.MaxRange ? string.Empty : $"{BotTranslations.to}{Formatter.Bold(_spellLevelData.MaxRange.ToString())}")} {BotTranslations.ShortRange}";
+            var apCost = $"{Formatter.Bold(_spellLevelData.ActionPointCost.ToString())} {BotTranslations.ShortActionPoint}";
             embed.AddField(Constant.ZeroWidthSpace, $"{range}\n{apCost}", true);
 
-            embed.AddField("Catégorie :", _spellData.SpellCategory.GetDescription(), true);
+            embed.AddField(BotTranslations.Embed_Field_Category_Title, _spellData.SpellCategory.GetDescription(), true);
 
             var requiredStatesData = _spellLevelData.GetRequiredStatesData().ToList();
             if (requiredStatesData.Count > 0)
             {
-                embed.AddField("Etats requis :", string.Join(", ", requiredStatesData.Select(x => x.Name)), true);
+                embed.AddField(BotTranslations.Embed_Field_RequiredStates_Title, string.Join(", ", requiredStatesData.Select(x => x.Name)), true);
             }
 
             var forbiddenStatesData = _spellLevelData.GetForbiddenStatesData().ToList();
             if (forbiddenStatesData.Count > 0)
             {
-                embed.AddField("Etats interdits :", string.Join(", ", forbiddenStatesData.Select(x => x.Name)), true);
+                embed.AddField(BotTranslations.Embed_Field_ForbiddenStates_Title, string.Join(", ", forbiddenStatesData.Select(x => x.Name)), true);
             }
 
             if (_spellData.Id == 101 || _spellData.Id == 2083)
             {
-                embed.AddField("Effets :", "Fuck roulette");
+                embed.AddField(BotTranslations.Embed_Field_Effects_Title, "Fuck");
             }
             else
             {
                 var effects = _spellLevelData.Effects;
-                var trapEffects = _spellLevelData.GetTrapEffects();
-                var glyphEffects = _spellLevelData.GetGlyphEffects();
-                var criticalEffects = _spellLevelData.CriticalEffects;
-
-                if (effects.Count == 0 && trapEffects.Count == 0 && glyphEffects.Count == 0 && criticalEffects.Count == 0)
+                if (effects.Count > 0)
                 {
-                    embed.AddField(Constant.ZeroWidthSpace, Constant.ZeroWidthSpace);
+                    embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects);
                 }
-                else
+
+                var trapEffects = _spellLevelData.GetTrapEffects();
+                if (trapEffects.Count > 0)
                 {
-                    if (effects.Count > 0)
-                    {
-                        embed.AddEffectFields("Effets :", effects);
-                    }
+                    embed.AddEffectFields(BotTranslations.Embed_Field_TrapEffects_Title, trapEffects);
+                }
 
-                    if (trapEffects.Count > 0)
-                    {
-                        embed.AddEffectFields("Effets piege :", trapEffects);
-                    }
+                var glyphEffects = _spellLevelData.GetGlyphEffects();
+                if (glyphEffects.Count > 0)
+                {
+                    embed.AddEffectFields(BotTranslations.Embed_Field_GlyphEffects_Title, glyphEffects);
+                }
 
-                    if (glyphEffects.Count > 0)
-                    {
-                        embed.AddEffectFields("Effets glyphe :", glyphEffects);
-                    }
-
-                    if (criticalEffects.Count > 0)
-                    {
-                        embed.AddEffectFields("Effets critiques :", criticalEffects);
-                    }
+                var criticalEffects = _spellLevelData.CriticalEffects;
+                if (criticalEffects.Count > 0)
+                {
+                    embed.AddEffectFields(BotTranslations.Embed_Field_CriticalEffects_Title, criticalEffects);
                 }
             }
 
             var caracteristics = $"""
-                 Probabilité de coup critique : {Formatter.Bold(_spellLevelData.CriticalHitRate == 0 ? "-" : $"1/{_spellLevelData.CriticalHitRate}")}
-                 Probabilité d'échec : {Formatter.Bold(_spellLevelData.CriticalFailureRate == 0 ? "-" : $"1/{_spellLevelData.CriticalFailureRate}")}
-                 Nb. de lancers par tour : {Formatter.Bold(_spellLevelData.LaunchCountByTurn == 0 ? "-" : _spellLevelData.LaunchCountByTurn.ToString())}
-                 Nb. de lancers par tour par joueur : {Formatter.Bold(_spellLevelData.LaunchCountByPlayerByTurn == 0 ? "-" : _spellLevelData.LaunchCountByPlayerByTurn.ToString())}
-                 Nb. de tours entre deux lancers : {Formatter.Bold(_spellLevelData.DelayBetweenLaunch == 0 ? "-" : _spellLevelData.DelayBetweenLaunch == 63 ? "inf." : _spellLevelData.DelayBetweenLaunch.ToString())}
-                 {(_spellData.GlobalInterval ? "Intervalle de relance global" : string.Empty)}
+                 {BotTranslations.Embed_Field_Characteristics_Content_CriticalHit} {Formatter.Bold(_spellLevelData.CriticalHitRate == 0 ? "-" : $"1/{_spellLevelData.CriticalHitRate}")}
+                 {BotTranslations.Embed_Field_Characteristics_Content_CriticalFailure} {Formatter.Bold(_spellLevelData.CriticalFailureRate == 0 ? "-" : $"1/{_spellLevelData.CriticalFailureRate}")}
+                 {BotTranslations.Embed_Field_Characteristics_Content_CastPerTurn} {Formatter.Bold(_spellLevelData.CastPerTurn == 0 ? "-" : _spellLevelData.CastPerTurn.ToString())}
+                 {BotTranslations.Embed_Field_Characteristics_Content_CastPerPlayer} {Formatter.Bold(_spellLevelData.CastPerPlayer == 0 ? "-" : _spellLevelData.CastPerPlayer.ToString())}
+                 {BotTranslations.Embed_Field_Characteristics_Content_TurnsBetweenCast} {Formatter.Bold(_spellLevelData.TurnsBetweenCast == 0 ? "-" : _spellLevelData.TurnsBetweenCast == 63 ? BotTranslations.ShortInfinity : _spellLevelData.TurnsBetweenCast.ToString())}
+                 {(_spellData.GlobalInterval ? BotTranslations.Embed_Field_Characteristics_Content_GlobalRecast : string.Empty)}
                  """;
-            embed.AddField("Autres caractéristiques : ", caracteristics, true);
+            embed.AddField(BotTranslations.Embed_Field_Characteristics_Title, caracteristics, true);
 
             caracteristics = $"""
-                {Emojis.Bool(_spellLevelData.CanBoostRange)} Portée modifiable
-                {Emojis.Bool(_spellLevelData.LineOfSight)} Ligne de vue
-                {Emojis.Bool(_spellLevelData.LineOnly)} Lancer en ligne
-                {Emojis.Bool(_spellLevelData.NeedFreeCell)} Cellules libres
-                {Emojis.Bool(_spellLevelData.CricalFailureEndTheTurn)} EC fini le tour
+                {Emojis.Bool(_spellLevelData.AdjustableRange)} {BotTranslations.Embed_Field_Characteristics_Content_AdjustableRange}
+                {Emojis.Bool(_spellLevelData.LineOfSight)} {BotTranslations.Embed_Field_Characteristics_Content_LineOfSight}
+                {Emojis.Bool(_spellLevelData.Linear)} {BotTranslations.Embed_Field_Characteristics_Content_Linear}
+                {Emojis.Bool(_spellLevelData.NeedFreeCell)} {BotTranslations.Embed_Field_Characteristics_Content_NeedFreeCell}
+                {Emojis.Bool(_spellLevelData.CricalFailureEndTheTurn)} {BotTranslations.Embed_Field_Characteristics_Content_CriticalFailureEndTurn}
                 """;
             embed.AddField(Constant.ZeroWidthSpace, caracteristics, true);
         }

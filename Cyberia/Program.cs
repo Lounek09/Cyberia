@@ -7,12 +7,18 @@ using Cyberia.Salamandra;
 
 using Microsoft.Extensions.Configuration;
 
+using System.Globalization;
+
 namespace Cyberia;
 
 public static class Program
 {
     public static async Task Main()
     {
+        CultureInfo defaultCulture = new("en");
+        CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
+        CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
+
         Directory.SetCurrentDirectory(AppContext.BaseDirectory);
 
         var builder = new ConfigurationBuilder()

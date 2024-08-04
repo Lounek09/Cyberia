@@ -8,23 +8,23 @@ namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 
 public static class RuneComponentsBuilder
 {
-    public static DiscordButtonComponent RuneItemButtonBuilder(ItemData itemData, int qte = 1, bool disable = false)
+    public static DiscordButtonComponent RuneItemButtonBuilder(ItemData itemData, int quantity = 1, bool disable = false)
     {
-        return new(DiscordButtonStyle.Success, RuneItemMessageBuilder.GetPacket(itemData.Id, qte), "Calculateur de runes", disable);
+        return new(DiscordButtonStyle.Success, RuneItemMessageBuilder.GetPacket(itemData.Id, quantity), BotTranslations.Button_RuneItem, disable);
     }
 
-    public static DiscordSelectComponent ItemsSelectBuilder(int index, IEnumerable<ItemData> itemsData, int qte, bool disable = false)
+    public static DiscordSelectComponent ItemsSelectBuilder(int index, IEnumerable<ItemData> itemsData, int quantity, bool disable = false)
     {
         var options = itemsData
             .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
-                    RuneItemMessageBuilder.GetPacket(x.Id, qte),
+                    ExtendString.WithMaxLength(x.Name, 100),
+                    RuneItemMessageBuilder.GetPacket(x.Id, quantity),
                     DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x.ItemTypeId));
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne un item pour calculer les runes obtenable", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_RuneItem_Splaceholder, options, disable);
     }
 }

@@ -16,10 +16,9 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
     private readonly string _search;
 
     public PaginatedQuestMessageBuilder(List<QuestData> questsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Quests, "Livre de quêtes", "Plusieurs quêtes trouvées :", questsData, selectedPageIndex)
+        : base(EmbedCategory.Quests, BotTranslations.Embed_Quest_Author, BotTranslations.Embed_PaginatedQuest_Title, questsData, selectedPageIndex)
     {
-        _search = search
-            ;
+        _search = search;
     }
 
     public static PaginatedQuestMessageBuilder? Create(int version, string[] parameters)

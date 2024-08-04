@@ -10,7 +10,7 @@ public sealed class StateData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("p")]
     [JsonInclude]
@@ -20,13 +20,13 @@ public sealed class StateData : IDofusData<int>
     public bool Display { get; init; }
 
     [JsonPropertyName("s")]
-    public string ShortName { get; init; }
+    public LocalizedString ShortName { get; init; }
 
     [JsonConstructor]
     internal StateData()
     {
-        Name = string.Empty;
-        ShortName = string.Empty;
+        Name = LocalizedString.Empty;
+        ShortName = LocalizedString.Empty;
     }
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)

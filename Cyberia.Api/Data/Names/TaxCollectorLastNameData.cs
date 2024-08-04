@@ -8,11 +8,11 @@ public sealed class TaxCollectorLastNameData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonConstructor]
     internal TaxCollectorLastNameData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 }

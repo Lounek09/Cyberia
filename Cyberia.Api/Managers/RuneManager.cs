@@ -93,7 +93,7 @@ public static class RuneManager
         return bundle;
     }
 
-    public static IReadOnlyCollection<RuneBundle> GetRuneBundlesFromItem(ItemData itemData, int qte, double? multiplicator = null)
+    public static IReadOnlyCollection<RuneBundle> GetRuneBundlesFromItem(ItemData itemData, int quantity, double? multiplicator = null)
     {
         var itemstatsData = itemData.GetItemStatsData();
         if (itemstatsData is null)
@@ -111,7 +111,7 @@ public static class RuneManager
                 continue;
             }
 
-            for (var i = 0; i < qte; i++)
+            for (var i = 0; i < quantity; i++)
             {
                 var bundle = GetRuneBundleFromStat(runeData, itemData.Level, effect.GetRandomValue(), multiplicator);
 

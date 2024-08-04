@@ -16,7 +16,7 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
     private readonly string _search;
 
     public PaginatedIncarnationMessageBuilder(List<IncarnationData> incarnationsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Inventory, "Incarnations", "Plusieurs incarnations trouvés :", incarnationsData, selectedPageIndex)
+        : base(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author, BotTranslations.Embed_PaginatedIncarnation_Title, incarnationsData, selectedPageIndex)
     {
         _search = search;
     }

@@ -4,7 +4,7 @@
 	<select name="culture" title="@WebTranslations.Layout_CultureSelection">
 		@foreach (var culture in Model)
 		{
-			<!option value="@culture.CultureInfo.Name" @culture.Selected>@culture.CultureInfo.Name.ToUpper()</!option>
+			<!option value="@culture.CultureInfo.TwoLetterISOLanguageName" @culture.Selected>@culture.CultureInfo.TwoLetterISOLanguageName.ToUpper()</!option>
 		}
 		<input type="hidden" name="returnPath" value="@Context.Request.Path">
 	</select>

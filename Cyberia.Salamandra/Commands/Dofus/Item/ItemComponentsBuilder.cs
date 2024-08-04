@@ -8,9 +8,9 @@ namespace Cyberia.Salamandra.Commands.Dofus.Item;
 
 public static class ItemComponentsBuilder
 {
-    public static DiscordButtonComponent ItemButtonBuilder(ItemData itemData, int craftQte = 1, bool disable = false)
+    public static DiscordButtonComponent ItemButtonBuilder(ItemData itemData, int quantity = 1, bool disable = false)
     {
-        return new(DiscordButtonStyle.Success, ItemMessageBuilder.GetPacket(itemData.Id, craftQte), itemData.Name, disable);
+        return new(DiscordButtonStyle.Success, ItemMessageBuilder.GetPacket(itemData.Id, quantity), itemData.Name, disable);
     }
 
     public static DiscordSelectComponent ItemsSelectBuilder(int index, IEnumerable<ItemData> itemsData, bool disable = false)
@@ -20,11 +20,11 @@ public static class ItemComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(x.Name, 100),
                     ItemMessageBuilder.GetPacket(x.Id),
                     DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x.ItemTypeId));
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne un item pour l'afficher", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_Item_Placeholder, options, disable);
     }
 }

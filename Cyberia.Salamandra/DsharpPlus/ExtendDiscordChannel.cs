@@ -2,8 +2,16 @@
 
 namespace Cyberia.Salamandra.DsharpPlus;
 
+/// <summary>
+/// Provides extension methods for <see cref="DiscordChannel"/>.
+/// </summary>
 public static class ExtendDiscordChannel
 {
+    /// <summary>
+    /// Sends a message to the channel if the bot has the necessary permissions.
+    /// </summary>
+    /// <param name="channel">The channel to send the message to.</param>
+    /// <param name="message">The message to send.</param>
     public static async Task SendMessageSafe(this DiscordChannel channel, DiscordMessageBuilder message)
     {
         var permissions = channel.Guild.CurrentMember.PermissionsIn(channel);

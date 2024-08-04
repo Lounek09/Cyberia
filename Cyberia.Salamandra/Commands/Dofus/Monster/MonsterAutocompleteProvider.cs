@@ -10,6 +10,6 @@ public sealed class MonsterAutocompleteProvider : AutoCompleteProvider
     {
         return DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
-            .ToDictionary(x => $"{$"{x.Name}{(x.BreedSummon ? " (invocation)" : string.Empty)}".WithMaxLength(90)} ({x.Id})", x => (object)x.Id.ToString());
+            .ToDictionary(x => $"{$"{x.Name}{(x.BreedSummon ? $" ({BotTranslations.Summon})" : string.Empty)}".WithMaxLength(90)} ({x.Id})", x => (object)x.Id.ToString());
     }
 }

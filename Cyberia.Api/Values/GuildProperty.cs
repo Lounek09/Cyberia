@@ -4,5 +4,5 @@ public enum GuildProperty
 {
     None,
     House,
-    Enclosure
+    Paddock
 }

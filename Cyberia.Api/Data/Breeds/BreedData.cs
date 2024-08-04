@@ -14,19 +14,19 @@ public sealed class BreedData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("sn")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("ln")]
-    public string LongName { get; init; }
+    public LocalizedString LongName { get; init; }
 
     [JsonPropertyName("ep")]
     public int Episode { get; init; }
 
     [JsonPropertyName("d")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonPropertyName("sd")]
-    public string ShortDescription { get; init; }
+    public LocalizedString ShortDescription { get; init; }
 
     [JsonPropertyName("di")]
     public bool Diabolical { get; init; }
@@ -35,10 +35,10 @@ public sealed class BreedData : IDofusData<int>
     public IReadOnlyList<int> SpellsId { get; init; }
 
     [JsonPropertyName("pt")]
-    public string TemporisPassiveName { get; init; }
+    public LocalizedString TemporisPassiveName { get; init; }
 
     [JsonPropertyName("pd")]
-    public string TemporisPassiveDescription { get; init; }
+    public LocalizedString TemporisPassiveDescription { get; init; }
 
     [JsonPropertyName("cc")]
     [JsonInclude]
@@ -77,13 +77,13 @@ public sealed class BreedData : IDofusData<int>
     [JsonConstructor]
     internal BreedData()
     {
-        Name = string.Empty;
-        LongName = string.Empty;
-        Description = string.Empty;
-        ShortDescription = string.Empty;
+        Name = LocalizedString.Empty;
+        LongName = LocalizedString.Empty;
+        Description = LocalizedString.Empty;
+        ShortDescription = LocalizedString.Empty;
         SpellsId = [];
-        TemporisPassiveName = string.Empty;
-        TemporisPassiveDescription = string.Empty;
+        TemporisPassiveName = LocalizedString.Empty;
+        TemporisPassiveDescription = LocalizedString.Empty;
         CloseCombatInfos = new();
         StrengthBoostCost = [];
         VitalityBoostCost = [];

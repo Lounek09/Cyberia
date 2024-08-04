@@ -39,7 +39,7 @@ public sealed class LangsWatcherTests
     [TestMethod]
     public void GetOutputPath_WhenTypeIsOfficialAndLanguageFrench_ReturnsCorrectPath()
     {
-        var result = LangsWatcher.GetOutputPath(LangType.Official, LangLanguage.FR);
+        var result = LangsWatcher.GetOutputPath(LangType.Official, LangLanguage.fr);
 
         Assert.AreEqual(Path.Join(LangsWatcher.OutputPath, "official", "fr"), result);
     }

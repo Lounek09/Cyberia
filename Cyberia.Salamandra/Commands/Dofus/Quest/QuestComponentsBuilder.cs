@@ -19,11 +19,11 @@ public static class QuestComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(x.Name, 100),
                     QuestMessageBuilder.GetPacket(x.Id),
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne une quête pour l'afficher", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_Quest_Placeholder, options, disable);
     }
 }

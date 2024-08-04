@@ -8,11 +8,11 @@ public sealed class AlignmentFeatEffectData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonConstructor]
     internal AlignmentFeatEffectData()
     {
-        Description = string.Empty;
+        Description = LocalizedString.Empty;
     }
 }

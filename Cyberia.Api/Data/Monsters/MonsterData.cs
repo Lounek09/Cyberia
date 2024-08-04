@@ -11,7 +11,7 @@ public sealed class MonsterData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("g")]
     public int GfxId { get; init; }
@@ -70,7 +70,7 @@ public sealed class MonsterData : IDofusData<int>
     [JsonConstructor]
     internal MonsterData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
         TrelloUrl = string.Empty;
     }
 

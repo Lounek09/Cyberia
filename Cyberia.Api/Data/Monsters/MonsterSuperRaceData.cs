@@ -8,7 +8,7 @@ public sealed class MonsterSuperRaceData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("s")]
     [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
@@ -18,6 +18,6 @@ public sealed class MonsterSuperRaceData : IDofusData<int>
     [JsonConstructor]
     internal MonsterSuperRaceData()
     {
-        Name = string.Empty;
+        Name = LocalizedString.Empty;
     }
 }

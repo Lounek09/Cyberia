@@ -19,11 +19,11 @@ public static class MonsterComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(x.Name, 100),
                     MonsterMessageBuilder.GetPacket(x.Id),
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), "Sélectionne un monstre pour l'afficher", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_Monster_Placeholder, options, disable);
     }
 }

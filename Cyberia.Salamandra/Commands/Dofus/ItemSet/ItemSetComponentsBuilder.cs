@@ -19,11 +19,11 @@ public static class ItemSetComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    x.Name.WithMaxLength(100),
+                    ExtendString.WithMaxLength(x.Name, 100),
                     ItemSetMessageBuilder.GetPacket(x.Id, x.Effects.Count),
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), "Sélectionne une panoplie pour l'afficher", options, disable);
+        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_ItemSet_Placeholder, options, disable);
     }
 }

@@ -27,14 +27,18 @@ public sealed class EscapeCommandModule
         [MinMaxValue(1, 99999)]
         int foeAgility)
     {
+        CommandManager.SetCulture();
+
         var escapePercent = Formulas.GetEscapePercent(agility, foeAgility);
         var agilityToEscapeForSure = Formulas.GetAgilityToEscapeForSure(foeAgility);
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Calculateur de % de fuite")
-            .WithDescription($"""
-                Avec {Formatter.Bold(agility.ToString())}agi tu auras {Formatter.Bold(escapePercent.ToString())}% de chance de fuir contre {Formatter.Bold(foeAgility.ToString())}agi
-                Pour fuir à 100% il te faudra au minimum {Formatter.Bold(agilityToEscapeForSure.ToString())}agi !
-                """);
+        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Escape_Author)
+            .WithDescription(Translation.Format(
+                BotTranslations.Embed_Escape_Description,
+                Formatter.Bold(agility.ToString()),
+                Formatter.Bold(escapePercent.ToString()),
+                Formatter.Bold(foeAgility.ToString()),
+                Formatter.Bold(agilityToEscapeForSure.ToString())));
 
         await ctx.RespondAsync(embed);
     }

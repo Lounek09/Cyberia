@@ -247,76 +247,76 @@
     <value>Créature invocable disponible &gt; #1</value>
   </data>
   <data name="Criterion.BaseAgility.Different" xml:space="preserve">
-    <value>Agilité de base ≠ #1</value>
+    <value>Agilité additionnelle ≠ #1</value>
   </data>
   <data name="Criterion.BaseAgility.Equal" xml:space="preserve">
-    <value>Agilité de base = #1</value>
+    <value>Agilité additionnelle = #1</value>
   </data>
   <data name="Criterion.BaseAgility.Inferior" xml:space="preserve">
-    <value>Agilité de base &lt; #1</value>
+    <value>Agilité additionnelle &lt; #1</value>
   </data>
   <data name="Criterion.BaseAgility.Superior" xml:space="preserve">
-    <value>Agilité de base &gt; #1</value>
+    <value>Agilité additionnelle &gt; #1</value>
   </data>
   <data name="Criterion.BaseChance.Different" xml:space="preserve">
-    <value>Chance de base ≠ #1</value>
+    <value>Chance additionnelle ≠ #1</value>
   </data>
   <data name="Criterion.BaseChance.Equal" xml:space="preserve">
-    <value>Chance de base = #1</value>
+    <value>Chance additionnelle = #1</value>
   </data>
   <data name="Criterion.BaseChance.Inferior" xml:space="preserve">
-    <value>Chance de base &lt; #1</value>
+    <value>Chance additionnelle &lt; #1</value>
   </data>
   <data name="Criterion.BaseChance.Superior" xml:space="preserve">
-    <value>Chance de base &gt; #1</value>
+    <value>Chance additionnelle &gt; #1</value>
   </data>
   <data name="Criterion.BaseIntelligence.Different" xml:space="preserve">
-    <value>Intelligence de base ≠ #1</value>
+    <value>Intelligence additionnelle ≠ #1</value>
   </data>
   <data name="Criterion.BaseIntelligence.Equal" xml:space="preserve">
-    <value>Intelligence de base = #1</value>
+    <value>Intelligence additionnelle = #1</value>
   </data>
   <data name="Criterion.BaseIntelligence.Inferior" xml:space="preserve">
-    <value>Intelligence de base &lt; #1</value>
+    <value>Intelligence additionnelle &lt; #1</value>
   </data>
   <data name="Criterion.BaseIntelligence.Superior" xml:space="preserve">
-    <value>Intelligence de base &gt; #1</value>
+    <value>Intelligence additionnelle &gt; #1</value>
   </data>
   <data name="Criterion.BaseStrength.Different" xml:space="preserve">
-    <value>Force de base ≠ #1</value>
+    <value>Force additionnelle ≠ #1</value>
   </data>
   <data name="Criterion.BaseStrength.Equal" xml:space="preserve">
-    <value>Force de base = #1</value>
+    <value>Force additionnelle = #1</value>
   </data>
   <data name="Criterion.BaseStrength.Inferior" xml:space="preserve">
-    <value>Force de base &lt; #1</value>
+    <value>Force additionnelle &lt; #1</value>
   </data>
   <data name="Criterion.BaseStrength.Superior" xml:space="preserve">
-    <value>Force de base &gt; #1</value>
+    <value>Force additionnelle &gt; #1</value>
   </data>
   <data name="Criterion.BaseVitality.Different" xml:space="preserve">
-    <value>Vitalité de base ≠ #1</value>
+    <value>Vitalité additionnelle ≠ #1</value>
   </data>
   <data name="Criterion.BaseVitality.Equal" xml:space="preserve">
-    <value>Vitalité de base = #1</value>
+    <value>Vitalité additionnelle = #1</value>
   </data>
   <data name="Criterion.BaseVitality.Inferior" xml:space="preserve">
-    <value>Vitalité de base &lt; #1</value>
+    <value>Vitalité additionnelle &lt; #1</value>
   </data>
   <data name="Criterion.BaseVitality.Superior" xml:space="preserve">
-    <value>Vitalité de base &gt; #1</value>
+    <value>Vitalité additionnelle &gt; #1</value>
   </data>
   <data name="Criterion.BaseWisdom.Different" xml:space="preserve">
-    <value>Sagesse de base ≠ #1</value>
+    <value>Sagesse additionnelle ≠ #1</value>
   </data>
   <data name="Criterion.BaseWisdom.Equal" xml:space="preserve">
-    <value>Sagesse de base = #1</value>
+    <value>Sagesse additionnelle = #1</value>
   </data>
   <data name="Criterion.BaseWisdom.Inferior" xml:space="preserve">
-    <value>Sagesse de base &lt; #1</value>
+    <value>Sagesse additionnelle &lt; #1</value>
   </data>
   <data name="Criterion.BaseWisdom.Superior" xml:space="preserve">
-    <value>Sagesse de base &gt; #1</value>
+    <value>Sagesse additionnelle &gt; #1</value>
   </data>
   <data name="Criterion.BestElement.Different" xml:space="preserve">
     <value>Meilleur élément ≠ #1</value>
@@ -463,7 +463,7 @@
     <value>Craft</value>
   </data>
   <data name="SpellLevelCategory.WeaponSkill" xml:space="preserve">
-    <value>Maîtrise</value>
+    <value>Maîtrise d'arme</value>
   </data>
   <data name="SpellLevelCategory.Summon" xml:space="preserve">
     <value>Invocation</value>
@@ -478,7 +478,7 @@
     <value>Classe</value>
   </data>
   <data name="SpellCategory.WeaponSkill" xml:space="preserve">
-    <value>Maîtrise</value>
+    <value>Maîtrise d'arme</value>
   </data>
   <data name="SpellCategory.Temporis2Triggered" xml:space="preserve">
     <value>Sort déclenché - Temporis 2</value>
@@ -490,7 +490,7 @@
     <value>Monstre - Temporis 2</value>
   </data>
   <data name="SpellCategory.Temporis2Legendary" xml:space="preserve">
-    <value>Legendaire - Temporis 2</value>
+    <value>Légendaire - Temporis 2</value>
   </data>
   <data name="SpellCategory.Temporis2Epic" xml:space="preserve">
     <value>Epic - Temporis 2</value>
@@ -526,7 +526,7 @@
     <value>Classe</value>
   </data>
   <data name="Rune" xml:space="preserve">
-    <value>Rune #1</value>
+    <value>Rune</value>
   </data>
   <data name="QuestObjectiveType.Unknown" xml:space="preserve">
     <value>QuestObjectiveType #1 inconnu (#2)</value>
@@ -543,19 +543,19 @@
   <data name="LastMeal.None" xml:space="preserve">
     <value>Aucun</value>
   </data>
-  <data name="Infinity" xml:space="preserve">
+  <data name="ShortInfinity" xml:space="preserve">
     <value>inf.</value>
   </data>
   <data name="Infertile" xml:space="preserve">
     <value>Stérile</value>
   </data>
-  <data name="GuildStructure.None" xml:space="preserve">
-    <value>Structure inconnu</value>
+  <data name="GuildProperty.None" xml:space="preserve">
+    <value>Aucune</value>
   </data>
-  <data name="GuildStructure.House" xml:space="preserve">
+  <data name="GuildProperty.House" xml:space="preserve">
     <value>Maison</value>
   </data>
-  <data name="GuildStructure.Enclosure" xml:space="preserve">
+  <data name="GuildProperty.Paddock" xml:space="preserve">
     <value>Enclos</value>
   </data>
   <data name="GiveItemTarget.TargetCheckTarget" xml:space="preserve">
@@ -664,7 +664,7 @@
     <value>Croix diagonale</value>
   </data>
   <data name="EffectArea.10" xml:space="preserve">
-    <value>Cone</value>
+    <value>Cône</value>
   </data>
   <data name="EffectArea.1" xml:space="preserve">
     <value>Croix</value>
@@ -673,7 +673,7 @@
     <value>Effect #1 inconnu (#2)</value>
   </data>
   <data name="Effect.Turn" xml:space="preserve">
-    <value>#1 tour(s)</value>
+    <value>1# tour(s)</value>
   </data>
   <data name="Effect.Probability" xml:space="preserve">
     <value>Dans #1% des cas</value>
@@ -895,7 +895,7 @@
     <value>Etre équipé de l'objet #1</value>
   </data>
   <data name="Criterion.Item.Equiped.Quantity" xml:space="preserve">
-    <value>Avoir #2 fois l'objet #1 équipé</value>
+    <value>Avoir l'objet #1 équipé #2 fois</value>
   </data>
   <data name="Criterion.Item.Inferior" xml:space="preserve">
     <value>Ne pas posséder l'objet #1</value>
@@ -907,7 +907,7 @@
     <value>Ne pas être équipé de l'objet #1</value>
   </data>
   <data name="Criterion.Item.NotEquiped.Quantity" xml:space="preserve">
-    <value>Ne pas avoir l'objet #1 équipé #2 fois</value>
+    <value>Ne pas être équipé de l'objet #1 #2 fois</value>
   </data>
   <data name="Criterion.Item.Superior" xml:space="preserve">
     <value>Posséder l'objet #1</value>
@@ -1003,16 +1003,16 @@
     <value>Etre #1</value>
   </data>
   <data name="Criterion.MaxEnergyPoints.Different" xml:space="preserve">
-    <value>Points d'énergie maximum ≠ #1</value>
+    <value>Points d'énergie max ≠ #1</value>
   </data>
   <data name="Criterion.MaxEnergyPoints.Equal" xml:space="preserve">
-    <value>Points d'énergie maximum = #1</value>
+    <value>Points d'énergie max = #1</value>
   </data>
   <data name="Criterion.MaxEnergyPoints.Inferior" xml:space="preserve">
-    <value>Points d'énergie maximum &lt; #1</value>
+    <value>Points d'énergie max &lt; #1</value>
   </data>
   <data name="Criterion.MaxEnergyPoints.Superior" xml:space="preserve">
-    <value>Points d'énergie maximum &gt; #1</value>
+    <value>Points d'énergie max &gt; #1</value>
   </data>
   <data name="Criterion.Minute.Different" xml:space="preserve">
     <value>Minute ≠ #1</value>

@@ -18,6 +18,11 @@ public sealed class ApiConfig
     public LangType Type { get; init; }
 
     /// <summary>
+    /// Gets the language of lang from which the base data is loaded, only the translations will be loaded from the others.
+    /// </summary>
+    public LangLanguage BaseLanguage { get; init; }
+
+    /// <summary>
     /// Gets the invitation URL of the support Discord guild.
     /// </summary>
     public string DiscordInviteUrl { get; init; }

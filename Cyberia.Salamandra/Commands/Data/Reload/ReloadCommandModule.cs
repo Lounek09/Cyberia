@@ -13,13 +13,13 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
 public sealed class ReloadCommandModule
 {
-    [Command("reload"), Description("[Owner] Recharge les données de Salamandra")]
+    [Command("reload"), Description("[Owner] Reload the API data")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("type"), Description("Type des langs à load, si vide utilise la donnée stocké dans la config")]
+        [Parameter("type"), Description("The type of langs to load; if empty, use the value in the config")]
         LangType? type = null)
     {
         await ctx.DeferResponseAsync();

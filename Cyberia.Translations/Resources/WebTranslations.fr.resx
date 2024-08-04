@@ -122,7 +122,7 @@
     <value>est un fansite non affilié à</value>
   </data>
   <data name="Layout.DevelopedBy" xml:space="preserve">
-    <value>Développé par #1</value>
+    <value>Développé par </value>
   </data>
   <data name="Page.Quests.Title" xml:space="preserve">
     <value>Quêtes</value>
@@ -147,7 +147,7 @@
 &lt;p&gt;Salamandra peut conserver des informations dans un mécanisme de cache interne pendant un certain temps.&lt;br&gt;
 Après cette période, les informations mises en cache seront supprimées et ne seront réajoutées qu'en cas de besoin.&lt;/p&gt;
 &lt;h3&gt;5. Question et préoccupations&lt;/h3&gt;
-&lt;p&gt;Si vous avez des questions et/ou des préoccupations concernant les données stockées, veuillez me contacter sur Discord à Lounek#3562.&lt;/p&gt;
+&lt;p&gt;Si vous avez des questions et/ou des préoccupations concernant les données stockées, veuillez me contacter sur Discord à lounek.&lt;/p&gt;
 &lt;hr&gt;
 &lt;small&gt;Remarque : *Nous nous réservons le droit de modifier ces informations sans en avertir nos utilisateurs.*&lt;/small&gt;</value>
   </data>

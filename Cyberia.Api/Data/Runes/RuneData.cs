@@ -32,7 +32,7 @@ public sealed class RuneData : IDofusData<int>
 
     public string GetFullName()
     {
-        return Translation.Format(ApiTranslations.Rune, Name);
+        return $"{ApiTranslations.Rune} {Name}";
     }
 
     public int GetPower(RuneType type)

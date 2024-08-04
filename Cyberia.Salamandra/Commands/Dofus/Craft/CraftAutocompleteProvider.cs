@@ -11,10 +11,10 @@ public sealed class CraftAutocompleteProvider : AutoCompleteProvider
         return DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(ctx.UserInput)
            .Take(Constant.MaxChoice)
            .ToDictionary(x =>
-           {
-               var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id);
-               return $"{itemName.WithMaxLength(90)} ({x.Id})";
-           },
-           x => (object)x.Id.ToString());
+               {
+                   var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id);
+                   return $"{itemName.WithMaxLength(90)} ({x.Id})";
+               },
+               x => (object)x.Id.ToString());
     }
 }

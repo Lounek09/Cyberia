@@ -11,16 +11,16 @@ public sealed class KnowledgeBookArticleData : IDofusData<int>
     public int KnowledgeBookCatagoryId { get; init; }
 
     [JsonPropertyName("n")]
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     [JsonPropertyName("o")]
     public int Order { get; init; }
 
     [JsonPropertyName("a")]
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     [JsonPropertyName("k")]
-    public List<string> KeyWords { get; init; }
+    public List<LocalizedString> KeyWords { get; init; }
 
     [JsonPropertyName("i")]
     public int Index { get; init; }
@@ -31,8 +31,8 @@ public sealed class KnowledgeBookArticleData : IDofusData<int>
     [JsonConstructor]
     internal KnowledgeBookArticleData()
     {
-        Name = string.Empty;
-        Description = string.Empty;
+        Name = LocalizedString.Empty;
+        Description = LocalizedString.Empty;
         KeyWords = [];
     }
 

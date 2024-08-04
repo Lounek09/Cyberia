@@ -49,7 +49,7 @@ public sealed class MapsRepository : IDofusRepository
 
     public IEnumerable<MapData> GetMapsDataByCoordinate(int xCoord, int yCoord)
     {
-        return Maps.Values.Where(x => x.XCoord == xCoord && x.YCoord == yCoord);
+        return Maps.Values.Where(x => x.X == xCoord && x.Y == yCoord);
     }
 
     public IEnumerable<MapData> GetMapsDataByMapAreaId(int id)
@@ -91,7 +91,7 @@ public sealed class MapsRepository : IDofusRepository
         {
             return names.All(y =>
             {
-                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
@@ -119,7 +119,7 @@ public sealed class MapsRepository : IDofusRepository
         {
             return names.All(y =>
             {
-                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
@@ -130,6 +130,6 @@ public sealed class MapsRepository : IDofusRepository
 
         return mapSubAreaData is null
             ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : mapSubAreaData.Name.TrimStart('/');
+            : mapSubAreaData.Name.ToString().TrimStart('/');
     }
 }

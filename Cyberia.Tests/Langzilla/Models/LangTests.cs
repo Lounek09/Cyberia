@@ -13,7 +13,7 @@ public sealed class LangTests
     [TestInitialize]
     public void Setup()
     {
-        _lang = new("ranks", 1178, LangType.Official, LangLanguage.FR);
+        _lang = new("ranks", 1178, LangType.Official, LangLanguage.fr);
 
         LangsWatcher.Initialize();
         LangsWatcher.HttpRetryPolicy = SharedData.HttpRetryPolicy;
