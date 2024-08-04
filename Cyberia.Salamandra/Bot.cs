@@ -24,21 +24,19 @@ public static class Bot
 
         Config = config;
 
-        Client = DiscordClientBuilder.CreateDefault(Config.Token, DiscordIntents.Guilds | DiscordIntents.GuildMessages)
+        Client = DiscordClientBuilder.CreateDefault(Config.Token, DiscordIntents.Guilds)
             .ConfigureLogging(logger => logger.AddSerilog(Log.Logger))
-            .ConfigureGatewayClient(config =>
-            {
-                config.GatewayCompressionLevel = GatewayCompressionLevel.Stream;
-                config.LogUnknownAuditlogs = false;
-                config.LogUnknownEvents = false;
-            })
             .ConfigureEventHandlers(eventHandler =>
             {
                 eventHandler.HandleGuildDownloadCompleted(ClientManager.OnGuildDownloadCompleted);
                 eventHandler.HandleGuildCreated(GuildManager.OnGuildCreated);
                 eventHandler.HandleGuildDeleted(GuildManager.OnGuildDeleted);
-                eventHandler.HandleMessageCreated(MessageManager.OnMessageCreated);
                 eventHandler.HandleComponentInteractionCreated(InteractionManager.OnComponentInteractionCreated);
+            })
+            .ConfigureExtraFeatures(config =>
+            {
+                config.LogUnknownAuditlogs = false;
+                config.LogUnknownEvents = false;
             })
             .Build();
 
@@ -59,7 +57,7 @@ public static class Bot
 
     public static async Task LaunchAsync()
     {
-        var activity = new DiscordActivity("Dofus Retro", DiscordActivityType.Playing);
+        DiscordActivity activity = new("Dofus Retro", DiscordActivityType.Playing);
         await Client.ConnectAsync(activity);
     }
 }

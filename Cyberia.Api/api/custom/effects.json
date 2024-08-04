@@ -506,6 +506,20 @@
     {
       "id": 2150,
       "d": "Affiche les effets de #3"
+    },
+    {
+      "id": 2153,
+      "d": "Téléporte les membres du groupe",
+      "c": 0,
+      "o": "",
+      "t": true
+    },
+    {
+      "id": 2154,
+      "d": "Verrouillé au compte jusqu'au : #1",
+      "c": 0,
+      "o": "/",
+      "t": true
     }
   ]
 }

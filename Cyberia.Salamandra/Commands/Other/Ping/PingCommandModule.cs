@@ -15,6 +15,8 @@ public sealed class PingCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.RespondAsync($"Pong... {ctx.Client.Ping}ms !", true);
+        var latency = ctx.Client.GetConnectionLatency(ctx.Channel.Id);
+
+        await ctx.RespondAsync($"Pong... {latency.TotalMilliseconds}ms !", true);
     }
 }

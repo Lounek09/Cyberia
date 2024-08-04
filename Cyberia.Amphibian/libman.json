@@ -1,19 +1,13 @@
 {
   "version": "1.0",
-  "defaultProvider": "unpkg",
+  "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "htmx.org@2.0.0",
+      "library": "htmx@2.0.1",
       "destination": "wwwroot/lib/htmx/",
       "files": [
-        "dist/htmx.min.js"
-      ]
-    },
-    {
-      "library": "htmx-ext-head-support@2.0.0",
-      "destination": "wwwroot/lib/htmx/",
-      "files": [
-        "head-support.js"
+        "htmx.min.js",
+        "ext/head-support.min.js"
       ]
     }
   ]
