@@ -45,9 +45,9 @@ public static class ExtendDiscordEmbedBuilder
 
         foreach (var row in rows)
         {
-            if (row.Length > Constant.MaxEmbedFieldSize)
+            if (row.Length > Constant.MaxEmbedFieldContentSize)
             {
-                throw new ArgumentException($"One row exceeds {Constant.MaxEmbedFieldSize} characters and embed field value cannot exceed this length.");
+                throw new ArgumentException($"One row exceeds {Constant.MaxEmbedFieldContentSize} characters and embed field value cannot exceed this length.");
             }
 
             if (builder.Length + row.Length > 1024)

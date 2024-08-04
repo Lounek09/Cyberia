@@ -48,7 +48,7 @@ public static class CytrusManager
              {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
              """;
 
-        if (mainContent.Length + diff.Length > 2000)
+        if (mainContent.Length + diff.Length > Constant.MaxMessageSize)
         {
             using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
             await channel.SendMessageSafeAsync(messageBuilder.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
@@ -68,7 +68,7 @@ public static class CytrusManager
 
         var content = Formatter.BlockCode(args.Diff, "json");
 
-        if (content.Length > 2000)
+        if (content.Length > Constant.MaxMessageSize)
         {
             using MemoryStream stream = new(Encoding.UTF8.GetBytes(content));
             await channel.SendMessageAsync(new DiscordMessageBuilder().AddFile("cytrus_diff.json", stream));

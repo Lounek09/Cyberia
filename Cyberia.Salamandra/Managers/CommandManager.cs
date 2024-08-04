@@ -100,7 +100,7 @@ public static class CommandManager
             An error occurred when {Formatter.Sanitize(ctx.User.Username)} ({ctx.User.Mention}) used the {Formatter.Bold(commandName)} command.
             {(commandArgs.Length > 0 ? $"\n{Formatter.Bold("Arguments :")}\n{commandArgs}\n" : string.Empty)}
             {Formatter.Bold($"{args.Exception.GetType().Name} :")}
-            {Formatter.BlockCode($"{args.Exception.Message}\n{args.Exception.StackTrace}".WithMaxLength(3000))}
+            {Formatter.BlockCode($"{args.Exception.Message}\n{args.Exception.StackTrace}".WithMaxLength(Constant.MaxEmbedDescriptionSize - 500))}
             """,
             Color = DiscordColor.Red
         };
