@@ -13,12 +13,10 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
     public const string PacketHeader = "PS";
     public const int PacketVersion = 2;
 
-    private readonly string _search;
-
     public PaginatedSpellMessageBuilder(List<SpellData> spellsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Spells, BotTranslations.Embed_Spell_Author, BotTranslations.Embed_PaginatedSpell_Title, spellsData, selectedPageIndex)
+        : base(EmbedCategory.Spells, BotTranslations.Embed_Spell_Author, BotTranslations.Embed_PaginatedSpell_Title, spellsData, search, selectedPageIndex)
     {
-        _search = search;
+
     }
 
     public static PaginatedSpellMessageBuilder? Create(int version, string[] parameters)

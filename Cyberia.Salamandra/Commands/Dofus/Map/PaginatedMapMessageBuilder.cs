@@ -14,13 +14,11 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
     public const int PacketVersion = 2;
 
     private readonly MapSearchCategory _searchCategory;
-    private readonly string _search;
 
     public PaginatedMapMessageBuilder(List<MapData> mapsData, MapSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Map, BotTranslations.Embed_Map_Author, BotTranslations.Embed_PaginatedMap_Title, mapsData.OrderBy(x => x.Id).ToList(), selectedPageIndex)
+        : base(EmbedCategory.Map, BotTranslations.Embed_Map_Author, BotTranslations.Embed_PaginatedMap_Title, mapsData.OrderBy(x => x.Id).ToList(), search, selectedPageIndex)
     {
         _searchCategory = searchCategory;
-        _search = search;
     }
 
     public static PaginatedMapMessageBuilder? Create(int version, string[] parameters)

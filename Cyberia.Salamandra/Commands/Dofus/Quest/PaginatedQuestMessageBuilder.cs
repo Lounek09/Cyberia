@@ -13,12 +13,10 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
     public const string PacketHeader = "PQ";
     public const int PacketVersion = 2;
 
-    private readonly string _search;
-
     public PaginatedQuestMessageBuilder(List<QuestData> questsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Quests, BotTranslations.Embed_Quest_Author, BotTranslations.Embed_PaginatedQuest_Title, questsData, selectedPageIndex)
+        : base(EmbedCategory.Quests, BotTranslations.Embed_Quest_Author, BotTranslations.Embed_PaginatedQuest_Title, questsData, search, selectedPageIndex)
     {
-        _search = search;
+
     }
 
     public static PaginatedQuestMessageBuilder? Create(int version, string[] parameters)

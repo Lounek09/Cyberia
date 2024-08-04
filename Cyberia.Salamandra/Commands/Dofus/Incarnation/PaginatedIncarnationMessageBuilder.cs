@@ -13,12 +13,9 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
     public const string PacketHeader = "PINCA";
     public const int PacketVersion = 2;
 
-    private readonly string _search;
-
     public PaginatedIncarnationMessageBuilder(List<IncarnationData> incarnationsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author, BotTranslations.Embed_PaginatedIncarnation_Title, incarnationsData, selectedPageIndex)
+        : base(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author, BotTranslations.Embed_PaginatedIncarnation_Title, incarnationsData, search, selectedPageIndex)
     {
-        _search = search;
     }
 
     public static PaginatedIncarnationMessageBuilder? Create(int version, string[] parameters)

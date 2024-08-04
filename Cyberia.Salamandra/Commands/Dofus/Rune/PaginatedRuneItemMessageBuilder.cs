@@ -13,13 +13,11 @@ public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<It
     public const string PacketHeader = "PR";
     public const int PacketVersion = 2;
 
-    private readonly string _search;
     private readonly int _quantity;
 
     public PaginatedRuneItemMessageBuilder(List<ItemData> itemsData, string search, int quantity = 1, int selectedPageIndex = 0)
-        : base(EmbedCategory.Inventory, BotTranslations.Embed_Item_Author, BotTranslations.Embed_PaginatedItem_Title, itemsData, selectedPageIndex)
+        : base(EmbedCategory.Inventory, BotTranslations.Embed_Item_Author, BotTranslations.Embed_PaginatedItem_Title, itemsData, search, selectedPageIndex)
     {
-        _search = search;
         _quantity = quantity;
     }
 

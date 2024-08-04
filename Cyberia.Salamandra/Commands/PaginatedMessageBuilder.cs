@@ -13,15 +13,17 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
     private readonly string _authorText;
     private readonly string _title;
 
+    protected readonly string _search;
     protected readonly int _selectedPageIndex;
     protected readonly int _totalPage;
     protected readonly IReadOnlyList<T> _data;
 
-    public PaginatedMessageBuilder(EmbedCategory category, string authorText, string title, List<T> data, int selectedPageIndex)
+    public PaginatedMessageBuilder(EmbedCategory category, string authorText, string title, List<T> data, string search, int selectedPageIndex)
     {
         _category = category;
         _authorText = authorText;
         _title = title;
+        _search = search;
         _selectedPageIndex = selectedPageIndex;
         _totalPage = (int)Math.Ceiling(data.Count / (double)c_rowPerPage);
 

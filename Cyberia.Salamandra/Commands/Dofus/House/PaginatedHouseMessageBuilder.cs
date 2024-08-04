@@ -14,13 +14,11 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
     public const int PacketVersion = 2;
 
     private readonly HouseSearchCategory _searchCategory;
-    private readonly string _search;
 
     public PaginatedHouseMessageBuilder(List<HouseData> housesData, HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Houses, BotTranslations.Embed_House_Author, BotTranslations.Embed_PaginatedHouse_Title, housesData, selectedPageIndex)
+        : base(EmbedCategory.Houses, BotTranslations.Embed_House_Author, BotTranslations.Embed_PaginatedHouse_Title, housesData, search, selectedPageIndex)
     {
         _searchCategory = searchCategory;
-        _search = search;
     }
 
     public static PaginatedHouseMessageBuilder? Create(int version, string[] parameters)

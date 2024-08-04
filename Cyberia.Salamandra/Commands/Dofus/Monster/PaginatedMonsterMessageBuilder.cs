@@ -13,12 +13,10 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
     public const string PacketHeader = "PM";
     public const int PacketVersion = 2;
 
-    private readonly string _search;
-
     public PaginatedMonsterMessageBuilder(List<MonsterData> monstersData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Bestiary, BotTranslations.Embed_Monster_Author, BotTranslations.Embed_PaginatedMonster_Title, monstersData, selectedPageIndex)
+        : base(EmbedCategory.Bestiary, BotTranslations.Embed_Monster_Author, BotTranslations.Embed_PaginatedMonster_Title, monstersData, search, selectedPageIndex)
     {
-        _search = search;
+
     }
 
     public static PaginatedMonsterMessageBuilder? Create(int version, string[] parameters)

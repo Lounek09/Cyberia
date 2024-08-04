@@ -13,13 +13,11 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
     public const string PacketHeader = "PC";
     public const int PacketVersion = 2;
 
-    private readonly string _search;
     private readonly int _quantity;
 
     public PaginatedCraftMessageBuilder(List<CraftData> craftsData, string search, int quantity = 1, int selectedPageIndex = 0)
-        : base(EmbedCategory.Jobs, BotTranslations.Embed_Craft_Author, BotTranslations.Embed_PaginatedCraft_Title, craftsData, selectedPageIndex)
+        : base(EmbedCategory.Jobs, BotTranslations.Embed_Craft_Author, BotTranslations.Embed_PaginatedCraft_Title, craftsData, search, selectedPageIndex)
     {
-        _search = search;
         _quantity = quantity;
     }
 

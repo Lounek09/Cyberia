@@ -13,12 +13,9 @@ public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<Ite
     public const string PacketHeader = "PIS";
     public const int PacketVersion = 2;
 
-    private readonly string _search;
-
     public PaginatedItemSetMessageBuilder(List<ItemSetData> itemSetsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Inventory, BotTranslations.Embed_ItemSet_Author, BotTranslations.Embed_PaginatedItemSet_Title, itemSetsData, selectedPageIndex)
+        : base(EmbedCategory.Inventory, BotTranslations.Embed_ItemSet_Author, BotTranslations.Embed_PaginatedItemSet_Title, itemSetsData, search, selectedPageIndex)
     {
-        _search = search;
     }
 
     public static PaginatedItemSetMessageBuilder? Create(int version, string[] parameters)

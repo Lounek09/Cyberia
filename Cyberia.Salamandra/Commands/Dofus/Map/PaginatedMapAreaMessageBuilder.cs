@@ -13,12 +13,10 @@ public sealed class PaginatedMapAreaMessageBuilder : PaginatedMessageBuilder<Map
     public const string PacketHeader = "PMA.A";
     public const int PacketVersion = 2;
 
-    private readonly string _search;
-
     public PaginatedMapAreaMessageBuilder(List<MapAreaData> mapAreasData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Map, BotTranslations.Embed_Map_Author, BotTranslations.Embed_PaginatedMapArea_Title, mapAreasData, selectedPageIndex)
+        : base(EmbedCategory.Map, BotTranslations.Embed_Map_Author, BotTranslations.Embed_PaginatedMapArea_Title, mapAreasData, search, selectedPageIndex)
     {
-        _search = search;
+
     }
 
     public static PaginatedMapAreaMessageBuilder? Create(int version, string[] parameters)
