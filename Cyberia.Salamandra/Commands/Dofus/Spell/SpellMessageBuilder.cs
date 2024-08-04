@@ -57,7 +57,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
         return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, spellId, selectedLevel);
     }
 
-    public async Task<T> GetMessageAsync<T>() where T : IDiscordMessageBuilder, new()
+    public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()
     {
         var message = new T()
             .AddEmbed(await EmbedBuilder());

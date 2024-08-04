@@ -32,6 +32,6 @@ public sealed class BreedCommandModule
             return;
         }
 
-        await ctx.RespondAsync(await new BreedMessageBuilder(breedData).GetMessageAsync<DiscordInteractionResponseBuilder>());
+        await ctx.RespondAsync(await new BreedMessageBuilder(breedData).BuildAsync<DiscordInteractionResponseBuilder>());
     }
 }

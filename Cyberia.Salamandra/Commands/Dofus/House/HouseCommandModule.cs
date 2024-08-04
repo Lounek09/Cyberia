@@ -37,7 +37,7 @@ public sealed class HouseCommandModule
             var houseData = DofusApi.Datacenter.HousesRepository.GetHouseDataById(id);
             if (houseData is not null)
             {
-                response = await new HouseMessageBuilder(houseData).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new HouseMessageBuilder(houseData).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -45,11 +45,11 @@ public sealed class HouseCommandModule
             var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(value).ToList();
             if (housesData.Count == 1)
             {
-                response = await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new HouseMessageBuilder(housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (housesData.Count > 1)
             {
-                response = await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Name, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Name, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
@@ -78,12 +78,12 @@ public sealed class HouseCommandModule
         }
         else if (housesData.Count == 1)
         {
-            await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+            await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
         }
         else
         {
             await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{x}{InteractionManager.PacketParameterSeparator}{y}")
-                .GetMessageAsync<DiscordInteractionResponseBuilder>());
+                .BuildAsync<DiscordInteractionResponseBuilder>());
         }
     }
 
@@ -119,12 +119,12 @@ public sealed class HouseCommandModule
             }
             else if (housesData.Count == 1)
             {
-                await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
             }
             else
             {
                 await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapSubArea, value)
-                    .GetMessageAsync<DiscordInteractionResponseBuilder>());
+                    .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }
@@ -161,12 +161,12 @@ public sealed class HouseCommandModule
             }
             else if (housesData.Count == 1)
             {
-                await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
             }
             else
             {
                 await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapArea, value)
-                    .GetMessageAsync<DiscordInteractionResponseBuilder>());
+                    .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }

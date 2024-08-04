@@ -33,7 +33,7 @@ public sealed class QuestCommandModule
             var questData = DofusApi.Datacenter.QuestsRepository.GetQuestDataById(id);
             if (questData is not null)
             {
-                response = await new QuestMessageBuilder(questData).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new QuestMessageBuilder(questData).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -41,11 +41,11 @@ public sealed class QuestCommandModule
             var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(value).ToList();
             if (questsData.Count == 1)
             {
-                response = await new QuestMessageBuilder(questsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new QuestMessageBuilder(questsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (questsData.Count > 1)
             {
-                response = await new PaginatedQuestMessageBuilder(questsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedQuestMessageBuilder(questsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

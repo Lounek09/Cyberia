@@ -33,7 +33,7 @@ public sealed class IncarnationCommandModule
             var incarnationData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(id);
             if (incarnationData is not null)
             {
-                response = await new IncarnationMessageBuilder(incarnationData).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new IncarnationMessageBuilder(incarnationData).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -41,11 +41,11 @@ public sealed class IncarnationCommandModule
             var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByName(value).ToList();
             if (incarnationsData.Count == 1)
             {
-                response = await new IncarnationMessageBuilder(incarnationsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new IncarnationMessageBuilder(incarnationsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (incarnationsData.Count > 1)
             {
-                response = await new PaginatedIncarnationMessageBuilder(incarnationsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedIncarnationMessageBuilder(incarnationsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

@@ -118,7 +118,7 @@ public static partial class InteractionManager
             return;
         }
 
-        response = await message.GetMessageAsync<DiscordInteractionResponseBuilder>();
+        response = await message.BuildAsync<DiscordInteractionResponseBuilder>();
         await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.UpdateMessage, response);
     }
 }

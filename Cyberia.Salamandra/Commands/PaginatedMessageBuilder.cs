@@ -37,7 +37,7 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
         _data = data.GetRange(index, count);
     }
 
-    public async Task<T2> GetMessageAsync<T2>()
+    public async Task<T2> BuildAsync<T2>()
         where T2 : IDiscordMessageBuilder, new()
     {
         var message = new T2()

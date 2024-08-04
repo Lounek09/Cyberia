@@ -39,7 +39,7 @@ public sealed class MonsterCommandModule
             var monsterData = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(id);
             if (monsterData is not null)
             {
-                response = await new MonsterMessageBuilder(monsterData).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new MonsterMessageBuilder(monsterData).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -47,11 +47,11 @@ public sealed class MonsterCommandModule
             var monstersData = DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(value).ToList();
             if (monstersData.Count == 1)
             {
-                response = await new MonsterMessageBuilder(monstersData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new MonsterMessageBuilder(monstersData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (monstersData.Count > 1)
             {
-                response = await new PaginatedMonsterMessageBuilder(monstersData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedMonsterMessageBuilder(monstersData, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

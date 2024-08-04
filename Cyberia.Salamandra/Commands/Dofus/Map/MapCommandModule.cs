@@ -34,7 +34,7 @@ public sealed class MapCommandModule
             return;
         }
 
-        await ctx.RespondAsync(await new MapMessageBuilder(mapData).GetMessageAsync<DiscordInteractionResponseBuilder>());
+        await ctx.RespondAsync(await new MapMessageBuilder(mapData).BuildAsync<DiscordInteractionResponseBuilder>());
     }
 
 
@@ -60,12 +60,12 @@ public sealed class MapCommandModule
 
         if (mapsData.Count == 1)
         {
-            await ctx.RespondAsync(await new MapMessageBuilder(mapsData[0]).GetMessageAsync<DiscordInteractionResponseBuilder>());
+            await ctx.RespondAsync(await new MapMessageBuilder(mapsData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
             return;
         }
         
         await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.Coordinate, $"{x}{InteractionManager.PacketParameterSeparator}{y}")
-            .GetMessageAsync<DiscordInteractionResponseBuilder>());
+            .BuildAsync<DiscordInteractionResponseBuilder>());
     }
 
 
@@ -101,7 +101,7 @@ public sealed class MapCommandModule
             else
             {
                 await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapSubArea, value)
-                    .GetMessageAsync<DiscordInteractionResponseBuilder>());
+                    .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }
@@ -139,7 +139,7 @@ public sealed class MapCommandModule
             else
             {
                 await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapArea, value)
-                    .GetMessageAsync<DiscordInteractionResponseBuilder>());
+                    .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }
     }

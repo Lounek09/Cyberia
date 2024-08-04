@@ -42,7 +42,7 @@ public sealed class RuneCommandModule
             var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                response = await new RuneItemMessageBuilder(itemData, quantity).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new RuneItemMessageBuilder(itemData, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -50,11 +50,11 @@ public sealed class RuneCommandModule
             var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(value).ToList();
             if (itemsData.Count == 1)
             {
-                response = await new RuneItemMessageBuilder(itemsData[0], quantity).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new RuneItemMessageBuilder(itemsData[0], quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (itemsData.Count > 1)
             {
-                response = await new PaginatedRuneItemMessageBuilder(itemsData, value, quantity).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedRuneItemMessageBuilder(itemsData, value, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

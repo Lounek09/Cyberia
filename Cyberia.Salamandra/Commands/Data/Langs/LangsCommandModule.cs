@@ -127,7 +127,7 @@ public sealed class LangsCommandModule
         [Parameter("language"), Description("The language to display")]
         LangLanguage language = LangLanguage.fr)
     {
-        await ctx.RespondAsync(await new LangsMessageBuilder(type, language).GetMessageAsync<DiscordInteractionResponseBuilder>());
+        await ctx.RespondAsync(await new LangsMessageBuilder(type, language).BuildAsync<DiscordInteractionResponseBuilder>());
     }
 
     [Command("get"), Description("Returns the requested decompiled lang")]

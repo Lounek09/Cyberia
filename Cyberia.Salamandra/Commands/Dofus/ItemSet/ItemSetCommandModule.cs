@@ -33,7 +33,7 @@ public sealed class ItemSetCommandModule
             var itemSetData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(id);
             if (itemSetData is not null)
             {
-                response = await new ItemSetMessageBuilder(itemSetData, itemSetData.Effects.Count).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new ItemSetMessageBuilder(itemSetData, itemSetData.Effects.Count).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -41,11 +41,11 @@ public sealed class ItemSetCommandModule
             var itemSetsData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(value).ToList();
             if (itemSetsData.Count == 1)
             {
-                response = await new ItemSetMessageBuilder(itemSetsData[0], itemSetsData[0].Effects.Count).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new ItemSetMessageBuilder(itemSetsData[0], itemSetsData[0].Effects.Count).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (itemSetsData.Count > 1)
             {
-                response = await new PaginatedItemSetMessageBuilder(itemSetsData, value).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedItemSetMessageBuilder(itemSetsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

@@ -36,7 +36,7 @@ public sealed class CraftCommandModule
             var craftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(id);
             if (craftData is not null)
             {
-                response = await new CraftMessageBuilder(craftData, quantity).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(craftData, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -44,11 +44,11 @@ public sealed class CraftCommandModule
             var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(value).ToList();
             if (craftsData.Count == 1)
             {
-                response = await new CraftMessageBuilder(craftsData[0], quantity).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(craftsData[0], quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (craftsData.Count > 1)
             {
-                response = await new PaginatedCraftMessageBuilder(craftsData, value, quantity).GetMessageAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedCraftMessageBuilder(craftsData, value, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
