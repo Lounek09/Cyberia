@@ -19,6 +19,7 @@ public sealed class ItemsRepository : IDofusRepository
     public FrozenDictionary<int, ItemSuperTypeData> ItemSuperTypes { get; init; }
 
     [JsonPropertyName("I.ss")]
+    [JsonInclude]
     internal IReadOnlyList<ItemSuperTypeSlotData> ItemSuperTypeSlots { get; init; }
 
     [JsonPropertyName("I.t")]
