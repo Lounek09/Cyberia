@@ -34,6 +34,7 @@ public sealed class PetFoodsData : IDofusData
     [JsonConstructor]
     internal PetFoodsData()
     {
+        Effect = new ErroredEffect(string.Empty);
         ItemsId = [];
         ItemTypesId = [];
         MonstersIdQuantities = new Dictionary<int, int>();
