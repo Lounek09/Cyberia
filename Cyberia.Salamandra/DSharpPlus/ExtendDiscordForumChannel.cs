@@ -7,6 +7,8 @@ namespace Cyberia.Salamandra.DSharpPlus;
 /// </summary>
 public static class ExtendDiscordForumChannel
 {
+    public const string ManualDiffTagName = "Manual diff";
+
     /// <summary>
     /// Gets a <see cref="DiscordForumTag"/> by its name.
     /// </summary>

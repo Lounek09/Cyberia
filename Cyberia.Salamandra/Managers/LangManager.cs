@@ -125,7 +125,7 @@ public static class LangManager
 				$"Diff of langs {Formatter.Bold(currentType)} from {currentLastChange:yyyy-mm-dd HH:mmzzz} " +
 				$"and {Formatter.Bold(modelType)} from {modelLastChange:yyyy-mm-dd HH:mmzzz} in {Formatter.Bold(currentLanguage)}"));
 
-		var tag = forum.GetDiscordForumTagByName("Diff manuel"); //TODO: Change tag to a constant and translate it to english after the culture PR
+		var tag = forum.GetDiscordForumTagByName(ExtendDiscordForumChannel.ManualDiffTagName);
 		if (tag is not null)
 		{
 			postBuilder.AddTag(tag);
