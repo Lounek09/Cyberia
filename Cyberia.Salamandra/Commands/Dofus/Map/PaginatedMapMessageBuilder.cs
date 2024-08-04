@@ -11,7 +11,7 @@ namespace Cyberia.Salamandra.Commands.Dofus.Map;
 public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData>
 {
     public const string PacketHeader = "PMA";
-    public const int PacketVersion = 1;
+    public const int PacketVersion = 2;
 
     private readonly MapSearchCategory _searchCategory;
     private readonly string _search;
@@ -68,9 +68,9 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
         return null;
     }
 
-    public static string GetPacket(MapSearchCategory searchCategory, string search, int selectedPageIndex = 0, PaginatedAction action = PaginatedAction.None)
+    public static string GetPacket(MapSearchCategory searchCategory, string search, int selectedPageIndex = 0)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, (int)action, selectedPageIndex, (int)searchCategory, search);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, selectedPageIndex, (int)searchCategory, search);
     }
 
     protected override IEnumerable<string> GetContent()

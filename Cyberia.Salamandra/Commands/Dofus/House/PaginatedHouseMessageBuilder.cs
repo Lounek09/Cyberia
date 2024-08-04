@@ -11,7 +11,7 @@ namespace Cyberia.Salamandra.Commands.Dofus.House;
 public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<HouseData>
 {
     public const string PacketHeader = "PH";
-    public const int PacketVersion = 1;
+    public const int PacketVersion = 2;
 
     private readonly HouseSearchCategory _searchCategory;
     private readonly string _search;
@@ -72,9 +72,9 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
         return null;
     }
 
-    public static string GetPacket(HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0, PaginatedAction action = PaginatedAction.None)
+    public static string GetPacket(HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, (int)action, selectedPageIndex, (int)searchCategory, search);
+        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, selectedPageIndex, (int)searchCategory, search);
     }
 
     protected override IEnumerable<string> GetContent()

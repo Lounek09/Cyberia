@@ -5,13 +5,6 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands;
 
-public enum PaginatedAction
-{
-    None,
-    Previous,
-    Next
-}
-
 public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
 {
     private const int c_rowPerPage = 25;
