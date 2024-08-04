@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Langzilla.Enums;
+using Cyberia.Salamandra.DSharpPlus;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -106,7 +107,7 @@ public static class CommandManager
         };
 
 #if DEBUG
-        await ctx.Channel.SendMessageAsync(embed);
+        await ctx.Channel.SendMessageSafeAsync(embed);
 #else
         await MessageManager.SendErrorMessage(embed);
 #endif

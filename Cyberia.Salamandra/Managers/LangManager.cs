@@ -145,12 +145,12 @@ public static class LangManager
         var diffFilePath = lang.DiffFilePath;
         if (!File.Exists(diffFilePath))
         {
-            await thread.SendMessageAsync(message);
+            await thread.SendMessageSafeAsync(message);
             return;
         }
 
         using var fileStream = File.OpenRead(diffFilePath);
-        await thread.SendMessageAsync(message.AddFile($"{lang.Name}.as", fileStream));
+        await thread.SendMessageSafeAsync(message.AddFile($"{lang.Name}.as", fileStream));
     }
 
     private static async Task SendManualDiffLangMessageAsync(this DiscordThreadChannel thread, Lang currentLang, Lang? modelLang)
@@ -164,11 +164,11 @@ public static class LangManager
         var diff = currentLang.Diff(modelLang);
         if (string.IsNullOrEmpty(diff))
         {
-            await thread.SendMessageAsync(message);
+            await thread.SendMessageSafeAsync(message);
             return;
         }
 
         using MemoryStream memoryStream = new(Encoding.UTF8.GetBytes(diff));
-        await thread.SendMessageAsync(message.AddFile($"{currentLang.Name}.as", memoryStream));
+        await thread.SendMessageSafeAsync(message.AddFile($"{currentLang.Name}.as", memoryStream));
     }
 }

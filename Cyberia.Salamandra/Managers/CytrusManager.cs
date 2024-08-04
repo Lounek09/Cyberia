@@ -71,11 +71,11 @@ public static class CytrusManager
         if (content.Length > Constant.MaxMessageSize)
         {
             using MemoryStream stream = new(Encoding.UTF8.GetBytes(content));
-            await channel.SendMessageAsync(new DiscordMessageBuilder().AddFile("cytrus_diff.json", stream));
+            await channel.SendMessageSafeAsync("cytrus_diff.json", stream);
             return;
         }
 
-        await channel.SendMessageAsync(Formatter.BlockCode(args.Diff, "json"));
+        await channel.SendMessageSafeAsync(Formatter.BlockCode(args.Diff, "json"));
     }
 
     private static async Task SendCytrusManifestDiffAsync(NewCytrusDetectedEventArgs args)
