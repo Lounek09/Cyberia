@@ -11,7 +11,7 @@ using Cyberia.Salamandra.Commands.Dofus.Craft;
 using Cyberia.Salamandra.Commands.Dofus.Incarnation;
 using Cyberia.Salamandra.Commands.Dofus.ItemSet;
 using Cyberia.Salamandra.Commands.Dofus.Rune;
-using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.DSharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 

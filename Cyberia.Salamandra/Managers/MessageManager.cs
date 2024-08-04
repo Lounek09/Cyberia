@@ -1,4 +1,4 @@
-﻿using Cyberia.Salamandra.DsharpPlus;
+﻿using Cyberia.Salamandra.DSharpPlus;
 
 using DSharpPlus.Entities;
 

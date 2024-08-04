@@ -1,6 +1,6 @@
 ﻿using DSharpPlus.Commands.Processors.SlashCommands;
 
-namespace Cyberia.Salamandra.DsharpPlus;
+namespace Cyberia.Salamandra.DSharpPlus;
 
 /// <summary>
 /// Provides extension methods for <see cref="AutoCompleteContext"/>.

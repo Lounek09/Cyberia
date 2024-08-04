@@ -3,7 +3,7 @@ using Cyberia.Api.Data;
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.Items;
 using Cyberia.Salamandra.Commands.Dofus.Item;
-using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.DSharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 

@@ -1,7 +1,7 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Cytrusaurus.EventArgs;
 using Cyberia.Cytrusaurus.Models;
-using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.DSharpPlus;
 
 using DSharpPlus;
 using DSharpPlus.Entities;

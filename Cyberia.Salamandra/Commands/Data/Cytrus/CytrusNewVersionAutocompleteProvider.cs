@@ -1,5 +1,5 @@
 ﻿using Cyberia.Cytrusaurus;
-using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.DSharpPlus;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 

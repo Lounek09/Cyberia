@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Cytrusaurus;
-using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.DSharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 

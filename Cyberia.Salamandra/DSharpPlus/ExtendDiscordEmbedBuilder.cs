@@ -12,7 +12,7 @@ using DSharpPlus.Entities;
 
 using System.Text;
 
-namespace Cyberia.Salamandra.DsharpPlus;
+namespace Cyberia.Salamandra.DSharpPlus;
 
 /// <summary>
 /// Provides extension methods for <see cref="DiscordEmbedBuilder"/>.

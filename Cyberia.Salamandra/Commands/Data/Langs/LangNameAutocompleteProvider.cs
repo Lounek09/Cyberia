@@ -1,6 +1,6 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
-using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.DSharpPlus;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 

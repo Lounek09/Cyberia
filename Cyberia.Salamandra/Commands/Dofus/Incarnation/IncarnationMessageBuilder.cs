@@ -6,7 +6,7 @@ using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Commands.Dofus.Spell;
-using Cyberia.Salamandra.DsharpPlus;
+using Cyberia.Salamandra.DSharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
