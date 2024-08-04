@@ -1,15 +1,13 @@
 ﻿using Cyberia.Api;
 
-using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Trees;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 
-public sealed class BreedChoiceProvider : IChoiceProvider
+public sealed class BreedChoiceProvider : ChoiceProvider
 {
-    public ValueTask<IReadOnlyDictionary<string, object>> ProvideAsync(CommandParameter parameter)
+    protected override IReadOnlyDictionary<string, object> InternalProvide(CommandParameter parameter)
     {
-        return ValueTask.FromResult<IReadOnlyDictionary<string, object>>(
-            DofusApi.Datacenter.BreedsRepository.Breeds.Values.ToDictionary(x => x.Name.ToString(), x => (object)x.Id));
+        return DofusApi.Datacenter.BreedsRepository.Breeds.Values.ToDictionary(x => x.Name.ToString(), x => (object)x.Id);
     }
 }
