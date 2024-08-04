@@ -86,6 +86,8 @@ public static partial class InteractionManager
             return;
         }
 
+        CommandManager.SetCulture();
+
         var response = new DiscordInteractionResponseBuilder().AsEphemeral();
 
         var decomposedPacket = (SelectComponentPacketRegex().IsMatch(args.Id) ? args.Values[0] : args.Id)
