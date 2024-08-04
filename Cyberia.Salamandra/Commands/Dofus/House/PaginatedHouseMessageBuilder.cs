@@ -26,39 +26,39 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
     public static PaginatedHouseMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 3 &&
-            int.TryParse(parameters[1], out var selectedPageIndex) &&
-            Enum.TryParse(parameters[2], true, out HouseSearchCategory searchCategory))
+            parameters.Length > 2 &&
+            int.TryParse(parameters[0], out var selectedPageIndex) &&
+            Enum.TryParse(parameters[1], true, out HouseSearchCategory searchCategory))
         {
             List<HouseData> housesData = [];
             var search = string.Empty;
             switch (searchCategory)
             {
                 case HouseSearchCategory.Name:
-                    housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(parameters[3]).ToList();
-                    search = parameters[3];
+                    housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(parameters[2]).ToList();
+                    search = parameters[2];
                     break;
                 case HouseSearchCategory.Coordinate:
-                    if (parameters.Length > 4 &&
-                        int.TryParse(parameters[3], out var xCoord) &&
-                        int.TryParse(parameters[4], out var yCoord))
+                    if (parameters.Length > 3 &&
+                        int.TryParse(parameters[2], out var x) &&
+                        int.TryParse(parameters[3], out var y))
                     {
-                        housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(xCoord, yCoord).ToList();
-                        search = $"{parameters[3]}{InteractionManager.PacketParameterSeparator}{parameters[4]}";
+                        housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(x, y).ToList();
+                        search = $"{parameters[2]}{InteractionManager.PacketParameterSeparator}{parameters[3]}";
                     }
                     break;
                 case HouseSearchCategory.MapSubArea:
-                    if (int.TryParse(parameters[3], out var mapSubAreaId))
+                    if (int.TryParse(parameters[2], out var mapSubAreaId))
                     {
                         housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByMapSubAreaId(mapSubAreaId).ToList();
-                        search = parameters[3];
+                        search = parameters[2];
                     }
                     break;
                 case HouseSearchCategory.MapArea:
-                    if (int.TryParse(parameters[3], out var mapAreaId))
+                    if (int.TryParse(parameters[2], out var mapAreaId))
                     {
                         housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByMapAreaId(mapAreaId).ToList();
-                        search = parameters[3];
+                        search = parameters[2];
                     }
                     break;
             }

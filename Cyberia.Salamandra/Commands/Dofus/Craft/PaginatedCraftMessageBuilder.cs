@@ -26,14 +26,14 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
     public static PaginatedCraftMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 3 &&
-            int.TryParse(parameters[1], out var selectedPageIndex) &&
-            int.TryParse(parameters[3], out var quantity))
+            parameters.Length > 2 &&
+            int.TryParse(parameters[0], out var selectedPageIndex) &&
+            int.TryParse(parameters[2], out var quantity))
         {
-            var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(parameters[2]).ToList();
+            var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(parameters[1]).ToList();
             if (craftsData.Count > 0)
             {
-                return new(craftsData, parameters[2], quantity, selectedPageIndex);
+                return new(craftsData, parameters[1], quantity, selectedPageIndex);
             }
         }
 

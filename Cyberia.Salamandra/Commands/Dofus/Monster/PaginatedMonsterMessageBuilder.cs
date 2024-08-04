@@ -24,13 +24,13 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
     public static PaginatedMonsterMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 2 &&
-            int.TryParse(parameters[1], out var selectedPageIndex))
+            parameters.Length > 1 &&
+            int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var monstersData = DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(parameters[2]).ToList();
+            var monstersData = DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(parameters[1]).ToList();
             if (monstersData.Count > 0)
             {
-                return new PaginatedMonsterMessageBuilder(monstersData, parameters[2], selectedPageIndex);
+                return new PaginatedMonsterMessageBuilder(monstersData, parameters[1], selectedPageIndex);
             }
         }
 

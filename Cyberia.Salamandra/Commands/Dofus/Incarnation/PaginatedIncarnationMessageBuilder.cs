@@ -24,13 +24,13 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
     public static PaginatedIncarnationMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 2 &&
-            int.TryParse(parameters[1], out var selectedPageIndex))
+            parameters.Length > 1 &&
+            int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByName(parameters[2]).ToList();
+            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByName(parameters[1]).ToList();
             if (incarnationsData.Count > 0)
             {
-                return new(incarnationsData, parameters[2], selectedPageIndex);
+                return new(incarnationsData, parameters[1], selectedPageIndex);
             }
         }
 

@@ -24,13 +24,13 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
     public static PaginatedSpellMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 2 &&
-            int.TryParse(parameters[1], out var selectedPageIndex))
+            parameters.Length > 1 &&
+            int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(parameters[2]).ToList();
+            var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(parameters[1]).ToList();
             if (spellsData.Count > 0)
             {
-                return new(spellsData, parameters[2], selectedPageIndex);
+                return new(spellsData, parameters[1], selectedPageIndex);
             }
         }
 

@@ -26,35 +26,35 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
     public static PaginatedMapMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 3 &&
-            int.TryParse(parameters[1], out var selectedPageIndex) &&
-            Enum.TryParse(parameters[2], true, out MapSearchCategory searchCategory))
+            parameters.Length > 2 &&
+            int.TryParse(parameters[0], out var selectedPageIndex) &&
+            Enum.TryParse(parameters[1], true, out MapSearchCategory searchCategory))
         {
             List<MapData> mapsData = [];
             var search = string.Empty;
             switch (searchCategory)
             {
                 case MapSearchCategory.Coordinate:
-                    if (parameters.Length > 4 &&
-                        int.TryParse(parameters[3], out var x) &&
-                        int.TryParse(parameters[4], out var y))
+                    if (parameters.Length > 3 &&
+                        int.TryParse(parameters[2], out var x) &&
+                        int.TryParse(parameters[3], out var y))
                     {
                         mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
-                        search = $"{parameters[3]}{InteractionManager.PacketParameterSeparator}{parameters[4]}";
+                        search = $"{parameters[2]}{InteractionManager.PacketParameterSeparator}{parameters[3]}";
                     }
                     break;
                 case MapSearchCategory.MapSubArea:
-                    if (int.TryParse(parameters[3], out var mapSubAreaId))
+                    if (int.TryParse(parameters[2], out var mapSubAreaId))
                     {
                         mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByMapSubAreaId(mapSubAreaId).ToList();
-                        search = parameters[3];
+                        search = parameters[2];
                     }
                     break;
                 case MapSearchCategory.MapArea:
-                    if (int.TryParse(parameters[3], out var mapAreaId))
+                    if (int.TryParse(parameters[2], out var mapAreaId))
                     {
                         mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByMapAreaId(mapAreaId).ToList();
-                        search = parameters[3];
+                        search = parameters[2];
                     }
                     break;
             }

@@ -26,14 +26,14 @@ public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<It
     public static PaginatedRuneItemMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 3 &&
-            int.TryParse(parameters[1], out var selectedPageIndex) &&
-            int.TryParse(parameters[3], out var quantity))
+            parameters.Length > 2 &&
+            int.TryParse(parameters[0], out var selectedPageIndex) &&
+            int.TryParse(parameters[2], out var quantity))
         {
-            var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(parameters[2]).ToList();
+            var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(parameters[1]).ToList();
             if (itemsData.Count > 0)
             {
-                return new(itemsData, parameters[2], quantity, selectedPageIndex);
+                return new(itemsData, parameters[1], quantity, selectedPageIndex);
             }
         }
 

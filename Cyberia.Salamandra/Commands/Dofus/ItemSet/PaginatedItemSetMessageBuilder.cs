@@ -24,13 +24,13 @@ public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<Ite
     public static PaginatedItemSetMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 2 &&
-            int.TryParse(parameters[1], out var selectedPageIndex))
+            parameters.Length > 1 &&
+            int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var itemSetsData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(parameters[2]).ToList();
+            var itemSetsData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(parameters[1]).ToList();
             if (itemSetsData.Count > 0)
             {
-                return new(itemSetsData, parameters[2], selectedPageIndex);
+                return new(itemSetsData, parameters[1], selectedPageIndex);
             }
         }
 

@@ -24,13 +24,13 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
     public static PaginatedQuestMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 2 &&
-            int.TryParse(parameters[1], out var selectedPageIndex))
+            parameters.Length > 1 &&
+            int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(parameters[2]).ToList();
+            var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(parameters[1]).ToList();
             if (questsData.Count > 0)
             {
-                return new(questsData, parameters[2], selectedPageIndex);
+                return new(questsData, parameters[1], selectedPageIndex);
             }
         }
 

@@ -24,13 +24,13 @@ public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<
     public static PaginatedMapSubAreaMessageBuilder? Create(int version, string[] parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 2 &&
-            int.TryParse(parameters[1], out var selectedPageIndex))
+            parameters.Length > 1 &&
+            int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var mapSubAreasData = DofusApi.Datacenter.MapsRepository.GetMapSubAreasDataByName(parameters[2]).ToList();
+            var mapSubAreasData = DofusApi.Datacenter.MapsRepository.GetMapSubAreasDataByName(parameters[1]).ToList();
             if (mapSubAreasData.Count > 0)
             {
-                return new(mapSubAreasData, parameters[2], selectedPageIndex);
+                return new(mapSubAreasData, parameters[1], selectedPageIndex);
             }
         }
 
