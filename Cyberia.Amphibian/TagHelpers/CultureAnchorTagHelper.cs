@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Cyberia.Amphibian.TagHelpers;
 
 [HtmlTargetElement("a", Attributes = c_culturePageAttributeName)]
-public class CultureAnchorTagHelper : AnchorTagHelper
+public sealed class CultureAnchorTagHelper : AnchorTagHelper
 {
     private const string c_culturePageAttributeName = "asp-culture-page";
 

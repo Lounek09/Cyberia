@@ -22,7 +22,11 @@ public sealed class MainMenuItemTagHelper : TagHelper
     {
         if (output.Attributes.TryGetAttribute("href", out var hrefAttribute))
         {
-            output.AddClass(IsSelected(hrefAttribute.Value.ToString()), HtmlEncoder.Default);
+            var selected = IsSelected(hrefAttribute.Value.ToString());
+            if (!string.IsNullOrEmpty(selected))
+            {
+                output.AddClass(selected, HtmlEncoder.Default);
+            }
         }
 
         output.Attributes.RemoveAll(c_MainMenuItemAttributeName);
