@@ -16,7 +16,6 @@ public static class Bot
 
     public static BotConfig Config { get; private set; } = default!;
     public static DiscordClient Client { get; private set; } = default!;
-    public static CommandsExtension Commands { get; private set; } = default!;
 
     public static void Initialize(BotConfig config)
     {
@@ -38,17 +37,21 @@ public static class Bot
                 config.LogUnknownAuditlogs = false;
                 config.LogUnknownEvents = false;
             })
+            .UseCommands(
+                setup =>
+                {
+                    setup.CommandErrored += CommandManager.OnCommandErrored;
+                    setup.AddProcessor(new SlashCommandProcessor());
+                    setup.AddProcessor(new UserCommandProcessor());
+                    setup.RegisterCommands(Config.AdminGuildId);
+                },
+                new CommandsConfiguration()
+                {
+                    UseDefaultCommandErrorHandler = false,
+                    RegisterDefaultCommandProcessors = false
+                }
+            )
             .Build();
-
-        Commands = Client.UseCommands(new CommandsConfiguration()
-        {
-            UseDefaultCommandErrorHandler = false,
-            RegisterDefaultCommandProcessors = false
-        });
-        Commands.CommandErrored += CommandManager.OnCommandErrored;
-        Commands.AddProcessor(new SlashCommandProcessor());
-        Commands.AddProcessor(new UserCommandProcessor());
-        Commands.RegisterCommands(Config.AdminGuildId);
 
         CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
 
