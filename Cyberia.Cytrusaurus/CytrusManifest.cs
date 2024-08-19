@@ -76,7 +76,7 @@ public static class CytrusManifest
             }
             else if (currentFragment.FilesLength > 0)
             {
-                StringBuilder fragmentDiff = new($"// {currentFragment.Name.ToUpper()} \\");
+                StringBuilder fragmentDiff = new($@"// {currentFragment.Name.ToUpper()} \\");
 
                 foreach (var gameFile in currentFragment.GetGameFiles())
                 {
@@ -95,7 +95,7 @@ public static class CytrusManifest
 
             if (fragment.FilesLength > 0)
             {
-                StringBuilder fragmentDiff = new($"// {fragment.Name.ToUpper()} \\");
+                StringBuilder fragmentDiff = new($@"// {fragment.Name.ToUpper()} \\");
 
                 foreach (var gameFile in fragment.GetGameFiles())
                 {
@@ -171,7 +171,7 @@ public static class CytrusManifest
 
         if (diff.Count > 0)
         {
-            diff.Add(new(-1, $@"// {current.Name.ToUpper()} \\"));
+            diff.Add(new KeyValuePair<int, string>(-1, $@"// {current.Name.ToUpper()} \\"));
         }
 
         return string.Join('\n', diff.OrderBy(x => x.Key).Select(x => x.Value));
