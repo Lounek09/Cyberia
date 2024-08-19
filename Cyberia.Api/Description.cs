@@ -46,7 +46,7 @@ public readonly record struct Description
     /// Returns a string formed by the template populated with its parameters.
     /// </summary>
     /// <returns>The formatted string.</returns>
-    public override string ToString() => Translation.Format(Template, Parameters);
+    public override string ToString() => Translation.Format(Template, _parameters);
 
     /// <inheritdoc cref="ToString()"/>
     /// <param name="decorator">The decorator function to apply to each parameter.</param>
