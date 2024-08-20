@@ -6,8 +6,15 @@ namespace Cyberia.Salamandra.Managers;
 
 public static class ClientManager
 {
+    private static bool _isInitialized = false;
+
     internal static async Task OnGuildDownloadCompleted(DiscordClient sender, GuildDownloadCompletedEventArgs _)
     {
+        if (_isInitialized)
+        {
+            return;
+        }
+
         await Task.WhenAll(
            sender.SetChannelAsync<DiscordChannel>(Bot.Config.LogChannelId, nameof(ChannelManager.LogChannel), x => ChannelManager.LogChannel = x),
            sender.SetChannelAsync<DiscordChannel>(Bot.Config.ErrorChannelId, nameof(ChannelManager.ErrorChannel), x => ChannelManager.ErrorChannel = x),
@@ -18,5 +25,7 @@ public static class ClientManager
 #if !DEBUG
         await MessageManager.SendLogMessage($"{Formatter.Bold(sender.CurrentUser.Username)} started successfully !");
 #endif
+
+        _isInitialized = true;
     }
 }
