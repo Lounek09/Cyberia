@@ -100,7 +100,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
         if (_itemStatsData is not null)
         {
-            embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, _itemStatsData.Effects);
+            embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, _itemStatsData.Effects, true);
         }
 
         if (_itemData.Criteria.Count > 0)

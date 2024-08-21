@@ -91,7 +91,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
             IEnumerable<IEffect> effects = _incarnationData.GetRealEffects();
             if (effects.Any())
             {
-                embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects);
+                embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects, true);
             }
 
             if (_itemData.WeaponData is not null)

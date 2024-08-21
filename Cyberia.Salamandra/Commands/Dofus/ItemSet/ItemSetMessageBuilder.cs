@@ -99,7 +99,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
         var effects = _itemSetData.GetEffects(_nbItemSelected);
         if (effects.Any())
         {
-            embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects);
+            embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects, true);
         }
 
         return Task.FromResult(embed);

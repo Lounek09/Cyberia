@@ -63,9 +63,9 @@ public static class ExtendDiscordEmbedBuilder
         return embed.AddField(name, builder.ToString(), inline);
     }
 
-    public static DiscordEmbedBuilder AddEffectFields(this DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool inline = false)
+    public static DiscordEmbedBuilder AddEffectFields(this DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool sort, bool inline = false)
     {
-        var effectsParse = GetEffectsParse(effects, x => Formatter.Bold(Formatter.Sanitize(x)));
+        var effectsParse = GetEffectsParse(effects, sort, x => Formatter.Bold(Formatter.Sanitize(x)));
         return embed.AddFields(name, effectsParse, inline);
     }
 
@@ -289,18 +289,20 @@ public static class ExtendDiscordEmbedBuilder
         return embed.AddField(BotTranslations.Embed_Field_Pet_Title, builder.ToString(), inline);
     }
 
-    private static List<string> GetEffectsParse(IEnumerable<IEffect> effects, Func<string, string>? parametersDecorator = null)
+    private static List<string> GetEffectsParse(IEnumerable<IEffect> effects, bool sort, Func<string, string>? parametersDecorator = null)
     {
         List<string> effectsParse = [];
 
-        foreach (var effect in effects)
+        var sortedEffects = sort ? effects.OrderByDescending(x => x) : effects;
+
+        foreach (var effect in sortedEffects)
         {
             if (effect is ReplaceEffect replaceEffect)
             {
                 var itemStatsData = replaceEffect.GetItemData()?.GetItemStatsData();
                 if (itemStatsData is not null)
                 {
-                    effectsParse.AddRange(GetEffectsParse(itemStatsData.Effects, parametersDecorator));
+                    effectsParse.AddRange(GetEffectsParse(itemStatsData.Effects, sort, parametersDecorator));
                 }
 
                 continue;

@@ -29,7 +29,7 @@ public sealed class ParseCommandModule
         {
             var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
                 .WithTitle("Item effects parser")
-                .AddEffectFields("Effects :", effects);
+                .AddEffectFields("Effects :", effects, true);
 
             await ctx.RespondAsync(embed);
             return;

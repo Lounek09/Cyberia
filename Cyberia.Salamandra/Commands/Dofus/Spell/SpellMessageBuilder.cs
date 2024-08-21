@@ -121,25 +121,25 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
                 var effects = _spellLevelData.Effects;
                 if (effects.Count > 0)
                 {
-                    embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects);
+                    embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects, false);
                 }
 
                 var trapEffects = _spellLevelData.GetTrapEffects();
                 if (trapEffects.Count > 0)
                 {
-                    embed.AddEffectFields(BotTranslations.Embed_Field_TrapEffects_Title, trapEffects);
+                    embed.AddEffectFields(BotTranslations.Embed_Field_TrapEffects_Title, trapEffects, false);
                 }
 
                 var glyphEffects = _spellLevelData.GetGlyphEffects();
                 if (glyphEffects.Count > 0)
                 {
-                    embed.AddEffectFields(BotTranslations.Embed_Field_GlyphEffects_Title, glyphEffects);
+                    embed.AddEffectFields(BotTranslations.Embed_Field_GlyphEffects_Title, glyphEffects, false);
                 }
 
                 var criticalEffects = _spellLevelData.CriticalEffects;
                 if (criticalEffects.Count > 0)
                 {
-                    embed.AddEffectFields(BotTranslations.Embed_Field_CriticalEffects_Title, criticalEffects);
+                    embed.AddEffectFields(BotTranslations.Embed_Field_CriticalEffects_Title, criticalEffects, false);
                 }
             }
 
