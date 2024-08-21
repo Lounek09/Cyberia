@@ -10,15 +10,11 @@
     },
     {
       "id": 34,
-      "d": "Commence la quête #3",
-      "c": 0,
-      "o": ""
+      "d": "Commence la quête #3"
     },
     {
       "id": 35,
-      "d": "Termine la quête #3",
-      "c": 0,
-      "o": ""
+      "d": "Termine la quête #3"
     },
     {
       "id": 90,
@@ -78,15 +74,11 @@
     },
     {
       "id": 192,
-      "d": "Supprime l'objet #1",
-      "c": 0,
-      "o": ""
+      "d": "Supprime l'objet #1"
     },
     {
       "id": 193,
-      "d": "Ajoute #2 #3 (#1)",
-      "c": 0,
-      "o": ""
+      "d": "Ajoute #2 #3 (#1)"
     },
     {
       "id": 194,
@@ -98,9 +90,7 @@
     },
     {
       "id": 205,
-      "d": "Effet 205 inconnu (#1, #2, #3, #4)",
-      "c": 0,
-      "o": ""
+      "d": "Effet 205 inconnu (#1, #2, #3, #4)"
     },
     {
       "id": 206,
@@ -160,9 +150,7 @@
     },
     {
       "id": 228,
-      "d": "Lance l'animation de sort #3",
-      "c": 0,
-      "o": ""
+      "d": "Lance l'animation de sort #3"
     },
     {
       "id": 229,
@@ -170,9 +158,7 @@
     },
     {
       "id": 233,
-      "d": "Retire #2 #3 aux personnages autour de vous",
-      "c": 0,
-      "o": ""
+      "d": "Retire #2 #3 aux personnages autour de vous"
     },
     {
       "id": 250,
@@ -225,38 +211,32 @@
     {
       "id": 280,
       "d": "Diminue la portée minimale du sort #1 de #3",
-      "c": 0,
       "o": "+",
       "t": true
     },
     {
       "id": 295,
       "d": "Augmente la portée minimale du sort #1 de #3",
-      "c": 0,
       "o": "-"
     },
     {
       "id": 296,
       "d": "Augmente le coût en PA du sort #1 de #3",
-      "c": 0,
       "o": "-"
     },
     {
       "id": 297,
       "d": "Désactive le lancer du sort #1 sur une case occupée",
-      "c": 0,
       "o": "-"
     },
     {
       "id": 298,
       "d": "Désactive le lancer du sort #1 sur une case libre",
-      "c": 0,
       "o": "-"
     },
     {
       "id": 299,
       "d": "Active le lancer du sort #1 sur une case libre",
-      "c": 0,
       "o": "+"
     },
     {
@@ -287,9 +267,7 @@
     },
     {
       "id": 521,
-      "d": "Indestructible",
-      "c": 0,
-      "o": ""
+      "d": "Indestructible"
     },
     {
       "id": 601,
@@ -325,22 +303,16 @@
     },
     {
       "id": 721,
-      "d": "Propriétaire de la goule",
-      "c": 0,
-      "o": ""
+      "d": "Propriétaire de la goule"
     },
     {
       "id": 722,
       "d": "Apprend temporairement le sort #3 au rang #1",
-      "c": 0,
-      "o": "",
       "t": true
     },
     {
       "id": 723,
-      "d": "Ajoute l'aura #3",
-      "c": 0,
-      "o": ""
+      "d": "Ajoute l'aura #3"
     },
     {
       "id": 724,
@@ -389,39 +361,28 @@
     {
       "id": 826,
       "d": "Téléporte",
-      "c": 0,
       "o": "+",
       "t": true
     },
     {
       "id": 830,
-      "d": "Ouvre l'interface de guilde puis téléporte dans un/une #3",
-      "c": 0,
-      "o": ""
+      "d": "Ouvre l'interface de guilde puis téléporte dans un/une #3"
     },
     {
       "id": 850,
-      "d": "Ouvre l'interface de changement de nom",
-      "c": 0,
-      "o": ""
+      "d": "Ouvre l'interface de changement de nom"
     },
     {
       "id": 851,
-      "d": "Ouvre l'interface de changement de couleurs",
-      "c": 0,
-      "o": ""
+      "d": "Ouvre l'interface de changement de couleurs"
     },
     {
       "id": 852,
-      "d": "Change de sexe",
-      "c": 0,
-      "o": ""
+      "d": "Change de sexe"
     },
     {
       "id": 853,
-      "d": "Ouvre l'interface de mimibiotage",
-      "c": 0,
-      "o": ""
+      "d": "Ouvre l'interface de mimibiotage"
     },
     {
       "id": 939,
@@ -510,14 +471,11 @@
     {
       "id": 2153,
       "d": "Téléporte les membres du groupe",
-      "c": 0,
-      "o": "",
       "t": true
     },
     {
       "id": 2154,
       "d": "Verrouillé au compte jusqu'au : #1",
-      "c": 0,
       "o": "/",
       "t": true
     }

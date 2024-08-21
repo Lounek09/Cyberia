@@ -32,6 +32,6 @@ public sealed record CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect
         var maxDealtDamagePercent = MaxDealtDamagePercent == 0 ? string.Empty : MaxDealtDamagePercent.ToString();
         var maxReceivedDamagePercent = MaxReceivedDamagePercent == 0 ? string.Empty : MaxReceivedDamagePercent.ToString();
 
-        return GetDescription(MinDealtDamagePercent, maxDealtDamagePercent, MaxDealtDamagePercent, maxReceivedDamagePercent);
+        return GetDescription(MinDealtDamagePercent, MinReceivedDamagePercent, maxDealtDamagePercent, maxReceivedDamagePercent);
     }
 }
