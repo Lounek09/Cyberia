@@ -5,6 +5,8 @@ namespace Cyberia.Api.Factories.Effects;
 
 public sealed record CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect : Effect
 {
+    private const double c_ratio = 1.5;
+
     public int MinDealtDamagePercent { get; init; }
     public int MaxDealtDamagePercent { get; init; }
     public int MinReceivedDamagePercent { get; init; }
@@ -21,10 +23,27 @@ public sealed record CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect
 
     internal static CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
-        //TODO: Param4 is not always a string now...
-        var maxReceivedDamagePercent = string.IsNullOrEmpty(parameters.Param4) ? 0 : int.Parse(parameters.Param4);
+        int param1, param2, param3, param4;
 
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3, (int)parameters.Param2, maxReceivedDamagePercent);
+        if (parameters.Param1 == 0 && parameters.Param2 == 0)
+        {
+            param1 = (int)parameters.Param3;
+            param2 = (int)Math.Round(parameters.Param3 * c_ratio);
+            param3 = 0;
+            param4 = 0;
+        }
+        else
+        {
+            var tempDealt = parameters.Param1 + parameters.Param3;
+            var tempReceived = parameters.Param2 + parameters.Param3;
+
+            param1 = (int)tempDealt;
+            param2 = (int)Math.Round(tempDealt * c_ratio);
+            param3 = (int)tempReceived;
+            param4 = (int)Math.Round(tempReceived * c_ratio);
+        }
+
+        return new(effectId, duration, probability, criteria, effectArea, param1, param3, param2, param4);
     }
 
     public override Description GetDescription()
