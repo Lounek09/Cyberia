@@ -431,7 +431,10 @@ public static class EffectFactory
             { 2153, TeleportGroupMemberEffect.Create },
             { 2154, LockToAccountUntilEffect.Create },
             { 2155, LockToAccountEffect.Create },
-            { 2156, RadiantEffect.Create }
+            { 2156, RadiantEffect.Create },
+            { 2157, CharacterBoostReceivedDamagePercentMultiplierEffect.Create },
+            { 2158, CharacterDeboostReceivedDamagePercentMultiplierEffect.Create },
+            { 2159, CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect.Create },
         }.ToFrozenDictionary();
 
     /// <summary>
