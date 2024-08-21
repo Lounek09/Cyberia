@@ -16,6 +16,9 @@ public sealed class EffectData : IDofusData<int>
     [JsonPropertyName("c")]
     public int CharacteristicId { get; init; }
 
+    [JsonPropertyName("p")]
+    public int Priority { get; init; }
+
     [JsonPropertyName("o")]
     public string Operator { get; init; }
 
