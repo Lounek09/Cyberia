@@ -131,7 +131,13 @@ public static class LangManager
 			postBuilder.AddTag(tag);
 		}
 
-		var post = await forum.CreateForumPostAsync(postBuilder);
+        var languageTag = forum.GetDiscordForumTagByName(currentLanguage);
+        if (languageTag is not null)
+        {
+            postBuilder.AddTag(languageTag);
+        }
+
+        var post = await forum.CreateForumPostAsync(postBuilder);
 		return post.Channel;
 	}
 

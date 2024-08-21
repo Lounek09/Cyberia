@@ -17,6 +17,6 @@ public static class ExtendDiscordForumChannel
     /// <returns>Returns the tag with the specified name; if not found, <see langword="null"/>.</returns>
     public static DiscordForumTag? GetDiscordForumTagByName(this DiscordForumChannel forum, string name)
     {
-        return forum.AvailableTags.FirstOrDefault(x => x.Name.Equals(name));
+        return forum.AvailableTags.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
 }
