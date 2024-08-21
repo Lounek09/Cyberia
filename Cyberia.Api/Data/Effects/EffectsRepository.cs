@@ -56,7 +56,7 @@ public sealed class EffectsRepository : IDofusRepository
 
         data.Effects = data.EffectsCore
             .GroupBy(x => x.Id)
-            .ToFrozenDictionary(x => x.Key, x => x.ElementAt(0));
+            .ToFrozenDictionary(x => x.Key, x => x.First());
 
         return data;
     }
