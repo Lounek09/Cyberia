@@ -54,7 +54,10 @@ public sealed class EffectsRepository : IDofusRepository
             effectData.Description = new LocalizedString(effectCustomData.Description); 
         }
 
-        data.Effects = data.EffectsCore.ToFrozenDictionary(x => x.Id, x => x);
+        data.Effects = data.EffectsCore
+            .GroupBy(x => x.Id)
+            .ToFrozenDictionary(x => x.Key, x => x.ElementAt(0));
+
         return data;
     }
 
