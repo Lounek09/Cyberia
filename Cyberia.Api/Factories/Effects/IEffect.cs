@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories.Effects;
 /// <summary>
 /// Represents an effect of an in game object (a spell, an item, etc).
 /// </summary>
-public interface IEffect
+public interface IEffect : IComparable<IEffect>
 {
     /// <summary>
     /// Gets the unique identifier of the effect.

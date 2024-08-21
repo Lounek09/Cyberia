@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Data.Ranks;
 
-public sealed class GuildRankData : IDofusData<int>
+public sealed class GuildRankData : IDofusData<int>, IComparable<GuildRankData>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -20,5 +20,15 @@ public sealed class GuildRankData : IDofusData<int>
     internal GuildRankData()
     {
         Name = LocalizedString.Empty;
+    }
+
+    public int CompareTo(GuildRankData? other)
+    {
+        if (other is null)
+        {
+            return 1;
+        }
+
+        return Order.CompareTo(other.Order);
     }
 }

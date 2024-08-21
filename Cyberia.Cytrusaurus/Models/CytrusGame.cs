@@ -5,7 +5,7 @@ namespace Cyberia.Cytrusaurus.Models;
 /// <summary>
 /// Represents a game in Cytrus.
 /// </summary>
-public sealed class CytrusGame
+public sealed class CytrusGame : IComparable<CytrusGame>
 {
     public const string MetaAssets = "meta";
 
@@ -119,5 +119,15 @@ public sealed class CytrusGame
         }
 
         return version;
+    }
+
+    public int CompareTo(CytrusGame? other)
+    {
+        if (other is null)
+        {
+            return 1;
+        }
+
+        return Order.CompareTo(other.Order);
     }
 }

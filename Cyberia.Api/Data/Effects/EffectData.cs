@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Effects;
 
-public sealed class EffectData : IDofusData<int>
+public sealed class EffectData : IDofusData<int>, IComparable<EffectData>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -42,5 +42,15 @@ public sealed class EffectData : IDofusData<int>
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
         return await CdnManager.GetImagePathAsync("effects", Id, size);
+    }
+
+    public int CompareTo(EffectData? other)
+    {
+        if (other is null)
+        {
+            return 1;
+        }
+
+        return Priority.CompareTo(other.Priority);
     }
 }

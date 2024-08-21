@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Data.KnowledgeBook;
 
-public sealed class KnowledgeBookArticleData : IDofusData<int>
+public sealed class KnowledgeBookArticleData : IDofusData<int>, IComparable<KnowledgeBookArticleData>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -39,5 +39,15 @@ public sealed class KnowledgeBookArticleData : IDofusData<int>
     public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryData()
     {
         return DofusApi.Datacenter.KnowledgeBookRepository.GetKnowledgeBookCatagoryDataById(KnowledgeBookCatagoryId);
+    }
+
+    public int CompareTo(KnowledgeBookArticleData? other)
+    {
+        if (other is null)
+        {
+            return 1;
+        }
+
+        return Order.CompareTo(other.Order);
     }
 }

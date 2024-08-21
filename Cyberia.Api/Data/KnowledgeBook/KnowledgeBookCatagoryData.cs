@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Data.KnowledgeBook;
 
-public sealed class KnowledgeBookCatagoryData : IDofusData<int>
+public sealed class KnowledgeBookCatagoryData : IDofusData<int>, IComparable<KnowledgeBookCatagoryData>
 {
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -23,5 +23,15 @@ public sealed class KnowledgeBookCatagoryData : IDofusData<int>
     internal KnowledgeBookCatagoryData()
     {
         Name = LocalizedString.Empty;
+    }
+
+    public int CompareTo(KnowledgeBookCatagoryData? other)
+    {
+        if (other is null)
+        {
+            return 1;
+        }
+
+        return Order.CompareTo(other.Order);
     }
 }

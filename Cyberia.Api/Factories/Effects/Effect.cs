@@ -109,4 +109,32 @@ public abstract record Effect : IEffect
 
         return new(builder.ToString(), parameters);
     }
+
+    public int CompareTo(IEffect? other)
+    {
+        if (other is null)
+        {
+            return 1;
+        }
+
+        var effectData = GetEffectData();
+        var otherEffectData = other.GetEffectData();
+
+        if (effectData is null && otherEffectData is null)
+        {
+            return 0;
+        }
+
+        if (effectData is null)
+        {
+            return -1;
+        }
+
+        if (otherEffectData is null)
+        {
+            return 1;
+        }
+
+        return effectData.CompareTo(otherEffectData);
+    }
 }
