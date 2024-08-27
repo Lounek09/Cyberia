@@ -18,16 +18,16 @@ public abstract record QuestObjective : IQuestObjective
         QuestObjectiveData = questObjectiveData;
     }
 
-    public abstract Description GetDescription();
+    public abstract DescriptionString GetDescription();
 
     /// <inheritdoc cref="IQuestObjective.GetDescription"/>
-    protected Description GetDescription<T>(T parameter)
+    protected DescriptionString GetDescription<T>(T parameter)
     {
         return GetDescription(parameter?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="IQuestObjective.GetDescription"/>
-    protected Description GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
+    protected DescriptionString GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
     {
         return GetDescription(
             parameter0?.ToString() ?? string.Empty,
@@ -35,7 +35,7 @@ public abstract record QuestObjective : IQuestObjective
     }
 
     /// <inheritdoc cref="IQuestObjective.GetDescription"/>
-    protected Description GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
+    protected DescriptionString GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
     {
         return GetDescription(
             parameter0?.ToString() ?? string.Empty,
@@ -44,7 +44,7 @@ public abstract record QuestObjective : IQuestObjective
     }
 
     /// <inheritdoc cref="IQuestObjective.GetDescription"/>
-    protected Description GetDescription(params string[] parameters)
+    protected DescriptionString GetDescription(params string[] parameters)
     {
         var questObjectiveTypeData = QuestObjectiveData.GetQuestObjectiveTypeData();
         if (questObjectiveTypeData is null)

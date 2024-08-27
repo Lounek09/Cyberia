@@ -24,7 +24,7 @@ public sealed record ItemLivingCategoryEffect : Effect
         return DofusApi.Datacenter.ItemsRepository.GetItemTypeDataById(ItemTypeId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var itemTypeName = DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(ItemTypeId);
 

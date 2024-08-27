@@ -22,7 +22,7 @@ public sealed record SizeEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2, (int)parameters.Param3);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(MinSize, MaxSize, ActualSize);
     }

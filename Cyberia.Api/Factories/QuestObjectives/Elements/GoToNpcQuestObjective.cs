@@ -29,7 +29,7 @@ public sealed record GoToNpcQuestObjective : QuestObjective
         return DofusApi.Datacenter.NpcsRepository.GetNpcDataById(NpcId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
 

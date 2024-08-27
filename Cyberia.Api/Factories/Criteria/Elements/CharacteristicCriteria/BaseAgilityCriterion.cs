@@ -25,7 +25,7 @@ public sealed record BaseAgilityCriterion : Criterion
         return $"Criterion.BaseAgility.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

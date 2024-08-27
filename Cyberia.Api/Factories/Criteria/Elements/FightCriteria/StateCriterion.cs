@@ -32,7 +32,7 @@ public sealed record StateCriterion : Criterion
         return $"Criterion.State.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var stateName = DofusApi.Datacenter.StatesRepository.GetStateNameById(StateId);
 

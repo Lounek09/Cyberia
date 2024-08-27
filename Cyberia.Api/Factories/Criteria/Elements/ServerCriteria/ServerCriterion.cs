@@ -32,7 +32,7 @@ public sealed record ServerCriterion : Criterion
         return $"Criterion.Server.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var serverName = DofusApi.Datacenter.ServersRepository.GetServerNameById(ServerId);
 

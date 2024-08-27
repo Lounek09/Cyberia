@@ -25,7 +25,7 @@ public sealed record EnergyPointsCriterion : Criterion
         return $"Criterion.EnergyPoints.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

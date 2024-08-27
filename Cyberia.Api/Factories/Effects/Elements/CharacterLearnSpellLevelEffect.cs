@@ -24,7 +24,7 @@ public sealed record CharacterLearnSpellLevelEffect : Effect
         return DofusApi.Datacenter.SpellsRepository.GetSpellLevelDataById(SpellLevelId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var spellLevelData = GetSpellLevelData();
         if (spellLevelData is null)

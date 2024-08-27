@@ -25,7 +25,7 @@ public sealed record LevelModulationCriterion : Criterion
         return $"Criterion.LevelModulation.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

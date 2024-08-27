@@ -39,7 +39,7 @@ public sealed record BringItemToNpcQuestObjective : QuestObjective
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);

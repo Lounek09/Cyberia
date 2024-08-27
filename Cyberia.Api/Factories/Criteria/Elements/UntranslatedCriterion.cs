@@ -17,7 +17,7 @@ public sealed record UntranslatedCriterion : Criterion
         return "Criterion.Unknown";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Id, CompressedCriterion);
     }

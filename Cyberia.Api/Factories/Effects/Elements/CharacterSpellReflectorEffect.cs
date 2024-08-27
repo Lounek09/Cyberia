@@ -18,7 +18,7 @@ public sealed record CharacterSpellReflectorEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(string.Empty, Level);
     }

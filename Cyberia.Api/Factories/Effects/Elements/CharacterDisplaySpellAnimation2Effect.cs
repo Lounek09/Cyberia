@@ -18,7 +18,7 @@ public sealed record CharacterDisplaySpellAnimation2Effect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(string.Empty, string.Empty, GfxId);
     }

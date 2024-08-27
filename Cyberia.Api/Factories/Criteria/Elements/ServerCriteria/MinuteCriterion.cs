@@ -25,7 +25,7 @@ public sealed record MinuteCriterion : Criterion
         return $"Criterion.Minute.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

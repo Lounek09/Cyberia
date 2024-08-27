@@ -29,7 +29,7 @@ public sealed record DiscoverMapSubAreaQuestObjective : QuestObjective
         return DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(MapSubAreaId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var mapSubAreaName = DofusApi.Datacenter.MapsRepository.GetMapSubAreaNameById(MapSubAreaId);
 

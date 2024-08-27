@@ -23,7 +23,7 @@ public sealed record DuelSpecificPlayerQuestObjective : QuestObjective
         return null;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(SpecificPlayer);
     }

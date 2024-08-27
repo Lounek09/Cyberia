@@ -34,7 +34,7 @@ public sealed record MapPlayerCriterion : Criterion
         return $"Criterion.MapPlayer.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var map = GetMapData();
         var mapAreaSubAreaName = map is null ? Translation.Format(ApiTranslations.Unknown_Data, MapId) : map.GetMapAreaName();

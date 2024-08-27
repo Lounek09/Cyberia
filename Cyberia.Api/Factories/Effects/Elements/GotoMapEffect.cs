@@ -26,7 +26,7 @@ public sealed record GotoMapEffect : Effect
         return DofusApi.Datacenter.MapsRepository.GetMapDataById(MapId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var map = GetMapData();
         var mapAreaSubAreaName = map is null ? Translation.Format(ApiTranslations.Unknown_Data, MapId) : map.GetMapAreaName();

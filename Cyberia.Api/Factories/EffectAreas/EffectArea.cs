@@ -55,12 +55,12 @@ public readonly record struct EffectArea
     /// <summary>
     /// Generates a human-readable description of the effect area.
     /// </summary>
-    /// <returns>The <see cref="Description"/> object containing the description of the effect area.</returns>
-    public Description GetDescription()
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the effect area.</returns>
+    public DescriptionString GetDescription()
     {
         if (Id == EffectAreaFactory.Default.Id)
         {
-            return Description.Empty;
+            return DescriptionString.Empty;
         }
 
         var effectAreaName = ApiTranslations.ResourceManager.GetString($"EffectArea.{Id}");

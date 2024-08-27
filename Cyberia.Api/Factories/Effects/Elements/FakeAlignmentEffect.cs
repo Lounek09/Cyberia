@@ -24,7 +24,7 @@ public sealed record FakeAlignmentEffect : Effect
         return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentDataById(AlignmentId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var alignmentName = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentNameById(AlignmentId);
 

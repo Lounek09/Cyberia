@@ -25,7 +25,7 @@ public sealed record PercentVitalityCriterion : Criterion
         return $"Criterion.PercentVitality.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

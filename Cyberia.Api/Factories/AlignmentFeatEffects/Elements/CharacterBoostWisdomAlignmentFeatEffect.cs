@@ -20,7 +20,7 @@ public sealed record CharacterBoostWisdomAlignmentFeatEffect : AlignmentFeatEffe
         return null;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

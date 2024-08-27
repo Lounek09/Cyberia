@@ -25,7 +25,7 @@ public sealed record PlayerRightsCriterion : Criterion
         return $"Criterion.PlayerRights.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(RightsLevel);
     }

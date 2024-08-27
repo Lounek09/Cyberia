@@ -32,7 +32,7 @@ public sealed record AlignmentCriterion : Criterion
         return $"Criterion.Alignment.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var alignmentName = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentNameById(AlignmentId);
 

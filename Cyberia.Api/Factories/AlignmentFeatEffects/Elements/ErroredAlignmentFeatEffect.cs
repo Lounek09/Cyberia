@@ -10,7 +10,7 @@ public sealed record ErroredAlignmentFeatEffect : AlignmentFeatEffect
         Parameters = parameter;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return new(ApiTranslations.AlignmentFeatEffect_Errored,
             Id.ToString(),

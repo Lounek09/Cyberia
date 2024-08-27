@@ -27,7 +27,7 @@ public sealed record BestElementCriterion : Criterion
         return $"Criterion.BestElement.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Element.GetDescription());
     }

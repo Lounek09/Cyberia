@@ -25,7 +25,7 @@ public sealed record ActionPointCriterion : Criterion
         return $"Criterion.ActionPoint.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

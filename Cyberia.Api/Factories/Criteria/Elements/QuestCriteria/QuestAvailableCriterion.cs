@@ -32,7 +32,7 @@ public sealed record QuestAvailableCriterion : Criterion
         return $"Criterion.QuestAvailable.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var questName = DofusApi.Datacenter.QuestsRepository.GetQuestNameById(QuestId);
 

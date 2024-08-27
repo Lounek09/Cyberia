@@ -44,7 +44,7 @@ public sealed record AlignmentFeatCriterion : Criterion
         return $"Criterion.AlignmentFeat.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var alignmentName = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentFeatNameById(AlignmentFeatId);
 

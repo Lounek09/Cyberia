@@ -32,7 +32,7 @@ public sealed record MonsterSummonCriterion : Criterion
         return $"Criterion.MonsterSummon.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
 

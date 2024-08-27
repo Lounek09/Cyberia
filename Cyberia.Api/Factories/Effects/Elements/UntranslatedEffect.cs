@@ -13,7 +13,7 @@ public sealed record UntranslatedEffect : Effect
         Parameters = parameters;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Parameters.Param1, Parameters.Param2, Parameters.Param3, Parameters.Param4);
     }

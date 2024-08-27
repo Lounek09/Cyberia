@@ -25,7 +25,7 @@ public sealed record MaxEnergyPointsCriterion : Criterion
         return $"Criterion.MaxEnergyPoints.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

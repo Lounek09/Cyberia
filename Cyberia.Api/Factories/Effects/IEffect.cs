@@ -43,6 +43,6 @@ public interface IEffect : IComparable<IEffect>
     /// <summary>
     /// Generates a human-readable description of the effect.
     /// </summary>
-    /// <returns>The <see cref="Description"/> object containing the description of the effect.</returns>
-    Description GetDescription();
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the effect.</returns>
+    DescriptionString GetDescription();
 }

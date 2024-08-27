@@ -25,7 +25,7 @@ public sealed record UnusableItemCriterion : Criterion
         return $"Criterion.UnusableItem.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription([]);
     }

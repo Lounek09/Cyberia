@@ -18,7 +18,7 @@ public sealed record CharacterPullEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Distance);
     }

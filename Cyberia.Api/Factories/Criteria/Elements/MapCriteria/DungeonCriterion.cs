@@ -25,7 +25,7 @@ public sealed record DungeonCriterion : Criterion
         return $"Criterion.Dungeon.{GetOperatorDescriptionKey()}.{InDungeon}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription([]);
     }

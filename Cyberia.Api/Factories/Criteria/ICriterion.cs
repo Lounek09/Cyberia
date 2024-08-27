@@ -18,6 +18,6 @@ public interface ICriterion : ICriteriaElement
     /// <summary>
     /// Generates a human-readable description of the criterion.
     /// </summary>
-    /// <returns>The <see cref="Description"/> object containing the description of the criterion.</returns>
-    Description GetDescription();
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the criterion.</returns>
+    DescriptionString GetDescription();
 }

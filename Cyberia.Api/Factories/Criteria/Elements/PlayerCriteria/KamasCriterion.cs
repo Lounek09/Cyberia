@@ -25,7 +25,7 @@ public sealed record KamasCriterion : Criterion
         return $"Criterion.Kamas.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

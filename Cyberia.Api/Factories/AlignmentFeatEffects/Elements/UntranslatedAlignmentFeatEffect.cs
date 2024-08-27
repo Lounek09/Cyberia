@@ -10,7 +10,7 @@ public sealed record UntranslatedAlignmentFeatEffect : AlignmentFeatEffect
         Parameters = parameters;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Parameters.ToArray());
     }

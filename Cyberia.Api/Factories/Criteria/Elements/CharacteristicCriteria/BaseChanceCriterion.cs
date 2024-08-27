@@ -25,7 +25,7 @@ public sealed record BaseChanceCriterion : Criterion
         return $"Criterion.BaseChance.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

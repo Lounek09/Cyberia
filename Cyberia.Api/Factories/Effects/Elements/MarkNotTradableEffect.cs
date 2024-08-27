@@ -24,7 +24,7 @@ public sealed record MarkNotTradableEffect : Effect
         return DateTime == DateTime.MaxValue;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         if (IsLinkedToAccount())
         {

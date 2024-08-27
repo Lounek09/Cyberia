@@ -27,7 +27,7 @@ public sealed record LadderRaceEffect : Effect
         return DofusApi.Datacenter.MonstersRepository.GetMonsterRaceDataById(MonsterRaceId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var monsterRaceName = DofusApi.Datacenter.MonstersRepository.GetMonsterRaceNameById(MonsterRaceId);
 

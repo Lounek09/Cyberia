@@ -32,7 +32,7 @@ public sealed record QuestStepCriterion : Criterion
         return $"Criterion.QuestStep.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var questStepName = DofusApi.Datacenter.QuestsRepository.GetQuestStepNameById(QuestStepId);
 

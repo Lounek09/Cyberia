@@ -25,7 +25,7 @@ public sealed record VitalityCriterion : Criterion
         return $"Criterion.Vitality.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

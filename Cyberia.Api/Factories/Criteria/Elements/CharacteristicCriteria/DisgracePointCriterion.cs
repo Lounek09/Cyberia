@@ -25,7 +25,7 @@ public sealed record DisgracePointCriterion : Criterion
         return $"Criterion.DisgracePoint.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

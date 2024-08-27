@@ -44,7 +44,7 @@ public sealed record JobCriterion : Criterion
         return $"Criterion.Job.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var jobName = DofusApi.Datacenter.JobsRepository.GetJobNameById(JobId);
 

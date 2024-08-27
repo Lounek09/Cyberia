@@ -46,7 +46,7 @@ public sealed record QuestFinishedCountCriterion : Criterion
         return $"Criterion.QuestFinishedCount.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var questName = DofusApi.Datacenter.QuestsRepository.GetQuestNameById(QuestId);
 

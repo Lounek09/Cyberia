@@ -24,7 +24,7 @@ public sealed record GiveTTGCardFromFamilyEffect : Effect
         return DofusApi.Datacenter.TTGRepository.GetTTGFamilyDataById(TTGFamilyId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var ttgFamilyName = DofusApi.Datacenter.TTGRepository.GetTTGFamilyNameById(TTGFamilyId);
 

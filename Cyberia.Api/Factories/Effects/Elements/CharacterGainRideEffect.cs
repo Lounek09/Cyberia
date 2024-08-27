@@ -33,7 +33,7 @@ public sealed record CharacterGainRideEffect : Effect
         return DofusApi.Datacenter.RidesRepository.GetRideAbilityDataById(RideAbilityId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var value = DofusApi.Datacenter.RidesRepository.GetRideNameById(RideId);
 

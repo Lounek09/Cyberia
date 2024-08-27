@@ -24,7 +24,7 @@ public sealed record ErroredCriterion : Criterion
         return "Criterion.Errored";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(CompressedCriterion);
     }

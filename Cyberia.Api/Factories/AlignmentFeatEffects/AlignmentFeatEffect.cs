@@ -21,10 +21,10 @@ public abstract record AlignmentFeatEffect : IAlignmentFeatEffect
         return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentFeatEffectDataById(Id);
     }
 
-    public abstract Description GetDescription();
+    public abstract DescriptionString GetDescription();
 
     /// <inheritdoc cref="IAlignmentFeatEffect.GetDescription"/>/>
-    protected Description GetDescription(params int[] parameters)
+    protected DescriptionString GetDescription(params int[] parameters)
     {
         var alignmentFeatEffect = GetAlignmentFeatEffectData();
         if (alignmentFeatEffect is null)

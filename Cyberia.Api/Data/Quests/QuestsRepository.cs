@@ -135,12 +135,12 @@ public sealed class QuestsRepository : IDofusRepository
         return questObjectiveData;
     }
 
-    public Description GetQuestObjectiveDescriptionById(int id)
+    public DescriptionString GetQuestObjectiveDescriptionById(int id)
     {
         var questObjectiveData = GetQuestObjectiveDataById(id);
 
         return questObjectiveData is null
-            ? new Description(ApiTranslations.Unknown_Data, id.ToString())
+            ? new DescriptionString(ApiTranslations.Unknown_Data, id.ToString())
             : QuestObjectiveFactory.Create(questObjectiveData).GetDescription();
     }
 

@@ -44,7 +44,7 @@ public sealed record ItemCriterion : Criterion
         return $"Criterion.Item.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 

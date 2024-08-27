@@ -23,7 +23,7 @@ public sealed record FreeFormQuestObjective : QuestObjective
         return null;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Description);
     }

@@ -32,7 +32,7 @@ public sealed record QuestObjectiveCriterion : Criterion
         return $"Criterion.QuestObjective.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var questObjectiveDescription = DofusApi.Datacenter.QuestsRepository.GetQuestObjectiveDescriptionById(QuestObjectiveId);
 

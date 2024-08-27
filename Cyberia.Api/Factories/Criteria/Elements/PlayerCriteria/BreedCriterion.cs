@@ -32,7 +32,7 @@ public sealed record BreedCriterion : Criterion
         return $"Criterion.Breed.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var breedName = DofusApi.Datacenter.BreedsRepository.GetBreedNameById(BreedId);
 

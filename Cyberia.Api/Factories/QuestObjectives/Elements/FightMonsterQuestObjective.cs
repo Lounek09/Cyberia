@@ -29,7 +29,7 @@ public sealed record FightMonsterQuestObjective : QuestObjective
         return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
 

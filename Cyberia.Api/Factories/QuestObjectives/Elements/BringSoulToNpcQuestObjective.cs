@@ -39,7 +39,7 @@ public sealed record BringSoulToNpcQuestObjective : QuestObjective
         return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
         var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);

@@ -10,7 +10,7 @@ public sealed record UntranslatedQuestObjective : QuestObjective
 
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription([]);
     }

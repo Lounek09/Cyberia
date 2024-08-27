@@ -32,7 +32,7 @@ public sealed record EmoteCriterion : Criterion
         return $"Criterion.Emote.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var emoteName = DofusApi.Datacenter.EmotesRepository.GetEmoteNameById(EmoteId);
 

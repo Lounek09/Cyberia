@@ -19,7 +19,7 @@ public sealed record GotoGuildPropertyEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (GuildProperty)parameters.Param3);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(string.Empty, string.Empty, GuildProperty.GetDescription());
     }

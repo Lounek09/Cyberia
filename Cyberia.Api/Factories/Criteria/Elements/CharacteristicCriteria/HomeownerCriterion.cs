@@ -25,7 +25,7 @@ public sealed record HomeownerCriterion : Criterion
         return $"Criterion.Homeowner.{GetOperatorDescriptionKey()}.{IsHomeowner}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription([]);
     }

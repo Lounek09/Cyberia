@@ -25,7 +25,7 @@ public sealed record BaseWisdomCriterion : Criterion
         return $"Criterion.BaseWisdom.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

@@ -25,7 +25,7 @@ public sealed record SlotCriterion : Criterion
         return $"Criterion.Slot.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(SlotId);
     }

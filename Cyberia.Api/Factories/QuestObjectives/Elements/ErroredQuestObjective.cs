@@ -10,9 +10,9 @@ public sealed record ErroredQuestObjective : QuestObjective
 
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
-        return new Description(ApiTranslations.QuestObjectiveType_Errored,
+        return new DescriptionString(ApiTranslations.QuestObjectiveType_Errored,
             QuestObjectiveData.QuestObjectiveTypeId.ToString(),
             string.Join(", ", QuestObjectiveData.Parameters));
     }

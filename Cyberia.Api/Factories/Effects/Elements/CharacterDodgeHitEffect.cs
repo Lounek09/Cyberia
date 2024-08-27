@@ -20,7 +20,7 @@ public sealed record CharacterDodgeHitEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(DodgePercent, CasePushed);
     }

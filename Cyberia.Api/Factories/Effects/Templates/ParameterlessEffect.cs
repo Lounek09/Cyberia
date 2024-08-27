@@ -11,7 +11,7 @@ public abstract record ParameterlessEffect : Effect
 
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription([]);
     }

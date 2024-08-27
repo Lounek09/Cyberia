@@ -37,7 +37,7 @@ public sealed record TurnCriterion : Criterion
         return $"Criterion.Turn.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

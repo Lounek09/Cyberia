@@ -37,7 +37,7 @@ public sealed record CharacterSummonMonsterGroupEffect : Effect
         }
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var monstersName = string.Join(", ", MonstersId.Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(x)));
 

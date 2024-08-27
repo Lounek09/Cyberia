@@ -25,7 +25,7 @@ public sealed record LevelCriterion : Criterion
         return $"Criterion.Level.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

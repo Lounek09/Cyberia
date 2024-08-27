@@ -25,7 +25,7 @@ public sealed record HonorPointCriterion : Criterion
         return $"Criterion.HonorPoint.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

@@ -27,7 +27,7 @@ public sealed record MaritalStatusCriterion : Criterion
         return $"Criterion.MaritalStatus.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(MaritalStatus.GetDescription());
     }

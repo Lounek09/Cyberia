@@ -25,7 +25,7 @@ public sealed record LookCriterion : Criterion
         return $"Criterion.Look.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(LookId);
     }

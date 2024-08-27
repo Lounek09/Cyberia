@@ -24,7 +24,7 @@ public sealed record QuestStartEffect : Effect
         return DofusApi.Datacenter.QuestsRepository.GetQuestDataById(QuestId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var questName = DofusApi.Datacenter.QuestsRepository.GetQuestNameById(QuestId);
 

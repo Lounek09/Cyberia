@@ -21,6 +21,6 @@ public interface IAlignmentFeatEffect
     /// <summary>
     /// Generates a human-readable description of the alignment feat effect.
     /// </summary>
-    /// <returns>The <see cref="Description"/> object containing the description of the alignment feat effect.</returns>
-    Description GetDescription();
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the alignment feat effect.</returns>
+    DescriptionString GetDescription();
 }

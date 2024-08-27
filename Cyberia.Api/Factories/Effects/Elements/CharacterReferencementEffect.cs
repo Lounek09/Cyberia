@@ -24,7 +24,7 @@ public sealed record CharacterReferencementEffect : Effect
         return DofusApi.Datacenter.JobsRepository.GetJobDataById(JobId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var jobName = DofusApi.Datacenter.JobsRepository.GetJobNameById(JobId);
 

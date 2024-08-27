@@ -19,7 +19,7 @@ public sealed record PetsLastMealEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, DateManager.CreateDateTimeFromEffectParameters(parameters));
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(DateTime.ToString("dd/MM/yyy HH:mm"));
     }

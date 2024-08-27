@@ -27,7 +27,7 @@ public sealed record GenderCriterion : Criterion
         return $"Criterion.Gender.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Gender.GetDescription());
     }

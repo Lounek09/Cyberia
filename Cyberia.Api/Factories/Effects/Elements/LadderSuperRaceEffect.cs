@@ -26,7 +26,7 @@ public sealed record LadderSuperRaceEffect : Effect
         return DofusApi.Datacenter.MonstersRepository.GetMonsterSuperRaceDataById(MonsterSuperRaceId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var monsterSuperRace = DofusApi.Datacenter.MonstersRepository.GetMonsterSuperRaceNameById(MonsterSuperRaceId);
 

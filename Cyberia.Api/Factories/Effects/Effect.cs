@@ -37,16 +37,16 @@ public abstract record Effect : IEffect
         return DofusApi.Datacenter.EffectsRepository.GetEffectDataById(Id);
     }
 
-    public abstract Description GetDescription();
+    public abstract DescriptionString GetDescription();
 
     /// <inheritdoc cref="IEffect.GetDescription"/>
-    protected Description GetDescription<T>(T parameter)
+    protected DescriptionString GetDescription<T>(T parameter)
     {
         return GetDescription(parameter?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="IEffect.GetDescription"/>
-    protected Description GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
+    protected DescriptionString GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
     {
         return GetDescription(
             parameter0?.ToString() ?? string.Empty,
@@ -54,7 +54,7 @@ public abstract record Effect : IEffect
     }
 
     /// <inheritdoc cref="IEffect.GetDescription"/>
-    protected Description GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
+    protected DescriptionString GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
     {
         return GetDescription(
             parameter0?.ToString() ?? string.Empty,
@@ -63,7 +63,7 @@ public abstract record Effect : IEffect
     }
 
     /// <inheritdoc cref="IEffect.GetDescription"/>
-    protected Description GetDescription<T0, T1, T2, T3>(T0 parameter0, T1 parameter1, T2 parameter2, T3 parameter3)
+    protected DescriptionString GetDescription<T0, T1, T2, T3>(T0 parameter0, T1 parameter1, T2 parameter2, T3 parameter3)
     {
         return GetDescription(
             parameter0?.ToString() ?? string.Empty,
@@ -73,7 +73,7 @@ public abstract record Effect : IEffect
     }
 
     /// <inheritdoc cref="IEffect.GetDescription"/>
-    protected Description GetDescription(params string[] parameters)
+    protected DescriptionString GetDescription(params string[] parameters)
     {
         var effectData = GetEffectData();
         if (effectData is null)

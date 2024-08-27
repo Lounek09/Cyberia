@@ -25,7 +25,7 @@ public sealed record ServerContentCriterion : Criterion
         return $"Criterion.ServerContent.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Number);
     }

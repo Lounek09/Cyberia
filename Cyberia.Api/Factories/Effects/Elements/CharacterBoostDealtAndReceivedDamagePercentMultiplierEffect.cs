@@ -46,7 +46,7 @@ public sealed record CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect
         return new(effectId, duration, probability, criteria, effectArea, param1, param3, param2, param4);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var maxDealtDamagePercent = MaxDealtDamagePercent == 0 ? string.Empty : MaxDealtDamagePercent.ToString();
         var maxReceivedDamagePercent = MaxReceivedDamagePercent == 0 ? string.Empty : MaxReceivedDamagePercent.ToString();

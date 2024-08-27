@@ -28,7 +28,7 @@ public sealed record CharacterPunishmentEffect : Effect
         return DofusApi.Datacenter.EffectsRepository.GetEffectDataById(BoostEffectId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(string.Empty, MaxBoost, Turn);
     }

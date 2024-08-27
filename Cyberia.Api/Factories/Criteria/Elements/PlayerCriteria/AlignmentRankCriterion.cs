@@ -25,7 +25,7 @@ public sealed record AlignmentRankCriterion : Criterion
         return $"Criterion.AlignmentRank.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Rank);
     }

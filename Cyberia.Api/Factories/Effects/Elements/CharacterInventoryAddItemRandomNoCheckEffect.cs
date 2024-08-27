@@ -26,7 +26,7 @@ public sealed record CharacterInventoryAddItemRandomNoCheckEffect : Effect
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
 

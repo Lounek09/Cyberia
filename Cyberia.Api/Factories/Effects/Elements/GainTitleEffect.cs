@@ -24,7 +24,7 @@ public sealed record GainTitleEffect : Effect
         return DofusApi.Datacenter.TitlesRepository.GetTitleDataById(TitleId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var titleName = DofusApi.Datacenter.TitlesRepository.GetTitleNameById(TitleId);
 

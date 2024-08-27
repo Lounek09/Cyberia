@@ -19,7 +19,7 @@ public sealed record GiveTTGCardFromRarityEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (TTGCardRarity)parameters.Param3);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(string.Empty, string.Empty, Rarity.GetDescription());
     }

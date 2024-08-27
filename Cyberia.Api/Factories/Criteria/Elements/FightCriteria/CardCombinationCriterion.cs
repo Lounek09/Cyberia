@@ -27,7 +27,7 @@ public sealed record CardCombinationCriterion : Criterion
         return $"Criterion.CardCombination.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(CardCombination.GetDescription());
     }

@@ -24,7 +24,7 @@ public sealed record AddTTGCardToBinderEffect : Effect
         return DofusApi.Datacenter.TTGRepository.GetTTGCardDataById(TTGCardId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var ttgCard = GetTTGCardData();
         var ttgEntityName = ttgCard is null ? $"{nameof(TTGCardData)} {Translation.Format(ApiTranslations.Unknown_Data, TTGCardId)}" : DofusApi.Datacenter.TTGRepository.GetTTGEntityNameById(ttgCard.TTGEntityId);

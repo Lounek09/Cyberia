@@ -20,7 +20,7 @@ public sealed record ItemChangeDurabilityEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2, (int)parameters.Param3);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(string.Empty, CurrentDurability, MaxDurability);
     }

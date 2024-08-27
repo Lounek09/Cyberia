@@ -26,7 +26,7 @@ public sealed record CharacterBoostWeaponDamagePercentEffect : Effect
         return DofusApi.Datacenter.ItemsRepository.GetItemTypeDataById(ItemTypeId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var itemTypeName = ItemTypeId == 0
             ? ApiTranslations.Weapons

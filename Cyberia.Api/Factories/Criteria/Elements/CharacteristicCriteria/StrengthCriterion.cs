@@ -25,7 +25,7 @@ public sealed record StrengthCriterion : Criterion
         return $"Criterion.Strength.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

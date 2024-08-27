@@ -18,7 +18,7 @@ public sealed record MarkLegitOwnerEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, parameters.Param4);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(string.Empty, string.Empty, string.Empty, Name);
     }

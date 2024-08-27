@@ -26,7 +26,7 @@ public sealed record LaunchSpellEffect : Effect
         return DofusApi.Datacenter.SpellsRepository.GetSpellDataById(SpellId);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var spellName = DofusApi.Datacenter.SpellsRepository.GetSpellNameById(SpellId);
 

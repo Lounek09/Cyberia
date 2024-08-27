@@ -21,7 +21,7 @@ public sealed record ItemPetsShapeEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, corpulence);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Corpulence.GetDescription());
     }

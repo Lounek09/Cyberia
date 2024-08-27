@@ -15,6 +15,6 @@ public interface IQuestObjective
     /// <summary>
     /// Generates a human-readable description of the quest objective.
     /// </summary>
-    /// <returns>The <see cref="Description"/> object containing the description of the quest objective.</returns>
-    Description GetDescription();
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the quest objective.</returns>
+    DescriptionString GetDescription();
 }

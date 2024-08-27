@@ -17,7 +17,7 @@ public abstract record Criterion : ICriterion
         Operator = @operator;
     }
 
-    public abstract Description GetDescription();
+    public abstract DescriptionString GetDescription();
 
     /// <inheritdoc cref="CriterionFactory.GetOperatorDescriptionKey"/>
     protected string GetOperatorDescriptionKey()
@@ -32,13 +32,13 @@ public abstract record Criterion : ICriterion
     protected abstract string GetDescriptionKey();
 
     /// <inheritdoc cref="ICriterion.GetDescription"/>
-    protected Description GetDescription<T>(T parameter)
+    protected DescriptionString GetDescription<T>(T parameter)
     {
         return GetDescription(parameter?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="ICriterion.GetDescription"/>
-    protected Description GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
+    protected DescriptionString GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
     {
         return GetDescription(
             parameter0?.ToString() ?? string.Empty,
@@ -46,7 +46,7 @@ public abstract record Criterion : ICriterion
     }
 
     /// <inheritdoc cref="ICriterion.GetDescription"/>
-    protected Description GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
+    protected DescriptionString GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
     {
         return GetDescription(
             parameter0?.ToString() ?? string.Empty,
@@ -55,7 +55,7 @@ public abstract record Criterion : ICriterion
     }
 
     /// <inheritdoc cref="ICriterion.GetDescription"/>
-    protected Description GetDescription(params string[] parameters)
+    protected DescriptionString GetDescription(params string[] parameters)
     {
         var descriptionKey = GetDescriptionKey();
 

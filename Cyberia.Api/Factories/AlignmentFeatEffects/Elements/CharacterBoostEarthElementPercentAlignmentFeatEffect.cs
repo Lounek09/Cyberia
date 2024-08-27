@@ -20,7 +20,7 @@ public sealed record CharacterBoostEarthElementPercentAlignmentFeatEffect : Alig
         return null;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

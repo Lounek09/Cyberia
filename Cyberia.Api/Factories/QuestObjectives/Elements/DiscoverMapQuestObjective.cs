@@ -23,7 +23,7 @@ public sealed record DiscoverMapQuestObjective : QuestObjective
         return null;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(MapDescription);
     }

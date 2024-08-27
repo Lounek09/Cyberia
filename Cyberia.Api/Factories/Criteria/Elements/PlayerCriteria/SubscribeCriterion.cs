@@ -25,7 +25,7 @@ public sealed record SubscribeCriterion : Criterion
         return $"Criterion.Subscribe.{GetOperatorDescriptionKey()}.{Subscribed}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Subscribed);
     }

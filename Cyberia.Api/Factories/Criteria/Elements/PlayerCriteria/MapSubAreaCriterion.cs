@@ -32,7 +32,7 @@ public sealed record MapSubAreaCriterion : Criterion
         return $"Criterion.MapSubArea.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         var mapSubAreaName = DofusApi.Datacenter.MapsRepository.GetMapSubAreaNameById(MapSubAreaId);
 

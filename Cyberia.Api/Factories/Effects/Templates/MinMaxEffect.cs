@@ -20,7 +20,7 @@ public abstract record MinMaxEffect : Effect
         return Max < Min ? Min : Random.Shared.Next(Min, Max + 1);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Min, Max == 0 ? string.Empty : Max.ToString());
     }

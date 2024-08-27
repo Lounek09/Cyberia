@@ -10,7 +10,7 @@ public sealed record ErroredEffect : Effect
         CompressedEffect = compressedEffect;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return new(ApiTranslations.Effect_Errored, CompressedEffect);
     }

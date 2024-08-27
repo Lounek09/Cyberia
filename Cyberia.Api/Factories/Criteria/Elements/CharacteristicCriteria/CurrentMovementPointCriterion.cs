@@ -25,7 +25,7 @@ public sealed record CurrentMovementPointCriterion : Criterion
         return $"Criterion.CurrentMovementPoint.{GetOperatorDescriptionKey()}";
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }

@@ -20,7 +20,7 @@ public sealed record RideDetailsEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, DateTimeOffset.FromUnixTimeMilliseconds(parameters.Param2).UtcDateTime);
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(ItemUuid, ExpirationDate.ToString("dd/MM/yyyy HH:mm"));
     }

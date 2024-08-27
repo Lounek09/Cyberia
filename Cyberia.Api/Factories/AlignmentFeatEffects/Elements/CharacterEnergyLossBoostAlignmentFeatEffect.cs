@@ -20,7 +20,7 @@ public sealed record CharacterEnergyLossBoostAlignmentFeatEffect : AlignmentFeat
         return null;
     }
 
-    public override Description GetDescription()
+    public override DescriptionString GetDescription()
     {
         return GetDescription(Value);
     }
