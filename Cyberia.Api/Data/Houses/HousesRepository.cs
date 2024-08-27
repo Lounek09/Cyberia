@@ -69,8 +69,7 @@ public sealed class HousesRepository : IDofusRepository
             {
                 return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
-        })
-        .OrderBy(x => x.Id);
+        });
     }
 
     public IEnumerable<HouseData> GetHousesDataByCoordinate(int x, int y)

@@ -16,7 +16,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
     private readonly MapSearchCategory _searchCategory;
 
     public PaginatedMapMessageBuilder(List<MapData> mapsData, MapSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Map, BotTranslations.Embed_Map_Author, BotTranslations.Embed_PaginatedMap_Title, mapsData.OrderBy(x => x.Id).ToList(), search, selectedPageIndex)
+        : base(EmbedCategory.Map, BotTranslations.Embed_Map_Author, BotTranslations.Embed_PaginatedMap_Title, mapsData, search, selectedPageIndex)
     {
         _searchCategory = searchCategory;
     }
