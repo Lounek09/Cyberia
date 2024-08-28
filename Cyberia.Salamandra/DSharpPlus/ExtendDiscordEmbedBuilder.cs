@@ -187,7 +187,7 @@ public static class ExtendDiscordEmbedBuilder
             builder.Append('\n');
         }
 
-        builder.Append(twoHanded ? BotTranslations.Embed_Field_Weapon_Content_OneHanded : BotTranslations.Embed_Field_Weapon_Content_TwoHanded);
+        builder.Append(twoHanded ? BotTranslations.Embed_Field_Weapon_Content_TwoHanded : BotTranslations.Embed_Field_Weapon_Content_OneHanded);
 
         if (itemTypeData is not null && itemTypeData.EffectArea != EffectAreaFactory.Default)
         {
