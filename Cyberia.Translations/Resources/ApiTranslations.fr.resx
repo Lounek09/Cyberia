@@ -673,7 +673,7 @@
     <value>Effect #1 inconnu (#2)</value>
   </data>
   <data name="Effect.Turn" xml:space="preserve">
-    <value>1# tour(s)</value>
+    <value>#1 tour(s)</value>
   </data>
   <data name="Effect.Probability" xml:space="preserve">
     <value>Dans #1% des cas</value>

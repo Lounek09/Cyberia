@@ -802,7 +802,7 @@
     <value>In #1% of cases</value>
   </data>
   <data name="Effect.Turn" xml:space="preserve">
-    <value>1# turn(s)</value>
+    <value>#1 turn(s)</value>
   </data>
   <data name="Effect.Unknown" xml:space="preserve">
     <value>Unknown effect #1 (#2)</value>
