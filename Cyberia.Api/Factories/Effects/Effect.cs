@@ -23,7 +23,7 @@ public abstract record Effect : IEffect
     /// <param name="probability">The probability (as a percentage) that the effect will occur.</param>
     /// <param name="criteria">The criteria where the effect is applicable</param>
     /// <param name="effectArea">The area of the effect.</param>
-    public Effect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    protected Effect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         Id = id;
         Duration = duration;
