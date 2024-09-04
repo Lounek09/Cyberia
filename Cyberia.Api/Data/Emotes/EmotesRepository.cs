@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Emotes;
 
-public sealed class EmotesRepository : IDofusRepository
+public sealed class EmotesRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "emotes.json";
+    public static string FileName => "emotes.json";
 
     [JsonPropertyName("EM")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, EmoteData>))]
@@ -17,13 +17,6 @@ public sealed class EmotesRepository : IDofusRepository
     internal EmotesRepository()
     {
         Emotes = FrozenDictionary<int, EmoteData>.Empty;
-    }
-
-    internal static EmotesRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<EmotesRepository>(filePath);
     }
 
     public EmoteData? GetEmoteById(int id)

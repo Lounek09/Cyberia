@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.InteractiveObjects;
 
-public sealed class InteractiveObjectsRepository : IDofusRepository
+public sealed class InteractiveObjectsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "interactiveobjects.json";
+    public static string FileName => "interactiveobjects.json";
 
     [JsonPropertyName("IO.g")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, InteractiveObjectGfxData>))]
@@ -24,24 +24,6 @@ public sealed class InteractiveObjectsRepository : IDofusRepository
         InteractiveObjects = FrozenDictionary<int, InteractiveObjectData>.Empty;
     }
 
-    internal static InteractiveObjectsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        var data = Datacenter.LoadRepository<InteractiveObjectsRepository>(filePath);
-
-        foreach (var interactiveObjectData in data.InteractiveObjects.Values)
-        {
-            var interactiveObjectGfxData = data.GetInteractiveObjectGfxDataById(interactiveObjectData.GfxId);
-            if (interactiveObjectGfxData is not null)
-            {
-                interactiveObjectData.GfxId = interactiveObjectGfxData.GfxId;
-            }
-        }
-
-        return data;
-    }
-
     internal InteractiveObjectGfxData? GetInteractiveObjectGfxDataById(int id)
     {
         InteractiveObjectsGfx.TryGetValue(id, out var interactiveObjectGfxData);
@@ -52,5 +34,17 @@ public sealed class InteractiveObjectsRepository : IDofusRepository
     {
         InteractiveObjects.TryGetValue(id, out var interactiveObjectData);
         return interactiveObjectData;
+    }
+
+    protected override void LoadCustomData()
+    {
+        foreach (var interactiveObjectData in InteractiveObjects.Values)
+        {
+            var interactiveObjectGfxData = GetInteractiveObjectGfxDataById(interactiveObjectData.GfxId);
+            if (interactiveObjectGfxData is not null)
+            {
+                interactiveObjectData.GfxId = interactiveObjectGfxData.GfxId;
+            }
+        }
     }
 }

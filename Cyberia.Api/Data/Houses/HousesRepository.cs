@@ -7,9 +7,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Houses;
 
-public sealed class HousesRepository : IDofusRepository
+public sealed class HousesRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "houses.json";
+    public static string FileName => "houses.json";
 
     [JsonPropertyName("H.h")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, HouseData>))]
@@ -28,29 +28,6 @@ public sealed class HousesRepository : IDofusRepository
         Houses = FrozenDictionary<int, HouseData>.Empty;
         HouseMaps = FrozenDictionary<int, HouseMapData>.Empty;
         HousesIndoorSkillsId = [];
-    }
-
-    internal static HousesRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-        var customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
-
-        var data = Datacenter.LoadRepository<HousesRepository>(filePath);
-        var customData = Datacenter.LoadRepository<HousesCustomRepository>(customFilePath);
-
-        foreach (var houseCustomData in customData.HousesCustom)
-        {
-            var houseData = data.GetHouseDataById(houseCustomData.Id);
-            if (houseData is not null)
-            {
-                houseData.OutdoorMapId = houseCustomData.OutdoorMapId;
-                houseData.RoomNumber = houseCustomData.RoomNumber;
-                houseData.ChestNumber = houseCustomData.ChestNumber;
-                houseData.Price = houseCustomData.Price;
-            }
-        }
-
-        return data;
     }
 
     public HouseData? GetHouseDataById(int id)
@@ -127,6 +104,23 @@ public sealed class HousesRepository : IDofusRepository
             if (skillData is not null)
             {
                 yield return skillData;
+            }
+        }
+    }
+
+    protected override void LoadCustomData()
+    {
+        var customRepository = DofusCustomRepository.Load<HousesCustomRepository>();
+
+        foreach (var houseCustomData in customRepository.HousesCustom)
+        {
+            var houseData = GetHouseDataById(houseCustomData.Id);
+            if (houseData is not null)
+            {
+                houseData.OutdoorMapId = houseCustomData.OutdoorMapId;
+                houseData.RoomNumber = houseCustomData.RoomNumber;
+                houseData.ChestNumber = houseCustomData.ChestNumber;
+                houseData.Price = houseCustomData.Price;
             }
         }
     }

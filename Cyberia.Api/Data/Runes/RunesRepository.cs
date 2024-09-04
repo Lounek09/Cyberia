@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Runes;
 
-public sealed class RunesRepository : IDofusRepository
+public sealed class RunesRepository : DofusCustomRepository, IDofusRepository
 {
-    private const string c_fileName = "runes.json";
+    public static string FileName => "runes.json";
 
     [JsonPropertyName("RU")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, RuneData>))]
@@ -17,13 +17,6 @@ public sealed class RunesRepository : IDofusRepository
     internal RunesRepository()
     {
         Runes = FrozenDictionary<int, RuneData>.Empty;
-    }
-
-    internal static RunesRepository Load(string _)
-    {
-        var customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
-
-        return Datacenter.LoadRepository<RunesRepository>(customFilePath);
     }
 
     public RuneData? GetRuneDataById(int id)

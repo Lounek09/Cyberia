@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Crafts;
 
-public sealed class CraftsRepository : IDofusRepository
+public sealed class CraftsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "crafts.json";
+    public static string FileName => "crafts.json";
 
     [JsonPropertyName("CR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, CraftData>))]
@@ -17,13 +17,6 @@ public sealed class CraftsRepository : IDofusRepository
     internal CraftsRepository()
     {
         Crafts = FrozenDictionary<int, CraftData>.Empty;
-    }
-
-    internal static CraftsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<CraftsRepository>(filePath);
     }
 
     public CraftData? GetCraftDataById(int id)

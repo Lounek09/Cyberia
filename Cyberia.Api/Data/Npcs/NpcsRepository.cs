@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Npcs;
 
-public sealed class NpcsRepository : IDofusRepository
+public sealed class NpcsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "npc.json";
+    public static string FileName => "npc.json";
 
     [JsonPropertyName("N.a")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, NpcActionData>))]
@@ -22,13 +22,6 @@ public sealed class NpcsRepository : IDofusRepository
     {
         NpcActions = FrozenDictionary<int, NpcActionData>.Empty;
         Npcs = FrozenDictionary<int, NpcData>.Empty;
-    }
-
-    internal static NpcsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<NpcsRepository>(filePath);
     }
 
     public NpcActionData? GetNpcActionDataById(int id)

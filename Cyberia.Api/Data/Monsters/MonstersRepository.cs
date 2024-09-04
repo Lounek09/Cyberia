@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Monsters;
 
-public sealed class MonstersRepository : IDofusRepository
+public sealed class MonstersRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "monsters.json";
+    public static string FileName => "monsters.json";
 
     [JsonPropertyName("MSR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MonsterSuperRaceData>))]
@@ -28,37 +28,6 @@ public sealed class MonstersRepository : IDofusRepository
         MonsterSuperRaces = FrozenDictionary<int, MonsterSuperRaceData>.Empty;
         MonsterRaces = FrozenDictionary<int, MonsterRaceData>.Empty;
         Monsters = FrozenDictionary<int, MonsterData>.Empty;
-    }
-
-    internal static MonstersRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-        var customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
-
-        var data = Datacenter.LoadRepository<MonstersRepository>(filePath);
-        var customData = Datacenter.LoadRepository<MonstersCustomRepository>(customFilePath);
-
-        foreach (var pair in data.Monsters)
-        {
-            var i = 1;
-            foreach (var monsterGradeData in pair.Value.GetMonsterGradesData())
-            {
-                monsterGradeData.MonsterData = pair.Value;
-                monsterGradeData.Rank = i++;
-            }
-        }
-
-        foreach (var monsterCustomData in customData.MonstersCustom)
-        {
-            var monsterData = data.GetMonsterDataById(monsterCustomData.Id);
-            if (monsterData is not null)
-            {
-                monsterData.BreedSummon = monsterCustomData.BreedSummon;
-                monsterData.TrelloUrl = monsterCustomData.TrelloUrl;
-            }
-        }
-
-        return data;
     }
 
     public MonsterSuperRaceData? GetMonsterSuperRaceDataById(int id)
@@ -117,5 +86,30 @@ public sealed class MonstersRepository : IDofusRepository
         return monsterData is null
             ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : monsterData.Name;
+    }
+
+    protected override void LoadCustomData()
+    {
+        var customRepository = DofusCustomRepository.Load<MonstersCustomRepository>();
+
+        foreach (var pair in Monsters)
+        {
+            var i = 1;
+            foreach (var monsterGradeData in pair.Value.GetMonsterGradesData())
+            {
+                monsterGradeData.MonsterData = pair.Value;
+                monsterGradeData.Rank = i++;
+            }
+        }
+
+        foreach (var monsterCustomData in customRepository.MonstersCustom)
+        {
+            var monsterData = GetMonsterDataById(monsterCustomData.Id);
+            if (monsterData is not null)
+            {
+                monsterData.BreedSummon = monsterCustomData.BreedSummon;
+                monsterData.TrelloUrl = monsterCustomData.TrelloUrl;
+            }
+        }
     }
 }

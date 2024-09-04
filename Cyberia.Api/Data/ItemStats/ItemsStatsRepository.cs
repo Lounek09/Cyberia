@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.ItemStats;
 
-public sealed class ItemsStatsRepository : IDofusRepository
+public sealed class ItemsStatsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "itemstats.json";
+    public static string FileName => "itemstats.json";
 
     [JsonPropertyName("ISTA")]
     [JsonInclude]
@@ -24,20 +24,22 @@ public sealed class ItemsStatsRepository : IDofusRepository
         ItemsStats = FrozenDictionary<int, ItemStatsData>.Empty;
     }
 
-    internal static ItemsStatsRepository Load(string directoryPath)
+    public ItemStatsData? GetItemStatDataById(int id)
     {
-        var filePath = Path.Join(directoryPath, c_fileName);
-        var customFilePath = Path.Combine(DofusApi.CustomPath, c_fileName);
+        ItemsStats.TryGetValue(id, out var itemStatsData);
+        return itemStatsData;
+    }
 
-        var data = Datacenter.LoadRepository<ItemsStatsRepository>(filePath);
-        var customData = Datacenter.LoadRepository<ItemsStatsCustomRepository>(customFilePath);
+    protected override void LoadCustomData()
+    {
+        var customRepository = DofusCustomRepository.Load<ItemsStatsCustomRepository>();
 
-        foreach (var itemStatsCustomData in customData.ItemsStatsCustom)
+        foreach (var itemStatsCustomData in customRepository.ItemsStatsCustom)
         {
-            var itemStatsData = data.ItemsStatsCore.Find(x => x.Id == itemStatsCustomData.Id);
+            var itemStatsData = ItemsStatsCore.Find(x => x.Id == itemStatsCustomData.Id);
             if (itemStatsData is null)
             {
-                data.ItemsStatsCore.Add(new ItemStatsData()
+                ItemsStatsCore.Add(new ItemStatsData()
                 {
                     Id = itemStatsCustomData.Id,
                     Effects = itemStatsCustomData.Effects
@@ -49,13 +51,6 @@ public sealed class ItemsStatsRepository : IDofusRepository
             ((List<IEffect>)itemStatsData.Effects).AddRange(itemStatsCustomData.Effects);
         }
 
-        data.ItemsStats = data.ItemsStatsCore.ToFrozenDictionary(x => x.Id, x => x);
-        return data;
-    }
-
-    public ItemStatsData? GetItemStatDataById(int id)
-    {
-        ItemsStats.TryGetValue(id, out var itemStatsData);
-        return itemStatsData;
+        ItemsStats = ItemsStatsCore.GroupBy(x => x.Id).ToFrozenDictionary(x => x.Key, x => x.First());
     }
 }

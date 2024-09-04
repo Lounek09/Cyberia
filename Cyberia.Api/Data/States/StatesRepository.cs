@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.States;
 
-public sealed class StatesRepository : IDofusRepository
+public sealed class StatesRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "states.json";
+    public static string FileName => "states.json";
 
     [JsonPropertyName("ST")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, StateData>))]
@@ -17,13 +17,6 @@ public sealed class StatesRepository : IDofusRepository
     internal StatesRepository()
     {
         States = FrozenDictionary<int, StateData>.Empty;
-    }
-
-    internal static StatesRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<StatesRepository>(filePath);
     }
 
     public StateData? GetStateDataById(int id)

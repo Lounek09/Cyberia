@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.KnowledgeBook;
 
-public sealed class KnowledgeBookRepository : IDofusRepository
+public sealed class KnowledgeBookRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "kb.json";
+    public static string FileName => "kb.json";
 
     [JsonPropertyName("KBC")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, KnowledgeBookCatagoryData>))]
@@ -32,13 +32,6 @@ public sealed class KnowledgeBookRepository : IDofusRepository
         KnowledgeBookArticles = FrozenDictionary<int, KnowledgeBookArticleData>.Empty;
         KnowledgeBookTips = FrozenDictionary<int, KnowledgeBookTipData>.Empty;
         KnowledgeBookTriggers = FrozenDictionary<int, KnowledgeBookTriggerData>.Empty;
-    }
-
-    internal static KnowledgeBookRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<KnowledgeBookRepository>(filePath);
     }
 
     public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryDataById(int id)

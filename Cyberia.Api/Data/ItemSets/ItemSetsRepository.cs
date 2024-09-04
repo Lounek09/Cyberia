@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.ItemSets;
 
-public sealed class ItemSetsRepository : IDofusRepository
+public sealed class ItemSetsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "itemsets.json";
+    public static string FileName => "itemsets.json";
 
     [JsonPropertyName("IS")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemSetData>))]
@@ -18,26 +18,6 @@ public sealed class ItemSetsRepository : IDofusRepository
     internal ItemSetsRepository()
     {
         ItemSets = FrozenDictionary<int, ItemSetData>.Empty;
-    }
-
-    internal static ItemSetsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-        var customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
-
-        var data = Datacenter.LoadRepository<ItemSetsRepository>(filePath);
-        var customData = Datacenter.LoadRepository<ItemSetsCustomRepository>(customFilePath);
-
-        foreach (var itemSetCustomData in customData.ItemSetsCustom)
-        {
-            var itemSetData = data.GetItemSetDataById(itemSetCustomData.Id);
-            if (itemSetData is not null)
-            {
-                itemSetData.Effects = itemSetCustomData.Effects;
-            }
-        }
-
-        return data;
     }
 
     public ItemSetData? GetItemSetDataById(int id)
@@ -66,5 +46,19 @@ public sealed class ItemSetsRepository : IDofusRepository
         return itemSetData is null
             ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : itemSetData.Name;
+    }
+
+    protected override void LoadCustomData()
+    {
+        var customRepository = DofusCustomRepository.Load<ItemSetsCustomRepository>();
+
+        foreach (var itemSetCustomData in customRepository.ItemSetsCustom)
+        {
+            var itemSetData = GetItemSetDataById(itemSetCustomData.Id);
+            if (itemSetData is not null)
+            {
+                itemSetData.Effects = itemSetCustomData.Effects;
+            }
+        }
     }
 }

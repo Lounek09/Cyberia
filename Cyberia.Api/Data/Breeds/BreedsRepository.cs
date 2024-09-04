@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Breeds;
 
-public sealed class BreedsRepository : IDofusRepository
+public sealed class BreedsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "classes.json";
+    public static string FileName => "classes.json";
 
     [JsonPropertyName("G")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, BreedData>))]
@@ -18,27 +18,6 @@ public sealed class BreedsRepository : IDofusRepository
     internal BreedsRepository()
     {
         Breeds = FrozenDictionary<int, BreedData>.Empty;
-    }
-
-    internal static BreedsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-        var customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
-
-        var data = Datacenter.LoadRepository<BreedsRepository>(filePath);
-        var customData = Datacenter.LoadRepository<BreedsCustomRepository>(customFilePath);
-
-        foreach (var breedCustomData in customData.Breeds)
-        {
-            var breedData = data.GetBreedDataById(breedCustomData.Id);
-            if (breedData is not null)
-            {
-                breedData.SpecialSpellId = breedCustomData.SpecialSpellId;
-                breedData.ItemSetId = breedCustomData.ItemSetId;
-            }
-        }
-
-        return data;
     }
 
     public BreedData? GetBreedDataById(int id)
@@ -74,5 +53,20 @@ public sealed class BreedsRepository : IDofusRepository
         return breed is null
             ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : breed.Name;
+    }
+
+    protected override void LoadCustomData()
+    {
+        var customRepository = DofusCustomRepository.Load<BreedsCustomRepository>();
+
+        foreach (var breedCustomData in customRepository.Breeds)
+        {
+            var breedData = GetBreedDataById(breedCustomData.Id);
+            if (breedData is not null)
+            {
+                breedData.SpecialSpellId = breedCustomData.SpecialSpellId;
+                breedData.ItemSetId = breedCustomData.ItemSetId;
+            }
+        }
     }
 }

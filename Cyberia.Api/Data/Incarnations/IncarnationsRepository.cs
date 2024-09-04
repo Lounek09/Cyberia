@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Incarnations;
 
-public sealed class IncarnationsRepository : IDofusRepository
+public sealed class IncarnationsRepository : DofusCustomRepository, IDofusRepository
 {
-    private const string c_fileName = "incarnation.json";
+    public static string FileName => "incarnation.json";
 
     [JsonPropertyName("INCA")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, IncarnationData>))]
@@ -17,13 +17,6 @@ public sealed class IncarnationsRepository : IDofusRepository
     internal IncarnationsRepository()
     {
         Incarnations = FrozenDictionary<int, IncarnationData>.Empty;
-    }
-
-    internal static IncarnationsRepository Load(string _)
-    {
-        var customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
-
-        return Datacenter.LoadRepository<IncarnationsRepository>(customFilePath);
     }
 
     public IncarnationData? GetIncarnationDataByItemId(int id)

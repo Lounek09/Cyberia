@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Servers;
 
-public sealed class ServersRepository : IDofusRepository
+public sealed class ServersRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "servers.json";
+    public static string FileName => "servers.json";
 
     [JsonPropertyName("SR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ServerData>))]
@@ -44,24 +44,6 @@ public sealed class ServersRepository : IDofusRepository
         ServerSpecificTexts = ReadOnlyDictionary<string, string>.Empty;
     }
 
-    internal static ServersRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        var data = Datacenter.LoadRepository<ServersRepository>(filePath);
-
-        foreach (var serverPopulationWeightData in data.ServerPopulationsWeight)
-        {
-            var serverPopulationData = data.GetServerPopulationDataById(serverPopulationWeightData.Id);
-            if (serverPopulationData is not null)
-            {
-                serverPopulationData.Weight = serverPopulationWeightData.Weight;
-            }
-        }
-
-        return data;
-    }
-
     public ServerData? GetServerDataById(int id)
     {
         Servers.TryGetValue(id, out var serverData);
@@ -87,5 +69,17 @@ public sealed class ServersRepository : IDofusRepository
     {
         ServerCommunities.TryGetValue(id, out var serverCommunityData);
         return serverCommunityData;
+    }
+
+    protected override void LoadCustomData()
+    {
+        foreach (var serverPopulationWeightData in ServerPopulationsWeight)
+        {
+            var serverPopulationData = GetServerPopulationDataById(serverPopulationWeightData.Id);
+            if (serverPopulationData is not null)
+            {
+                serverPopulationData.Weight = serverPopulationWeightData.Weight;
+            }
+        }
     }
 }

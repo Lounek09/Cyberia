@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Rides;
 
-public sealed class RidesRepository : IDofusRepository
+public sealed class RidesRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "rides.json";
+    public static string FileName => "rides.json";
 
     [JsonPropertyName("RI")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, RideData>))]
@@ -22,13 +22,6 @@ public sealed class RidesRepository : IDofusRepository
     {
         Rides = FrozenDictionary<int, RideData>.Empty;
         RideAbilities = FrozenDictionary<int, RideAbilityData>.Empty;
-    }
-
-    internal static RidesRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<RidesRepository>(filePath);
     }
 
     public RideData? GetRideDataById(int id)

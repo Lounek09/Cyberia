@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.FightChallenges;
 
-public sealed class FightChallengesRepository : IDofusRepository
+public sealed class FightChallengesRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "fightChallenge.json";
+    public static string FileName => "fightChallenge.json";
 
     [JsonPropertyName("FC")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, FightChallengeData>))]
@@ -17,13 +17,6 @@ public sealed class FightChallengesRepository : IDofusRepository
     internal FightChallengesRepository()
     {
         FightChallenges = FrozenDictionary<int, FightChallengeData>.Empty;
-    }
-
-    internal static FightChallengesRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<FightChallengesRepository>(filePath);
     }
 
     public FightChallengeData? GetFightChallenge(int id)

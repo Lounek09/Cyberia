@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Pets;
 
-public sealed class PetsRepository : IDofusRepository
+public sealed class PetsRepository : DofusCustomRepository, IDofusRepository
 {
-    private const string c_fileName = "pets.json";
+    public static string FileName => "pets.json";
 
     [JsonPropertyName("PET")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, PetData>))]
@@ -17,13 +17,6 @@ public sealed class PetsRepository : IDofusRepository
     internal PetsRepository()
     {
         Pets = FrozenDictionary<int, PetData>.Empty;
-    }
-
-    internal static PetsRepository Load(string _)
-    {
-        var customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
-
-        return Datacenter.LoadRepository<PetsRepository>(customFilePath);
     }
 
     public PetData? GetPetDataByItemId(int id)

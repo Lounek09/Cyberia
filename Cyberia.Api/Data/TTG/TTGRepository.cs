@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TTG;
 
-public sealed class TTGRepository : IDofusRepository
+public sealed class TTGRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "ttg.json";
+    public static string FileName => "ttg.json";
 
     [JsonPropertyName("TTG.c")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGCardData>))]
@@ -27,13 +27,6 @@ public sealed class TTGRepository : IDofusRepository
         TTGCards = FrozenDictionary<int, TTGCardData>.Empty;
         TTGEntities = FrozenDictionary<int, TTGEntityData>.Empty;
         TTGFamilies = FrozenDictionary<int, TTGFamilyData>.Empty;
-    }
-
-    internal static TTGRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<TTGRepository>(filePath);
     }
 
     public TTGCardData? GetTTGCardDataById(int id)

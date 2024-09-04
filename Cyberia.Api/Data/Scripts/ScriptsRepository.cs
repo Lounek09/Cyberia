@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Scripts;
 
-public sealed class ScriptsRepository : IDofusRepository
+public sealed class ScriptsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "scripts.json";
+    public static string FileName => "scripts.json";
 
     [JsonPropertyName("SCR")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ScriptDialogData>))]
@@ -17,13 +17,6 @@ public sealed class ScriptsRepository : IDofusRepository
     internal ScriptsRepository()
     {
         ScriptDialogs = FrozenDictionary<int, ScriptDialogData>.Empty;
-    }
-
-    internal static ScriptsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<ScriptsRepository>(filePath);
     }
 
     public ScriptDialogData? GetScriptDialog(int id)

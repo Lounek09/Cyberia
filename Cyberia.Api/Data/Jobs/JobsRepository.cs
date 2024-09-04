@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Jobs;
 
-public sealed class JobsRepository : IDofusRepository
+public sealed class JobsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "jobs.json";
+    public static string FileName => "jobs.json";
 
     [JsonPropertyName("J")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, JobData>))]
@@ -17,13 +17,6 @@ public sealed class JobsRepository : IDofusRepository
     internal JobsRepository()
     {
         Jobs = FrozenDictionary<int, JobData>.Empty;
-    }
-
-    internal static JobsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<JobsRepository>(filePath);
     }
 
     public JobData? GetJobDataById(int id)

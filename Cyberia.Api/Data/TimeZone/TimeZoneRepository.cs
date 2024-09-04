@@ -4,9 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TimeZone;
 
-public sealed class TimeZoneRepository : IDofusRepository
+public sealed class TimeZoneRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "timezones.json";
+    public static string FileName => "timezones.json";
 
     [JsonPropertyName("T.mspd")]
     public int MilisecondPerDay { get; set; }
@@ -25,13 +25,6 @@ public sealed class TimeZoneRepository : IDofusRepository
     internal TimeZoneRepository()
     {
         StartDayOfMonths = new Dictionary<int, LocalizedString>();
-    }
-
-    internal static TimeZoneRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<TimeZoneRepository>(filePath);
     }
 
     public string GetMonth(int dayOfYear)

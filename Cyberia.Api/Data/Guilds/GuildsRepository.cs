@@ -2,9 +2,9 @@
 
 namespace Cyberia.Api.Data.Guilds;
 
-public sealed class GuildsRepository : IDofusRepository
+public sealed class GuildsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "guilds.json";
+    public static string FileName => "guilds.json";
 
     [JsonPropertyName("GU.b")]
     public GuildData Guild { get; init; }
@@ -13,12 +13,5 @@ public sealed class GuildsRepository : IDofusRepository
     internal GuildsRepository()
     {
         Guild = new();
-    }
-
-    internal static GuildsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<GuildsRepository>(filePath);
     }
 }

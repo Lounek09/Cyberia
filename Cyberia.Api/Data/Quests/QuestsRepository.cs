@@ -7,9 +7,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests;
 
-public sealed class QuestsRepository : IDofusRepository
+public sealed class QuestsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "quests.json";
+    public static string FileName => "quests.json";
 
     [JsonPropertyName("Q.q")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, QuestData>))]
@@ -34,56 +34,6 @@ public sealed class QuestsRepository : IDofusRepository
         QuestSteps = FrozenDictionary<int, QuestStepData>.Empty;
         QuestObjectives = FrozenDictionary<int, QuestObjectiveData>.Empty;
         QuestObjectiveTypes = FrozenDictionary<int, QuestObjectiveTypeData>.Empty;
-    }
-
-    internal static QuestsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-        var customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
-
-        var data = Datacenter.LoadRepository<QuestsRepository>(filePath);
-        var dataCustom = Datacenter.LoadRepository<QuestsCustomRepository>(customFilePath);
-
-        foreach (var questCustomData in dataCustom.QuestsCustom)
-        {
-            var questData = data.GetQuestDataById(questCustomData.Id);
-            if (questData is not null)
-            {
-                questData.Repeatable = questCustomData.Repeatable;
-                questData.Account = questCustomData.Account;
-                questData.HasDungeon = questCustomData.HasDungeon;
-                questData.QuestStepsId = questCustomData.QuestStepsId;
-            }
-        }
-
-        foreach (var questStepCustomData in dataCustom.QuestStepsCustom)
-        {
-            var questStepData = data.GetQuestStepDataById(questStepCustomData.Id);
-            if (questStepData is not null)
-            {
-                questStepData.DialogQuestionId = questStepCustomData.DialogQuestionId;
-                questStepData.OptimalLevel = questStepCustomData.OptimalLevel;
-                questStepData.QuestObjectivesId = questStepCustomData.QuestObjectivesId;
-            }
-        }
-
-        foreach (var questStepData in data.QuestSteps.Values)
-        {
-            List<QuestObjectiveData> questObjectivesData = [];
-
-            foreach (var questObjectiveId in questStepData.QuestObjectivesId)
-            {
-                var questObjectiveData = data.GetQuestObjectiveDataById(questObjectiveId);
-                if (questObjectiveData is not null)
-                {
-                    questObjectivesData.Add(questObjectiveData);
-                }
-            }
-
-            questStepData.QuestObjectives = QuestObjectiveFactory.CreateMany(questObjectivesData);
-        }
-
-        return data;
     }
 
     public QuestData? GetQuestDataById(int id)
@@ -148,5 +98,49 @@ public sealed class QuestsRepository : IDofusRepository
     {
         QuestObjectiveTypes.TryGetValue(id, out var questObjectiveTypeData);
         return questObjectiveTypeData;
+    }
+
+    protected override void LoadCustomData()
+    {
+        var customRepository = DofusCustomRepository.Load<QuestsCustomRepository>();
+
+        foreach (var questCustomData in customRepository.QuestsCustom)
+        {
+            var questData = GetQuestDataById(questCustomData.Id);
+            if (questData is not null)
+            {
+                questData.Repeatable = questCustomData.Repeatable;
+                questData.Account = questCustomData.Account;
+                questData.HasDungeon = questCustomData.HasDungeon;
+                questData.QuestStepsId = questCustomData.QuestStepsId;
+            }
+        }
+
+        foreach (var questStepCustomData in customRepository.QuestStepsCustom)
+        {
+            var questStepData = GetQuestStepDataById(questStepCustomData.Id);
+            if (questStepData is not null)
+            {
+                questStepData.DialogQuestionId = questStepCustomData.DialogQuestionId;
+                questStepData.OptimalLevel = questStepCustomData.OptimalLevel;
+                questStepData.QuestObjectivesId = questStepCustomData.QuestObjectivesId;
+            }
+        }
+
+        foreach (var questStepData in QuestSteps.Values)
+        {
+            List<QuestObjectiveData> questObjectivesData = [];
+
+            foreach (var questObjectiveId in questStepData.QuestObjectivesId)
+            {
+                var questObjectiveData = GetQuestObjectiveDataById(questObjectiveId);
+                if (questObjectiveData is not null)
+                {
+                    questObjectivesData.Add(questObjectiveData);
+                }
+            }
+
+            questStepData.QuestObjectives = QuestObjectiveFactory.CreateMany(questObjectivesData);
+        }
     }
 }

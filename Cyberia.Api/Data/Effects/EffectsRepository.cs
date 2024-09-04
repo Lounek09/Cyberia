@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Effects;
 
-public sealed class EffectsRepository : IDofusRepository
+public sealed class EffectsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "effects.json";
+    public static string FileName => "effects.json";
 
     [JsonPropertyName("E")]
     [JsonInclude]
@@ -23,20 +23,22 @@ public sealed class EffectsRepository : IDofusRepository
         Effects = FrozenDictionary<int, EffectData>.Empty;
     }
 
-    internal static EffectsRepository Load(string directoryPath)
+    public EffectData? GetEffectDataById(int id)
     {
-        var filePath = Path.Join(directoryPath, c_fileName);
-        var customFilePath = Path.Join(DofusApi.CustomPath, c_fileName);
+        Effects.TryGetValue(id, out var effectData);
+        return effectData;
+    }
 
-        var data = Datacenter.LoadRepository<EffectsRepository>(filePath);
-        var customData = Datacenter.LoadRepository<EffectsCustomRepository>(customFilePath);
+    protected override void LoadCustomData()
+    {
+        var customRepository = DofusCustomRepository.Load<EffectsCustomRepository>();
 
-        foreach (var effectCustomData in customData.Effects)
+        foreach (var effectCustomData in customRepository.Effects)
         {
-            var effectData = data.EffectsCore.Find(x => x.Id == effectCustomData.Id);
+            var effectData = EffectsCore.Find(x => x.Id == effectCustomData.Id);
             if (effectData is null)
             {
-                data.EffectsCore.Add(new EffectData()
+                EffectsCore.Add(new EffectData()
                 {
                     Id = effectCustomData.Id,
                     Description = new LocalizedString(effectCustomData.Description),
@@ -50,20 +52,9 @@ public sealed class EffectsRepository : IDofusRepository
                 continue;
             }
 
-            //TODO: Merge translations instead of replacing and losing the original ones
-            effectData.Description = new LocalizedString(effectCustomData.Description); 
+            effectData.Description = new LocalizedString(effectCustomData.Description);
         }
 
-        data.Effects = data.EffectsCore
-            .GroupBy(x => x.Id)
-            .ToFrozenDictionary(x => x.Key, x => x.First());
-
-        return data;
-    }
-
-    public EffectData? GetEffectDataById(int id)
-    {
-        Effects.TryGetValue(id, out var effectData);
-        return effectData;
+        Effects = EffectsCore.GroupBy(x => x.Id).ToFrozenDictionary(x => x.Key, x => x.First());
     }
 }

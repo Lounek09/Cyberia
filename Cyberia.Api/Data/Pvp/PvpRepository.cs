@@ -2,9 +2,9 @@
 
 namespace Cyberia.Api.Data.Pvp;
 
-public sealed class PvpRepository : IDofusRepository
+public sealed class PvpRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "pvp.json";
+    public static string FileName => "pvp.json";
 
     [JsonPropertyName("PP.hp")]
     public IReadOnlyList<int> HonnorPointThresholds { get; init; }
@@ -20,12 +20,5 @@ public sealed class PvpRepository : IDofusRepository
     {
         HonnorPointThresholds = [];
         PvpGrades = [];
-    }
-
-    internal static PvpRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<PvpRepository>(filePath);
     }
 }

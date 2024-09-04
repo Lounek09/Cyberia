@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Hints;
 
-public sealed class HintsRepository : IDofusRepository
+public sealed class HintsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "hints.json";
+    public static string FileName => "hints.json";
 
     [JsonPropertyName("HIC")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, HintCategoryData>))]
@@ -21,13 +21,6 @@ public sealed class HintsRepository : IDofusRepository
     {
         HintCategories = FrozenDictionary<int, HintCategoryData>.Empty;
         Hints = [];
-    }
-
-    internal static HintsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<HintsRepository>(filePath);
     }
 
     public HintCategoryData? GetHintCategory(int id)

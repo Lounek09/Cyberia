@@ -1,8 +1,4 @@
-﻿using Cyberia.Api.Managers;
-using Cyberia.Langzilla.Enums;
-
-using System.Reflection;
-using System.Text.Json;
+﻿using Cyberia.Langzilla.Enums;
 
 namespace Cyberia.Api.Data;
 
@@ -28,6 +24,7 @@ public sealed class Datacenter
     public KnowledgeBook.KnowledgeBookRepository KnowledgeBookRepository { get; init; }
     public Maps.MapsRepository MapsRepository { get; init; }
     public Monsters.MonstersRepository MonstersRepository { get; init; }
+    public Names.NamesRepository NamesRepository { get; init; }
     public Npcs.NpcsRepository NpcsRepository { get; init; }
     public Pets.PetsRepository PetsRepository { get; init; }
     public Pvp.PvpRepository PvpRepository { get; init; }
@@ -41,52 +38,49 @@ public sealed class Datacenter
     public SpeakingItems.SpeakingItemsRepository SpeakingItemsRepository { get; init; }
     public Spells.SpellsRepository SpellsRepository { get; init; }
     public States.StatesRepository StatesRepository { get; init; }
-    public Names.TaxCollectorNamesRepository TaxCollectorNamesRepository { get; init; }
     public TimeZone.TimeZoneRepository TimeZonesRepository { get; init; }
     public Titles.TitlesRepository TitlesRepository { get; init; }
     public TTG.TTGRepository TTGRepository { get; init; }
 
     internal Datacenter(LangType type)
     {
-        var outputDirectoryPath = LangParserManager.GetOutputDirectoryPath(type, DofusApi.Config.BaseLanguage);
-
-        AlignmentsRepository = Alignments.AlignmentsRepository.Load(outputDirectoryPath);
-        AudiosRepository = Audios.AudiosRepository.Load(outputDirectoryPath);
-        BreedsRepository = Breeds.BreedsRepository.Load(outputDirectoryPath);
-        CraftsRepository = Crafts.CraftsRepository.Load(outputDirectoryPath);
-        DialogsRepository = Dialogs.DialogsRepository.Load(outputDirectoryPath);
-        EffectsRepository = Effects.EffectsRepository.Load(outputDirectoryPath);
-        EmotesRepository = Emotes.EmotesRepository.Load(outputDirectoryPath);
-        FightChallengesRepository = FightChallenges.FightChallengesRepository.Load(outputDirectoryPath);
-        GuildsRepository = Guilds.GuildsRepository.Load(outputDirectoryPath);
-        HintsRepository = Hints.HintsRepository.Load(outputDirectoryPath);
-        HousesRepository = Houses.HousesRepository.Load(outputDirectoryPath);
-        IncarnationsRepository = Incarnations.IncarnationsRepository.Load(outputDirectoryPath);
-        InteractiveObjectsRepository = InteractiveObjects.InteractiveObjectsRepository.Load(outputDirectoryPath);
-        ItemsRepository = Items.ItemsRepository.Load(outputDirectoryPath);
-        ItemSetsRepository = ItemSets.ItemSetsRepository.Load(outputDirectoryPath);
-        ItemsStatsRepository = ItemStats.ItemsStatsRepository.Load(outputDirectoryPath);
-        JobsRepository = Jobs.JobsRepository.Load(outputDirectoryPath);
-        KnowledgeBookRepository = KnowledgeBook.KnowledgeBookRepository.Load(outputDirectoryPath);
-        MapsRepository = Maps.MapsRepository.Load(outputDirectoryPath);
-        MonstersRepository = Monsters.MonstersRepository.Load(outputDirectoryPath);
-        NpcsRepository = Npcs.NpcsRepository.Load(outputDirectoryPath);
-        PetsRepository = Pets.PetsRepository.Load(outputDirectoryPath);
-        PvpRepository = Pvp.PvpRepository.Load(outputDirectoryPath);
-        QuestsRepository = Quests.QuestsRepository.Load(outputDirectoryPath);
-        RanksRepository = Ranks.RanksRepository.Load(outputDirectoryPath);
-        RidesRepository = Rides.RidesRepository.Load(outputDirectoryPath);
-        RunesRepository = Runes.RunesRepository.Load(outputDirectoryPath);
-        ScriptsRepository = Scripts.ScriptsRepository.Load(outputDirectoryPath);
-        ServersRepository = Servers.ServersRepository.Load(outputDirectoryPath);
-        SkillsRepository = Skills.SkillsRepository.Load(outputDirectoryPath);
-        SpeakingItemsRepository = SpeakingItems.SpeakingItemsRepository.Load(outputDirectoryPath);
-        SpellsRepository = Spells.SpellsRepository.Load(outputDirectoryPath);
-        StatesRepository = States.StatesRepository.Load(outputDirectoryPath);
-        TaxCollectorNamesRepository = Names.TaxCollectorNamesRepository.Load(outputDirectoryPath);
-        TimeZonesRepository = TimeZone.TimeZoneRepository.Load(outputDirectoryPath);
-        TitlesRepository = Titles.TitlesRepository.Load(outputDirectoryPath);
-        TTGRepository = TTG.TTGRepository.Load(outputDirectoryPath);
+        AlignmentsRepository = DofusRepository.Load<Alignments.AlignmentsRepository>(type);
+        AudiosRepository = DofusRepository.Load<Audios.AudiosRepository>(type);
+        BreedsRepository = DofusRepository.Load<Breeds.BreedsRepository>(type);
+        CraftsRepository = DofusRepository.Load<Crafts.CraftsRepository>(type);
+        DialogsRepository = DofusRepository.Load<Dialogs.DialogsRepository>(type);
+        EffectsRepository = DofusRepository.Load<Effects.EffectsRepository>(type);
+        EmotesRepository = DofusRepository.Load<Emotes.EmotesRepository>(type);
+        FightChallengesRepository = DofusRepository.Load<FightChallenges.FightChallengesRepository>(type);
+        GuildsRepository = DofusRepository.Load<Guilds.GuildsRepository>(type);
+        HintsRepository = DofusRepository.Load<Hints.HintsRepository>(type);
+        HousesRepository = DofusRepository.Load<Houses.HousesRepository>(type);
+        IncarnationsRepository = DofusCustomRepository.Load<Incarnations.IncarnationsRepository>();
+        InteractiveObjectsRepository = DofusRepository.Load<InteractiveObjects.InteractiveObjectsRepository>(type);
+        ItemsRepository = DofusRepository.Load<Items.ItemsRepository>(type);
+        ItemSetsRepository = DofusRepository.Load<ItemSets.ItemSetsRepository>(type);
+        ItemsStatsRepository = DofusRepository.Load<ItemStats.ItemsStatsRepository>(type);
+        JobsRepository = DofusRepository.Load<Jobs.JobsRepository>(type);
+        KnowledgeBookRepository = DofusRepository.Load<KnowledgeBook.KnowledgeBookRepository>(type);
+        MapsRepository = DofusRepository.Load<Maps.MapsRepository>(type);
+        MonstersRepository = DofusRepository.Load<Monsters.MonstersRepository>(type);
+        NamesRepository = DofusRepository.Load<Names.NamesRepository>(type);
+        NpcsRepository = DofusRepository.Load<Npcs.NpcsRepository>(type);
+        PetsRepository = DofusCustomRepository.Load<Pets.PetsRepository>();
+        PvpRepository = DofusRepository.Load<Pvp.PvpRepository>(type);
+        QuestsRepository = DofusRepository.Load<Quests.QuestsRepository>(type);
+        RanksRepository = DofusRepository.Load<Ranks.RanksRepository>(type);
+        RidesRepository = DofusRepository.Load<Rides.RidesRepository>(type);
+        RunesRepository = DofusCustomRepository.Load<Runes.RunesRepository>();
+        ScriptsRepository = DofusRepository.Load<Scripts.ScriptsRepository>(type);
+        ServersRepository = DofusRepository.Load<Servers.ServersRepository>(type);
+        SkillsRepository = DofusRepository.Load<Skills.SkillsRepository>(type);
+        SpeakingItemsRepository = DofusRepository.Load<SpeakingItems.SpeakingItemsRepository>(type);
+        SpellsRepository = DofusRepository.Load<Spells.SpellsRepository>(type);
+        StatesRepository = DofusRepository.Load<States.StatesRepository>(type);
+        TimeZonesRepository = DofusRepository.Load<TimeZone.TimeZoneRepository>(type);
+        TitlesRepository = DofusRepository.Load<Titles.TitlesRepository>(type);
+        TTGRepository = DofusRepository.Load<TTG.TTGRepository>(type);
     }
 
     public static (int boost, int cost) GetNextBoostCost(IReadOnlyList<IReadOnlyList<int>> boostCost, int currentAmout)
@@ -105,31 +99,5 @@ public sealed class Datacenter
         }
 
         return (1, 1);
-    }
-
-    internal static T LoadRepository<T>(string filePath)
-        where T : class, IDofusRepository
-    {
-        var constructor = typeof(T).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.EmptyTypes) ??
-            throw new EntryPointNotFoundException($"Non public parameter-less constructor for {typeof(T).Name} not found");
-
-        if (!File.Exists(filePath))
-        {
-            Log.Warning("File {FilePath} not found to initialize {TypeName}", filePath, typeof(T).Name);
-            return (T)constructor.Invoke(null);
-        }
-
-        using var json = File.OpenRead(filePath);
-
-        try
-        {
-            return JsonSerializer.Deserialize<T>(json) ?? (T)constructor.Invoke(null);
-        }
-        catch (Exception e)
-        {
-            Log.Error(e, "Failed to deserialize the JSON located at {FilePath} to initialize {TypeName}", filePath, typeof(T).Name);
-        }
-
-        return (T)constructor.Invoke(null);
     }
 }

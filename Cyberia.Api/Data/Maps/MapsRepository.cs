@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Maps;
 
-public sealed class MapsRepository : IDofusRepository
+public sealed class MapsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "maps.json";
+    public static string FileName => "maps.json";
 
     [JsonPropertyName("MA.m")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, MapData>))]
@@ -32,13 +32,6 @@ public sealed class MapsRepository : IDofusRepository
         MapSuperAreas = FrozenDictionary<int, MapSuperAreaData>.Empty;
         MapAreas = FrozenDictionary<int, MapAreaData>.Empty;
         MapSubAreas = FrozenDictionary<int, MapSubAreaData>.Empty;
-    }
-
-    internal static MapsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<MapsRepository>(filePath);
     }
 
     public MapData? GetMapDataById(int id)

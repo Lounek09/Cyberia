@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Names;
 
-public sealed class TaxCollectorNamesRepository : IDofusRepository
+public sealed class NamesRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "names.json";
+    public static string FileName => "names.json";
 
     [JsonPropertyName("NF.n")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TaxCollectorLastNameData>))]
@@ -18,17 +18,10 @@ public sealed class TaxCollectorNamesRepository : IDofusRepository
     public FrozenDictionary<int, TaxCollectorFirstNameData> TaxCollectorFirstNames { get; init; }
 
     [JsonConstructor]
-    internal TaxCollectorNamesRepository()
+    internal NamesRepository()
     {
         TaxCollectorLastNames = FrozenDictionary<int, TaxCollectorLastNameData>.Empty;
         TaxCollectorFirstNames = FrozenDictionary<int, TaxCollectorFirstNameData>.Empty;
-    }
-
-    internal static TaxCollectorNamesRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<TaxCollectorNamesRepository>(filePath);
     }
 
     public string GetRandomTaxCollectorName()

@@ -2,8 +2,10 @@
 
 namespace Cyberia.Api.Data.Houses.Custom;
 
-internal sealed class HousesCustomRepository : IDofusRepository
+internal sealed class HousesCustomRepository : DofusCustomRepository, IDofusRepository
 {
+    public static string FileName => HousesRepository.FileName;
+
     [JsonPropertyName("CH.h")]
     public IReadOnlyList<HouseCustomData> HousesCustom { get; init; }
 

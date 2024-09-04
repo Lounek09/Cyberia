@@ -2,8 +2,10 @@
 
 namespace Cyberia.Api.Data.ItemSets.Custom;
 
-internal sealed class ItemSetsCustomRepository : IDofusRepository
+internal sealed class ItemSetsCustomRepository : DofusCustomRepository, IDofusRepository
 {
+    public static string FileName => ItemSetsRepository.FileName;
+
     [JsonPropertyName("CIS")]
     public IReadOnlyList<ItemSetCustomData> ItemSetsCustom { get; init; }
 

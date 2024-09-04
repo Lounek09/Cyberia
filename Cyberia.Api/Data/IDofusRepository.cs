@@ -2,5 +2,5 @@
 
 public interface IDofusRepository
 {
-
+    static abstract string FileName { get; }
 }

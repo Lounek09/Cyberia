@@ -2,8 +2,10 @@
 
 namespace Cyberia.Api.Data.ItemStats.Custom;
 
-internal sealed class ItemsStatsCustomRepository : IDofusRepository
+internal sealed class ItemsStatsCustomRepository : DofusCustomRepository, IDofusRepository
 {
+    public static string FileName => ItemsStatsRepository.FileName;
+
     [JsonPropertyName("CISTA")]
     public IReadOnlyList<ItemStatsCustomData> ItemsStatsCustom { get; init; }
 

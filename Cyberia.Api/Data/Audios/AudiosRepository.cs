@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Audios;
 
-public sealed class AudiosRepository : IDofusRepository
+public sealed class AudiosRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "audio.json";
+    public static string FileName => "audio.json";
 
     [JsonPropertyName("AUMC")]
     [JsonInclude]
@@ -43,13 +43,6 @@ public sealed class AudiosRepository : IDofusRepository
         AudioEffects = FrozenDictionary<int, AudioEffectData>.Empty;
         AudioEnvironmentsContent = ReadOnlyDictionary<string, int>.Empty;
         AudioEnvironments = FrozenDictionary<int, AudioEnvironmentData>.Empty;
-    }
-
-    internal static AudiosRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<AudiosRepository>(filePath);
     }
 
     public AudioMusicData? GetAudioMusicDataById(int id)

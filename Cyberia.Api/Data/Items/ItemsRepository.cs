@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Items;
 
-public sealed class ItemsRepository : IDofusRepository
+public sealed class ItemsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "items.json";
+    public static string FileName => "items.json";
 
     [JsonPropertyName("I.us")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, ItemUnicStringData>))]
@@ -38,24 +38,6 @@ public sealed class ItemsRepository : IDofusRepository
         ItemSuperTypeSlots = [];
         ItemTypes = FrozenDictionary<int, ItemTypeData>.Empty;
         Items = FrozenDictionary<int, ItemData>.Empty;
-    }
-
-    internal static ItemsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        var data = Datacenter.LoadRepository<ItemsRepository>(filePath);
-
-        foreach (var itemSuperTypeSlotData in data.ItemSuperTypeSlots)
-        {
-            var itemSuperTypeData = data.GetItemSuperTypeDataById(itemSuperTypeSlotData.Id);
-            if (itemSuperTypeData is not null)
-            {
-                itemSuperTypeData.SlotsId = itemSuperTypeSlotData.SlotsId;
-            }
-        }
-
-        return data;
     }
 
     public ItemSuperTypeData? GetItemSuperTypeDataById(int id)
@@ -125,5 +107,17 @@ public sealed class ItemsRepository : IDofusRepository
         return itemData is null
             ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : itemData.Name;
+    }
+
+    protected override void LoadCustomData()
+    {
+        foreach (var itemSuperTypeSlotData in ItemSuperTypeSlots)
+        {
+            var itemSuperTypeData = GetItemSuperTypeDataById(itemSuperTypeSlotData.Id);
+            if (itemSuperTypeData is not null)
+            {
+                itemSuperTypeData.SlotsId = itemSuperTypeSlotData.SlotsId;
+            }
+        }
     }
 }

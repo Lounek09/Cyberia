@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Titles;
 
-public sealed class TitlesRepository : IDofusRepository
+public sealed class TitlesRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "titles.json";
+    public static string FileName => "titles.json";
 
     [JsonPropertyName("PT")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TitleData>))]
@@ -17,13 +17,6 @@ public sealed class TitlesRepository : IDofusRepository
     internal TitlesRepository()
     {
         Titles = FrozenDictionary<int, TitleData>.Empty;
-    }
-
-    internal static TitlesRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<TitlesRepository>(filePath);
     }
 
     public TitleData? GetTitleDataById(int id)

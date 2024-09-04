@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Dialogs;
 
-public sealed class DialogsRepository : IDofusRepository
+public sealed class DialogsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "dialog.json";
+    public static string FileName => "dialog.json";
 
     [JsonPropertyName("D.q")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, DialogQuestionData>))]
@@ -22,13 +22,6 @@ public sealed class DialogsRepository : IDofusRepository
     {
         DialogQuestions = FrozenDictionary<int, DialogQuestionData>.Empty;
         DialogAnswers = FrozenDictionary<int, DialogAnswerData>.Empty;
-    }
-
-    internal static DialogsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<DialogsRepository>(filePath);
     }
 
     public DialogQuestionData? GetDialogQuestionDataById(int id)

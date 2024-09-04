@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Skills;
 
-public sealed class SkillsRepository : IDofusRepository
+public sealed class SkillsRepository : DofusRepository, IDofusRepository
 {
-    private const string c_fileName = "skills.json";
+    public static string FileName => "skills.json";
 
     [JsonPropertyName("SK")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, SkillData>))]
@@ -17,13 +17,6 @@ public sealed class SkillsRepository : IDofusRepository
     internal SkillsRepository()
     {
         Skills = FrozenDictionary<int, SkillData>.Empty;
-    }
-
-    internal static SkillsRepository Load(string directoryPath)
-    {
-        var filePath = Path.Join(directoryPath, c_fileName);
-
-        return Datacenter.LoadRepository<SkillsRepository>(filePath);
     }
 
     public SkillData? GetSkillDataById(int id)
