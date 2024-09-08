@@ -19,15 +19,15 @@
 //TODO
 
 #### Production:
-> [!IMPORTANT]
-> From this point forward, I will assume that all steps from the Cyberia.Cdn setup have been completed.
-
 1. **Prerequisites:**  
    Ensure you have the following prerequisites:
    - An x64 or x86 processor architecture, [Flare](http://www.nowrap.de/flare.html) does not support ARM.
    - **.NET**: [Install .NET](https://learn.microsoft.com/en-us/dotnet/core/install/linux)
    - **Cyberia.Cdn**: Follow the [Cyberia.Cdn setup](https://github.com/Lounek09/Cyberia.Cdn#setup)
    - **Caddy**: [Install Caddy](https://caddyserver.com/docs/install)
+
+> [!IMPORTANT]
+> From this point forward, I will assume that all steps from the Cyberia.Cdn setup have been completed.
 
 2. **Build the project:**  
    You have two options for building the project: manually from the server or by setting up the publish action in your fork.
