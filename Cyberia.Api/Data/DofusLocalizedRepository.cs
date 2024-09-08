@@ -8,6 +8,14 @@ namespace Cyberia.Api.Data;
 
 public abstract class DofusLocalizedRepository
 {
+    /// <summary>
+    /// Load a localized repository from a JSON file.
+    /// </summary>
+    /// <typeparam name="T">The type of the localized repository.</typeparam>
+    /// <param name="type">The type of the lang to load.</param>
+    /// <param name="language">The language of the lang to load.</param>
+    /// <returns>The loaded localized repository.</returns>
+    /// <exception cref="EntryPointNotFoundException">Thrown when the internal constructor of the repository is not found.</exception>
     internal static T Load<T>(LangType type, LangLanguage language)
         where T : DofusLocalizedRepository, IDofusRepository
     {

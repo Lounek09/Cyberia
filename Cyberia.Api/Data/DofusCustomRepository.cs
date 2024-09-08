@@ -4,6 +4,13 @@ namespace Cyberia.Api.Data;
 
 public abstract class DofusCustomRepository
 {
+    /// <summary>
+    /// Load a custom repository from a JSON file.
+    /// </summary>
+    /// <typeparam name="T">The type of the custom repository.</typeparam>
+    /// <returns>The loaded custom repository.</returns>
+    /// <exception cref="FileNotFoundException">Thrown when the JSON file is not found.</exception>
+    /// <exception cref="JsonException">Thrown when the deserialization of the JSON file returns null.</exception>
     internal static T Load<T>()
         where T : DofusCustomRepository, IDofusRepository
     {
