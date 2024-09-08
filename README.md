@@ -13,20 +13,23 @@
 > [!NOTE]
 > This procedure is tailored to my specific use case. Feel free to setup the application in any way that suits you.
 
-### Prerequisites
-
-Ensure you have the following prerequisites:
-- An x64 or x86 processor architecture, [Flare](http://www.nowrap.de/flare.html) does not support ARM.
-- **.NET**: [Install .NET](https://learn.microsoft.com/en-us/dotnet/core/install/linux)
-- **Cyberia.Cdn**: Follow the [Cyberia.Cdn setup](https://github.com/Lounek09/Cyberia.Cdn#setup)
-- **Caddy**: [Install Caddy](https://caddyserver.com/docs/install)
-
 ### Installation Steps
 
+#### Development:
+//TODO
+
+#### Production:
 > [!IMPORTANT]
 > From this point forward, I will assume that all steps from the Cyberia.Cdn setup have been completed.
 
-1. **Build the project:**  
+1. **Prerequisites:**  
+   Ensure you have the following prerequisites:
+   - An x64 or x86 processor architecture, [Flare](http://www.nowrap.de/flare.html) does not support ARM.
+   - **.NET**: [Install .NET](https://learn.microsoft.com/en-us/dotnet/core/install/linux)
+   - **Cyberia.Cdn**: Follow the [Cyberia.Cdn setup](https://github.com/Lounek09/Cyberia.Cdn#setup)
+   - **Caddy**: [Install Caddy](https://caddyserver.com/docs/install)
+
+2. **Build the project:**  
    You have two options for building the project: manually from the server or by setting up the publish action in your fork.
    
    - **Manual Build:**  
@@ -47,7 +50,7 @@ Ensure you have the following prerequisites:
      
      After configuring these secrets, you can manually trigger the publish action by following [GitHub's guide on manually running a workflow](https://docs.github.com/en/actions/using-workflows/manually-running-a-workflow).
 
-2. **Configure Caddy:**  
+3. **Configure Caddy:**  
    Edit the Caddy configuration file located at `/etc/caddy/Caddyfile` to include the following block. Replace *your-domain.com* with your actual domain:
    ```caddy
    your-domain.com {
@@ -59,13 +62,13 @@ Ensure you have the following prerequisites:
    ```
    For more information, see the [Caddiyfile documentation](https://caddyserver.com/docs/caddyfile).  
 
-3. **Restart Caddy:**  
+4. **Restart Caddy:**  
    Restart the Caddy service to apply the new configuration[^1]:
    ```bash
    sudo systemctl restart caddy
    ```
 
-4. **Create a systemd service:**  
+5. **Create a systemd service:**  
    To launch the app in the background, a systemd service is a good approach. Go to `/etc/systemd/system` and create a new file called `cyberia.service` with this content. Replace *salamandra* with your user:
    ```service
    [Unit]
@@ -86,13 +89,13 @@ Ensure you have the following prerequisites:
    ```
    For more information, see the [systemd.service documentation](https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html).  
 
-5. **Reload the systemd manager configuration:**  
+6. **Reload the systemd manager configuration:**  
    Reload the systemd manager configuration to apply the new service:
    ```bash
    sudo systemctl daemon-reload
    ```
 
-6. **Configure the app:**  
+7. **Configure the app:**  
    Inside the App directory, you will need to rename the `appsettings.sample.json` to `appsettings.json` and fill in the required configuration. See [Configuration](#configuration) for more detail about each variable.
 
 8. **Launch the App:**  
