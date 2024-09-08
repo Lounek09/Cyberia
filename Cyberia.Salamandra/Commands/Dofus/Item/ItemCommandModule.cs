@@ -24,7 +24,7 @@ public sealed class ItemCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        CommandManager.SetCulture();
+        CultureManager.SetCulture(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 

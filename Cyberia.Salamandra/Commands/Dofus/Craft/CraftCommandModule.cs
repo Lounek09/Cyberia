@@ -27,7 +27,7 @@ public sealed class CraftCommandModule
         [MinMaxValue(1, CraftMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
-        CommandManager.SetCulture();
+        CultureManager.SetCulture(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 

@@ -19,10 +19,10 @@ public sealed class BreedCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("nom"), Description("Nom de la classe")]
-        [SlashChoiceProvider<BreedChoiceProvider>]
+        [SlashAutoCompleteProvider<BreedAutocompleteProvider>]
         int breedId)
     {
-        CommandManager.SetCulture();
+        CultureManager.SetCulture(ctx.Interaction);
 
         var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
 

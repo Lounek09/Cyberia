@@ -68,7 +68,7 @@ public readonly record struct LocalizedString
 
     /// <inheritdoc cref="Add(string, string)"/>
     /// <param name="language">The language.</param>
-    internal void Add(LangLanguage language, string translation) => Add(language.ToCultureInfo().TwoLetterISOLanguageName, translation);
+    internal void Add(LangLanguage language, string translation) => Add(language.ToCulture().TwoLetterISOLanguageName, translation);
 
     /// <summary>
     /// Returns the translation for the specified language.
@@ -88,7 +88,7 @@ public readonly record struct LocalizedString
 
     /// <inheritdoc cref="ToString(string)"/>
     /// <param name="language">The language.</param>
-    public string ToString(LangLanguage language) => ToString(language.ToCultureInfo());
+    public string ToString(LangLanguage language) => ToString(language.ToCulture());
 
     /// <summary>
     /// Returns the translation for the current language.

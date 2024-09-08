@@ -4,7 +4,7 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
-public sealed class CraftAutocompleteProvider : AutoCompleteProvider
+public sealed class CraftAutocompleteProvider : CultureAutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {

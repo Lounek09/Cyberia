@@ -4,7 +4,7 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
-public sealed class IncarnationAutocompleteProvider : AutoCompleteProvider
+public sealed class IncarnationAutocompleteProvider : CultureAutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {

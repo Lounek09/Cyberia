@@ -74,7 +74,7 @@ public sealed class BreedsRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
         var localizedRepository = DofusLocalizedRepository.Load<BreedsLocalizedRepository>(type, language);
 
         foreach (var breedLocalizedData in localizedRepository.Breeds)

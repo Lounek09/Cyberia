@@ -27,7 +27,7 @@ public sealed class PvpRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
         var localizedRepository = DofusLocalizedRepository.Load<PvpLocalizedRepository>(type, language);
 
         if (localizedRepository.PvpGrades.Count == PvpGrades.Count)

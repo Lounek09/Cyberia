@@ -29,7 +29,7 @@ public sealed class SkillsRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
         var localizedRepository = DofusLocalizedRepository.Load<SkillsLocalizedRepository>(type, language);
 
         foreach (var skillLocalizedData in localizedRepository.Skills)

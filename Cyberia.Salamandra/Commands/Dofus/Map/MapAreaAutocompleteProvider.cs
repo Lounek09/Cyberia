@@ -4,7 +4,7 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
-public sealed class MapAreaAutocompleteProvider : AutoCompleteProvider
+public sealed class MapAreaAutocompleteProvider : CultureAutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {

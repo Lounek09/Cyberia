@@ -4,7 +4,7 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 
-public sealed class RuneAutocompleteProvider : AutoCompleteProvider
+public sealed class RuneAutocompleteProvider : CultureAutoCompleteProvider
 {
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {

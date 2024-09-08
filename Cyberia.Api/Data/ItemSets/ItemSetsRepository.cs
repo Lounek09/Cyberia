@@ -66,7 +66,7 @@ public sealed class ItemSetsRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
         var localizedRepository = DofusLocalizedRepository.Load<ItemSetsLocalizedRepository>(type, language);
 
         foreach (var itemSetLocalizedData in localizedRepository.ItemSets)

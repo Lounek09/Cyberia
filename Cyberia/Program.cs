@@ -33,7 +33,7 @@ public static class Program
 
             var config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>()!;
 
-            var defaultCulture = config.ApiConfig.SupportedLanguages[0].ToCultureInfo();
+            var defaultCulture = config.ApiConfig.SupportedLanguages[0].ToCulture();
             CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
             CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
 

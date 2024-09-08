@@ -1,5 +1,4 @@
 ﻿using Cyberia.Api;
-using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Commands;
@@ -10,7 +9,6 @@ using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
 using System.ComponentModel;
-using System.Globalization;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Monster;
 
@@ -26,11 +24,7 @@ public sealed class MonsterCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        CommandManager.SetCulture();
-
-        var culture = DofusApi.Config.BaseLanguage.ToCultureInfo();
-        CultureInfo.CurrentCulture = culture;
-        CultureInfo.CurrentUICulture = culture;
+        CultureManager.SetCulture(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 

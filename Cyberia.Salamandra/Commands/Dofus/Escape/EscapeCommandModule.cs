@@ -27,7 +27,7 @@ public sealed class EscapeCommandModule
         [MinMaxValue(1, 99999)]
         int foeAgility)
     {
-        CommandManager.SetCulture();
+        CultureManager.SetCulture(ctx.Interaction);
 
         var escapePercent = Formulas.GetEscapePercent(agility, foeAgility);
         var agilityToEscapeForSure = Formulas.GetAgilityToEscapeForSure(foeAgility);

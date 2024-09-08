@@ -23,6 +23,8 @@ public sealed class ParseCommandModule
         [Parameter("value"), Description("Effects of an item")]
         string value)
     {
+        CultureManager.SetCulture(ctx.Interaction);
+
         var effects = EffectFactory.CreateMany(value);
 
         if (effects.Count > 0)
@@ -44,6 +46,8 @@ public sealed class ParseCommandModule
         [Parameter("value"), Description("Criteria")]
         string value)
     {
+        CultureManager.SetCulture(ctx.Interaction);
+
         var criteria = CriterionFactory.CreateMany(value);
 
         if (criteria.Count > 0)

@@ -64,7 +64,7 @@ public static class ExtendLangLanguage
     /// </summary>
     /// <param name="language">The language to convert.</param>
     /// <returns>The corresponding <see cref="CultureInfo"/>; if not found, the <see cref="CultureInfo"/> for <see cref="LangLanguage.en"/>.</returns>
-    public static CultureInfo ToCultureInfo(this LangLanguage language)
+    public static CultureInfo ToCulture(this LangLanguage language)
     {
         return _cultures.TryGetValue(language, out var result) ? result : _cultures[LangLanguage.en];
     }

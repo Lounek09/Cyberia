@@ -38,7 +38,7 @@ public sealed class TitlesRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
         var localizedRepository = DofusLocalizedRepository.Load<TitlesLocalizedRepository>(type, language);
 
         foreach (var titleLocalizedData in localizedRepository.Titles)

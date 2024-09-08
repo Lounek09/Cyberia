@@ -29,7 +29,7 @@ public sealed class RanksRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
         var localizedRepository = DofusLocalizedRepository.Load<RanksLocalizedRepository>(type, language);
 
         foreach (var guildRankLocalizedData in localizedRepository.GuildRanks)

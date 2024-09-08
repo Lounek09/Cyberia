@@ -129,7 +129,7 @@ public sealed class HousesRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
         var localizedRepository = DofusLocalizedRepository.Load<HousesLocalizedRepository>(type, language);
 
         foreach (var houseLocalizedData in localizedRepository.Houses)

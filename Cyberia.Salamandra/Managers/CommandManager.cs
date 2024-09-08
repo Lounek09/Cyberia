@@ -48,7 +48,7 @@ public static class CommandManager
 
     public static void SetCulture()
     {
-        var culture = DofusApi.Config.SupportedLanguages[0].ToCultureInfo();
+        var culture = DofusApi.Config.SupportedLanguages[0].ToCulture();
         CultureInfo.CurrentCulture = culture;
         CultureInfo.CurrentUICulture = culture;
     }
