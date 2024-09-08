@@ -1,4 +1,5 @@
-﻿using Cyberia.Langzilla.Enums;
+﻿using Cyberia.Api;
+using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.DSharpPlus;
 
 using DSharpPlus;
@@ -47,7 +48,7 @@ public static class CommandManager
 
     public static void SetCulture()
     {
-        var culture = LangLanguage.de.ToCultureInfo();
+        var culture = DofusApi.Config.SupportedLanguages[0].ToCultureInfo();
         CultureInfo.CurrentCulture = culture;
         CultureInfo.CurrentUICulture = culture;
     }

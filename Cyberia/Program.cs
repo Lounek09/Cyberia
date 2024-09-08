@@ -15,10 +15,6 @@ public static class Program
 {
     public static async Task Main()
     {
-        CultureInfo defaultCulture = new("en");
-        CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
-        CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
-
         Directory.SetCurrentDirectory(AppContext.BaseDirectory);
 
         var builder = new ConfigurationBuilder()
@@ -36,6 +32,10 @@ public static class Program
             Log.Information("Starting Cyberia");
 
             var config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>()!;
+
+            var defaultCulture = config.ApiConfig.SupportedLanguages[0].ToCultureInfo();
+            CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
 
             Log.Information("Initializing CytrusWatcher");
             CytrusWatcher.Initialize();

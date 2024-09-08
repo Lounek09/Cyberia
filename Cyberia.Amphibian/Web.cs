@@ -1,5 +1,7 @@
 using Cyberia.Amphibian.Conventions;
 using Cyberia.Amphibian.Middlewares;
+using Cyberia.Api;
+using Cyberia.Langzilla.Enums;
 
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Localization.Routing;
@@ -32,7 +34,7 @@ public static class Web
 
         builder.Services.Configure<RequestLocalizationOptions>(options =>
         {
-            string[] supportedCultures = ["en", "fr", "es", "de", "it", "nl", "pt"];
+            var supportedCultures = DofusApi.Config.SupportedLanguages.Select(lang => lang.ToStringFast()).ToArray();
 
             options.SetDefaultCulture(supportedCultures[0]);
             options.AddSupportedCultures(supportedCultures);

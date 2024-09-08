@@ -18,9 +18,14 @@ public sealed class ApiConfig
     public LangType Type { get; init; }
 
     /// <summary>
-    /// Gets the language of lang from which the base data is loaded, only the translations will be loaded from the others.
+    /// Gets the language of lang from which the base data is loaded, only the translations will be loaded from the others listed in <see cref="SupportedLanguages"/>.
     /// </summary>
     public LangLanguage BaseLanguage { get; init; }
+
+    /// <summary>
+    /// Gets the list of the supported languages, the first one will be the default one.
+    /// </summary>
+    public IReadOnlyList<LangLanguage> SupportedLanguages { get; init; }
 
     /// <summary>
     /// Gets the invitation URL of the support Discord guild.
@@ -38,6 +43,7 @@ public sealed class ApiConfig
     public ApiConfig()
     {
         CdnUrl = string.Empty;
+        SupportedLanguages = [];
         DiscordInviteUrl = string.Empty;
         GitRepositoryUrl = string.Empty;
     }
