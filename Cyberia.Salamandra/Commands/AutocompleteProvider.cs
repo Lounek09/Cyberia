@@ -1,4 +1,6 @@
-﻿using DSharpPlus.Commands.Processors.SlashCommands;
+﻿using Cyberia.Salamandra.Managers;
+
+using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 
 namespace Cyberia.Salamandra.Commands;
@@ -9,6 +11,8 @@ public abstract class AutoCompleteProvider : IAutoCompleteProvider
 
     public ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
+        CommandManager.SetCulture();
+
         return ValueTask.FromResult(InternalAutoComplete(ctx));
     }
 

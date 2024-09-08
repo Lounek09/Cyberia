@@ -1,4 +1,6 @@
-﻿using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+﻿using Cyberia.Salamandra.Managers;
+
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Trees;
 
 namespace Cyberia.Salamandra.Commands;
@@ -9,6 +11,8 @@ public abstract class ChoiceProvider : IChoiceProvider
 
     public ValueTask<IReadOnlyDictionary<string, object>> ProvideAsync(CommandParameter parameter)
     {
+        CommandManager.SetCulture();
+
         return ValueTask.FromResult(InternalProvide(parameter));
     }
 
