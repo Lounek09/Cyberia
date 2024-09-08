@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.Hints.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -23,9 +25,21 @@ public sealed class HintsRepository : DofusRepository, IDofusRepository
         Hints = [];
     }
 
-    public HintCategoryData? GetHintCategory(int id)
+    public HintCategoryData? GetHintCategoryDataById(int id)
     {
         HintCategories.TryGetValue(id, out var hintsCategory);
         return hintsCategory;
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<HintsLocalizedRepository>(type, language);
+
+        foreach (var hintCategoryLocalizedData in localizedRepository.HintCategories)
+        {
+            var hintCategoryData = GetHintCategoryDataById(hintCategoryLocalizedData.Id);
+            hintCategoryData?.Name.Add(twoLetterISOLanguageName, hintCategoryLocalizedData.Name);
+        }
     }
 }

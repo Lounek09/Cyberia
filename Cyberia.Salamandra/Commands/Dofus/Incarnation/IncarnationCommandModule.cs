@@ -38,7 +38,7 @@ public sealed class IncarnationCommandModule
         }
         else
         {
-            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByName(value).ToList();
+            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(value).ToList();
             if (incarnationsData.Count == 1)
             {
                 response = await new IncarnationMessageBuilder(incarnationsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();

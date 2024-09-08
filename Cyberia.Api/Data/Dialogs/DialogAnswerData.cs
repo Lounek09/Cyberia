@@ -8,11 +8,11 @@ public sealed class DialogAnswerData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    public LocalizedString Answer { get; init; }
+    public LocalizedString Message { get; init; }
 
     [JsonConstructor]
     internal DialogAnswerData()
     {
-        Answer = LocalizedString.Empty;
+        Message = LocalizedString.Empty;
     }
 }

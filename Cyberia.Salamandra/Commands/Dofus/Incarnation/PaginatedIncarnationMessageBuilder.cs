@@ -16,6 +16,7 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
     public PaginatedIncarnationMessageBuilder(List<IncarnationData> incarnationsData, string search, int selectedPageIndex = 0)
         : base(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author, BotTranslations.Embed_PaginatedIncarnation_Title, incarnationsData, search, selectedPageIndex)
     {
+
     }
 
     public static PaginatedIncarnationMessageBuilder? Create(int version, string[] parameters)
@@ -24,7 +25,7 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByName(parameters[1]).ToList();
+            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(parameters[1]).ToList();
             if (incarnationsData.Count > 0)
             {
                 return new(incarnationsData, parameters[1], selectedPageIndex);
@@ -41,7 +42,14 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {Formatter.Bold(Formatter.Sanitize(x.Name))} ({x.Id})");
+        foreach (var incarnationData in _data)
+        {
+            var itemData = incarnationData.GetItemData();
+            if (itemData is not null)
+            {
+                yield return $"- {Formatter.Bold(Formatter.Sanitize(itemData.Name))} ({incarnationData.Id})";
+            }
+        }
     }
 
     protected override DiscordSelectComponent SelectBuilder()

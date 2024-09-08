@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.Npcs.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -43,5 +45,23 @@ public sealed class NpcsRepository : DofusRepository, IDofusRepository
         return npc is null
             ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : npc.Name;
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<NpcsLocalizedRepository>(type, language);
+
+        foreach (var npcActionLocalizedData in localizedRepository.NpcActions)
+        {
+            var npcActionData = GetNpcActionDataById(npcActionLocalizedData.Id);
+            npcActionData?.Name.Add(twoLetterISOLanguageName, npcActionLocalizedData.Name);
+        }
+
+        foreach (var npcLocalizedData in localizedRepository.Npcs)
+        {
+            var npcData = GetNpcDataById(npcLocalizedData.Id);
+            npcData?.Name.Add(twoLetterISOLanguageName, npcLocalizedData.Name);
+        }
     }
 }

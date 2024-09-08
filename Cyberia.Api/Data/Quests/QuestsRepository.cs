@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.Data.Quests.Custom;
+using Cyberia.Api.Data.Quests.Localized;
 using Cyberia.Api.Factories;
 using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -141,6 +143,34 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
             }
 
             questStepData.QuestObjectives = QuestObjectiveFactory.CreateMany(questObjectivesData);
+        }
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<QuestsLocalizedRepository>(type, language);
+
+        foreach (var questLocalizedData in localizedRepository.Quests)
+        {
+            var questData = GetQuestDataById(questLocalizedData.Id);
+            questData?.Name.Add(twoLetterISOLanguageName, questLocalizedData.Name);
+        }
+
+        foreach (var questStepLocalizedData in localizedRepository.QuestSteps)
+        {
+            var questStepData = GetQuestStepDataById(questStepLocalizedData.Id);
+            if (questStepData is not null)
+            {
+                questStepData.Name.Add(twoLetterISOLanguageName, questStepLocalizedData.Name);
+                questStepData.Description.Add(twoLetterISOLanguageName, questStepLocalizedData.Description);
+            }
+        }
+
+        foreach (var questObjectiveTypeLocalizedData in localizedRepository.QuestObjectiveTypes)
+        {
+            var questObjectiveTypeData = GetQuestObjectiveTypeDataById(questObjectiveTypeLocalizedData.Id);
+            questObjectiveTypeData?.Description.Add(twoLetterISOLanguageName, questObjectiveTypeLocalizedData.Description);
         }
     }
 }

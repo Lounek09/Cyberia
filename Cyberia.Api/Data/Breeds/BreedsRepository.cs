@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Data.Breeds.Custom;
+using Cyberia.Api.Data.Breeds.Localized;
 using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -66,6 +68,26 @@ public sealed class BreedsRepository : DofusRepository, IDofusRepository
             {
                 breedData.SpecialSpellId = breedCustomData.SpecialSpellId;
                 breedData.ItemSetId = breedCustomData.ItemSetId;
+            }
+        }
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<BreedsLocalizedRepository>(type, language);
+
+        foreach (var breedLocalizedData in localizedRepository.Breeds)
+        {
+            var breedData = GetBreedDataById(breedLocalizedData.Id);
+            if (breedData is not null)
+            {
+                breedData.Name.Add(twoLetterISOLanguageName, breedLocalizedData.Name);
+                breedData.LongName.Add(twoLetterISOLanguageName, breedLocalizedData.LongName);
+                breedData.Description.Add(twoLetterISOLanguageName, breedLocalizedData.Description);
+                breedData.ShortDescription.Add(twoLetterISOLanguageName, breedLocalizedData.ShortDescription);
+                breedData.TemporisPassiveName.Add(twoLetterISOLanguageName, breedLocalizedData.TemporisPassiveName);
+                breedData.TemporisPassiveDescription.Add(twoLetterISOLanguageName, breedLocalizedData.TemporisPassiveDescription);
             }
         }
     }

@@ -28,7 +28,7 @@ public sealed class MonsterCommandModule
     {
         CommandManager.SetCulture();
 
-        var culture = DofusApi.Config.BaseLanguage.ToCulture();
+        var culture = DofusApi.Config.BaseLanguage.ToCultureInfo();
         CultureInfo.CurrentCulture = culture;
         CultureInfo.CurrentUICulture = culture;
 

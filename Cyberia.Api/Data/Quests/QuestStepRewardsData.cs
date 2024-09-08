@@ -64,7 +64,7 @@ public sealed class QuestStepRewardsData : IDofusData
     {
         foreach (var emoteId in EmotesId)
         {
-            var emoteData = DofusApi.Datacenter.EmotesRepository.GetEmoteById(emoteId);
+            var emoteData = DofusApi.Datacenter.EmotesRepository.GetEmoteDataById(emoteId);
             if (emoteData is not null)
             {
                 yield return emoteData;

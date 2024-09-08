@@ -1,5 +1,7 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Data.Items.Localized;
+using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -38,6 +40,12 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
         ItemSuperTypeSlots = [];
         ItemTypes = FrozenDictionary<int, ItemTypeData>.Empty;
         Items = FrozenDictionary<int, ItemData>.Empty;
+    }
+
+    public ItemUnicStringData? GetItemUnicStringDataById(int id)
+    {
+        ItemUnicStrings.TryGetValue(id, out var itemUnicStringData);
+        return itemUnicStringData;
     }
 
     public ItemSuperTypeData? GetItemSuperTypeDataById(int id)
@@ -117,6 +125,35 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
             if (itemSuperTypeData is not null)
             {
                 itemSuperTypeData.SlotsId = itemSuperTypeSlotData.SlotsId;
+            }
+        }
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<ItemsLocalizedRepository>(type, language);
+
+        foreach (var itemUnicStringLocalizedData in localizedRepository.ItemUnicStrings)
+        {
+            var itemUnicStringData = GetItemUnicStringDataById(itemUnicStringLocalizedData.Id);
+            itemUnicStringData?.Value.Add(twoLetterISOLanguageName, itemUnicStringLocalizedData.Value);
+        }
+
+        foreach (var itemTypeLocalizedData in localizedRepository.ItemTypes)
+        {
+            var itemTypeData = GetItemTypeDataById(itemTypeLocalizedData.Id);
+            itemTypeData?.Name.Add(twoLetterISOLanguageName, itemTypeLocalizedData.Name);
+        }
+
+        foreach (var itemLocalizedData in localizedRepository.Items)
+        {
+            var itemData = GetItemDataById(itemLocalizedData.Id);
+            if (itemData is not null)
+            {
+                itemData.Name.Add(twoLetterISOLanguageName, itemLocalizedData.Name);
+                itemData.NormalizedName.Add(twoLetterISOLanguageName, itemLocalizedData.NormalizedName);
+                itemData.Description.Add(twoLetterISOLanguageName, itemLocalizedData.Description);
             }
         }
     }

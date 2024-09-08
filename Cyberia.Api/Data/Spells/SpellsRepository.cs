@@ -1,5 +1,7 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Data.Spells.Localized;
+using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -100,6 +102,22 @@ public sealed class SpellsRepository : DofusRepository, IDofusRepository
             {
                 spellLevelData.SpellData = spellData;
                 spellLevelData.Rank = i++;
+            }
+        }
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<SpellsLocalizedRepository>(type, language);
+
+        foreach (var spellLocalizedData in localizedRepository.Spells)
+        {
+            var spellData = GetSpellDataById(spellLocalizedData.Id);
+            if (spellData is not null)
+            {
+                spellData.Name.Add(twoLetterISOLanguageName, spellLocalizedData.Name);
+                spellData.Description.Add(twoLetterISOLanguageName, spellLocalizedData.Description);
             }
         }
     }

@@ -1,5 +1,8 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.TimeZone.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TimeZone;
@@ -24,12 +27,12 @@ public sealed class TimeZoneRepository : DofusRepository, IDofusRepository
     [JsonConstructor]
     internal TimeZoneRepository()
     {
-        StartDayOfMonths = new Dictionary<int, LocalizedString>();
+        StartDayOfMonths = ReadOnlyDictionary<int, LocalizedString>.Empty;
     }
 
     public string GetMonth(int dayOfYear)
     {
-        foreach (var pair in Enumerable.Reverse(StartDayOfMonths))
+        foreach (var pair in StartDayOfMonths)
         {
             if (dayOfYear > pair.Key)
             {
@@ -38,5 +41,24 @@ public sealed class TimeZoneRepository : DofusRepository, IDofusRepository
         }
 
         return string.Empty;
+    }
+
+    protected override void LoadCustomData()
+    {
+        StartDayOfMonths = StartDayOfMonths.Reverse().ToDictionary();
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<TimeZoneLocalizedRepository>(type, language);
+
+        if (localizedRepository.StartDayOfMonths.Count == StartDayOfMonths.Count)
+        {
+            foreach (var pair in localizedRepository.StartDayOfMonths.Reverse())
+            {
+                StartDayOfMonths[pair.Key].Add(twoLetterISOLanguageName, pair.Value);
+            }
+        }
     }
 }

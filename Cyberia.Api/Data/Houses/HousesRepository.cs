@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.Data.Houses.Custom;
+using Cyberia.Api.Data.Houses.Localized;
 using Cyberia.Api.Data.Skills;
 using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -121,6 +123,22 @@ public sealed class HousesRepository : DofusRepository, IDofusRepository
                 houseData.RoomNumber = houseCustomData.RoomNumber;
                 houseData.ChestNumber = houseCustomData.ChestNumber;
                 houseData.Price = houseCustomData.Price;
+            }
+        }
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<HousesLocalizedRepository>(type, language);
+
+        foreach (var houseLocalizedData in localizedRepository.Houses)
+        {
+            var houseData = GetHouseDataById(houseLocalizedData.Id);
+            if (houseData is not null)
+            {
+                houseData.Name.Add(twoLetterISOLanguageName, houseLocalizedData.Name);
+                houseData.Description.Add(twoLetterISOLanguageName, houseLocalizedData.Description);
             }
         }
     }

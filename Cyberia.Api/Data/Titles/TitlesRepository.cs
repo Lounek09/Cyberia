@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.Titles.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -32,5 +34,17 @@ public sealed class TitlesRepository : DofusRepository, IDofusRepository
         return titleData is null
             ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : titleData.Name;
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<TitlesLocalizedRepository>(type, language);
+
+        foreach (var titleLocalizedData in localizedRepository.Titles)
+        {
+            var titleData = GetTitleDataById(titleLocalizedData.Id);
+            titleData?.Name.Add(twoLetterISOLanguageName, titleLocalizedData.Name);
+        }
     }
 }

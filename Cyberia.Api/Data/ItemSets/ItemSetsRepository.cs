@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Data.ItemSets.Custom;
+using Cyberia.Api.Data.ItemSets.Localized;
 using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -59,6 +61,18 @@ public sealed class ItemSetsRepository : DofusRepository, IDofusRepository
             {
                 itemSetData.Effects = itemSetCustomData.Effects;
             }
+        }
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<ItemSetsLocalizedRepository>(type, language);
+
+        foreach (var itemSetLocalizedData in localizedRepository.ItemSets)
+        {
+            var itemSetData = GetItemSetDataById(itemSetLocalizedData.Id);
+            itemSetData?.Name.Add(twoLetterISOLanguageName, itemSetLocalizedData.Name);
         }
     }
 }

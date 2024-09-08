@@ -91,7 +91,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
             if (_dialogQuestionData is not null)
             {
-                embed.AddField(BotTranslations.Embed_Field_Dialog_Title, _dialogQuestionData.Question);
+                embed.AddField(BotTranslations.Embed_Field_Dialog_Title, _dialogQuestionData.Message);
             }
 
             if (_questStepData.QuestObjectives.Count > 0)

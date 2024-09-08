@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.Servers.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Collections.ObjectModel;
@@ -71,6 +73,12 @@ public sealed class ServersRepository : DofusRepository, IDofusRepository
         return serverCommunityData;
     }
 
+    public DefaultServerSpecificTextData? GetDefaultServerSpecificTextDataById(int id)
+    {
+        DefaultServerSpecificTexts.TryGetValue(id, out var defaultServerSpecificTextData);
+        return defaultServerSpecificTextData;
+    }
+
     protected override void LoadCustomData()
     {
         foreach (var serverPopulationWeightData in ServerPopulationsWeight)
@@ -80,6 +88,40 @@ public sealed class ServersRepository : DofusRepository, IDofusRepository
             {
                 serverPopulationData.Weight = serverPopulationWeightData.Weight;
             }
+        }
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<ServersLocalizedRepository>(type, language);
+
+        foreach (var serverLocalizedData in localizedRepository.Servers)
+        {
+            var serverData = GetServerDataById(serverLocalizedData.Id);
+            if (serverData is not null)
+            {
+                serverData.Name.Add(twoLetterISOLanguageName, serverLocalizedData.Name);
+                serverData.Description.Add(twoLetterISOLanguageName, serverLocalizedData.Description);
+            }
+        }
+
+        foreach (var serverPopulationLocalizedData in localizedRepository.ServerPopulations)
+        {
+            var serverPopulationData = GetServerPopulationDataById(serverPopulationLocalizedData.Id);
+            serverPopulationData?.Name.Add(twoLetterISOLanguageName, serverPopulationLocalizedData.Name);
+        }
+
+        foreach (var serverCommunityLocalizedData in localizedRepository.ServerCommunities)
+        {
+            var serverCommunityData = GetServerCommunityDataById(serverCommunityLocalizedData.Id);
+            serverCommunityData?.Name.Add(twoLetterISOLanguageName, serverCommunityLocalizedData.Name);
+        }
+
+        foreach (var defaultServerSpecificTextLocalizedData in localizedRepository.DefaultServerSpecificTexts)
+        {
+            var defaultServerSpecificTextData = GetDefaultServerSpecificTextDataById(defaultServerSpecificTextLocalizedData.Id);
+            defaultServerSpecificTextData?.Description.Add(twoLetterISOLanguageName, defaultServerSpecificTextLocalizedData.Description);
         }
     }
 }

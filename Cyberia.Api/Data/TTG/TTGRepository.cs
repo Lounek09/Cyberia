@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.TTG.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -63,5 +65,23 @@ public sealed class TTGRepository : DofusRepository, IDofusRepository
         return ttgFamilyData is null
             ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : ttgFamilyData.Name;
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<TTGLocalizedRepository>(type, language);
+
+        foreach (var ttgEntityLocalizedData in localizedRepository.TTGEntities)
+        {
+            var ttgEntityData = GetTTGEntityDataById(ttgEntityLocalizedData.Id);
+            ttgEntityData?.Name.Add(twoLetterISOLanguageName, ttgEntityLocalizedData.Name);
+        }
+
+        foreach (var ttgFamilyLocalizedData in localizedRepository.TTGFamilies)
+        {
+            var ttgFamilyData = GetTTGFamilyDataById(ttgFamilyLocalizedData.Id);
+            ttgFamilyData?.Name.Add(twoLetterISOLanguageName, ttgFamilyLocalizedData.Name);
+        }
     }
 }

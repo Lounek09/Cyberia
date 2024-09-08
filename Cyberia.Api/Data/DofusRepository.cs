@@ -39,7 +39,16 @@ public abstract class DofusRepository
         }
 
         repository.LoadCustomData();
-        repository.LoadTranslations();
+
+        foreach (var language in Enum.GetValues<LangLanguage>())
+        {
+            if (language == DofusApi.Config.BaseLanguage)
+            {
+                continue;
+            }
+
+            repository.LoadLocalizedData(type, language);
+        }
 
         return repository;
     }
@@ -49,7 +58,7 @@ public abstract class DofusRepository
 
     }
 
-    protected virtual void LoadTranslations()
+    protected virtual void LoadLocalizedData(LangType type, LangLanguage language)
     {
 
     }

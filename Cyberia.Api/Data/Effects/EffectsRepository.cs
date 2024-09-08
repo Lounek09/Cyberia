@@ -1,4 +1,6 @@
 ﻿using Cyberia.Api.Data.Effects.Custom;
+using Cyberia.Api.Data.Effects.Localized;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -56,5 +58,17 @@ public sealed class EffectsRepository : DofusRepository, IDofusRepository
         }
 
         Effects = EffectsCore.GroupBy(x => x.Id).ToFrozenDictionary(x => x.Key, x => x.First());
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<EffectsLocalizedRepository>(type, language);
+
+        foreach (var effectLocalizedData in localizedRepository.Effects)
+        {
+            var effectData = GetEffectDataById(effectLocalizedData.Id);
+            effectData?.Description.Add(twoLetterISOLanguageName, effectLocalizedData.Description);
+        }
     }
 }

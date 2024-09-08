@@ -25,16 +25,18 @@ public sealed class IncarnationsRepository : DofusCustomRepository, IDofusReposi
         return incarnationData;
     }
 
-    public IEnumerable<IncarnationData> GetIncarnationsDataByName(string name)
+    public IEnumerable<IncarnationData> GetIncarnationsDataByItemName(string itemName)
     {
-        var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var itemNames = itemName.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-        return Incarnations.Values.Where(x =>
+        foreach (var incarnationData in Incarnations.Values)
         {
-            return names.All(y =>
+            var itemData = incarnationData.GetItemData();
+            if (itemData is not null &&
+                itemNames.All(x => itemData.NormalizedName.ToString().Contains(x, StringComparison.OrdinalIgnoreCase)))
             {
-                return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
-            });
-        });
+                yield return incarnationData;
+            }
+        }
     }
 }

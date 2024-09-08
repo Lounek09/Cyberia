@@ -21,7 +21,7 @@ public sealed record CharacterLearnEmoteEffect : Effect
 
     public EmoteData? GetEmoteData()
     {
-        return DofusApi.Datacenter.EmotesRepository.GetEmoteById(EmoteId);
+        return DofusApi.Datacenter.EmotesRepository.GetEmoteDataById(EmoteId);
     }
 
     public override DescriptionString GetDescription()

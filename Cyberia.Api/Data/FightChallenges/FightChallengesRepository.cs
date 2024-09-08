@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.FightChallenges.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -19,9 +21,25 @@ public sealed class FightChallengesRepository : DofusRepository, IDofusRepositor
         FightChallenges = FrozenDictionary<int, FightChallengeData>.Empty;
     }
 
-    public FightChallengeData? GetFightChallenge(int id)
+    public FightChallengeData? GetFightChallengeDataById(int id)
     {
-        FightChallenges.TryGetValue(id, out var fightChallenge);
-        return fightChallenge;
+        FightChallenges.TryGetValue(id, out var fightChallengeData);
+        return fightChallengeData;
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<FightChallengesLocalizedRepository>(type, language);
+
+        foreach (var fightChallengeLocalizedData in localizedRepository.FightChallenges)
+        {
+            var fightChallengeData = GetFightChallengeDataById(fightChallengeLocalizedData.Id);
+            if (fightChallengeData is not null)
+            {
+                fightChallengeData.Name.Add(twoLetterISOLanguageName, fightChallengeLocalizedData.Name);
+                fightChallengeData.Description.Add(twoLetterISOLanguageName, fightChallengeLocalizedData.Description);
+            }
+        }
     }
 }

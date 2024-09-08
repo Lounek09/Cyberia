@@ -1,5 +1,7 @@
-﻿using Cyberia.Api.Factories;
+﻿using Cyberia.Api.Data.Alignments.Localized;
+using Cyberia.Api.Factories;
 using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json;
@@ -41,7 +43,7 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
 
     [JsonPropertyName("A.b")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentBalanceData>))]
-    public FrozenDictionary<int, AlignmentBalanceData> AlignmentBalance { get; init; }
+    public FrozenDictionary<int, AlignmentBalanceData> AlignmentBalances { get; init; }
 
     [JsonPropertyName("A.s")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, AlignmentSpecializationData>))]
@@ -57,7 +59,7 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
         AlignmentsViewPvpGain = FrozenDictionary<int, AlignmentViewPvpGainData>.Empty;
         AlignmentFeats = FrozenDictionary<int, AlignmentFeatData>.Empty;
         AlignmentFeatEffects = FrozenDictionary<int, AlignmentFeatEffectData>.Empty;
-        AlignmentBalance = FrozenDictionary<int, AlignmentBalanceData>.Empty;
+        AlignmentBalances = FrozenDictionary<int, AlignmentBalanceData>.Empty;
         AlignmentSpecializations = FrozenDictionary<int, AlignmentSpecializationData>.Empty;
     }
 
@@ -121,6 +123,12 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
         return alignmentFeatEffectData;
     }
 
+    public AlignmentBalanceData? GetAlignmentBalanceDataById(int id)
+    {
+        AlignmentBalances.TryGetValue(id, out var alignmentBalanceData);
+        return alignmentBalanceData;
+    }
+
     public AlignmentSpecializationData? GetAlignmentSpecializationDataById(int id)
     {
         AlignmentSpecializations.TryGetValue(id, out var alignmentSpecializationData);
@@ -166,6 +174,53 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
             }
 
             alignmentSpecializationData.Value.AlignmentFeatsParametersData = alignmentFeatsParametersData;
+        }
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<AlignmentsLocalizedRepository>(type, language);
+
+        foreach (var alignmentLocalizedData in localizedRepository.Alignments)
+        {
+            var alignmentData = GetAlignmentDataById(alignmentLocalizedData.Id);
+            alignmentData?.Name.Add(twoLetterISOLanguageName, alignmentLocalizedData.Name);
+        }
+
+        foreach (var alignmentOrderLocalizedData in localizedRepository.AlignmentOrders)
+        {
+            var alignmentOrderData = GetAlignmentOrderDataById(alignmentOrderLocalizedData.Id);
+            alignmentOrderData?.Name.Add(twoLetterISOLanguageName, alignmentOrderLocalizedData.Name);
+        }
+
+        foreach (var alignmentFeatLocalizedData in localizedRepository.AlignmentFeats)
+        {
+            var alignmentFeatData = GetAlignmentFeatDataById(alignmentFeatLocalizedData.Id);
+            alignmentFeatData?.Name.Add(twoLetterISOLanguageName, alignmentFeatLocalizedData.Name);
+        }
+
+        foreach (var alignmentFeatEffectLocalizedData in localizedRepository.AlignmentFeatEffects)
+        {
+            var alignmentFeatEffectData = GetAlignmentFeatEffectDataById(alignmentFeatEffectLocalizedData.Id);
+            alignmentFeatEffectData?.Description.Add(twoLetterISOLanguageName, alignmentFeatEffectLocalizedData.Description);
+        }
+
+        foreach (var alignmentBalanceLocalizedData in localizedRepository.AlignmentBalances)
+        {
+            var alignmentBalanceData = GetAlignmentBalanceDataById(alignmentBalanceLocalizedData.Id);
+            alignmentBalanceData?.Name.Add(twoLetterISOLanguageName, alignmentBalanceLocalizedData.Name);
+        }
+
+        foreach (var alignmentSpecializationLocalizedData in localizedRepository.AlignmentSpecializations)
+        {
+            var alignmentSpecializationData = GetAlignmentSpecializationDataById(alignmentSpecializationLocalizedData.Id);
+            if (alignmentSpecializationData is not null)
+            {
+                alignmentSpecializationData?.Name.Add(twoLetterISOLanguageName, alignmentSpecializationLocalizedData.Name);
+                alignmentSpecializationData?.Description.Add(twoLetterISOLanguageName, alignmentSpecializationLocalizedData.Description);
+
+            }
         }
     }
 }

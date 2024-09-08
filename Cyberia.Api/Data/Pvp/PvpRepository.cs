@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Data.Pvp.Localized;
+using Cyberia.Langzilla.Enums;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Pvp;
 
@@ -13,12 +16,33 @@ public sealed class PvpRepository : DofusRepository, IDofusRepository
     public int MaxDishonourPoint { get; init; }
 
     [JsonPropertyName("PP.grds")]
-    public IReadOnlyList<IEnumerable<PvpGradeData>> PvpGrades { get; init; }
+    public IReadOnlyList<IReadOnlyList<PvpGradeData>> PvpGrades { get; init; }
 
     [JsonConstructor]
     internal PvpRepository()
     {
         HonnorPointThresholds = [];
         PvpGrades = [];
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<PvpLocalizedRepository>(type, language);
+
+        if (localizedRepository.PvpGrades.Count == PvpGrades.Count)
+        {
+            for (var i = 0; i < PvpGrades.Count; i++)
+            {
+                if (localizedRepository.PvpGrades[i].Count == PvpGrades[i].Count)
+                {
+                    for (var j = 0; j < PvpGrades[i].Count; j++)
+                    {
+                        PvpGrades[i][j].Name.Add(twoLetterISOLanguageName, localizedRepository.PvpGrades[i][j].Name);
+                        PvpGrades[i][j].ShortName.Add(twoLetterISOLanguageName, localizedRepository.PvpGrades[i][j].ShortName);
+                    }
+                }
+            }
+        }
     }
 }

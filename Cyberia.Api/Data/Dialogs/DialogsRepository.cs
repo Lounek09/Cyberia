@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.Dialogs.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -34,5 +36,23 @@ public sealed class DialogsRepository : DofusRepository, IDofusRepository
     {
         DialogAnswers.TryGetValue(id, out var dialogAnswerData);
         return dialogAnswerData;
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<DialogsLocalizedRepository>(type, language);
+
+        foreach (var dialogQuestionLocalizedData in localizedRepository.DialogQuestions)
+        {
+            var dialogQuestionData = GetDialogQuestionDataById(dialogQuestionLocalizedData.Id);
+            dialogQuestionData?.Message.Add(twoLetterISOLanguageName, dialogQuestionLocalizedData.Message);
+        }
+
+        foreach (var dialogAnswerLocalizedData in localizedRepository.DialogAnswers)
+        {
+            var dialogAnswerData = GetDialogAnswerDataById(dialogAnswerLocalizedData.Id);
+            dialogAnswerData?.Message.Add(twoLetterISOLanguageName, dialogAnswerLocalizedData.Message);
+        }
     }
 }

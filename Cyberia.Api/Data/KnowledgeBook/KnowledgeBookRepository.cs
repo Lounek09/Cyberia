@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.KnowledgeBook.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -50,5 +52,35 @@ public sealed class KnowledgeBookRepository : DofusRepository, IDofusRepository
     {
         KnowledgeBookTips.TryGetValue(id, out var knowledgeBookTipData);
         return knowledgeBookTipData;
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<KnowledgeBookLocalizedRepository>(type, language);
+
+        foreach (var knowledgeBookCatagoryLocalizedData in localizedRepository.KnowledgeBookCatagories)
+        {
+            var knowledgeBookCatagoryData = GetKnowledgeBookCatagoryDataById(knowledgeBookCatagoryLocalizedData.Id);
+            knowledgeBookCatagoryData?.Name.Add(twoLetterISOLanguageName, knowledgeBookCatagoryLocalizedData.Name);
+        }
+
+        foreach (var knowledgeBookArticleLocalizedData in localizedRepository.KnowledgeBookArticles)
+        {
+            var knowledgeBookArticleData = GetKnowledgeBookArticleDataById(knowledgeBookArticleLocalizedData.Id);
+            if (knowledgeBookArticleData is not null)
+            {
+                knowledgeBookArticleData.Name.Add(twoLetterISOLanguageName, knowledgeBookArticleLocalizedData.Name);
+                knowledgeBookArticleData.Description.Add(twoLetterISOLanguageName, knowledgeBookArticleLocalizedData.Description);
+
+                if (knowledgeBookArticleLocalizedData.KeyWords.Count == knowledgeBookArticleData.KeyWords.Count)
+                {
+                    for (var i = 0; i < knowledgeBookArticleLocalizedData.KeyWords.Count; i++)
+                    {
+                        knowledgeBookArticleData.KeyWords[i].Add(twoLetterISOLanguageName, knowledgeBookArticleLocalizedData.KeyWords[i]);
+                    }
+                }
+            }
+        }
     }
 }

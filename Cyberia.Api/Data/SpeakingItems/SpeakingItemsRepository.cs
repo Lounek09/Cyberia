@@ -1,5 +1,7 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.SpeakingItems.Localized;
+using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Values;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -34,5 +36,17 @@ public sealed class SpeakingItemsRepository : DofusRepository, IDofusRepository
     public SpeakingItemsTriggerData? GetSpeakingItemsTriggerData(int triggerId, Corpulence corpulence)
     {
         return SpeakingItemsTriggers.FirstOrDefault(x => x.TriggerId == triggerId && x.Corpulence == corpulence);
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<SpeakingItemsLocalizedRepository>(type, language);
+
+        foreach (var speakingItemMessageLocalizedData in localizedRepository.SpeakingItemsMessages)
+        {
+            var speakingItemMessageData = GetSpeakingItemsMessageData(speakingItemMessageLocalizedData.Id);
+            speakingItemMessageData?.Message.Add(twoLetterISOLanguageName, speakingItemMessageLocalizedData.Message);
+        }
     }
 }

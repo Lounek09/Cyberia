@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Data.Effects.Custom;
 
-public sealed class EffectsCustomRepository : DofusCustomRepository, IDofusRepository
+internal sealed class EffectsCustomRepository : DofusCustomRepository, IDofusRepository
 {
     public static string FileName => EffectsRepository.FileName;
 

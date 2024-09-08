@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.Maps.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -124,5 +126,29 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         return mapSubAreaData is null
             ? Translation.Format(ApiTranslations.Unknown_Data, id)
             : mapSubAreaData.Name.ToString().TrimStart('/');
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<MapsLocalizedRepository>(type, language);
+
+        foreach (var mapSuperAreaLocalizedData in localizedRepository.MapSuperAreas)
+        {
+            var mapSuperAreaData = GetMapSuperAreaDataById(mapSuperAreaLocalizedData.Id);
+            mapSuperAreaData?.Name.Add(twoLetterISOLanguageName, mapSuperAreaLocalizedData.Name);
+        }
+
+        foreach (var mapAreaLocalizedData in localizedRepository.MapAreas)
+        {
+            var mapAreaData = GetMapAreaDataById(mapAreaLocalizedData.Id);
+            mapAreaData?.Name.Add(twoLetterISOLanguageName, mapAreaLocalizedData.Name);
+        }
+
+        foreach (var mapSubAreaLocalizedData in localizedRepository.MapSubAreas)
+        {
+            var mapSubAreaData = GetMapSubAreaDataById(mapSubAreaLocalizedData.Id);
+            mapSubAreaData?.Name.Add(twoLetterISOLanguageName, mapSubAreaLocalizedData.Name);
+        }
     }
 }

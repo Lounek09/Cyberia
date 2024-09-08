@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.Skills.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -23,5 +25,17 @@ public sealed class SkillsRepository : DofusRepository, IDofusRepository
     {
         Skills.TryGetValue(id, out var skillData);
         return skillData;
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<SkillsLocalizedRepository>(type, language);
+
+        foreach (var skillLocalizedData in localizedRepository.Skills)
+        {
+            var skillData = GetSkillDataById(skillLocalizedData.Id);
+            skillData?.Description.Add(twoLetterISOLanguageName, skillLocalizedData.Description);
+        }
     }
 }

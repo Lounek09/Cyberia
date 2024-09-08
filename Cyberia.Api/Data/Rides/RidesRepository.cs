@@ -1,4 +1,7 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿
+using Cyberia.Api.Data.Rides.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -50,5 +53,27 @@ public sealed class RidesRepository : DofusRepository, IDofusRepository
         var rideAbilityData = GetRideAbilityDataById(id);
 
         return rideAbilityData is null ? Translation.Format(ApiTranslations.Unknown_Data, id) : rideAbilityData.Name;
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<RidesLocalizedRepository>(type, language);
+
+        foreach (var rideLocalizedData in localizedRepository.Rides)
+        {
+            var rideDate = GetRideDataById(rideLocalizedData.Id);
+            rideDate?.Name.Add(twoLetterISOLanguageName, rideLocalizedData.Name);
+        }
+
+        foreach (var rideAbilityLocalizedData in localizedRepository.RideAbilities)
+        {
+            var rideAbilityData = GetRideAbilityDataById(rideAbilityLocalizedData.Id);
+            if (rideAbilityData is not null)
+            {
+                rideAbilityData.Name.Add(twoLetterISOLanguageName, rideAbilityLocalizedData.Name);
+                rideAbilityData.Description.Add(twoLetterISOLanguageName, rideAbilityLocalizedData.Description);
+            }
+        }
     }
 }

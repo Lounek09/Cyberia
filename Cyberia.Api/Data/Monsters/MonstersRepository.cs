@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Data.Monsters.Custom;
+using Cyberia.Api.Data.Monsters.Localized;
 using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -110,6 +112,30 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
                 monsterData.BreedSummon = monsterCustomData.BreedSummon;
                 monsterData.TrelloUrl = monsterCustomData.TrelloUrl;
             }
+        }
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<MonstersLocalizedRepository>(type, language);
+
+        foreach (var monsterSuperRaceLocalizedData in localizedRepository.MonsterSuperRaces)
+        {
+            var monsterSuperRaceData = GetMonsterSuperRaceDataById(monsterSuperRaceLocalizedData.Id);
+            monsterSuperRaceData?.Name.Add(twoLetterISOLanguageName, monsterSuperRaceLocalizedData.Name);
+        }
+
+        foreach (var monsterRaceLocalizedData in localizedRepository.MonsterRaces)
+        {
+            var monsterRaceData = GetMonsterRaceDataById(monsterRaceLocalizedData.Id);
+            monsterRaceData?.Name.Add(twoLetterISOLanguageName, monsterRaceLocalizedData.Name);
+        }
+
+        foreach (var monsterLocalizedData in localizedRepository.Monsters)
+        {
+            var monsterData = GetMonsterDataById(monsterLocalizedData.Id);
+            monsterData?.Name.Add(twoLetterISOLanguageName, monsterLocalizedData.Name);
         }
     }
 }

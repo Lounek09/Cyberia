@@ -22,6 +22,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     private readonly IncarnationData _incarnationData;
     private readonly ItemData? _itemData;
+    private readonly string _itemName;
     private readonly ItemTypeData? _itemTypeData;
     private readonly IEnumerable<SpellData> _spellsData;
 
@@ -29,6 +30,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     {
         _incarnationData = incarnationData;
         _itemData = incarnationData.GetItemData();
+        _itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(incarnationData.Id);
         _itemTypeData = _itemData?.GetItemTypeData();
         _spellsData = incarnationData.GetSpellsData();
     }
@@ -77,7 +79,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author)
-            .WithTitle($"{_incarnationData.Name} ({_incarnationData.Id})")
+            .WithTitle($"{_itemName} ({_incarnationData.Id})")
             .WithImageUrl(await _incarnationData.GetBigImagePathAsync(CdnImageSize.Size512));
 
         if (_itemData is not null)

@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data.Incarnations;
+﻿using Cyberia.Api;
+using Cyberia.Api.Data.Incarnations;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Entities;
@@ -9,7 +10,8 @@ public static class IncarnationComponentsBuilder
 {
     public static DiscordButtonComponent IncarnationButtonBuilder(IncarnationData incarnationData, bool disable = false)
     {
-        return new(DiscordButtonStyle.Success, IncarnationMessageBuilder.GetPacket(incarnationData.Id), incarnationData.Name, disable);
+        var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(incarnationData.Id);
+        return new(DiscordButtonStyle.Success, IncarnationMessageBuilder.GetPacket(incarnationData.Id), itemName, disable);
     }
 
     public static DiscordSelectComponent IncarnationsSelectBuilder(int index, IEnumerable<IncarnationData> incarnationsData, bool disable = false)
@@ -18,8 +20,9 @@ public static class IncarnationComponentsBuilder
             .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
+                var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id);
                 return new DiscordSelectComponentOption(
-                    ExtendString.WithMaxLength(x.Name, 100),
+                    itemName.WithMaxLength(100),
                     IncarnationMessageBuilder.GetPacket(x.Id),
                     x.Id.ToString());
             });

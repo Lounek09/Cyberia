@@ -30,9 +30,9 @@ public sealed class HintData : IDofusData
         return await CdnManager.GetImagePathAsync("maps/hints", GfxId, size);
     }
 
-    public HintCategoryData? GetHintCategory()
+    public HintCategoryData? GetHintCategoryData()
     {
-        return DofusApi.Datacenter.HintsRepository.GetHintCategory(HintCategoryId);
+        return DofusApi.Datacenter.HintsRepository.GetHintCategoryDataById(HintCategoryId);
     }
 
     public MapData? GetMap()

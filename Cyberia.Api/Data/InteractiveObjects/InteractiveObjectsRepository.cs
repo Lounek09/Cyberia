@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.InteractiveObjects.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -11,6 +13,7 @@ public sealed class InteractiveObjectsRepository : DofusRepository, IDofusReposi
 
     [JsonPropertyName("IO.g")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, InteractiveObjectGfxData>))]
+    [JsonInclude]
     internal FrozenDictionary<int, InteractiveObjectGfxData> InteractiveObjectsGfx { get; init; }
 
     [JsonPropertyName("IO.d")]
@@ -45,6 +48,18 @@ public sealed class InteractiveObjectsRepository : DofusRepository, IDofusReposi
             {
                 interactiveObjectData.GfxId = interactiveObjectGfxData.GfxId;
             }
+        }
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<InteractiveObjectsLocalizedRepository>(type, language);
+
+        foreach (var interactiveObjectLocalizedData in localizedRepository.InteractiveObjects)
+        {
+            var interactiveObjectData = GetInteractiveObjectDataById(interactiveObjectLocalizedData.Id);
+            interactiveObjectData?.Name.Add(twoLetterISOLanguageName, interactiveObjectLocalizedData.Name);
         }
     }
 }

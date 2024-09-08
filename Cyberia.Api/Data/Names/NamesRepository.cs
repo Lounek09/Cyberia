@@ -1,4 +1,6 @@
-﻿using Cyberia.Api.JsonConverters;
+﻿using Cyberia.Api.Data.Names.Localized;
+using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
@@ -24,6 +26,18 @@ public sealed class NamesRepository : DofusRepository, IDofusRepository
         TaxCollectorFirstNames = FrozenDictionary<int, TaxCollectorFirstNameData>.Empty;
     }
 
+    public TaxCollectorLastNameData? GetTaxCollectorLastNameDataById(int id)
+    {
+        TaxCollectorLastNames.TryGetValue(id, out var taxCollectorLastNameData);
+        return taxCollectorLastNameData;
+    }
+
+    public TaxCollectorFirstNameData? GetTaxCollectorFirstNameDataById(int id)
+    {
+        TaxCollectorFirstNames.TryGetValue(id, out var taxCollectorFirstNameData);
+        return taxCollectorFirstNameData;
+    }
+
     public string GetRandomTaxCollectorName()
     {
         if (TaxCollectorLastNames.Count > 0 && TaxCollectorFirstNames.Count > 0)
@@ -35,5 +49,23 @@ public sealed class NamesRepository : DofusRepository, IDofusRepository
         }
 
         return string.Empty;
+    }
+
+    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+        var twoLetterISOLanguageName = language.ToCultureInfo().TwoLetterISOLanguageName;
+        var localizedRepository = DofusLocalizedRepository.Load<NamesLocalizedRepository>(type, language);
+
+        foreach (var taxCollectorLastNameLocalizedData in localizedRepository.TaxCollectorLastNames)
+        {
+            var taxCollectorLastNameData = GetTaxCollectorLastNameDataById(taxCollectorLastNameLocalizedData.Id);
+            taxCollectorLastNameData?.Name.Add(twoLetterISOLanguageName, taxCollectorLastNameLocalizedData.Name);
+        }
+
+        foreach (var taxCollectorFirstNameLocalizedData in localizedRepository.TaxCollectorFirstNames)
+        {
+            var taxCollectorFirstNameData = GetTaxCollectorFirstNameDataById(taxCollectorFirstNameLocalizedData.Id);
+            taxCollectorFirstNameData?.Name.Add(twoLetterISOLanguageName, taxCollectorFirstNameLocalizedData.Name);
+        }
     }
 }
