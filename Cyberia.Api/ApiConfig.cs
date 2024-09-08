@@ -23,7 +23,7 @@ public sealed class ApiConfig
     public LangLanguage BaseLanguage { get; init; }
 
     /// <summary>
-    /// Gets the list of the supported languages, the first one will be the default one.
+    /// Gets the list of the supported languages, the first one will be the default language.
     /// </summary>
     public IReadOnlyList<LangLanguage> SupportedLanguages { get; init; }
 
