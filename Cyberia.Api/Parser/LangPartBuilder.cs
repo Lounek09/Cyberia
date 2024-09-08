@@ -128,40 +128,57 @@ internal sealed class LangPartBuilder
 
         _valueSanitizerBuilder.Clear();
 
-        _valueSanitizerBuilder.Append(firstChar == '\'' ? '"' : firstChar);
+        var inString = firstChar == '\'';
+        _valueSanitizerBuilder.Append(inString ? '"' : firstChar);
 
         var length = valueSegment.Length - 1;
         for (var i = 1; i < length; i++)
         {
-            var previousChar = valueSegment[i -1];
+            var previousChar = valueSegment[i - 1];
             var currentChar = valueSegment[i];
             var nextChar = valueSegment[i + 1];
 
-            switch (currentChar)
+            if (inString)
             {
-                case ' ' when nextChar == ' ':
-                    break;
-                case ' ' when previousChar == '\'' && nextChar == '+':
-                    _valueSanitizerBuilder[^1] = '\\';
-                    _valueSanitizerBuilder.Append('"');
-                    i += 9;
-                    break;
-                case '\\' when nextChar == '\'':
-                    _valueSanitizerBuilder.Append('\'');
-                    i++;
-                    break;
-                case '\'':
-                    _valueSanitizerBuilder.Append('"');
-                    break;
-                case '"':
-                    _valueSanitizerBuilder.Append('\\').Append('"');
-                    break;
-                case < (char)32:
-                    _valueSanitizerBuilder.AppendEscapedChar(currentChar);
-                    break;
-                default:
-                    _valueSanitizerBuilder.Append(currentChar);
-                    break;
+                switch (currentChar)
+                {
+                    case '\\' when nextChar == '\'':
+                        _valueSanitizerBuilder.Append('\'');
+                        i++;
+                        break;
+                    case '\'':
+                        inString = false;
+                        _valueSanitizerBuilder.Append('"');
+                        break;
+                    case '"':
+                        _valueSanitizerBuilder.Append('\\').Append('"');
+                        break;
+                    case < (char)32:
+                        _valueSanitizerBuilder.AppendEscapedChar(currentChar);
+                        break;
+                    default:
+                        _valueSanitizerBuilder.Append(currentChar);
+                        break;
+                }
+            }
+            else
+            {
+                switch (currentChar)
+                {
+                    case ' ' when previousChar == '\'' && nextChar == '+':
+                        inString = true;
+                        _valueSanitizerBuilder[^1] = '\\';
+                        _valueSanitizerBuilder.Append('"');
+                        i += 9;
+                        break;
+                    case '\'':
+                        inString = true;
+                        _valueSanitizerBuilder.Append('"');
+                        break;
+                    default:
+                        _valueSanitizerBuilder.Append(currentChar);
+                        break;
+                }
             }
         }
 
