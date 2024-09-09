@@ -3,6 +3,7 @@ using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -13,10 +14,11 @@ namespace Cyberia.Salamandra.Commands.Other.Help;
 
 public sealed class HelpCommandModule
 {
-    [Command("help"), Description("Liste les commandes du bot")]
+    [Command(HelpInteractionLocalizer.CommandName), Description(HelpInteractionLocalizer.CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    [InteractionLocalizer<HelpInteractionLocalizer>]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
         StringBuilder descriptionBuilder = new();

@@ -2,6 +2,7 @@
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -11,10 +12,11 @@ namespace Cyberia.Salamandra.Commands.Other.Discord;
 
 public sealed class DiscordCommandModule
 {
-    [Command("discord"), Description("Lien d'invitation du serveur Discord de support")]
+    [Command(DiscordInteractionLocalizer.CommandName), Description(DiscordInteractionLocalizer.CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    [InteractionLocalizer<DiscordInteractionLocalizer>]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
         await ctx.RespondAsync(DofusApi.Config.DiscordInviteUrl, true);

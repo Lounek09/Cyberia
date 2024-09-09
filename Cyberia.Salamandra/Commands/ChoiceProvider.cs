@@ -5,8 +5,6 @@ namespace Cyberia.Salamandra.Commands;
 
 public abstract class ChoiceProvider : IChoiceProvider
 {
-    protected readonly static IReadOnlyDictionary<string, object> s_empty = new Dictionary<string, object>();
-
     public ValueTask<IReadOnlyDictionary<string, object>> ProvideAsync(CommandParameter parameter)
     {
         return ValueTask.FromResult(InternalProvide(parameter));

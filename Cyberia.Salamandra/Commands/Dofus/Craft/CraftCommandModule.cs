@@ -5,6 +5,7 @@ using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -14,16 +15,19 @@ namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
 public sealed class CraftCommandModule
 {
-    [Command("craft"), Description("Permet de calculer les ressources nécessaires pour craft un objet")]
+    [Command(CraftInteractionLocalizer.CommandName), Description(CraftInteractionLocalizer.CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    [InteractionLocalizer<CraftInteractionLocalizer>]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de l'item à craft")]
+        [Parameter(CraftInteractionLocalizer.Value_ParameterName), Description(CraftInteractionLocalizer.Value_ParameterDescription)]
+        [InteractionLocalizer<CraftInteractionLocalizer>]
         [SlashAutoCompleteProvider<CraftAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value,
-        [Parameter("quantite"), Description("Quantité à craft")]
+        [Parameter(CraftInteractionLocalizer.Quantity_ParameterName), Description(CraftInteractionLocalizer.Quantity_ParameterDescription)]
+        [InteractionLocalizer<CraftInteractionLocalizer>]
         [MinMaxValue(1, CraftMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {

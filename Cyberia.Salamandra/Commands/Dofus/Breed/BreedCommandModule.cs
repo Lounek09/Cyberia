@@ -4,6 +4,7 @@ using Cyberia.Salamandra.Managers;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -13,12 +14,14 @@ namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 
 public sealed class BreedCommandModule
 {
-    [Command("classe"), Description("Retourne les informations d'une classe à partir de son nom")]
+    [Command(BreedInteractionLocalizer.CommandName), Description(BreedInteractionLocalizer.CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    [InteractionLocalizer<BreedInteractionLocalizer>]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de la classe")]
+        [Parameter(BreedInteractionLocalizer.BreedId_ParameterName), Description(BreedInteractionLocalizer.BreedId_ParameterDescription)]
+        [InteractionLocalizer<BreedInteractionLocalizer>]
         [SlashAutoCompleteProvider<BreedAutocompleteProvider>]
         int breedId)
     {
