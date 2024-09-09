@@ -31,7 +31,11 @@ public static class Program
         {
             Log.Information("Starting Cyberia");
 
-            var config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>()!;
+            var config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>();
+            if (config is null || config.Validate())
+            {
+                throw new InvalidOperationException("Invalid configuration");
+            }
 
             var defaultCulture = config.ApiConfig.SupportedLanguages[0].ToCulture();
             CultureInfo.DefaultThreadCurrentCulture = defaultCulture;

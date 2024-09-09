@@ -83,4 +83,15 @@ public sealed class CyberiaConfig
         BotConfig = new();
         WebConfig = new();
     }
+
+    public bool Validate()
+    {
+        if (ApiConfig.SupportedLanguages.Count == 0)
+        {
+            Log.Error("You must specify at least one supported language in the API configuration.");
+            return false;
+        }
+
+        return true;
+    }
 }
