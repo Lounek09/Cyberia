@@ -86,7 +86,7 @@ public static partial class InteractionManager
             return;
         }
 
-        CommandManager.SetCulture();
+        CultureManager.SetCulture(args.Interaction);
 
         var response = new DiscordInteractionResponseBuilder().AsEphemeral();
 
