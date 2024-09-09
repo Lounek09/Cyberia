@@ -82,12 +82,6 @@ public readonly record struct LocalizedString
             return translation;
         }
 
-        var defaultLanguage = DofusApi.Config.SupportedLanguages[0].ToCulture().TwoLetterISOLanguageName;
-        if (_translations.TryGetValue(defaultLanguage, out translation) && !string.IsNullOrEmpty(translation))
-        {
-            return translation;
-        }
-
         return Default;
     }
 
