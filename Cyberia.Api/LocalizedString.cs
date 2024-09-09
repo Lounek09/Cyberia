@@ -68,7 +68,7 @@ public readonly record struct LocalizedString
 
     /// <inheritdoc cref="Add(string, string)"/>
     /// <param name="language">The language.</param>
-    internal void Add(LangLanguage language, string translation) => Add(language.ToCulture().TwoLetterISOLanguageName, translation);
+    internal void Add(LangLanguage language, string translation) => Add(language.ToCulture(), translation);
 
     /// <summary>
     /// Returns the translation for the specified language.
@@ -77,9 +77,18 @@ public readonly record struct LocalizedString
     /// <returns>The translation for the specified language; if not found, the default value.</returns>
     public string ToString(string twoLetterISOLanguageName)
     {
-        return _translations.TryGetValue(twoLetterISOLanguageName, out var translation)
-            ? translation
-            : Default;
+        if (_translations.TryGetValue(twoLetterISOLanguageName, out var translation) && !string.IsNullOrEmpty(translation))
+        {
+            return translation;
+        }
+
+        var defaultLanguage = DofusApi.Config.SupportedLanguages[0].ToCulture().TwoLetterISOLanguageName;
+        if (_translations.TryGetValue(defaultLanguage, out translation) && !string.IsNullOrEmpty(translation))
+        {
+            return translation;
+        }
+
+        return Default;
     }
 
     /// <inheritdoc cref="ToString(string)"/>
