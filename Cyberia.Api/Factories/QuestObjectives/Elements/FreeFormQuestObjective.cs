@@ -4,9 +4,9 @@ namespace Cyberia.Api.Factories.QuestObjectives;
 
 public sealed record FreeFormQuestObjective : QuestObjective
 {
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
-    private FreeFormQuestObjective(QuestObjectiveData questObjectiveData, string description)
+    private FreeFormQuestObjective(QuestObjectiveData questObjectiveData, LocalizedString description)
         : base(questObjectiveData)
     {
         Description = description;

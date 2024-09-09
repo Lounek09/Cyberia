@@ -7,7 +7,14 @@ public sealed class LocalizedStringConverter : JsonConverter<LocalizedString>
 {
     public override LocalizedString Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return new LocalizedString(reader.GetString() ?? string.Empty);
+        var element = JsonElement.ParseValue(ref reader);
+
+        return element.ValueKind switch
+        {
+            JsonValueKind.String => new LocalizedString(element.GetString() ?? string.Empty),
+            JsonValueKind.Number => new LocalizedString(element.GetDouble().ToString()),
+            _ => throw new JsonException()
+        };
     }
 
     public override void Write(Utf8JsonWriter writer, LocalizedString value, JsonSerializerOptions options)

@@ -4,9 +4,9 @@ namespace Cyberia.Api.Factories.QuestObjectives;
 
 public sealed record DuelSpecificPlayerQuestObjective : QuestObjective
 {
-    public string SpecificPlayer { get; init; }
+    public LocalizedString SpecificPlayer { get; init; }
 
-    private DuelSpecificPlayerQuestObjective(QuestObjectiveData questObjectiveData, string specificPlayer)
+    private DuelSpecificPlayerQuestObjective(QuestObjectiveData questObjectiveData, LocalizedString specificPlayer)
         : base(questObjectiveData)
     {
         SpecificPlayer = specificPlayer;

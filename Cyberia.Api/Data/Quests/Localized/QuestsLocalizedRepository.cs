@@ -12,6 +12,9 @@ internal sealed class QuestsLocalizedRepository : DofusLocalizedRepository, IDof
     [JsonPropertyName("Q.s")]
     public IReadOnlyList<QuestStepLocalizedData> QuestSteps { get; init; }
 
+    [JsonPropertyName("Q.o")]
+    public IReadOnlyList<QuestObjectiveLocalizedData> QuestObjectives { get; init; }
+
     [JsonPropertyName("Q.t")]
     public IReadOnlyList<QuestObjectiveTypeLocalizedData> QuestObjectiveTypes { get; init; }
 
@@ -20,6 +23,7 @@ internal sealed class QuestsLocalizedRepository : DofusLocalizedRepository, IDof
     {
         Quests = [];
         QuestSteps = [];
+        QuestObjectives = [];
         QuestObjectiveTypes = [];
     }
 }

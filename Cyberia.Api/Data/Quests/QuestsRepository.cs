@@ -151,6 +151,18 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
             }
         }
 
+        foreach (var questObjectiveLocalizedData in localizedRepository.QuestObjectives)
+        {
+            var questObjectiveData = GetQuestObjectiveDataById(questObjectiveLocalizedData.Id);
+            if (questObjectiveData is not null && questObjectiveLocalizedData.Parameters.Count == questObjectiveData.Parameters.Count)
+            {
+                for (var i = 0; i < questObjectiveData.Parameters.Count; i++)
+                {
+                    questObjectiveData.Parameters[i].Add(twoLetterISOLanguageName, questObjectiveLocalizedData.Parameters[i]);
+                }
+            }
+        }
+
         foreach (var questObjectiveTypeLocalizedData in localizedRepository.QuestObjectiveTypes)
         {
             var questObjectiveTypeData = GetQuestObjectiveTypeDataById(questObjectiveTypeLocalizedData.Id);

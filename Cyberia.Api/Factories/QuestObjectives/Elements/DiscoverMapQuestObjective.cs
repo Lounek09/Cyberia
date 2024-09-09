@@ -4,9 +4,9 @@ namespace Cyberia.Api.Factories.QuestObjectives;
 
 public sealed record DiscoverMapQuestObjective : QuestObjective
 {
-    public string MapDescription { get; init; }
+    public LocalizedString MapDescription { get; init; }
 
-    private DiscoverMapQuestObjective(QuestObjectiveData questObjectiveData, string mapDescription)
+    private DiscoverMapQuestObjective(QuestObjectiveData questObjectiveData, LocalizedString mapDescription)
         : base(questObjectiveData)
     {
         MapDescription = mapDescription;

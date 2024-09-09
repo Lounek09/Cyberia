@@ -14,9 +14,7 @@ public sealed class DofusDataFrozenDictionaryConverter<TKey, TValue> : JsonConve
     {
         var values = JsonSerializer.Deserialize<TValue[]>(ref reader, options) ?? [];
 
-        return values
-            .GroupBy(x => x.Id)
-            .ToFrozenDictionary(x => x.Key, x => x.First());
+        return values.GroupBy(x => x.Id).ToFrozenDictionary(x => x.Key, x => x.First());
     }
 
     public override void Write(Utf8JsonWriter writer, FrozenDictionary<TKey, TValue> values, JsonSerializerOptions options)
