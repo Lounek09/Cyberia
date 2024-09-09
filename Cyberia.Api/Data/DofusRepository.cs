@@ -57,6 +57,8 @@ public abstract class DofusRepository
             repository.LoadLocalizedData(type, language);
         }
 
+        repository.FinalizeLoading();
+
         return repository;
     }
 
@@ -74,6 +76,14 @@ public abstract class DofusRepository
     /// <param name="type">The type of the lang to load.</param>
     /// <param name="language">The language of the lang to load.</param>
     protected virtual void LoadLocalizedData(LangType type, LangLanguage language)
+    {
+
+    }
+
+    /// <summary>
+    /// Finalize the loading process of the repository.
+    /// </summary>
+    protected virtual void FinalizeLoading()
     {
 
     }

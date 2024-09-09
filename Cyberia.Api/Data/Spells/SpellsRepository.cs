@@ -93,19 +93,6 @@ public sealed class SpellsRepository : DofusRepository, IDofusRepository
         return null;
     }
 
-    protected override void LoadCustomData()
-    {
-        foreach (var spellData in Spells.Values)
-        {
-            var i = 1;
-            foreach (var spellLevelData in spellData.GetSpellLevelsData())
-            {
-                spellLevelData.SpellData = spellData;
-                spellLevelData.Rank = i++;
-            }
-        }
-    }
-
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
         var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
@@ -118,6 +105,19 @@ public sealed class SpellsRepository : DofusRepository, IDofusRepository
             {
                 spellData.Name.Add(twoLetterISOLanguageName, spellLocalizedData.Name);
                 spellData.Description.Add(twoLetterISOLanguageName, spellLocalizedData.Description);
+            }
+        }
+    }
+
+    protected override void FinalizeLoading()
+    {
+        foreach (var spellData in Spells.Values)
+        {
+            var i = 1;
+            foreach (var spellLevelData in spellData.GetSpellLevelsData())
+            {
+                spellLevelData.SpellData = spellData;
+                spellLevelData.Rank = i++;
             }
         }
     }

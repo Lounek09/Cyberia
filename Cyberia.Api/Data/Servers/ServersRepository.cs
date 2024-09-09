@@ -79,18 +79,6 @@ public sealed class ServersRepository : DofusRepository, IDofusRepository
         return defaultServerSpecificTextData;
     }
 
-    protected override void LoadCustomData()
-    {
-        foreach (var serverPopulationWeightData in ServerPopulationsWeight)
-        {
-            var serverPopulationData = GetServerPopulationDataById(serverPopulationWeightData.Id);
-            if (serverPopulationData is not null)
-            {
-                serverPopulationData.Weight = serverPopulationWeightData.Weight;
-            }
-        }
-    }
-
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
         var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
@@ -122,6 +110,18 @@ public sealed class ServersRepository : DofusRepository, IDofusRepository
         {
             var defaultServerSpecificTextData = GetDefaultServerSpecificTextDataById(defaultServerSpecificTextLocalizedData.Id);
             defaultServerSpecificTextData?.Description.Add(twoLetterISOLanguageName, defaultServerSpecificTextLocalizedData.Description);
+        }
+    }
+
+    protected override void FinalizeLoading()
+    {
+        foreach (var serverPopulationWeightData in ServerPopulationsWeight)
+        {
+            var serverPopulationData = GetServerPopulationDataById(serverPopulationWeightData.Id);
+            if (serverPopulationData is not null)
+            {
+                serverPopulationData.Weight = serverPopulationWeightData.Weight;
+            }
         }
     }
 }

@@ -117,18 +117,6 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
             : itemData.Name;
     }
 
-    protected override void LoadCustomData()
-    {
-        foreach (var itemSuperTypeSlotData in ItemSuperTypeSlots)
-        {
-            var itemSuperTypeData = GetItemSuperTypeDataById(itemSuperTypeSlotData.Id);
-            if (itemSuperTypeData is not null)
-            {
-                itemSuperTypeData.SlotsId = itemSuperTypeSlotData.SlotsId;
-            }
-        }
-    }
-
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
         var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
@@ -154,6 +142,18 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
                 itemData.Name.Add(twoLetterISOLanguageName, itemLocalizedData.Name);
                 itemData.NormalizedName.Add(twoLetterISOLanguageName, itemLocalizedData.NormalizedName);
                 itemData.Description.Add(twoLetterISOLanguageName, itemLocalizedData.Description);
+            }
+        }
+    }
+
+    protected override void FinalizeLoading()
+    {
+        foreach (var itemSuperTypeSlotData in ItemSuperTypeSlots)
+        {
+            var itemSuperTypeData = GetItemSuperTypeDataById(itemSuperTypeSlotData.Id);
+            if (itemSuperTypeData is not null)
+            {
+                itemSuperTypeData.SlotsId = itemSuperTypeSlotData.SlotsId;
             }
         }
     }

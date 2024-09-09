@@ -128,22 +128,6 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
                 questStepData.QuestObjectivesId = questStepCustomData.QuestObjectivesId;
             }
         }
-
-        foreach (var questStepData in QuestSteps.Values)
-        {
-            List<QuestObjectiveData> questObjectivesData = [];
-
-            foreach (var questObjectiveId in questStepData.QuestObjectivesId)
-            {
-                var questObjectiveData = GetQuestObjectiveDataById(questObjectiveId);
-                if (questObjectiveData is not null)
-                {
-                    questObjectivesData.Add(questObjectiveData);
-                }
-            }
-
-            questStepData.QuestObjectives = QuestObjectiveFactory.CreateMany(questObjectivesData);
-        }
     }
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
@@ -171,6 +155,25 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
         {
             var questObjectiveTypeData = GetQuestObjectiveTypeDataById(questObjectiveTypeLocalizedData.Id);
             questObjectiveTypeData?.Description.Add(twoLetterISOLanguageName, questObjectiveTypeLocalizedData.Description);
+        }
+    }
+
+    protected override void FinalizeLoading()
+    {
+        foreach (var questStepData in QuestSteps.Values)
+        {
+            List<QuestObjectiveData> questObjectivesData = [];
+
+            foreach (var questObjectiveId in questStepData.QuestObjectivesId)
+            {
+                var questObjectiveData = GetQuestObjectiveDataById(questObjectiveId);
+                if (questObjectiveData is not null)
+                {
+                    questObjectivesData.Add(questObjectiveData);
+                }
+            }
+
+            questStepData.QuestObjectives = QuestObjectiveFactory.CreateMany(questObjectivesData);
         }
     }
 }

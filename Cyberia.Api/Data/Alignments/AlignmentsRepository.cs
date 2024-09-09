@@ -144,39 +144,6 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
         : alignmentSpecializationData.Name;
     }
 
-    protected override void LoadCustomData()
-    {
-        foreach (var alignmentSpecializationData in AlignmentSpecializations)
-        {
-            List<AlignmentFeatParametersData> alignmentFeatsParametersData = [];
-
-            foreach (var compressedAlignmentFeatsParameters in alignmentSpecializationData.Value.CompressedAlignmentFeatsParameters)
-            {
-                var length = compressedAlignmentFeatsParameters.GetArrayLength();
-
-                var alignmentFeatId = compressedAlignmentFeatsParameters[0].GetInt32OrDefault();
-                var level = compressedAlignmentFeatsParameters[1].GetInt32OrDefault();
-                var parameters = length > 2
-                ? JsonSerializer.Deserialize<int[]>(compressedAlignmentFeatsParameters[2]) ?? []
-                    : [];
-
-                var alignmentFeatData = GetAlignmentFeatDataById(alignmentFeatId);
-                var alignmentFeatEffect = alignmentFeatData is null || alignmentFeatData.AlignmentFeatEffectId == 0
-                    ? null
-                    : AlignmentFeatEffectFactory.Create(alignmentFeatData.AlignmentFeatEffectId, parameters);
-
-                alignmentFeatsParametersData.Add(new AlignmentFeatParametersData
-                {
-                    AlignmentFeatId = alignmentFeatId,
-                    Level = level,
-                    AlignmentFeatEffect = alignmentFeatEffect
-                });
-            }
-
-            alignmentSpecializationData.Value.AlignmentFeatsParametersData = alignmentFeatsParametersData;
-        }
-    }
-
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
         var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
@@ -221,6 +188,39 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
                 alignmentSpecializationData?.Description.Add(twoLetterISOLanguageName, alignmentSpecializationLocalizedData.Description);
 
             }
+        }
+    }
+
+    protected override void FinalizeLoading()
+    {
+        foreach (var alignmentSpecializationData in AlignmentSpecializations)
+        {
+            List<AlignmentFeatParametersData> alignmentFeatsParametersData = [];
+
+            foreach (var compressedAlignmentFeatsParameters in alignmentSpecializationData.Value.CompressedAlignmentFeatsParameters)
+            {
+                var length = compressedAlignmentFeatsParameters.GetArrayLength();
+
+                var alignmentFeatId = compressedAlignmentFeatsParameters[0].GetInt32OrDefault();
+                var level = compressedAlignmentFeatsParameters[1].GetInt32OrDefault();
+                var parameters = length > 2
+                ? JsonSerializer.Deserialize<int[]>(compressedAlignmentFeatsParameters[2]) ?? []
+                    : [];
+
+                var alignmentFeatData = GetAlignmentFeatDataById(alignmentFeatId);
+                var alignmentFeatEffect = alignmentFeatData is null || alignmentFeatData.AlignmentFeatEffectId == 0
+                    ? null
+                    : AlignmentFeatEffectFactory.Create(alignmentFeatData.AlignmentFeatEffectId, parameters);
+
+                alignmentFeatsParametersData.Add(new AlignmentFeatParametersData
+                {
+                    AlignmentFeatId = alignmentFeatId,
+                    Level = level,
+                    AlignmentFeatEffect = alignmentFeatEffect
+                });
+            }
+
+            alignmentSpecializationData.Value.AlignmentFeatsParametersData = alignmentFeatsParametersData;
         }
     }
 }

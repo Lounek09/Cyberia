@@ -43,11 +43,6 @@ public sealed class TimeZoneRepository : DofusRepository, IDofusRepository
         return string.Empty;
     }
 
-    protected override void LoadCustomData()
-    {
-        StartDayOfMonths = StartDayOfMonths.Reverse().ToDictionary();
-    }
-
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
         var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
@@ -55,10 +50,15 @@ public sealed class TimeZoneRepository : DofusRepository, IDofusRepository
 
         if (localizedRepository.StartDayOfMonths.Count == StartDayOfMonths.Count)
         {
-            foreach (var pair in localizedRepository.StartDayOfMonths.Reverse())
+            foreach (var pair in localizedRepository.StartDayOfMonths)
             {
                 StartDayOfMonths[pair.Key].Add(twoLetterISOLanguageName, pair.Value);
             }
         }
+    }
+
+    protected override void FinalizeLoading()
+    {
+        StartDayOfMonths = StartDayOfMonths.Reverse().ToDictionary();
     }
 }

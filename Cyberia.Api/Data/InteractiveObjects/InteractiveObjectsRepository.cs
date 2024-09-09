@@ -39,18 +39,6 @@ public sealed class InteractiveObjectsRepository : DofusRepository, IDofusReposi
         return interactiveObjectData;
     }
 
-    protected override void LoadCustomData()
-    {
-        foreach (var interactiveObjectData in InteractiveObjects.Values)
-        {
-            var interactiveObjectGfxData = GetInteractiveObjectGfxDataById(interactiveObjectData.GfxId);
-            if (interactiveObjectGfxData is not null)
-            {
-                interactiveObjectData.GfxId = interactiveObjectGfxData.GfxId;
-            }
-        }
-    }
-
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
         var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
@@ -62,4 +50,16 @@ public sealed class InteractiveObjectsRepository : DofusRepository, IDofusReposi
             interactiveObjectData?.Name.Add(twoLetterISOLanguageName, interactiveObjectLocalizedData.Name);
         }
     }
+    protected override void FinalizeLoading()
+    {
+        foreach (var interactiveObjectData in InteractiveObjects.Values)
+        {
+            var interactiveObjectGfxData = GetInteractiveObjectGfxDataById(interactiveObjectData.GfxId);
+            if (interactiveObjectGfxData is not null)
+            {
+                interactiveObjectData.GfxId = interactiveObjectGfxData.GfxId;
+            }
+        }
+    }
+
 }

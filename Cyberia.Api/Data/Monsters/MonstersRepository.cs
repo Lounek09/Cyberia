@@ -94,16 +94,6 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
     {
         var customRepository = DofusCustomRepository.Load<MonstersCustomRepository>();
 
-        foreach (var pair in Monsters)
-        {
-            var i = 1;
-            foreach (var monsterGradeData in pair.Value.GetMonsterGradesData())
-            {
-                monsterGradeData.MonsterData = pair.Value;
-                monsterGradeData.Rank = i++;
-            }
-        }
-
         foreach (var monsterCustomData in customRepository.MonstersCustom)
         {
             var monsterData = GetMonsterDataById(monsterCustomData.Id);
@@ -136,6 +126,19 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
         {
             var monsterData = GetMonsterDataById(monsterLocalizedData.Id);
             monsterData?.Name.Add(twoLetterISOLanguageName, monsterLocalizedData.Name);
+        }
+    }
+
+    protected override void FinalizeLoading()
+    {
+        foreach (var pair in Monsters)
+        {
+            var i = 1;
+            foreach (var monsterGradeData in pair.Value.GetMonsterGradesData())
+            {
+                monsterGradeData.MonsterData = pair.Value;
+                monsterGradeData.Rank = i++;
+            }
         }
     }
 }
