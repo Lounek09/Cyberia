@@ -1,10 +1,12 @@
 ﻿using Cyberia.Api.Factories;
+using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.DSharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -21,9 +23,20 @@ public sealed class ParseCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task EffectsExecuteAsync(SlashCommandContext ctx,
         [Parameter("value"), Description("Effects of an item")]
-        string value)
+        string value,
+        [Parameter("language"), Description("Language used to display the effects")]
+        [SlashChoiceProvider(typeof(SupportedCultureChoiceProvider))]
+        string? languageStr = null)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        if (languageStr is null)
+        {
+            CultureManager.SetCulture(ctx.Interaction);
+        }
+        else
+        {
+            var language = Enum.Parse<LangLanguage>(languageStr);
+            CultureManager.SetCulture(language);
+        }
 
         var effects = EffectFactory.CreateMany(value);
 
@@ -44,9 +57,20 @@ public sealed class ParseCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task CriteriaExecuteAsync(SlashCommandContext ctx,
         [Parameter("value"), Description("Criteria")]
-        string value)
+        string value,
+        [Parameter("language"), Description("Language used to display the effects")]
+        [SlashChoiceProvider(typeof(SupportedCultureChoiceProvider))]
+        string? languageStr = null)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        if (languageStr is null)
+        {
+            CultureManager.SetCulture(ctx.Interaction);
+        }
+        else
+        {
+            var language = Enum.Parse<LangLanguage>(languageStr);
+            CultureManager.SetCulture(language);
+        }
 
         var criteria = CriterionFactory.CreateMany(value);
 

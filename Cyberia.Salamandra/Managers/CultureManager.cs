@@ -9,6 +9,17 @@ namespace Cyberia.Salamandra.Managers;
 public static class CultureManager
 {
     /// <summary>
+    /// Set the culture of the current thread to the one of the lang language.
+    /// </summary>
+    /// <param name="language">The lang language to get the culture from.</param>
+    public static void SetCulture(LangLanguage language)
+    {
+        var culture = language.ToCulture();
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+    }
+
+    /// <summary>
     /// Set the culture of the current thread to the one of the interaction.
     /// </summary>
     /// <param name="interaction">The interaction to get the culture from.</param>
