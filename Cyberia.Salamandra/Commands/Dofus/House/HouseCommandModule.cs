@@ -8,6 +8,7 @@ using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -15,15 +16,18 @@ using System.ComponentModel;
 
 namespace Cyberia.Salamandra.Commands.Dofus.House;
 
-[Command("maison"), Description("Retourne les informations d'une maison")]
+[Command(HouseInteractionLocalizer.CommandName), Description(HouseInteractionLocalizer.CommandDescription)]
 [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+[InteractionLocalizer<HouseInteractionLocalizer>]
 public sealed class HouseCommandModule
 {
-    [Command("nom"), Description("Retourne les informations d'une maison à partir de son nom")]
+    [Command(HouseInteractionLocalizer.Name_CommandName), Description(HouseInteractionLocalizer.Name_CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionLocalizer<HouseInteractionLocalizer>]
     public static async Task NameExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de la maison")]
+        [Parameter(HouseInteractionLocalizer.Name_Value_ParameterName), Description(HouseInteractionLocalizer.Name_Value_ParameterDescription)]
+        [InteractionLocalizer<HouseInteractionLocalizer>]
         [SlashAutoCompleteProvider<HouseAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
@@ -58,13 +62,16 @@ public sealed class HouseCommandModule
     }
 
 
-    [Command("coordonnees"), Description("Retourne une liste de maisons à partir de leurs coordonnées")]
+    [Command(HouseInteractionLocalizer.Coordinates_CommandName), Description(HouseInteractionLocalizer.Coordinates_CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionLocalizer<HouseInteractionLocalizer>]
     public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
-        [Parameter("x"), Description("Coordonnée x de la map de la maison")]
+        [Parameter(HouseInteractionLocalizer.Coordinates_X_ParameterName), Description(HouseInteractionLocalizer.Coordinates_X_ParameterDescription)]
+        [InteractionLocalizer<HouseInteractionLocalizer>]
         [MinMaxValue(-666, 666)]
         int x,
-        [Parameter("y"), Description("Coordonnée y de la map de la maison")]
+        [Parameter(HouseInteractionLocalizer.Coordinates_Y_ParameterName), Description(HouseInteractionLocalizer.Coordinates_Y_ParameterDescription)]
+        [InteractionLocalizer<HouseInteractionLocalizer>]
         [MinMaxValue(-666, 666)]
         int y)
     {
@@ -88,10 +95,12 @@ public sealed class HouseCommandModule
     }
 
 
-    [Command("sous-zone"), Description("Retourne une liste de maisons à partir de leur sous-zone")]
+    [Command(HouseInteractionLocalizer.SubArea_CommandName), Description(HouseInteractionLocalizer.SubArea_CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionLocalizer<HouseInteractionLocalizer>]
     public static async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de la sous-zone")]
+        [Parameter(HouseInteractionLocalizer.SubArea_Value_ParameterName), Description(HouseInteractionLocalizer.SubArea_Value_ParameterDescription)]
+        [InteractionLocalizer<HouseInteractionLocalizer>]
         [SlashAutoCompleteProvider<MapSubAreaAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
@@ -130,10 +139,12 @@ public sealed class HouseCommandModule
     }
 
 
-    [Command("zone"), Description("Retourne une liste de maisons à partir de leur zone")]
+    [Command(HouseInteractionLocalizer.Area_CommandName), Description(HouseInteractionLocalizer.Area_CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [InteractionLocalizer<HouseInteractionLocalizer>]
     public static async Task MapAreaExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de la zone")]
+        [Parameter(HouseInteractionLocalizer.Area_Value_ParameterName), Description(HouseInteractionLocalizer.Area_Value_ParameterDescription)]
+        [InteractionLocalizer<HouseInteractionLocalizer>]
         [SlashAutoCompleteProvider<MapAreaAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)

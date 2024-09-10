@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
 
@@ -6,6 +7,7 @@ using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -26,8 +28,21 @@ public sealed class SearchCommandModule
         SearchLocation location,
         [Parameter("id"), Description("Effect id")]
         [MinMaxValue(-1, 9999)]
-        int effectId)
+        int effectId,
+        [Parameter("language"), Description("Language used to display the effects")]
+        [SlashChoiceProvider(typeof(SupportedCultureChoiceProvider))]
+        string? languageStr = null)
     {
+        if (languageStr is null)
+        {
+            CultureManager.SetCulture(ctx.Interaction);
+        }
+        else
+        {
+            var language = Enum.Parse<LangLanguage>(languageStr);
+            CultureManager.SetCulture(language);
+        }
+
         StringBuilder descriptionBuilder = new();
 
         switch (location)
@@ -71,8 +86,21 @@ public sealed class SearchCommandModule
         SearchLocation location,
         [Parameter("id"), Description("Criterion id")]
         [MinMaxLength(2, 2)]
-        string criterionId)
+        string criterionId,
+        [Parameter("language"), Description("Language used to display the effects")]
+        [SlashChoiceProvider(typeof(SupportedCultureChoiceProvider))]
+        string? languageStr = null)
     {
+        if (languageStr is null)
+        {
+            CultureManager.SetCulture(ctx.Interaction);
+        }
+        else
+        {
+            var language = Enum.Parse<LangLanguage>(languageStr);
+            CultureManager.SetCulture(language);
+        }
+
         StringBuilder descriptionBuilder = new();
 
         switch (location)

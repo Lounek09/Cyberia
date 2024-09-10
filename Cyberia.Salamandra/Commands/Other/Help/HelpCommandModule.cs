@@ -15,12 +15,15 @@ namespace Cyberia.Salamandra.Commands.Other.Help;
 public sealed class HelpCommandModule
 {
     [Command(HelpInteractionLocalizer.CommandName), Description(HelpInteractionLocalizer.CommandDescription)]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<HelpInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
+        CultureManager.SetCulture(ctx.Interaction);
+        var locale = ctx.Interaction.Locale ?? ctx.Interaction.GuildLocale ?? string.Empty;
+
         StringBuilder descriptionBuilder = new();
 
         var commands = await Bot.Client.GetGlobalApplicationCommandsAsync();
@@ -30,6 +33,11 @@ public sealed class HelpCommandModule
             if (command.Name.Equals("help"))
             {
                 continue;
+            }
+
+            if (!command.DescriptionLocalizations.TryGetValue(locale, out var commandDescription))
+            {
+                commandDescription = command.Description;
             }
 
             if (command.Options is not null)
@@ -42,7 +50,7 @@ public sealed class HelpCommandModule
                     descriptionBuilder.Append("- ");
                     descriptionBuilder.Append(string.Join(" - ", subCommands.Select(x => command.GetSubcommandMention(x.Name))));
                     descriptionBuilder.Append(" : ");
-                    descriptionBuilder.Append(command.Description);
+                    descriptionBuilder.Append(commandDescription);
                     descriptionBuilder.Append('\n');
 
                     continue;
@@ -52,7 +60,7 @@ public sealed class HelpCommandModule
             descriptionBuilder.Append("- ");
             descriptionBuilder.Append(command.Mention);
             descriptionBuilder.Append(" : ");
-            descriptionBuilder.Append(command.Description);
+            descriptionBuilder.Append(commandDescription);
             descriptionBuilder.Append('\n');
         }
 

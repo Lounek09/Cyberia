@@ -11,9 +11,9 @@ namespace Cyberia.Salamandra.Commands.Admin.Restart;
 public sealed class RestartCommandModule
 {
     [Command("restart"), Description("[Owner] Restart the bot")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {

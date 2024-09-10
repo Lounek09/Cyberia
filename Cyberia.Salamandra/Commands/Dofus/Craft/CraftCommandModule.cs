@@ -16,10 +16,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 public sealed class CraftCommandModule
 {
     [Command(CraftInteractionLocalizer.CommandName), Description(CraftInteractionLocalizer.CommandDescription)]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<CraftInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(CraftInteractionLocalizer.Value_ParameterName), Description(CraftInteractionLocalizer.Value_ParameterDescription)]
         [InteractionLocalizer<CraftInteractionLocalizer>]

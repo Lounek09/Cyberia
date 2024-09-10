@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -13,12 +14,14 @@ namespace Cyberia.Salamandra.Commands.Other.Discord;
 public sealed class DiscordCommandModule
 {
     [Command(DiscordInteractionLocalizer.CommandName), Description(DiscordInteractionLocalizer.CommandDescription)]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<DiscordInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
+        CultureManager.SetCulture(ctx.Interaction);
+
         await ctx.RespondAsync(DofusApi.Config.DiscordInviteUrl, true);
     }
 }

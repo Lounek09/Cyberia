@@ -13,9 +13,9 @@ namespace Cyberia.Salamandra.Commands.Admin.Ip;
 public sealed class IpCommandModule
 {
     [Command("ip"), Description("Decodes IPs sent from game packets")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("value"), Description("The encoded IP")]
         [MinMaxLength(11, 11)]

@@ -14,9 +14,9 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 public sealed class ReloadCommandModule
 {
     [Command("reload"), Description("[Owner] Reload the API data")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type of langs to load; if empty, use the value in the config")]

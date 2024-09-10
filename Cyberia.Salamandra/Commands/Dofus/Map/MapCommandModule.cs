@@ -7,6 +7,7 @@ using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -14,14 +15,18 @@ using System.ComponentModel;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
-[Command("map"), Description("Retourne les informations d'une map")]
+[Command(MapInteractionLocalizer.CommandName), Description(MapInteractionLocalizer.CommandDescription)]
 [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+[InteractionLocalizer<MapInteractionLocalizer>]
 public sealed class MapCommandModule
 {
-    [Command("id"), Description("Retourne les informations d'une map à partir de son id")]
+    [Command(MapInteractionLocalizer.Id_CommandName), Description(MapInteractionLocalizer.Id_CommandDescription)]
+    [InteractionLocalizer<MapInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task IdExecuteAsync(SlashCommandContext ctx,
-        [Parameter("id"), Description("Id de la map")]
+        [Parameter(MapInteractionLocalizer.Id_Id_ParameterName), Description(MapInteractionLocalizer.Id_Id_ParameterDescription)]
+        [InteractionLocalizer<MapInteractionLocalizer>]
         [MinMaxValue(1, 99999)]
         int id)
     {
@@ -38,13 +43,16 @@ public sealed class MapCommandModule
     }
 
 
-    [Command("coordonnees"), Description("Retourne une liste de maps à partir de leurs coordonnées")]
+    [Command(MapInteractionLocalizer.Coordinates_CommandName), Description(MapInteractionLocalizer.Coordinates_CommandDescription)]
+    [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
-        [Parameter("x"), Description("Coordonnée x de la map")]
+        [Parameter(MapInteractionLocalizer.Coordinates_X_ParameterName), Description(MapInteractionLocalizer.Coordinates_X_ParameterDescription)]
+        [InteractionLocalizer<MapInteractionLocalizer>]
         [MinMaxValue(-666, 666)]
         int x,
-        [Parameter("y"), Description("Coordonnée y de la map")]
+        [Parameter(MapInteractionLocalizer.Coordinates_Y_ParameterName), Description(MapInteractionLocalizer.Coordinates_Y_ParameterDescription)]
+        [InteractionLocalizer<MapInteractionLocalizer>]
         [MinMaxValue(-666, 666)]
         int y)
     {
@@ -69,10 +77,12 @@ public sealed class MapCommandModule
     }
 
 
-    [Command("sous-zone"), Description("Retourne une liste de maps à partir de leur sous-zone")]
+    [Command(MapInteractionLocalizer.SubArea_CommandName), Description(MapInteractionLocalizer.SubArea_CommandDescription)]
+    [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de la sous-zone")]
+        [Parameter(MapInteractionLocalizer.SubArea_Value_ParameterName), Description(MapInteractionLocalizer.SubArea_Value_ParameterDescription)]
+        [InteractionLocalizer<MapInteractionLocalizer>]
         [SlashAutoCompleteProvider<MapSubAreaAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
@@ -107,10 +117,12 @@ public sealed class MapCommandModule
     }
 
 
-    [Command("zone"), Description("Retourne une liste de maps à partir de leur zone")]
+    [Command(MapInteractionLocalizer.Area_CommandName), Description(MapInteractionLocalizer.Area_CommandDescription)]
+    [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task MapAreaExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de la zone")]
+        [Parameter(MapInteractionLocalizer.Area_Value_ParameterName), Description(MapInteractionLocalizer.Area_Value_ParameterDescription)]
+        [InteractionLocalizer<MapInteractionLocalizer>]
         [SlashAutoCompleteProvider<MapAreaAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)

@@ -13,9 +13,9 @@ namespace Cyberia.Salamandra.Commands.Admin.Leave;
 public sealed class LeaveCommandModule
 {
     [Command("leave"), Description("[Owner] Leave a guild")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("id"), Description("Guild's id")]

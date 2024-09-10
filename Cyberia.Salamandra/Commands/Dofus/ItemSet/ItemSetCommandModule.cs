@@ -5,6 +5,7 @@ using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -14,12 +15,14 @@ namespace Cyberia.Salamandra.Commands.Dofus.ItemSet;
 
 public sealed class ItemSetCommandModule
 {
-    [Command("panoplie"), Description("Retourne les informations d'une panoplie à partir de son nom")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [Command(ItemSetInteractionLocalizer.CommandName), Description(ItemSetInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    [InteractionLocalizer<ItemSetInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de la panoplie")]
+        [Parameter(ItemSetInteractionLocalizer.Value_ParameterName), Description(ItemSetInteractionLocalizer.Value_ParameterDescription)]
+        [InteractionLocalizer<ItemSetInteractionLocalizer>]
         [SlashAutoCompleteProvider<ItemSetAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)

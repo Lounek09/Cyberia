@@ -11,9 +11,9 @@ namespace Cyberia.Salamandra.Commands.Admin.Kill;
 public sealed class KillCommandModule
 {
     [Command("kill"), Description("[Owner] Kill Salamandra")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {

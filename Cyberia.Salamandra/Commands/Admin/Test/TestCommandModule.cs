@@ -11,9 +11,9 @@ namespace Cyberia.Salamandra.Commands.Admin.Test;
 public sealed class TestCommandModule
 {
     [Command("test"), Description("[Owner] Command to test random stuff")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {

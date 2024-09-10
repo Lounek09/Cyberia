@@ -5,6 +5,7 @@ using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -14,12 +15,14 @@ namespace Cyberia.Salamandra.Commands.Dofus.Item;
 
 public sealed class ItemCommandModule
 {
-    [Command("item"), Description("Retourne les informations d'un item à partir de son nom")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [Command(ItemInteractionLocalizer.CommandName), Description(ItemInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    [InteractionLocalizer<ItemInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de l'item")]
+        [Parameter(ItemInteractionLocalizer.Value_ParameterName), Description(ItemInteractionLocalizer.Value_ParameterDescription)]
+        [InteractionLocalizer<ItemInteractionLocalizer>]
         [SlashAutoCompleteProvider<ItemAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)

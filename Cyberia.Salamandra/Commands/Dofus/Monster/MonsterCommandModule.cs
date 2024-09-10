@@ -5,6 +5,7 @@ using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -14,12 +15,14 @@ namespace Cyberia.Salamandra.Commands.Dofus.Monster;
 
 public sealed class MonsterCommandModule
 {
-    [Command("monstre"), Description("Retourne les informations d'un monstre à partir de son nom")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [Command(MonsterInteractionLocalizer.CommandName), Description(MonsterInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    [InteractionLocalizer<MonsterInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom du monstre")]
+        [Parameter(MonsterInteractionLocalizer.Value_ParameterName), Description(MonsterInteractionLocalizer.Value_ParameterDescription)]
+        [InteractionLocalizer<MonsterInteractionLocalizer>]
         [SlashAutoCompleteProvider<MonsterAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)

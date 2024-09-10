@@ -5,6 +5,7 @@ using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -14,12 +15,14 @@ namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 
 public sealed class SpellCommandModule
 {
-    [Command("sort"), Description("Retourne les informations d'un sort à partir de son nom")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [Command(SpellInteractionLocalizer.CommandName), Description(SpellInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    [InteractionLocalizer<SpellInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom du sort")]
+        [Parameter(SpellInteractionLocalizer.Value_ParameterName), Description(SpellInteractionLocalizer.Value_ParameterDescription)]
+        [InteractionLocalizer<SpellInteractionLocalizer>]
         [SlashAutoCompleteProvider<SpellAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)

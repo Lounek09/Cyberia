@@ -5,6 +5,7 @@ using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -14,12 +15,14 @@ namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
 public sealed class IncarnationCommandModule
 {
-    [Command("incarnation"), Description("Retourne les informations d'une incarnation à partir de son nom")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [Command(IncarnationInteractionLocalizer.CommandName), Description(IncarnationInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    [InteractionLocalizer<IncarnationInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de l'incarnation")]
+        [Parameter(IncarnationInteractionLocalizer.Value_ParameterName), Description(IncarnationInteractionLocalizer.Value_ParameterDescription)]
+        [InteractionLocalizer<IncarnationInteractionLocalizer>]
         [SlashAutoCompleteProvider<IncarnationAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)

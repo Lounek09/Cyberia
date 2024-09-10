@@ -9,6 +9,7 @@ using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -17,19 +18,23 @@ using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 
-[Command("rune"), Description("Permet de calculer les runes obtenues lors d'un brisage")]
+[Command(RuneInteractionLocalizer.CommandName), Description(RuneInteractionLocalizer.CommandDescription)]
 [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+[InteractionLocalizer<RuneInteractionLocalizer>]
 public sealed class RuneCommandModule
 {
-    [Command("item"), Description("Permet de calculer le nombre de rune obtenable depuis un item")]
+    [Command(RuneInteractionLocalizer.Item_CommandName), Description(RuneInteractionLocalizer.Item_CommandDescription)]
+    [InteractionLocalizer<RuneInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ItemExecuteAsync(SlashCommandContext ctx,
-        [Parameter("item"), Description("Nom de l'item à briser")]
+        [Parameter(RuneInteractionLocalizer.Item_Value_ParameterName), Description(RuneInteractionLocalizer.Item_Value_ParameterDescription)]
+        [InteractionLocalizer<RuneInteractionLocalizer>]
         [SlashAutoCompleteProvider<RuneItemAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value,
-        [Parameter("quantite"), Description("Quantité d'item")]
+        [Parameter(RuneInteractionLocalizer.Item_Quantity_ParameterName), Description(RuneInteractionLocalizer.Item_Quantity_ParameterDescription)]
+        [InteractionLocalizer<RuneInteractionLocalizer>]
         [MinMaxValue(1, RuneItemMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
@@ -62,16 +67,20 @@ public sealed class RuneCommandModule
         await ctx.RespondAsync(response);
     }
 
-    [Command("stat"), Description("Permet de calculer le nombre de rune obtenable d'une stat sur un item")]
+    [Command(RuneInteractionLocalizer.Stat_CommandName), Description(RuneInteractionLocalizer.Stat_CommandDescription)]
+    [InteractionLocalizer<RuneInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task StatExecuteAsync(SlashCommandContext ctx,
-        [Parameter("niveau"), Description("Niveau de l'item")]
+        [Parameter(RuneInteractionLocalizer.Stat_ItemLvl_ParameterName), Description(RuneInteractionLocalizer.Stat_ItemLvl_ParameterDescription)]
+        [InteractionLocalizer<RuneInteractionLocalizer>]
         [MinMaxValue(1, 200)]
         int itemLvl,
-        [Parameter("montant") , Description("Montant de la stat")]
+        [Parameter(RuneInteractionLocalizer.Stat_StatAmount_ParameterName), Description(RuneInteractionLocalizer.Stat_StatAmount_ParameterDescription)]
+        [InteractionLocalizer<RuneInteractionLocalizer>]
         [MinMaxValue(1, 9999)]
         int statAmount,
-        [Parameter("rune"), Description("Nom de la rune")]
+        [Parameter(RuneInteractionLocalizer.Stat_runeName_ParameterName), Description(RuneInteractionLocalizer.Stat_runeName_ParameterDescription)]
+        [InteractionLocalizer<RuneInteractionLocalizer>]
         [SlashAutoCompleteProvider<RuneAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string runeName)

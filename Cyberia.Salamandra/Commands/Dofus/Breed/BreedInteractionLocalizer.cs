@@ -7,7 +7,7 @@ namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 public sealed class BreedInteractionLocalizer : InteractionLocalizer
 {
     public const string CommandName = "class";
-    public const string CommandDescription = "Return the information of a class from it's name.";
+    public const string CommandDescription = "Return the information of a class from its name.";
 
     public const string BreedId_ParameterName = "name";
     public const string BreedId_ParameterDescription = "Name of the class.";

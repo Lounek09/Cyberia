@@ -15,10 +15,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 public sealed class BreedCommandModule
 {
     [Command(BreedInteractionLocalizer.CommandName), Description(BreedInteractionLocalizer.CommandDescription)]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<BreedInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(BreedInteractionLocalizer.BreedId_ParameterName), Description(BreedInteractionLocalizer.BreedId_ParameterDescription)]
         [InteractionLocalizer<BreedInteractionLocalizer>]

@@ -5,6 +5,7 @@ using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -14,12 +15,14 @@ namespace Cyberia.Salamandra.Commands.Dofus.Quest;
 
 public sealed class QuestCommandModule
 {
-    [Command("quete"), Description("Retourne les informations d'une quête à partir de son nom")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [Command(QuestInteractionLocalizer.CommandName), Description(QuestInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
+    [InteractionLocalizer<QuestInteractionLocalizer>]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter("nom"), Description("Nom de la quête")]
+        [Parameter(QuestInteractionLocalizer.Value_ParameterName), Description(QuestInteractionLocalizer.Value_ParameterDescription)]
+        [InteractionLocalizer<QuestInteractionLocalizer>]
         [SlashAutoCompleteProvider<QuestAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
