@@ -26,16 +26,16 @@ public sealed class HelpCommandModule
 
         StringBuilder descriptionBuilder = new();
 
-        var commands = await Bot.Client.GetGlobalApplicationCommandsAsync();
+        var commands = await ctx.Client.GetGlobalApplicationCommandsAsync(true);
 
         foreach (var command in commands)
         {
-            if (command.Name.Equals("help"))
+            if (command.Name.Equals(HelpInteractionLocalizer.CommandName))
             {
                 continue;
             }
 
-            if (!command.DescriptionLocalizations.TryGetValue(locale, out var commandDescription))
+            if (command.DescriptionLocalizations is null || !command.DescriptionLocalizations.TryGetValue(locale, out var commandDescription))
             {
                 commandDescription = command.Description;
             }
