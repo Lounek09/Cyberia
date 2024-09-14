@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -15,19 +15,26 @@ namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
 public sealed class IncarnationCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public IncarnationCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command(IncarnationInteractionLocalizer.CommandName), Description(IncarnationInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<IncarnationInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ExecuteAsync(SlashCommandContext ctx,
+    public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(IncarnationInteractionLocalizer.Value_ParameterName), Description(IncarnationInteractionLocalizer.Value_ParameterDescription)]
         [InteractionLocalizer<IncarnationInteractionLocalizer>]
         [SlashAutoCompleteProvider<IncarnationAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 

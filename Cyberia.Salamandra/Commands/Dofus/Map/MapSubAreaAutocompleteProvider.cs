@@ -1,13 +1,24 @@
 ﻿using Cyberia.Api;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
-public sealed class MapSubAreaAutocompleteProvider : CultureAutoCompleteProvider
+public sealed class MapSubAreaAutocompleteProvider : IAutoCompleteProvider
 {
-    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
+    private readonly CultureService _cultureService;
+
+    public MapSubAreaAutocompleteProvider(CultureService cultureService)
     {
+        _cultureService = cultureService;
+    }
+
+    public async ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
+    {
+        await _cultureService.SetCultureAsync(ctx.Interaction);
+
         return DofusApi.Datacenter.MapsRepository.GetMapSubAreasDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
             .ToDictionary(x => $"{ExtendString.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());

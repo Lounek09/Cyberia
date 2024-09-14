@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -21,16 +22,23 @@ namespace Cyberia.Salamandra.Commands.Dofus.Map;
 [InteractionLocalizer<MapInteractionLocalizer>]
 public sealed class MapCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public MapCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command(MapInteractionLocalizer.Id_CommandName), Description(MapInteractionLocalizer.Id_CommandDescription)]
     [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task IdExecuteAsync(SlashCommandContext ctx,
+    public async Task IdExecuteAsync(SlashCommandContext ctx,
         [Parameter(MapInteractionLocalizer.Id_Id_ParameterName), Description(MapInteractionLocalizer.Id_Id_ParameterDescription)]
         [InteractionLocalizer<MapInteractionLocalizer>]
         [MinMaxValue(1, 99999)]
         int id)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById((int)id);
         if (mapData is null)
@@ -46,7 +54,7 @@ public sealed class MapCommandModule
     [Command(MapInteractionLocalizer.Coordinates_CommandName), Description(MapInteractionLocalizer.Coordinates_CommandDescription)]
     [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
+    public async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter(MapInteractionLocalizer.Coordinates_X_ParameterName), Description(MapInteractionLocalizer.Coordinates_X_ParameterDescription)]
         [InteractionLocalizer<MapInteractionLocalizer>]
         [MinMaxValue(-666, 666)]
@@ -56,7 +64,7 @@ public sealed class MapCommandModule
         [MinMaxValue(-666, 666)]
         int y)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
 
@@ -80,14 +88,14 @@ public sealed class MapCommandModule
     [Command(MapInteractionLocalizer.SubArea_CommandName), Description(MapInteractionLocalizer.SubArea_CommandDescription)]
     [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
+    public async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter(MapInteractionLocalizer.SubArea_Value_ParameterName), Description(MapInteractionLocalizer.SubArea_Value_ParameterDescription)]
         [InteractionLocalizer<MapInteractionLocalizer>]
         [SlashAutoCompleteProvider<MapSubAreaAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         MapSubAreaData? mapSubAreaData = null;
 
@@ -120,14 +128,14 @@ public sealed class MapCommandModule
     [Command(MapInteractionLocalizer.Area_CommandName), Description(MapInteractionLocalizer.Area_CommandDescription)]
     [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task MapAreaExecuteAsync(SlashCommandContext ctx,
+    public async Task MapAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter(MapInteractionLocalizer.Area_Value_ParameterName), Description(MapInteractionLocalizer.Area_Value_ParameterDescription)]
         [InteractionLocalizer<MapInteractionLocalizer>]
         [SlashAutoCompleteProvider<MapAreaAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         MapAreaData? mapAreaData = null;
 

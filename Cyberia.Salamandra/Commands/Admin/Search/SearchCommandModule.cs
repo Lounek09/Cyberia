@@ -1,13 +1,12 @@
 ﻿using Cyberia.Api;
-using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands;
-using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -21,27 +20,23 @@ namespace Cyberia.Salamandra.Commands.Admin.Search;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class SearchCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public SearchCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command("effect"), Description("Search where the effect is used")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task EffectExecuteAsync(SlashCommandContext ctx,
+    public async Task EffectExecuteAsync(SlashCommandContext ctx,
         [Parameter("where"), Description("Where to look for the effect")]
         SearchLocation location,
         [Parameter("id"), Description("Effect id")]
         [MinMaxValue(-1, 9999)]
-        int effectId,
-        [Parameter("language"), Description("Language used to display the effects")]
-        [SlashChoiceProvider(typeof(SupportedCultureChoiceProvider))]
-        string? languageStr = null)
+        int effectId)
     {
-        if (languageStr is null)
-        {
-            CultureManager.SetCulture(ctx.Interaction);
-        }
-        else
-        {
-            var language = Enum.Parse<LangLanguage>(languageStr);
-            CultureManager.SetCulture(language);
-        }
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         StringBuilder descriptionBuilder = new();
 
@@ -81,25 +76,14 @@ public sealed class SearchCommandModule
 
     [Command("criterion"), Description("Search where the criterion is used")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task CriterionExecuteAsync(SlashCommandContext ctx,
+    public async Task CriterionExecuteAsync(SlashCommandContext ctx,
         [Parameter("where"), Description("Where to look for the criterion")]
         SearchLocation location,
         [Parameter("id"), Description("Criterion id")]
         [MinMaxLength(2, 2)]
-        string criterionId,
-        [Parameter("language"), Description("Language used to display the effects")]
-        [SlashChoiceProvider(typeof(SupportedCultureChoiceProvider))]
-        string? languageStr = null)
+        string criterionId)
     {
-        if (languageStr is null)
-        {
-            CultureManager.SetCulture(ctx.Interaction);
-        }
-        else
-        {
-            var language = Enum.Parse<LangLanguage>(languageStr);
-            CultureManager.SetCulture(language);
-        }
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         StringBuilder descriptionBuilder = new();
 

@@ -1,13 +1,24 @@
 ﻿using Cyberia.Api;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 
-public sealed class SpellAutocompleteProvider : CultureAutoCompleteProvider
+public sealed class SpellAutocompleteProvider : IAutoCompleteProvider
 {
-    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
+    private readonly CultureService _cultureService;
+
+    public SpellAutocompleteProvider(CultureService cultureService)
     {
+        _cultureService = cultureService;
+    }
+
+    public async ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
+    {
+        await _cultureService.SetCultureAsync(ctx.Interaction);
+
         return DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
             .ToDictionary(x => $"{ExtendString.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());

@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -16,12 +17,19 @@ namespace Cyberia.Salamandra.Commands.Dofus.Escape;
 
 public sealed class EscapeCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public EscapeCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command(EscapeInteractionLocalizer.CommandName), Description(EscapeInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<EscapeInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ExecuteAsync(SlashCommandContext ctx,
+    public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(EscapeInteractionLocalizer.Agility_ParameterName), Description(EscapeInteractionLocalizer.Agility_ParameterDescription)]
         [InteractionLocalizer<EscapeInteractionLocalizer>]
         [MinMaxValue(1, 99999)]
@@ -31,7 +39,7 @@ public sealed class EscapeCommandModule
         [MinMaxValue(1, 99999)]
         int enemyAgility)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         var escapePercent = Formulas.GetEscapePercent(agility, enemyAgility);
         var agilityToEscapeForSure = Formulas.GetAgilityToEscapeForSure(enemyAgility);

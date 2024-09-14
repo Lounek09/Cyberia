@@ -1,13 +1,24 @@
 ﻿using Cyberia.Api;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 
-public sealed class BreedAutocompleteProvider : CultureAutoCompleteProvider
+public sealed class BreedAutocompleteProvider : IAutoCompleteProvider
 {
-    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
+    private readonly CultureService _cultureService;
+
+    public BreedAutocompleteProvider(CultureService cultureService)
     {
+        _cultureService = cultureService;
+    }
+
+    public async ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
+    {
+        await _cultureService.SetCultureAsync(ctx.Interaction);
+
         return DofusApi.Datacenter.BreedsRepository.Breeds.Values.ToDictionary(x => x.Name.ToString(), x => (object)x.Id);
     }
 }

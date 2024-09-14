@@ -2,6 +2,7 @@
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Commands.Dofus.Map;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -22,17 +23,24 @@ namespace Cyberia.Salamandra.Commands.Dofus.House;
 [InteractionLocalizer<HouseInteractionLocalizer>]
 public sealed class HouseCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public HouseCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command(HouseInteractionLocalizer.Name_CommandName), Description(HouseInteractionLocalizer.Name_CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionLocalizer<HouseInteractionLocalizer>]
-    public static async Task NameExecuteAsync(SlashCommandContext ctx,
+    public async Task NameExecuteAsync(SlashCommandContext ctx,
         [Parameter(HouseInteractionLocalizer.Name_Value_ParameterName), Description(HouseInteractionLocalizer.Name_Value_ParameterDescription)]
         [InteractionLocalizer<HouseInteractionLocalizer>]
         [SlashAutoCompleteProvider<HouseAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -65,7 +73,7 @@ public sealed class HouseCommandModule
     [Command(HouseInteractionLocalizer.Coordinates_CommandName), Description(HouseInteractionLocalizer.Coordinates_CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionLocalizer<HouseInteractionLocalizer>]
-    public static async Task CoordinateExecuteAsync(SlashCommandContext ctx,
+    public async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter(HouseInteractionLocalizer.Coordinates_X_ParameterName), Description(HouseInteractionLocalizer.Coordinates_X_ParameterDescription)]
         [InteractionLocalizer<HouseInteractionLocalizer>]
         [MinMaxValue(-666, 666)]
@@ -75,7 +83,7 @@ public sealed class HouseCommandModule
         [MinMaxValue(-666, 666)]
         int y)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(x, y).ToList();
 
@@ -98,14 +106,14 @@ public sealed class HouseCommandModule
     [Command(HouseInteractionLocalizer.SubArea_CommandName), Description(HouseInteractionLocalizer.SubArea_CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionLocalizer<HouseInteractionLocalizer>]
-    public static async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
+    public async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter(HouseInteractionLocalizer.SubArea_Value_ParameterName), Description(HouseInteractionLocalizer.SubArea_Value_ParameterDescription)]
         [InteractionLocalizer<HouseInteractionLocalizer>]
         [SlashAutoCompleteProvider<MapSubAreaAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         MapSubAreaData? mapSubAreaData = null;
 
@@ -142,14 +150,14 @@ public sealed class HouseCommandModule
     [Command(HouseInteractionLocalizer.Area_CommandName), Description(HouseInteractionLocalizer.Area_CommandDescription)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [InteractionLocalizer<HouseInteractionLocalizer>]
-    public static async Task MapAreaExecuteAsync(SlashCommandContext ctx,
+    public async Task MapAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter(HouseInteractionLocalizer.Area_Value_ParameterName), Description(HouseInteractionLocalizer.Area_Value_ParameterDescription)]
         [InteractionLocalizer<HouseInteractionLocalizer>]
         [SlashAutoCompleteProvider<MapAreaAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         MapAreaData? mapAreaData = null;
 

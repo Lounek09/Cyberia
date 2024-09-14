@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -15,12 +15,19 @@ namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
 public sealed class CraftCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public CraftCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command(CraftInteractionLocalizer.CommandName), Description(CraftInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<CraftInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ExecuteAsync(SlashCommandContext ctx,
+    public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(CraftInteractionLocalizer.Value_ParameterName), Description(CraftInteractionLocalizer.Value_ParameterDescription)]
         [InteractionLocalizer<CraftInteractionLocalizer>]
         [SlashAutoCompleteProvider<CraftAutocompleteProvider>]
@@ -31,7 +38,7 @@ public sealed class CraftCommandModule
         [MinMaxValue(1, CraftMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 

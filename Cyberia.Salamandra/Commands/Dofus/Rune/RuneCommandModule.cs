@@ -3,6 +3,7 @@ using Cyberia.Api.Managers;
 using Cyberia.Api.Values;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -24,10 +25,17 @@ namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 [InteractionLocalizer<RuneInteractionLocalizer>]
 public sealed class RuneCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public RuneCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command(RuneInteractionLocalizer.Item_CommandName), Description(RuneInteractionLocalizer.Item_CommandDescription)]
     [InteractionLocalizer<RuneInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ItemExecuteAsync(SlashCommandContext ctx,
+    public async Task ItemExecuteAsync(SlashCommandContext ctx,
         [Parameter(RuneInteractionLocalizer.Item_Value_ParameterName), Description(RuneInteractionLocalizer.Item_Value_ParameterDescription)]
         [InteractionLocalizer<RuneInteractionLocalizer>]
         [SlashAutoCompleteProvider<RuneItemAutocompleteProvider>]
@@ -38,7 +46,7 @@ public sealed class RuneCommandModule
         [MinMaxValue(1, RuneItemMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -70,7 +78,7 @@ public sealed class RuneCommandModule
     [Command(RuneInteractionLocalizer.Stat_CommandName), Description(RuneInteractionLocalizer.Stat_CommandDescription)]
     [InteractionLocalizer<RuneInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task StatExecuteAsync(SlashCommandContext ctx,
+    public async Task StatExecuteAsync(SlashCommandContext ctx,
         [Parameter(RuneInteractionLocalizer.Stat_ItemLvl_ParameterName), Description(RuneInteractionLocalizer.Stat_ItemLvl_ParameterDescription)]
         [InteractionLocalizer<RuneInteractionLocalizer>]
         [MinMaxValue(1, 200)]
@@ -85,7 +93,7 @@ public sealed class RuneCommandModule
         [MinMaxLength(1, 70)]
         string runeName)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         var runeData = DofusApi.Datacenter.RunesRepository.GetRuneDataByName(runeName);
         if (runeData is null)

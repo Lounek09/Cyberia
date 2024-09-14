@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -14,18 +14,25 @@ namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 
 public sealed class BreedCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public BreedCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command(BreedInteractionLocalizer.CommandName), Description(BreedInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<BreedInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ExecuteAsync(SlashCommandContext ctx,
+    public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(BreedInteractionLocalizer.BreedId_ParameterName), Description(BreedInteractionLocalizer.BreedId_ParameterDescription)]
         [InteractionLocalizer<BreedInteractionLocalizer>]
         [SlashAutoCompleteProvider<BreedAutocompleteProvider>]
         int breedId)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
 

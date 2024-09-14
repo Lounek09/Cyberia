@@ -1,5 +1,4 @@
 ﻿using Cyberia.Api;
-using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -20,8 +19,6 @@ public sealed class DiscordCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        CultureManager.SetCulture(ctx.Interaction);
-
         await ctx.RespondAsync(DofusApi.Config.DiscordInviteUrl, true);
     }
 }

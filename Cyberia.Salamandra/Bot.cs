@@ -1,12 +1,15 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Langzilla;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.UserCommands;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra;
 
@@ -25,6 +28,10 @@ public static class Bot
 
         Client = DiscordClientBuilder.CreateDefault(Config.Token, DiscordIntents.Guilds)
             .ConfigureLogging(logger => logger.AddSerilog(Log.Logger))
+            .ConfigureServices(services =>
+            {
+                services.AddSingleton<CultureService>();
+            })
             .ConfigureEventHandlers(eventHandler =>
             {
                 eventHandler.HandleGuildDownloadCompleted(ClientManager.OnGuildDownloadCompleted);
@@ -54,7 +61,6 @@ public static class Bot
             .Build();
 
         CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
-
         LangsWatcher.CheckLangFinished += LangManager.OnCheckLangFinished;
     }
 

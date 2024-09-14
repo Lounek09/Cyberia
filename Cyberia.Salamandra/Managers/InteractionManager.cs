@@ -11,10 +11,13 @@ using Cyberia.Salamandra.Commands.Dofus.Monster;
 using Cyberia.Salamandra.Commands.Dofus.Quest;
 using Cyberia.Salamandra.Commands.Dofus.Rune;
 using Cyberia.Salamandra.Commands.Dofus.Spell;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using System.Collections.Frozen;
 using System.Text;
@@ -79,14 +82,15 @@ public static partial class InteractionManager
         return $"SELECT{uniqueIndex}";
     }
 
-    public static async Task OnComponentInteractionCreated(DiscordClient _, ComponentInteractionCreatedEventArgs args)
+    public static async Task OnComponentInteractionCreated(DiscordClient client, ComponentInteractionCreatedEventArgs args)
     {
         if (args.User.IsBot || string.IsNullOrEmpty(args.Id))
         {
             return;
         }
 
-        CultureManager.SetCulture(args.Interaction);
+        var cultureService = client.ServiceProvider.GetRequiredService<CultureService>();
+        await cultureService.SetCultureAsync(args.Interaction);
 
         var response = new DiscordInteractionResponseBuilder().AsEphemeral();
 

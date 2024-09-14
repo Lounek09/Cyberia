@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -16,12 +17,19 @@ namespace Cyberia.Salamandra.Commands.Dofus.Crit;
 
 public sealed class CritCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public CritCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command(CritInteractionLocalizer.CommandName), Description(CritInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<CritInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ExecuteAsync(SlashCommandContext ctx,
+    public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(CritInteractionLocalizer.Number_ParameterName), Description(CritInteractionLocalizer.Number_ParameterDescription)]
         [InteractionLocalizer<CritInteractionLocalizer>]
         [MinMaxValue(1, 999)]
@@ -35,7 +43,7 @@ public sealed class CritCommandModule
         [MinMaxValue(1, 99999)]
         int agility)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         var rate = Formulas.GetCriticalRate(number, targetRate, agility);
         var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, targetRate);

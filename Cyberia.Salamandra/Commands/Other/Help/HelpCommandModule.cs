@@ -1,5 +1,6 @@
 ﻿using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -14,14 +15,21 @@ namespace Cyberia.Salamandra.Commands.Other.Help;
 
 public sealed class HelpCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public HelpCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command(HelpInteractionLocalizer.CommandName), Description(HelpInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<HelpInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ExecuteAsync(SlashCommandContext ctx)
+    public async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
         var locale = ctx.Interaction.Locale ?? ctx.Interaction.GuildLocale ?? string.Empty;
 
         StringBuilder descriptionBuilder = new();

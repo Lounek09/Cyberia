@@ -1,6 +1,4 @@
-﻿using Cyberia.Salamandra.Managers;
-
-using DSharpPlus.Commands;
+﻿using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
@@ -19,8 +17,6 @@ public sealed class PingCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        CultureManager.SetCulture(ctx.Interaction);
-
         var latency = ctx.Client.GetConnectionLatency(ctx.Channel.Id);
 
         await ctx.RespondAsync($"Pong... {latency.TotalMilliseconds}ms !", true);

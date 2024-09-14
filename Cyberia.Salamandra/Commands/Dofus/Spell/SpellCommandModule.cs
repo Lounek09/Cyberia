@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -15,19 +15,26 @@ namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 
 public sealed class SpellCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public SpellCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command(SpellInteractionLocalizer.CommandName), Description(SpellInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<SpellInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ExecuteAsync(SlashCommandContext ctx,
+    public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(SpellInteractionLocalizer.Value_ParameterName), Description(SpellInteractionLocalizer.Value_ParameterDescription)]
         [InteractionLocalizer<SpellInteractionLocalizer>]
         [SlashAutoCompleteProvider<SpellAutocompleteProvider>]
         [MinMaxLength(1, 70)]
         string value)
     {
-        CultureManager.SetCulture(ctx.Interaction);
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 

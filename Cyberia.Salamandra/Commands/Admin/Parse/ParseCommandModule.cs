@@ -1,12 +1,11 @@
 ﻿using Cyberia.Api.Factories;
-using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.DSharpPlus;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
-using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
@@ -19,24 +18,20 @@ namespace Cyberia.Salamandra.Commands.Admin.Parse;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class ParseCommandModule
 {
+    private readonly CultureService _cultureService;
+
+    public ParseCommandModule(CultureService cultureService)
+    {
+        _cultureService = cultureService;
+    }
+
     [Command("effects"), Description("Parse the effects of an item")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task EffectsExecuteAsync(SlashCommandContext ctx,
+    public async Task EffectsExecuteAsync(SlashCommandContext ctx,
         [Parameter("value"), Description("Effects of an item")]
-        string value,
-        [Parameter("language"), Description("Language used to display the effects")]
-        [SlashChoiceProvider(typeof(SupportedCultureChoiceProvider))]
-        string? languageStr = null)
+        string value)
     {
-        if (languageStr is null)
-        {
-            CultureManager.SetCulture(ctx.Interaction);
-        }
-        else
-        {
-            var language = Enum.Parse<LangLanguage>(languageStr);
-            CultureManager.SetCulture(language);
-        }
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         var effects = EffectFactory.CreateMany(value);
 
@@ -55,22 +50,11 @@ public sealed class ParseCommandModule
 
     [Command("criteria"), Description("Parse the critera")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task CriteriaExecuteAsync(SlashCommandContext ctx,
+    public async Task CriteriaExecuteAsync(SlashCommandContext ctx,
         [Parameter("value"), Description("Criteria")]
-        string value,
-        [Parameter("language"), Description("Language used to display the effects")]
-        [SlashChoiceProvider(typeof(SupportedCultureChoiceProvider))]
-        string? languageStr = null)
+        string value)
     {
-        if (languageStr is null)
-        {
-            CultureManager.SetCulture(ctx.Interaction);
-        }
-        else
-        {
-            var language = Enum.Parse<LangLanguage>(languageStr);
-            CultureManager.SetCulture(language);
-        }
+        await _cultureService.SetCultureAsync(ctx.Interaction);
 
         var criteria = CriterionFactory.CreateMany(value);
 
