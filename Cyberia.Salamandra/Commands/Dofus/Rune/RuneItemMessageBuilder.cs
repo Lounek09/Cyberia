@@ -5,7 +5,7 @@ using Cyberia.Api.Managers;
 using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
-
+using Cyberia.Utils.Extensions;
 using DSharpPlus;
 using DSharpPlus.Entities;
 

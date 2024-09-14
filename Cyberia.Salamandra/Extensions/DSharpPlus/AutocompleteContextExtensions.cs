@@ -1,11 +1,11 @@
 ﻿using DSharpPlus.Commands.Processors.SlashCommands;
 
-namespace Cyberia.Salamandra.DSharpPlus;
+namespace Cyberia.Salamandra.Extensions.DSharpPlus;
 
 /// <summary>
 /// Provides extension methods for <see cref="AutoCompleteContext"/>.
 /// </summary>
-public static class ExtendAutocompleteContext
+public static class AutocompleteContextExtensions
 {
     /// <summary>
     /// Gets the value of the argument with the specified name.

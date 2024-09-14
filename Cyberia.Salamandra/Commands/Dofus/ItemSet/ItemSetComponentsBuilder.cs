@@ -19,7 +19,7 @@ public static class ItemSetComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    ExtendString.WithMaxLength(x.Name, 100),
+                    StringExtensions.WithMaxLength(x.Name, 100),
                     ItemSetMessageBuilder.GetPacket(x.Id, x.Effects.Count),
                     x.Id.ToString());
             });

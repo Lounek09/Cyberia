@@ -21,6 +21,6 @@ public sealed class HouseAutocompleteProvider : IAutoCompleteProvider
 
         return DofusApi.Datacenter.HousesRepository.GetHousesDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
-            .ToDictionary(x => $"{ExtendString.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());
+            .ToDictionary(x => $"{StringExtensions.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());
     }
 }

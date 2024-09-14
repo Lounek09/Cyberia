@@ -1,37 +1,25 @@
-﻿using Cyberia.Cytrusaurus;
-using Cyberia.Langzilla;
-using Cyberia.Salamandra.Managers;
+﻿using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.UserCommands;
-using DSharpPlus.Entities;
+using DSharpPlus.Extensions;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cyberia.Salamandra;
+namespace Cyberia.Salamandra.Extensions;
 
-public static class Bot
+public static class ServiceCollectionExtensions
 {
-    public const string OutputPath = "bot";
-
-    public static BotConfig Config { get; private set; } = default!;
-    public static DiscordClient Client { get; private set; } = default!;
-
-    public static void Initialize(BotConfig config)
+    public static IServiceCollection AddSalamandra(this IServiceCollection services, BotConfig config)
     {
-        Directory.CreateDirectory(OutputPath);
+        Directory.CreateDirectory(Constant.OutputPath);
 
-        Config = config;
+        services.AddSingleton(config);
 
-        Client = DiscordClientBuilder.CreateDefault(Config.Token, DiscordIntents.Guilds)
-            .ConfigureLogging(logger => logger.AddSerilog(Log.Logger))
-            .ConfigureServices(services =>
-            {
-                services.AddSingleton<CultureService>();
-            })
+        services.AddDiscordClient(config.Token, DiscordIntents.Guilds)
             .ConfigureEventHandlers(eventHandler =>
             {
                 eventHandler.HandleGuildDownloadCompleted(ClientManager.OnGuildDownloadCompleted);
@@ -39,34 +27,29 @@ public static class Bot
                 eventHandler.HandleGuildDeleted(GuildManager.OnGuildDeleted);
                 eventHandler.HandleComponentInteractionCreated(InteractionManager.OnComponentInteractionCreated);
             })
-            .ConfigureExtraFeatures(config =>
+            .Configure<DiscordConfiguration>(config =>
             {
                 config.LogUnknownAuditlogs = false;
                 config.LogUnknownEvents = false;
             })
-            .UseCommands(
+            .AddCommandsExtension(
                 setup =>
                 {
                     setup.CommandErrored += CommandManager.OnCommandErrored;
                     setup.AddProcessor(new SlashCommandProcessor());
                     setup.AddProcessor(new UserCommandProcessor());
-                    setup.RegisterCommands(Config.AdminGuildId);
+                    setup.RegisterCommands(config.AdminGuildId);
                 },
                 new CommandsConfiguration()
                 {
                     UseDefaultCommandErrorHandler = false,
                     RegisterDefaultCommandProcessors = false
                 }
-            )
-            .Build();
+            );
 
-        CytrusWatcher.NewCytrusDetected += CytrusManager.OnNewCytrusDetected;
-        LangsWatcher.CheckLangFinished += LangManager.OnCheckLangFinished;
-    }
+        services.AddSingleton<CultureService>();
+        services.AddSingleton<CytrusService>();
 
-    public static async Task LaunchAsync()
-    {
-        DiscordActivity activity = new("Dofus Retro", DiscordActivityType.Playing);
-        await Client.ConnectAsync(activity);
+        return services;
     }
 }

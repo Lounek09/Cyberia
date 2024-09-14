@@ -1,11 +1,11 @@
 ﻿using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.DSharpPlus;
+namespace Cyberia.Salamandra.Extensions.DSharpPlus;
 
 /// <summary>
 /// Provides extension methods for <see cref="DiscordChannel"/>.
 /// </summary>
-public static class ExtendDiscordChannel
+public static class DiscordChannelExtensions
 {
     /// <summary>
     /// Sends a message to the channel if the bot has the necessary permissions.

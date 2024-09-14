@@ -1,9 +1,9 @@
-﻿namespace Cyberia.Utils;
+﻿namespace Cyberia.Utils.Extensions;
 
 /// <summary>
 /// Provides extension methods for IDictionary.
 /// </summary>
-public static class ExtendDictionary
+public static class DictionaryExtensions
 {
     /// <summary>
     /// Removes the first key-value pair in the source dictionary that has the specified value.

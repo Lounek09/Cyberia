@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Cyberia.Utils.Extensions;
 
 namespace Cyberia.Tests.Utils;
 

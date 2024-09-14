@@ -1,7 +1,9 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Cytrusaurus.EventArgs;
+using Cyberia.Cytrusaurus.Extensions;
 using Cyberia.Cytrusaurus.Models;
-using Cyberia.Salamandra.DSharpPlus;
+using Cyberia.Salamandra.Extensions.DSharpPlus;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -9,56 +11,47 @@ using DSharpPlus.Entities;
 using System.Text;
 using System.Text.Json;
 
-namespace Cyberia.Salamandra.Managers;
+namespace Cyberia.Salamandra.Services;
 
-public static class CytrusManager
+public sealed class CytrusService
 {
-    public static async void OnNewCytrusDetected(object? _, NewCytrusDetectedEventArgs args)
+    private readonly CytrusManifestFetcher _fetcher;
+
+    public CytrusService(CytrusManifestFetcher fetcher)
+    {
+        _fetcher = fetcher;
+    }
+
+    public async void OnNewCytrusDetected(object? _, NewCytrusFileDetectedEventArgs args)
     {
         await SendCytrusDiffAsync(args);
-        await SendCytrusManifestDiffAsync(args);
+        await SendManifestDiffAsync(args);
     }
 
-    public static async Task SendCytrusManifestDiffMessageAsync(this DiscordChannel channel, string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
+    public async Task<string> GetManifestDiffAsync(string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
     {
-        DiscordMessageBuilder messageBuilder = new();
-
-        var modelManifest = await CytrusManifest.GetManifestAsync(game, platform, oldRelease, oldVersion);
+        var modelManifest = await _fetcher.GetAsync(game, platform, oldRelease, oldVersion);
         if (modelManifest is null)
-        { 
-            await channel.SendMessageSafeAsync(messageBuilder.WithContent($"Old client not found."));
-            return;
+        {
+            return "Old client not found.";
         }
 
-        var currentManifest = await CytrusManifest.GetManifestAsync(game, platform, newRelease, newVersion);
+        var currentManifest = await _fetcher.GetAsync(game, platform, newRelease, newVersion);
         if (currentManifest is null)
         {
-            await channel.SendMessageSafeAsync(messageBuilder.WithContent($"New client not found."));
-            return;
+            return "New client not found.";
         }
 
-        var diff = CytrusManifest.Diff(currentManifest.Value, modelManifest.Value);
+        var diff = currentManifest.Value.Diff(modelManifest.Value);
         if (string.IsNullOrEmpty(diff))
         {
-            diff = "No difference";
+            return "No differences found.";
         }
 
-        var mainContent = $"""
-             Diff of {Formatter.Bold(game.Capitalize())} on {Formatter.Bold(platform)}
-             {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
-             """;
-
-        if (mainContent.Length + diff.Length > Constant.MaxMessageSize)
-        {
-            using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
-            await channel.SendMessageSafeAsync(messageBuilder.WithContent(mainContent).AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream));
-            return;
-        }
-
-        await channel.SendMessageSafeAsync(messageBuilder.WithContent($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}"));
+        return diff;
     }
 
-    private static async Task SendCytrusDiffAsync(NewCytrusDetectedEventArgs args)
+    private static async Task SendCytrusDiffAsync(NewCytrusFileDetectedEventArgs args)
     {
         var channel = ChannelManager.CytrusChannel;
         if (channel is null)
@@ -78,7 +71,7 @@ public static class CytrusManager
         await channel.SendMessageSafeAsync(Formatter.BlockCode(args.Diff, "json"));
     }
 
-    private static async Task SendCytrusManifestDiffAsync(NewCytrusDetectedEventArgs args)
+    private async Task SendManifestDiffAsync(NewCytrusFileDetectedEventArgs args)
     {
         var channel = ChannelManager.CytrusManifestChannel;
         if (channel is null)
@@ -125,13 +118,31 @@ public static class CytrusManager
 
                 var oldVersion = oldRelease.GetString();
                 var newVersion = newRelease.GetString();
-
                 if (string.IsNullOrEmpty(oldVersion) || string.IsNullOrEmpty(newVersion))
                 {
                     return;
                 }
 
-                await channel.SendCytrusManifestDiffMessageAsync(game.Name, CytrusGame.WindowsPlatform, release.Name, oldVersion, release.Name, newVersion);
+                var mainContent = $"""
+                     Diff of {Formatter.Bold(game.Name.Capitalize())} on {Formatter.Bold(CytrusGame.WindowsPlatform)}
+                     {Formatter.InlineCode(oldVersion)} ({release.Name}) ➜ {Formatter.InlineCode(newVersion)} ({release.Name})
+                     """;
+
+                var diff = await GetManifestDiffAsync(game.Name, CytrusGame.WindowsPlatform, release.Name, oldVersion, release.Name, newVersion);
+
+                if (mainContent.Length + diff.Length > Constant.MaxMessageSize)
+                {
+                    using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
+
+                    var message = new DiscordMessageBuilder()
+                        .WithContent(mainContent)
+                        .AddFile($"{game.Name}_{CytrusGame.WindowsPlatform}_{release.Name}_{oldVersion}_{release.Name}_{newVersion}.diff", stream);
+
+                    await channel.SendMessageSafeAsync(message);
+                    return;
+                }
+
+                await channel.SendMessageSafeAsync($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}");
             }
         }
     }

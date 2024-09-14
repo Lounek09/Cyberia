@@ -20,6 +20,6 @@ public sealed class QuestAutocompleteProvider : IAutoCompleteProvider
         await _cultureService.SetCultureAsync(ctx.Interaction);
         return DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
-            .ToDictionary(x => $"{ExtendString.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());
+            .ToDictionary(x => $"{StringExtensions.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());
     }
 }

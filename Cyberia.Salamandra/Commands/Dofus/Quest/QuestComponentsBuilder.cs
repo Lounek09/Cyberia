@@ -19,7 +19,7 @@ public static class QuestComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    ExtendString.WithMaxLength(x.Name, 100),
+                    StringExtensions.WithMaxLength(x.Name, 100),
                     QuestMessageBuilder.GetPacket(x.Id),
                     x.Id.ToString());
             });

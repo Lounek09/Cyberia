@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Factories;
-using Cyberia.Salamandra.DSharpPlus;
 using Cyberia.Salamandra.Enums;
+using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.Services;
 

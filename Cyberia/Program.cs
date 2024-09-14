@@ -1,11 +1,15 @@
 ﻿using Cyberia.Amphibian;
 using Cyberia.Api;
 using Cyberia.Cytrusaurus;
+using Cyberia.Cytrusaurus.Extensions;
+using Cyberia.Database.Extentsions;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
-using Cyberia.Salamandra;
+using Cyberia.Salamandra.Extensions;
 
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using System.Globalization;
 
@@ -17,76 +21,97 @@ public static class Program
     {
         Directory.SetCurrentDirectory(AppContext.BaseDirectory);
 
-        var builder = new ConfigurationBuilder()
+        var config = new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
-            .AddJsonFile("appsettings.json", false);
-
-        var appConfig = builder.Build();
+            .AddJsonFile("appsettings.json", false)
+            .Build();
 
         Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(appConfig)
+            .ReadFrom.Configuration(config)
             .CreateLogger();
 
         try
         {
             Log.Information("Starting Cyberia");
 
-            var config = appConfig.GetSection("Cyberia").Get<CyberiaConfig>();
-            if (config is null || !config.Validate())
+            var connectionString = config.GetConnectionString("Cyberia");
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new InvalidOperationException("Invalid connection string");
+            }
+
+            var cyberiaConfig = config.GetSection("Cyberia").Get<CyberiaConfig>();
+            if (cyberiaConfig is null || !cyberiaConfig.Validate())
             {
                 throw new InvalidOperationException("Invalid configuration");
             }
 
-            var defaultCulture = config.ApiConfig.SupportedLanguages[0].ToCulture();
+            var defaultCulture = cyberiaConfig.ApiConfig.SupportedLanguages[0].ToCulture();
             CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
             CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
 
+            var services = new ServiceCollection();
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddSerilog(Log.Logger);
+            });
+
+            Log.Information("Initializing Database");
+            services.AddDatabase(connectionString);
+
             Log.Information("Initializing CytrusWatcher");
-            CytrusWatcher.Initialize();
+            services.AddCytrusaurus();
 
             Log.Information("Initializing LangsWatcher");
             LangsWatcher.Initialize();
 
             Log.Information("Initializing DofusApi");
-            DofusApi.Initialize(config.ApiConfig);
+            DofusApi.Initialize(cyberiaConfig.ApiConfig);
 
             Log.Information("Initializing Salamandra");
-            Bot.Initialize(config.BotConfig);
-            if (config.EnableSalamandra)
-            {
-                await Bot.LaunchAsync();
-            }
+            services.AddSalamandra(cyberiaConfig.BotConfig);
 
             Log.Information("Initializing Amphibian");
-            Web.Initialize(config.WebConfig);
-            if (config.EnableAmphibian)
+            Web.Initialize(cyberiaConfig.WebConfig);
+
+            var provider = services.BuildServiceProvider();
+
+            await provider.CreateTablesAsync();
+
+            if (cyberiaConfig.EnableSalamandra)
+            {
+                await provider.StartSalamandraAsync();
+            }
+
+            if (cyberiaConfig.EnableAmphibian)
             {
                 _ = Web.LaunchAsync();
             }
 
-            if (config.EnableCheckCytrus)
+            if (cyberiaConfig.EnableCheckCytrus)
             {
-                Log.Information("Watching Cytrus each {CytrusInterval}",
-                    config.CheckCytrusInterval);
-                CytrusWatcher.Watch(TimeSpan.FromSeconds(10), config.CheckCytrusInterval);
+                Log.Information("Watching Cytrus each {CytrusInterval}", cyberiaConfig.CheckCytrusInterval);
+                provider.GetRequiredService<CytrusWatcher>().Watch(TimeSpan.FromSeconds(20), cyberiaConfig.CheckCytrusInterval);
             }
 
-            if (config.EnableCheckLang)
+            if (cyberiaConfig.EnableCheckLang)
             {
-                Log.Information("Watching {LangType} Langs each {OfficialLangInterval}", LangType.Official, config.CheckLangInterval);
-                LangsWatcher.Watch(LangType.Official, TimeSpan.FromSeconds(20), config.CheckLangInterval);
+                Log.Information("Watching {LangType} Langs each {OfficialLangInterval}", LangType.Official, cyberiaConfig.CheckLangInterval);
+                LangsWatcher.Watch(LangType.Official, TimeSpan.FromSeconds(20), cyberiaConfig.CheckLangInterval);
             }
 
-            if (config.EnableCheckBetaLang)
+            if (cyberiaConfig.EnableCheckBetaLang)
             {
-                Log.Information("Watching {LangType} Langs each {BetaLangInterval}", LangType.Beta, config.CheckBetaLangInterval);
-                LangsWatcher.Watch(LangType.Beta, TimeSpan.FromSeconds(140), config.CheckBetaLangInterval);
+                Log.Information("Watching {LangType} Langs each {BetaLangInterval}", LangType.Beta, cyberiaConfig.CheckBetaLangInterval);
+                LangsWatcher.Watch(LangType.Beta, TimeSpan.FromSeconds(140), cyberiaConfig.CheckBetaLangInterval);
             }
 
-            if (config.EnableCheckTemporisLang)
+            if (cyberiaConfig.EnableCheckTemporisLang)
             {
-                Log.Information("Watching {LangType} Langs each {TemporisLangInterval}", LangType.Temporis, config.CheckTemporisLangInterval);
-                LangsWatcher.Watch(LangType.Temporis, TimeSpan.FromSeconds(260), config.CheckCytrusInterval);
+                Log.Information("Watching {LangType} Langs each {TemporisLangInterval}", LangType.Temporis, cyberiaConfig.CheckTemporisLangInterval);
+                LangsWatcher.Watch(LangType.Temporis, TimeSpan.FromSeconds(260), cyberiaConfig.CheckCytrusInterval);
             }
 
             Log.Information("Cyberia started");

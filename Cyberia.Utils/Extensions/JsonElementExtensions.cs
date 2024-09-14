@@ -1,11 +1,11 @@
 ﻿using System.Text.Json;
 
-namespace Cyberia.Utils;
+namespace Cyberia.Utils.Extensions;
 
 /// <summary>
 /// Provides extension methods for JsonElement.
 /// </summary>
-public static class ExtendJsonElement
+public static class JsonElementExtensions
 {
     /// <summary>
     /// Gets the integer value of the <see cref="JsonElement"/>, or the <see langword="default"/> value if it's not a number.

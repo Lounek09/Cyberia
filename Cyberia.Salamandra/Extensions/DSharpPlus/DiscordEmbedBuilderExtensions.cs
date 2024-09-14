@@ -6,18 +6,18 @@ using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.QuestObjectives;
-
+using Cyberia.Utils.Extensions;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
 using System.Text;
 
-namespace Cyberia.Salamandra.DSharpPlus;
+namespace Cyberia.Salamandra.Extensions.DSharpPlus;
 
 /// <summary>
 /// Provides extension methods for <see cref="DiscordEmbedBuilder"/>.
 /// </summary>
-public static class ExtendDiscordEmbedBuilder
+public static class DiscordEmbedBuilderExtensions
 {
     /// <summary>
     /// Adds an empty field to the embed.

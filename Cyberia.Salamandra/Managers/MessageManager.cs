@@ -1,5 +1,4 @@
-﻿using Cyberia.Salamandra.DSharpPlus;
-
+﻿using Cyberia.Salamandra.Extensions.DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Managers;

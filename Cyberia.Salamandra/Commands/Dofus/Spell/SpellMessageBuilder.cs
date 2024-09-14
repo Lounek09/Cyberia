@@ -6,8 +6,8 @@ using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Values;
 using Cyberia.Salamandra.Commands.Dofus.Breed;
 using Cyberia.Salamandra.Commands.Dofus.Incarnation;
-using Cyberia.Salamandra.DSharpPlus;
 using Cyberia.Salamandra.Enums;
+using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

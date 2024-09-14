@@ -4,7 +4,7 @@ using Cyberia.Api.Data.Alignments;
 using Cyberia.Api.Data.Monsters;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
-
+using Cyberia.Utils.Extensions;
 using DSharpPlus;
 using DSharpPlus.Entities;
 

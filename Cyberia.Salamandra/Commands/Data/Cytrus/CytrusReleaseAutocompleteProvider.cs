@@ -1,6 +1,5 @@
 ﻿using Cyberia.Cytrusaurus;
-using Cyberia.Salamandra.DSharpPlus;
-
+using Cyberia.Salamandra.Extensions.DSharpPlus;
 using DSharpPlus.Commands.Processors.SlashCommands;
 
 using System.Collections.ObjectModel;
@@ -9,6 +8,13 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
 public sealed class CytrusReleaseAutoCompleteProvider : AutoCompleteProvider
 {
+    private readonly CytrusWatcher _cytrusWatcher;
+
+    public CytrusReleaseAutoCompleteProvider(CytrusWatcher cytrusWatcher)
+    {
+        _cytrusWatcher = cytrusWatcher;
+    }
+
     protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
     {
         var game = ctx.GetArgument<string>("game");
@@ -23,7 +29,7 @@ public sealed class CytrusReleaseAutoCompleteProvider : AutoCompleteProvider
             return ReadOnlyDictionary<string, object>.Empty;
         }
 
-        var cytrusGame = CytrusWatcher.Cytrus.GetGameByName(game);
+        var cytrusGame = _cytrusWatcher.Cytrus.GetGameByName(game);
         if (cytrusGame is null)
         {
             return ReadOnlyDictionary<string, object>.Empty;

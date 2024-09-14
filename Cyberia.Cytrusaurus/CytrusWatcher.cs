@@ -6,7 +6,7 @@ namespace Cyberia.Cytrusaurus;
 /// <summary>
 /// Provides methods for watching updates of Cytrus.
 /// </summary>
-public static class CytrusWatcher
+public class CytrusWatcher
 {
     public const string OutputPath = "cytrus";
     public const string CytrusFileName = "cytrus.json";
@@ -18,26 +18,24 @@ public static class CytrusWatcher
     /// <summary>
     /// The current Cytrus data.
     /// </summary>
-    public static Cytrus Cytrus { get; internal set; } = default!;
+    public Cytrus Cytrus { get; internal set; }
 
     /// <summary>
     /// The old Cytrus data.
     /// </summary>
-    public static Cytrus OldCytrus { get; internal set; } = default!;
+    public Cytrus OldCytrus { get; internal set; }
 
-
-    internal static HttpClient HttpClient { get; set; } = default!;
-    internal static HttpRetryPolicy HttpRetryPolicy { get; set; } = default!;
-
+    internal HttpClient HttpClient { get; set; }
+    internal HttpRetryPolicy HttpRetryPolicy { get; set; }
 
 #pragma warning disable IDE0052 // Remove unread private members
-    private static Timer? _timer;
+    private Timer? _timer;
 #pragma warning restore IDE0052 // Remove unread private members
 
     /// <summary>
-    /// Initializes the CytrusWatcher.
+    /// Initializes a new instance of the <see cref="CytrusWatcher"/> class.
     /// </summary>
-    public static void Initialize()
+    public CytrusWatcher()
     {
         Directory.CreateDirectory(OutputPath);
 
@@ -52,16 +50,16 @@ public static class CytrusWatcher
     }
 
     /// <summary>
-    /// Event that is triggered when a new Cytrus is detected.
+    /// Event that is triggered when a new Cytrus file is detected.
     /// </summary>
-    public static event EventHandler<NewCytrusDetectedEventArgs>? NewCytrusDetected;
+    public static event EventHandler<NewCytrusFileDetectedEventArgs>? NewCytrusFileDetected;
 
     /// <summary>
     /// Starts watching for updates of Cytrus.
     /// </summary>
     /// <param name="dueTime">The amount of time to delay before the first check.</param>
     /// <param name="interval">The interval between checks.</param>
-    public static void Watch(TimeSpan dueTime, TimeSpan interval)
+    public void Watch(TimeSpan dueTime, TimeSpan interval)
     {
         _timer = new(async _ => await CheckAsync(), null, dueTime, interval);
     }
@@ -79,10 +77,10 @@ public static class CytrusWatcher
     ///     <item>If there is no difference, it returns.</item>
     ///     <item>Replaces the old Cytrus data by the new Cytrus data.</item>
     ///     <item>Loads the new Cytrus data from the response content.</item>
-    ///     <item>Triggers the <see cref="NewCytrusDetected"/> event with the difference.</item>
+    ///     <item>Triggers the <see cref="NewCytrusFileDetected"/> event with the difference.</item>
     /// </list>
     /// </remarks>
-    public static async Task CheckAsync()
+    public async Task CheckAsync()
     {
         string json;
         try
@@ -110,7 +108,7 @@ public static class CytrusWatcher
         Cytrus = Cytrus.Load(json);
 
         Log.Information("Cytrus update detected :\n{CytrusDiff}", diff);
-        NewCytrusDetected?.Invoke(null, new NewCytrusDetectedEventArgs(Cytrus, OldCytrus, diff));
+        NewCytrusFileDetected?.Invoke(null, new NewCytrusFileDetectedEventArgs(Cytrus, OldCytrus, diff));
 
         if (File.Exists(CytrusPath))
         {

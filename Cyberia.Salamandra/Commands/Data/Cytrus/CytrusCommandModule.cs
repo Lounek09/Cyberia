@@ -1,8 +1,8 @@
-﻿using Cyberia.Api;
-using Cyberia.Cytrusaurus;
-using Cyberia.Salamandra.DSharpPlus;
+﻿using Cyberia.Cytrusaurus;
 using Cyberia.Salamandra.Enums;
+using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -23,28 +23,37 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class CytrusCommandModule
 {
+    private readonly CytrusWatcher _cytrusWatcher;
+    private readonly CytrusService _cytrusService;
+
+    public CytrusCommandModule(CytrusWatcher cytrusWatcher, CytrusService cytrusService)
+    {
+        _cytrusWatcher = cytrusWatcher;
+        _cytrusService = cytrusService;
+    }
+
     [Command("check"), Description("[Owner] Launch a check to see if there is a new version of Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
-    public static async Task CheckExecuteAsync(SlashCommandContext ctx)
+    public async Task CheckExecuteAsync(SlashCommandContext ctx)
     {
         await ctx.RespondAsync("Starting the check of Cytrus...");
 
-        await CytrusWatcher.CheckAsync();
+        await _cytrusWatcher.CheckAsync();
 
         await ctx.EditResponseAsync("Cytrus check completed");
     }
 
     [Command("show"), Description("Display the information of the currently online Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ShowExecuteAsync(SlashCommandContext ctx)
+    public async Task ShowExecuteAsync(SlashCommandContext ctx)
     {
         var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus")
-            .AddField("Name", CytrusWatcher.Cytrus.Name.Capitalize(), true)
-            .AddField("Version", CytrusWatcher.Cytrus.Version.ToString(), true)
+            .AddField("Name", _cytrusWatcher.Cytrus.Name.Capitalize(), true)
+            .AddField("Version", _cytrusWatcher.Cytrus.Version.ToString(), true)
             .AddEmptyField(true);
 
-        foreach (var game in CytrusWatcher.Cytrus.Games.OrderBy(x => x.Value.Order))
+        foreach (var game in _cytrusWatcher.Cytrus.Games.OrderBy(x => x.Value.Order))
         {
             StringBuilder fieldContentBuilder = new();
 
@@ -71,7 +80,7 @@ public sealed class CytrusCommandModule
 
     [Command("diff"), Description("List the differences between the files of two versions of a game on Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task DiffExecuteAsync(SlashCommandContext ctx,
+    public async Task DiffExecuteAsync(SlashCommandContext ctx,
         [Parameter("game"), Description("Name of the game")]
         [SlashChoiceProvider<CytrusGameChoiceProvider>]
         string game,
@@ -92,8 +101,27 @@ public sealed class CytrusCommandModule
         string newVersion)
     {
         //TODO: Change this piece of shit to use DeferResponseAsync
-        await ctx.RespondAsync("👷", true);
+        await ctx.DeferResponseAsync();
 
-        await ctx.Channel.SendCytrusManifestDiffMessageAsync(game, platform.ToLower(), oldRelease.ToLower(), oldVersion, newRelease.ToLower(), newVersion);
+        var mainContent = $"""
+                     Diff of {Formatter.Bold(game.Capitalize())} on {Formatter.Bold(platform)}
+                     {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
+                     """;
+
+        var diff = await _cytrusService.GetManifestDiffAsync(game, platform, oldRelease, oldVersion, newRelease, newVersion);
+
+        if (mainContent.Length + diff.Length > Constant.MaxMessageSize)
+        {
+            using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
+
+            var message = new DiscordInteractionResponseBuilder()
+                .WithContent(mainContent)
+                .AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream);
+
+            await ctx.EditResponseAsync(message);
+            return;
+        }
+
+        await ctx.EditResponseAsync($"{mainContent}\n{Formatter.BlockCode(diff, "diff")}");
     }
 }

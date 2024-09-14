@@ -1,10 +1,10 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Dialogs;
 using Cyberia.Api.Data.Quests;
-using Cyberia.Salamandra.DSharpPlus;
 using Cyberia.Salamandra.Enums;
+using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
-
+using Cyberia.Utils.Extensions;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
@@ -173,7 +173,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 yield return new DiscordSelectComponentOption(
                     $"{BotTranslations.Select_QuestStep_Content_Step} {i + 1}",
                     GetPacket(_questData.Id, i),
-                    ExtendString.WithMaxLength(_questStepsData[i].Name, 100),
+                    StringExtensions.WithMaxLength(_questStepsData[i].Name, 100),
                     isDefault: i == _selectedQuestStepIndex);
             }
         }

@@ -1,6 +1,5 @@
 ﻿using Cyberia.Database.Repositories;
-using Cyberia.Salamandra.DSharpPlus;
-
+using Cyberia.Salamandra.Extensions.DSharpPlus;
 using DSharpPlus.Entities;
 
 using System.Globalization;

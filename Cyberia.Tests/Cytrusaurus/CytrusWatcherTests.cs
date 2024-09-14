@@ -10,11 +10,15 @@ namespace Cyberia.Tests.Cytrusaurus;
 [TestClass]
 public sealed class CytrusWatcherTests
 {
+    private CytrusWatcher _cytrusWatcher = default!;
+
     [TestInitialize]
     public void Initialize()
     {
-        CytrusWatcher.Initialize();
-        CytrusWatcher.HttpRetryPolicy = SharedData.HttpRetryPolicy;
+        _cytrusWatcher = new()
+        {
+            HttpRetryPolicy = SharedData.HttpRetryPolicy
+        };
     }
 
     [TestCleanup]
@@ -39,19 +43,19 @@ public sealed class CytrusWatcherTests
                 Content = new StringContent(json)
             });
 
-        CytrusWatcher.HttpClient = new HttpClient(mock.Object)
+        _cytrusWatcher.HttpClient = new HttpClient(mock.Object)
         {
             BaseAddress = new Uri(CytrusWatcher.BaseUrl)
         };
 
-        Mock<EventHandler<NewCytrusDetectedEventArgs>> mockHandler = new();
-        CytrusWatcher.NewCytrusDetected += mockHandler.Object;
+        Mock<EventHandler<NewCytrusFileDetectedEventArgs>> mockHandler = new();
+        CytrusWatcher.NewCytrusFileDetected += mockHandler.Object;
 
-        await CytrusWatcher.CheckAsync();
+        await _cytrusWatcher.CheckAsync();
 
-        Assert.AreEqual(6, CytrusWatcher.Cytrus.Version);
-        Assert.AreEqual("production", CytrusWatcher.Cytrus.Name);
-        mockHandler.Verify(x => x(It.IsAny<object>(), It.IsAny<NewCytrusDetectedEventArgs>()), Times.Once);
+        Assert.AreEqual(6, _cytrusWatcher.Cytrus.Version);
+        Assert.AreEqual("production", _cytrusWatcher.Cytrus.Name);
+        mockHandler.Verify(x => x(It.IsAny<object>(), It.IsAny<NewCytrusFileDetectedEventArgs>()), Times.Once);
     }
 
     #endregion

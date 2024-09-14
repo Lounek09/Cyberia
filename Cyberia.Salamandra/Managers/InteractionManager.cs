@@ -82,14 +82,14 @@ public static partial class InteractionManager
         return $"SELECT{uniqueIndex}";
     }
 
-    public static async Task OnComponentInteractionCreated(DiscordClient client, ComponentInteractionCreatedEventArgs args)
+    public static async Task OnComponentInteractionCreated(DiscordClient sender, ComponentInteractionCreatedEventArgs args)
     {
         if (args.User.IsBot || string.IsNullOrEmpty(args.Id))
         {
             return;
         }
 
-        var cultureService = client.ServiceProvider.GetRequiredService<CultureService>();
+        var cultureService = sender.ServiceProvider.GetRequiredService<CultureService>();
         await cultureService.SetCultureAsync(args.Interaction);
 
         var response = new DiscordInteractionResponseBuilder().AsEphemeral();

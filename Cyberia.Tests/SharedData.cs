@@ -11,6 +11,7 @@ public static class SharedData
     public static readonly string CytrusJsonPath = Path.Join(OutputPath, "cytrus.json");
     public static readonly string CurrentNanifestPath = Path.Join(OutputPath, "current.manifest");
     public static readonly string ModelManifestPath = Path.Join(OutputPath, "model.manifest");
+    public static readonly string FragmentDiffPath = Path.Join(OutputPath, "fragment.diff");
     public static readonly string ManifestDiffPath = Path.Join(OutputPath, "manifest.diff");
 
     //Langzilla

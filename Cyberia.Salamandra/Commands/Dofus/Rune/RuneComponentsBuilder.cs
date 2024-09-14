@@ -20,7 +20,7 @@ public static class RuneComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    ExtendString.WithMaxLength(x.Name, 100),
+                    StringExtensions.WithMaxLength(x.Name, 100),
                     RuneItemMessageBuilder.GetPacket(x.Id, quantity),
                     DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x.ItemTypeId));
             });

@@ -5,9 +5,9 @@ using DSharpPlus.Entities;
 
 using System.Globalization;
 
-namespace Cyberia.Salamandra.DSharpPlus;
+namespace Cyberia.Salamandra.Extensions.DSharpPlus;
 
-public static class ExtendDiscordInteraction
+public static class DiscordInteractionExtensions
 {
     /// <summary>
     /// Get the culture of the interaction.

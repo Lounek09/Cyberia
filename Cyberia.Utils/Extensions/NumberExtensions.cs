@@ -1,9 +1,9 @@
-﻿namespace Cyberia.Utils;
+﻿namespace Cyberia.Utils.Extensions;
 
 /// <summary>
 /// Provides extension methods for numbers.
 /// </summary>
-public static class ExtendNumber
+public static class NumberExtensions
 {
     /// <summary>
     /// Converts the value of this instance to its equivalent string representation using thousand separators.

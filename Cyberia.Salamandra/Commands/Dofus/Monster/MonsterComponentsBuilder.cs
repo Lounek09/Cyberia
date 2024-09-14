@@ -19,7 +19,7 @@ public static class MonsterComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    ExtendString.WithMaxLength(x.Name, 100),
+                    StringExtensions.WithMaxLength(x.Name, 100),
                     MonsterMessageBuilder.GetPacket(x.Id),
                     x.Id.ToString());
             });

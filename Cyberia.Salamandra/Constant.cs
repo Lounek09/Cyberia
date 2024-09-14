@@ -2,6 +2,8 @@
 
 internal static class Constant
 {
+    public const string OutputPath = "bot";
+
     public const string ZeroWidthSpace = "\u200b";
 
     public const int MaxMessageSize = 2000;

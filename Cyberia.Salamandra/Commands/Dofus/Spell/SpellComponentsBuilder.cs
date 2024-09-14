@@ -20,7 +20,7 @@ public static class SpellComponentsBuilder
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    ExtendString.WithMaxLength(x.Name, 100),
+                    StringExtensions.WithMaxLength(x.Name, 100),
                     SpellMessageBuilder.GetPacket(x.Id, x.GetMaxLevelNumber()),
                     x.SpellCategory.GetDescription());
             });

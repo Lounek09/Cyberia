@@ -1,7 +1,6 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
-using Cyberia.Salamandra.DSharpPlus;
-
+using Cyberia.Salamandra.Extensions.DSharpPlus;
 using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace Cyberia.Salamandra.Commands.Data.Cytrus;

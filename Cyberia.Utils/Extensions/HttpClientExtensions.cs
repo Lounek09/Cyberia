@@ -1,9 +1,9 @@
-﻿namespace Cyberia.Utils;
+﻿namespace Cyberia.Utils.Extensions;
 
 /// <summary>
 /// Provides extension methods for HttpClient.
 /// </summary>
-public static class ExtendHttpClient
+public static class HttpClientExtensions
 {
     /// <summary>
     /// Checks if the specified URL exists by sending a HEAD request and checking the response status.

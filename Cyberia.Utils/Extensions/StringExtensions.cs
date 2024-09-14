@@ -5,7 +5,7 @@ namespace Cyberia.Utils;
 /// <summary>
 /// Provides extension methods for String and ReadOnlySpan<char>.
 /// </summary>
-public static partial class ExtendString
+public static partial class StringExtensions
 {
     /// <summary>
     /// Capitalizes the first character of the string.

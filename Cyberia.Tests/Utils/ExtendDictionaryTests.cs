@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Tests.Utils;
+﻿using Cyberia.Utils.Extensions;
+
+namespace Cyberia.Tests.Utils;
 
 [TestClass]
 public sealed class ExtendDictionaryTests

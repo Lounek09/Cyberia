@@ -21,6 +21,6 @@ public sealed class ItemSetAutocompleteProvider : IAutoCompleteProvider
 
         return DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
-            .ToDictionary(x => $"{ExtendString.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());
+            .ToDictionary(x => $"{StringExtensions.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());
     }
 }

@@ -32,7 +32,7 @@ public sealed class BreedsRepository : DofusRepository, IDofusRepository
     {
         name = name.NormalizeToAscii();
 
-        return Breeds.Values.FirstOrDefault(x => ExtendString.NormalizeToAscii(x.Name).Equals(name));
+        return Breeds.Values.FirstOrDefault(x => StringExtensions.NormalizeToAscii(x.Name).Equals(name));
     }
 
     public IEnumerable<BreedData> GetBreedsDataByName(string name)
@@ -43,7 +43,7 @@ public sealed class BreedsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

@@ -5,9 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Data;
 using System.Data.SQLite;
 
-namespace Cyberia.Database;
+namespace Cyberia.Database.Extentsions;
 
-public static class Database
+/// <summary>
+/// Provides extension methods for the <see cref="IServiceCollection"/> interface.
+/// </summary>
+public static class ServiceCollectionExtensions
 {
     /// <summary>
     /// Adds the database dependencies to the service collection.
@@ -21,29 +24,12 @@ public static class Database
         {
             SQLiteConnection connection = new(connectionString);
             connection.Open();
+
             return connection;
         });
 
         services.AddScoped<UserRepository>();
 
         return services;
-    }
-
-    /// <summary>
-    /// Creates the tables for the database.
-    /// </summary>
-    /// <param name="provider">The service provider.</param>
-    /// <returns>The service provider.</returns>
-    public static async Task<IServiceProvider> CreateTablesAsync(this IServiceProvider provider)
-    {
-        var scope = provider.CreateScope();
-        var repositories = scope.ServiceProvider.GetServices<IDatabaseRepository>();
-
-        foreach (var repository in repositories)
-        {
-            await repository.CreateTableAsync();
-        }
-
-        return provider;
     }
 }

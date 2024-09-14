@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Google.FlatBuffers" Version="24.3.25" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
 
   <ItemGroup>
     <Using Include="Cyberia.Utils" />
+    <Using Include="Cyberia.Utils.Extensions" />
     <Using Include="Serilog" />
   </ItemGroup>
 

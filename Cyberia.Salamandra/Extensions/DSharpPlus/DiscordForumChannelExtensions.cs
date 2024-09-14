@@ -1,11 +1,11 @@
 ﻿using DSharpPlus.Entities;
 
-namespace Cyberia.Salamandra.DSharpPlus;
+namespace Cyberia.Salamandra.Extensions.DSharpPlus;
 
 /// <summary>
 /// Provides extension methods for <see cref="DiscordForumChannel"/>.
 /// </summary>
-public static class ExtendDiscordForumChannel
+public static class DiscordForumChannelExtensions
 {
     public const string ManualDiffTagName = "Manual diff";
 

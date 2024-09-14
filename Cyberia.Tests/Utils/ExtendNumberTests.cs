@@ -1,5 +1,6 @@
 ﻿using Cyberia.Tests.Attributes;
 using Cyberia.Tests.Common;
+using Cyberia.Utils.Extensions;
 
 namespace Cyberia.Tests.Utils;
 

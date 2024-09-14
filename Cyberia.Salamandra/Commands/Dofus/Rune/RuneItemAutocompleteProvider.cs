@@ -16,6 +16,6 @@ public sealed class RuneItemAutocompleteProvider : AutoCompleteProvider
                 return itemStatsData is not null && itemStatsData.Effects.Any(x => x is IRuneGeneratorEffect);
             })
             .Take(Constant.MaxChoice)
-            .ToDictionary(x => $"{ExtendString.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());
+            .ToDictionary(x => $"{StringExtensions.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());
     }
 }

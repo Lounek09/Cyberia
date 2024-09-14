@@ -4,8 +4,8 @@ using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Salamandra.Commands.Dofus.Breed;
 using Cyberia.Salamandra.Commands.Dofus.Item;
-using Cyberia.Salamandra.DSharpPlus;
 using Cyberia.Salamandra.Enums;
+using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;

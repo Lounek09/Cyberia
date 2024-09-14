@@ -1,8 +1,7 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 using Cyberia.Langzilla.EventArgs;
-using Cyberia.Salamandra.DSharpPlus;
-
+using Cyberia.Salamandra.Extensions.DSharpPlus;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.Exceptions;
@@ -125,7 +124,7 @@ public static class LangManager
 				$"Diff of langs {Formatter.Bold(currentType)} from {currentLastChange:yyyy-MM-dd HH:mmzzz} " +
 				$"and {Formatter.Bold(modelType)} from {modelLastChange:yyyy-MM-dd HH:mmzzz} in {Formatter.Bold(currentLanguage)}"));
 
-		var tag = forum.GetDiscordForumTagByName(ExtendDiscordForumChannel.ManualDiffTagName);
+		var tag = forum.GetDiscordForumTagByName(DiscordForumChannelExtensions.ManualDiffTagName);
 		if (tag is not null)
 		{
 			postBuilder.AddTag(tag);

@@ -52,7 +52,7 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

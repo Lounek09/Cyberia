@@ -86,7 +86,7 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
@@ -114,7 +114,7 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return ExtendString.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
