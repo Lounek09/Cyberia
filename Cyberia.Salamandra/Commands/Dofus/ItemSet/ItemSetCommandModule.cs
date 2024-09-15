@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -16,10 +17,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.ItemSet;
 public sealed class ItemSetCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public ItemSetCommandModule(CultureService cultureService)
+    public ItemSetCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(ItemSetInteractionLocalizer.CommandName), Description(ItemSetInteractionLocalizer.CommandDescription)]
@@ -43,7 +46,7 @@ public sealed class ItemSetCommandModule
             var itemSetData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(id);
             if (itemSetData is not null)
             {
-                response = await new ItemSetMessageBuilder(itemSetData, itemSetData.Effects.Count).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new ItemSetMessageBuilder(_embedBuilderService, itemSetData, itemSetData.Effects.Count).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -51,11 +54,11 @@ public sealed class ItemSetCommandModule
             var itemSetsData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(value).ToList();
             if (itemSetsData.Count == 1)
             {
-                response = await new ItemSetMessageBuilder(itemSetsData[0], itemSetsData[0].Effects.Count).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new ItemSetMessageBuilder(_embedBuilderService, itemSetsData[0], itemSetsData[0].Effects.Count).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (itemSetsData.Count > 1)
             {
-                response = await new PaginatedItemSetMessageBuilder(itemSetsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedItemSetMessageBuilder(_embedBuilderService, itemSetsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

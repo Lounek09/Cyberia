@@ -3,6 +3,7 @@ using Cyberia.Langzilla.Enums;
 using Cyberia.Langzilla.Models;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -18,10 +19,12 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "LANG";
     public const int PacketVersion = 1;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly LangsRepository _repository;
 
-    public LangsMessageBuilder(LangsRepository repository)
+    public LangsMessageBuilder(EmbedBuilderService embedBuilderService, LangsRepository repository)
     {
+        _embedBuilderService = embedBuilderService;
         _repository = repository;
     }
 
@@ -32,10 +35,11 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
             Enum.TryParse(parameters[0], out LangType langType) &&
             Enum.TryParse(parameters[1], out LangLanguage language))
         {
+            var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
             var langsWatcher = provider.GetRequiredService<LangsWatcher>();
             var repository = langsWatcher.GetRepository(langType, language);
 
-            return new LangsMessageBuilder(repository);
+            return new LangsMessageBuilder(embedBuilderService, repository);
         }
 
         return null;
@@ -61,7 +65,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         var type = _repository.Type.ToStringFast();
         var language = _repository.Language.ToStringFast();
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Langs")
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Langs")
             .WithTitle($"Langs {type} in {language}");
 
         if (_repository.Langs.Count > 0)

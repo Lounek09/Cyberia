@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -16,10 +17,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Quest;
 public sealed class QuestCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public QuestCommandModule(CultureService cultureService)
+    public QuestCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(QuestInteractionLocalizer.CommandName), Description(QuestInteractionLocalizer.CommandDescription)]
@@ -43,7 +46,7 @@ public sealed class QuestCommandModule
             var questData = DofusApi.Datacenter.QuestsRepository.GetQuestDataById(id);
             if (questData is not null)
             {
-                response = await new QuestMessageBuilder(questData).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new QuestMessageBuilder(_embedBuilderService, questData).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -51,11 +54,11 @@ public sealed class QuestCommandModule
             var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(value).ToList();
             if (questsData.Count == 1)
             {
-                response = await new QuestMessageBuilder(questsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new QuestMessageBuilder(_embedBuilderService, questsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (questsData.Count > 1)
             {
-                response = await new PaginatedQuestMessageBuilder(questsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedQuestMessageBuilder(_embedBuilderService, questsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

@@ -1,8 +1,9 @@
 ﻿using Cyberia.Api.Managers;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -24,11 +25,13 @@ public sealed class LangsCommandModule
 {
     private readonly LangsWatcher _langsWatcher;
     private readonly LangsService _langsService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public LangsCommandModule(LangsWatcher langsWatcher, LangsService langsService)
+    public LangsCommandModule(LangsWatcher langsWatcher, LangsService langsService, EmbedBuilderService embedBuilderService)
     {
         _langsWatcher = langsWatcher;
         _langsService = langsService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command("check"), Description("[Owner] Launch a check to see if there is a new version of the langs")]
@@ -137,7 +140,7 @@ public sealed class LangsCommandModule
     {
         var repository = _langsWatcher.GetRepository(type, language);
 
-        await ctx.RespondAsync(await new LangsMessageBuilder(repository).BuildAsync<DiscordInteractionResponseBuilder>());
+        await ctx.RespondAsync(await new LangsMessageBuilder(_embedBuilderService, repository).BuildAsync<DiscordInteractionResponseBuilder>());
     }
 
     [Command("get"), Description("Returns the requested decompiled lang")]

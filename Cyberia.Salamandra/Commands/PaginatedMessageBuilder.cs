@@ -1,5 +1,4 @@
-﻿using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
+﻿using Cyberia.Salamandra.Managers;
 
 using DSharpPlus.Entities;
 
@@ -9,8 +8,7 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
 {
     private const int c_rowPerPage = 25;
 
-    private readonly EmbedCategory _category;
-    private readonly string _authorText;
+    private readonly DiscordEmbedBuilder _baseEmbedBuilder;
     private readonly string _title;
 
     protected readonly string _search;
@@ -18,10 +16,9 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
     protected readonly int _totalPage;
     protected readonly IReadOnlyList<T> _data;
 
-    public PaginatedMessageBuilder(EmbedCategory category, string authorText, string title, List<T> data, string search, int selectedPageIndex)
+    public PaginatedMessageBuilder(DiscordEmbedBuilder baseEmbedBuilder, string title, List<T> data, string search, int selectedPageIndex)
     {
-        _category = category;
-        _authorText = authorText;
+        _baseEmbedBuilder = baseEmbedBuilder;
         _title = title;
         _search = search;
         _selectedPageIndex = selectedPageIndex;
@@ -67,8 +64,7 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(_category, _authorText)
-            .WithTitle(_title)
+        var embed = _baseEmbedBuilder.WithTitle(_title)
             .WithDescription(string.Join('\n', GetContent()))
             .AddField(Constant.ZeroWidthSpace, $"{BotTranslations.Embed_Field_Page_Content} {_selectedPageIndex + 1}/{_totalPage}");
 

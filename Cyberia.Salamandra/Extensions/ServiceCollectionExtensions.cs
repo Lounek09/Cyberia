@@ -1,5 +1,6 @@
 ﻿using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -57,6 +58,7 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<CultureService>();
         services.AddTransient<CytrusService>();
+        services.AddTransient<EmbedBuilderService>();
         services.AddTransient<LangsService>();
 
         return services;

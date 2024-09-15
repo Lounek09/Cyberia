@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -18,10 +18,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Escape;
 public sealed class EscapeCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public EscapeCommandModule(CultureService cultureService)
+    public EscapeCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(EscapeInteractionLocalizer.CommandName), Description(EscapeInteractionLocalizer.CommandDescription)]
@@ -44,7 +46,7 @@ public sealed class EscapeCommandModule
         var escapePercent = Formulas.GetEscapePercent(agility, enemyAgility);
         var agilityToEscapeForSure = Formulas.GetAgilityToEscapeForSure(enemyAgility);
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Escape_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Escape_Author)
             .WithDescription(Translation.Format(
                 BotTranslations.Embed_Escape_Description,
                 Formatter.Bold(agility.ToString()),

@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -15,10 +16,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 public sealed class BreedCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public BreedCommandModule(CultureService cultureService)
+    public BreedCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(BreedInteractionLocalizer.CommandName), Description(BreedInteractionLocalizer.CommandDescription)]
@@ -42,6 +45,6 @@ public sealed class BreedCommandModule
             return;
         }
 
-        await ctx.RespondAsync(await new BreedMessageBuilder(breedData).BuildAsync<DiscordInteractionResponseBuilder>());
+        await ctx.RespondAsync(await new BreedMessageBuilder(_embedBuilderService, breedData).BuildAsync<DiscordInteractionResponseBuilder>());
     }
 }

@@ -2,9 +2,12 @@
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
@@ -15,13 +18,13 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
 
     private readonly MapSearchCategory _searchCategory;
 
-    public PaginatedMapMessageBuilder(List<MapData> mapsData, MapSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Map, BotTranslations.Embed_Map_Author, BotTranslations.Embed_PaginatedMap_Title, mapsData, search, selectedPageIndex)
+    public PaginatedMapMessageBuilder(EmbedBuilderService embedBuilderService, List<MapData> mapsData, MapSearchCategory searchCategory, string search, int selectedPageIndex = 0)
+        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, BotTranslations.Embed_Map_Author), BotTranslations.Embed_PaginatedMap_Title, mapsData, search, selectedPageIndex)
     {
         _searchCategory = searchCategory;
     }
 
-    public static PaginatedMapMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static PaginatedMapMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -59,7 +62,9 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
 
             if (mapsData.Count > 0 && !string.IsNullOrEmpty(search))
             {
-                return new(mapsData, searchCategory, search, selectedPageIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, mapsData, searchCategory, search, selectedPageIndex);
             }
         }
 

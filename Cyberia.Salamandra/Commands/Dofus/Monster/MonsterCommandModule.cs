@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -16,10 +17,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Monster;
 public sealed class MonsterCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public MonsterCommandModule(CultureService cultureService)
+    public MonsterCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(MonsterInteractionLocalizer.CommandName), Description(MonsterInteractionLocalizer.CommandDescription)]
@@ -43,7 +46,7 @@ public sealed class MonsterCommandModule
             var monsterData = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(id);
             if (monsterData is not null)
             {
-                response = await new MonsterMessageBuilder(monsterData).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new MonsterMessageBuilder(_embedBuilderService, monsterData).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -51,11 +54,11 @@ public sealed class MonsterCommandModule
             var monstersData = DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(value).ToList();
             if (monstersData.Count == 1)
             {
-                response = await new MonsterMessageBuilder(monstersData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new MonsterMessageBuilder(_embedBuilderService, monstersData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (monstersData.Count > 1)
             {
-                response = await new PaginatedMonsterMessageBuilder(monstersData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedMonsterMessageBuilder(_embedBuilderService, monstersData, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

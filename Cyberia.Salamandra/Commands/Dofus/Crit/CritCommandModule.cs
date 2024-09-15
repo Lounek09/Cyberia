@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -18,10 +18,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Crit;
 public sealed class CritCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public CritCommandModule(CultureService cultureService)
+    public CritCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(CritInteractionLocalizer.CommandName), Description(CritInteractionLocalizer.CommandDescription)]
@@ -48,7 +50,7 @@ public sealed class CritCommandModule
         var rate = Formulas.GetCriticalRate(number, targetRate, agility);
         var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, targetRate);
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Crit_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Crit_Author)
             .WithDescription(Translation.Format(
                 BotTranslations.Embed_Crit_Description,
                 Formatter.Bold($"1/{rate}"),

@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -21,10 +21,12 @@ namespace Cyberia.Salamandra.Commands.Admin.Search;
 public sealed class SearchCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public SearchCommandModule(CultureService cultureService)
+    public SearchCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command("effect"), Description("Search where the effect is used")]
@@ -67,7 +69,7 @@ public sealed class SearchCommandModule
                 return;
         }
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
             .WithTitle($"Search effect {effectId} in {location}")
             .WithDescription(descriptionBuilder.ToString().WithMaxLength(4000));
 
@@ -114,7 +116,7 @@ public sealed class SearchCommandModule
                 return;
         }
 
-        await ctx.RespondAsync(EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, $"Search criterion {criterionId} in {location}")
+        await ctx.RespondAsync(_embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, $"Search criterion {criterionId} in {location}")
             .WithDescription(descriptionBuilder.ToString().WithMaxLength(4000)));
     }
 }

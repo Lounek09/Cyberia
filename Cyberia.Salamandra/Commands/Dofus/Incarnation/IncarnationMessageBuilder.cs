@@ -9,9 +9,12 @@ using Cyberia.Salamandra.Commands.Dofus.Spell;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
@@ -20,14 +23,16 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "INCA";
     public const int PacketVersion = 1;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly IncarnationData _incarnationData;
     private readonly ItemData? _itemData;
     private readonly string _itemName;
     private readonly ItemTypeData? _itemTypeData;
     private readonly IEnumerable<SpellData> _spellsData;
 
-    public IncarnationMessageBuilder(IncarnationData incarnationData)
+    public IncarnationMessageBuilder(EmbedBuilderService embedBuilderService, IncarnationData incarnationData)
     {
+        _embedBuilderService = embedBuilderService;
         _incarnationData = incarnationData;
         _itemData = incarnationData.GetItemData();
         _itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(incarnationData.Id);
@@ -37,7 +42,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     public ItemTypeData? ItemTypeData => _itemTypeData;
 
-    public static IncarnationMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static IncarnationMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&
@@ -46,7 +51,9 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
             var incarnartionData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(incarnationId);
             if (incarnartionData is not null)
             {
-                return new(incarnartionData);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, incarnartionData);
             }
         }
 
@@ -78,7 +85,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author)
             .WithTitle($"{_itemName} ({_incarnationData.Id})")
             .WithImageUrl(await _incarnationData.GetBigImagePathAsync(CdnImageSize.Size512));
 

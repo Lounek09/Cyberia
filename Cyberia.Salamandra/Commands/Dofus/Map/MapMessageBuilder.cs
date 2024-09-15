@@ -4,8 +4,11 @@ using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Commands.Dofus.House;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
@@ -14,20 +17,22 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "MA";
     public const int PacketVersion = 1;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly MapData _mapData;
     private readonly MapSubAreaData? _mapSubAreaData;
     private readonly MapAreaData? _mapAreaData;
     private readonly HouseData? _houseData;
 
-    public MapMessageBuilder(MapData mapData)
+    public MapMessageBuilder(EmbedBuilderService embedBuilderService, MapData mapData)
     {
+        _embedBuilderService = embedBuilderService;
         _mapData = mapData;
         _mapSubAreaData = _mapData.GetMapSubAreaData();
         _mapAreaData = _mapSubAreaData?.GetMapAreaData();
         _houseData = _mapData.GetHouseData();
     }
 
-    public static MapMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static MapMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&
@@ -36,7 +41,9 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
             var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById(mapId);
             if (mapData is not null)
             {
-                return new(mapData);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, mapData);
             }
         }
 
@@ -64,7 +71,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Map, BotTranslations.Embed_Map_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, BotTranslations.Embed_Map_Author)
             .WithTitle($"{_mapData.GetCoordinate()} ({_mapData.Id})")
             .WithDescription(_mapData.GetMapAreaName())
             .WithImageUrl(await _mapData.GetImagePathAsync());

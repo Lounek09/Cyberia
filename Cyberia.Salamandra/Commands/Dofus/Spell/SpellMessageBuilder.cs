@@ -9,9 +9,12 @@ using Cyberia.Salamandra.Commands.Dofus.Incarnation;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 
@@ -20,14 +23,16 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "S";
     public const int PacketVersion = 1;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly SpellData _spellData;
     private readonly int _selectedLevel;
     private readonly SpellLevelData? _spellLevelData;
     private readonly BreedData? _breedData;
     private readonly IncarnationData? _incarnationData;
 
-    public SpellMessageBuilder(SpellData spell, int selectedLevel)
+    public SpellMessageBuilder(EmbedBuilderService embedBuilderService, SpellData spell, int selectedLevel)
     {
+        _embedBuilderService = embedBuilderService;
         _spellData = spell;
         _selectedLevel = selectedLevel;
         _spellLevelData = spell.GetSpellLevelData(selectedLevel);
@@ -35,7 +40,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
         _incarnationData = spell.GetIncarnationData();
     }
 
-    public static SpellMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static SpellMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -45,7 +50,9 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spellId);
             if (spellData is not null)
             {
-                return new SpellMessageBuilder(spellData, selectedLevel);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new SpellMessageBuilder(embedBuilderService, spellData, selectedLevel);
             }
         }
 
@@ -85,7 +92,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Spells, BotTranslations.Embed_Spell_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Spells, BotTranslations.Embed_Spell_Author)
             .WithTitle($"{_spellData.Name} ({_spellData.Id}) - {BotTranslations.ShortLevel} {_selectedLevel}")
             .WithDescription(string.IsNullOrEmpty(_spellData.Description) ? string.Empty : Formatter.Italic(_spellData.Description.ToString().Trim()))
             .WithThumbnail(await _spellData.GetIconImagePathAsync(CdnImageSize.Size128));

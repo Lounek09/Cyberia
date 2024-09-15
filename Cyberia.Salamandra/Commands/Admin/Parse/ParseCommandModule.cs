@@ -1,8 +1,8 @@
 ﻿using Cyberia.Api.Factories;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Extensions.DSharpPlus;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Extensions.DSharpPlus;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -19,10 +19,12 @@ namespace Cyberia.Salamandra.Commands.Admin.Parse;
 public sealed class ParseCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public ParseCommandModule(CultureService cultureService)
+    public ParseCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command("effects"), Description("Parse the effects of an item")]
@@ -37,7 +39,7 @@ public sealed class ParseCommandModule
 
         if (effects.Count > 0)
         {
-            var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
+            var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
                 .WithTitle("Item effects parser")
                 .AddEffectFields("Effects :", effects, true);
 
@@ -60,7 +62,7 @@ public sealed class ParseCommandModule
 
         if (criteria.Count > 0)
         {
-            var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
+            var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
                 .WithTitle("Criteria parser")
                 .AddCriteriaFields(criteria);
 

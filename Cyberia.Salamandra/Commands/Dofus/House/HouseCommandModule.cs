@@ -3,6 +3,7 @@ using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Commands.Dofus.Map;
 using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -24,10 +25,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.House;
 public sealed class HouseCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public HouseCommandModule(CultureService cultureService)
+    public HouseCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(HouseInteractionLocalizer.Name_CommandName), Description(HouseInteractionLocalizer.Name_CommandDescription)]
@@ -49,7 +52,7 @@ public sealed class HouseCommandModule
             var houseData = DofusApi.Datacenter.HousesRepository.GetHouseDataById(id);
             if (houseData is not null)
             {
-                response = await new HouseMessageBuilder(houseData).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new HouseMessageBuilder(_embedBuilderService, houseData).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -57,11 +60,11 @@ public sealed class HouseCommandModule
             var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(value).ToList();
             if (housesData.Count == 1)
             {
-                response = await new HouseMessageBuilder(housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new HouseMessageBuilder(_embedBuilderService, housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (housesData.Count > 1)
             {
-                response = await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Name, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.Name, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
@@ -93,11 +96,11 @@ public sealed class HouseCommandModule
         }
         else if (housesData.Count == 1)
         {
-            await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
+            await ctx.RespondAsync(await new HouseMessageBuilder(_embedBuilderService, housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
         }
         else
         {
-            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{x}{PacketManager.ParameterSeparator}{y}")
+            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.Coordinate, $"{x}{PacketManager.ParameterSeparator}{y}")
                 .BuildAsync<DiscordInteractionResponseBuilder>());
         }
     }
@@ -136,11 +139,11 @@ public sealed class HouseCommandModule
             }
             else if (housesData.Count == 1)
             {
-                await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new HouseMessageBuilder(_embedBuilderService, housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapSubArea, value)
+                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.MapSubArea, value)
                     .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }
@@ -180,11 +183,11 @@ public sealed class HouseCommandModule
             }
             else if (housesData.Count == 1)
             {
-                await ctx.RespondAsync(await new HouseMessageBuilder(housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new HouseMessageBuilder(_embedBuilderService, housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.MapArea, value)
+                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.MapArea, value)
                     .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }

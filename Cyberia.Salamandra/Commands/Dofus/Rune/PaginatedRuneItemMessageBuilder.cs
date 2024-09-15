@@ -2,9 +2,12 @@
 using Cyberia.Api.Data.Items;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 
@@ -15,13 +18,13 @@ public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<It
 
     private readonly int _quantity;
 
-    public PaginatedRuneItemMessageBuilder(List<ItemData> itemsData, string search, int quantity = 1, int selectedPageIndex = 0)
-        : base(EmbedCategory.Inventory, BotTranslations.Embed_Item_Author, BotTranslations.Embed_PaginatedItem_Title, itemsData, search, selectedPageIndex)
+    public PaginatedRuneItemMessageBuilder(EmbedBuilderService embedBuilderService, List<ItemData> itemsData, string search, int quantity = 1, int selectedPageIndex = 0)
+        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Item_Author), BotTranslations.Embed_PaginatedItem_Title, itemsData, search, selectedPageIndex)
     {
         _quantity = quantity;
     }
 
-    public static PaginatedRuneItemMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static PaginatedRuneItemMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -31,7 +34,9 @@ public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<It
             var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(parameters[1]).ToList();
             if (itemsData.Count > 0)
             {
-                return new(itemsData, parameters[1], quantity, selectedPageIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, itemsData, parameters[1], quantity, selectedPageIndex);
             }
         }
 

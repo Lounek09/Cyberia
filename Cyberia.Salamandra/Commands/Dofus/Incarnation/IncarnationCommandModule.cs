@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -16,10 +17,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 public sealed class IncarnationCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public IncarnationCommandModule(CultureService cultureService)
+    public IncarnationCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(IncarnationInteractionLocalizer.CommandName), Description(IncarnationInteractionLocalizer.CommandDescription)]
@@ -43,7 +46,7 @@ public sealed class IncarnationCommandModule
             var incarnationData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(id);
             if (incarnationData is not null)
             {
-                response = await new IncarnationMessageBuilder(incarnationData).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new IncarnationMessageBuilder(_embedBuilderService, incarnationData).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -51,11 +54,11 @@ public sealed class IncarnationCommandModule
             var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(value).ToList();
             if (incarnationsData.Count == 1)
             {
-                response = await new IncarnationMessageBuilder(incarnationsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new IncarnationMessageBuilder(_embedBuilderService, incarnationsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (incarnationsData.Count > 1)
             {
-                response = await new PaginatedIncarnationMessageBuilder(incarnationsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedIncarnationMessageBuilder(_embedBuilderService, incarnationsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

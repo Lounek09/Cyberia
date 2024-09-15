@@ -3,9 +3,12 @@ using Cyberia.Api.Data.Houses;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.House;
 
@@ -14,20 +17,22 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "H";
     public const int PacketVersion = 1;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly HouseData _houseData;
     private readonly int _selectedMapIndex;
     private readonly MapData? _outdoorMapData;
     private readonly List<MapData> _mapsData;
 
-    public HouseMessageBuilder(HouseData houseData, int selectedMapIndex = -1)
+    public HouseMessageBuilder(EmbedBuilderService embedBuilderService, HouseData houseData, int selectedMapIndex = -1)
     {
+        _embedBuilderService = embedBuilderService;
         _houseData = houseData;
         _outdoorMapData = houseData.GetOutdoorMapData();
         _mapsData = houseData.GetMapsData().ToList();
         _selectedMapIndex = selectedMapIndex;
     }
 
-    public static HouseMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static HouseMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -37,7 +42,9 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
             var houseData = DofusApi.Datacenter.HousesRepository.GetHouseDataById(houseId);
             if (houseData is not null)
             {
-                return new(houseData, selectedMapIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, houseData, selectedMapIndex);
             }
         }
 
@@ -64,7 +71,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Houses, BotTranslations.Embed_House_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Houses, BotTranslations.Embed_House_Author)
             .WithTitle($"{_houseData.Name} {_houseData.GetCoordinate()} ({_houseData.Id})")
             .WithDescription(string.IsNullOrEmpty(_houseData.Description) ? string.Empty : Formatter.Italic(_houseData.Description))
             .AddField(BotTranslations.Embed_Field_Room_Title, _houseData.RoomNumber == 0 ? "?" : _houseData.RoomNumber.ToString(), true)

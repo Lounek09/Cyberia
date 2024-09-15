@@ -7,9 +7,12 @@ using Cyberia.Salamandra.Commands.Dofus.ItemSet;
 using Cyberia.Salamandra.Commands.Dofus.Spell;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using System.Text;
 
@@ -20,20 +23,22 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "G";
     public const int PacketVersion = 1;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly BreedData _breedData;
     private readonly IEnumerable<SpellData> _spellsData;
     private readonly SpellData? _specialSpellData;
     private readonly ItemSetData? _itemSetData;
 
-    public BreedMessageBuilder(BreedData breedData)
+    public BreedMessageBuilder(EmbedBuilderService embedBuilderService, BreedData breedData)
     {
+        _embedBuilderService = embedBuilderService;
         _breedData = breedData;
         _spellsData = breedData.GetSpellsData();
         _specialSpellData = breedData.GetSpecialSpellData();
         _itemSetData = breedData.GetItemSetData();
     }
 
-    public static BreedMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static BreedMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&
@@ -42,7 +47,9 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
             var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
             if (breedData is not null)
             {
-                return new(breedData);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, breedData);
             }
         }
 
@@ -75,7 +82,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Breeds, BotTranslations.Embed_Breed_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Breeds, BotTranslations.Embed_Breed_Author)
             .WithTitle($"{_breedData.LongName} ({_breedData.Id})")
             .WithDescription(Formatter.Italic(_breedData.Description))
             .WithThumbnail(await _breedData.GetIconImagePathAsync(CdnImageSize.Size128))

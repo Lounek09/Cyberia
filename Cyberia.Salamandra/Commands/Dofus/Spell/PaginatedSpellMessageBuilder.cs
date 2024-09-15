@@ -2,9 +2,12 @@
 using Cyberia.Api.Data.Spells;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 
@@ -13,13 +16,13 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
     public const string PacketHeader = "PS";
     public const int PacketVersion = 2;
 
-    public PaginatedSpellMessageBuilder(List<SpellData> spellsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Spells, BotTranslations.Embed_Spell_Author, BotTranslations.Embed_PaginatedSpell_Title, spellsData, search, selectedPageIndex)
+    public PaginatedSpellMessageBuilder(EmbedBuilderService embedBuilderService, List<SpellData> spellsData, string search, int selectedPageIndex = 0)
+        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Spells, BotTranslations.Embed_Spell_Author), BotTranslations.Embed_PaginatedSpell_Title, spellsData, search, selectedPageIndex)
     {
 
     }
 
-    public static PaginatedSpellMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static PaginatedSpellMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -28,7 +31,9 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
             var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(parameters[1]).ToList();
             if (spellsData.Count > 0)
             {
-                return new(spellsData, parameters[1], selectedPageIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, spellsData, parameters[1], selectedPageIndex);
             }
         }
 

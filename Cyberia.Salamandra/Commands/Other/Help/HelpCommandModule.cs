@@ -1,6 +1,6 @@
 ﻿using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -16,10 +16,12 @@ namespace Cyberia.Salamandra.Commands.Other.Help;
 public sealed class HelpCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public HelpCommandModule(CultureService cultureService)
+    public HelpCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(HelpInteractionLocalizer.CommandName), Description(HelpInteractionLocalizer.CommandDescription)]
@@ -72,7 +74,7 @@ public sealed class HelpCommandModule
             descriptionBuilder.Append('\n');
         }
 
-        await ctx.RespondAsync(EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Help")
+        await ctx.RespondAsync(_embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Help")
             .WithDescription(descriptionBuilder.ToString()));
     }
 }

@@ -5,9 +5,12 @@ using Cyberia.Api.Managers;
 using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using System.Text;
 
@@ -19,16 +22,18 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
     public const int PacketVersion = 1;
     public const int MaxQuantity = 9999;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly ItemData _itemData;
     private readonly int _quantity;
 
-    public RuneItemMessageBuilder(ItemData itemData, int quantity = 1)
+    public RuneItemMessageBuilder(EmbedBuilderService embedBuilderService, ItemData itemData, int quantity = 1)
     {
+        _embedBuilderService = embedBuilderService;
         _itemData = itemData;
         _quantity = quantity;
     }
 
-    public static RuneItemMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static RuneItemMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -38,7 +43,9 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
             var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                return new(itemData, quantity);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, itemData, quantity);
             }
         }
 
@@ -63,7 +70,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Rune_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Rune_Author)
             .WithTitle($"{BotTranslations.Embed_RuneItem_Description} {_quantity.ToFormattedString()}x {Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
             .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128));
 

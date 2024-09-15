@@ -2,9 +2,12 @@
 using Cyberia.Api.Data.Quests;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Quest;
 
@@ -13,13 +16,13 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
     public const string PacketHeader = "PQ";
     public const int PacketVersion = 2;
 
-    public PaginatedQuestMessageBuilder(List<QuestData> questsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Quests, BotTranslations.Embed_Quest_Author, BotTranslations.Embed_PaginatedQuest_Title, questsData, search, selectedPageIndex)
+    public PaginatedQuestMessageBuilder(EmbedBuilderService embedBuilderService, List<QuestData> questsData, string search, int selectedPageIndex = 0)
+        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, BotTranslations.Embed_Quest_Author), BotTranslations.Embed_PaginatedQuest_Title, questsData, search, selectedPageIndex)
     {
 
     }
 
-    public static PaginatedQuestMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static PaginatedQuestMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -28,7 +31,9 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
             var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(parameters[1]).ToList();
             if (questsData.Count > 0)
             {
-                return new(questsData, parameters[1], selectedPageIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, questsData, parameters[1], selectedPageIndex);
             }
         }
 

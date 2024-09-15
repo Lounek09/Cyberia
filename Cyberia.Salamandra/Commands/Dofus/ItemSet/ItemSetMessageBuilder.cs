@@ -7,9 +7,12 @@ using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.ItemSet;
 
@@ -18,20 +21,22 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "IS";
     public const int PacketVersion = 1;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly ItemSetData _itemSetData;
     private readonly int _nbItemSelected;
     private readonly IEnumerable<ItemData> _itemsData;
     private readonly BreedData? _breedData;
 
-    public ItemSetMessageBuilder(ItemSetData itemSetData, int nbItemSelected)
+    public ItemSetMessageBuilder(EmbedBuilderService embedBuilderService, ItemSetData itemSetData, int nbItemSelected)
     {
+        _embedBuilderService = embedBuilderService;
         _itemSetData = itemSetData;
         _nbItemSelected = nbItemSelected;
         _itemsData = itemSetData.GetItemsData();
         _breedData = itemSetData.GetBreedData();
     }
 
-    public static ItemSetMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static ItemSetMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -41,7 +46,9 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
             var itemSetData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(itemSetId);
             if (itemSetData is not null)
             {
-                return new(itemSetData, nbItemSelected);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, itemSetData, nbItemSelected);
             }
         }
 
@@ -86,7 +93,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_ItemSet_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_ItemSet_Author)
             .WithTitle($"{_itemSetData.Name} ({_itemSetData.Id})")
             .AddField(BotTranslations.Embed_Field_Level_Title, _itemSetData.GetLevel().ToString());
 

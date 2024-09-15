@@ -2,9 +2,12 @@
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.ItemSet;
 
@@ -13,12 +16,12 @@ public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<Ite
     public const string PacketHeader = "PIS";
     public const int PacketVersion = 2;
 
-    public PaginatedItemSetMessageBuilder(List<ItemSetData> itemSetsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Inventory, BotTranslations.Embed_ItemSet_Author, BotTranslations.Embed_PaginatedItemSet_Title, itemSetsData, search, selectedPageIndex)
+    public PaginatedItemSetMessageBuilder(EmbedBuilderService embedBuilderService, List<ItemSetData> itemSetsData, string search, int selectedPageIndex = 0)
+        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_ItemSet_Author), BotTranslations.Embed_PaginatedItemSet_Title, itemSetsData, search, selectedPageIndex)
     {
     }
 
-    public static PaginatedItemSetMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static PaginatedItemSetMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -27,7 +30,9 @@ public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<Ite
             var itemSetsData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(parameters[1]).ToList();
             if (itemSetsData.Count > 0)
             {
-                return new(itemSetsData, parameters[1], selectedPageIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, itemSetsData, parameters[1], selectedPageIndex);
             }
         }
 

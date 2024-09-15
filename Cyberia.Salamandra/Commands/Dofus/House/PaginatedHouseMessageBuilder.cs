@@ -2,9 +2,12 @@
 using Cyberia.Api.Data.Houses;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.House;
 
@@ -15,13 +18,13 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
 
     private readonly HouseSearchCategory _searchCategory;
 
-    public PaginatedHouseMessageBuilder(List<HouseData> housesData, HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Houses, BotTranslations.Embed_House_Author, BotTranslations.Embed_PaginatedHouse_Title, housesData, search, selectedPageIndex)
+    public PaginatedHouseMessageBuilder(EmbedBuilderService embedBuilderService, List<HouseData> housesData, HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0)
+        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Houses, BotTranslations.Embed_House_Author), BotTranslations.Embed_PaginatedHouse_Title, housesData, search, selectedPageIndex)
     {
         _searchCategory = searchCategory;
     }
 
-    public static PaginatedHouseMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static PaginatedHouseMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -63,7 +66,9 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
 
             if (housesData.Count > 0 && !string.IsNullOrEmpty(search))
             {
-                return new(housesData, searchCategory, search, selectedPageIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, housesData, searchCategory, search, selectedPageIndex);
             }
         }
 

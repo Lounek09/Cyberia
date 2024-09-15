@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -16,10 +17,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 public sealed class CraftCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public CraftCommandModule(CultureService cultureService)
+    public CraftCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(CraftInteractionLocalizer.CommandName), Description(CraftInteractionLocalizer.CommandDescription)]
@@ -47,7 +50,7 @@ public sealed class CraftCommandModule
             var craftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(id);
             if (craftData is not null)
             {
-                response = await new CraftMessageBuilder(craftData, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(_embedBuilderService, craftData, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -55,11 +58,11 @@ public sealed class CraftCommandModule
             var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(value).ToList();
             if (craftsData.Count == 1)
             {
-                response = await new CraftMessageBuilder(craftsData[0], quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(_embedBuilderService, craftsData[0], quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (craftsData.Count > 1)
             {
-                response = await new PaginatedCraftMessageBuilder(craftsData, value, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedCraftMessageBuilder(_embedBuilderService, craftsData, value, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

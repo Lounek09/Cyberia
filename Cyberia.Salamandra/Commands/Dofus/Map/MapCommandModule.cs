@@ -2,6 +2,7 @@
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -23,10 +24,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Map;
 public sealed class MapCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public MapCommandModule(CultureService cultureService)
+    public MapCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(MapInteractionLocalizer.Id_CommandName), Description(MapInteractionLocalizer.Id_CommandDescription)]
@@ -47,7 +50,7 @@ public sealed class MapCommandModule
             return;
         }
 
-        await ctx.RespondAsync(await new MapMessageBuilder(mapData).BuildAsync<DiscordInteractionResponseBuilder>());
+        await ctx.RespondAsync(await new MapMessageBuilder(_embedBuilderService, mapData).BuildAsync<DiscordInteractionResponseBuilder>());
     }
 
 
@@ -76,11 +79,11 @@ public sealed class MapCommandModule
 
         if (mapsData.Count == 1)
         {
-            await ctx.RespondAsync(await new MapMessageBuilder(mapsData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
+            await ctx.RespondAsync(await new MapMessageBuilder(_embedBuilderService, mapsData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
             return;
         }
         
-        await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.Coordinate, $"{x}{PacketManager.ParameterSeparator}{y}")
+        await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.Coordinate, $"{x}{PacketManager.ParameterSeparator}{y}")
             .BuildAsync<DiscordInteractionResponseBuilder>());
     }
 
@@ -118,7 +121,7 @@ public sealed class MapCommandModule
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapSubArea, value)
+                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.MapSubArea, value)
                     .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }
@@ -158,7 +161,7 @@ public sealed class MapCommandModule
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(mapsData, MapSearchCategory.MapArea, value)
+                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.MapArea, value)
                     .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }

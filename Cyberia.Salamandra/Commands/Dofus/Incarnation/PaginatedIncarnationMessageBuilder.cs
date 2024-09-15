@@ -2,9 +2,12 @@
 using Cyberia.Api.Data.Incarnations;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
@@ -13,13 +16,13 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
     public const string PacketHeader = "PINCA";
     public const int PacketVersion = 2;
 
-    public PaginatedIncarnationMessageBuilder(List<IncarnationData> incarnationsData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author, BotTranslations.Embed_PaginatedIncarnation_Title, incarnationsData, search, selectedPageIndex)
+    public PaginatedIncarnationMessageBuilder(EmbedBuilderService embedBuilderService, List<IncarnationData> incarnationsData, string search, int selectedPageIndex = 0)
+        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author), BotTranslations.Embed_PaginatedIncarnation_Title, incarnationsData, search, selectedPageIndex)
     {
 
     }
 
-    public static PaginatedIncarnationMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static PaginatedIncarnationMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -28,7 +31,9 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
             var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(parameters[1]).ToList();
             if (incarnationsData.Count > 0)
             {
-                return new(incarnationsData, parameters[1], selectedPageIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, incarnationsData, parameters[1], selectedPageIndex);
             }
         }
 

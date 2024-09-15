@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -16,10 +17,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Item;
 public sealed class ItemCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public ItemCommandModule(CultureService cultureService)
+    public ItemCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(ItemInteractionLocalizer.CommandName), Description(ItemInteractionLocalizer.CommandDescription)]
@@ -43,7 +46,7 @@ public sealed class ItemCommandModule
             var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(id);
             if (itemData is not null)
             {
-                response = await new ItemMessageBuilder(itemData).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new ItemMessageBuilder(_embedBuilderService, itemData).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -51,11 +54,11 @@ public sealed class ItemCommandModule
             var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(value).ToList();
             if (itemsData.Count == 1)
             {
-                response = await new ItemMessageBuilder(itemsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new ItemMessageBuilder(_embedBuilderService, itemsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (itemsData.Count > 1)
             {
-                response = await new PaginatedItemMessageBuilder(itemsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedItemMessageBuilder(_embedBuilderService, itemsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

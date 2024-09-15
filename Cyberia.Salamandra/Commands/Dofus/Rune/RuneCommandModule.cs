@@ -2,9 +2,9 @@
 using Cyberia.Api.Managers;
 using Cyberia.Api.Values;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.EventHandlers;
-using Cyberia.Utils.Extensions;
+using Cyberia.Salamandra.Services;
+
 using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -26,10 +26,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 public sealed class RuneCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public RuneCommandModule(CultureService cultureService)
+    public RuneCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(RuneInteractionLocalizer.Item_CommandName), Description(RuneInteractionLocalizer.Item_CommandDescription)]
@@ -55,7 +57,7 @@ public sealed class RuneCommandModule
             var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                response = await new RuneItemMessageBuilder(itemData, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new RuneItemMessageBuilder(_embedBuilderService, itemData, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -63,11 +65,11 @@ public sealed class RuneCommandModule
             var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(value).ToList();
             if (itemsData.Count == 1)
             {
-                response = await new RuneItemMessageBuilder(itemsData[0], quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new RuneItemMessageBuilder(_embedBuilderService, itemsData[0], quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (itemsData.Count > 1)
             {
-                response = await new PaginatedRuneItemMessageBuilder(itemsData, value, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedRuneItemMessageBuilder(_embedBuilderService, itemsData, value, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
@@ -107,7 +109,7 @@ public sealed class RuneCommandModule
 
         var percentRuneExtractable = Math.Round(RuneManager.GetPercentStatExtractable(runeData, itemLvl, statAmount), 2);
 
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Rune_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Rune_Author)
             .WithTitle(runeData.GetFullName());
 
         if (statAmount == 1)

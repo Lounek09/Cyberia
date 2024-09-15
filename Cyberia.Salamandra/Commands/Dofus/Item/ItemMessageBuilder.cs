@@ -14,9 +14,12 @@ using Cyberia.Salamandra.Commands.Dofus.Rune;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using System.Text;
 
@@ -27,6 +30,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "I";
     public const int PacketVersion = 2;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly ItemData _itemData;
     private readonly ItemTypeData? _itemTypeData;
     private readonly ItemSetData? _itemSetData;
@@ -36,8 +40,9 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
     private readonly IncarnationData? _incarnationData;
     private readonly int _quantity;
 
-    public ItemMessageBuilder(ItemData itemData, int quantity = 1)
+    public ItemMessageBuilder(EmbedBuilderService embedBuilderService, ItemData itemData, int quantity = 1)
     {
+        _embedBuilderService = embedBuilderService;
         _itemData = itemData;
         _itemTypeData = itemData.GetItemTypeData();
         _itemSetData = itemData.GetItemSetData();
@@ -48,7 +53,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         _quantity = quantity;
     }
 
-    public static ItemMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static ItemMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -58,7 +63,9 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                return new(itemData, quantity);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, itemData, quantity);
             }
         }
 
@@ -86,7 +93,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Item_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Item_Author)
             .WithTitle($"{Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
             .WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description))
             .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128))

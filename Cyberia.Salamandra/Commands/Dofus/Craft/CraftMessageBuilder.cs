@@ -6,9 +6,12 @@ using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
@@ -18,20 +21,22 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
     public const int PacketVersion = 1;
     public const int MaxQuantity = 99999;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly CraftData _craftData;
     private readonly ItemData? _itemData;
     private readonly int _quantity;
     private readonly bool _recursive;
 
-    public CraftMessageBuilder(CraftData craftData, int quantity = 1, bool recursive = false)
+    public CraftMessageBuilder(EmbedBuilderService embedBuilderService, CraftData craftData, int quantity = 1, bool recursive = false)
     {
+        _embedBuilderService = embedBuilderService;
         _craftData = craftData;
         _itemData = craftData.GetItemData();
         _quantity = quantity;
         _recursive = recursive;
     }
 
-    public static CraftMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static CraftMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -42,7 +47,9 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
             var craftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(craftId);
             if (craftData is not null)
             {
-                return new(craftData, quantity, recursive);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, craftData, quantity, recursive);
             }
         }
 
@@ -72,7 +79,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Jobs, BotTranslations.Embed_Craft_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Jobs, BotTranslations.Embed_Craft_Author)
             .WithCraftDescription(_craftData, _quantity, _recursive);
 
         if (_itemData is not null)

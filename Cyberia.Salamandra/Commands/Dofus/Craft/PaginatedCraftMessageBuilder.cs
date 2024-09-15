@@ -2,9 +2,12 @@
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
@@ -15,13 +18,13 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
 
     private readonly int _quantity;
 
-    public PaginatedCraftMessageBuilder(List<CraftData> craftsData, string search, int quantity = 1, int selectedPageIndex = 0)
-        : base(EmbedCategory.Jobs, BotTranslations.Embed_Craft_Author, BotTranslations.Embed_PaginatedCraft_Title, craftsData, search, selectedPageIndex)
+    public PaginatedCraftMessageBuilder(EmbedBuilderService embedBuilderService, List<CraftData> craftsData, string search, int quantity = 1, int selectedPageIndex = 0)
+        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Jobs, BotTranslations.Embed_Craft_Author), BotTranslations.Embed_PaginatedCraft_Title, craftsData, search, selectedPageIndex)
     {
         _quantity = quantity;
     }
 
-    public static PaginatedCraftMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static PaginatedCraftMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -31,7 +34,9 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
             var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(parameters[1]).ToList();
             if (craftsData.Count > 0)
             {
-                return new(craftsData, parameters[1], quantity, selectedPageIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, craftsData, parameters[1], quantity, selectedPageIndex);
             }
         }
 

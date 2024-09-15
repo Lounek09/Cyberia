@@ -4,9 +4,12 @@ using Cyberia.Api.Data.Alignments;
 using Cyberia.Api.Data.Monsters;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using System.Text;
 
@@ -17,6 +20,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "M";
     public const int PacketVersion = 1;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly MonsterData _monsterData;
     private readonly int _selectedGrade;
     private readonly MonsterGradeData? _monsterGradeData;
@@ -24,8 +28,9 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
     private readonly MonsterSuperRaceData? _monsterSuperRaceData;
     private readonly AlignmentData? _alignmentData;
 
-    public MonsterMessageBuilder(MonsterData monster, int selectedGrade = 1)
+    public MonsterMessageBuilder(EmbedBuilderService embedBuilderService, MonsterData monster, int selectedGrade = 1)
     {
+        _embedBuilderService = embedBuilderService;
         _monsterData = monster;
         _selectedGrade = selectedGrade;
         _monsterGradeData = _monsterData.GetMonsterGradeData(selectedGrade);
@@ -34,7 +39,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
         _alignmentData = _monsterData.GetAlignmentData();
     }
 
-    public static MonsterMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static MonsterMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -44,7 +49,9 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             var monsterData = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(monsterId);
             if (monsterData is not null)
             {
-                return new MonsterMessageBuilder(monsterData, selectedGrade);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new MonsterMessageBuilder(embedBuilderService, monsterData, selectedGrade);
             }
         }
 
@@ -78,7 +85,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Bestiary, BotTranslations.Embed_Monster_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Bestiary, BotTranslations.Embed_Monster_Author)
             .WithTitle($"{_monsterData.Name} ({_monsterData.Id}) - {BotTranslations.Rank} {_selectedGrade}")
             .WithThumbnail(await _monsterData.GetBigImagePathAsync(CdnImageSize.Size128));
 

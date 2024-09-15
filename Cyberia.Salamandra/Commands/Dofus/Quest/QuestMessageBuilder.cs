@@ -4,9 +4,12 @@ using Cyberia.Api.Data.Quests;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using System.Text;
 
@@ -17,14 +20,16 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "Q";
     public const int PacketVersion = 1;
 
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly QuestData _questData;
     private readonly List<QuestStepData> _questStepsData;
     private readonly int _selectedQuestStepIndex;
     private readonly QuestStepData? _questStepData;
     private readonly DialogQuestionData? _dialogQuestionData;
 
-    public QuestMessageBuilder(QuestData questData, int selectedQuestStepIndex = 0)
+    public QuestMessageBuilder(EmbedBuilderService embedBuilderService, QuestData questData, int selectedQuestStepIndex = 0)
     {
+        _embedBuilderService = embedBuilderService;
         _questData = questData;
         _questStepsData = questData.GetQuestStepsData().ToList();
         _selectedQuestStepIndex = selectedQuestStepIndex;
@@ -32,7 +37,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
         _dialogQuestionData = _questStepData?.GetDialogQuestionData();
     }
 
-    public static QuestMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static QuestMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -42,7 +47,9 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             var questData = DofusApi.Datacenter.QuestsRepository.GetQuestDataById(questId);
             if (questData is not null)
             {
-                return new QuestMessageBuilder(questData, selectedQuestStepIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new QuestMessageBuilder(embedBuilderService, questData, selectedQuestStepIndex);
             }
         }
 
@@ -76,7 +83,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Quests, BotTranslations.Embed_Quest_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, BotTranslations.Embed_Quest_Author)
             .WithTitle($"{_questData.Name} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.Dungeon : string.Empty)}");
 
         if (_questStepData is not null)

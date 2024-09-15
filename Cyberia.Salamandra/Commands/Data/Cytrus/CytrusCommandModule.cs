@@ -1,8 +1,8 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Extensions.DSharpPlus;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Extensions.DSharpPlus;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -25,11 +25,13 @@ public sealed class CytrusCommandModule
 {
     private readonly CytrusWatcher _cytrusWatcher;
     private readonly CytrusService _cytrusService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public CytrusCommandModule(CytrusWatcher cytrusWatcher, CytrusService cytrusService)
+    public CytrusCommandModule(CytrusWatcher cytrusWatcher, CytrusService cytrusService, EmbedBuilderService embedBuilderService)
     {
         _cytrusWatcher = cytrusWatcher;
         _cytrusService = cytrusService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command("check"), Description("[Owner] Launch a check to see if there is a new version of Cytrus")]
@@ -48,7 +50,7 @@ public sealed class CytrusCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task ShowExecuteAsync(SlashCommandContext ctx)
     {
-        var embed = EmbedManager.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus")
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus")
             .AddField("Name", _cytrusWatcher.Cytrus.Name.Capitalize(), true)
             .AddField("Version", _cytrusWatcher.Cytrus.Version.ToString(), true)
             .AddEmptyField(true);

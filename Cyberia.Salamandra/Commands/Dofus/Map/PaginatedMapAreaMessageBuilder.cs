@@ -2,9 +2,12 @@
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
@@ -13,13 +16,13 @@ public sealed class PaginatedMapAreaMessageBuilder : PaginatedMessageBuilder<Map
     public const string PacketHeader = "PMA.A";
     public const int PacketVersion = 2;
 
-    public PaginatedMapAreaMessageBuilder(List<MapAreaData> mapAreasData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Map, BotTranslations.Embed_Map_Author, BotTranslations.Embed_PaginatedMapArea_Title, mapAreasData, search, selectedPageIndex)
+    public PaginatedMapAreaMessageBuilder(EmbedBuilderService embedBuilderService, List<MapAreaData> mapAreasData, string search, int selectedPageIndex = 0)
+        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, BotTranslations.Embed_Map_Author), BotTranslations.Embed_PaginatedMapArea_Title, mapAreasData, search, selectedPageIndex)
     {
 
     }
 
-    public static PaginatedMapAreaMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static PaginatedMapAreaMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -28,7 +31,9 @@ public sealed class PaginatedMapAreaMessageBuilder : PaginatedMessageBuilder<Map
             var mapAreasData = DofusApi.Datacenter.MapsRepository.GetMapAreasDataByName(parameters[1]).ToList();
             if (mapAreasData.Count > 0)
             {
-                return new(mapAreasData, parameters[1], selectedPageIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new(embedBuilderService, mapAreasData, parameters[1], selectedPageIndex);
             }
         }
 

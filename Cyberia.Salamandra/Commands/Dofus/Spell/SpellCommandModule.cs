@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
@@ -16,10 +17,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 public sealed class SpellCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly EmbedBuilderService _embedBuilderService;
 
-    public SpellCommandModule(CultureService cultureService)
+    public SpellCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     [Command(SpellInteractionLocalizer.CommandName), Description(SpellInteractionLocalizer.CommandDescription)]
@@ -43,7 +46,7 @@ public sealed class SpellCommandModule
             var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(id);
             if (spellData is not null)
             {
-                response = await new SpellMessageBuilder(spellData, spellData.GetMaxLevelNumber()).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new SpellMessageBuilder(_embedBuilderService, spellData, spellData.GetMaxLevelNumber()).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
@@ -51,11 +54,11 @@ public sealed class SpellCommandModule
             var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(value).ToList();
             if (spellsData.Count == 1)
             {
-                response = await new SpellMessageBuilder(spellsData[0], spellsData[0].GetMaxLevelNumber()).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new SpellMessageBuilder(_embedBuilderService, spellsData[0], spellsData[0].GetMaxLevelNumber()).BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (spellsData.Count > 1)
             {
-                response = await new PaginatedSpellMessageBuilder(spellsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedSpellMessageBuilder(_embedBuilderService, spellsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 

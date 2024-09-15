@@ -2,9 +2,12 @@
 using Cyberia.Api.Data.Monsters;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Monster;
 
@@ -13,13 +16,13 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
     public const string PacketHeader = "PM";
     public const int PacketVersion = 2;
 
-    public PaginatedMonsterMessageBuilder(List<MonsterData> monstersData, string search, int selectedPageIndex = 0)
-        : base(EmbedCategory.Bestiary, BotTranslations.Embed_Monster_Author, BotTranslations.Embed_PaginatedMonster_Title, monstersData, search, selectedPageIndex)
+    public PaginatedMonsterMessageBuilder(EmbedBuilderService embedBuilderService, List<MonsterData> monstersData, string search, int selectedPageIndex = 0)
+        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Bestiary, BotTranslations.Embed_Monster_Author), BotTranslations.Embed_PaginatedMonster_Title, monstersData, search, selectedPageIndex)
     {
 
     }
 
-    public static PaginatedMonsterMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
+    public static PaginatedMonsterMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -28,7 +31,9 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
             var monstersData = DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(parameters[1]).ToList();
             if (monstersData.Count > 0)
             {
-                return new PaginatedMonsterMessageBuilder(monstersData, parameters[1], selectedPageIndex);
+                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+
+                return new PaginatedMonsterMessageBuilder(embedBuilderService, monstersData, parameters[1], selectedPageIndex);
             }
         }
 
