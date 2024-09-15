@@ -72,7 +72,7 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
             return;
         }
 
-        await _cultureService.SetCultureAsync(args.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(args.Interaction));
 
         var response = new DiscordInteractionResponseBuilder().AsEphemeral();
 

@@ -37,7 +37,7 @@ public sealed class SpellCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         DiscordInteractionResponseBuilder? response = null;
 

@@ -18,7 +18,7 @@ public static class ServiceProviderExtensions
     {
         var scope = provider.CreateScope();
 
-        await scope.ServiceProvider.GetRequiredService<UserRepository>().CreateTableAsync();
+        await scope.ServiceProvider.GetRequiredService<DiscordCachedUserRepository>().CreateTableAsync();
 
         return provider;
     }

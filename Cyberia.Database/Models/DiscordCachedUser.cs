@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Database.Models;
 
-public sealed class User : IDatabaseEntity
+public sealed class DiscordCachedUser : IDatabaseEntity
 {
     /// <summary>
     /// Gets the id of the user.
@@ -13,9 +13,9 @@ public sealed class User : IDatabaseEntity
     public string? Locale { get; set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="User"/> class.
+    /// Initializes a new instance of the <see cref="DiscordCachedUser"/> class.
     /// </summary>
-    public User()
+    public DiscordCachedUser()
     {
         
     }

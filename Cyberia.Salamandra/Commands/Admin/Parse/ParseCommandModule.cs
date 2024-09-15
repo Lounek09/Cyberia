@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api.Factories;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Services;
 
@@ -33,7 +32,7 @@ public sealed class ParseCommandModule
         [Parameter("value"), Description("Effects of an item")]
         string value)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         var effects = EffectFactory.CreateMany(value);
 
@@ -56,7 +55,7 @@ public sealed class ParseCommandModule
         [Parameter("value"), Description("Criteria")]
         string value)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         var criteria = CriterionFactory.CreateMany(value);
 

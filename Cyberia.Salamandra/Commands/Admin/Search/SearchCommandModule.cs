@@ -38,7 +38,7 @@ public sealed class SearchCommandModule
         [MinMaxValue(-1, 9999)]
         int effectId)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         StringBuilder descriptionBuilder = new();
 
@@ -85,7 +85,7 @@ public sealed class SearchCommandModule
         [MinMaxLength(2, 2)]
         string criterionId)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         StringBuilder descriptionBuilder = new();
 

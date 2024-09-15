@@ -1,5 +1,4 @@
 ﻿using Cyberia.Api;
-using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
@@ -41,7 +40,7 @@ public sealed class CraftCommandModule
         [MinMaxValue(1, CraftMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         DiscordInteractionResponseBuilder? response = null;
 

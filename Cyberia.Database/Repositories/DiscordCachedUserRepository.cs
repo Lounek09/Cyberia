@@ -9,15 +9,15 @@ namespace Cyberia.Database.Repositories;
 /// <summary>
 /// Represents a repository for Discord users.
 /// </summary>
-public sealed class UserRepository : IDatabaseRepository
+public sealed class DiscordCachedUserRepository : IDatabaseRepository
 {
     private readonly IDbConnection _connection;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="UserRepository"/> class.
+    /// Initializes a new instance of the <see cref="DiscordCachedUserRepository"/> class.
     /// </summary>
     /// <param name="connectionString">The connection string to the database.</param>
-    public UserRepository(IDbConnection connection)
+    public DiscordCachedUserRepository(IDbConnection connection)
     {
         _connection = connection;
     }
@@ -29,7 +29,7 @@ public sealed class UserRepository : IDatabaseRepository
     public async Task<bool> CreateTableAsync()
     {
         var query = @"
-            CREATE TABLE IF NOT EXISTS User (
+            CREATE TABLE IF NOT EXISTS DiscordCachedUser (
                 Id INTEGER PRIMARY KEY,
                 Locale TEXT
             );";
@@ -42,13 +42,13 @@ public sealed class UserRepository : IDatabaseRepository
     /// </summary>
     /// <param name="id">The id of the user.</param>
     /// <returns>The user if found; otherwise, <see langword="null"/>.</returns>
-    public async Task<User?> GetAsync(ulong id)
+    public async Task<DiscordCachedUser?> GetAsync(ulong id)
     {
         var query = @"
-            SELECT * FROM User
+            SELECT * FROM DiscordCachedUser
             WHERE Id = @Id";
 
-        return await _connection.QueryFirstOrDefaultAsync<User>(query, new { Id = id });
+        return await _connection.QueryFirstOrDefaultAsync<DiscordCachedUser>(query, new { Id = id });
     }
 
     /// <summary>
@@ -56,10 +56,10 @@ public sealed class UserRepository : IDatabaseRepository
     /// </summary>
     /// <param name="user">The user to create or update.</param>
     /// <returns><see langword="true"/> if the user was created or updated; otherwise, <see langword="false"/>.</returns>
-    public async Task<bool> CreateOrUpdateAsync(User user)
+    public async Task<bool> CreateOrUpdateAsync(DiscordCachedUser user)
     {
         var query = @"
-            INSERT INTO User (Id, Locale)
+            INSERT INTO DiscordCachedUser (Id, Locale)
             VALUES (@Id, @Locale)
             ON CONFLICT(Id) DO UPDATE SET Locale = @Locale";
 
@@ -74,7 +74,7 @@ public sealed class UserRepository : IDatabaseRepository
     public async Task<bool> DeleteAsync(ulong id)
     {
         var query = @"
-            DELETE FROM User
+            DELETE FROM DiscordCachedUser
             WHERE Id = @Id";
 
         return await _connection.ExecuteAsync(query, new { Id = id }) > 0;

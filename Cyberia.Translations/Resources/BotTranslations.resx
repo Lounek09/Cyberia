@@ -607,4 +607,7 @@ To escape at 100%, you will need at minimum #4 agi.</value>
   <data name="Embed.PaginatedSpell.Title" xml:space="preserve">
     <value>Multiple spells found :</value>
   </data>
+  <data name="Language.Set" xml:space="preserve">
+    <value>Your language has been modified to #1.</value>
+  </data>
 </root>

@@ -48,7 +48,7 @@ public sealed class RuneCommandModule
         [MinMaxValue(1, RuneItemMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -95,7 +95,7 @@ public sealed class RuneCommandModule
         [MinMaxLength(1, 70)]
         string runeName)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         var runeData = DofusApi.Datacenter.RunesRepository.GetRuneDataByName(runeName);
         if (runeData is null)

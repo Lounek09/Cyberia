@@ -1225,6 +1225,15 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your language has been modified to #1..
+        /// </summary>
+        public static string Language_Set {
+            get {
+                return ResourceManager.GetString("Language.Set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Map not found..
         /// </summary>
         public static string Map_NotFound {

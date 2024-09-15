@@ -607,4 +607,7 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
   <data name="Embed.PaginatedSpell.Title" xml:space="preserve">
     <value>Plusieurs sorts trouvés :</value>
   </data>
+  <data name="Language.Set" xml:space="preserve">
+    <value>Votre langue à été modifié en #1.</value>
+  </data>
 </root>

@@ -17,7 +17,7 @@ public sealed class QuestAutocompleteProvider : IAutoCompleteProvider
 
     public async ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
         return DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)
             .ToDictionary(x => $"{StringExtensions.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());

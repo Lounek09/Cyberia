@@ -31,7 +31,7 @@ public sealed class HelpCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
         var locale = ctx.Interaction.Locale ?? ctx.Interaction.GuildLocale ?? string.Empty;
 
         StringBuilder descriptionBuilder = new();

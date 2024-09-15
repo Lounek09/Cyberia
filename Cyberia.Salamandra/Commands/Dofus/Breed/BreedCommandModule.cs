@@ -35,7 +35,7 @@ public sealed class BreedCommandModule
         [SlashAutoCompleteProvider<BreedAutocompleteProvider>]
         int breedId)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
 

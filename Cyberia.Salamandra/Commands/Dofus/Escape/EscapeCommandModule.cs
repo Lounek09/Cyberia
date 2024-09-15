@@ -41,7 +41,7 @@ public sealed class EscapeCommandModule
         [MinMaxValue(1, 99999)]
         int enemyAgility)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         var escapePercent = Formulas.GetEscapePercent(agility, enemyAgility);
         var agilityToEscapeForSure = Formulas.GetAgilityToEscapeForSure(enemyAgility);

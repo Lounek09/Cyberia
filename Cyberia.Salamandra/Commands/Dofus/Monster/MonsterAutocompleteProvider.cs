@@ -17,7 +17,7 @@ public sealed class MonsterAutocompleteProvider : IAutoCompleteProvider
 
     public async ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        await _cultureService.SetCultureAsync(ctx.Interaction);
+        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
         return DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(ctx.UserInput)
             .Take(Constant.MaxChoice)

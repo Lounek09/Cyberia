@@ -12,30 +12,28 @@ namespace Cyberia.Salamandra.Services;
 /// </summary>
 public sealed class CultureService
 {
-    private readonly UserRepository _userRepository;
+    private readonly DiscordCachedUserRepository _discordCachedUserRepository;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CultureService"/> class.
     /// </summary>
-    /// <param name="userRepository">The user repository to get the user from.</param>
-    public CultureService(UserRepository userRepository)
+    /// <param name="discordCachedUserRepository">The user repository to get the user from.</param>
+    public CultureService(DiscordCachedUserRepository discordCachedUserRepository)
     {
-        _userRepository = userRepository;
+        _discordCachedUserRepository = discordCachedUserRepository;
     }
 
     /// <summary>
-    /// Set the culture of the current thread to the culture of the user.
+    /// Gets the culture of the user.
     /// </summary>
     /// <param name="interaction">The interaction to get the culture from.</param>
-    public async Task SetCultureAsync(DiscordInteraction interaction)
+    /// <returns>The culture of the user.</returns>
+    public async Task<CultureInfo> GetCultureAsync(DiscordInteraction interaction)
     {
-        var user = await _userRepository.GetAsync(interaction.User.Id);
+        var user = await _discordCachedUserRepository.GetAsync(interaction.User.Id);
 
-        var culture = string.IsNullOrEmpty(user?.Locale)
+        return string.IsNullOrEmpty(user?.Locale)
             ? interaction.GetCulture()
             : new CultureInfo(user.Locale);
-
-        CultureInfo.CurrentCulture = culture;
-        CultureInfo.CurrentUICulture = culture;
     }
 }
