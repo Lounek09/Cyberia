@@ -1,7 +1,7 @@
-﻿namespace Cyberia.Tests.Utils;
+﻿namespace Cyberia.Tests.Utils.Extensions;
 
 [TestClass]
-public class ExtendStringTests
+public class StringExtensionsTests
 {
     #region Capitalize
 

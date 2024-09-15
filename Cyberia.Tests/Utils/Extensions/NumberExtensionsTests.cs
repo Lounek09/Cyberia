@@ -1,11 +1,10 @@
 ﻿using Cyberia.Tests.Attributes;
 using Cyberia.Tests.Common;
-using Cyberia.Utils.Extensions;
 
-namespace Cyberia.Tests.Utils;
+namespace Cyberia.Tests.Utils.Extensions;
 
 [TestClass]
-public sealed class ExtendNumberTests : CultureAwareTest
+public sealed class NumberExtensionsTests : CultureAwareTest
 {
     #region ToFormattedString
 

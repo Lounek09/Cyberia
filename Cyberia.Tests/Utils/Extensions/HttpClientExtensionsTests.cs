@@ -1,10 +1,9 @@
 ﻿using System.Net;
-using Cyberia.Utils.Extensions;
 
-namespace Cyberia.Tests.Utils;
+namespace Cyberia.Tests.Utils.Extensions;
 
 [TestClass]
-public sealed class ExtendHttpClientTests
+public sealed class HttpClientExtensionsTests
 {
     #region ExistsAsync
 
@@ -29,12 +28,12 @@ public sealed class ExtendHttpClientTests
     [TestMethod]
     public async Task ExistsAsync_WhenUrlDoesNotExist_ReturnsFalse()
     {
-         var mock = SharedData.SetupMockHttpMessageHandlerForSuccessfullResponse(
-             new HttpResponseMessage()
-             {
-                 StatusCode = HttpStatusCode.NotFound,
-             }
-         );
+        var mock = SharedData.SetupMockHttpMessageHandlerForSuccessfullResponse(
+            new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+            }
+        );
 
         var httpClient = new HttpClient(mock.Object);
 
