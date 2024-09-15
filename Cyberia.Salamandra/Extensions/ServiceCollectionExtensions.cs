@@ -11,8 +11,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Salamandra.Extensions;
 
+/// <summary>
+/// Provides extension methods for the <see cref="IServiceCollection"/> interface.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
+    /// <summary>
+    /// Adds the Salamandra dependencies to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="config">The bot configuration.</param>
+    /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddSalamandra(this IServiceCollection services, BotConfig config)
     {
         Directory.CreateDirectory(Constant.OutputPath);

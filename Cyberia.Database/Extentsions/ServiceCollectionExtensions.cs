@@ -28,7 +28,7 @@ public static class ServiceCollectionExtensions
             return connection;
         });
 
-        services.AddScoped<UserRepository>();
+        services.AddScoped<IDatabaseRepository, UserRepository>();
 
         return services;
     }
