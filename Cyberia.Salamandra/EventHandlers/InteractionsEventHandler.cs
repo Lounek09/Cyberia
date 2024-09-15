@@ -1,5 +1,5 @@
 ﻿using Cyberia.Salamandra.Commands;
-using Cyberia.Salamandra.Commands.Data.Cytrus;
+using Cyberia.Salamandra.Commands.Data.Langs;
 using Cyberia.Salamandra.Commands.Dofus.Breed;
 using Cyberia.Salamandra.Commands.Dofus.Craft;
 using Cyberia.Salamandra.Commands.Dofus.House;
@@ -11,25 +11,20 @@ using Cyberia.Salamandra.Commands.Dofus.Monster;
 using Cyberia.Salamandra.Commands.Dofus.Quest;
 using Cyberia.Salamandra.Commands.Dofus.Rune;
 using Cyberia.Salamandra.Commands.Dofus.Spell;
-using Cyberia.Salamandra.Services;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
-using Microsoft.Extensions.DependencyInjection;
-
 using System.Collections.Frozen;
-using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Cyberia.Salamandra.Managers;
+namespace Cyberia.Salamandra.EventHandlers;
 
-public static partial class InteractionManager
+public sealed partial class InteractionsEventHandler : IEventHandler<ComponentInteractionCreatedEventArgs>
 {
-    public const char PacketParameterSeparator = '|';
-
-    private static readonly FrozenDictionary<string, Func<int, string[], ICustomMessageBuilder?>> s_factory = new Dictionary<string, Func<int, string[], ICustomMessageBuilder?>>()
+    private static readonly FrozenDictionary<string, Func<IServiceProvider, int, string[], ICustomMessageBuilder?>> s_factory = new Dictionary<string, Func<IServiceProvider, int, string[], ICustomMessageBuilder?>>()
     {
         { BreedMessageBuilder.PacketHeader, BreedMessageBuilder.Create },
         { CraftMessageBuilder.PacketHeader, CraftMessageBuilder.Create },
@@ -60,42 +55,28 @@ public static partial class InteractionManager
     [GeneratedRegex(@"SELECT\d+", RegexOptions.Compiled)]
     private static partial Regex SelectComponentPacketRegex();
 
-    public static string ComponentPacketBuilder(string header, int version, params object[] parameters)
+    private readonly IServiceProvider _serviceProvider;
+    private readonly CultureService _cultureService;
+
+    public InteractionsEventHandler(IServiceProvider serviceProvider, CultureService cultureService)
     {
-        StringBuilder packetBuilder = new();
-
-        packetBuilder.Append(header);
-        packetBuilder.Append(PacketParameterSeparator);
-        packetBuilder.Append(version);
-
-        if (parameters.Length > 0)
-        {
-            packetBuilder.Append(PacketParameterSeparator);
-            packetBuilder.Append(string.Join(PacketParameterSeparator, parameters));
-        }
-
-        return packetBuilder.ToString();
+        _serviceProvider = serviceProvider;
+        _cultureService = cultureService;
     }
 
-    public static string SelectComponentPacketBuilder(int uniqueIndex)
-    {
-        return $"SELECT{uniqueIndex}";
-    }
-
-    public static async Task OnComponentInteractionCreated(DiscordClient sender, ComponentInteractionCreatedEventArgs args)
+    public async Task HandleEventAsync(DiscordClient sender, ComponentInteractionCreatedEventArgs args)
     {
         if (args.User.IsBot || string.IsNullOrEmpty(args.Id))
         {
             return;
         }
 
-        var cultureService = sender.ServiceProvider.GetRequiredService<CultureService>();
-        await cultureService.SetCultureAsync(args.Interaction);
+        await _cultureService.SetCultureAsync(args.Interaction);
 
         var response = new DiscordInteractionResponseBuilder().AsEphemeral();
 
         var decomposedPacket = (SelectComponentPacketRegex().IsMatch(args.Id) ? args.Values[0] : args.Id)
-            .Split(PacketParameterSeparator, StringSplitOptions.RemoveEmptyEntries);
+            .Split(PacketManager.ParameterSeparator, StringSplitOptions.RemoveEmptyEntries);
 
         if (decomposedPacket.Length < 2)
         {
@@ -116,7 +97,7 @@ public static partial class InteractionManager
         var version = int.Parse(decomposedPacket[1]);
         var parameters = decomposedPacket.Length > 2 ? decomposedPacket[2..] : [];
 
-        var message = builder(version, parameters);
+        var message = builder(_serviceProvider, version, parameters);
         if (message is null)
         {
             response.WithContent(BotTranslations.Command_Error_Component);

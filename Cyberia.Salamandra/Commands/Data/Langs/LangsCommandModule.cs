@@ -1,8 +1,8 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Managers;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.EventHandlers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -15,17 +15,26 @@ using DSharpPlus.Entities;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace Cyberia.Salamandra.Commands.Data.Cytrus;
+namespace Cyberia.Salamandra.Commands.Data.Langs;
 
 [Command("langs")]
 [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class LangsCommandModule
 {
+    private readonly LangsWatcher _langsWatcher;
+    private readonly LangsService _langsService;
+
+    public LangsCommandModule(LangsWatcher langsWatcher, LangsService langsService)
+    {
+        _langsWatcher = langsWatcher;
+        _langsService = langsService;
+    }
+
     [Command("check"), Description("[Owner] Launch a check to see if there is a new version of the langs")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
-    public static async Task CheckExecuteAsync(SlashCommandContext ctx,
+    public async Task CheckExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type to check")]
         LangType type,
         [Parameter("language"), Description("The language to check; if empty, check all languages simultaneously")]
@@ -43,8 +52,8 @@ public sealed class LangsCommandModule
                 Enum.GetValues<LangLanguage>()
                     .Select(x =>
                     {
-                        var repository = LangsWatcher.LangRepositories[(type, x)];
-                        return LangsWatcher.CheckAsync(repository, force);
+                        var repository = _langsWatcher.GetRepository(type, x);
+                        return _langsWatcher.CheckAsync(repository, force);
                     }));
 
             await ctx.EditResponseAsync($"Check of {Formatter.Bold(typeStr)} langs in all language completed.");
@@ -55,8 +64,8 @@ public sealed class LangsCommandModule
 
         await ctx.RespondAsync($"Starting the check of {Formatter.Bold(typeStr)} langs in {Formatter.Bold(languageStr)}...");
 
-        var repository = LangsWatcher.LangRepositories[(type, language.Value)];
-        await LangsWatcher.CheckAsync(repository, force);
+        var repository = _langsWatcher.GetRepository(type, language.Value);
+        await _langsWatcher.CheckAsync(repository, force);
 
         await ctx.EditResponseAsync($"Check of {Formatter.Bold(typeStr)} langs in {Formatter.Bold(languageStr)} completed.");
     }
@@ -64,7 +73,7 @@ public sealed class LangsCommandModule
     [Command("diff"), Description("[Owner] List the differences between to type of langs")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
-    public static async Task DiffExecuteAsync(SlashCommandContext ctx,
+    public async Task DiffExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type to diff")]
         LangType type,
         [Parameter("model_type"), Description("The type of the model langs")]
@@ -82,12 +91,11 @@ public sealed class LangsCommandModule
 
         if (language is null)
         {
-            await Task.WhenAll(Enum.GetValues<LangLanguage>()
-                                   .Select(x => LangManager.LaunchManualDiff(type, modelType, x)));
+            await Task.WhenAll(Enum.GetValues<LangLanguage>().Select(x => _langsService.LaunchManualDiff(type, modelType, x)));
         }
         else
         {
-            await LangManager.LaunchManualDiff(type, modelType, language.Value);
+            await _langsService.LaunchManualDiff(type, modelType, language.Value);
         }
 
         await ctx.EditResponseAsync("Diff completed");
@@ -121,18 +129,20 @@ public sealed class LangsCommandModule
 
     [Command("show"), Description("Display the information of the currently online langs")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ShowExecuteAsync(SlashCommandContext ctx,
+    public async Task ShowExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type to display")]
         LangType type = LangType.Official,
         [Parameter("language"), Description("The language to display")]
         LangLanguage language = LangLanguage.fr)
     {
-        await ctx.RespondAsync(await new LangsMessageBuilder(type, language).BuildAsync<DiscordInteractionResponseBuilder>());
+        var repository = _langsWatcher.GetRepository(type, language);
+
+        await ctx.RespondAsync(await new LangsMessageBuilder(repository).BuildAsync<DiscordInteractionResponseBuilder>());
     }
 
     [Command("get"), Description("Returns the requested decompiled lang")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task GetExecuteAsync(SlashCommandContext ctx,
+    public async Task GetExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The requested type")]
         LangType type,
         [Parameter("language"), Description("The requested language")]
@@ -141,7 +151,7 @@ public sealed class LangsCommandModule
         [SlashAutoCompleteProvider<LangNameAutocompleteProvider>]
         string name)
     {
-        var langRepository = LangsWatcher.LangRepositories[(type, language)];
+        var langRepository = _langsWatcher.GetRepository(type, language);
 
         var lang = langRepository.GetByName(name);
         if (lang is null)

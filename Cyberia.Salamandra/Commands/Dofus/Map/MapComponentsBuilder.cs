@@ -16,7 +16,7 @@ public static class MapComponentsBuilder
     public static DiscordButtonComponent PaginatedMapCoordinateButtonBuilder(MapData mapData, bool disable = false)
     {
         return new(DiscordButtonStyle.Success,
-            PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.X}{InteractionManager.PacketParameterSeparator}{mapData.Y}"),
+            PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.X}{PacketManager.ParameterSeparator}{mapData.Y}"),
             mapData.GetCoordinate(),
             disable);
     }
@@ -47,7 +47,7 @@ public static class MapComponentsBuilder
                     x.GetMapAreaName().WithMaxLength(50));
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_Map_Placeholder, options, disable);
+        return new(PacketManager.SelectComponentBuilder(uniqueIndex), BotTranslations.Select_Map_Placeholder, options, disable);
     }
 
     public static DiscordSelectComponent MapSubAreasSelectBuilder(int uniqueIndex, IEnumerable<MapSubAreaData> mapSubAreasData, bool disable = false)
@@ -62,7 +62,7 @@ public static class MapComponentsBuilder
                     DofusApi.Datacenter.MapsRepository.GetMapAreaNameById(x.MapAreaId));
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_MapSubArea_Placeholder, options, disable);
+        return new(PacketManager.SelectComponentBuilder(uniqueIndex), BotTranslations.Select_MapSubArea_Placeholder, options, disable);
     }
 
     public static DiscordSelectComponent MapAreasSelectBuilder(int uniqueIndex, IEnumerable<MapAreaData> mapAreasData, bool disable = false)
@@ -77,6 +77,6 @@ public static class MapComponentsBuilder
                     DofusApi.Datacenter.MapsRepository.GetMapSuperAreaNameById(x.MapSuperAreaId));
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_MapArea_Placeholder, options, disable);
+        return new(PacketManager.SelectComponentBuilder(uniqueIndex), BotTranslations.Select_MapArea_Placeholder, options, disable);
     }
 }

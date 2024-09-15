@@ -27,7 +27,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
         _houseData = _mapData.GetHouseData();
     }
 
-    public static MapMessageBuilder? Create(int version, string[] parameters)
+    public static MapMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&
@@ -45,7 +45,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int mapId)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, mapId);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, mapId);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

@@ -3,7 +3,7 @@ using Cyberia.Api.Data.Houses;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
-using Cyberia.Utils.Extensions;
+
 using DSharpPlus;
 using DSharpPlus.Entities;
 
@@ -27,7 +27,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
         _selectedMapIndex = selectedMapIndex;
     }
 
-    public static HouseMessageBuilder? Create(int version, string[] parameters)
+    public static HouseMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -46,7 +46,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int houseId, int selectedMapIndex = -1)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, houseId, selectedMapIndex);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, houseId, selectedMapIndex);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -95,6 +95,6 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
             }
         }
 
-        return new DiscordSelectComponent(InteractionManager.SelectComponentPacketBuilder(0), BotTranslations.Select_HouseMap_Placeholder, OptionsGenerator());
+        return new DiscordSelectComponent(PacketManager.SelectComponentBuilder(0), BotTranslations.Select_HouseMap_Placeholder, OptionsGenerator());
     }
 }

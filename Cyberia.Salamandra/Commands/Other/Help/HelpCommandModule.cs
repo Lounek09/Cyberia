@@ -1,6 +1,6 @@
 ﻿using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
-using Cyberia.Salamandra.Services;
+using Cyberia.Salamandra.EventHandlers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;

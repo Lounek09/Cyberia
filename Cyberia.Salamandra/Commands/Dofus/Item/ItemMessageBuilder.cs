@@ -14,7 +14,7 @@ using Cyberia.Salamandra.Commands.Dofus.Rune;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
-using Cyberia.Utils.Extensions;
+
 using DSharpPlus;
 using DSharpPlus.Entities;
 
@@ -48,7 +48,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         _quantity = quantity;
     }
 
-    public static ItemMessageBuilder? Create(int version, string[] parameters)
+    public static ItemMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -67,7 +67,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int itemId, int quantity = 1)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, itemId, quantity);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, itemId, quantity);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

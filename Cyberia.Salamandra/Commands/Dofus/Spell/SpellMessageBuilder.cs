@@ -35,7 +35,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
         _incarnationData = spell.GetIncarnationData();
     }
 
-    public static SpellMessageBuilder? Create(int version, string[] parameters)
+    public static SpellMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -54,7 +54,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int spellId, int selectedLevel)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, spellId, selectedLevel);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, spellId, selectedLevel);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

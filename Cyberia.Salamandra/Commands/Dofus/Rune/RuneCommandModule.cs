@@ -3,7 +3,7 @@ using Cyberia.Api.Managers;
 using Cyberia.Api.Values;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
-using Cyberia.Salamandra.Services;
+using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Utils.Extensions;
 using DSharpPlus;
 using DSharpPlus.Commands;

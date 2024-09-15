@@ -1,4 +1,4 @@
-﻿using Cyberia.Langzilla.Enums;
+﻿using Cyberia.Langzilla.Models;
 
 namespace Cyberia.Langzilla.EventArgs;
 
@@ -10,13 +10,13 @@ public sealed class CheckLangStartedEventArgs : System.EventArgs
     /// <summary>
     /// The checked lang repository.
     /// </summary>
-    public LangRepository Repository { get; init; }
+    public LangsRepository Repository { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CheckLangStartedEventArgs"/> class.
     /// </summary>
     /// <param name="repository">The checked lang repository.</param>
-    internal CheckLangStartedEventArgs(LangRepository repository)
+    internal CheckLangStartedEventArgs(LangsRepository repository)
     {
         Repository = repository;
     }

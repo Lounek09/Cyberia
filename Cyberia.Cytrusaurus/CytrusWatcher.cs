@@ -6,7 +6,7 @@ namespace Cyberia.Cytrusaurus;
 /// <summary>
 /// Provides methods for watching updates of Cytrus.
 /// </summary>
-public class CytrusWatcher
+public sealed class CytrusWatcher
 {
     public const string OutputPath = "cytrus";
     public const string CytrusFileName = "cytrus.json";

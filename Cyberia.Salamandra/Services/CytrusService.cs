@@ -11,7 +11,7 @@ using DSharpPlus.Entities;
 using System.Text;
 using System.Text.Json;
 
-namespace Cyberia.Salamandra.Services;
+namespace Cyberia.Salamandra.EventHandlers;
 
 public sealed class CytrusService
 {

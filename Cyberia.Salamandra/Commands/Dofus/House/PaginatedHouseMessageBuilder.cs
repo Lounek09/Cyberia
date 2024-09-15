@@ -21,7 +21,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
         _searchCategory = searchCategory;
     }
 
-    public static PaginatedHouseMessageBuilder? Create(int version, string[] parameters)
+    public static PaginatedHouseMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -42,7 +42,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
                         int.TryParse(parameters[3], out var y))
                     {
                         housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(x, y).ToList();
-                        search = $"{parameters[2]}{InteractionManager.PacketParameterSeparator}{parameters[3]}";
+                        search = $"{parameters[2]}{PacketManager.ParameterSeparator}{parameters[3]}";
                     }
                     break;
                 case HouseSearchCategory.MapSubArea:
@@ -72,7 +72,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
 
     public static string GetPacket(HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, selectedPageIndex, (int)searchCategory, search);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, selectedPageIndex, (int)searchCategory, search);
     }
 
     protected override IEnumerable<string> GetContent()

@@ -27,6 +27,6 @@ public static class IncarnationComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_Incarnation_Placeholder, options, disable);
+        return new(PacketManager.SelectComponentBuilder(index), BotTranslations.Select_Incarnation_Placeholder, options, disable);
     }
 }

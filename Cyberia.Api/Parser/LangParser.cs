@@ -1,4 +1,4 @@
-﻿using Cyberia.Langzilla;
+﻿using Cyberia.Langzilla.Models;
 
 using System.Text;
 

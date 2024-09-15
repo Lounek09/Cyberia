@@ -26,6 +26,6 @@ public static class CraftComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_Craft_Placeholder, options, disable);
+        return new(PacketManager.SelectComponentBuilder(uniqueIndex), BotTranslations.Select_Craft_Placeholder, options, disable);
     }
 }

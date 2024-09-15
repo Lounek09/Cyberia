@@ -1,9 +1,9 @@
 ﻿using Cyberia.Langzilla.Enums;
-using Cyberia.Utils.Extensions;
+
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Langzilla;
+namespace Cyberia.Langzilla.Models;
 
 /// <summary>
 /// Represents a lang data.
@@ -120,8 +120,7 @@ public sealed class Lang
     /// <returns>A string that represents the differences.</returns>
     public string Diff(Lang? model)
     {
-        var currentDecompiledFilePath = CurrentDecompiledFilePath;
-        if (!File.Exists(currentDecompiledFilePath))
+        if (!File.Exists(CurrentDecompiledFilePath))
         {
             return string.Empty;
         }
@@ -129,11 +128,11 @@ public sealed class Lang
         var modelDecompiledFilePath = Equals(model) ? OldDecompiledFilePath : model?.CurrentDecompiledFilePath;
         if (!File.Exists(modelDecompiledFilePath))
         {
-            var currentLines = File.ReadLines(currentDecompiledFilePath);
+            var currentLines = File.ReadLines(CurrentDecompiledFilePath);
             return string.Join('\n', currentLines.Select(x => $"+ {x}"));
         }
 
-        var currentLinesByIndex = File.ReadLines(currentDecompiledFilePath)
+        var currentLinesByIndex = File.ReadLines(CurrentDecompiledFilePath)
             .Select((line, index) => (Line: line, Index: index)) //TODO: .NET9 Use new Index() instead
             .ToDictionary(x => x.Index, x => x.Line);
 
@@ -157,70 +156,6 @@ public sealed class Lang
         }
 
         return string.Join('\n', diff.OrderBy(x => x.Key).Select(x => x.Value));
-    }
-
-    /// <summary>
-    /// Asynchronously downloads the lang file.
-    /// </summary>
-    /// <returns><see langword="true"/> if the download was successful; otherwise, <see langword="false"/>.</returns>
-    internal async Task<bool> DownloadAsync()
-    {
-        Array.ForEach(Directory.GetFiles(OutputPath, "*.swf"), File.Delete);
-
-        var fileRoute = FileRoute;
-
-        try
-        {
-            using var response = await LangsWatcher.HttpRetryPolicy.ExecuteAsync(() => LangsWatcher.HttpClient.GetAsync(fileRoute));
-            response.EnsureSuccessStatusCode();
-
-            using var fileStream = new FileStream(FilePath, FileMode.Create);
-            await response.Content.CopyToAsync(fileStream);
-
-            return true;
-        }
-        catch (HttpRequestException e)
-        {
-            Log.Error(e, "An error occurred while sending Get request to {Url}", Path.Join(LangsWatcher.OutputPath, fileRoute));
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Extracts the lang file.
-    /// </summary>
-    /// <returns><see langword="true"/> if the extraction was successful; otherwise, <see langword="false"/>.</returns>
-    internal bool Extract()
-    {
-        var filePath = FilePath;
-        if (!File.Exists(filePath))
-        {
-            return false;
-        }
-
-        if (!Flare.TryExtract(filePath, out var flareOutputFilePath))
-        {
-            Log.Error("An error occured while decompiling {FilePath}", filePath);
-            return false;
-        }
-
-        var lines = File.ReadLines(flareOutputFilePath, Encoding.UTF8).Skip(7).SkipLast(3);
-        var content = lines
-            .Select(x => x.Trim())
-            .Where(x => x.Length > 0 && !x.Equals("}") && !x.Equals("frame 1 {"));
-
-        var currentDecompiledFilePath = CurrentDecompiledFilePath;
-        var oldDecompiledFilePath = OldDecompiledFilePath;
-
-        if (File.Exists(currentDecompiledFilePath))
-        {
-            File.Move(currentDecompiledFilePath, oldDecompiledFilePath, true);
-        }
-        File.WriteAllLines(currentDecompiledFilePath, content, Encoding.UTF8);
-        File.Delete(flareOutputFilePath);
-
-        return true;
     }
 
     /// <summary>

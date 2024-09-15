@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api;
-using Cyberia.Salamandra.Services;
+using Cyberia.Salamandra.EventHandlers;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;

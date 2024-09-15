@@ -24,6 +24,6 @@ public static class QuestComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_Quest_Placeholder, options, disable);
+        return new(PacketManager.SelectComponentBuilder(index), BotTranslations.Select_Quest_Placeholder, options, disable);
     }
 }

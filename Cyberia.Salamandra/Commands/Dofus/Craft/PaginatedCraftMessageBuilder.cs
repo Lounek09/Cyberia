@@ -21,7 +21,7 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
         _quantity = quantity;
     }
 
-    public static PaginatedCraftMessageBuilder? Create(int version, string[] parameters)
+    public static PaginatedCraftMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -40,7 +40,7 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
 
     public static string GetPacket(string search, int quantity, int selectedPageIndex = 0)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, selectedPageIndex, search, quantity);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, selectedPageIndex, search, quantity);
     }
 
     protected override IEnumerable<string> GetContent()

@@ -1,5 +1,5 @@
-﻿using Cyberia.Salamandra.Managers;
-using Cyberia.Salamandra.Services;
+﻿using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -34,7 +34,7 @@ public static class ServiceCollectionExtensions
                 eventHandler.HandleGuildDownloadCompleted(ClientManager.OnGuildDownloadCompleted);
                 eventHandler.HandleGuildCreated(GuildManager.OnGuildCreated);
                 eventHandler.HandleGuildDeleted(GuildManager.OnGuildDeleted);
-                eventHandler.HandleComponentInteractionCreated(InteractionManager.OnComponentInteractionCreated);
+                eventHandler.AddEventHandlers<InteractionsEventHandler>();
             })
             .Configure<DiscordConfiguration>(config =>
             {
@@ -58,6 +58,7 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<CultureService>();
         services.AddSingleton<CytrusService>();
+        services.AddSingleton<LangsService>();
 
         return services;
     }

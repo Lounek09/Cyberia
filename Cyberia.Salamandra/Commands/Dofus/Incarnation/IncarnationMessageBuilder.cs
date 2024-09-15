@@ -37,7 +37,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     public ItemTypeData? ItemTypeData => _itemTypeData;
 
-    public static IncarnationMessageBuilder? Create(int version, string[] parameters)
+    public static IncarnationMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&
@@ -55,7 +55,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int incarnationId)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, incarnationId);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, incarnationId);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

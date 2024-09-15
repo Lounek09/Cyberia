@@ -1,7 +1,5 @@
-﻿using Cyberia.Langzilla;
-using Cyberia.Langzilla.Enums;
-
-using System.Net;
+﻿using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Models;
 
 namespace Cyberia.Tests.Langzilla.Models;
 
@@ -14,85 +12,7 @@ public sealed class LangTests
     public void Setup()
     {
         _lang = new("ranks", 1178, LangType.Official, LangLanguage.fr);
-
-        LangsWatcher.Initialize();
-        LangsWatcher.HttpRetryPolicy = SharedData.HttpRetryPolicy;
     }
-
-    [TestCleanup]
-    public void Cleanup()
-    {
-        if (Directory.Exists(LangsWatcher.OutputPath))
-        {
-            Directory.Delete(LangsWatcher.OutputPath, true);
-        }
-    }
-
-    #region DownloadAync
-
-    [TestMethod]
-    public async Task DownloadAsync_WhithSuccessfullResponse_DownloadsAndSaveFileCorrectly()
-    {
-        var mock = SharedData.SetupMockHttpMessageHandlerForSuccessfullResponse(
-            new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new ByteArrayContent(File.ReadAllBytes(SharedData.RanksSwfPath))
-            }
-        );
-
-        LangsWatcher.HttpClient = new HttpClient(mock.Object)
-        {
-            BaseAddress = new Uri(LangsWatcher.BaseUrl)
-        };
-
-        var success = await _lang.DownloadAsync();
-
-        Assert.IsTrue(success);
-        Assert.IsTrue(File.Exists(_lang.FilePath));
-    }
-
-    public async Task DownloadAsync_WithException_ReturnsFalse()
-    {
-        var mock = SharedData.SetupMockHttpMessageHandlerForException(new HttpRequestException());
-
-        LangsWatcher.HttpClient = new HttpClient(mock.Object)
-        {
-            BaseAddress = new Uri(LangsWatcher.BaseUrl)
-        };
-
-        var success = await _lang.DownloadAsync();
-
-        Assert.IsFalse(success);
-    }
-
-    #endregion
-
-    #region Extract
-
-    [TestMethod]
-    public void Extract_WhenFileExists_ExtractionSuccessful()
-    {
-        Directory.CreateDirectory(_lang.OutputPath);
-        File.WriteAllBytes(_lang.FilePath, File.ReadAllBytes(SharedData.RanksSwfPath));
-        var expected = File.ReadAllLines(SharedData.RanksCurrentPath);
-
-        var success = _lang.Extract();
-        var result = File.ReadAllLines(_lang.CurrentDecompiledFilePath);
-
-        Assert.IsTrue(success);
-        Assert.IsTrue(expected.SequenceEqual(result));
-    }
-
-    [TestMethod]
-    public void Extract_WhenNoFileExists_ExtractionSuccessful()
-    {
-        var success = _lang.Extract();
-
-        Assert.IsFalse(success);
-    }
-
-    #endregion
 
     #region Diff
 

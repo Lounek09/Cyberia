@@ -1,7 +1,6 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Langzilla;
-using Cyberia.Salamandra.Managers;
-using Cyberia.Salamandra.Services;
+using Cyberia.Salamandra.EventHandlers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -23,7 +22,7 @@ public static class ServiceProviderExtensions
     public static IServiceProvider RegisterSalamandraEvents(this IServiceProvider provider)
     {
         CytrusWatcher.NewCytrusFileDetected += provider.GetRequiredService<CytrusService>().OnNewCytrusDetected;
-        LangsWatcher.CheckLangFinished += LangManager.OnCheckLangFinished;
+        LangsWatcher.CheckLangFinished += provider.GetRequiredService<LangsService>().OnCheckLangFinished;
 
         return provider;
     }

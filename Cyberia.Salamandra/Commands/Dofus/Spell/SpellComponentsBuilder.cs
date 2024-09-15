@@ -25,6 +25,6 @@ public static class SpellComponentsBuilder
                     x.SpellCategory.GetDescription());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_Spell_Placeholder, options, disable);
+        return new(PacketManager.SelectComponentBuilder(index), BotTranslations.Select_Spell_Placeholder, options, disable);
     }
 }

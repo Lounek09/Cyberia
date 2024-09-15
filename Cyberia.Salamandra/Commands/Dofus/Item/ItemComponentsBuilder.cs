@@ -25,6 +25,6 @@ public static class ItemComponentsBuilder
                     DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x.ItemTypeId));
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(index), BotTranslations.Select_Item_Placeholder, options, disable);
+        return new(PacketManager.SelectComponentBuilder(index), BotTranslations.Select_Item_Placeholder, options, disable);
     }
 }

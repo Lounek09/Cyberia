@@ -24,6 +24,6 @@ public static class HouseComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(InteractionManager.SelectComponentPacketBuilder(uniqueIndex), BotTranslations.Select_House_Placeholder, options, disable);
+        return new(PacketManager.SelectComponentBuilder(uniqueIndex), BotTranslations.Select_House_Placeholder, options, disable);
     }
 }

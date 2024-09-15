@@ -5,9 +5,9 @@ using Google.FlatBuffers;
 namespace Cyberia.Cytrusaurus;
 
 /// <summary>
-/// Provides methods for retrieving and game manifests from Cytrus.
+/// Provides methods for retrieving game manifests from Cytrus.
 /// </summary>
-public class CytrusManifestFetcher
+public sealed class CytrusManifestFetcher
 {
     private readonly CytrusWatcher _cytrusWatcher;
 

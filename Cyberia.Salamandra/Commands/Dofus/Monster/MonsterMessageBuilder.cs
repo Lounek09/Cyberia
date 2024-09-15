@@ -4,7 +4,7 @@ using Cyberia.Api.Data.Alignments;
 using Cyberia.Api.Data.Monsters;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Managers;
-using Cyberia.Utils.Extensions;
+
 using DSharpPlus;
 using DSharpPlus.Entities;
 
@@ -34,7 +34,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
         _alignmentData = _monsterData.GetAlignmentData();
     }
 
-    public static MonsterMessageBuilder? Create(int version, string[] parameters)
+    public static MonsterMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -53,7 +53,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int monsterId, int selectedGrade = 1)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, monsterId, selectedGrade);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, monsterId, selectedGrade);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

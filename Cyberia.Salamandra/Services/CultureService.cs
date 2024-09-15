@@ -4,7 +4,7 @@ using DSharpPlus.Entities;
 
 using System.Globalization;
 
-namespace Cyberia.Salamandra.Services;
+namespace Cyberia.Salamandra.EventHandlers;
 
 public sealed class CultureService
 {

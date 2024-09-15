@@ -5,6 +5,7 @@ using Cyberia.Cytrusaurus.Extensions;
 using Cyberia.Database.Extentsions;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Extensions;
 using Cyberia.Salamandra.Extensions;
 
 using Microsoft.Extensions.Configuration;
@@ -60,7 +61,7 @@ public static class Program
 
             services.AddDatabase(connectionString);
             services.AddCytrusaurus();
-            LangsWatcher.Initialize();
+            services.AddLangzilla();
             DofusApi.Initialize(cyberiaConfig.ApiConfig);
             services.AddSalamandra(cyberiaConfig.BotConfig);
             Web.Initialize(cyberiaConfig.WebConfig);
@@ -88,19 +89,19 @@ public static class Program
             if (cyberiaConfig.EnableCheckLang)
             {
                 Log.Information("Watching {LangType} Langs each {OfficialLangInterval}", LangType.Official, cyberiaConfig.CheckLangInterval);
-                LangsWatcher.Watch(LangType.Official, TimeSpan.FromSeconds(20), cyberiaConfig.CheckLangInterval);
+                provider.GetRequiredService<LangsWatcher>().Watch(LangType.Official, TimeSpan.FromSeconds(20), cyberiaConfig.CheckLangInterval);
             }
 
             if (cyberiaConfig.EnableCheckBetaLang)
             {
                 Log.Information("Watching {LangType} Langs each {BetaLangInterval}", LangType.Beta, cyberiaConfig.CheckBetaLangInterval);
-                LangsWatcher.Watch(LangType.Beta, TimeSpan.FromSeconds(140), cyberiaConfig.CheckBetaLangInterval);
+                provider.GetRequiredService<LangsWatcher>().Watch(LangType.Beta, TimeSpan.FromSeconds(140), cyberiaConfig.CheckBetaLangInterval);
             }
 
             if (cyberiaConfig.EnableCheckTemporisLang)
             {
                 Log.Information("Watching {LangType} Langs each {TemporisLangInterval}", LangType.Temporis, cyberiaConfig.CheckTemporisLangInterval);
-                LangsWatcher.Watch(LangType.Temporis, TimeSpan.FromSeconds(260), cyberiaConfig.CheckCytrusInterval);
+                provider.GetRequiredService<LangsWatcher>().Watch(LangType.Temporis, TimeSpan.FromSeconds(260), cyberiaConfig.CheckCytrusInterval);
             }
 
             Log.Information("Cyberia started");

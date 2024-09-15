@@ -80,12 +80,12 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
         var disabled = _totalPage == 1;
 
         yield return new(DiscordButtonStyle.Primary,
-            $"{PreviousPacketBuilder()}{InteractionManager.PacketParameterSeparator}P",
+            $"{PreviousPacketBuilder()}{PacketManager.ParameterSeparator}P",
             BotTranslations.Button_Previous,
             disabled);
 
         yield return new(DiscordButtonStyle.Primary,
-            $"{NextPacketBuilder()}{InteractionManager.PacketParameterSeparator}N",
+            $"{NextPacketBuilder()}{PacketManager.ParameterSeparator}N",
             BotTranslations.Button_Next,
             disabled);
     }

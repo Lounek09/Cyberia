@@ -13,7 +13,8 @@ public static class LangParserManager
 
     public static bool Parse(LangType type, LangLanguage language)
     {
-        var repository = LangsWatcher.LangRepositories[(type, language)];
+        LangsWatcher langsWatcher = new(); //TODO: Temporary solution, should be injected
+        var repository = langsWatcher.GetRepository(type, language);
 
         var directoryPath = GetOutputDirectoryPath(type, language);
         if (!Directory.Exists(directoryPath))

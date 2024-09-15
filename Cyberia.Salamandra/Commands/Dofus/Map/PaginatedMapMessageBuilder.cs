@@ -21,7 +21,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
         _searchCategory = searchCategory;
     }
 
-    public static PaginatedMapMessageBuilder? Create(int version, string[] parameters)
+    public static PaginatedMapMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -38,7 +38,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
                         int.TryParse(parameters[3], out var y))
                     {
                         mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
-                        search = $"{parameters[2]}{InteractionManager.PacketParameterSeparator}{parameters[3]}";
+                        search = $"{parameters[2]}{PacketManager.ParameterSeparator}{parameters[3]}";
                     }
                     break;
                 case MapSearchCategory.MapSubArea:
@@ -68,7 +68,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
 
     public static string GetPacket(MapSearchCategory searchCategory, string search, int selectedPageIndex = 0)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, selectedPageIndex, (int)searchCategory, search);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, selectedPageIndex, (int)searchCategory, search);
     }
 
     protected override IEnumerable<string> GetContent()

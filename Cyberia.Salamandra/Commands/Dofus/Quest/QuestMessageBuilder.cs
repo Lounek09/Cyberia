@@ -4,7 +4,7 @@ using Cyberia.Api.Data.Quests;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
-using Cyberia.Utils.Extensions;
+
 using DSharpPlus;
 using DSharpPlus.Entities;
 
@@ -32,7 +32,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
         _dialogQuestionData = _questStepData?.GetDialogQuestionData();
     }
 
-    public static QuestMessageBuilder? Create(int version, string[] parameters)
+    public static QuestMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -51,7 +51,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int questId, int selectedQuestStepIndex = 0)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, questId, selectedQuestStepIndex);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, questId, selectedQuestStepIndex);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -178,6 +178,6 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             }
         }
 
-        return new(InteractionManager.SelectComponentPacketBuilder(selectIndex), BotTranslations.Select_QuestStep_Placeholder, OptionsGenerator(startIndex));
+        return new(PacketManager.SelectComponentBuilder(selectIndex), BotTranslations.Select_QuestStep_Placeholder, OptionsGenerator(startIndex));
     }
 }

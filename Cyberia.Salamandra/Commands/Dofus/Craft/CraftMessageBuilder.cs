@@ -6,7 +6,7 @@ using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
-using Cyberia.Utils.Extensions;
+
 using DSharpPlus;
 using DSharpPlus.Entities;
 
@@ -31,7 +31,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
         _recursive = recursive;
     }
 
-    public static CraftMessageBuilder? Create(int version, string[] parameters)
+    public static CraftMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -51,7 +51,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int craftId, int quantity = 1, bool recursive = false)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, craftId, quantity, recursive);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, craftId, quantity, recursive);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

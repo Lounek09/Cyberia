@@ -19,7 +19,7 @@ public sealed class PaginatedItemMessageBuilder : PaginatedMessageBuilder<ItemDa
 
     }
 
-    public static PaginatedItemMessageBuilder? Create(int version, string[] parameters)
+    public static PaginatedItemMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -37,7 +37,7 @@ public sealed class PaginatedItemMessageBuilder : PaginatedMessageBuilder<ItemDa
 
     public static string GetPacket(string search, int selectedPageIndex = 0)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, selectedPageIndex, search);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, selectedPageIndex, search);
     }
 
     protected override IEnumerable<string> GetContent()

@@ -1,37 +1,34 @@
 ﻿using Cyberia.Langzilla.Enums;
 using Cyberia.Langzilla.EventArgs;
+using Cyberia.Langzilla.Models;
 
 using System.Collections.Concurrent;
+using System.Text;
 
 namespace Cyberia.Langzilla;
 
 /// <summary>
 /// Provides methods for watching updates of langs.
 /// </summary>
-public static class LangsWatcher
+public sealed class LangsWatcher
 {
     public const string OutputPath = "langs";
     public const string BaseUrl = "https://dofusretro.cdn.ankama.com/";
 
-    /// <summary>
-    /// Gets a read-only dictionary of the langs by type and language.
-    /// </summary>
-    public static IReadOnlyDictionary<(LangType, LangLanguage), LangRepository> LangRepositories => _langRepositories.AsReadOnly();
+    internal HttpClient HttpClient { get; set; } = default!;
+    internal HttpRetryPolicy HttpRetryPolicy { get; set; } = default!;
 
-    internal static HttpClient HttpClient { get; set; } = default!;
-    internal static HttpRetryPolicy HttpRetryPolicy { get; set; } = default!;
-
-    private static Dictionary<(LangType, LangLanguage), LangRepository> _langRepositories = [];
-    private static ConcurrentDictionary<(LangType, LangLanguage), Timer> _timers = [];
+    private readonly Dictionary<(LangType, LangLanguage), LangsRepository> _langsRepositories = [];
+    private readonly ConcurrentDictionary<(LangType, LangLanguage), Timer> _timers = [];
 
     /// <summary>
-    /// Initializes the LangsWatcher.
+    /// Initializes a new instance of the <see cref="LangsWatcher"/> class.
     /// </summary>
-    public static void Initialize()
+    public LangsWatcher()
     {
         Directory.CreateDirectory(OutputPath);
 
-        _langRepositories = [];
+        _langsRepositories = [];
         _timers = [];
 
         foreach (var type in Enum.GetValues<LangType>())
@@ -39,14 +36,12 @@ public static class LangsWatcher
             foreach (var language in Enum.GetValues<LangLanguage>())
             {
                 var outputPath = GetOutputPath(type, language);
-                if (!Directory.Exists(outputPath))
-                {
-                    Directory.CreateDirectory(outputPath);
-                }
+                Directory.CreateDirectory(outputPath);
 
-                var filePath = Path.Join(outputPath, LangRepository.FileName);
-                var repository = LangRepository.LoadFromFile(filePath);
-                _langRepositories.Add((type, language), repository);
+                var filePath = Path.Join(outputPath, LangsRepository.FileName);
+                var repository = LangsRepository.LoadFromFile(filePath);
+
+                _langsRepositories.Add((type, language), repository);
             }
         }
 
@@ -67,6 +62,17 @@ public static class LangsWatcher
     /// </summary>
     public static event EventHandler<CheckLangFinishedEventArgs>? CheckLangFinished;
 
+    /// <summary>
+    /// Gets the lang repository from its type and language.
+    /// </summary>
+    /// <param name="type">The type of the langs in the repository.</param>
+    /// <param name="language">The language of the langs in the repository.</param>
+    /// <returns>The lang repository.</returns>
+    public LangsRepository GetRepository(LangType type, LangLanguage language)
+    {
+        return _langsRepositories[(type, language)];
+    }
+
 
     /// <summary>
     /// Starts watching for update of langs by type.
@@ -74,12 +80,12 @@ public static class LangsWatcher
     /// <param name="type">The type of the langs to check.</param>
     /// <param name="dueTime">The amount of time to delay before the first check.</param>
     /// <param name="interval">The interval between checks.</param>
-    public static void Watch(LangType type, TimeSpan dueTime, TimeSpan interval)
+    public void Watch(LangType type, TimeSpan dueTime, TimeSpan interval)
     {
         foreach (var language in Enum.GetValues<LangLanguage>())
         {
-            var repository = _langRepositories[(type, language)];
-            var timer = new Timer(async _ => await CheckAsync(repository), null, dueTime, interval);
+            var repository = GetRepository(type, language);
+            Timer timer = new(async _ => await CheckAsync(repository), null, dueTime, interval);
 
             _timers.AddOrUpdate((type, language), timer, (key, oldValue) => oldValue = timer);
         }
@@ -101,31 +107,29 @@ public static class LangsWatcher
     ///     <item>Triggers the <see cref="CheckLangFinished"/> event.</item>
     /// </list>
     /// </remarks>
-    public static async Task CheckAsync(LangRepository repository, bool force = false)
+    public async Task CheckAsync(LangsRepository repository, bool force = false)
     {
         CheckLangStarted?.Invoke(null, new CheckLangStartedEventArgs(repository));
 
-        var versions = await repository.FetchVersionsAsync(force);
+        var versions = await FetchVersionsAsync(repository, force);
         if (string.IsNullOrEmpty(versions))
         {
             CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(repository, []));
             return;
         }
 
-        var updatedLangs = repository.GetUpdatedLangsFromVersions(versions).ToList();
+        var updatedLangs = GetUpdatedLangs(repository, versions);
         foreach (var updatedLang in updatedLangs)
         {
-            if (!await updatedLang.DownloadAsync())
+            if (!await DownloadLangAsync(updatedLang))
             {
-                Log.Error("Failed to download {LangType} {LangName} lang in {LangLanguage}",
-                    repository.Type, updatedLang.Name, repository.Language);
+                Log.Error("Failed to download {LangType} {LangName} lang in {LangLanguage}", repository.Type, updatedLang.Name, repository.Language);
                 continue;
             }
 
-            if (!updatedLang.Extract())
+            if (!ExtractLang(updatedLang))
             {
-                Log.Error("Failed to extract {LangType} {LangName} lang in {LangLanguage}",
-                    repository.Type, updatedLang.Name, repository.Language);
+                Log.Error("Failed to extract {LangType} {LangName} lang in {LangLanguage}", repository.Type, updatedLang.Name, repository.Language);
                 continue;
             }
 
@@ -159,5 +163,141 @@ public static class LangsWatcher
     internal static string GetOutputPath(LangType type, LangLanguage language)
     {
         return Path.Join(OutputPath, type.ToStringFast().ToLower(), language.ToStringFast());
+    }
+
+    /// <summary>
+    /// Fetches the versions of the langs.
+    /// </summary>
+    /// <param name="repository">The repository to fetch the versions from.</param>
+    /// <param name="force">Force the fetch without checking the last update time.</param>
+    /// <returns>A string that contains the versions of the langs.</returns>
+    internal async Task<string> FetchVersionsAsync(LangsRepository repository, bool force = false)
+    {
+        try
+        {
+            using var response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(repository.VersionFileRoute));
+            response.EnsureSuccessStatusCode();
+
+            var lastModifiedHeader = response.Content.Headers.LastModified!.Value.UtcDateTime;
+            if (lastModifiedHeader > repository.LastChange || force)
+            {
+                repository.LastChange = lastModifiedHeader;
+
+                var versions = await response.Content.ReadAsStringAsync();
+
+                Log.Information("New {LangType} langs detected in {LangLanguage} :\n{Versions}", repository.Type, repository.Language, versions);
+                File.WriteAllText(repository.VersionFilePath, versions);
+
+                return versions;
+            }
+        }
+        catch (HttpRequestException e)
+        {
+            Log.Error(e, "An error occurred while sending Get request to {VersionFileUrl}", Path.Join(BaseUrl, repository.VersionFileRoute));
+        }
+
+        return string.Empty;
+    }
+
+    /// <summary>
+    /// Gets the updated langs from the fetched versions of the langs.
+    /// </summary>
+    /// <param name="versions">The versions of the langs.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="Lang"/> that contains the updated langs.</returns>
+    internal static IEnumerable<Lang> GetUpdatedLangs(LangsRepository repository, string versions)
+    {
+        if (versions.Length < 4)
+        {
+            yield break;
+        }
+
+        var langInfos = versions[3..].Split("|", StringSplitOptions.RemoveEmptyEntries);
+        if (langInfos.Length == 0)
+        {
+            yield break;
+        }
+
+        foreach (var langInfo in langInfos)
+        {
+            var langParameters = langInfo.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            if (langParameters.Length < 3 ||
+                !int.TryParse(langParameters[2], out var langVersion))
+            {
+                continue;
+            }
+
+            var lang = new Lang(langParameters[0], langVersion, repository.Type, repository.Language);
+            if (!File.Exists(lang.FilePath))
+            {
+                repository.AddOrUpdate(lang);
+
+                yield return lang;
+            }
+        }
+
+        repository.Save();
+    }
+
+    /// <summary>
+    /// Downloads the lang file.
+    /// </summary>
+    /// <param name="lang">The lang to download.</param>
+    /// <returns><see langword="true"/> if the download was successful; otherwise, <see langword="false"/>.</returns>
+    internal async Task<bool> DownloadLangAsync(Lang lang)
+    {
+        Array.ForEach(Directory.GetFiles(OutputPath, "*.swf"), File.Delete);
+
+        try
+        {
+            using var response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(lang.FileRoute));
+            response.EnsureSuccessStatusCode();
+
+            using var fileStream = new FileStream(lang.FilePath, FileMode.Create);
+            await response.Content.CopyToAsync(fileStream);
+
+            return true;
+        }
+        catch (HttpRequestException e)
+        {
+            Log.Error(e, "An error occurred while sending Get request to {Url}", Path.Join(OutputPath, lang.FileRoute));
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Extracts the lang file.
+    /// </summary>
+    /// <param name="lang">The lang to extract.</param>
+    /// <returns><see langword="true"/> if the extraction was successful; otherwise, <see langword="false"/>.</returns>
+    internal static bool ExtractLang(Lang lang)
+    {
+        if (!File.Exists(lang.FilePath))
+        {
+            return false;
+        }
+
+        if (!Flare.TryExtract(lang.FilePath, out var flareOutputFilePath))
+        {
+            Log.Error("An error occured while decompiling {FilePath}", lang.FilePath);
+            return false;
+        }
+
+        var lines = File.ReadLines(flareOutputFilePath, Encoding.UTF8).Skip(7).SkipLast(3);
+        var content = lines
+            .Select(x => x.Trim())
+            .Where(x => x.Length > 0 && !x.Equals("}") && !x.Equals("frame 1 {"));
+
+        var currentDecompiledFilePath = lang.CurrentDecompiledFilePath;
+        var oldDecompiledFilePath = lang.OldDecompiledFilePath;
+
+        if (File.Exists(currentDecompiledFilePath))
+        {
+            File.Move(currentDecompiledFilePath, oldDecompiledFilePath, true);
+        }
+        File.WriteAllLines(currentDecompiledFilePath, content, Encoding.UTF8);
+        File.Delete(flareOutputFilePath);
+
+        return true;
     }
 }

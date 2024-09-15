@@ -1,8 +1,8 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Commands.Dofus.Map;
+using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Managers;
-using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -97,7 +97,7 @@ public sealed class HouseCommandModule
         }
         else
         {
-            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{x}{InteractionManager.PacketParameterSeparator}{y}")
+            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(housesData, HouseSearchCategory.Coordinate, $"{x}{PacketManager.ParameterSeparator}{y}")
                 .BuildAsync<DiscordInteractionResponseBuilder>());
         }
     }

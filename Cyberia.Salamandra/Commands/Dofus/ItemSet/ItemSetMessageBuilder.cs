@@ -31,7 +31,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
         _breedData = itemSetData.GetBreedData();
     }
 
-    public static ItemSetMessageBuilder? Create(int version, string[] parameters)
+    public static ItemSetMessageBuilder? Create(IServiceProvider _, int version, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -50,7 +50,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int itemSetId, int nbItemSelected)
     {
-        return InteractionManager.ComponentPacketBuilder(PacketHeader, PacketVersion, itemSetId, nbItemSelected);
+        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, itemSetId, nbItemSelected);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()
