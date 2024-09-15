@@ -138,15 +138,16 @@
   </data>
   <data name="Page.SalamandraPrivacy.Content" xml:space="preserve">
     <value>&lt;h3&gt;1. Consentement&lt;/h3&gt;
-&lt;p&gt;En utilisant Salamandra, vous acceptez la politique de confidentialité suivante.
+&lt;p&gt;En utilisant Salamandra, vous acceptez la politique de confidentialité suivante.&lt;/p&gt;
 &lt;h3&gt;2. Quelles sont les informations stockées&lt;/h3&gt;
-&lt;p&gt;Aucune.&lt;/p&gt;
+&lt;p&gt;Nous stockons uniquement votre identifiant Discord afin de savoir dans quelle langue vous répondre.&lt;/p&gt;
 &lt;h3&gt;3. Comment nous utilisons vos informations&lt;/h3&gt;
-&lt;p&gt;Nous n'utilisons pas vos informations.&lt;/p&gt;
-&lt;h3&gt;4. information stockée temporairement&lt;/h3&gt;
-&lt;p&gt;Salamandra peut conserver des informations dans un mécanisme de cache interne pendant un certain temps.&lt;br&gt;
-Après cette période, les informations mises en cache seront supprimées et ne seront réajoutées qu'en cas de besoin.&lt;/p&gt;
-&lt;h3&gt;5. Question et préoccupations&lt;/h3&gt;
+&lt;p&gt;Votre identifiant Discord est utilisé exclusivement pour adapter la langue des commandes que vous recevez de Salamandra.&lt;/p&gt;
+&lt;h3&gt;4. Informations stockées temporairement&lt;/h3&gt;
+&lt;p&gt;Salamandra peut conserver des informations dans un mécanisme de cache interne pendant un certain temps.&lt;br&gt; Après cette période, les informations mises en cache seront supprimées et ne seront réajoutées qu'en cas de besoin.&lt;/p&gt;
+&lt;h3&gt;5. Récupération et suppression des données&lt;/h3&gt;
+&lt;p&gt;Vous pouvez récupérer ou supprimer vos données personnelles à tout moment en utilisant la commande &lt;code&gt;/rgpd&lt;/code&gt; sur Discord.&lt;/p&gt;
+&lt;h3&gt;6. Questions et préoccupations&lt;/h3&gt;
 &lt;p&gt;Si vous avez des questions et/ou des préoccupations concernant les données stockées, veuillez me contacter sur Discord à lounek.&lt;/p&gt;
 &lt;hr&gt;
 &lt;small&gt;&lt;i&gt;Remarque : Nous nous réservons le droit de modifier ces informations sans en avertir nos utilisateurs.&lt;/i&gt;&lt;/small&gt;</value>

@@ -154,13 +154,11 @@ namespace Cyberia.Translations {
         ///   Looks up a localized string similar to &lt;h3&gt;1. Consent&lt;/h3&gt;
         ///&lt;p&gt;By using Salamandra, you agree to the following privacy policy.&lt;/p&gt;
         ///&lt;h3&gt;2. What information is stored&lt;/h3&gt;
-        ///&lt;p&gt;None.&lt;/p&gt;
+        ///&lt;p&gt;We only store your Discord user ID to determine the language in which to respond to you.&lt;/p&gt;
         ///&lt;h3&gt;3. How we use your information&lt;/h3&gt;
-        ///&lt;p&gt;We don&apos;t use your information.&lt;/p&gt;
-        ///&lt;h3&gt;4. Temporarily stored Information&lt;/h3&gt;
-        ///&lt;p&gt;Salamandra may keep information in an internal caching mechanic for a certain amount of time.&lt;br&gt;
-        ///After this time period, the cached information will be dropped and only be re-added when required.&lt;/p&gt;
-        ///&lt;h3&gt;5. Questions and Concerns&lt;/h3&gt;        /// [rest of string was truncated]&quot;;.
+        ///&lt;p&gt;Your Discord user ID is used solely to adapt the language of commands you receive from Salamandra.&lt;/p&gt;
+        ///&lt;h3&gt;4. Temporarily stored information&lt;/h3&gt;
+        ///&lt;p&gt;Salamandra may keep information in an internal caching mechanism for a certain amount o [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Page_SalamandraPrivacy_Content {
             get {
