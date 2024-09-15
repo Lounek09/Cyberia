@@ -610,4 +610,13 @@ To escape at 100%, you will need at minimum #4 agi.</value>
   <data name="Language.Set" xml:space="preserve">
     <value>Your language has been modified to #1.</value>
   </data>
+  <data name="Rgpd.NoData" xml:space="preserve">
+    <value>No personal data is currently stored about you.</value>
+  </data>
+  <data name="Rgpd.Data" xml:space="preserve">
+    <value>Here is the personal information currently stored about you:</value>
+  </data>
+  <data name="Rgpd.Deleted" xml:space="preserve">
+    <value>All your personal data has been deleted.</value>
+  </data>
 </root>

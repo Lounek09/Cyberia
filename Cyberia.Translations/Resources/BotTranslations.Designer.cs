@@ -1324,6 +1324,33 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Here is the personal information currently stored about you:.
+        /// </summary>
+        public static string Rgpd_Data {
+            get {
+                return ResourceManager.GetString("Rgpd.Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All your personal data has been deleted..
+        /// </summary>
+        public static string Rgpd_Deleted {
+            get {
+                return ResourceManager.GetString("Rgpd.Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No personal data is currently stored about you..
+        /// </summary>
+        public static string Rgpd_NoData {
+            get {
+                return ResourceManager.GetString("Rgpd.NoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select an item to calculate its craft.
         /// </summary>
         public static string Select_Craft_Placeholder {
