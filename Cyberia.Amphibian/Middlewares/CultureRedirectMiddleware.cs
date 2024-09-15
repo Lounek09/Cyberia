@@ -33,13 +33,12 @@ public sealed class CultureRedirectMiddleware
         }
 
         path = path[1..];
-
         var index = path.Span.IndexOf('/');
         var firstSegment = index == -1 ? path : path[..index];
 
         if (!_requestLocalizationOptions.SupportedCultures!.Any(x => firstSegment.Span.SequenceEqual(x.TwoLetterISOLanguageName)))
         {
-            context.Response.Redirect($"/{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}{path[firstSegment.Length..]}");
+            context.Response.Redirect($"/{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}/{path}");
             return;
         }
 
