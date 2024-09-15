@@ -58,22 +58,11 @@ public static class Program
                 loggingBuilder.AddSerilog(Log.Logger);
             });
 
-            Log.Information("Initializing Database");
             services.AddDatabase(connectionString);
-
-            Log.Information("Initializing CytrusWatcher");
             services.AddCytrusaurus();
-
-            Log.Information("Initializing LangsWatcher");
             LangsWatcher.Initialize();
-
-            Log.Information("Initializing DofusApi");
             DofusApi.Initialize(cyberiaConfig.ApiConfig);
-
-            Log.Information("Initializing Salamandra");
             services.AddSalamandra(cyberiaConfig.BotConfig);
-
-            Log.Information("Initializing Amphibian");
             Web.Initialize(cyberiaConfig.WebConfig);
 
             var provider = services.BuildServiceProvider();
