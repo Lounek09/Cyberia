@@ -17,12 +17,8 @@ public static class ServiceProviderExtensions
     public static async Task<IServiceProvider> CreateTablesAsync(this IServiceProvider provider)
     {
         var scope = provider.CreateScope();
-        var repositories = scope.ServiceProvider.GetServices<IDatabaseRepository>();
 
-        foreach (var repository in repositories)
-        {
-            await repository.CreateTableAsync();
-        }
+        await scope.ServiceProvider.GetRequiredService<UserRepository>().CreateTableAsync();
 
         return provider;
     }
