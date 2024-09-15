@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Data;
-using Cyberia.Utils.Extensions;
+
 using System.Collections.Concurrent;
 
 namespace Cyberia.Api.Managers;

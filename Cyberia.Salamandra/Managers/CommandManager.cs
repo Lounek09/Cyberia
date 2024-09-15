@@ -1,4 +1,5 @@
 ﻿using Cyberia.Salamandra.Extensions.DSharpPlus;
+
 using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ContextChecks;

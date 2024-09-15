@@ -1,5 +1,6 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
+
 using DSharpPlus.Commands.Processors.SlashCommands;
 
 using System.Collections.ObjectModel;

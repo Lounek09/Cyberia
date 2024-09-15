@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Maps;
-using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.Services;
 

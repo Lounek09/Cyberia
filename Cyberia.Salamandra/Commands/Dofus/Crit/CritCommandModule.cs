@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;

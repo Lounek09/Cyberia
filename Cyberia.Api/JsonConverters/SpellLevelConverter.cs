@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories;
 using Cyberia.Api.Values;
-using Cyberia.Utils.Extensions;
+
 using System.Text.Json;
 using System.Text.Json.Serialization;
 

@@ -1,6 +1,5 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Services;
 

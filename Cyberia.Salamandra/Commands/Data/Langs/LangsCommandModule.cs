@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.Managers;
 using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
-using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.Services;
 
