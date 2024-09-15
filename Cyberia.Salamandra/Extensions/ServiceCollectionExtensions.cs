@@ -31,9 +31,8 @@ public static class ServiceCollectionExtensions
         services.AddDiscordClient(config.Token, DiscordIntents.Guilds)
             .ConfigureEventHandlers(eventHandler =>
             {
-                eventHandler.HandleGuildDownloadCompleted(ClientManager.OnGuildDownloadCompleted);
-                eventHandler.HandleGuildCreated(GuildManager.OnGuildCreated);
-                eventHandler.HandleGuildDeleted(GuildManager.OnGuildDeleted);
+                eventHandler.AddEventHandlers<ClientEventHandler>(ServiceLifetime.Singleton);
+                eventHandler.AddEventHandlers<GuildsEventHandler>();
                 eventHandler.AddEventHandlers<InteractionsEventHandler>();
             })
             .Configure<DiscordConfiguration>(config =>
@@ -56,9 +55,9 @@ public static class ServiceCollectionExtensions
                 }
             );
 
-        services.AddSingleton<CultureService>();
-        services.AddSingleton<CytrusService>();
-        services.AddSingleton<LangsService>();
+        services.AddTransient<CultureService>();
+        services.AddTransient<CytrusService>();
+        services.AddTransient<LangsService>();
 
         return services;
     }

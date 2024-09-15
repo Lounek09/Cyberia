@@ -11,7 +11,7 @@ public static class ChannelManager
     public static DiscordChannel? CytrusChannel { get; internal set; }
     public static DiscordChannel? CytrusManifestChannel { get; internal set; }
 
-    public static async Task SetChannelAsync<T>(this DiscordClient client, ulong id, string name, Action<T> set)
+    internal static async Task SetChannelAsync<T>(this DiscordClient client, ulong id, string name, Action<T> set)
         where T : DiscordChannel
     {
         if (id == 0)
