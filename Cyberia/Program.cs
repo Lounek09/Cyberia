@@ -1,4 +1,4 @@
-﻿using Cyberia.Amphibian;
+﻿using Cyberia.Amphibian.Extensions;
 using Cyberia.Api;
 using Cyberia.Cytrusaurus;
 using Cyberia.Cytrusaurus.Extensions;
@@ -64,7 +64,7 @@ public static class Program
             services.AddLangzilla();
             DofusApi.Initialize(cyberiaConfig.ApiConfig);
             services.AddSalamandra(cyberiaConfig.BotConfig);
-            Web.Initialize(cyberiaConfig.WebConfig);
+            services.AddAmphibian(cyberiaConfig.WebConfig);
 
             var provider = services.BuildServiceProvider();
 
@@ -77,7 +77,7 @@ public static class Program
 
             if (cyberiaConfig.EnableAmphibian)
             {
-                _ = Web.LaunchAsync();
+                provider.StartAmphibian();
             }
 
             if (cyberiaConfig.EnableCheckCytrus)

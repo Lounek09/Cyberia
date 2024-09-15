@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Cyberia.Salamandra.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="IServiceProvider"/>.
+/// Provides extension methods for the <see cref="IServiceProvider"/> interface.
 /// </summary>
 public static class ServiceProviderExtensions
 {
@@ -34,8 +34,10 @@ public static class ServiceProviderExtensions
     /// <returns>The service provider.</returns>
     public static async Task<IServiceProvider> StartSalamandraAsync(this IServiceProvider provider)
     {
+        var discordClient = provider.GetRequiredService<DiscordClient>();
+
         DiscordActivity activity = new("Dofus Retro", DiscordActivityType.Playing);
-        await provider.GetRequiredService<DiscordClient>().ConnectAsync(activity);
+        await discordClient.ConnectAsync(activity);
 
         return provider;
     }
