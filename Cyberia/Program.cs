@@ -62,7 +62,7 @@ public static class Program
             services.AddDatabase(connectionString);
             services.AddCytrusaurus();
             services.AddLangzilla();
-            DofusApi.Initialize(cyberiaConfig.ApiConfig);
+            DofusApi.Initialize(cyberiaConfig.ApiConfig); //TODO: Use DI
             services.AddSalamandra(cyberiaConfig.BotConfig);
             services.AddAmphibian(cyberiaConfig.WebConfig);
 
@@ -104,7 +104,6 @@ public static class Program
                 provider.GetRequiredService<LangsWatcher>().Watch(LangType.Temporis, TimeSpan.FromSeconds(260), cyberiaConfig.CheckCytrusInterval);
             }
 
-            Log.Information("Cyberia started");
             await Task.Delay(-1);
         }
         catch (Exception e)
