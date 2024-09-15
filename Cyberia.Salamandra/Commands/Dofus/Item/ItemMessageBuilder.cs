@@ -47,9 +47,9 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         _itemTypeData = itemData.GetItemTypeData();
         _itemSetData = itemData.GetItemSetData();
         _itemStatsData = itemData.GetItemStatsData();
-        _petData = _itemData.ItemTypeId == ItemTypeData.Pet ? DofusApi.Datacenter.PetsRepository.GetPetDataByItemId(_itemData.Id) : null;
+        _petData = itemData.GetPetData();
         _craftData = itemData.GetCraftData();
-        _incarnationData = _itemData.IsWeapon() ? DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(_itemData.Id) : null;
+        _incarnationData = itemData.GetIncarnationData();
         _quantity = quantity;
     }
 

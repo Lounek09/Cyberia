@@ -1,7 +1,9 @@
 ﻿using Cyberia.Api.Data.Crafts;
+using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.ItemStats;
 using Cyberia.Api.Data.Npcs;
+using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Managers;
@@ -110,6 +112,16 @@ public sealed class ItemData : IDofusData<int>
     public CraftData? GetCraftData()
     {
         return DofusApi.Datacenter.CraftsRepository.GetCraftDataById(Id);
+    }
+
+    public PetData? GetPetData()
+    {
+        return DofusApi.Datacenter.PetsRepository.GetPetDataByItemId(Id);
+    }
+
+    public IncarnationData? GetIncarnationData()
+    {
+        return DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(Id);
     }
 
     public bool IsWeapon()
