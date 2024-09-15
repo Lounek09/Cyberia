@@ -12,6 +12,7 @@ using Cyberia.Salamandra.Commands.Dofus.Quest;
 using Cyberia.Salamandra.Commands.Dofus.Rune;
 using Cyberia.Salamandra.Commands.Dofus.Spell;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;

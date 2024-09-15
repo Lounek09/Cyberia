@@ -1,6 +1,6 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Langzilla;
-using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Entities;

@@ -11,7 +11,7 @@ using DSharpPlus.Exceptions;
 
 using System.Text;
 
-namespace Cyberia.Salamandra.EventHandlers;
+namespace Cyberia.Salamandra.Services;
 
 public sealed class LangsService
 {

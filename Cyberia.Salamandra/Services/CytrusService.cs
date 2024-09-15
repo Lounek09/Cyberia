@@ -11,15 +11,22 @@ using DSharpPlus.Entities;
 using System.Text;
 using System.Text.Json;
 
-namespace Cyberia.Salamandra.EventHandlers;
+namespace Cyberia.Salamandra.Services;
 
+/// <summary>
+/// Represents a service to handle the Cytrus events.
+/// </summary>
 public sealed class CytrusService
 {
-    private readonly CytrusManifestFetcher _fetcher;
+    private readonly CytrusManifestFetcher _cytrusManifestFetcher;
 
-    public CytrusService(CytrusManifestFetcher fetcher)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CytrusService"/> class.
+    /// </summary>
+    /// <param name="cytrusManifestFetcher">The fetcher to get the manifest from.</param>
+    public CytrusService(CytrusManifestFetcher cytrusManifestFetcher)
     {
-        _fetcher = fetcher;
+        _cytrusManifestFetcher = cytrusManifestFetcher;
     }
 
     public async void OnNewCytrusDetected(object? _, NewCytrusFileDetectedEventArgs args)
@@ -28,15 +35,25 @@ public sealed class CytrusService
         await SendManifestDiffAsync(args);
     }
 
+    /// <summary>
+    /// Gets the manifest diff between two versions of a game.
+    /// </summary>
+    /// <param name="game">The name of the game.</param>
+    /// <param name="platform">The platform of the game.</param>
+    /// <param name="oldRelease">The old release of the game.</param>
+    /// <param name="oldVersion">The old version of the game.</param>
+    /// <param name="newRelease">The new release of the game.</param>
+    /// <param name="newVersion">The new version of the game.</param>
+    /// <returns>A string representing the differences between the two versions.</returns>
     public async Task<string> GetManifestDiffAsync(string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
     {
-        var modelManifest = await _fetcher.GetAsync(game, platform, oldRelease, oldVersion);
+        var modelManifest = await _cytrusManifestFetcher.GetAsync(game, platform, oldRelease, oldVersion);
         if (modelManifest is null)
         {
             return "Old client not found.";
         }
 
-        var currentManifest = await _fetcher.GetAsync(game, platform, newRelease, newVersion);
+        var currentManifest = await _cytrusManifestFetcher.GetAsync(game, platform, newRelease, newVersion);
         if (currentManifest is null)
         {
             return "New client not found.";
@@ -51,6 +68,10 @@ public sealed class CytrusService
         return diff;
     }
 
+    /// <summary>
+    /// Sends the Cytrus diff to the Cytrus channel.
+    /// </summary>
+    /// <param name="args">The event arguments containing the diff.</param>
     private static async Task SendCytrusDiffAsync(NewCytrusFileDetectedEventArgs args)
     {
         var channel = ChannelManager.CytrusChannel;
@@ -71,6 +92,10 @@ public sealed class CytrusService
         await channel.SendMessageSafeAsync(Formatter.BlockCode(args.Diff, "json"));
     }
 
+    /// <summary>
+    /// Sends the manifest diff of the windows platform to the Cytrus manifest channel.
+    /// </summary>
+    /// <param name="args">The event arguments containing the diff.</param>
     private async Task SendManifestDiffAsync(NewCytrusFileDetectedEventArgs args)
     {
         var channel = ChannelManager.CytrusManifestChannel;
