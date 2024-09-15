@@ -1,5 +1,4 @@
 ﻿using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
@@ -15,6 +14,8 @@ namespace Cyberia.Salamandra.Commands.Other.Help;
 
 public sealed class HelpCommandModule
 {
+    private static IEnumerable<DiscordApplicationCommand>? s_commands = null;
+
     private readonly CultureService _cultureService;
     private readonly EmbedBuilderService _embedBuilderService;
 
@@ -36,9 +37,13 @@ public sealed class HelpCommandModule
 
         StringBuilder descriptionBuilder = new();
 
-        var commands = await ctx.Client.GetGlobalApplicationCommandsAsync(true);
+        if (s_commands is null)
+        {
+            s_commands = await ctx.Client.GetGlobalApplicationCommandsAsync(true);
+            s_commands = s_commands.OrderBy(x => x.Name);
+        }
 
-        foreach (var command in commands)
+        foreach (var command in s_commands)
         {
             if (command.Name.Equals(HelpInteractionLocalizer.CommandName))
             {

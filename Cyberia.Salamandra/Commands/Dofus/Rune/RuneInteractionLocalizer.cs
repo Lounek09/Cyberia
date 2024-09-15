@@ -10,7 +10,7 @@ public sealed class RuneInteractionLocalizer : InteractionLocalizer
     public const string CommandDescription = "Allow you to calculate the runes obtained during a breakage.";
 
     public const string Item_CommandName = "item";
-    public const string Item_CommandDescription = "Allow you to calculate the number of runes obtainable from an item.";
+    public const string Item_CommandDescription = "Allows you to calculate the number of runes obtainable from an item.";
 
     public const string Item_Value_ParameterName = "name";
     public const string Item_Value_ParameterDescription = "Name of the item to break.";
@@ -19,7 +19,7 @@ public sealed class RuneInteractionLocalizer : InteractionLocalizer
     public const string Item_Quantity_ParameterDescription = "Quantity of item to break.";
 
     public const string Stat_CommandName = "stat";
-    public const string Stat_CommandDescription = "Allow you to calculate the number of runes obtainable from a stat on an item.";
+    public const string Stat_CommandDescription = "Allows you to calculate the number of runes obtainable from a stat on an item.";
 
     public const string Stat_ItemLvl_ParameterName = "level";
     public const string Stat_ItemLvl_ParameterDescription = "Level of the item.";
