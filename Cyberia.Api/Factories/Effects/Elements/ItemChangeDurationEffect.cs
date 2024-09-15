@@ -16,7 +16,7 @@ public sealed record ItemChangeDurationEffect : Effect
 
     internal static ItemChangeDurationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, DateManager.CreateDateTimeFromEffectParameters(parameters));
+        return new(effectId, duration, probability, criteria, effectArea, DateTimeManager.CreateDateTimeFromEffectParameters(parameters));
     }
 
     public override DescriptionString GetDescription()

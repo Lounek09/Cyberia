@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Managers;
 
-public static class DateManager
+public static class DateTimeManager
 {
     public static DateTime CreateDateTimeFromEffectParameters(EffectParameters parameters)
     {

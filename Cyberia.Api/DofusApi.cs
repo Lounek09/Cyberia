@@ -10,10 +10,10 @@ public static class DofusApi
 
     public static readonly string CustomPath = Path.Join(OutputPath, "custom");
 
-    public static ApiConfig Config { get; private set; } = default!;
-    public static Datacenter Datacenter { get; private set; } = default!;
+    public static ApiConfig Config { get; internal set; } = default!;
+    public static Datacenter Datacenter { get; internal set; } = default!;
 
-    internal static HttpClient HttpClient { get; private set; } = default!;
+    internal static HttpClient HttpClient { get; set; } = default!;
 
     public static void Initialize(ApiConfig config)
     {
