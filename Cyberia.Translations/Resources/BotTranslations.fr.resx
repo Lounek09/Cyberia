@@ -545,7 +545,7 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
     <value>Niveau requis :</value>
   </data>
   <data name="ShortRange" xml:space="preserve">
-    <value>PA</value>
+    <value>PO</value>
   </data>
   <data name="ShortActionPoint" xml:space="preserve">
     <value>PA</value>
