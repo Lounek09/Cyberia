@@ -12,7 +12,7 @@ public sealed class ItemsStatsRepository : DofusRepository, IDofusRepository
 
     [JsonPropertyName("ISTA")]
     [JsonInclude]
-    internal List<ItemStatsData> ItemsStatsCore { get; init; }
+    private List<ItemStatsData> ItemsStatsCore { get; init; }
 
     [JsonIgnore]
     public FrozenDictionary<int, ItemStatsData> ItemsStats { get; internal set; }

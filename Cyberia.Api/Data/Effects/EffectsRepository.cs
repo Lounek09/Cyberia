@@ -13,7 +13,7 @@ public sealed class EffectsRepository : DofusRepository, IDofusRepository
 
     [JsonPropertyName("E")]
     [JsonInclude]
-    internal List<EffectData> EffectsCore { get; init; }
+    private List<EffectData> EffectsCore { get; init; }
 
     [JsonIgnore]
     public FrozenDictionary<int, EffectData> Effects { get; internal set; }
