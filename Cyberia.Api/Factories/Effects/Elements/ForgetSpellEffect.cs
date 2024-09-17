@@ -4,17 +4,17 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record CharacterUnlearnSpellEffect : Effect
+public sealed record ForgetSpellEffect : Effect
 {
     public int SpellId { get; init; }
 
-    private CharacterUnlearnSpellEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId)
+    private ForgetSpellEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId)
         : base(id, duration, probability, criteria, effectArea)
     {
         SpellId = spellId;
     }
 
-    internal static CharacterUnlearnSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static ForgetSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }

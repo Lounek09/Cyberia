@@ -78,7 +78,7 @@
     },
     {
       "id": 193,
-      "d": "Ajoute #2 #3 (#1)"
+      "d": "Ajoute #2x #3 (#1)"
     },
     {
       "id": 194,
@@ -94,7 +94,7 @@
     },
     {
       "id": 206,
-      "d": "Ressuscite la cible avec #3 points d'énergie)"
+      "d": "Ressuscite la cible avec #3 points d'énergie"
     },
     {
       "id": 208,
@@ -142,7 +142,7 @@
     },
     {
       "id": 221,
-      "d": "Qu'y a-t-il là dedans ? (#2 #3)"
+      "d": "Qu'y a-t-il là dedans ? (#2x #3)"
     },
     {
       "id": 222,
@@ -337,6 +337,14 @@
     {
       "id": 742,
       "d": "Fragment d'âme de Shushu"
+    },
+    {
+      "id": 777,
+      "d": "-#1{~1~2 à }#2% de dégâts subis permanents",
+      "c": 75,
+      "p": -100,
+      "o": "+",
+      "j": true 
     },
     {
       "id": 780,

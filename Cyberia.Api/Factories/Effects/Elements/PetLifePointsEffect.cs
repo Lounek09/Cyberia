@@ -3,17 +3,17 @@ using Cyberia.Api.Factories.EffectAreas;
 
 namespace Cyberia.Api.Factories.Effects;
 
-public sealed record ItemPetsLifePointsEffect : Effect
+public sealed record PetLifePointsEffect : Effect
 {
     public int LifePoints { get; init; }
 
-    private ItemPetsLifePointsEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int lifePoints)
+    private PetLifePointsEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int lifePoints)
         : base(id, duration, probability, criteria, effectArea)
     {
         LifePoints = lifePoints;
     }
 
-    internal static ItemPetsLifePointsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static PetLifePointsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }
