@@ -245,7 +245,7 @@ public sealed class LangsWatcher
     /// <returns><see langword="true"/> if the download was successful; otherwise, <see langword="false"/>.</returns>
     internal async Task<bool> DownloadLangAsync(Lang lang)
     {
-        Array.ForEach(Directory.GetFiles(OutputPath, "*.swf"), File.Delete);
+        Array.ForEach(Directory.GetFiles(lang.OutputPath, "*.swf"), File.Delete);
 
         try
         {
@@ -259,7 +259,7 @@ public sealed class LangsWatcher
         }
         catch (HttpRequestException e)
         {
-            Log.Error(e, "An error occurred while sending Get request to {Url}", Path.Join(OutputPath, lang.FileRoute));
+            Log.Error(e, "An error occurred while sending Get request to {Url}", Path.Join(BaseUrl, lang.FileRoute));
         }
 
         return false;
