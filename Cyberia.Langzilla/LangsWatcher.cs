@@ -118,7 +118,7 @@ public sealed class LangsWatcher
             return;
         }
 
-        var updatedLangs = GetUpdatedLangs(repository, versions);
+        var updatedLangs = GetUpdatedLangs(repository, versions).ToList();
         foreach (var updatedLang in updatedLangs)
         {
             if (!await DownloadLangAsync(updatedLang))

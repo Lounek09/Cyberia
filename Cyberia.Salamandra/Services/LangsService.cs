@@ -24,7 +24,7 @@ public sealed class LangsService
 
     public async void OnCheckLangFinished(object? _, CheckLangFinishedEventArgs args)
     {
-        if (args.UpdatedLangs.Any())
+        if (args.UpdatedLangs.Count == 0)
         {
             return;
         }

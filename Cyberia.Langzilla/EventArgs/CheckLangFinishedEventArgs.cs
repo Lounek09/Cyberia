@@ -15,14 +15,14 @@ public sealed class CheckLangFinishedEventArgs : System.EventArgs
     /// <summary>
     /// The list of the updated langs.
     /// </summary>
-    public IEnumerable<Lang> UpdatedLangs { get; init; }
+    public IReadOnlyList<Lang> UpdatedLangs { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CheckLangFinishedEventArgs"/> class.
     /// </summary>
     /// <param name="repository">The checked lang repository.</param>
     /// <param name="updatedLangs">The list of updated langs.</param>
-    internal CheckLangFinishedEventArgs(LangsRepository repository, IEnumerable<Lang> updatedLangs)
+    internal CheckLangFinishedEventArgs(LangsRepository repository, IReadOnlyList<Lang> updatedLangs)
     {
         Repository = repository;
         UpdatedLangs = updatedLangs;
