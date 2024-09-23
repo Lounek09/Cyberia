@@ -456,7 +456,7 @@ public static class Emojis
     private static readonly FrozenDictionary<int, string> s_raRunes = new Dictionary<int, string>()
     {
         { 1, "<:rune_ra_fo:1238075593220685866>" },
-        { 2, "<:rune_ra_sa:1238075626095771699>" },
+        { 2, "<:rune_ra_sa:1238075623088459786>" },
         { 3, "<:rune_ra_ine:1238075594537832549>" },
         { 4, "<:rune_ra_vi:1238075624535621702>" },
         { 5, "<:rune_ra_age:1238075556743086121>" },
