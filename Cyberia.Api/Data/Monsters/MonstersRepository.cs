@@ -76,7 +76,7 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.NormalizedName.ToString().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
@@ -125,7 +125,11 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
         foreach (var monsterLocalizedData in localizedRepository.Monsters)
         {
             var monsterData = GetMonsterDataById(monsterLocalizedData.Id);
-            monsterData?.Name.Add(twoLetterISOLanguageName, monsterLocalizedData.Name);
+            if (monsterData is not null)
+            {
+                monsterData.Name.Add(twoLetterISOLanguageName, monsterLocalizedData.Name);
+                monsterData.NormalizedName.Add(twoLetterISOLanguageName, monsterLocalizedData.NormalizedName);
+            }
         }
     }
 

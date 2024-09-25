@@ -10,9 +10,13 @@ internal sealed class MonsterLocalizedData : IDofusData<int>
     [JsonPropertyName("n")]
     public string Name { get; init; }
 
+    [JsonPropertyName("nn")]
+    public string NormalizedName { get; init; }
+
     [JsonConstructor]
     internal MonsterLocalizedData()
     {
         Name = string.Empty;
+        NormalizedName = string.Empty;
     }
 }

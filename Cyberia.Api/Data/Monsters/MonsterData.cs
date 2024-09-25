@@ -13,6 +13,9 @@ public sealed class MonsterData : IDofusData<int>
     [JsonPropertyName("n")]
     public LocalizedString Name { get; init; }
 
+    [JsonPropertyName("nn")]
+    public LocalizedString NormalizedName { get; init; }
+
     [JsonPropertyName("g")]
     public int GfxId { get; init; }
 
