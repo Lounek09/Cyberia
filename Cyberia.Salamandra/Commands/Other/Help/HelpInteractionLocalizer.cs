@@ -17,7 +17,7 @@ public sealed class HelpInteractionLocalizer : InteractionLocalizer
             {
                 { DiscordLocale.en_US, CommandName },
                 { DiscordLocale.en_GB, CommandName },
-                { DiscordLocale.fr, CommandName }
+                { DiscordLocale.fr, "help" }
             };
         }
 

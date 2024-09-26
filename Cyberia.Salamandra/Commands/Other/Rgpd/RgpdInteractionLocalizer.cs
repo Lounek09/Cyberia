@@ -53,7 +53,7 @@ public sealed class RgpdInteractionLocalizer : InteractionLocalizer
             {
                 { DiscordLocale.en_US, Get_CommandDescription },
                 { DiscordLocale.en_GB, Get_CommandDescription },
-                { DiscordLocale.fr, "Permet de recuperer vos données personnelles." }
+                { DiscordLocale.fr, "Permet de récupérer vos données personnelles." }
             };
         }
 
