@@ -1,4 +1,5 @@
-﻿using Cyberia.Salamandra.Managers;
+﻿using Cyberia.Salamandra.Extensions.DSharpPlus;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;

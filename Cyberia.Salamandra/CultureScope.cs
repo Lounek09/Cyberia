@@ -14,13 +14,24 @@ public sealed class CultureScope : IDisposable
     /// Initializes a new instance of the <see cref="CultureScope"/> class.
     /// </summary>
     /// <param name="culture">The culture to set the current thread to.</param>
-    public CultureScope(CultureInfo culture)
+    /// <param name="UICulture">The UI culture to set the current thread to.</param>
+    public CultureScope(CultureInfo culture, CultureInfo UICulture)
     {
         _originalCulture = CultureInfo.CurrentCulture;
         _originalUICulture = CultureInfo.CurrentUICulture;
 
         CultureInfo.CurrentCulture = culture;
-        CultureInfo.CurrentUICulture = culture;
+        CultureInfo.CurrentUICulture = UICulture;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CultureScope"/> class.
+    /// </summary>
+    /// <param name="culture">The culture to set the current thread to.</param>
+    public CultureScope(CultureInfo culture)
+        : this(culture, culture)
+    {
+
     }
 
     /// <summary>
