@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -42,7 +42,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
 
     public static string GetPacket(string search, int selectedPageIndex = 0)
     {
-        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, selectedPageIndex, search);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, selectedPageIndex, search);
     }
 
     protected override IEnumerable<string> GetContent()

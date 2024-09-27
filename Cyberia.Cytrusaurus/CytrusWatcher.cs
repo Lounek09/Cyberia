@@ -52,7 +52,7 @@ public sealed class CytrusWatcher
     /// <summary>
     /// Event that is triggered when a new Cytrus file is detected.
     /// </summary>
-    public static event EventHandler<NewCytrusFileDetectedEventArgs>? NewCytrusFileDetected;
+    public event EventHandler<NewCytrusFileDetectedEventArgs>? NewCytrusFileDetected;
 
     /// <summary>
     /// Starts watching for updates of Cytrus.

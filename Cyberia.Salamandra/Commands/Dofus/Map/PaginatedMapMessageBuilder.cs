@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -41,7 +41,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
                         int.TryParse(parameters[3], out var y))
                     {
                         mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
-                        search = $"{parameters[2]}{PacketManager.ParameterSeparator}{parameters[3]}";
+                        search = $"{parameters[2]}{PacketFormatter.Separator}{parameters[3]}";
                     }
                     break;
                 case MapSearchCategory.MapSubArea:
@@ -73,7 +73,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
 
     public static string GetPacket(MapSearchCategory searchCategory, string search, int selectedPageIndex = 0)
     {
-        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, selectedPageIndex, (int)searchCategory, search);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, selectedPageIndex, (int)searchCategory, search);
     }
 
     protected override IEnumerable<string> GetContent()

@@ -49,7 +49,7 @@ public sealed class CytrusWatcherTests
         };
 
         Mock<EventHandler<NewCytrusFileDetectedEventArgs>> mockHandler = new();
-        CytrusWatcher.NewCytrusFileDetected += mockHandler.Object;
+        _cytrusWatcher.NewCytrusFileDetected += mockHandler.Object;
 
         await _cytrusWatcher.CheckAsync();
 

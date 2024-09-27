@@ -22,15 +22,17 @@ namespace Cyberia.Salamandra.Commands.Data.Langs;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class LangsCommandModule
 {
+    private readonly CachedChannelsManager _cachedChannelsManager;
+    private readonly EmbedBuilderService _embedBuilderService;
     private readonly LangsWatcher _langsWatcher;
     private readonly LangsService _langsService;
-    private readonly EmbedBuilderService _embedBuilderService;
 
-    public LangsCommandModule(LangsWatcher langsWatcher, LangsService langsService, EmbedBuilderService embedBuilderService)
+    public LangsCommandModule(CachedChannelsManager cachedChannelsManager, EmbedBuilderService embedBuilderService, LangsWatcher langsWatcher, LangsService langsService)
     {
+        _cachedChannelsManager = cachedChannelsManager;
+        _embedBuilderService = embedBuilderService;
         _langsWatcher = langsWatcher;
         _langsService = langsService;
-        _embedBuilderService = embedBuilderService;
     }
 
     [Command("check"), Description("[Owner] Launch a check to see if there is a new version of the langs")]
@@ -83,7 +85,7 @@ public sealed class LangsCommandModule
         [Parameter("language"), Description("The language to diff; if empty, diff all language simultaneously")]
         LangLanguage? language = null)
     {
-        if (ChannelManager.LangForumChannel is null)
+        if (_cachedChannelsManager.LangsForumChannel is null)
         {
             await ctx.RespondAsync("The lang forum channel is not defined.");
             return;

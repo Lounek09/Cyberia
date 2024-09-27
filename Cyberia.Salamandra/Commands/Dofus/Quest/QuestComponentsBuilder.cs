@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api.Data.Quests;
-using Cyberia.Salamandra.Managers;
-
+using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Quest;
@@ -24,6 +23,6 @@ public static class QuestComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(PacketManager.SelectComponentBuilder(index), BotTranslations.Select_Quest_Placeholder, options, disable);
+        return new(PacketFormatter.Select(index), BotTranslations.Select_Quest_Placeholder, options, disable);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Maps;
-using Cyberia.Salamandra.Managers;
-
+using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Map;
@@ -16,7 +15,7 @@ public static class MapComponentsBuilder
     public static DiscordButtonComponent PaginatedMapCoordinateButtonBuilder(MapData mapData, bool disable = false)
     {
         return new(DiscordButtonStyle.Success,
-            PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.X}{PacketManager.ParameterSeparator}{mapData.Y}"),
+            PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.Coordinate, $"{mapData.X}{PacketFormatter.Separator}{mapData.Y}"),
             mapData.GetCoordinate(),
             disable);
     }
@@ -47,7 +46,7 @@ public static class MapComponentsBuilder
                     x.GetMapAreaName().WithMaxLength(50));
             });
 
-        return new(PacketManager.SelectComponentBuilder(uniqueIndex), BotTranslations.Select_Map_Placeholder, options, disable);
+        return new(PacketFormatter.Select(uniqueIndex), BotTranslations.Select_Map_Placeholder, options, disable);
     }
 
     public static DiscordSelectComponent MapSubAreasSelectBuilder(int uniqueIndex, IEnumerable<MapSubAreaData> mapSubAreasData, bool disable = false)
@@ -62,7 +61,7 @@ public static class MapComponentsBuilder
                     DofusApi.Datacenter.MapsRepository.GetMapAreaNameById(x.MapAreaId));
             });
 
-        return new(PacketManager.SelectComponentBuilder(uniqueIndex), BotTranslations.Select_MapSubArea_Placeholder, options, disable);
+        return new(PacketFormatter.Select(uniqueIndex), BotTranslations.Select_MapSubArea_Placeholder, options, disable);
     }
 
     public static DiscordSelectComponent MapAreasSelectBuilder(int uniqueIndex, IEnumerable<MapAreaData> mapAreasData, bool disable = false)
@@ -77,6 +76,6 @@ public static class MapComponentsBuilder
                     DofusApi.Datacenter.MapsRepository.GetMapSuperAreaNameById(x.MapSuperAreaId));
             });
 
-        return new(PacketManager.SelectComponentBuilder(uniqueIndex), BotTranslations.Select_MapArea_Placeholder, options, disable);
+        return new(PacketFormatter.Select(uniqueIndex), BotTranslations.Select_MapArea_Placeholder, options, disable);
     }
 }

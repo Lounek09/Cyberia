@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Items;
-using Cyberia.Salamandra.Managers;
-
+using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Rune;
@@ -25,6 +24,6 @@ public static class RuneComponentsBuilder
                     DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x.ItemTypeId));
             });
 
-        return new(PacketManager.SelectComponentBuilder(index), BotTranslations.Select_RuneItem_Splaceholder, options, disable);
+        return new(PacketFormatter.Select(index), BotTranslations.Select_RuneItem_Splaceholder, options, disable);
     }
 }

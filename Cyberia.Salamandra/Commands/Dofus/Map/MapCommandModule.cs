@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Maps;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -82,7 +82,7 @@ public sealed class MapCommandModule
             return;
         }
         
-        await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.Coordinate, $"{x}{PacketManager.ParameterSeparator}{y}")
+        await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.Coordinate, $"{x}{PacketFormatter.Separator}{y}")
             .BuildAsync<DiscordInteractionResponseBuilder>());
     }
 

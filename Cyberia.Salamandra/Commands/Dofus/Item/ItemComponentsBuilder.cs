@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Items;
-using Cyberia.Salamandra.Managers;
-
+using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Item;
@@ -25,6 +24,6 @@ public static class ItemComponentsBuilder
                     DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x.ItemTypeId));
             });
 
-        return new(PacketManager.SelectComponentBuilder(index), BotTranslations.Select_Item_Placeholder, options, disable);
+        return new(PacketFormatter.Select(index), BotTranslations.Select_Item_Placeholder, options, disable);
     }
 }

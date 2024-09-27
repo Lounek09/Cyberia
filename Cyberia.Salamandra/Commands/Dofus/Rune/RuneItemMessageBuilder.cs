@@ -4,7 +4,7 @@ using Cyberia.Api.Data.Items;
 using Cyberia.Api.Managers;
 using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -54,7 +54,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int itemId, int quantity = 1)
     {
-        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, itemId, quantity);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, itemId, quantity);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

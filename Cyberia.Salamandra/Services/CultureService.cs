@@ -8,7 +8,7 @@ using System.Globalization;
 namespace Cyberia.Salamandra.Services;
 
 /// <summary>
-/// Represents a service to set the culture of the current thread to the culture of the user.
+/// Represents a service to handle culture-related logic for Discord users.
 /// </summary>
 public sealed class CultureService
 {
@@ -17,14 +17,14 @@ public sealed class CultureService
     /// <summary>
     /// Initializes a new instance of the <see cref="CultureService"/> class.
     /// </summary>
-    /// <param name="discordCachedUserRepository">The user repository to get the user from.</param>
+    /// <param name="discordCachedUserRepository">The repository to get the cached user from.</param>
     public CultureService(DiscordCachedUserRepository discordCachedUserRepository)
     {
         _discordCachedUserRepository = discordCachedUserRepository;
     }
 
     /// <summary>
-    /// Gets the culture of the user.
+    /// Gets the culture of the user from the database or the provided interaction if not found.
     /// </summary>
     /// <param name="interaction">The interaction to get the culture from.</param>
     /// <returns>The culture of the user.</returns>

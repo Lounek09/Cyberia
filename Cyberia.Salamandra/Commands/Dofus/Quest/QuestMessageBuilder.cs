@@ -3,7 +3,7 @@ using Cyberia.Api.Data.Dialogs;
 using Cyberia.Api.Data.Quests;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -58,7 +58,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int questId, int selectedQuestStepIndex = 0)
     {
-        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, questId, selectedQuestStepIndex);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, questId, selectedQuestStepIndex);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -185,6 +185,6 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             }
         }
 
-        return new(PacketManager.SelectComponentBuilder(selectIndex), BotTranslations.Select_QuestStep_Placeholder, OptionsGenerator(startIndex));
+        return new(PacketFormatter.Select(selectIndex), BotTranslations.Select_QuestStep_Placeholder, OptionsGenerator(startIndex));
     }
 }

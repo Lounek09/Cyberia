@@ -8,7 +8,7 @@ using Cyberia.Salamandra.Commands.Dofus.Breed;
 using Cyberia.Salamandra.Commands.Dofus.Incarnation;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -61,7 +61,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int spellId, int selectedLevel)
     {
-        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, spellId, selectedLevel);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, spellId, selectedLevel);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

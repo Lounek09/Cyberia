@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api.Data.Monsters;
-using Cyberia.Salamandra.Managers;
-
+using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Monster;
@@ -24,6 +23,6 @@ public static class MonsterComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(PacketManager.SelectComponentBuilder(index), BotTranslations.Select_Monster_Placeholder, options, disable);
+        return new(PacketFormatter.Select(index), BotTranslations.Select_Monster_Placeholder, options, disable);
     }
 }

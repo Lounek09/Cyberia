@@ -3,7 +3,7 @@ using Cyberia.Api.Data;
 using Cyberia.Api.Data.Alignments;
 using Cyberia.Api.Data.Monsters;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -60,7 +60,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int monsterId, int selectedGrade = 1)
     {
-        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, monsterId, selectedGrade);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, monsterId, selectedGrade);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

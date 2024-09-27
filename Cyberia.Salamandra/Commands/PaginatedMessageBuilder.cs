@@ -1,5 +1,4 @@
-﻿using Cyberia.Salamandra.Managers;
-
+﻿using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands;
@@ -76,12 +75,12 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
         var disabled = _totalPage == 1;
 
         yield return new(DiscordButtonStyle.Primary,
-            $"{PreviousPacketBuilder()}{PacketManager.ParameterSeparator}P",
+            $"{PreviousPacketBuilder()}{PacketFormatter.Separator}P",
             BotTranslations.Button_Previous,
             disabled);
 
         yield return new(DiscordButtonStyle.Primary,
-            $"{NextPacketBuilder()}{PacketManager.ParameterSeparator}N",
+            $"{NextPacketBuilder()}{PacketFormatter.Separator}N",
             BotTranslations.Button_Next,
             disabled);
     }

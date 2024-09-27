@@ -3,7 +3,7 @@ using Cyberia.Api.Data.Houses;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Commands.Dofus.House;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Entities;
@@ -52,7 +52,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int mapId)
     {
-        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, mapId);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, mapId);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

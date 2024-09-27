@@ -55,12 +55,12 @@ public sealed class LangsWatcher
     /// <summary>
     /// Event that is triggered when a lang check is started.
     /// </summary>
-    public static event EventHandler<CheckLangStartedEventArgs>? CheckLangStarted;
+    public event EventHandler<CheckLangStartedEventArgs>? CheckLangStarted;
 
     /// <summary>
     /// Event that is triggered when a lang check is finished.
     /// </summary>
-    public static event EventHandler<CheckLangFinishedEventArgs>? CheckLangFinished;
+    public event EventHandler<CheckLangFinishedEventArgs>? CheckLangFinished;
 
     /// <summary>
     /// Gets the lang repository from its type and language.

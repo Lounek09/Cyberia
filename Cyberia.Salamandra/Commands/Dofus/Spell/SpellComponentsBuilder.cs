@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Values;
-using Cyberia.Salamandra.Managers;
-
+using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Spell;
@@ -25,6 +24,6 @@ public static class SpellComponentsBuilder
                     x.SpellCategory.GetDescription());
             });
 
-        return new(PacketManager.SelectComponentBuilder(index), BotTranslations.Select_Spell_Placeholder, options, disable);
+        return new(PacketFormatter.Select(index), BotTranslations.Select_Spell_Placeholder, options, disable);
     }
 }

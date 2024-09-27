@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api.Data.Houses;
-using Cyberia.Salamandra.Managers;
-
+using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.House;
@@ -24,6 +23,6 @@ public static class HouseComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(PacketManager.SelectComponentBuilder(uniqueIndex), BotTranslations.Select_House_Placeholder, options, disable);
+        return new(PacketFormatter.Select(uniqueIndex), BotTranslations.Select_House_Placeholder, options, disable);
     }
 }

@@ -10,7 +10,7 @@ using System.Globalization;
 namespace Cyberia.Salamandra.Services;
 
 /// <summary>
-/// Represents a service that provides methods to create a base embed builder.
+/// Represents a service to handle the base embeds creation logic.
 /// </summary>
 public sealed class EmbedBuilderService
 {

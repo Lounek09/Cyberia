@@ -13,15 +13,30 @@ using System.Text;
 
 namespace Cyberia.Salamandra.Services;
 
+/// <summary>
+/// Represents a service to handle langs events and logic.
+/// </summary>
 public sealed class LangsService
 {
     private readonly LangsWatcher _langsWatcher;
+    private readonly CachedChannelsManager _cachedChannelsManager;
 
-    public LangsService(LangsWatcher langsWatcher)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LangsService"/> class.
+    /// </summary>
+    /// <param name="langsWatcher">The watcher to get the langs from.</param>
+    /// <param name="cachedChannelsManager">The manager to get the cached channels from.</param>
+    public LangsService(LangsWatcher langsWatcher, CachedChannelsManager cachedChannelsManager)
     {
         _langsWatcher = langsWatcher;
+        _cachedChannelsManager = cachedChannelsManager;
     }
 
+    /// <summary>
+    /// Handles the event when the check of langs is finished.
+    /// </summary>
+    /// <param name="_">Ignored.</param>
+    /// <param name="args">The event arguments.</param>
     public async void OnCheckLangFinished(object? _, CheckLangFinishedEventArgs args)
     {
         if (args.UpdatedLangs.Count == 0)
@@ -29,7 +44,7 @@ public sealed class LangsService
             return;
         }
 
-        var forum = ChannelManager.LangForumChannel;
+        var forum = _cachedChannelsManager.LangsForumChannel;
         if (forum is null)
         {
             return;
@@ -47,9 +62,15 @@ public sealed class LangsService
         }
     }
 
+    /// <summary>
+    /// Launches a manual diff between two types of langs for the specified language, if the types are equal, it will send the last auto diff.
+    /// </summary>
+    /// <param name="currentType">The current type of langs.</param>
+    /// <param name="modelType">The model type of langs.</param>
+    /// <param name="language">The language of the langs.</param>
     public async Task LaunchManualDiff(LangType currentType, LangType modelType, LangLanguage language)
     {
-        var forum = ChannelManager.LangForumChannel;
+        var forum = _cachedChannelsManager.LangsForumChannel;
         if (forum is null)
         {
             return;
@@ -82,6 +103,12 @@ public sealed class LangsService
         }
     }
 
+    /// <summary>
+    /// Creates a forum post for the auto diff of langs.
+    /// </summary>
+    /// <param name="forum">The forum channel where to create the post.</param>
+    /// <param name="repository">The repository of langs diff.</param>
+    /// <returns>The created thread channel.</returns>
     private static async Task<DiscordThreadChannel> CreateAutoDiffPostAsync(DiscordForumChannel forum, LangsRepository repository)
     {
         var lastChange = repository.LastChange.ToLocalTime();
@@ -119,6 +146,13 @@ public sealed class LangsService
         }
     }
 
+    /// <summary>
+    /// Creates a forum post for the manual diff of langs.
+    /// </summary>
+    /// <param name="forum">The forum channel where to create the post.</param>
+    /// <param name="currentRepository">The current repository of the langs diff.</param>
+    /// <param name="modelRepository">The model repository of the langs diff.</param>
+    /// <returns>The created thread channel.</returns>
     private static async Task<DiscordThreadChannel> CreateManualDiffPostAsync(DiscordForumChannel forum, LangsRepository currentRepository, LangsRepository modelRepository)
     {
         var currentLastChange = currentRepository.LastChange.ToLocalTime();
@@ -150,6 +184,11 @@ public sealed class LangsService
         return post.Channel;
     }
 
+    /// <summary>
+    /// Sends an auto diff message to the specified thread channel.
+    /// </summary>
+    /// <param name="thread">The thread channel where to send the message.</param>
+    /// <param name="lang">The updated lang.</param>
     private static async Task SendAutoDiffLangMessageAsync(DiscordThreadChannel thread, Lang lang)
     {
         var message = new DiscordMessageBuilder()
@@ -168,6 +207,12 @@ public sealed class LangsService
         await thread.SendMessageSafeAsync(message.AddFile($"{lang.Name}.as", fileStream));
     }
 
+    /// <summary>
+    /// Sends a manual diff message to the specified thread channel.
+    /// </summary>
+    /// <param name="thread">The thread channel where to send the message.</param>
+    /// <param name="currentLang">The updated lang.</param>
+    /// <param name="modelLang">The model lang.</param>
     private static async Task SendManualDiffLangMessageAsync(DiscordThreadChannel thread, Lang currentLang, Lang? modelLang)
     {
         var message = new DiscordMessageBuilder()

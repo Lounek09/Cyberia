@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Incarnations;
-using Cyberia.Salamandra.Managers;
-
+using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
@@ -27,6 +26,6 @@ public static class IncarnationComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(PacketManager.SelectComponentBuilder(index), BotTranslations.Select_Incarnation_Placeholder, options, disable);
+        return new(PacketFormatter.Select(index), BotTranslations.Select_Incarnation_Placeholder, options, disable);
     }
 }

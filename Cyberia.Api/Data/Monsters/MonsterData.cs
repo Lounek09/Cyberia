@@ -74,6 +74,7 @@ public sealed class MonsterData : IDofusData<int>
     internal MonsterData()
     {
         Name = LocalizedString.Empty;
+        NormalizedName = LocalizedString.Empty;
         TrelloUrl = string.Empty;
     }
 

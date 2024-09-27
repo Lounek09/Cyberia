@@ -19,7 +19,7 @@ namespace Cyberia.Salamandra.Commands.Other.Rgpd;
 [InteractionLocalizer<RgpdInteractionLocalizer>]
 public sealed class RgpdCommandModule
 {
-    private static JsonSerializerOptions s_jsonOptions = new()
+    private static readonly JsonSerializerOptions s_jsonOptions = new()
     {
         WriteIndented = true
     };

@@ -1,4 +1,5 @@
 ﻿using Cyberia.Salamandra.Extensions.DSharpPlus;
+using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -9,41 +10,30 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Entities;
 using DSharpPlus.Exceptions;
 
-using System.Reflection;
+namespace Cyberia.Salamandra.Services;
 
-namespace Cyberia.Salamandra.Managers;
-
-public static class CommandManager
+/// <summary>
+/// Represents a service to handle commands events.
+/// </summary>
+public sealed class CommandsService
 {
-    public static void RegisterCommands(this CommandsExtension extension, params ulong[] guildIds)
+    private readonly CachedChannelsManager _cachedChannelsManager;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CommandsService"/> class.
+    /// </summary>
+    /// <param name="cachedChannelsManager">The manager to get the channels from.</param>
+    public CommandsService(CachedChannelsManager cachedChannelsManager)
     {
-        Dictionary<string, bool> commandGroups = new()
-        {
-            { "Cyberia.Salamandra.Commands.Admin", true },
-            { "Cyberia.Salamandra.Commands.Data", true },
-            { "Cyberia.Salamandra.Commands.Dofus", false },
-            { "Cyberia.Salamandra.Commands.Other", false }
-        };
-
-        var types = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(x => !string.IsNullOrEmpty(x.Namespace) && x.Name.EndsWith("CommandModule"));
-
-        foreach (var (startNamespace, requiresGuildId) in commandGroups)
-        {
-            var commandModules = types.Where(x => x.Namespace!.StartsWith(startNamespace));
-
-            if (requiresGuildId)
-            {
-                extension.AddCommands(commandModules, guildIds);
-            }
-            else
-            {
-                extension.AddCommands(commandModules);
-            }
-        }
+        _cachedChannelsManager = cachedChannelsManager;
     }
 
-    public static async Task OnCommandErrored(CommandsExtension _, CommandErroredEventArgs args)
+    /// <summary>
+    /// Handles the event when a command execution results in an error.
+    /// </summary>
+    /// <param name="_">Ignored.</param>
+    /// <param name="args">The event arguments.</param>
+    public async Task OnCommandErrored(CommandsExtension _, CommandErroredEventArgs args)
     {
         var ctx = args.Context.As<SlashCommandContext>();
         var exception = args.Exception;
@@ -90,8 +80,8 @@ public static class CommandManager
             Description = $"""
             An error occurred when {Formatter.Sanitize(ctx.User.Username)} ({ctx.User.Mention}) used the {Formatter.Bold(commandName)} command.
             {(commandArgs.Length > 0 ? $"\n{Formatter.Bold("Arguments :")}\n{commandArgs}\n" : string.Empty)}
-            {Formatter.Bold($"{args.Exception.GetType().Name} :")}
-            {Formatter.BlockCode($"{args.Exception.Message}\n{args.Exception.StackTrace}".WithMaxLength(Constant.MaxEmbedDescriptionSize - 500))}
+            {Formatter.Bold($"{exception.GetType().Name} :")}
+            {Formatter.BlockCode($"{exception.Message}\n{exception.StackTrace}".WithMaxLength(Constant.MaxEmbedDescriptionSize - 500))}
             """,
             Color = DiscordColor.Red
         };
@@ -99,7 +89,7 @@ public static class CommandManager
 #if DEBUG
         await ctx.Channel.SendMessageSafeAsync(embed);
 #else
-        await MessageManager.SendErrorMessage(embed);
+        await _messagesManager.SendErrorMessage(embed);
 #endif
 
         if (ctx.Interaction.ResponseState == DiscordInteractionResponseState.Unacknowledged)

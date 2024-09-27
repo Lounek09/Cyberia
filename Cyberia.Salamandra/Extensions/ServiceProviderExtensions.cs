@@ -15,20 +15,20 @@ namespace Cyberia.Salamandra.Extensions;
 public static class ServiceProviderExtensions
 {
     /// <summary>
-    /// Registers Salamandra specific events from the services.
+    /// Registers Salamandra specific events from the service provider.
     /// </summary>
     /// <param name="provider">The service provider to register the events from.</param>
     /// <returns>The service provider.</returns>
     public static IServiceProvider RegisterSalamandraEvents(this IServiceProvider provider)
     {
-        CytrusWatcher.NewCytrusFileDetected += provider.GetRequiredService<CytrusService>().OnNewCytrusDetected;
-        LangsWatcher.CheckLangFinished += provider.GetRequiredService<LangsService>().OnCheckLangFinished;
+        provider.GetRequiredService<CytrusWatcher>().NewCytrusFileDetected += provider.GetRequiredService<CytrusService>().OnNewCytrusDetected;
+        provider.GetRequiredService<LangsWatcher>().CheckLangFinished += provider.GetRequiredService<LangsService>().OnCheckLangFinished;
 
         return provider;
     }
 
     /// <summary>
-    /// Starts the Salamandra discord client from the services.
+    /// Starts the Salamandra discord client from the service provider.
     /// </summary>
     /// <param name="provider">The service provider to start the discord client from.</param>
     /// <returns>The service provider.</returns>

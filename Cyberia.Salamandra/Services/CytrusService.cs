@@ -14,21 +14,29 @@ using System.Text.Json;
 namespace Cyberia.Salamandra.Services;
 
 /// <summary>
-/// Represents a service to handle the Cytrus events.
+/// Represents a service to handle Cytrus events and logic.
 /// </summary>
 public sealed class CytrusService
 {
     private readonly CytrusManifestFetcher _cytrusManifestFetcher;
+    private readonly CachedChannelsManager _cachedChannelsManager;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusService"/> class.
     /// </summary>
     /// <param name="cytrusManifestFetcher">The fetcher to get the manifest from.</param>
-    public CytrusService(CytrusManifestFetcher cytrusManifestFetcher)
+    /// <param name="cachedChannelsManager">The manager to get the cached channels from.</param>
+    public CytrusService(CytrusManifestFetcher cytrusManifestFetcher, CachedChannelsManager cachedChannelsManager)
     {
         _cytrusManifestFetcher = cytrusManifestFetcher;
+        _cachedChannelsManager = cachedChannelsManager;
     }
 
+    /// <summary>
+    /// Handles the event when a new Cytrus is detected.
+    /// </summary>
+    /// <param name="_">Ignored.</param>
+    /// <param name="args">The event arguments.</param>
     public async void OnNewCytrusDetected(object? _, NewCytrusFileDetectedEventArgs args)
     {
         await SendCytrusDiffAsync(args);
@@ -44,7 +52,7 @@ public sealed class CytrusService
     /// <param name="oldVersion">The old version of the game.</param>
     /// <param name="newRelease">The new release of the game.</param>
     /// <param name="newVersion">The new version of the game.</param>
-    /// <returns>A string representing the differences between the two versions.</returns>
+    /// <returns>The differences between the two versions as a string.</returns>
     public async Task<string> GetManifestDiffAsync(string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
     {
         var modelManifest = await _cytrusManifestFetcher.GetAsync(game, platform, oldRelease, oldVersion);
@@ -72,9 +80,9 @@ public sealed class CytrusService
     /// Sends the Cytrus diff to the Cytrus channel.
     /// </summary>
     /// <param name="args">The event arguments containing the diff.</param>
-    private static async Task SendCytrusDiffAsync(NewCytrusFileDetectedEventArgs args)
+    private async Task SendCytrusDiffAsync(NewCytrusFileDetectedEventArgs args)
     {
-        var channel = ChannelManager.CytrusChannel;
+        var channel = _cachedChannelsManager.CytrusChannel;
         if (channel is null)
         {
             return;
@@ -93,12 +101,12 @@ public sealed class CytrusService
     }
 
     /// <summary>
-    /// Sends the manifest diff of the windows platform to the Cytrus manifest channel.
+    /// Sends the manifest diff of the windows platform if it exists to the Cytrus manifest channel.
     /// </summary>
     /// <param name="args">The event arguments containing the diff.</param>
     private async Task SendManifestDiffAsync(NewCytrusFileDetectedEventArgs args)
     {
-        var channel = ChannelManager.CytrusManifestChannel;
+        var channel = _cachedChannelsManager.CytrusManifestChannel;
         if (channel is null)
         {
             return;

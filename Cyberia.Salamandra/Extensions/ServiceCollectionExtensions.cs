@@ -1,4 +1,5 @@
 ﻿using Cyberia.Salamandra.EventHandlers;
+using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.Services;
 
@@ -44,10 +45,10 @@ public static class ServiceCollectionExtensions
             .AddCommandsExtension(
                 setup =>
                 {
-                    setup.CommandErrored += CommandManager.OnCommandErrored;
                     setup.AddProcessor(new SlashCommandProcessor());
                     setup.AddProcessor(new UserCommandProcessor());
                     setup.RegisterCommands(config.AdminGuildId);
+                    setup.CommandErrored += setup.ServiceProvider.GetRequiredService<CommandsService>().OnCommandErrored;
                 },
                 new CommandsConfiguration()
                 {
@@ -56,10 +57,13 @@ public static class ServiceCollectionExtensions
                 }
             );
 
+        services.AddTransient<CommandsService>();
         services.AddTransient<CultureService>();
         services.AddTransient<CytrusService>();
         services.AddTransient<EmbedBuilderService>();
         services.AddTransient<LangsService>();
+
+        services.AddSingleton<CachedChannelsManager>();
 
         return services;
     }

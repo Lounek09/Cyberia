@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -41,7 +41,7 @@ public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<Ite
 
     public static string GetPacket(string search, int selectedPageIndex = 0)
     {
-        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, selectedPageIndex, search);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, selectedPageIndex, search);
     }
 
     protected override IEnumerable<string> GetContent()

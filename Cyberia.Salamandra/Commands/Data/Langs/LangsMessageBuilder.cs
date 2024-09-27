@@ -2,7 +2,7 @@
 using Cyberia.Langzilla.Enums;
 using Cyberia.Langzilla.Models;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -47,7 +47,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(LangType langType, LangLanguage language)
     {
-        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, langType, language);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, langType, language);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -100,7 +100,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     private DiscordSelectComponent TypeSelectBuilder()
     {
         return new DiscordSelectComponent(
-            PacketManager.SelectComponentBuilder(0),
+            PacketFormatter.Select(0),
             "Select a type to display",
             Enum.GetValues<LangType>()
                 .Select(x => new DiscordSelectComponentOption(x.ToStringFast(), GetPacket(x, _repository.Language), isDefault: x == _repository.Type)));
@@ -109,7 +109,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     private DiscordSelectComponent LanguageSelectBuilder()
     {
         return new DiscordSelectComponent(
-            PacketManager.SelectComponentBuilder(1),
+            PacketFormatter.Select(1),
             "Select a language to display",
             Enum.GetValues<LangLanguage>()
                 .Select(x => new DiscordSelectComponentOption(x.ToStringFast(), GetPacket(_repository.Type, x), isDefault: x == _repository.Language)));

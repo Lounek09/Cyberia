@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data.Crafts;
-using Cyberia.Salamandra.Managers;
-
+using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Craft;
@@ -26,6 +25,6 @@ public static class CraftComponentsBuilder
                     x.Id.ToString());
             });
 
-        return new(PacketManager.SelectComponentBuilder(uniqueIndex), BotTranslations.Select_Craft_Placeholder, options, disable);
+        return new(PacketFormatter.Select(uniqueIndex), BotTranslations.Select_Craft_Placeholder, options, disable);
     }
 }

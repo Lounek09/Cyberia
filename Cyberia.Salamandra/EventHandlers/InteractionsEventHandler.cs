@@ -11,7 +11,7 @@ using Cyberia.Salamandra.Commands.Dofus.Monster;
 using Cyberia.Salamandra.Commands.Dofus.Quest;
 using Cyberia.Salamandra.Commands.Dofus.Rune;
 using Cyberia.Salamandra.Commands.Dofus.Spell;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -77,7 +77,7 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
         var response = new DiscordInteractionResponseBuilder().AsEphemeral();
 
         var decomposedPacket = (SelectComponentPacketRegex().IsMatch(args.Id) ? args.Values[0] : args.Id)
-            .Split(PacketManager.ParameterSeparator, StringSplitOptions.RemoveEmptyEntries);
+            .Split(PacketFormatter.Separator, StringSplitOptions.RemoveEmptyEntries);
 
         if (decomposedPacket.Length < 2)
         {

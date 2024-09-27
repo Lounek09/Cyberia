@@ -6,7 +6,7 @@ using Cyberia.Api.Data.Spells;
 using Cyberia.Salamandra.Commands.Dofus.ItemSet;
 using Cyberia.Salamandra.Commands.Dofus.Spell;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -58,7 +58,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
     public static string GetPacket(int breedId)
     {
-        return PacketManager.ComponentBuilder(PacketHeader, PacketVersion, breedId);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, breedId);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()

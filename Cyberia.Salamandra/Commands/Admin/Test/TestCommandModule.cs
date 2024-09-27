@@ -17,6 +17,6 @@ public sealed class TestCommandModule
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.RespondAsync("test");
+        throw new NotImplementedException();
     }
 }
