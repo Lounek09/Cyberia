@@ -5,10 +5,17 @@ using DSharpPlus.EventArgs;
 
 namespace Cyberia.Salamandra.EventHandlers;
 
+/// <summary>
+/// Represents the handler for events related to guilds.
+/// </summary>
 public sealed class GuildsEventHandler : IEventHandler<GuildCreatedEventArgs>, IEventHandler<GuildDeletedEventArgs>
 {
     private readonly CachedChannelsManager _cachedChannelsManager;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GuildsEventHandler"/> class.
+    /// </summary>
+    /// <param name="cachedChannelsManager">The manager to get the cached channels from.</param>
     public GuildsEventHandler(CachedChannelsManager cachedChannelsManager)
     {
         _cachedChannelsManager = cachedChannelsManager;

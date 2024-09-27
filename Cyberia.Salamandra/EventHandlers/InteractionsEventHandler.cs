@@ -23,6 +23,9 @@ using System.Text.RegularExpressions;
 
 namespace Cyberia.Salamandra.EventHandlers;
 
+/// <summary>
+/// Represents the handler for events related to interactions.
+/// </summary>
 public sealed partial class InteractionsEventHandler : IEventHandler<ComponentInteractionCreatedEventArgs>
 {
     private static readonly FrozenDictionary<string, Func<IServiceProvider, int, string[], ICustomMessageBuilder?>> s_factory = new Dictionary<string, Func<IServiceProvider, int, string[], ICustomMessageBuilder?>>()
@@ -59,6 +62,11 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
     private readonly IServiceProvider _serviceProvider;
     private readonly CultureService _cultureService;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InteractionsEventHandler"/> class.
+    /// </summary>
+    /// <param name="serviceProvider">The service provider to get the services from.</param>
+    /// <param name="cultureService">The service to get the culture from.</param>
     public InteractionsEventHandler(IServiceProvider serviceProvider, CultureService cultureService)
     {
         _serviceProvider = serviceProvider;
