@@ -1,5 +1,4 @@
-﻿using Cyberia.Salamandra.Extensions.DSharpPlus;
-using Cyberia.Salamandra.Managers;
+﻿using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -89,7 +88,7 @@ public sealed class CommandsService
 #if DEBUG
         await ctx.Channel.SendMessageSafeAsync(embed);
 #else
-        await _messagesManager.SendErrorMessage(embed);
+        await _cachedChannelsManager.SendErrorMessage(embed);
 #endif
 
         if (ctx.Interaction.ResponseState == DiscordInteractionResponseState.Unacknowledged)
