@@ -92,12 +92,12 @@ public sealed class CytrusService
 
         if (content.Length > Constant.MaxMessageSize)
         {
-            using MemoryStream stream = new(Encoding.UTF8.GetBytes(content));
+            using MemoryStream stream = new(Encoding.UTF8.GetBytes(args.Diff));
             await channel.SendMessageSafeAsync("cytrus_diff.json", stream);
             return;
         }
 
-        await channel.SendMessageSafeAsync(Formatter.BlockCode(args.Diff, "json"));
+        await channel.SendMessageSafeAsync(content);
     }
 
     /// <summary>
