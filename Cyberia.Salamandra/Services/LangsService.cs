@@ -132,17 +132,16 @@ public sealed class LangsService
             postBuilder.AddTag(languageTag);
         }
 
-        while (true)
+    Retry:
+        try
         {
-            try
-            {
-                var post = await forum.CreateForumPostAsync(postBuilder);
-                return post.Channel;
-            }
-            catch (RateLimitException)
-            {
-                await Task.Delay(1000);
-            }
+            var post = await forum.CreateForumPostAsync(postBuilder);
+            return post.Channel;
+        }
+        catch (RateLimitException)
+        {
+            await Task.Delay(1000);
+            goto Retry;
         }
     }
 
