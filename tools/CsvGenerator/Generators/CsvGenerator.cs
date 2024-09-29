@@ -13,15 +13,15 @@ public abstract class CsvGenerator<T>
     public abstract string Name { get; }
     public string FilePath => Path.Join(Program.OutputPath, $"{Name}.csv");
 
+    protected readonly IEnumerable<string> _columns;
     protected readonly IEnumerable<T> _items;
     protected StringBuilder _builder;
 
     protected CsvGenerator(IEnumerable<string> columns, IEnumerable<T> items)
     {
+        _columns = columns;
         _items = items;
         _builder = new();
-
-        _builder.AppendLine(string.Join(c_csvSeparator, columns));
     }
 
     public void Generate()
@@ -29,9 +29,10 @@ public abstract class CsvGenerator<T>
         var startTime = Stopwatch.GetTimestamp();
         Log.Information($"Generating {Name} csv...");
 
+        AppendColumns();
         foreach (var item in _items)
         {
-            InternalGenerate(item);
+            AppendItem(item);
         }
 
         Save();
@@ -40,7 +41,12 @@ public abstract class CsvGenerator<T>
         Log.Information($"Generated {Name} csv in {elapsedTime.Milliseconds}ms");
     }
 
-    protected abstract void InternalGenerate(T item);
+    private void AppendColumns()
+    {
+        _builder.AppendLine(string.Join(c_csvSeparator, _columns));
+    }
+
+    protected abstract void AppendItem(T item);
 
     private void Save()
     {

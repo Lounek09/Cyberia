@@ -32,7 +32,7 @@ public sealed class Dofusbook_ItemsCsvGenerator : CsvGenerator<ItemData>
         "ceremonial"
     ];
 
-    public override string Name => "items";
+    public override string Name => "dofusbook_items";
 
     public Dofusbook_ItemsCsvGenerator(IEnumerable<ItemData> items)
         : base(s_columns, items)
@@ -40,7 +40,7 @@ public sealed class Dofusbook_ItemsCsvGenerator : CsvGenerator<ItemData>
 
     }
 
-    protected override void InternalGenerate(ItemData item)
+    protected override void AppendItem(ItemData item)
     {
         //name
         _builder.AppendCsvString(item.Name);

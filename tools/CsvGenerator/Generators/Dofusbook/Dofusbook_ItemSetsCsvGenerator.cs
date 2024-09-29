@@ -19,7 +19,7 @@ public sealed class Dofusbook_ItemSetsCsvGenerator : CsvGenerator<ItemSetData>
         "effect"
     ];
 
-    public override string Name => "itemsets";
+    public override string Name => "dofusbook_itemsets";
 
     public Dofusbook_ItemSetsCsvGenerator(IEnumerable<ItemSetData> items)
         : base(s_columns, items)
@@ -27,7 +27,7 @@ public sealed class Dofusbook_ItemSetsCsvGenerator : CsvGenerator<ItemSetData>
 
     }
 
-    protected override void InternalGenerate(ItemSetData item)
+    protected override void AppendItem(ItemSetData item)
     {
         for (var i = 0; i < item.Effects.Count; i++)
         {
