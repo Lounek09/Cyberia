@@ -41,6 +41,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Translations", "Cyb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cyberia.Utils", "Cyberia.Utils\Cyberia.Utils.csproj", "{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{A1D659EE-951E-4A5D-89A5-596CA0BF9876}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvGenerator", "tools\CsvGenerator\CsvGenerator.csproj", "{63229342-2A65-476F-86AF-C18E892BF375}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,10 @@ Global
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8BB67A8-4BB1-4E4F-B575-96B4D5B89C2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63229342-2A65-476F-86AF-C18E892BF375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63229342-2A65-476F-86AF-C18E892BF375}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63229342-2A65-476F-86AF-C18E892BF375}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63229342-2A65-476F-86AF-C18E892BF375}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +102,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E9996FEC-8D8C-459C-A144-6B74911A4F2F} = {096057BB-3D5F-4B1F-A4CB-95630A0E2375}
 		{29964EE0-98E6-4108-982F-E89561503B55} = {E9996FEC-8D8C-459C-A144-6B74911A4F2F}
+		{63229342-2A65-476F-86AF-C18E892BF375} = {A1D659EE-951E-4A5D-89A5-596CA0BF9876}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		RESX_NeutralResourcesLanguage = en-US

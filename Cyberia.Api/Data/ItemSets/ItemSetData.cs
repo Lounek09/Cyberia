@@ -51,7 +51,7 @@ public sealed class ItemSetData : IDofusData<int>
         return 1;
     }
 
-    public IEnumerable<IEffect> GetEffects(int nbItem)
+    public IReadOnlyList<IEffect> GetEffects(int nbItem)
     {
         var index = nbItem - 1;
 

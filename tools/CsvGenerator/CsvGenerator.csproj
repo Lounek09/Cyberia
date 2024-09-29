@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.0.2" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Cyberia.Api\Cyberia.Api.csproj" />
+    <ProjectReference Include="..\..\Cyberia.Utils\Cyberia.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Cyberia.Utils" />
+    <Using Include="Cyberia.Utils.Extensions" />
+    <Using Include="Serilog" />
+  </ItemGroup>
+
+</Project>
