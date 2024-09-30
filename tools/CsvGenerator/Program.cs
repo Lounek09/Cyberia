@@ -41,6 +41,7 @@ public static class Program
         Log.Information("Wich generator do you want to run ?");
         Log.Information("1. Dofusbook_Items");
         Log.Information("2. Dofusbook_ItemSets");
+        Log.Information("3. Dofusbook_Titles");
 
         switch (Console.ReadKey(true).Key)
         {
@@ -54,10 +55,17 @@ public static class Program
                 Dofusbook_ItemSetsCsvGenerator dofusbook_itemSetsGenerator = new(DofusApi.Datacenter.ItemSetsRepository.ItemSets.Values);
                 dofusbook_itemSetsGenerator.Generate();
                 break;
+            case ConsoleKey.D3:
+            case ConsoleKey.NumPad3:
+                Dofusbook_TitlesCsvGenerator dofusbook_titlesCsvGenerator = new(DofusApi.Datacenter.TitlesRepository.Titles.Values);
+                dofusbook_titlesCsvGenerator.Generate();
+                break;
             default:
                 Log.Warning("Invalid choice, please try again.");
                 break;
         }
+
+        Console.WriteLine();
 
         goto Retry;
     }

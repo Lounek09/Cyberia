@@ -53,9 +53,6 @@ public sealed class Dofusbook_ItemSetsCsvGenerator : CsvGenerator<ItemSetData>
             _builder.Append(item.Effects.Count);
             _builder.Append(c_csvSeparator);
 
-            //bonus
-            _builder.Append(c_csvSeparator);
-
             //name_fr
             _builder.AppendCsvString(item.Name.ToString("fr"));
             _builder.Append(c_csvSeparator);
