@@ -6,7 +6,7 @@ using Cyberia.Api.Values;
 
 namespace CsvGenerator.Generators.Dofusbook;
 
-public sealed class Dofusbook_SpellsCsvGenerator : CsvGenerator<SpellData>
+public sealed class Dofusbook_SpellsCsvGenerator : DofusCsvGenerator<SpellData>
 {
     private static readonly IReadOnlyList<string> s_columns =
     [

@@ -1,4 +1,5 @@
-﻿using CsvGenerator.Generators.Dofusbook;
+﻿using CsvGenerator.Generators;
+using CsvGenerator.Generators.Dofusbook;
 
 using Cyberia.Api;
 using Cyberia.Langzilla.Enums;
@@ -44,35 +45,25 @@ public static class Program
         Log.Information("3. Dofusbook_Spells");
         Log.Information("4. Dofusbook_Titles");
 
-        switch (Console.ReadKey(true).Key)
+        ICsvGenerator? generator = Console.ReadKey(true).Key switch
         {
-            case ConsoleKey.D1:
-            case ConsoleKey.NumPad1:
-                Dofusbook_ItemsCsvGenerator dofusbook_itemsCsvGenerator = new(DofusApi.Datacenter.ItemsRepository.Items.Values);
-                dofusbook_itemsCsvGenerator.Generate();
-                break;
-            case ConsoleKey.D2:
-            case ConsoleKey.NumPad2:
-                Dofusbook_ItemSetsCsvGenerator dofusbook_itemSetsGenerator = new(DofusApi.Datacenter.ItemSetsRepository.ItemSets.Values);
-                dofusbook_itemSetsGenerator.Generate();
-                break;
-            case ConsoleKey.D3:
-            case ConsoleKey.NumPad3:
-                Dofusbook_SpellsCsvGenerator dofusbook_spellsCsvGenerator = new(DofusApi.Datacenter.SpellsRepository.Spells.Values);
-                dofusbook_spellsCsvGenerator.Generate();
-                break;
-            case ConsoleKey.D4:
-            case ConsoleKey.NumPad4:
-                Dofusbook_TitlesCsvGenerator dofusbook_titlesCsvGenerator = new(DofusApi.Datacenter.TitlesRepository.Titles.Values);
-                dofusbook_titlesCsvGenerator.Generate();
-                break;
-            default:
-                Log.Warning("Invalid choice, please try again.");
-                break;
+            ConsoleKey.D1 or ConsoleKey.NumPad1 => new Dofusbook_ItemsCsvGenerator(DofusApi.Datacenter.ItemsRepository.Items.Values),
+            ConsoleKey.D2 or ConsoleKey.NumPad2 => new Dofusbook_ItemSetsCsvGenerator(DofusApi.Datacenter.ItemSetsRepository.ItemSets.Values),
+            ConsoleKey.D3 or ConsoleKey.NumPad3 => new Dofusbook_SpellsCsvGenerator(DofusApi.Datacenter.SpellsRepository.Spells.Values),
+            ConsoleKey.D4 or ConsoleKey.NumPad4 => new Dofusbook_TitlesCsvGenerator(DofusApi.Datacenter.TitlesRepository.Titles.Values),
+            _ => null
+        };
+
+        if (generator is not null)
+        {
+            generator.Generate();
+        }
+        else
+        {
+            Log.Error("Invalid choice.");
         }
 
         Console.WriteLine();
-
         goto Retry;
     }
 }

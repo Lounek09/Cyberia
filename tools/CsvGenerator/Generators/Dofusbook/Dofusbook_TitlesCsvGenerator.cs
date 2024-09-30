@@ -4,7 +4,7 @@ using Cyberia.Api.Data.Titles;
 
 namespace CsvGenerator.Generators.Dofusbook;
 
-public sealed class Dofusbook_TitlesCsvGenerator : CsvGenerator<TitleData>
+public sealed class Dofusbook_TitlesCsvGenerator : DofusCsvGenerator<TitleData>
 {
     private static readonly IReadOnlyList<string> s_columns =
     [

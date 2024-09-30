@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CsvGenerator.Generators;
 
-public abstract class CsvGenerator<T>
+public abstract class DofusCsvGenerator<T> : ICsvGenerator
     where T : IDofusData
 {
     protected const char c_csvSeparator = ',';
@@ -17,7 +17,7 @@ public abstract class CsvGenerator<T>
     protected readonly IEnumerable<T> _items;
     protected StringBuilder _builder;
 
-    protected CsvGenerator(IEnumerable<string> columns, IEnumerable<T> items)
+    protected DofusCsvGenerator(IEnumerable<string> columns, IEnumerable<T> items)
     {
         _columns = columns;
         _items = items;

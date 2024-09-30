@@ -4,7 +4,7 @@ using Cyberia.Api.Data.ItemSets;
 
 namespace CsvGenerator.Generators.Dofusbook;
 
-public sealed class Dofusbook_ItemSetsCsvGenerator : CsvGenerator<ItemSetData>
+public sealed class Dofusbook_ItemSetsCsvGenerator : DofusCsvGenerator<ItemSetData>
 {
     private static readonly IReadOnlyList<string> s_columns =
     [
