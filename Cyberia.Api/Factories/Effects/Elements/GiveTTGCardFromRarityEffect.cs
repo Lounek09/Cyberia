@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Extensions;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.EffectAreas;
-using Cyberia.Api.Values;
+using Cyberia.Api.Enums;
 
 namespace Cyberia.Api.Factories.Effects;
 

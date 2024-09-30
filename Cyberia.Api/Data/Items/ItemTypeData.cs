@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Factories.EffectAreas;
-using Cyberia.Api.Values;
+using Cyberia.Api.Enums;
 
 using System.Text.Json.Serialization;
 

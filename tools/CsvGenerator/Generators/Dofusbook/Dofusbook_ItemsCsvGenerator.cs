@@ -1,7 +1,7 @@
 ﻿using CsvGenerator.Extensions;
 
 using Cyberia.Api.Data.Items;
-using Cyberia.Api.Values;
+using Cyberia.Api.Enums;
 
 namespace CsvGenerator.Generators.Dofusbook;
 

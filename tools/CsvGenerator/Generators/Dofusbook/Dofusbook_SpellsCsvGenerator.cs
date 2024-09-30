@@ -2,7 +2,7 @@
 
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Values;
+using Cyberia.Api.Enums;
 
 namespace CsvGenerator.Generators.Dofusbook;
 

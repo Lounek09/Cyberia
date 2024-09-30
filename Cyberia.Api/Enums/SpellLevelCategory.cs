@@ -1,4 +1,4 @@
-﻿namespace Cyberia.Api.Values;
+﻿namespace Cyberia.Api.Enums;
 
 public enum SpellLevelCategory
 {
