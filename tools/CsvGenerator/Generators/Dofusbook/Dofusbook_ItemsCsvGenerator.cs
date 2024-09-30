@@ -2,6 +2,7 @@
 
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Enums;
+using Cyberia.Api.Factories.Effects;
 
 namespace CsvGenerator.Generators.Dofusbook;
 
@@ -31,6 +32,7 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         "ec",
         "one_hand",
         "ceremonial",
+        "incarnation",
         "craft"
     ];
 
@@ -82,6 +84,9 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
 
     protected override void AppendItem(ItemData item)
     {
+        var itemStatsData = item.GetItemStatsData();
+        var incarnationData = item.GetIncarnationData();
+
         //name
         _builder.AppendCsvString(item.Name);
         _builder.Append(c_csvSeparator);
@@ -140,10 +145,20 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         _builder.Append(c_csvSeparator);
 
         //effect
-        var itemStatData = item.GetItemStatsData();
-        if (itemStatData is not null)
+        List<IEffect> effects = [];
+        if (itemStatsData is not null)
         {
-            _builder.AppendEffects(itemStatData.Effects);
+            effects.AddRange(itemStatsData.Effects);
+        }
+
+        if (incarnationData is not null)
+        {
+            effects.AddRange(incarnationData.Effects);
+        }
+
+        if (effects.Count > 0)
+        {
+            _builder.AppendEffects(effects);
         }
         _builder.Append(c_csvSeparator);
 
@@ -186,6 +201,13 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
 
         //ceremonial
         if (item.Ceremonial)
+        {
+            _builder.Append('x');
+        }
+        _builder.Append(c_csvSeparator);
+
+        //incarnation
+        if (incarnationData is not null)
         {
             _builder.Append('x');
         }
