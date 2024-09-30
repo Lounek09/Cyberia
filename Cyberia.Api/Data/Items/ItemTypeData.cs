@@ -7,6 +7,10 @@ namespace Cyberia.Api.Data.Items;
 
 public sealed class ItemTypeData : IDofusData<int>
 {
+    public const int BowKennelCertificate = 77;
+    public const int Gifts = 89;
+    public const int ShushuSoulFragment = 115;
+
     public static readonly IReadOnlyList<int> NonEnhanceableTypesWeapon = [20, 21, 22, 102, 114];
 
     [JsonPropertyName("id")]

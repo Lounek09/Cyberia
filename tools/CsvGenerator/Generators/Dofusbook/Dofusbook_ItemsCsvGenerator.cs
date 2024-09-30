@@ -1,6 +1,7 @@
 ﻿using CsvGenerator.Extensions;
 
 using Cyberia.Api.Data.Items;
+using Cyberia.Api.Values;
 
 namespace CsvGenerator.Generators.Dofusbook;
 
@@ -29,7 +30,31 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         "cc",
         "ec",
         "one_hand",
-        "ceremonial"
+        "ceremonial",
+        "craft"
+    ];
+
+    private static readonly IReadOnlyList<ItemSuperType> s_filteredItemSuperType =
+    [
+        ItemSuperType.None,
+        ItemSuperType.Quest,
+        ItemSuperType.Mutation,
+        ItemSuperType.FoodBoost,
+        ItemSuperType.Blessing,
+        ItemSuperType.Curse,
+        ItemSuperType.RoleplayBuff,
+        ItemSuperType.FollowingCharacter,
+        ItemSuperType.LivingItem,
+        ItemSuperType.FullSoulStone,
+        ItemSuperType.TTGCard,
+        ItemSuperType.Tonic
+    ];
+
+    private static readonly IReadOnlyList<int> s_filteredItemType =
+    [
+        ItemTypeData.BowKennelCertificate,
+        ItemTypeData.Gifts,
+        ItemTypeData.ShushuSoulFragment
     ];
 
     public override string Name => "dofusbook_items";
@@ -38,6 +63,21 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         : base(s_columns, items)
     {
 
+    }
+
+    protected override IEnumerable<ItemData> FilteredItems()
+    {
+        return _items.Where(x =>
+        {
+            var itemTypeData = x.GetItemTypeData();
+            if (itemTypeData is null)
+            {
+                return false;
+            }
+
+            return !s_filteredItemSuperType.Contains(itemTypeData.ItemSuperType) &&
+                !s_filteredItemType.Contains(itemTypeData.Id);
+        });
     }
 
     protected override void AppendItem(ItemData item)
@@ -148,6 +188,14 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         if (item.Ceremonial)
         {
             _builder.Append('x');
+        }
+        _builder.Append(c_csvSeparator);
+
+        //craft
+        var craftData = item.GetCraftData();
+        if (craftData is not null)
+        {
+            _builder.AppendCraft(craftData);
         }
         _builder.AppendLine();
     }
