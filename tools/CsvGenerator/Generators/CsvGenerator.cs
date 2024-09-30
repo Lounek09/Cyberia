@@ -30,7 +30,7 @@ public abstract class CsvGenerator<T>
         Log.Information($"Generating {Name} csv...");
 
         AppendColumns();
-        foreach (var item in _items)
+        foreach (var item in FilteredItems())
         {
             AppendItem(item);
         }
@@ -45,6 +45,12 @@ public abstract class CsvGenerator<T>
     {
         _builder.AppendLine(string.Join(c_csvSeparator, _columns));
     }
+
+    protected virtual IEnumerable<T> FilteredItems()
+    {
+        return _items;
+    }
+
 
     protected abstract void AppendItem(T item);
 

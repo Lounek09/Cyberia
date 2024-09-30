@@ -41,7 +41,8 @@ public static class Program
         Log.Information("Wich generator do you want to run ?");
         Log.Information("1. Dofusbook_Items");
         Log.Information("2. Dofusbook_ItemSets");
-        Log.Information("3. Dofusbook_Titles");
+        Log.Information("3. Dofusbook_Spells");
+        Log.Information("4. Dofusbook_Titles");
 
         switch (Console.ReadKey(true).Key)
         {
@@ -57,6 +58,11 @@ public static class Program
                 break;
             case ConsoleKey.D3:
             case ConsoleKey.NumPad3:
+                Dofusbook_SpellsCsvGenerator dofusbook_spellsCsvGenerator = new(DofusApi.Datacenter.SpellsRepository.Spells.Values);
+                dofusbook_spellsCsvGenerator.Generate();
+                break;
+            case ConsoleKey.D4:
+            case ConsoleKey.NumPad4:
                 Dofusbook_TitlesCsvGenerator dofusbook_titlesCsvGenerator = new(DofusApi.Datacenter.TitlesRepository.Titles.Values);
                 dofusbook_titlesCsvGenerator.Generate();
                 break;

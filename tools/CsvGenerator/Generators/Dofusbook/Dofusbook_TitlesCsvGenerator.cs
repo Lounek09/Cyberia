@@ -12,7 +12,7 @@ public sealed class Dofusbook_TitlesCsvGenerator : CsvGenerator<TitleData>
         "official",
         "name_fr",
         "name_en",
-        "name_es",
+        "name_es"
     ];
 
     public override string Name => "dofusbook_titles";
