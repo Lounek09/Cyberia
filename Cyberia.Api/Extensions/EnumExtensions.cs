@@ -1,6 +1,6 @@
-﻿namespace Cyberia.Api.Values;
+﻿namespace Cyberia.Api.Extensions;
 
-public static class ExtendEnum
+public static class EnumExtensions
 {
     public static string GetDescription<T>(this T value)
         where T : Enum

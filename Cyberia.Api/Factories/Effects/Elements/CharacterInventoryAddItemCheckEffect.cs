@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api.Data.Items;
+using Cyberia.Api.Extensions;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Values;

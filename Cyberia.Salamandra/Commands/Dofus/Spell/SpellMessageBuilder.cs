@@ -3,7 +3,7 @@ using Cyberia.Api.Data;
 using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Data.Spells;
-using Cyberia.Api.Values;
+using Cyberia.Api.Extensions;
 using Cyberia.Salamandra.Commands.Dofus.Breed;
 using Cyberia.Salamandra.Commands.Dofus.Incarnation;
 using Cyberia.Salamandra.Enums;

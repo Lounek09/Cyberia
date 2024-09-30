@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Data.Spells;
-using Cyberia.Api.Values;
+using Cyberia.Api.Extensions;
 using Cyberia.Salamandra.Formatters;
 using DSharpPlus.Entities;
 
