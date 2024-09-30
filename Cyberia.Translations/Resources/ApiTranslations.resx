@@ -1104,4 +1104,85 @@
   <data name="Weapons" xml:space="preserve">
     <value>Weapons</value>
   </data>
+  <data name="ItemSuperType.None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="ItemSuperType.Amulet" xml:space="preserve">
+    <value>Amulet</value>
+  </data>
+  <data name="ItemSuperType..Weapon" xml:space="preserve">
+    <value>Weapon</value>
+  </data>
+  <data name="ItemSuperType.Ring" xml:space="preserve">
+    <value>Ring</value>
+  </data>
+  <data name="ItemSuperType.Belt" xml:space="preserve">
+    <value>Belt</value>
+  </data>
+  <data name="ItemSuperType.Boots" xml:space="preserve">
+    <value>Boots</value>
+  </data>
+  <data name="ItemSuperType.Consumable" xml:space="preserve">
+    <value>Consumable</value>
+  </data>
+  <data name="ItemSuperType.Shield" xml:space="preserve">
+    <value>Shield</value>
+  </data>
+  <data name="ItemSuperType.CaptureWeapon" xml:space="preserve">
+    <value>Capture weapon</value>
+  </data>
+  <data name="ItemSuperType.Resource" xml:space="preserve">
+    <value>Resource</value>
+  </data>
+  <data name="ItemSuperType.Hat" xml:space="preserve">
+    <value>Hat</value>
+  </data>
+  <data name="ItemSuperType.Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="ItemSuperType.Pet" xml:space="preserve">
+    <value>Pet</value>
+  </data>
+  <data name="ItemSuperType.Dofus" xml:space="preserve">
+    <value>Dofus</value>
+  </data>
+  <data name="ItemSuperType.Quest" xml:space="preserve">
+    <value>Quest</value>
+  </data>
+  <data name="ItemSuperType.Mutation" xml:space="preserve">
+    <value>Mutation</value>
+  </data>
+  <data name="ItemSuperType.FoodBoost" xml:space="preserve">
+    <value>Food boost</value>
+  </data>
+  <data name="ItemSuperType.Blessing" xml:space="preserve">
+    <value>Blessing</value>
+  </data>
+  <data name="ItemSuperType.Curse" xml:space="preserve">
+    <value>Curse</value>
+  </data>
+  <data name="ItemSuperType.RoleplayBuff" xml:space="preserve">
+    <value>Roleplay buff</value>
+  </data>
+  <data name="ItemSuperType.FollowingCharacter" xml:space="preserve">
+    <value>Following character</value>
+  </data>
+  <data name="ItemSuperType.Mount" xml:space="preserve">
+    <value>Mount</value>
+  </data>
+  <data name="ItemSuperType.LivingItem" xml:space="preserve">
+    <value>LivingItem</value>
+  </data>
+  <data name="ItemSuperType.FullSoulStone" xml:space="preserve">
+    <value>Full soul stone</value>
+  </data>
+  <data name="ItemSuperType.TTGCard" xml:space="preserve">
+    <value>TTG card</value>
+  </data>
+  <data name="ItemSuperType.Rune" xml:space="preserve">
+    <value>Rune</value>
+  </data>
+  <data name="ItemSuperType.Tonic" xml:space="preserve">
+    <value>Tonic</value>
+  </data>
 </root>

@@ -2554,6 +2554,249 @@ namespace Cyberia.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Weapon.
+        /// </summary>
+        public static string ItemSuperType__Weapon {
+            get {
+                return ResourceManager.GetString("ItemSuperType..Weapon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amulet.
+        /// </summary>
+        public static string ItemSuperType_Amulet {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Amulet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string ItemSuperType_Back {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Belt.
+        /// </summary>
+        public static string ItemSuperType_Belt {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Belt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blessing.
+        /// </summary>
+        public static string ItemSuperType_Blessing {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Blessing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boots.
+        /// </summary>
+        public static string ItemSuperType_Boots {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Boots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capture weapon.
+        /// </summary>
+        public static string ItemSuperType_CaptureWeapon {
+            get {
+                return ResourceManager.GetString("ItemSuperType.CaptureWeapon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Consumable.
+        /// </summary>
+        public static string ItemSuperType_Consumable {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Consumable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Curse.
+        /// </summary>
+        public static string ItemSuperType_Curse {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Curse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dofus.
+        /// </summary>
+        public static string ItemSuperType_Dofus {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Dofus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Following character.
+        /// </summary>
+        public static string ItemSuperType_FollowingCharacter {
+            get {
+                return ResourceManager.GetString("ItemSuperType.FollowingCharacter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Food boost.
+        /// </summary>
+        public static string ItemSuperType_FoodBoost {
+            get {
+                return ResourceManager.GetString("ItemSuperType.FoodBoost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full soul stone.
+        /// </summary>
+        public static string ItemSuperType_FullSoulStone {
+            get {
+                return ResourceManager.GetString("ItemSuperType.FullSoulStone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hat.
+        /// </summary>
+        public static string ItemSuperType_Hat {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Hat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LivingItem.
+        /// </summary>
+        public static string ItemSuperType_LivingItem {
+            get {
+                return ResourceManager.GetString("ItemSuperType.LivingItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mount.
+        /// </summary>
+        public static string ItemSuperType_Mount {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Mount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mutation.
+        /// </summary>
+        public static string ItemSuperType_Mutation {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Mutation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string ItemSuperType_None {
+            get {
+                return ResourceManager.GetString("ItemSuperType.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pet.
+        /// </summary>
+        public static string ItemSuperType_Pet {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Pet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quest.
+        /// </summary>
+        public static string ItemSuperType_Quest {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Quest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resource.
+        /// </summary>
+        public static string ItemSuperType_Resource {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Resource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ring.
+        /// </summary>
+        public static string ItemSuperType_Ring {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Ring", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Roleplay buff.
+        /// </summary>
+        public static string ItemSuperType_RoleplayBuff {
+            get {
+                return ResourceManager.GetString("ItemSuperType.RoleplayBuff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rune.
+        /// </summary>
+        public static string ItemSuperType_Rune {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Rune", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shield.
+        /// </summary>
+        public static string ItemSuperType_Shield {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Shield", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tonic.
+        /// </summary>
+        public static string ItemSuperType_Tonic {
+            get {
+                return ResourceManager.GetString("ItemSuperType.Tonic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TTG card.
+        /// </summary>
+        public static string ItemSuperType_TTGCard {
+            get {
+                return ResourceManager.GetString("ItemSuperType.TTGCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
         public static string LastMeal_None {

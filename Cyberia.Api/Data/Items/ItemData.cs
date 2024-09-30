@@ -7,6 +7,7 @@ using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Managers;
+using Cyberia.Api.Values;
 
 using System.Text.Json.Serialization;
 
@@ -131,7 +132,7 @@ public sealed class ItemData : IDofusData<int>
 
     public bool IsQuestItem()
     {
-        return GetItemTypeData()?.ItemSuperTypeId == ItemSuperTypeData.Quest;
+        return GetItemTypeData()?.ItemSuperType == ItemSuperType.Quest;
     }
 
     public bool IsReallyEnhanceable()
@@ -141,7 +142,7 @@ public sealed class ItemData : IDofusData<int>
         {
             return !Ceremonial &&
                 Enhanceable &&
-                ItemSuperTypeData.EnhanceableSuperTypes.Contains(itemTypeData.ItemSuperTypeId) &&
+                ItemSuperTypeData.EnhanceableSuperTypes.Contains(itemTypeData.ItemSuperType) &&
                 !ItemTypeData.NonEnhanceableTypesWeapon.Contains(itemTypeData.Id);
         }
 

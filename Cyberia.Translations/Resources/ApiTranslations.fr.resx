@@ -1104,4 +1104,85 @@
   <data name="Weapons" xml:space="preserve">
     <value>Armes</value>
   </data>
+  <data name="ItemSuperType.None" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
+  <data name="ItemSuperType.Amulet" xml:space="preserve">
+    <value>Amulette</value>
+  </data>
+  <data name="ItemSuperType..Weapon" xml:space="preserve">
+    <value>Arme</value>
+  </data>
+  <data name="ItemSuperType.Ring" xml:space="preserve">
+    <value>Anneau</value>
+  </data>
+  <data name="ItemSuperType.Belt" xml:space="preserve">
+    <value>Ceinture</value>
+  </data>
+  <data name="ItemSuperType.Boots" xml:space="preserve">
+    <value>Bottes</value>
+  </data>
+  <data name="ItemSuperType.Consumable" xml:space="preserve">
+    <value>Consommable</value>
+  </data>
+  <data name="ItemSuperType.Shield" xml:space="preserve">
+    <value>Bouclier</value>
+  </data>
+  <data name="ItemSuperType.CaptureWeapon" xml:space="preserve">
+    <value>Arme de capture</value>
+  </data>
+  <data name="ItemSuperType.Resource" xml:space="preserve">
+    <value>Ressource</value>
+  </data>
+  <data name="ItemSuperType.Hat" xml:space="preserve">
+    <value>Chapeau</value>
+  </data>
+  <data name="ItemSuperType.Back" xml:space="preserve">
+    <value>Dos</value>
+  </data>
+  <data name="ItemSuperType.Pet" xml:space="preserve">
+    <value>Familier</value>
+  </data>
+  <data name="ItemSuperType.Dofus" xml:space="preserve">
+    <value>Dofus</value>
+  </data>
+  <data name="ItemSuperType.Quest" xml:space="preserve">
+    <value>Quête</value>
+  </data>
+  <data name="ItemSuperType.Mutation" xml:space="preserve">
+    <value>Mutation</value>
+  </data>
+  <data name="ItemSuperType.FoodBoost" xml:space="preserve">
+    <value>Nourriture boost</value>
+  </data>
+  <data name="ItemSuperType.Blessing" xml:space="preserve">
+    <value>Bénédiction</value>
+  </data>
+  <data name="ItemSuperType.Curse" xml:space="preserve">
+    <value>Malédiction</value>
+  </data>
+  <data name="ItemSuperType.RoleplayBuff" xml:space="preserve">
+    <value>Roleplay buff</value>
+  </data>
+  <data name="ItemSuperType.FollowingCharacter" xml:space="preserve">
+    <value>Personnage suiveur</value>
+  </data>
+  <data name="ItemSuperType.Mount" xml:space="preserve">
+    <value>Monture</value>
+  </data>
+  <data name="ItemSuperType.LivingItem" xml:space="preserve">
+    <value>Objet vivant</value>
+  </data>
+  <data name="ItemSuperType.FullSoulStone" xml:space="preserve">
+    <value>Pierre d'âme pleine</value>
+  </data>
+  <data name="ItemSuperType.TTGCard" xml:space="preserve">
+    <value>Carte TTG</value>
+  </data>
+  <data name="ItemSuperType.Rune" xml:space="preserve">
+    <value>Rune</value>
+  </data>
+  <data name="ItemSuperType.Tonic" xml:space="preserve">
+    <value>Tonic</value>
+  </data>
 </root>

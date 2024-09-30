@@ -1,12 +1,21 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.Values;
+
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Items;
 
 public sealed class ItemSuperTypeData : IDofusData<int>
 {
-    public const int Quest = 14;
-
-    public static readonly IReadOnlyList<int> EnhanceableSuperTypes = [1, 2, 3, 4, 5, 10, 11];
+    public static readonly IReadOnlyList<ItemSuperType> EnhanceableSuperTypes =
+    [
+        ItemSuperType.Amulet,
+        ItemSuperType.Weapon,
+        ItemSuperType.Ring,
+        ItemSuperType.Belt,
+        ItemSuperType.Boots,
+        ItemSuperType.Hat,
+        ItemSuperType.Back
+    ];
 
     [JsonPropertyName("id")]
     public int Id { get; init; }
