@@ -7,7 +7,9 @@ public static class Formulas
         double withoutAgility = targetRate - crit;
         var withAgility = Math.Floor((targetRate - crit) * 2.9901 / Math.Log(agility + 12));
 
-        return Convert.ToInt32(Math.Max(2, Math.Min(withoutAgility, withAgility)));
+        var critRate = Math.Max(2, Math.Min(withoutAgility, withAgility));
+
+        return critRate > int.MaxValue ? int.MaxValue : Convert.ToInt32(critRate);
 
     }
 
@@ -15,7 +17,7 @@ public static class Formulas
     {
         var agility = Math.Exp((targetCrit - crit) * 2.9901 / 3) - 12;
 
-        return Convert.ToInt32(agility);
+        return agility > int.MaxValue ? int.MaxValue : Convert.ToInt32(agility);
     }
 
     public static double GetEscapePercent(int agility, int enemyAgility)
@@ -27,7 +29,9 @@ public static class Formulas
 
     public static int GetAgilityToEscapeForSure(int enemyAgility)
     {
-        return 25 + 2 * enemyAgility;
+        var agility = 25 + 2D * enemyAgility;
+
+        return agility > int.MaxValue ? int.MaxValue : Convert.ToInt32(agility);
     }
 
     public static TimeSpan GetTimePerCraft(int quantity, int slot)
