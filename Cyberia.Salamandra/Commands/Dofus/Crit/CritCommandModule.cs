@@ -55,8 +55,8 @@ public sealed class CritCommandModule
                 Formatter.Bold($"1/{rate}"),
                 Formatter.Bold($"1/{targetRate}"),
                 Formatter.Bold(number.ToString()),
-                Formatter.Bold(agility.ToString()),
-                Formatter.Bold(agilityNeeded.ToString())));
+                Formatter.Bold(agility.ToFormattedString()),
+                Formatter.Bold(agilityNeeded.ToFormattedString())));
 
         await ctx.RespondAsync(embed);
     }

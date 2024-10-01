@@ -48,10 +48,10 @@ public sealed class EscapeCommandModule
         var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Escape_Author)
             .WithDescription(Translation.Format(
                 BotTranslations.Embed_Escape_Description,
-                Formatter.Bold(agility.ToString()),
+                Formatter.Bold(agility.ToFormattedString()),
                 Formatter.Bold(escapePercent.ToString()),
-                Formatter.Bold(enemyAgility.ToString()),
-                Formatter.Bold(agilityToEscapeForSure.ToString())));
+                Formatter.Bold(enemyAgility.ToFormattedString()),
+                Formatter.Bold(agilityToEscapeForSure.ToFormattedString())));
 
         await ctx.RespondAsync(embed);
     }
