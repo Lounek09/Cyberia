@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Runes;
-using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.Enums;
+using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Managers;
 
@@ -154,7 +154,7 @@ public static class RuneManager
 
     private static double GetRandomMultiplicator()
     {
-        return new Random().NextDouble() * (MaxMultiplicator - MinMultiplicator) + MinMultiplicator;
+        return Random.Shared.NextDouble() * (MaxMultiplicator - MinMultiplicator) + MinMultiplicator;
     }
 
     private static double GetStatAmountExtractable(RuneData runeData, int itemLvl, int statAmount, double multiplicator)

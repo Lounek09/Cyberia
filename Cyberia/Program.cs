@@ -29,6 +29,7 @@ public static class Program
 
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(config)
+            .Enrich.FromLogContext()
             .CreateLogger();
 
         try
@@ -53,17 +54,15 @@ public static class Program
 
             var services = new ServiceCollection();
 
-            services.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder.ClearProviders();
-                loggingBuilder.AddSerilog(Log.Logger);
-            });
+            services.AddLogging(x => x.ClearProviders().AddSerilog());
 
             services.AddDatabase(connectionString);
             services.AddCytrusaurus();
             services.AddLangzilla();
             DofusApi.Initialize(cyberiaConfig.ApiConfig); //TODO: Use DI
             services.AddSalamandra(cyberiaConfig.BotConfig);
+            // Add this last to ensure all dependencies are registered in its internal service collection.
+            // Since it's a WebApplication, it will create a new service collection internally.
             services.AddAmphibian(cyberiaConfig.WebConfig);
 
             var provider = services.BuildServiceProvider();

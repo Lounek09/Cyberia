@@ -42,7 +42,8 @@ public static class ServiceCollectionExtensions
                 config.LogUnknownAuditlogs = false;
                 config.LogUnknownEvents = false;
             })
-            .AddCommandsExtension(
+            .AddCommandsExtension
+            (
                 setup =>
                 {
                     setup.AddProcessor(new SlashCommandProcessor());

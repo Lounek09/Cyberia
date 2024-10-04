@@ -40,8 +40,7 @@ public static class ServiceCollectionExtensions
                 builder.Services.Add(serviceDescriptor);
             }
 
-            builder.Logging.ClearProviders();
-            builder.Logging.AddSerilog(Log.Logger);
+            builder.Logging.ClearProviders().AddSerilog();
 
             builder.WebHost.UseUrls(config.Urls.ToArray());
 
@@ -63,7 +62,6 @@ public static class ServiceCollectionExtensions
             builder.Services.AddRouting(options => options.LowercaseUrls = true);
             builder.Services.AddAuthorization();
             builder.Services.AddRazorPages(options => options.Conventions.Add(new CulturePageRouteModelConvention()));
-
 
             var application = builder.Build();
 
