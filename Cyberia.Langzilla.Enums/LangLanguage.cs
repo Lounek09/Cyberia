@@ -41,7 +41,7 @@ public enum LangLanguage
 /// <summary>
 /// Provides extension methods for the <see cref="LangLanguage"/> enum.
 /// </summary>
-public static class ExtendLangLanguage
+public static class LangLanguageExtensions
 {
     internal static readonly FrozenDictionary<LangLanguage, CultureInfo> _cultures = new Dictionary<LangLanguage, CultureInfo>()
     {

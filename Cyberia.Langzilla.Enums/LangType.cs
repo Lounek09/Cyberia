@@ -19,7 +19,7 @@ public enum LangType
     Temporis
 }
 
-public static class ExtendLangType
+public static class LangTypeExtensions
 {
     public static string ToStringFast(this LangType type)
     {
