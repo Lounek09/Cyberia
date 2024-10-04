@@ -62,7 +62,11 @@ public abstract record Criterion : ICriterion
         var descriptionValue = ApiTranslations.ResourceManager.GetString(descriptionKey);
         if (descriptionValue is null)
         {
-            Log.Warning("Unknown {@Criterion}", this);
+            if (this is not UntranslatedCriterion)
+            {
+                Log.Warning("Unknown {@Criterion}", this);
+            }
+
             return new(ApiTranslations.Criterion_Unknown,
                 Id,
                 $"{Id}{Operator}{string.Join(',', parameters)}");

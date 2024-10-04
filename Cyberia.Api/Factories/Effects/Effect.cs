@@ -78,7 +78,11 @@ public abstract record Effect : IEffect
         var effectData = GetEffectData();
         if (effectData is null)
         {
-            Log.Information("Unknown EffectData {@Effect}", this);
+            if (this is not UntranslatedEffect)
+            {
+                Log.Warning("Unknown EffectData {@Effect}", this);
+            }
+
             return new(ApiTranslations.Effect_Unknown,
                 Id.ToString(),
                 string.Join(',', parameters));

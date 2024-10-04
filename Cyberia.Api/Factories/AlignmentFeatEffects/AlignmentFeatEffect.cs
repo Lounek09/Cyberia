@@ -29,7 +29,11 @@ public abstract record AlignmentFeatEffect : IAlignmentFeatEffect
         var alignmentFeatEffect = GetAlignmentFeatEffectData();
         if (alignmentFeatEffect is null)
         {
-            Log.Information("Unknown AlignmentFeatEffectData {@AlignmentFeatEffect}", this);
+            if (this is not UntranslatedAlignmentFeatEffect)
+            {
+                Log.Warning("Unknown AlignmentFeatEffectData {@AlignmentFeatEffect}", this);
+            }
+
             return new(ApiTranslations.AlignmentFeatEffect_Unknown,
                 Id.ToString(),
                 string.Join(',', parameters));

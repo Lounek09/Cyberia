@@ -49,11 +49,14 @@ public abstract record QuestObjective : IQuestObjective
         var questObjectiveTypeData = QuestObjectiveData.GetQuestObjectiveTypeData();
         if (questObjectiveTypeData is null)
         {
-            Log.Warning("Unknown QuestObjectiveTypeData {@QuestObjective}", this);
+            if (this is not UntranslatedQuestObjective)
+            {
+                Log.Warning("Unknown QuestObjectiveTypeData {@QuestObjective}", this);
+            }
 
             return new(ApiTranslations.QuestObjectiveType_Unknown,
-                QuestObjectiveData.QuestObjectiveTypeId.ToString(),
-                string.Join(',', QuestObjectiveData.Parameters));
+            QuestObjectiveData.QuestObjectiveTypeId.ToString(),
+            string.Join(',', QuestObjectiveData.Parameters));
         }
 
         StringBuilder builder = new(questObjectiveTypeData.Description);
