@@ -78,9 +78,8 @@
    [Service]
    Type=simple
    User=salamandra
-   WorkingDirectory=/var/www/cyberia/App
-   ExecStart=dotnet Cyberia.dll
-   ExecStop=/bin/bash -c 'ps aux | grep Cyberia.dll | grep -v grep | awk \'{print $2}\' | xargs kill -9'
+   ExecStart=/var/www/cyberia/App/Cyberia
+   ExecStop=/bin/bash -c 'ps aux | grep /var/www/cyberia/App/Cyberia | grep -v grep | awk \'{print $2}\' | xargs kill -9'
    Restart=on-failure
    RestartSec=10
 
