@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cyberia.Langzilla.Enums\Cyberia.Langzilla.Enums.csproj" />
     <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
     <ProjectReference Include="..\Cyberia.Translations\Cyberia.Translations.csproj" />
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />

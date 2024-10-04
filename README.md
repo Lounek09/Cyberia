@@ -134,9 +134,9 @@ Below are the detailed descriptions of each variable of the [configuration](/Cyb
 | Variable            | Description                                                                                                   | Type   |
 | :------------------- | :------------------------------------------------------------------------------------------------------------ | :----- |
 | `CdnUrl`             | The URL of the [CDN](https://github.com/Lounek09/Cyberia.Cdn)                                                 | String |
-| `Type`               | The type of lang loaded at startup                                                                            | [LangType](/Cyberia.Langzilla/Enums/LangType.cs) |
-| `BaseLanguage`       | The language of lang from which the base data is loaded, only the translations will be loaded from the others | [LangLanguage](/Cyberia.Langzilla/Enums/LangLanguage.cs) |
-| `SupportedLanguages` | The list of the supported languages, the first one will be the default language.                              | [LangLanguage](/Cyberia.Langzilla/Enums/LangLanguage.cs)[] |
+| `Type`               | The type of lang loaded at startup                                                                            | [LangType](/Cyberia.Langzilla.Enums/LangType.cs) |
+| `BaseLanguage`       | The language of lang from which the base data is loaded, only the translations will be loaded from the others | [LangLanguage](/Cyberia.Langzilla.Enums/LangLanguage.cs) |
+| `SupportedLanguages` | The list of the supported languages, the first one will be the default language.                              | [LangLanguage](/Cyberia.Langzilla.Enums/LangLanguage.cs)[] |
 | `DiscordInviteUrl`   | The invitation URL of the support Discord guild                                                               | String |
 | `GitRepositoryUrl`   | The URL of the repository                                                                                     | String |
 

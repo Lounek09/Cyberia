@@ -1,6 +1,5 @@
 ﻿namespace Cyberia.Langzilla.Enums;
 
-
 /// <summary>
 /// Type of the lang.
 /// </summary>
