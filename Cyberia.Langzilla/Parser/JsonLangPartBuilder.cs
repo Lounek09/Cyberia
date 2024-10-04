@@ -1,12 +1,14 @@
-﻿using System.Text;
+﻿using Cyberia.Langzilla.Parser.Extensions;
+
+using System.Text;
 using System.Text.Json;
 
-namespace Cyberia.Api.Parser;
+namespace Cyberia.Langzilla.Parser;
 
 /// <summary>
 /// Builds lang parts for parsing purposes.
 /// </summary>
-internal sealed class LangPartBuilder
+internal sealed class JsonLangPartBuilder
 {
     private readonly string _name;
     private readonly JsonValueKind _valueKind;
@@ -18,7 +20,7 @@ internal sealed class LangPartBuilder
     /// </summary>
     /// <param name="name">The name of the part to be built.</param>
     /// <param name="valueKind">Indicates whether the part to build should be formatted as an array.</param>
-    private LangPartBuilder(string name, JsonValueKind valueKind)
+    private JsonLangPartBuilder(string name, JsonValueKind valueKind)
     {
         _name = name;
         _valueKind = valueKind;
@@ -30,12 +32,12 @@ internal sealed class LangPartBuilder
     }
 
     /// <summary>
-    /// Creates a new <see cref="LangPartBuilder"/> instance.
+    /// Creates a new <see cref="JsonLangPartBuilder"/> instance.
     /// </summary>
     /// <param name="name">The name of the part.</param>
     /// <param name="keySegment">The key segment used to determine the value kind of the part.</param>
-    /// <returns>A new instance of <see cref="LangPartBuilder"/>.</returns>
-    public static LangPartBuilder Create(string name, ReadOnlySpan<char> keySegment)
+    /// <returns>A new instance of <see cref="JsonLangPartBuilder"/>.</returns>
+    public static JsonLangPartBuilder Create(string name, ReadOnlySpan<char> keySegment)
     {
         var truncatedKeySegment = keySegment[name.Length..];
         var firstChar = truncatedKeySegment.IsEmpty ? '\0' : truncatedKeySegment[0];
@@ -46,7 +48,7 @@ internal sealed class LangPartBuilder
             _ => JsonValueKind.Undefined
         };
 
-        return new LangPartBuilder(name, valueKind);
+        return new JsonLangPartBuilder(name, valueKind);
     }
 
     /// <summary>
@@ -55,7 +57,7 @@ internal sealed class LangPartBuilder
     /// <param name="keySegment">The key segment of the line.</param>
     /// <param name="valueSegment">The value segment of the line.</param>
     /// <returns>A reference to this instance after the append operation has completed.</returns>
-    public LangPartBuilder Append(ReadOnlySpan<char> keySegment, ReadOnlySpan<char> valueSegment)
+    public JsonLangPartBuilder Append(ReadOnlySpan<char> keySegment, ReadOnlySpan<char> valueSegment)
     {
         var truncatedKeySegment = _name.Length > keySegment.Length ? ReadOnlySpan<char>.Empty : keySegment[_name.Length..];
         var sanitizedValueSegment = SanitizeValueSegment(valueSegment);

@@ -1,15 +1,18 @@
 ﻿using Cyberia.Langzilla.Models;
 
+using System.Buffers;
 using System.Text;
 
-namespace Cyberia.Api.Parser;
+namespace Cyberia.Langzilla.Parser;
 
 /// <summary>
 /// Parses lang data into JSON.
 /// </summary>
-public sealed class LangParser : IDisposable
+public sealed class JsonLangParser : IDisposable
 {
-    public static readonly IReadOnlyList<string> IgnoredLangs = ["dungeons", "lang"];
+    internal static readonly SearchValues<char> UpperCaseLettersSearch = SearchValues.Create("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    internal static readonly SearchValues<char> LowerCaseLettersSearch = SearchValues.Create("abcdefghijklmnopqrstuvwxyz");
+    internal static readonly SearchValues<char> DigitsSearch = SearchValues.Create("0123456789");
 
     private const string c_lineSeparator = " = ";
     private static readonly IReadOnlyList<string> s_ignoredEndingLines = ["new Object();", "new Array();"];
@@ -17,14 +20,14 @@ public sealed class LangParser : IDisposable
     private readonly FileStream _fileStream;
     private readonly StreamReader _streamReader;
     private readonly StringBuilder _builder;
-    private readonly Dictionary<string, LangPartBuilder> _partBuilders;
+    private readonly Dictionary<string, JsonLangPartBuilder> _partBuilders;
     private bool _disposed;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="LangParser"/> class.
+    /// Initializes a new instance of the <see cref="JsonLangParser"/> class.
     /// </summary>
     /// <param name="filePath">The path to the lang file to parse.</param>
-    private LangParser(string filePath)
+    private JsonLangParser(string filePath)
     {
         _fileStream = new(filePath, FileMode.Open, FileAccess.Read);
         _streamReader = new(_fileStream);
@@ -33,24 +36,20 @@ public sealed class LangParser : IDisposable
     }
 
     /// <summary>
-    /// Creates a new <see cref="LangParser"/> instance and parses the lang data.
+    /// Creates a new <see cref="JsonLangParser"/> instance and parses the lang data.
     /// </summary>
     /// <param name="lang">The lang to parse.</param>
-    /// <returns>A new instance of <see cref="LangParser"/></returns>
-    public static LangParser Create(Lang lang)
+    /// <returns>A new instance of <see cref="JsonLangParser"/></returns>
+    /// <exception cref="FileNotFoundException">Thrown when the lang file has never been decompiled.</exception>
+    public static JsonLangParser Create(Lang lang)
     {
-        if (IgnoredLangs.Contains(lang.Name))
-        {
-            throw new InvalidOperationException($"The {lang.Name} lang is ignored.");
-        }
-
         var filePath = lang.CurrentDecompiledFilePath;
         if (!File.Exists(filePath))
         {
             throw new FileNotFoundException($"The {lang.Name} lang has never been decompiled.");
         }
 
-        LangParser langParser = new(filePath);
+        JsonLangParser langParser = new(filePath);
         langParser.Parse();
 
         return langParser;
@@ -65,9 +64,6 @@ public sealed class LangParser : IDisposable
         return _builder.ToString();
     }
 
-    /// <summary>
-    /// Releases all resources used by the <see cref="LangParser"/>.
-    /// </summary>
     public void Dispose()
     {
         if (!_disposed)
@@ -84,7 +80,7 @@ public sealed class LangParser : IDisposable
     private void Parse()
     {
         var currentPartName = ReadOnlySpan<char>.Empty;
-        LangPartBuilder? currentBuilder = null;
+        JsonLangPartBuilder? currentBuilder = null;
 
         while (!_streamReader.EndOfStream)
         {
@@ -159,7 +155,7 @@ public sealed class LangParser : IDisposable
         }
 
         var afterDot = keySegment[(indexOfDot + 1)..];
-        if (afterDot.ContainsAny(LangParserUtils.LowerCaseLettersSearch))
+        if (afterDot.ContainsAny(LowerCaseLettersSearch))
         {
             return keySegment;
         }
@@ -173,11 +169,11 @@ public sealed class LangParser : IDisposable
     /// <param name="name">The name of the builder.</param>
     /// <param name="keySegment">The key segment used to determine the value kind of the created part.</param>
     /// <returns>The builder.</returns>
-    private LangPartBuilder GetOrCreateLangPartBuilder(string name, ReadOnlySpan<char> keySegment)
+    private JsonLangPartBuilder GetOrCreateLangPartBuilder(string name, ReadOnlySpan<char> keySegment)
     {
         if (!_partBuilders.TryGetValue(name, out var builder))
         {
-            builder = LangPartBuilder.Create(name, keySegment);
+            builder = JsonLangPartBuilder.Create(name, keySegment);
             _partBuilders.Add(name, builder);
         }
 

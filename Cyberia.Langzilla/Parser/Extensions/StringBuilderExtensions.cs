@@ -1,19 +1,11 @@
-﻿using System.Buffers;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 
-namespace Cyberia.Api.Parser;
+namespace Cyberia.Langzilla.Parser.Extensions;
 
-/// <summary>
-/// Provides utility methods for parsing langs.
-/// </summary>
-public static class LangParserUtils
+internal static class StringBuilderExtensions
 {
-    public static readonly SearchValues<char> UpperCaseLettersSearch = SearchValues.Create("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    public static readonly SearchValues<char> LowerCaseLettersSearch = SearchValues.Create("abcdefghijklmnopqrstuvwxyz");
-    public static readonly SearchValues<char> DigitsSearch = SearchValues.Create("0123456789");
-
-    private static readonly char[] s_hexDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+    private static readonly IReadOnlyList<char> s_hexDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
 
     /// <summary>
     /// Appends the start of a JSON token based on the specified <see cref="JsonValueKind"/>.

@@ -1,5 +1,4 @@
-﻿using Cyberia.Api.Managers;
-using Cyberia.Langzilla;
+﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.Services;
@@ -24,13 +23,15 @@ public sealed class LangsCommandModule
 {
     private readonly CachedChannelsManager _cachedChannelsManager;
     private readonly EmbedBuilderService _embedBuilderService;
+    private readonly LangsParser _langsParser;
     private readonly LangsWatcher _langsWatcher;
     private readonly LangsService _langsService;
 
-    public LangsCommandModule(CachedChannelsManager cachedChannelsManager, EmbedBuilderService embedBuilderService, LangsWatcher langsWatcher, LangsService langsService)
+    public LangsCommandModule(CachedChannelsManager cachedChannelsManager, EmbedBuilderService embedBuilderService, LangsParser langsParser, LangsWatcher langsWatcher, LangsService langsService)
     {
         _cachedChannelsManager = cachedChannelsManager;
         _embedBuilderService = embedBuilderService;
+        _langsParser = langsParser;
         _langsWatcher = langsWatcher;
         _langsService = langsService;
     }
@@ -108,7 +109,7 @@ public sealed class LangsCommandModule
     [Command("parse"), Description("[Owner] Launch the parsing of the langs into JSON")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
-    public static async Task ParseExecuteAsync(SlashCommandContext ctx,
+    public async Task ParseExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type to parse")]
         LangType type,
         [Parameter("language"), Description("The language to parse; if empty, parse all language")]
@@ -119,8 +120,8 @@ public sealed class LangsCommandModule
         var startTime = Stopwatch.GetTimestamp();
 
         var success = language is null
-            ? LangParserManager.ParseAll(type)
-            : LangParserManager.Parse(type, language.Value);
+            ? _langsParser.ParseAll(type)
+            : _langsParser.Parse(type, language.Value);
 
         var elapsedTime = Stopwatch.GetElapsedTime(startTime);
 

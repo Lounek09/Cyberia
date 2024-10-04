@@ -1,5 +1,4 @@
-﻿using Cyberia.Api.Managers;
-using Cyberia.Langzilla.Enums;
+﻿using Cyberia.Langzilla.Enums;
 
 using System.Reflection;
 using System.Text.Json;
@@ -21,7 +20,7 @@ public abstract class DofusRepository
         var constructor = typeof(T).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.EmptyTypes) ??
             throw new EntryPointNotFoundException($"Non public parameter-less constructor for {typeof(T).Name} not found");
 
-        var filePath = Path.Join(LangParserManager.GetOutputDirectoryPath(type, DofusApi.Config.BaseLanguage), T.FileName);
+        var filePath = Path.Join(DofusApi.OutputPath, type.ToStringFast().ToLower(), DofusApi.Config.BaseLanguage.ToStringFast(), T.FileName);
         if (!File.Exists(filePath))
         {
             Log.Warning("File {FilePath} not found to initialize {TypeName}", filePath, typeof(T).Name);

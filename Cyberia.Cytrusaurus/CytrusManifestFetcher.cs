@@ -11,6 +11,10 @@ public sealed class CytrusManifestFetcher
 {
     private readonly CytrusWatcher _cytrusWatcher;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CytrusManifestFetcher"/> class.
+    /// </summary>
+    /// <param name="cytrusWatcher">The Cytrus watcher to get the manifests from.</param>
     public CytrusManifestFetcher(CytrusWatcher cytrusWatcher)
     {
         _cytrusWatcher = cytrusWatcher;
