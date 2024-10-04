@@ -1,5 +1,5 @@
-﻿using Cyberia.Api.Extensions;
-using Cyberia.Api.Enums;
+﻿using Cyberia.Api.Enums;
+using Cyberia.Api.Extensions;
 
 namespace Cyberia.Api.Factories.Criteria;
 

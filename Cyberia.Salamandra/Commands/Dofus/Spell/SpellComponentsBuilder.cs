@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Extensions;
 using Cyberia.Salamandra.Formatters;
+
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Spell;

@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Managers;
 using Cyberia.Api.Enums;
+using Cyberia.Api.Managers;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Services;
 

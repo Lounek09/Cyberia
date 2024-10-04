@@ -4,10 +4,10 @@ using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.ItemStats;
 using Cyberia.Api.Data.Npcs;
 using Cyberia.Api.Data.Pets;
+using Cyberia.Api.Enums;
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Managers;
-using Cyberia.Api.Enums;
 
 using System.Text.Json.Serialization;
 

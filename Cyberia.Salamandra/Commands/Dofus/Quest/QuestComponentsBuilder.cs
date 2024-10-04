@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.Quests;
 using Cyberia.Salamandra.Formatters;
+
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Quest;

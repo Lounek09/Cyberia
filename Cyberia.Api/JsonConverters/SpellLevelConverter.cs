@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.Spells;
-using Cyberia.Api.Factories;
 using Cyberia.Api.Enums;
+using Cyberia.Api.Factories;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;

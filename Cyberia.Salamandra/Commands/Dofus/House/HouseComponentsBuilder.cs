@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.Houses;
 using Cyberia.Salamandra.Formatters;
+
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.House;

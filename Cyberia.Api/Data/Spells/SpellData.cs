@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Incarnations;
-using Cyberia.Api.Managers;
 using Cyberia.Api.Enums;
+using Cyberia.Api.Managers;
 
 using System.Text.Json.Serialization;
 

@@ -1,8 +1,8 @@
 ﻿using Cyberia.Api.Data.States;
+using Cyberia.Api.Enums;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.JsonConverters;
-using Cyberia.Api.Enums;
 
 using System.Text.Json.Serialization;
 

@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.SpeakingItems.Localized;
-using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Enums;
+using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;

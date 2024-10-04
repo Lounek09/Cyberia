@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.ItemSets;
 using Cyberia.Salamandra.Formatters;
+
 using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.ItemSet;

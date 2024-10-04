@@ -1,8 +1,8 @@
 ﻿using CsvGenerator.Extensions;
 
 using Cyberia.Api.Data.Spells;
-using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Enums;
+using Cyberia.Api.Factories.Effects;
 
 namespace CsvGenerator.Generators.Dofusbook;
 
