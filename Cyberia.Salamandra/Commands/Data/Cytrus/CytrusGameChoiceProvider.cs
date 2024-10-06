@@ -1,10 +1,12 @@
 ﻿using Cyberia.Cytrusaurus;
 
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Trees;
+using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
-public sealed class CytrusGameChoiceProvider : ChoiceProvider
+public sealed class CytrusGameChoiceProvider : IChoiceProvider
 {
     private readonly CytrusWatcher _cytrusWatcher;
 
@@ -13,8 +15,13 @@ public sealed class CytrusGameChoiceProvider : ChoiceProvider
         _cytrusWatcher = cytrusWatcher;
     }
 
-    protected override IReadOnlyDictionary<string, object> InternalProvide(CommandParameter parameter)
+    public ValueTask<IEnumerable<DiscordApplicationCommandOptionChoice>> ProvideAsync(CommandParameter parameter)
     {
-        return _cytrusWatcher.Cytrus.Games.ToDictionary(x => x.Key.Capitalize(), x => (object)x.Key);
+        var choices = _cytrusWatcher.Cytrus.Games.Select(x =>
+        {
+            return new DiscordApplicationCommandOptionChoice(x.Key.Capitalize(), x.Key);
+        });
+
+        return ValueTask.FromResult(choices);
     }
 }

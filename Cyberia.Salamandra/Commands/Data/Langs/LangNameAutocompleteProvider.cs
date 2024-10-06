@@ -3,10 +3,12 @@ using Cyberia.Langzilla.Enums;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Data.Langs;
 
-public sealed class LangNameAutocompleteProvider : AutoCompleteProvider
+public sealed class LangNameAutocompleteProvider : IAutoCompleteProvider
 {
     private readonly LangsWatcher _langsWatcher;
 
@@ -15,14 +17,16 @@ public sealed class LangNameAutocompleteProvider : AutoCompleteProvider
         _langsWatcher = langsWatcher;
     }
 
-    protected override IReadOnlyDictionary<string, object> InternalAutoComplete(AutoCompleteContext ctx)
+    public ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         var type = ctx.GetArgument<LangType>("type");
         var language = ctx.GetArgument<LangLanguage>("language");
 
-        return _langsWatcher.GetRepository(type, language)
-           .GetAllByName(ctx.UserInput)
+        var choices = _langsWatcher.GetRepository(type, language)
+           .GetAllByName(ctx.UserInput ?? string.Empty)
            .Take(Constant.MaxChoice)
-           .ToDictionary(x => x.Name, x => (object)x.Name);
+           .Select(x => new DiscordAutoCompleteChoice(x.Name, x.Name));
+
+        return ValueTask.FromResult(choices);
     }
 }

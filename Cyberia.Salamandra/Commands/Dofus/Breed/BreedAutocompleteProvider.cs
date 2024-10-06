@@ -3,10 +3,11 @@ using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 
-public sealed class BreedAutocompleteProvider : IAutoCompleteProvider
+public sealed class BreedAutocompleteProvider : IAutoCompleteProvider //TODO: Use a IChoiceProvider with localized names
 {
     private readonly CultureService _cultureService;
 
@@ -15,10 +16,14 @@ public sealed class BreedAutocompleteProvider : IAutoCompleteProvider
         _cultureService = cultureService;
     }
 
-    public async ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
+    public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
-        return DofusApi.Datacenter.BreedsRepository.Breeds.Values.ToDictionary(x => x.Name.ToString(), x => (object)x.Id);
+        return DofusApi.Datacenter.BreedsRepository.Breeds.Values.Select(x =>
+        {
+            return new DiscordAutoCompleteChoice(x.Name, x.Id);
+        })
+        .ToList();
     }
 }

@@ -3,6 +3,7 @@ using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 
@@ -15,12 +16,16 @@ public sealed class RuneAutocompleteProvider : IAutoCompleteProvider
         _cultureService = cultureService;
     }
 
-    public async ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
+    public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
-        return DofusApi.Datacenter.RunesRepository.GetRunesDataByName(ctx.UserInput)
+        return DofusApi.Datacenter.RunesRepository.GetRunesDataByName(ctx.UserInput ?? string.Empty)
             .Take(Constant.MaxChoice)
-            .ToDictionary(x => x.Name.ToString(), x => (object)x.Name);
+            .Select(x =>
+            {
+                return new DiscordAutoCompleteChoice(x.Name, x.Name);
+            })
+           .ToList();
     }
 }

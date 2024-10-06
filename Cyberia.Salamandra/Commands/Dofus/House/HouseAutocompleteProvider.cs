@@ -3,6 +3,7 @@ using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.House;
 
@@ -15,12 +16,16 @@ public sealed class HouseAutocompleteProvider : IAutoCompleteProvider
         _cultureService = cultureService;
     }
 
-    public async ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
+    public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
-        return DofusApi.Datacenter.HousesRepository.GetHousesDataByName(ctx.UserInput)
+        return DofusApi.Datacenter.HousesRepository.GetHousesDataByName(ctx.UserInput ?? string.Empty)
             .Take(Constant.MaxChoice)
-            .ToDictionary(x => $"{StringExtensions.WithMaxLength(x.Name, 90)} ({x.Id})", x => (object)x.Id.ToString());
+            .Select(x =>
+            {
+                return new DiscordAutoCompleteChoice($"{StringExtensions.WithMaxLength(x.Name, 90)} ({x.Id})", x.Id.ToString());
+            })
+           .ToList();
     }
 }

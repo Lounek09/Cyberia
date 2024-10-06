@@ -3,6 +3,7 @@ using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
+using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
@@ -15,17 +16,17 @@ public sealed class IncarnationAutocompleteProvider : IAutoCompleteProvider
         _cultureService = cultureService;
     }
 
-    public async ValueTask<IReadOnlyDictionary<string, object>> AutoCompleteAsync(AutoCompleteContext ctx)
+    public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
 
-        return DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(ctx.UserInput)
+        return DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(ctx.UserInput ?? string.Empty)
             .Take(Constant.MaxChoice)
-           .ToDictionary(x =>
-               {
-                   var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id);
-                   return $"{itemName.WithMaxLength(90)} ({x.Id})";
-               },
-               x => (object)x.Id.ToString());
+            .Select(x =>
+            {
+                var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id);
+                return new DiscordAutoCompleteChoice($"{itemName.WithMaxLength(90)} ({x.Id})", x.Id.ToString());
+            })
+           .ToList();
     }
 }

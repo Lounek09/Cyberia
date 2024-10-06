@@ -44,12 +44,12 @@ public static class ServiceCollectionExtensions
             })
             .AddCommandsExtension
             (
-                setup =>
+                (provider, setup) =>
                 {
                     setup.AddProcessor(new SlashCommandProcessor());
                     setup.AddProcessor(new UserCommandProcessor());
                     setup.RegisterCommands(config.AdminGuildId);
-                    setup.CommandErrored += setup.ServiceProvider.GetRequiredService<CommandsService>().OnCommandErrored;
+                    setup.CommandErrored += provider.GetRequiredService<CommandsService>().OnCommandErrored;
                 },
                 new CommandsConfiguration()
                 {
@@ -61,8 +61,9 @@ public static class ServiceCollectionExtensions
         services.AddTransient<CommandsService>();
         services.AddTransient<CultureService>();
         services.AddTransient<CytrusService>();
-        services.AddTransient<EmbedBuilderService>();
         services.AddTransient<LangsService>();
+
+        services.AddSingleton<EmbedBuilderService>();
 
         services.AddSingleton<CachedChannelsManager>();
 
