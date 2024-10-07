@@ -29,7 +29,7 @@ public sealed class FightChallengesRepository : DofusRepository, IDofusRepositor
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<FightChallengesLocalizedRepository>(type, language);
 
         foreach (var fightChallengeLocalizedData in localizedRepository.FightChallenges)

@@ -44,7 +44,7 @@ public readonly record struct LocalizedString
         Default = @default;
         _translations = new()
         {
-            { DofusApi.Config.BaseLanguage.ToCulture().TwoLetterISOLanguageName, @default }
+            { DofusApi.Config.BaseLanguage.ToStringFast(), @default }
         };
     }
 

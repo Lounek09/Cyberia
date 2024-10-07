@@ -45,7 +45,7 @@ public sealed class TimeZoneRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<TimeZoneLocalizedRepository>(type, language);
 
         if (localizedRepository.StartDayOfMonths.Count == StartDayOfMonths.Count)

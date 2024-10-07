@@ -38,7 +38,7 @@ public sealed class JobsRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<JobsLocalizedRepository>(type, language);
 
         foreach (var jobLocalizedData in localizedRepository.Jobs)

@@ -40,7 +40,7 @@ public sealed class SpeakingItemsRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<SpeakingItemsLocalizedRepository>(type, language);
 
         foreach (var speakingItemMessageLocalizedData in localizedRepository.SpeakingItemsMessages)

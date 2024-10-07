@@ -107,7 +107,7 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<MonstersLocalizedRepository>(type, language);
 
         foreach (var monsterSuperRaceLocalizedData in localizedRepository.MonsterSuperRaces)

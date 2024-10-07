@@ -146,7 +146,7 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<AlignmentsLocalizedRepository>(type, language);
 
         foreach (var alignmentLocalizedData in localizedRepository.Alignments)

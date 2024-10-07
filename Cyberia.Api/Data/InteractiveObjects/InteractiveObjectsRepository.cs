@@ -41,7 +41,7 @@ public sealed class InteractiveObjectsRepository : DofusRepository, IDofusReposi
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<InteractiveObjectsLocalizedRepository>(type, language);
 
         foreach (var interactiveObjectLocalizedData in localizedRepository.InteractiveObjects)

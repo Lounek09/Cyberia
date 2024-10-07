@@ -130,7 +130,7 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
     {
-        var twoLetterISOLanguageName = language.ToCulture().TwoLetterISOLanguageName;
+        var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<MapsLocalizedRepository>(type, language);
 
         foreach (var mapSuperAreaLocalizedData in localizedRepository.MapSuperAreas)
