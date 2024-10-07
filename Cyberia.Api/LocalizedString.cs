@@ -92,13 +92,18 @@ public readonly record struct LocalizedString
 
     /// <inheritdoc cref="ToString(string)"/>
     /// <param name="culture">The culture to get the translation for.</param>
-    public string ToString(CultureInfo culture) => ToString(culture.TwoLetterISOLanguageName);
+    public string ToString(CultureInfo? culture)
+    {
+       return culture is null
+           ? ToString()
+           : ToString(culture.TwoLetterISOLanguageName);
+    }
 
     /// <summary>
     /// Returns the translation for the current language.
     /// </summary>
     /// <returns>The translation for the current language; if not found, the default value.</returns>
-    public override string ToString() => ToString(CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
+    public override string ToString() => ToString(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
 
     public static implicit operator string(LocalizedString value) => value.ToString();
 }

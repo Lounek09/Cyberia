@@ -141,7 +141,7 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
 
         return alignmentSpecializationData is null
             ? Translation.Format(ApiTranslations.Unknown_Data, id)
-        : alignmentSpecializationData.Name;
+            : alignmentSpecializationData.Name;
     }
 
     protected override void LoadLocalizedData(LangType type, LangLanguage language)
