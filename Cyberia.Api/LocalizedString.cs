@@ -102,7 +102,7 @@ public readonly record struct LocalizedString
     /// <summary>
     /// Returns the translation for the current language.
     /// </summary>
-    /// <returns>The translation for the current language; if not found, the default value.</returns>
+    /// <returns>The translation for the current language</returns>
     public override string ToString() => ToString(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
 
     public static implicit operator string(LocalizedString value) => value.ToString();

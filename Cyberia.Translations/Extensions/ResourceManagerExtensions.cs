@@ -4,6 +4,9 @@ using System.Resources;
 
 namespace Cyberia.Translations.Extensions;
 
+/// <summary>
+/// Provides extension methods for the <see cref="ResourceManager"/> class.
+/// </summary>
 public static class ResourceManagerExtensions
 {
     /// <summary>
