@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cyberia.Langzilla.Enums\Cyberia.Langzilla.Enums.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Compile Update="Resources\ApiTranslations.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

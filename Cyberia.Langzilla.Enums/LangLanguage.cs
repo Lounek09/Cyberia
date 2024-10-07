@@ -43,7 +43,7 @@ public enum LangLanguage
 /// </summary>
 public static class LangLanguageExtensions
 {
-    internal static readonly FrozenDictionary<LangLanguage, CultureInfo> _cultures = new Dictionary<LangLanguage, CultureInfo>()
+    internal static readonly FrozenDictionary<LangLanguage, CultureInfo> _toCultures = new Dictionary<LangLanguage, CultureInfo>()
     {
         { LangLanguage.fr, new CultureInfo("fr") },
         { LangLanguage.en, new CultureInfo("en") },
@@ -66,7 +66,7 @@ public static class LangLanguageExtensions
     /// <returns>The corresponding <see cref="CultureInfo"/>; if not found, the <see cref="CultureInfo"/> for <see cref="LangLanguage.en"/>.</returns>
     public static CultureInfo ToCulture(this LangLanguage language)
     {
-        return _cultures.TryGetValue(language, out var result) ? result : _cultures[LangLanguage.en];
+        return _toCultures.TryGetValue(language, out var result) ? result : _toCultures[LangLanguage.en];
     }
 
     /// <summary>
