@@ -1,6 +1,7 @@
 ﻿using CsvGenerator.Extensions;
 
 using Cyberia.Api.Data.ItemSets;
+using Cyberia.Langzilla.Enums;
 
 namespace CsvGenerator.Generators.Dofusbook;
 
@@ -54,15 +55,15 @@ public sealed class Dofusbook_ItemSetsCsvGenerator : DofusCsvGenerator<ItemSetDa
             _builder.Append(c_csvSeparator);
 
             //name_fr
-            _builder.AppendCsvString(item.Name.ToString("fr"));
+            _builder.AppendCsvString(item.Name.ToString(LangLanguage.fr));
             _builder.Append(c_csvSeparator);
 
             //name_en
-            _builder.AppendCsvString(item.Name.ToString("en"));
+            _builder.AppendCsvString(item.Name.ToString(LangLanguage.en));
             _builder.Append(c_csvSeparator);
 
             //name_es
-            _builder.AppendCsvString(item.Name.ToString("es"));
+            _builder.AppendCsvString(item.Name.ToString(LangLanguage.es));
             _builder.Append(c_csvSeparator);
 
             //count_item

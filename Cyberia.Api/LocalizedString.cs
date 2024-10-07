@@ -36,7 +36,7 @@ public readonly record struct LocalizedString
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="LocalizedString"/> struct.
+    /// Initializes a new instance of the <see cref="LocalizedString"/> struct with a default translation.
     /// </summary>
     /// <param name="default">The default translation.</param>
     public LocalizedString(string @default)
@@ -68,7 +68,7 @@ public readonly record struct LocalizedString
     /// <summary>
     /// Returns the translation for the specified language.
     /// </summary>
-    /// <param name="twoLetterISOLanguageName">The ISO 639-1 two-letter code for the language.</param>
+    /// <param name="twoLetterISOLanguageName">The ISO 639-1 two-letter code of the language to get the translation for.</param>
     /// <returns>The translation for the specified language; if not found, the default value.</returns>
     public string ToString(string twoLetterISOLanguageName)
     {
@@ -77,7 +77,7 @@ public readonly record struct LocalizedString
             return translation;
         }
 
-        var defaultTwoLetterISOLanguageName = DofusApi.Config.SupportedLanguages[0].ToCulture().TwoLetterISOLanguageName;
+        var defaultTwoLetterISOLanguageName = DofusApi.Config.SupportedLanguages[0].ToStringFast();
         if (_translations.TryGetValue(defaultTwoLetterISOLanguageName, out translation) && !string.IsNullOrEmpty(translation))
         {
             return translation;
@@ -85,6 +85,14 @@ public readonly record struct LocalizedString
 
         return Default;
     }
+
+    /// <inheritdoc cref="ToString(string)"/>
+    /// <param name="language">The language to get the translation for.</param>
+    public string ToString(LangLanguage language) => ToString(language.ToStringFast());
+
+    /// <inheritdoc cref="ToString(string)"/>
+    /// <param name="culture">The culture to get the translation for.</param>
+    public string ToString(CultureInfo culture) => ToString(culture.TwoLetterISOLanguageName);
 
     /// <summary>
     /// Returns the translation for the current language.

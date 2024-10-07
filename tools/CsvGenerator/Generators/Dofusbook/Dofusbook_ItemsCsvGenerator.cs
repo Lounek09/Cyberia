@@ -3,6 +3,7 @@
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Enums;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Langzilla.Enums;
 
 namespace CsvGenerator.Generators.Dofusbook;
 
@@ -121,27 +122,27 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         _builder.Append(c_csvSeparator);
 
         //name_fr
-        _builder.AppendCsvString(item.Name.ToString("fr"));
+        _builder.AppendCsvString(item.Name.ToString(LangLanguage.fr));
         _builder.Append(c_csvSeparator);
 
         //name_en
-        _builder.AppendCsvString(item.Name.ToString("en"));
+        _builder.AppendCsvString(item.Name.ToString(LangLanguage.en));
         _builder.Append(c_csvSeparator);
 
         //name_es
-        _builder.AppendCsvString(item.Name.ToString("es"));
+        _builder.AppendCsvString(item.Name.ToString(LangLanguage.es));
         _builder.Append(c_csvSeparator);
 
         //desc_fr
-        _builder.AppendCsvString(item.Description.ToString("fr"));
+        _builder.AppendCsvString(item.Description.ToString(LangLanguage.fr));
         _builder.Append(c_csvSeparator);
 
         //desc_en
-        _builder.AppendCsvString(item.Description.ToString("en"));
+        _builder.AppendCsvString(item.Description.ToString(LangLanguage.en));
         _builder.Append(c_csvSeparator);
 
         //desc_es
-        _builder.AppendCsvString(item.Description.ToString("es"));
+        _builder.AppendCsvString(item.Description.ToString(LangLanguage.es));
         _builder.Append(c_csvSeparator);
 
         //effect
