@@ -36,7 +36,7 @@ public sealed class StatesRepository : DofusRepository, IDofusRepository
             : stateData.Name;
     }
 
-    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    protected override void LoadLocalizedData(LangType type, Language language)
     {
         var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<StatesLocalizedRepository>(type, language);

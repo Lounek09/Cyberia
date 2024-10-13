@@ -20,7 +20,7 @@ public sealed class LangsRepository
     /// <summary>
     /// Gets the language of the langs.
     /// </summary>
-    public LangLanguage Language { get; init; }
+    public Language Language { get; init; }
 
     /// <summary>
     /// Gets the last modified datetime of the langs.

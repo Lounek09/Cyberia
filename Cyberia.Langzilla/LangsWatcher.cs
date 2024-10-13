@@ -18,8 +18,8 @@ public sealed class LangsWatcher
     internal HttpClient HttpClient { get; set; } = default!;
     internal HttpRetryPolicy HttpRetryPolicy { get; set; } = default!;
 
-    private readonly Dictionary<(LangType, LangLanguage), LangsRepository> _langsRepositories = [];
-    private readonly ConcurrentDictionary<(LangType, LangLanguage), Timer> _timers = [];
+    private readonly Dictionary<(LangType, Language), LangsRepository> _langsRepositories = [];
+    private readonly ConcurrentDictionary<(LangType, Language), Timer> _timers = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsWatcher"/> class.
@@ -33,7 +33,7 @@ public sealed class LangsWatcher
 
         foreach (var type in Enum.GetValues<LangType>())
         {
-            foreach (var language in Enum.GetValues<LangLanguage>())
+            foreach (var language in Enum.GetValues<Language>())
             {
                 var outputPath = GetOutputPath(type, language);
                 Directory.CreateDirectory(outputPath);
@@ -68,7 +68,7 @@ public sealed class LangsWatcher
     /// <param name="type">The type of the langs in the repository.</param>
     /// <param name="language">The language of the langs in the repository.</param>
     /// <returns>The lang repository.</returns>
-    public LangsRepository GetRepository(LangType type, LangLanguage language)
+    public LangsRepository GetRepository(LangType type, Language language)
     {
         return _langsRepositories[(type, language)];
     }
@@ -82,7 +82,7 @@ public sealed class LangsWatcher
     /// <param name="interval">The interval between checks.</param>
     public void Watch(LangType type, TimeSpan dueTime, TimeSpan interval)
     {
-        foreach (var language in Enum.GetValues<LangLanguage>())
+        foreach (var language in Enum.GetValues<Language>())
         {
             var repository = GetRepository(type, language);
             Timer timer = new(async _ => await CheckAsync(repository), null, dueTime, interval);
@@ -160,7 +160,7 @@ public sealed class LangsWatcher
     /// <param name="type">The type of the langs.</param>
     /// <param name="language">The language of the langs.</param>
     /// <returns>The output path of the langs.</returns>
-    internal static string GetOutputPath(LangType type, LangLanguage language)
+    internal static string GetOutputPath(LangType type, Language language)
     {
         return Path.Join(OutputPath, type.ToStringFast().ToLower(), language.ToStringFast());
     }

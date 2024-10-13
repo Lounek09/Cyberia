@@ -68,7 +68,7 @@ public sealed class LangsService
     /// <param name="currentType">The current type of langs.</param>
     /// <param name="modelType">The model type of langs.</param>
     /// <param name="language">The language of the langs.</param>
-    public async Task LaunchManualDiff(LangType currentType, LangType modelType, LangLanguage language)
+    public async Task LaunchManualDiff(LangType currentType, LangType modelType, Language language)
     {
         var forum = _cachedChannelsManager.LangsForumChannel;
         if (forum is null)

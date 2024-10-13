@@ -87,27 +87,27 @@ public sealed class Dofusbook_SpellsCsvGenerator : DofusCsvGenerator<SpellData>
             _builder.Append(c_csvSeparator);
 
             //name_fr
-            _builder.AppendCsvString(item.Name.ToString(LangLanguage.fr));
+            _builder.AppendCsvString(item.Name.ToString(Language.fr));
             _builder.Append(c_csvSeparator);
 
             //name_en
-            _builder.AppendCsvString(item.Name.ToString(LangLanguage.en));
+            _builder.AppendCsvString(item.Name.ToString(Language.en));
             _builder.Append(c_csvSeparator);
 
             //name_es
-            _builder.AppendCsvString(item.Name.ToString(LangLanguage.es));
+            _builder.AppendCsvString(item.Name.ToString(Language.es));
             _builder.Append(c_csvSeparator);
 
             //desc_fr
-            _builder.AppendCsvString(item.Description.ToString(LangLanguage.fr));
+            _builder.AppendCsvString(item.Description.ToString(Language.fr));
             _builder.Append(c_csvSeparator);
 
             //desc_en
-            _builder.AppendCsvString(item.Description.ToString(LangLanguage.en));
+            _builder.AppendCsvString(item.Description.ToString(Language.en));
             _builder.Append(c_csvSeparator);
 
             //desc_es
-            _builder.AppendCsvString(item.Description.ToString(LangLanguage.es));
+            _builder.AppendCsvString(item.Description.ToString(Language.es));
             _builder.Append(c_csvSeparator);
 
             //official_level

@@ -32,7 +32,7 @@ public sealed class Lang
     /// Gets the language of the lang.
     /// </summary>
     [JsonPropertyName("language")]
-    public LangLanguage Language { get; init; }
+    public Language Language { get; init; }
 
     /// <summary>
     /// Gets a value indicating whether the lang is new.
@@ -98,7 +98,7 @@ public sealed class Lang
     /// <param name="version">The version of the lang.</param>
     /// <param name="type">The type of the lange.</param>
     /// <param name="language">The language of the lang.</param>
-    internal Lang(string name, int version, LangType type, LangLanguage language)
+    internal Lang(string name, int version, LangType type, Language language)
     {
         Name = name;
         Version = version;

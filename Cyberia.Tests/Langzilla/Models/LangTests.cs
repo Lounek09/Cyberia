@@ -11,7 +11,7 @@ public sealed class LangTests
     [TestInitialize]
     public void Setup()
     {
-        _lang = new("ranks", 1178, LangType.Official, LangLanguage.fr);
+        _lang = new("ranks", 1178, LangType.Official, Language.fr);
     }
 
     #region Diff

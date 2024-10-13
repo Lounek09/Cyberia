@@ -28,7 +28,7 @@ public sealed class LangsParser
     /// <param name="type">The type of langs to parse.</param>
     /// <param name="language">The language of langs to parse.</param>
     /// <returns><see langword="true"/> if the langs were parsed successfully; otherwise, <see langword="false"/>.</returns>
-    public bool Parse(LangType type, LangLanguage language)
+    public bool Parse(LangType type, Language language)
     {
         var repository = _langsWatcher.GetRepository(type, language);
 
@@ -62,6 +62,6 @@ public sealed class LangsParser
     /// <returns><see langword="true"/> if the langs for each languages were parsed successfully; otherwise, <see langword="false"/>.</returns>"
     public bool ParseAll(LangType type)
     {
-        return Enum.GetValues<LangLanguage>().All(x => Parse(type, x));
+        return Enum.GetValues<Language>().All(x => Parse(type, x));
     }
 }

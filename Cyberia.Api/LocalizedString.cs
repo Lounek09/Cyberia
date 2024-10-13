@@ -88,7 +88,7 @@ public readonly record struct LocalizedString
 
     /// <inheritdoc cref="ToString(string)"/>
     /// <param name="language">The language to get the translation for.</param>
-    public string ToString(LangLanguage language) => ToString(language.ToStringFast());
+    public string ToString(Language language) => ToString(language.ToStringFast());
 
     /// <inheritdoc cref="ToString(string)"/>
     /// <param name="culture">The culture to get the translation for.</param>

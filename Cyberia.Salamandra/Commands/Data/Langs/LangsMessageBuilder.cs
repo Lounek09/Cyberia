@@ -33,7 +33,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         if (version == PacketVersion &&
             parameters.Length > 1 &&
             Enum.TryParse(parameters[0], out LangType langType) &&
-            Enum.TryParse(parameters[1], out LangLanguage language))
+            Enum.TryParse(parameters[1], out Language language))
         {
             var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
             var langsWatcher = provider.GetRequiredService<LangsWatcher>();
@@ -45,7 +45,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         return null;
     }
 
-    public static string GetPacket(LangType langType, LangLanguage language)
+    public static string GetPacket(LangType langType, Language language)
     {
         return PacketFormatter.Action(PacketHeader, PacketVersion, langType, language);
     }
@@ -111,7 +111,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         return new DiscordSelectComponent(
             PacketFormatter.Select(1),
             "Select a language to display",
-            Enum.GetValues<LangLanguage>()
+            Enum.GetValues<Language>()
                 .Select(x => new DiscordSelectComponentOption(x.ToStringFast(), GetPacket(_repository.Type, x), isDefault: x == _repository.Language)));
     }
 }

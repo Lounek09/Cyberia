@@ -21,7 +21,7 @@ public sealed class LangsWatcherTests
             HttpRetryPolicy = SharedData.HttpRetryPolicy
         };
         _versions = File.ReadAllText(SharedData.VersionsPath);
-        _lang = new("ranks", 1178, LangType.Official, LangLanguage.fr);
+        _lang = new("ranks", 1178, LangType.Official, Language.fr);
     }
 
     [TestCleanup]
@@ -50,7 +50,7 @@ public sealed class LangsWatcherTests
     [TestMethod]
     public void GetOutputPath_WhenTypeIsOfficialAndLanguageFrench_ReturnsCorrectPath()
     {
-        var result = LangsWatcher.GetOutputPath(LangType.Official, LangLanguage.fr);
+        var result = LangsWatcher.GetOutputPath(LangType.Official, Language.fr);
 
         Assert.AreEqual(Path.Join(LangsWatcher.OutputPath, "official", "fr"), result);
     }

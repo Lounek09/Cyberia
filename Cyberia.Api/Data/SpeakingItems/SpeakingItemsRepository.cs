@@ -38,7 +38,7 @@ public sealed class SpeakingItemsRepository : DofusRepository, IDofusRepository
         return SpeakingItemsTriggers.FirstOrDefault(x => x.TriggerId == triggerId && x.Corpulence == corpulence);
     }
 
-    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    protected override void LoadLocalizedData(LangType type, Language language)
     {
         var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<SpeakingItemsLocalizedRepository>(type, language);

@@ -24,7 +24,7 @@ public sealed class LangsRepositoryTests
 
         Assert.IsNotNull(repository);
         Assert.AreEqual(LangType.Official, repository.Type);
-        Assert.AreEqual(LangLanguage.fr, repository.Language);
+        Assert.AreEqual(Language.fr, repository.Language);
         Assert.AreEqual(DateTime.Parse("2024-03-19T08:24:23Z").ToUniversalTime(), repository.LastChange);
         Assert.AreNotEqual(0, repository.Langs.Count);
         Assert.AreEqual(Path.Join(LangsWatcher.OutputPath, "official", "fr"), repository.OutputPath);
@@ -46,7 +46,7 @@ public sealed class LangsRepositoryTests
         Assert.AreEqual("items", lang.Name);
         Assert.AreEqual(1184, lang.Version);
         Assert.AreEqual(LangType.Official, lang.Type);
-        Assert.AreEqual(LangLanguage.fr, lang.Language);
+        Assert.AreEqual(Language.fr, lang.Language);
         Assert.IsTrue(lang.New);
         Assert.AreEqual(Path.Join(LangsWatcher.OutputPath, "official", "fr", "items"), lang.OutputPath);
         Assert.AreEqual("items_fr_1184.swf", lang.FileName);

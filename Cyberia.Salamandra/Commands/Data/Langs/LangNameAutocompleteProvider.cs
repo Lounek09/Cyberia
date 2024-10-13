@@ -20,7 +20,7 @@ public sealed class LangNameAutocompleteProvider : IAutoCompleteProvider
     public ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         var type = ctx.GetArgument<LangType>("type");
-        var language = ctx.GetArgument<LangLanguage>("language");
+        var language = ctx.GetArgument<Language>("language");
 
         var choices = _langsWatcher.GetRepository(type, language)
            .GetAllByName(ctx.UserInput ?? string.Empty)

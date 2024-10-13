@@ -46,7 +46,7 @@ public abstract class DofusRepository
 
         repository.LoadCustomData();
 
-        foreach (var language in Enum.GetValues<LangLanguage>())
+        foreach (var language in Enum.GetValues<Language>())
         {
             if (language == DofusApi.Config.BaseLanguage)
             {
@@ -74,7 +74,7 @@ public abstract class DofusRepository
     /// </summary>
     /// <param name="type">The type of the lang to load.</param>
     /// <param name="language">The language of the lang to load.</param>
-    protected virtual void LoadLocalizedData(LangType type, LangLanguage language)
+    protected virtual void LoadLocalizedData(LangType type, Language language)
     {
 
     }

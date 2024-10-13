@@ -27,7 +27,7 @@ public sealed class SkillsRepository : DofusRepository, IDofusRepository
         return skillData;
     }
 
-    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    protected override void LoadLocalizedData(LangType type, Language language)
     {
         var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<SkillsLocalizedRepository>(type, language);

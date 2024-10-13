@@ -15,7 +15,7 @@ public abstract class DofusLocalizedRepository
     /// <param name="language">The language of the lang to load.</param>
     /// <returns>The loaded localized repository.</returns>
     /// <exception cref="EntryPointNotFoundException">Thrown when the internal constructor of the repository is not found.</exception>
-    internal static T Load<T>(LangType type, LangLanguage language)
+    internal static T Load<T>(LangType type, Language language)
         where T : DofusLocalizedRepository, IDofusRepository
     {
         var constructor = typeof(T).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.EmptyTypes) ??

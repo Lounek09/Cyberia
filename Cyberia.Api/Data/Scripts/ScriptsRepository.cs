@@ -27,7 +27,7 @@ public sealed class ScriptsRepository : DofusRepository, IDofusRepository
         return scriptDialog;
     }
 
-    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    protected override void LoadLocalizedData(LangType type, Language language)
     {
         var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<ScriptsLocalizedRepository>(type, language);

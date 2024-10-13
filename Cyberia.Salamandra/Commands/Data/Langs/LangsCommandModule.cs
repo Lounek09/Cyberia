@@ -43,7 +43,7 @@ public sealed class LangsCommandModule
         [Parameter("type"), Description("The type to check")]
         LangType type,
         [Parameter("language"), Description("The language to check; if empty, check all languages simultaneously")]
-        LangLanguage? language = null,
+        Language? language = null,
         [Parameter("force"), Description("Force the check")]
         bool force = false)
     {
@@ -54,7 +54,7 @@ public sealed class LangsCommandModule
             await ctx.RespondAsync($"Starting the check of {Formatter.Bold(typeStr)} langs in all languages...");
 
             await Task.WhenAll(
-                Enum.GetValues<LangLanguage>()
+                Enum.GetValues<Language>()
                     .Select(x =>
                     {
                         var repository = _langsWatcher.GetRepository(type, x);
@@ -84,7 +84,7 @@ public sealed class LangsCommandModule
         [Parameter("model_type"), Description("The type of the model langs")]
         LangType modelType,
         [Parameter("language"), Description("The language to diff; if empty, diff all language simultaneously")]
-        LangLanguage? language = null)
+        Language? language = null)
     {
         if (_cachedChannelsManager.LangsForumChannel is null)
         {
@@ -96,7 +96,7 @@ public sealed class LangsCommandModule
 
         if (language is null)
         {
-            await Task.WhenAll(Enum.GetValues<LangLanguage>().Select(x => _langsService.LaunchManualDiff(type, modelType, x)));
+            await Task.WhenAll(Enum.GetValues<Language>().Select(x => _langsService.LaunchManualDiff(type, modelType, x)));
         }
         else
         {
@@ -113,7 +113,7 @@ public sealed class LangsCommandModule
         [Parameter("type"), Description("The type to parse")]
         LangType type,
         [Parameter("language"), Description("The language to parse; if empty, parse all language")]
-        LangLanguage? language = null)
+        Language? language = null)
     {
         await ctx.DeferResponseAsync();
 
@@ -138,7 +138,7 @@ public sealed class LangsCommandModule
         [Parameter("type"), Description("The type to display")]
         LangType type = LangType.Official,
         [Parameter("language"), Description("The language to display")]
-        LangLanguage language = LangLanguage.fr)
+        Language language = Language.fr)
     {
         var repository = _langsWatcher.GetRepository(type, language);
 
@@ -151,7 +151,7 @@ public sealed class LangsCommandModule
         [Parameter("type"), Description("The requested type")]
         LangType type,
         [Parameter("language"), Description("The requested language")]
-        LangLanguage language,
+        Language language,
         [Parameter("name"), Description("The name of the requested lang")]
         [SlashAutoCompleteProvider<LangNameAutocompleteProvider>]
         string name)

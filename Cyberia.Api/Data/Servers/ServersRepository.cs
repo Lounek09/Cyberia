@@ -79,7 +79,7 @@ public sealed class ServersRepository : DofusRepository, IDofusRepository
         return defaultServerSpecificTextData;
     }
 
-    protected override void LoadLocalizedData(LangType type, LangLanguage language)
+    protected override void LoadLocalizedData(LangType type, Language language)
     {
         var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<ServersLocalizedRepository>(type, language);

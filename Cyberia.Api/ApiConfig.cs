@@ -20,12 +20,12 @@ public sealed class ApiConfig
     /// <summary>
     /// Gets the language of lang from which the base data is loaded, only the translations will be loaded from the others listed in <see cref="SupportedLanguages"/>.
     /// </summary>
-    public LangLanguage BaseLanguage { get; init; }
+    public Language BaseLanguage { get; init; }
 
     /// <summary>
     /// Gets the list of the supported languages, the first one will be the default language.
     /// </summary>
-    public IReadOnlyList<LangLanguage> SupportedLanguages { get; init; }
+    public IReadOnlyList<Language> SupportedLanguages { get; init; }
 
     /// <summary>
     /// Gets the invitation URL of the support Discord guild.

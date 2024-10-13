@@ -29,7 +29,7 @@ public static class Translation
     /// <param name="key">The key of the localized string.</param>
     /// <param name="language">The language of the localized string.</param>
     /// <returns>The value of the string localized for the specified language, or the key if the resource is not found.</returns>
-    public static string Get<T>(string key, LangLanguage language)
+    public static string Get<T>(string key, Language language)
         where T : ITranslationsWrapper
     {
         return Get<T>(key, language.ToCulture());
@@ -69,7 +69,7 @@ public static class Translation
     /// <param name="language">The language of the localized string.</param>
     /// <param name="value">The value of the string localized for the specified language, or the key if the resource is not found.</param>
     /// <returns><see langword="true"/> if the string was found; otherwise, <see langword="false"/>.</returns>
-    public static bool TryGet<T>(string key, LangLanguage language, out string value)
+    public static bool TryGet<T>(string key, Language language, out string value)
         where T : ITranslationsWrapper
     {
         return TryGet<T>(key, language.ToCulture(), out value);

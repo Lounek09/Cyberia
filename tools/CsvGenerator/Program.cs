@@ -33,8 +33,8 @@ public static class Program
 
         DofusApi.Initialize(new ApiConfig()
         {
-            BaseLanguage = LangLanguage.fr,
-            SupportedLanguages = [LangLanguage.en, LangLanguage.fr, LangLanguage.es],
+            BaseLanguage = Language.fr,
+            SupportedLanguages = [Language.en, Language.fr, Language.es],
             Type = LangType.Official
         });
 
