@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using Cyberia.Langzilla.Enums;
+
+using System.Globalization;
+using System.Text;
 
 namespace Cyberia.Translations;
 
@@ -7,6 +10,87 @@ namespace Cyberia.Translations;
 /// </summary>
 public static class Translation
 {
+    /// <summary>
+    /// Returns the value of the string localized for the current culture.
+    /// </summary>
+    /// <typeparam name="T">The type of the translations wrapper.</typeparam>
+    /// <param name="key">The key of the localized string.</param>
+    /// <returns>The value of the string localized for the current culture, or the key if the resource is not found.</returns>
+    public static string Get<T>(string key)
+        where T : ITranslationsWrapper
+    {
+        return Get<T>(key, CultureInfo.CurrentUICulture);
+    }
+
+    /// <summary>
+    /// Returns the value of the string localized for the specified language.
+    /// </summary>
+    /// <typeparam name="T">The type of the translations wrapper.</typeparam>
+    /// <param name="key">The key of the localized string.</param>
+    /// <param name="language">The language of the localized string.</param>
+    /// <returns>The value of the string localized for the specified language, or the key if the resource is not found.</returns>
+    public static string Get<T>(string key, LangLanguage language)
+        where T : ITranslationsWrapper
+    {
+        return Get<T>(key, language.ToCulture());
+    }
+
+    /// <summary>
+    /// Returns the value of the string localized for the specified culture.
+    /// </summary>
+    /// <typeparam name="T">The type of the translations wrapper.</typeparam>
+    /// <param name="key">The key of the localized string.</param>
+    /// <param name="culture">The culture of the localized string.</param>
+    /// <returns>The value of the string localized for the specified culture, or the key if the resource is not found.</returns>
+    public static string Get<T>(string key, CultureInfo culture)
+        where T : ITranslationsWrapper
+    {
+        return T.ResourceManager.GetString(key, culture) ?? key;
+    }
+
+    /// <summary>
+    /// Tries to get the value of the string localized for the current culture.
+    /// </summary>
+    /// <typeparam name="T">The type of the translations wrapper.</typeparam>
+    /// <param name="key">The key of the localized string.</param>
+    /// <param name="value">The value of the string localized for the current culture, or the key if the resource is not found.</param>
+    /// <returns><see langword="true"/> if the string was found; otherwise, <see langword="false"/>.</returns>
+    public static bool TryGet<T>(string key, out string value)
+        where T : ITranslationsWrapper
+    {
+        return TryGet<T>(key, CultureInfo.CurrentUICulture, out value);
+    }
+
+    /// <summary>
+    /// Tries to get the value of the string localized for the specified language.
+    /// </summary>
+    /// <typeparam name="T">The type of the translations wrapper.</typeparam>
+    /// <param name="key">The key of the localized string.</param>
+    /// <param name="language">The language of the localized string.</param>
+    /// <param name="value">The value of the string localized for the specified language, or the key if the resource is not found.</param>
+    /// <returns><see langword="true"/> if the string was found; otherwise, <see langword="false"/>.</returns>
+    public static bool TryGet<T>(string key, LangLanguage language, out string value)
+        where T : ITranslationsWrapper
+    {
+        return TryGet<T>(key, language.ToCulture(), out value);
+    }
+
+    /// <summary>
+    /// Tries to get the value of the string localized for the specified culture.
+    /// </summary>
+    /// <typeparam name="T">The type of the translations wrapper.</typeparam>
+    /// <param name="key">The key of the localized string.</param>
+    /// <param name="culture">The culture of the localized string.</param>
+    /// <param name="value">The value of the string localized for the specified culture, or the key if the resource is not found.</param>
+    /// <returns><see langword="true"/> if the string was found; otherwise, <see langword="false"/>.</returns>
+    public static bool TryGet<T>(string key, CultureInfo culture, out string value)
+        where T : ITranslationsWrapper
+    {
+        value = T.ResourceManager.GetString(key, culture) ?? key;
+
+        return value is not null;
+    }
+
     /// <summary>
     /// Formats the specified template using the provided parameter.
     /// </summary>
