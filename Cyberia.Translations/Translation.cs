@@ -11,18 +11,6 @@ namespace Cyberia.Translations;
 public static class Translation
 {
     /// <summary>
-    /// Returns the value of the string localized for the current culture.
-    /// </summary>
-    /// <typeparam name="T">The type of the translations wrapper.</typeparam>
-    /// <param name="key">The key of the localized string.</param>
-    /// <returns>The value of the string localized for the current culture, or the key if the resource is not found.</returns>
-    public static string Get<T>(string key)
-        where T : ITranslationsWrapper
-    {
-        return Get<T>(key, CultureInfo.CurrentUICulture);
-    }
-
-    /// <summary>
     /// Returns the value of the string localized for the specified language.
     /// </summary>
     /// <typeparam name="T">The type of the translations wrapper.</typeparam>
@@ -40,25 +28,14 @@ public static class Translation
     /// </summary>
     /// <typeparam name="T">The type of the translations wrapper.</typeparam>
     /// <param name="key">The key of the localized string.</param>
-    /// <param name="culture">The culture of the localized string.</param>
+    /// <param name="culture">The culture of the localized string, if not specified, the current UI culture is used.</param>
     /// <returns>The value of the string localized for the specified culture, or the key if the resource is not found.</returns>
-    public static string Get<T>(string key, CultureInfo culture)
+    public static string Get<T>(string key, CultureInfo? culture = null)
         where T : ITranslationsWrapper
     {
-        return T.ResourceManager.GetString(key, culture) ?? key;
-    }
+        culture ??= CultureInfo.CurrentUICulture;
 
-    /// <summary>
-    /// Tries to get the value of the string localized for the current culture.
-    /// </summary>
-    /// <typeparam name="T">The type of the translations wrapper.</typeparam>
-    /// <param name="key">The key of the localized string.</param>
-    /// <param name="value">The value of the string localized for the current culture, or the key if the resource is not found.</param>
-    /// <returns><see langword="true"/> if the string was found; otherwise, <see langword="false"/>.</returns>
-    public static bool TryGet<T>(string key, out string value)
-        where T : ITranslationsWrapper
-    {
-        return TryGet<T>(key, CultureInfo.CurrentUICulture, out value);
+        return T.ResourceManager.GetString(key, culture) ?? key;
     }
 
     /// <summary>
@@ -72,7 +49,7 @@ public static class Translation
     public static bool TryGet<T>(string key, Language language, out string value)
         where T : ITranslationsWrapper
     {
-        return TryGet<T>(key, language.ToCulture(), out value);
+        return TryGet<T>(key, out value, language.ToCulture());
     }
 
     /// <summary>
@@ -80,15 +57,43 @@ public static class Translation
     /// </summary>
     /// <typeparam name="T">The type of the translations wrapper.</typeparam>
     /// <param name="key">The key of the localized string.</param>
-    /// <param name="culture">The culture of the localized string.</param>
     /// <param name="value">The value of the string localized for the specified culture, or the key if the resource is not found.</param>
+    /// <param name="culture">The culture of the localized string, if not specified, the current UI culture is used.</param
     /// <returns><see langword="true"/> if the string was found; otherwise, <see langword="false"/>.</returns>
-    public static bool TryGet<T>(string key, CultureInfo culture, out string value)
+    public static bool TryGet<T>(string key, out string value, CultureInfo? culture = null)
         where T : ITranslationsWrapper
     {
+        culture ??= CultureInfo.CurrentUICulture;
         value = T.ResourceManager.GetString(key, culture) ?? key;
 
         return value is not null;
+    }
+
+    /// <summary>
+    /// Returns a localized string indicating that the data is unknown for the specified language.
+    /// </summary>
+    /// <typeparam name="T">The type of the data identifier.</typeparam>
+    /// <param name="id">The identifier of the data.</param>
+    /// <param name="language">The language of the localized string.</param>
+    /// <returns>The string localized for the specified language</returns>
+    public static string UnknownData<T>(T id, Language language)
+    {
+        return UnknownData(id, language.ToCulture());
+    }
+
+    /// <summary>
+    /// Returns a localized string indicating that the data is unknown for the specified culture.
+    /// </summary>
+    /// <typeparam name="T">The type of the data identifier.</typeparam>
+    /// <param name="id">The identifier of the data.</param>
+    /// <param name="culture">The culture of the localized string, if not specified, the current UI culture is used.</param>
+    /// <returns>The string localized for the specified culture</returns>
+    public static string UnknownData<T>(T id, CultureInfo? culture = null)
+    {
+        culture ??= CultureInfo.CurrentUICulture;
+        var template = Get<Api>("Unknown.Data", culture);
+
+        return Format(template, id);
     }
 
     /// <summary>
