@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.TTG;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record AddTTGCardToBinderEffect : Effect
 {
@@ -24,11 +26,13 @@ public sealed record AddTTGCardToBinderEffect : Effect
         return DofusApi.Datacenter.TTGRepository.GetTTGCardDataById(TTGCardId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
         var ttgCard = GetTTGCardData();
-        var ttgEntityName = ttgCard is null ? $"{nameof(TTGCardData)} {Translation.Format(ApiTranslations.Unknown_Data, TTGCardId)}" : DofusApi.Datacenter.TTGRepository.GetTTGEntityNameById(ttgCard.TTGEntityId);
+        var ttgEntityName = ttgCard is null
+            ? $"{nameof(TTGCardData)} {Translation.UnknownData(TTGCardId, culture)}"
+            : DofusApi.Datacenter.TTGRepository.GetTTGEntityNameById(ttgCard.TTGEntityId, culture);
 
-        return GetDescription(string.Empty, string.Empty, ttgEntityName);
+        return GetDescription(culture, string.Empty, string.Empty, ttgEntityName);
     }
 }

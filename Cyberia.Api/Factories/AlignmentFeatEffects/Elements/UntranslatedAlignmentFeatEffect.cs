@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
+﻿using System.Globalization;
+
+namespace Cyberia.Api.Factories.AlignmentFeatEffects.Elements;
 
 public sealed record UntranslatedAlignmentFeatEffect : AlignmentFeatEffect
 {
@@ -10,8 +12,8 @@ public sealed record UntranslatedAlignmentFeatEffect : AlignmentFeatEffect
         Parameters = parameters;
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(Parameters.ToArray());
+        return GetDescription(culture, Parameters.ToArray());
     }
 }

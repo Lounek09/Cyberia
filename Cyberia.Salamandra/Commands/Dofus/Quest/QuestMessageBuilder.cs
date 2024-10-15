@@ -11,6 +11,7 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
 using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Quest;
@@ -26,8 +27,9 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
     private readonly int _selectedQuestStepIndex;
     private readonly QuestStepData? _questStepData;
     private readonly DialogQuestionData? _dialogQuestionData;
+    private readonly CultureInfo? _culture;
 
-    public QuestMessageBuilder(EmbedBuilderService embedBuilderService, QuestData questData, int selectedQuestStepIndex = 0)
+    public QuestMessageBuilder(EmbedBuilderService embedBuilderService, QuestData questData, CultureInfo? culture, int selectedQuestStepIndex = 0)
     {
         _embedBuilderService = embedBuilderService;
         _questData = questData;
@@ -35,9 +37,10 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
         _selectedQuestStepIndex = selectedQuestStepIndex;
         _questStepData = _questStepsData.Count > selectedQuestStepIndex ? _questStepsData[selectedQuestStepIndex] : null;
         _dialogQuestionData = _questStepData?.GetDialogQuestionData();
+        _culture = culture;
     }
 
-    public static QuestMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static QuestMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -49,7 +52,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new QuestMessageBuilder(embedBuilderService, questData, selectedQuestStepIndex);
+                return new QuestMessageBuilder(embedBuilderService, questData, culture, selectedQuestStepIndex);
             }
         }
 
@@ -83,27 +86,35 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, BotTranslations.Embed_Quest_Author)
-            .WithTitle($"{_questData.Name} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.Dungeon : string.Empty)}");
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, Translation.Get<BotTranslations>("Embed.Quest.Author", _culture))
+            .WithTitle($"{_questData.Name.ToString(_culture)} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.Dungeon : string.Empty)}");
 
         if (_questStepData is not null)
         {
-            embed.WithDescription($"{Formatter.Bold(_questStepData.Name)}\n{(string.IsNullOrEmpty(_questStepData.Description) ? string.Empty : Formatter.Italic(_questStepData.Description))}");
+            embed.WithDescription($"{Formatter.Bold(_questStepData.Name.ToString(_culture))}");
+
+            var description = _questStepData.Description.ToString(_culture);
+            if (!string.IsNullOrEmpty(description))
+            {
+                embed.Description += $"\n{Formatter.Italic(description)}";
+            }
 
             var optimalLevel = _questStepData.OptimalLevel;
             if (optimalLevel > 0)
             {
-                embed.AddField(BotTranslations.Embed_Field_OptimalLevel_Title, optimalLevel.ToString());
+                embed.AddField(Translation.Get<BotTranslations>("Embed.Field.OptimalLevel.Title", _culture), optimalLevel.ToString());
             }
 
             if (_dialogQuestionData is not null)
             {
-                embed.AddField(BotTranslations.Embed_Field_Dialog_Title, _dialogQuestionData.Message);
+                embed.AddField(
+                    Translation.Get<BotTranslations>("Embed.Field.Dialog.Title", _culture),
+                    _dialogQuestionData.Message.ToString(_culture));
             }
 
             if (_questStepData.QuestObjectives.Count > 0)
             {
-                embed.AddQuestObjectiveFields(_questStepData.QuestObjectives);
+                embed.AddQuestObjectivesFields(_questStepData.QuestObjectives, _culture);
             }
 
             if (_questStepData.HasReward())
@@ -112,7 +123,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
                 if (_questStepData.RewardsData.Experience > 0)
                 {
-                    rewardsBuilder.Append(_questStepData.RewardsData.Experience.ToFormattedString());
+                    rewardsBuilder.Append(_questStepData.RewardsData.Experience.ToFormattedString(_culture));
                     rewardsBuilder.Append(' ');
                     rewardsBuilder.Append(Emojis.Xp);
                     rewardsBuilder.Append('\n');
@@ -120,7 +131,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
                 if (_questStepData.RewardsData.Kamas > 0)
                 {
-                    rewardsBuilder.Append(_questStepData.RewardsData.Kamas.ToFormattedString());
+                    rewardsBuilder.Append(_questStepData.RewardsData.Kamas.ToFormattedString(_culture));
                     rewardsBuilder.Append(' ');
                     rewardsBuilder.Append(Emojis.Kamas);
                     rewardsBuilder.Append('\n');
@@ -129,40 +140,40 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 var itemsReward = _questStepData.RewardsData.GetItemsDataQuantities();
                 if (itemsReward.Count > 0)
                 {
-                    rewardsBuilder.Append(string.Join(", ", itemsReward.Select(x => $"{Formatter.Bold(x.Value.ToString())}x {x.Key.Name}")));
+                    rewardsBuilder.Append(string.Join(", ", itemsReward.Select(x => $"{Formatter.Bold(x.Value.ToString())}x {x.Key.Name.ToString(_culture)}")));
                     rewardsBuilder.Append('\n');
                 }
 
                 var emotesReward = _questStepData.RewardsData.GetEmotesData().ToList();
                 if (emotesReward.Count > 0)
                 {
-                    rewardsBuilder.Append(BotTranslations.Embed_Field_Rewards_Content_Emotes);
+                    rewardsBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Rewards.Content.Emotes", _culture));
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(string.Join(", ", emotesReward.Select(x => x.Name)));
+                    rewardsBuilder.Append(string.Join(", ", emotesReward.Select(x => x.Name.ToString(_culture))));
                     rewardsBuilder.Append('\n');
                 }
 
                 var jobsReward = _questStepData.RewardsData.GetJobsData().ToList();
                 if (jobsReward.Count > 0)
                 {
-                    rewardsBuilder.Append(BotTranslations.Embed_Field_Rewards_Content_Jobs);
+                    rewardsBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Rewards.Content.Jobs", _culture));
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(string.Join(", ", jobsReward.Select(x => x.Name)));
+                    rewardsBuilder.Append(string.Join(", ", jobsReward.Select(x => x.Name.ToString(_culture))));
                     rewardsBuilder.Append('\n');
                 }
 
                 var spellsReward = _questStepData.RewardsData.GetSpellsData().ToList();
-                if (emotesReward.Count > 0)
+                if (spellsReward.Count > 0)
                 {
-                    rewardsBuilder.Append(BotTranslations.Embed_Field_Rewards_Content_Spells);
+                    rewardsBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Rewards.Content.Spells", _culture));
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(string.Join(", ", spellsReward.Select(x => x.Name)));
+                    rewardsBuilder.Append(string.Join(", ", spellsReward.Select(x => x.Name.ToString(_culture))));
                     rewardsBuilder.Append('\n');
                 }
 
                 if (rewardsBuilder.Length > 0)
                 {
-                    embed.AddField(BotTranslations.Embed_Field_Rewards_Title, rewardsBuilder.ToString());
+                    embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Rewards.Title", _culture), rewardsBuilder.ToString());
                 }
             }
         }
@@ -178,13 +189,16 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             for (var i = startIndex; i < endIndex; i++)
             {
                 yield return new DiscordSelectComponentOption(
-                    $"{BotTranslations.Select_QuestStep_Content_Step} {i + 1}",
+                    $"{Translation.Get<BotTranslations>("Select.QuestStep.Content.Step", _culture)} {i + 1}",
                     GetPacket(_questData.Id, i),
-                    StringExtensions.WithMaxLength(_questStepsData[i].Name, 100),
+                    StringExtensions.WithMaxLength(_questStepsData[i].Name.ToString(_culture), 100),
                     isDefault: i == _selectedQuestStepIndex);
             }
         }
 
-        return new(PacketFormatter.Select(selectIndex), BotTranslations.Select_QuestStep_Placeholder, OptionsGenerator(startIndex));
+        return new DiscordSelectComponent(
+            PacketFormatter.Select(selectIndex),
+            Translation.Get<BotTranslations>("Select.QuestStep.Placeholder", _culture),
+            OptionsGenerator(startIndex));
     }
 }

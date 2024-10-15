@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Jobs;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterLearnJobEffect : Effect
 {
@@ -24,10 +26,10 @@ public sealed record CharacterLearnJobEffect : Effect
         return DofusApi.Datacenter.JobsRepository.GetJobDataById(JobId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var jobName = DofusApi.Datacenter.JobsRepository.GetJobNameById(JobId);
+        var jobName = DofusApi.Datacenter.JobsRepository.GetJobNameById(JobId, culture);
 
-        return GetDescription(string.Empty, string.Empty, jobName);
+        return GetDescription(culture, string.Empty, string.Empty, jobName);
     }
 }

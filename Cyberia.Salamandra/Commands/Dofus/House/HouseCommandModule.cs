@@ -42,7 +42,7 @@ public sealed class HouseCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -51,23 +51,26 @@ public sealed class HouseCommandModule
             var houseData = DofusApi.Datacenter.HousesRepository.GetHouseDataById(id);
             if (houseData is not null)
             {
-                response = await new HouseMessageBuilder(_embedBuilderService, houseData).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new HouseMessageBuilder(_embedBuilderService, houseData, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
         {
-            var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(value).ToList();
+            var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(value, culture).ToList();
             if (housesData.Count == 1)
             {
-                response = await new HouseMessageBuilder(_embedBuilderService, housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new HouseMessageBuilder(_embedBuilderService, housesData[0], culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (housesData.Count > 1)
             {
-                response = await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.Name, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.Name, value, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.House_NotFound);
+        response ??= new DiscordInteractionResponseBuilder().WithContent(Translation.Get<BotTranslations>("House.NotFound", culture));
         await ctx.RespondAsync(response);
     }
 
@@ -85,21 +88,22 @@ public sealed class HouseCommandModule
         [MinMaxValue(-666, 666)]
         int y)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(x, y).ToList();
 
         if (housesData.Count == 0)
         {
-            await ctx.RespondAsync(Translation.Format(BotTranslations.House_NotFound_Coordinate, x, y));
+            await ctx.RespondAsync(Translation.Format(Translation.Get<BotTranslations>("House.NotFound.Coordinate", culture), x, y));
         }
         else if (housesData.Count == 1)
         {
-            await ctx.RespondAsync(await new HouseMessageBuilder(_embedBuilderService, housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
+            await ctx.RespondAsync(await new HouseMessageBuilder(_embedBuilderService, housesData[0], culture)
+                .BuildAsync<DiscordInteractionResponseBuilder>());
         }
         else
         {
-            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.Coordinate, $"{x}{PacketFormatter.Separator}{y}")
+            await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.Coordinate, $"{x}{PacketFormatter.Separator}{y}", culture)
                 .BuildAsync<DiscordInteractionResponseBuilder>());
         }
     }
@@ -115,7 +119,7 @@ public sealed class HouseCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         MapSubAreaData? mapSubAreaData = null;
 
@@ -126,7 +130,7 @@ public sealed class HouseCommandModule
 
         if (mapSubAreaData is null)
         {
-            await ctx.RespondAsync(BotTranslations.MapSubArea_NotFound);
+            await ctx.RespondAsync(Translation.Get<BotTranslations>("MapSubArea.NotFound", culture));
         }
         else
         {
@@ -134,15 +138,16 @@ public sealed class HouseCommandModule
 
             if (housesData.Count == 0)
             {
-                await ctx.RespondAsync(Translation.Format(BotTranslations.House_NotFound_MapSubArea, Formatter.Bold(mapSubAreaData.Name)));
+                await ctx.RespondAsync(Translation.Format(Translation.Get<BotTranslations>("House.NotFound.MapSubArea", culture), Formatter.Bold(mapSubAreaData.Name)));
             }
             else if (housesData.Count == 1)
             {
-                await ctx.RespondAsync(await new HouseMessageBuilder(_embedBuilderService, housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new HouseMessageBuilder(_embedBuilderService, housesData[0], culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>());
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.MapSubArea, value)
+                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.MapSubArea, value, culture)
                     .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }
@@ -159,7 +164,7 @@ public sealed class HouseCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         MapAreaData? mapAreaData = null;
 
@@ -170,7 +175,7 @@ public sealed class HouseCommandModule
 
         if (mapAreaData is null)
         {
-            await ctx.RespondAsync(BotTranslations.MapArea_NotFound);
+            await ctx.RespondAsync(Translation.Get<BotTranslations>("MapArea.NotFound", culture));
         }
         else
         {
@@ -178,15 +183,16 @@ public sealed class HouseCommandModule
 
             if (housesData.Count == 0)
             {
-                await ctx.RespondAsync(Translation.Format(BotTranslations.House_NotFound_MapArea, Formatter.Bold(mapAreaData.Name)));
+                await ctx.RespondAsync(Translation.Format(Translation.Get<BotTranslations>("House.NotFound.MapArea", culture), Formatter.Bold(mapAreaData.Name)));
             }
             else if (housesData.Count == 1)
             {
-                await ctx.RespondAsync(await new HouseMessageBuilder(_embedBuilderService, housesData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
+                await ctx.RespondAsync(await new HouseMessageBuilder(_embedBuilderService, housesData[0], culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>());
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.MapArea, value)
+                await ctx.RespondAsync(await new PaginatedHouseMessageBuilder(_embedBuilderService, housesData, HouseSearchCategory.MapArea, value, culture)
                     .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }

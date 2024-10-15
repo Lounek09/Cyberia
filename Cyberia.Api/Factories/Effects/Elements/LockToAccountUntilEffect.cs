@@ -1,8 +1,10 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Managers;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record LockToAccountUntilEffect : Effect
 {
@@ -19,8 +21,8 @@ public sealed record LockToAccountUntilEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, DateTimeManager.CreateDateTimeFromEffectParameters(parameters));
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(DateTime.ToString("dd/MM/yyy HH:mm"));
+        return GetDescription(culture, DateTime.ToString(culture?.DateTimeFormat ?? CultureInfo.CurrentCulture.DateTimeFormat));
     }
 }

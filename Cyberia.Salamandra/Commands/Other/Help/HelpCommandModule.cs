@@ -32,8 +32,7 @@ public sealed class HelpCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
-        var locale = ctx.Interaction.Locale ?? ctx.Interaction.GuildLocale ?? string.Empty;
+        var locale = await _cultureService.GetDiscordLocaleAsync(ctx.Interaction) ?? string.Empty;
 
         StringBuilder descriptionBuilder = new();
 
@@ -57,8 +56,7 @@ public sealed class HelpCommandModule
 
             if (command.Options is not null)
             {
-                var subCommands = command.Options
-                    .Where(x => x.Type is DiscordApplicationCommandOptionType.SubCommand);
+                var subCommands = command.Options.Where(x => x.Type is DiscordApplicationCommandOptionType.SubCommand);
 
                 if (subCommands.Any())
                 {

@@ -1,4 +1,7 @@
 ﻿using Cyberia.Api.Data.Alignments;
+using Cyberia.Langzilla.Enums;
+
+using System.Globalization;
 
 namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
@@ -19,8 +22,16 @@ public interface IAlignmentFeatEffect
     AlignmentFeatEffectData? GetAlignmentFeatEffectData();
 
     /// <summary>
-    /// Generates a human-readable description of the alignment feat effect.
+    /// Generates a human-readable description of the alignment feat effect for the specified language.
     /// </summary>
-    /// <returns>The <see cref="DescriptionString"/> object containing the description of the alignment feat effect.</returns>
-    DescriptionString GetDescription();
+    /// <param name="language">The language to generate the description for.</param>
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the alignment feat effect for the specified language.</returns>
+    DescriptionString GetDescription(Language language);
+
+    /// <summary>
+    /// Generates a human-readable description of the alignment feat effect for the specified culture.
+    /// </summary>
+    /// <param name="culture">The culture to generate the description for.</param>
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the alignment feat effect for the specified culture.</returns>
+    DescriptionString GetDescription(CultureInfo? culture = null);
 }

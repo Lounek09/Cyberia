@@ -10,6 +10,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
 public sealed class MapMessageBuilder : ICustomMessageBuilder
@@ -22,17 +24,19 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
     private readonly MapSubAreaData? _mapSubAreaData;
     private readonly MapAreaData? _mapAreaData;
     private readonly HouseData? _houseData;
+    private readonly CultureInfo? _culture;
 
-    public MapMessageBuilder(EmbedBuilderService embedBuilderService, MapData mapData)
+    public MapMessageBuilder(EmbedBuilderService embedBuilderService, MapData mapData, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _mapData = mapData;
         _mapSubAreaData = _mapData.GetMapSubAreaData();
         _mapAreaData = _mapSubAreaData?.GetMapAreaData();
         _houseData = _mapData.GetHouseData();
+        _culture = culture;
     }
 
-    public static MapMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static MapMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&
@@ -43,7 +47,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, mapData);
+                return new(embedBuilderService, mapData, culture);
             }
         }
 
@@ -71,9 +75,9 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, BotTranslations.Embed_Map_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, Translation.Get<BotTranslations>("Embed.Map.Author", _culture))
             .WithTitle($"{_mapData.GetCoordinate()} ({_mapData.Id})")
-            .WithDescription(_mapData.GetMapAreaName())
+            .WithDescription(_mapData.GetMapAreaName(_culture))
             .WithImageUrl(await _mapData.GetImagePathAsync());
 
         return embed;
@@ -89,17 +93,17 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
         if (_mapSubAreaData is not null)
         {
-            yield return MapComponentsBuilder.PaginatedMapMapSubAreaButtonBuilder(_mapSubAreaData);
+            yield return MapComponentsBuilder.PaginatedMapMapSubAreaButtonBuilder(_mapSubAreaData, _culture);
         }
 
         if (_mapAreaData is not null)
         {
-            yield return MapComponentsBuilder.PaginatedMapMapAreaButtonBuilder(_mapAreaData);
+            yield return MapComponentsBuilder.PaginatedMapMapAreaButtonBuilder(_mapAreaData, _culture);
         }
 
         if (_houseData is not null)
         {
-            yield return HouseComponentsBuilder.HouseButtonBuilder(_houseData);
+            yield return HouseComponentsBuilder.HouseButtonBuilder(_houseData, _culture);
         }
     }
 }

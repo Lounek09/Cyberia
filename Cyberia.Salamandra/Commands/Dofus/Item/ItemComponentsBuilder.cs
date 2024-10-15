@@ -1,30 +1,39 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Data.Items;
+﻿using Cyberia.Api.Data.Items;
 using Cyberia.Salamandra.Formatters;
 
 using DSharpPlus.Entities;
+
+using System.Globalization;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Item;
 
 public static class ItemComponentsBuilder
 {
-    public static DiscordButtonComponent ItemButtonBuilder(ItemData itemData, int quantity = 1, bool disable = false)
+    public static DiscordButtonComponent ItemButtonBuilder(ItemData itemData, int quantity, CultureInfo? culture, bool disable = false)
     {
-        return new(DiscordButtonStyle.Success, ItemMessageBuilder.GetPacket(itemData.Id, quantity), itemData.Name, disable);
+        return new DiscordButtonComponent(
+            DiscordButtonStyle.Success,
+            ItemMessageBuilder.GetPacket(itemData.Id, quantity),
+            itemData.Name.ToString(culture),
+            disable);
     }
 
-    public static DiscordSelectComponent ItemsSelectBuilder(int index, IEnumerable<ItemData> itemsData, bool disable = false)
+    public static DiscordSelectComponent ItemsSelectBuilder(int index, IEnumerable<ItemData> itemsData, CultureInfo? culture, bool disable = false)
     {
         var options = itemsData
             .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    StringExtensions.WithMaxLength(x.Name, 100),
+                    x.Name.ToString(culture).WithMaxLength(100),
                     ItemMessageBuilder.GetPacket(x.Id),
-                    DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x.ItemTypeId));
+                    x.GetItemTypeName(culture));
             });
 
-        return new(PacketFormatter.Select(index), BotTranslations.Select_Item_Placeholder, options, disable);
+        return new DiscordSelectComponent(
+            PacketFormatter.Select(index),
+            Translation.Get<BotTranslations>("Select.Item.Placeholder", culture),
+            options,
+            disable);
     }
 }

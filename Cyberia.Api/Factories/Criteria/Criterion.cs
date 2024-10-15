@@ -1,4 +1,9 @@
-﻿namespace Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
+using Cyberia.Langzilla.Enums;
+
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Criteria;
 
 /// <inheritdoc cref="ICriterion"/>
 public abstract record Criterion : ICriterion
@@ -17,7 +22,12 @@ public abstract record Criterion : ICriterion
         Operator = @operator;
     }
 
-    public abstract DescriptionString GetDescription();
+    public DescriptionString GetDescription(Language language)
+    {
+        return GetDescription(language.ToCulture());
+    }
+
+    public abstract DescriptionString GetDescription(CultureInfo? culture = null);
 
     /// <inheritdoc cref="CriterionFactory.GetOperatorDescriptionKey"/>
     protected string GetOperatorDescriptionKey()
@@ -32,46 +42,45 @@ public abstract record Criterion : ICriterion
     protected abstract string GetDescriptionKey();
 
     /// <inheritdoc cref="ICriterion.GetDescription"/>
-    protected DescriptionString GetDescription<T>(T parameter)
+    protected DescriptionString GetDescription<T>(CultureInfo? culture, T parameter)
     {
-        return GetDescription(parameter?.ToString() ?? string.Empty);
+        return GetDescription(culture, parameter?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="ICriterion.GetDescription"/>
-    protected DescriptionString GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
+    protected DescriptionString GetDescription<T0, T1>(CultureInfo? culture, T0 parameter0, T1 parameter1)
     {
-        return GetDescription(
+        return GetDescription(culture,
             parameter0?.ToString() ?? string.Empty,
             parameter1?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="ICriterion.GetDescription"/>
-    protected DescriptionString GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
+    protected DescriptionString GetDescription<T0, T1, T2>(CultureInfo? culture, T0 parameter0, T1 parameter1, T2 parameter2)
     {
-        return GetDescription(
+        return GetDescription(culture,
             parameter0?.ToString() ?? string.Empty,
             parameter1?.ToString() ?? string.Empty,
             parameter2?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="ICriterion.GetDescription"/>
-    protected DescriptionString GetDescription(params string[] parameters)
+    protected DescriptionString GetDescription(CultureInfo? culture, params string[] parameters)
     {
         var descriptionKey = GetDescriptionKey();
 
-        var descriptionValue = ApiTranslations.ResourceManager.GetString(descriptionKey);
-        if (descriptionValue is null)
+        if (!Translation.TryGet<ApiTranslations>(descriptionKey, out var template, culture))
         {
             if (this is not UntranslatedCriterion)
             {
                 Log.Warning("Unknown {@Criterion}", this);
             }
 
-            return new(ApiTranslations.Criterion_Unknown,
+            return new DescriptionString(Translation.Get<ApiTranslations>("Criterion.Unknown", culture),
                 Id,
                 $"{Id}{Operator}{string.Join(',', parameters)}");
         }
 
-        return new(descriptionValue, parameters);
+        return new DescriptionString(template, parameters);
     }
 }

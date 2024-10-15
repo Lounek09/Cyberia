@@ -14,6 +14,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.ItemSet;
 
 public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
@@ -26,17 +28,19 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
     private readonly int _nbItemSelected;
     private readonly IEnumerable<ItemData> _itemsData;
     private readonly BreedData? _breedData;
+    private readonly CultureInfo? _culture;
 
-    public ItemSetMessageBuilder(EmbedBuilderService embedBuilderService, ItemSetData itemSetData, int nbItemSelected)
+    public ItemSetMessageBuilder(EmbedBuilderService embedBuilderService, ItemSetData itemSetData, int nbItemSelected, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _itemSetData = itemSetData;
         _nbItemSelected = nbItemSelected;
         _itemsData = itemSetData.GetItemsData();
         _breedData = itemSetData.GetBreedData();
+        _culture = culture;
     }
 
-    public static ItemSetMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static ItemSetMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -48,7 +52,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, itemSetData, nbItemSelected);
+                return new(embedBuilderService, itemSetData, nbItemSelected, culture);
             }
         }
 
@@ -85,7 +89,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 
         if (_itemsData.Any())
         {
-            message.AddComponents(ItemComponentsBuilder.ItemsSelectBuilder(0, _itemsData));
+            message.AddComponents(ItemComponentsBuilder.ItemsSelectBuilder(0, _itemsData, _culture));
         }
 
         return (T)message;
@@ -93,20 +97,25 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_ItemSet_Author)
-            .WithTitle($"{_itemSetData.Name} ({_itemSetData.Id})")
-            .AddField(BotTranslations.Embed_Field_Level_Title, _itemSetData.GetLevel().ToString());
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.ItemSet.Author", _culture))
+            .WithTitle($"{_itemSetData.Name.ToString(_culture)} ({_itemSetData.Id})")
+            .AddField(Translation.Get<BotTranslations>("Embed.Field.Level.Title", _culture), _itemSetData.GetLevel().ToString());
 
         if (_itemsData.Any())
         {
-            embed.AddField(BotTranslations.Embed_Field_Items_Title,
-                string.Join('\n', _itemsData.Select(x => $"- {BotTranslations.ShortLevel}{x.Level} {Formatter.Bold(x.Name)}")));
+            embed.AddField(
+                Translation.Get<BotTranslations>("Embed.Field.Items.Title", _culture),
+                string.Join('\n', _itemsData.Select(x =>
+                {
+                    return $"- {Translation.Get<BotTranslations>("ShortLevel", _culture)}{x.Level} {Formatter.Bold(x.Name.ToString(_culture))}";
+                }))
+            );
         }
 
         var effects = _itemSetData.GetEffects(_nbItemSelected);
-        if (effects.Any())
+        if (effects.Count > 0)
         {
-            embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects, true);
+            embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
         }
 
         return Task.FromResult(embed);
@@ -131,7 +140,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
     {
         if (_breedData is not null)
         {
-            yield return BreedComponentsBuilder.BreedButtonBuilder(_breedData);
+            yield return BreedComponentsBuilder.BreedButtonBuilder(_breedData, _culture);
         }
     }
 }

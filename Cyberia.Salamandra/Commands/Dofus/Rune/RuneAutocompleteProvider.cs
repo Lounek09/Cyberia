@@ -18,14 +18,13 @@ public sealed class RuneAutocompleteProvider : IAutoCompleteProvider
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         return DofusApi.Datacenter.RunesRepository.GetRunesDataByName(ctx.UserInput ?? string.Empty)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {
                 return new DiscordAutoCompleteChoice(x.Name, x.Name);
-            })
-           .ToList();
+            });
     }
 }

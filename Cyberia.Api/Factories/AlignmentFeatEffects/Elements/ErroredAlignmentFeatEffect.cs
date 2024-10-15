@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
+﻿using System.Globalization;
+
+namespace Cyberia.Api.Factories.AlignmentFeatEffects.Elements;
 
 public sealed record ErroredAlignmentFeatEffect : AlignmentFeatEffect
 {
@@ -10,9 +12,9 @@ public sealed record ErroredAlignmentFeatEffect : AlignmentFeatEffect
         Parameters = parameter;
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return new(ApiTranslations.AlignmentFeatEffect_Errored,
+        return new DescriptionString(Translation.Get<ApiTranslations>("AlignmentFeatEffect.Errored", culture),
             Id.ToString(),
             string.Join(", ", Parameters));
     }

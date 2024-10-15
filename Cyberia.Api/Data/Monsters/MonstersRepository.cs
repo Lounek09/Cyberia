@@ -4,6 +4,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Monsters;
@@ -38,13 +39,18 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
         return monsterSuperRaceData;
     }
 
-    public string GetMonsterSuperRaceNameById(int id)
+    public string GetMonsterSuperRaceNameById(int id, Language language)
+    {
+        return GetMonsterSuperRaceNameById(id, language.ToCulture());
+    }
+
+    public string GetMonsterSuperRaceNameById(int id, CultureInfo? culture = null)
     {
         var monsterSuperRaceData = GetMonsterSuperRaceDataById(id);
 
         return monsterSuperRaceData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : monsterSuperRaceData.Name;
+            ? Translation.UnknownData(id, culture)
+            : monsterSuperRaceData.Name.ToString(culture);
     }
 
     public MonsterRaceData? GetMonsterRaceDataById(int id)
@@ -53,13 +59,18 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
         return monsterRaceData;
     }
 
-    public string GetMonsterRaceNameById(int id)
+    public string GetMonsterRaceNameById(int id, Language language)
+    {
+        return GetMonsterRaceNameById(id, language.ToCulture());
+    }
+
+    public string GetMonsterRaceNameById(int id, CultureInfo? culture = null)
     {
         var monsterRaceData = GetMonsterRaceDataById(id);
 
         return monsterRaceData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : monsterRaceData.Name;
+            ? Translation.UnknownData(id, culture)
+            : monsterRaceData.Name.ToString(culture);
     }
 
     public MonsterData? GetMonsterDataById(int id)
@@ -68,7 +79,12 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
         return monsterData;
     }
 
-    public IEnumerable<MonsterData> GetMonstersDataByName(string name)
+    public IEnumerable<MonsterData> GetMonstersDataByName(string name, Language language)
+    {
+        return GetMonstersDataByName(name, language.ToCulture());
+    }
+
+    public IEnumerable<MonsterData> GetMonstersDataByName(string name, CultureInfo? culture = null)
     {
         var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -76,18 +92,23 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return x.NormalizedName.ToString().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.NormalizedName.ToString(culture).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
 
-    public string GetMonsterNameById(int id)
+    public string GetMonsterNameById(int id, Language language)
+    {
+        return GetMonsterNameById(id, language.ToCulture());
+    }
+
+    public string GetMonsterNameById(int id, CultureInfo? culture = null)
     {
         var monsterData = GetMonsterDataById(id);
 
         return monsterData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : monsterData.Name;
+            ? Translation.UnknownData(id, culture)
+            : monsterData.Name.ToString(culture);
     }
 
     protected override void LoadCustomData()

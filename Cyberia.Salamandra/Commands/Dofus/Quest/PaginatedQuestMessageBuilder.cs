@@ -9,6 +9,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.Quest;
 
 public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<QuestData>
@@ -16,24 +18,35 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
     public const string PacketHeader = "PQ";
     public const int PacketVersion = 2;
 
-    public PaginatedQuestMessageBuilder(EmbedBuilderService embedBuilderService, List<QuestData> questsData, string search, int selectedPageIndex = 0)
-        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, BotTranslations.Embed_Quest_Author), BotTranslations.Embed_PaginatedQuest_Title, questsData, search, selectedPageIndex)
+    public PaginatedQuestMessageBuilder(
+        EmbedBuilderService embedBuilderService,
+        List<QuestData> questsData,
+        string search,
+        CultureInfo? culture,
+        int selectedPageIndex = 0)
+    : base(
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, Translation.Get<BotTranslations>("Embed.Quest.Author", culture)),
+        Translation.Get<BotTranslations>("Embed.PaginatedQuest.Title", culture),
+        questsData,
+        search,
+        culture,
+        selectedPageIndex)
     {
 
     }
 
-    public static PaginatedQuestMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static PaginatedQuestMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(parameters[1]).ToList();
+            var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(parameters[1], culture).ToList();
             if (questsData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, questsData, parameters[1], selectedPageIndex);
+                return new(embedBuilderService, questsData, parameters[1], culture, selectedPageIndex);
             }
         }
 
@@ -47,12 +60,12 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {Formatter.Bold(x.Name)} ({x.Id}) {Emojis.Quest(x.Repeatable, x.Account)}{(x.HasDungeon ? Emojis.Dungeon : string.Empty)}");
+        return _data.Select(x => $"- {Formatter.Bold(x.Name.ToString(_culture))} ({x.Id}) {Emojis.Quest(x.Repeatable, x.Account)}{(x.HasDungeon ? Emojis.Dungeon : string.Empty)}");
     }
 
     protected override DiscordSelectComponent SelectBuilder()
     {
-        return QuestComponentsBuilder.QuestsSelectBuilder(0, _data);
+        return QuestComponentsBuilder.QuestsSelectBuilder(0, _data, _culture);
     }
 
     protected override string PreviousPacketBuilder()

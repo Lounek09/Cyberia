@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Spells;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterLearnSpellEffect : Effect
 {
@@ -24,10 +26,10 @@ public sealed record CharacterLearnSpellEffect : Effect
         return DofusApi.Datacenter.SpellsRepository.GetSpellDataById(SpellId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var spellName = DofusApi.Datacenter.SpellsRepository.GetSpellNameById(SpellId);
+        var spellName = DofusApi.Datacenter.SpellsRepository.GetSpellNameById(SpellId, culture);
 
-        return GetDescription(string.Empty, string.Empty, spellName);
+        return GetDescription(culture, string.Empty, string.Empty, spellName);
     }
 }

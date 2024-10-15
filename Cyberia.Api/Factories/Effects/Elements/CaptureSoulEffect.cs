@@ -1,7 +1,9 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CaptureSoulEffect : Effect
 {
@@ -20,8 +22,8 @@ public sealed record CaptureSoulEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(CapturePercent, Power);
+        return GetDescription(culture, CapturePercent, Power);
     }
 }

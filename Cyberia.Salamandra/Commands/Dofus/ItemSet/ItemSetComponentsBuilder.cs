@@ -3,27 +3,37 @@ using Cyberia.Salamandra.Formatters;
 
 using DSharpPlus.Entities;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.ItemSet;
 
 public static class ItemSetComponentsBuilder
 {
-    public static DiscordButtonComponent ItemSetButtonBuilder(ItemSetData itemSetData, bool disable = false)
+    public static DiscordButtonComponent ItemSetButtonBuilder(ItemSetData itemSetData, CultureInfo? culture, bool disable = false)
     {
-        return new(DiscordButtonStyle.Success, ItemSetMessageBuilder.GetPacket(itemSetData.Id, itemSetData.Effects.Count), itemSetData.Name, disable);
+        return new DiscordButtonComponent(
+            DiscordButtonStyle.Success,
+            ItemSetMessageBuilder.GetPacket(itemSetData.Id, itemSetData.Effects.Count),
+            itemSetData.Name.ToString(culture),
+            disable);
     }
 
-    public static DiscordSelectComponent ItemSetsSelectBuilder(int uniqueIndex, IEnumerable<ItemSetData> itemSetsData, bool disable = false)
+    public static DiscordSelectComponent ItemSetsSelectBuilder(int uniqueIndex, IEnumerable<ItemSetData> itemSetsData, CultureInfo? culture, bool disable = false)
     {
         var options = itemSetsData
             .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
                 return new DiscordSelectComponentOption(
-                    StringExtensions.WithMaxLength(x.Name, 100),
+                    x.Name.ToString(culture).WithMaxLength(100),
                     ItemSetMessageBuilder.GetPacket(x.Id, x.Effects.Count),
                     x.Id.ToString());
             });
 
-        return new(PacketFormatter.Select(uniqueIndex), BotTranslations.Select_ItemSet_Placeholder, options, disable);
+        return new DiscordSelectComponent(
+            PacketFormatter.Select(uniqueIndex),
+            Translation.Get<BotTranslations>("Select.ItemSet.Placeholder", culture),
+            options,
+            disable);
     }
 }

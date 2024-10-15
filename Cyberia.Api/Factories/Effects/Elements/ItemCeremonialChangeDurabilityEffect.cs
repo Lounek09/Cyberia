@@ -1,7 +1,9 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record ItemCeremonialChangeDurabilityEffect : Effect
 {
@@ -20,8 +22,8 @@ public sealed record ItemCeremonialChangeDurabilityEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param2, (int)parameters.Param3);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(string.Empty, CurrentDurability, MaxDurability);
+        return GetDescription(culture, string.Empty, CurrentDurability, MaxDurability);
     }
 }

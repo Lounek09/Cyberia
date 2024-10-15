@@ -10,6 +10,7 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
 using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Data.Langs;
@@ -28,7 +29,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         _repository = repository;
     }
 
-    public static LangsMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static LangsMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? _, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&

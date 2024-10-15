@@ -1,9 +1,11 @@
 ﻿using Cyberia.Api.Enums;
 using Cyberia.Api.Extensions;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record ItemPetsShapeEffect : Effect
 {
@@ -22,8 +24,8 @@ public sealed record ItemPetsShapeEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, corpulence);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(Corpulence.GetDescription());
+        return GetDescription(culture, Corpulence.GetDescription(culture));
     }
 }

@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-	ViewBag.Title = WebTranslations.Page_Index_Title;
+	ViewBag.Title = Translation.Get<WebTranslations>("Page.Index.Title");
 }
 
-<h1>@WebTranslations.Page_Index_Title</h1>
+<h1>@ViewBag.Title</h1>

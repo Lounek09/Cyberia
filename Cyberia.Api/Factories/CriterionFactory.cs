@@ -1,4 +1,12 @@
 ﻿using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
+using Cyberia.Api.Factories.Criteria.Elements.Characteristics;
+using Cyberia.Api.Factories.Criteria.Elements.Fights;
+using Cyberia.Api.Factories.Criteria.Elements.Maps;
+using Cyberia.Api.Factories.Criteria.Elements.Others;
+using Cyberia.Api.Factories.Criteria.Elements.Players;
+using Cyberia.Api.Factories.Criteria.Elements.Quests;
+using Cyberia.Api.Factories.Criteria.Elements.Servers;
 
 using System.Collections.Frozen;
 

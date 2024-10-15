@@ -1,7 +1,9 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record UntranslatedEffect : Effect
 {
@@ -13,8 +15,8 @@ public sealed record UntranslatedEffect : Effect
         Parameters = parameters;
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(Parameters.Param1, Parameters.Param2, Parameters.Param3, Parameters.Param4);
+        return GetDescription(culture, Parameters.Param1, Parameters.Param2, Parameters.Param3, Parameters.Param4);
     }
 }

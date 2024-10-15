@@ -1,5 +1,7 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+
+using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
@@ -11,8 +13,8 @@ public abstract record ParameterlessEffect : Effect
 
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription([]);
+        return GetDescription(culture, []);
     }
 }

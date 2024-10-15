@@ -1,7 +1,9 @@
 ﻿using Cyberia.Api.Data.Maps;
 using Cyberia.Api.Data.Quests;
 
-namespace Cyberia.Api.Factories.QuestObjectives;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.QuestObjectives.Elements;
 
 public sealed record DiscoverMapSubAreaQuestObjective : QuestObjective
 {
@@ -29,10 +31,10 @@ public sealed record DiscoverMapSubAreaQuestObjective : QuestObjective
         return DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(MapSubAreaId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var mapSubAreaName = DofusApi.Datacenter.MapsRepository.GetMapSubAreaNameById(MapSubAreaId);
+        var mapSubAreaName = DofusApi.Datacenter.MapsRepository.GetMapSubAreaNameById(MapSubAreaId, culture);
 
-        return GetDescription(mapSubAreaName);
+        return GetDescription(culture, mapSubAreaName);
     }
 }

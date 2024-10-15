@@ -1,7 +1,9 @@
 ﻿using Cyberia.Api.Data.Npcs;
 using Cyberia.Api.Data.Quests;
 
-namespace Cyberia.Api.Factories.QuestObjectives;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.QuestObjectives.Elements;
 
 public sealed record GoToNpcQuestObjective : QuestObjective
 {
@@ -29,10 +31,10 @@ public sealed record GoToNpcQuestObjective : QuestObjective
         return DofusApi.Datacenter.NpcsRepository.GetNpcDataById(NpcId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
+        var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId, culture);
 
-        return GetDescription(npcName);
+        return GetDescription(culture, npcName);
     }
 }

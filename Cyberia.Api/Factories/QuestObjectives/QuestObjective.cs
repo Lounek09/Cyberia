@@ -1,5 +1,8 @@
 ﻿using Cyberia.Api.Data.Quests;
+using Cyberia.Api.Factories.QuestObjectives.Elements;
+using Cyberia.Langzilla.Enums;
 
+using System.Globalization;
 using System.Text;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
@@ -18,33 +21,38 @@ public abstract record QuestObjective : IQuestObjective
         QuestObjectiveData = questObjectiveData;
     }
 
-    public abstract DescriptionString GetDescription();
+    public DescriptionString GetDescription(Language language)
+    {
+        return GetDescription(language.ToCulture());
+    }
+
+    public abstract DescriptionString GetDescription(CultureInfo? culture = null);
 
     /// <inheritdoc cref="IQuestObjective.GetDescription"/>
-    protected DescriptionString GetDescription<T>(T parameter)
+    protected DescriptionString GetDescription<T>(CultureInfo? culture, T parameter)
     {
-        return GetDescription(parameter?.ToString() ?? string.Empty);
+        return GetDescription(culture, parameter?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="IQuestObjective.GetDescription"/>
-    protected DescriptionString GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
+    protected DescriptionString GetDescription<T0, T1>(CultureInfo? culture, T0 parameter0, T1 parameter1)
     {
-        return GetDescription(
+        return GetDescription(culture,
             parameter0?.ToString() ?? string.Empty,
             parameter1?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="IQuestObjective.GetDescription"/>
-    protected DescriptionString GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
+    protected DescriptionString GetDescription<T0, T1, T2>(CultureInfo? culture, T0 parameter0, T1 parameter1, T2 parameter2)
     {
-        return GetDescription(
+        return GetDescription(culture,
             parameter0?.ToString() ?? string.Empty,
             parameter1?.ToString() ?? string.Empty,
             parameter2?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="IQuestObjective.GetDescription"/>
-    protected DescriptionString GetDescription(params string[] parameters)
+    protected DescriptionString GetDescription(CultureInfo? culture, params string[] parameters)
     {
         var questObjectiveTypeData = QuestObjectiveData.GetQuestObjectiveTypeData();
         if (questObjectiveTypeData is null)
@@ -54,12 +62,12 @@ public abstract record QuestObjective : IQuestObjective
                 Log.Warning("Unknown QuestObjectiveTypeData {@QuestObjective}", this);
             }
 
-            return new(ApiTranslations.QuestObjectiveType_Unknown,
+            return new DescriptionString(Translation.Get<ApiTranslations>("QuestObjectiveType.Unknown", culture),
             QuestObjectiveData.QuestObjectiveTypeId.ToString(),
             string.Join(',', QuestObjectiveData.Parameters));
         }
 
-        StringBuilder builder = new(questObjectiveTypeData.Description);
+        StringBuilder builder = new(questObjectiveTypeData.Description.ToString(culture));
 
         var coordinate = QuestObjectiveData.GetCoordinate();
         if (!string.IsNullOrEmpty(coordinate))
@@ -68,6 +76,6 @@ public abstract record QuestObjective : IQuestObjective
             builder.Append(coordinate);
         }
 
-        return new(builder.ToString(), parameters);
+        return new DescriptionString(builder.ToString(), parameters);
     }
 }

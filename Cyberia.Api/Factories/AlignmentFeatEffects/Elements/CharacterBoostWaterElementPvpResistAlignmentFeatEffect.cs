@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api.Factories.AlignmentFeatEffects;
+﻿using System.Globalization;
+
+namespace Cyberia.Api.Factories.AlignmentFeatEffects.Elements;
 
 public sealed record CharacterBoostWaterElementPvpResistAlignmentFeatEffect : AlignmentFeatEffect
 {
@@ -20,8 +22,8 @@ public sealed record CharacterBoostWaterElementPvpResistAlignmentFeatEffect : Al
         return null;
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(Value);
+        return GetDescription(culture, Value);
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Spells;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterLearnSpellLevelEffect : Effect
 {
@@ -24,14 +26,14 @@ public sealed record CharacterLearnSpellLevelEffect : Effect
         return DofusApi.Datacenter.SpellsRepository.GetSpellLevelDataById(SpellLevelId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
         var spellLevelData = GetSpellLevelData();
         if (spellLevelData is null)
         {
-            return GetDescription(string.Empty, 0, $"{nameof(SpellLevelData)} {Translation.Format(ApiTranslations.Unknown_Data, SpellLevelId)}");
+            return GetDescription(culture, string.Empty, 0, $"{nameof(SpellLevelData)} {Translation.UnknownData(SpellLevelId, culture)}");
         }
 
-        return GetDescription(string.Empty, spellLevelData.Rank, spellLevelData.SpellData.Name);
+        return GetDescription(culture, string.Empty, spellLevelData.Rank, spellLevelData.SpellData.Name.ToString(culture));
     }
 }

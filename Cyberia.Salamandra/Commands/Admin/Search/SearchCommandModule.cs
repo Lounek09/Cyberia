@@ -37,7 +37,7 @@ public sealed class SearchCommandModule
         [MinMaxValue(-1, 9999)]
         int effectId)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         StringBuilder descriptionBuilder = new();
 
@@ -47,7 +47,7 @@ public sealed class SearchCommandModule
                 foreach (var itemData in DofusApi.Datacenter.ItemsRepository.GetItemsDataWithEffectId(effectId))
                 {
                     descriptionBuilder.Append("- ");
-                    descriptionBuilder.Append(itemData.Name);
+                    descriptionBuilder.Append(itemData.Name.ToString(culture));
                     descriptionBuilder.Append(" (");
                     descriptionBuilder.Append(itemData.Id);
                     descriptionBuilder.Append(")\n");
@@ -57,7 +57,7 @@ public sealed class SearchCommandModule
                 foreach (var spellData in DofusApi.Datacenter.SpellsRepository.GetSpellsDataWithEffectId(effectId))
                 {
                     descriptionBuilder.Append("- ");
-                    descriptionBuilder.Append(spellData.Name);
+                    descriptionBuilder.Append(spellData.Name.ToString(culture));
                     descriptionBuilder.Append(" (");
                     descriptionBuilder.Append(spellData.Id);
                     descriptionBuilder.Append(")\n");
@@ -84,7 +84,7 @@ public sealed class SearchCommandModule
         [MinMaxLength(2, 2)]
         string criterionId)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         StringBuilder descriptionBuilder = new();
 
@@ -94,7 +94,7 @@ public sealed class SearchCommandModule
                 foreach (var itemData in DofusApi.Datacenter.ItemsRepository.GetItemsDataWithCriterionId(criterionId))
                 {
                     descriptionBuilder.Append("- ");
-                    descriptionBuilder.Append(itemData.Name);
+                    descriptionBuilder.Append(itemData.Name.ToString(culture));
                     descriptionBuilder.Append(" (");
                     descriptionBuilder.Append(itemData.Id);
                     descriptionBuilder.Append(")\n");
@@ -104,7 +104,7 @@ public sealed class SearchCommandModule
                 foreach (var spellData in DofusApi.Datacenter.SpellsRepository.GetSpellsDataWithCriterionId(criterionId))
                 {
                     descriptionBuilder.Append("- ");
-                    descriptionBuilder.Append(spellData.Name);
+                    descriptionBuilder.Append(spellData.Name.ToString(culture));
                     descriptionBuilder.Append(" (");
                     descriptionBuilder.Append(spellData.Id);
                     descriptionBuilder.Append(")\n");

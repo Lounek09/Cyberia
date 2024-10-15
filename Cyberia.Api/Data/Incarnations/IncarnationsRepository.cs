@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Incarnations;
@@ -25,7 +27,12 @@ public sealed class IncarnationsRepository : DofusCustomRepository, IDofusReposi
         return incarnationData;
     }
 
-    public IEnumerable<IncarnationData> GetIncarnationsDataByItemName(string itemName)
+    public IEnumerable<IncarnationData> GetIncarnationsDataByItemName(string itemName, Language language)
+    {
+        return GetIncarnationsDataByItemName(itemName, language.ToCulture());
+    }
+
+    public IEnumerable<IncarnationData> GetIncarnationsDataByItemName(string itemName, CultureInfo? culture = null)
     {
         var itemNames = itemName.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -33,7 +40,7 @@ public sealed class IncarnationsRepository : DofusCustomRepository, IDofusReposi
         {
             var itemData = incarnationData.GetItemData();
             if (itemData is not null &&
-                itemNames.All(x => itemData.NormalizedName.ToString().Contains(x, StringComparison.OrdinalIgnoreCase)))
+                itemNames.All(x => itemData.NormalizedName.ToString(culture).Contains(x, StringComparison.OrdinalIgnoreCase)))
             {
                 yield return incarnationData;
             }

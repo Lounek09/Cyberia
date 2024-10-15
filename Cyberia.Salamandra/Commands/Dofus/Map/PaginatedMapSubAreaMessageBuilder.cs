@@ -9,6 +9,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
 public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<MapSubAreaData>
@@ -16,24 +18,35 @@ public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<
     public const string PacketHeader = "PMA.SA";
     public const int PacketVersion = 2;
 
-    public PaginatedMapSubAreaMessageBuilder(EmbedBuilderService embedBuilderService, List<MapSubAreaData> mapSubAreasData, string search, int selectedPageIndex = 0)
-        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, BotTranslations.Embed_Map_Author), BotTranslations.Embed_PaginatedMapSubArea_Title, mapSubAreasData, search, selectedPageIndex)
+    public PaginatedMapSubAreaMessageBuilder(
+        EmbedBuilderService embedBuilderService,
+        List<MapSubAreaData> mapSubAreasData,
+        string search,
+        CultureInfo? culture,
+        int selectedPageIndex = 0)
+    : base(
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, Translation.Get<BotTranslations>("Embed.Map.Author", culture)),
+        Translation.Get<BotTranslations>("Embed.PaginatedMapSubArea.Title", culture),
+        mapSubAreasData,
+        search,
+        culture,
+        selectedPageIndex)
     {
 
     }
 
-    public static PaginatedMapSubAreaMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static PaginatedMapSubAreaMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var mapSubAreasData = DofusApi.Datacenter.MapsRepository.GetMapSubAreasDataByName(parameters[1]).ToList();
+            var mapSubAreasData = DofusApi.Datacenter.MapsRepository.GetMapSubAreasDataByName(parameters[1], culture).ToList();
             if (mapSubAreasData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, mapSubAreasData, parameters[1], selectedPageIndex);
+                return new(embedBuilderService, mapSubAreasData, parameters[1], culture, selectedPageIndex);
             }
         }
 
@@ -47,12 +60,12 @@ public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {Formatter.Bold(x.Name)} ({x.Id})");
+        return _data.Select(x => $"- {Formatter.Bold(x.Name.ToString(_culture))} ({x.Id})");
     }
 
     protected override DiscordSelectComponent SelectBuilder()
     {
-        return MapComponentsBuilder.MapSubAreasSelectBuilder(0, _data);
+        return MapComponentsBuilder.MapSubAreasSelectBuilder(0, _data, _culture);
     }
 
     protected override string PreviousPacketBuilder()

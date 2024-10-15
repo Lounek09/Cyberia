@@ -18,12 +18,11 @@ public sealed class BreedAutocompleteProvider : IAutoCompleteProvider //TODO: Us
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         return DofusApi.Datacenter.BreedsRepository.Breeds.Values.Select(x =>
         {
-            return new DiscordAutoCompleteChoice(x.Name, x.Id);
-        })
-        .ToList();
+            return new DiscordAutoCompleteChoice(x.Name.ToString(culture), x.Id);
+        });
     }
 }

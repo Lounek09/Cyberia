@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Emotes;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterLearnEmoteEffect : Effect
 {
@@ -24,10 +26,10 @@ public sealed record CharacterLearnEmoteEffect : Effect
         return DofusApi.Datacenter.EmotesRepository.GetEmoteDataById(EmoteId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var emoteName = DofusApi.Datacenter.EmotesRepository.GetEmoteNameById(EmoteId);
+        var emoteName = DofusApi.Datacenter.EmotesRepository.GetEmoteNameById(EmoteId, culture);
 
-        return GetDescription(string.Empty, string.Empty, emoteName);
+        return GetDescription(culture, string.Empty, string.Empty, emoteName);
     }
 }

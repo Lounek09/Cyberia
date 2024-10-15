@@ -1,7 +1,9 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record MarkLegitOwnerEffect : Effect
 {
@@ -18,8 +20,8 @@ public sealed record MarkLegitOwnerEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, parameters.Param4);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(string.Empty, string.Empty, string.Empty, Name);
+        return GetDescription(culture, string.Empty, string.Empty, string.Empty, Name);
     }
 }

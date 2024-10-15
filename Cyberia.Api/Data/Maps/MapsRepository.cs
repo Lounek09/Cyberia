@@ -3,6 +3,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Maps;
@@ -63,13 +64,18 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         return mapSuperAreaData;
     }
 
-    public string GetMapSuperAreaNameById(int id)
+    public string GetMapSuperAreaNameById(int id, Language language)
+    {
+        return GetMapSuperAreaNameById(id, language.ToCulture());
+    }
+
+    public string GetMapSuperAreaNameById(int id, CultureInfo? culture = null)
     {
         var mapSuperAreaData = GetMapSuperAreaDataById(id);
 
         return mapSuperAreaData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : mapSuperAreaData.Name;
+            ? Translation.UnknownData(id, culture)
+            : mapSuperAreaData.Name.ToString(culture);
     }
 
     public MapAreaData? GetMapAreaDataById(int id)
@@ -78,7 +84,12 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         return mapAreaData;
     }
 
-    public IEnumerable<MapAreaData> GetMapAreasDataByName(string name)
+    public IEnumerable<MapAreaData> GetMapAreasDataByName(string name, Language language)
+    {
+        return GetMapAreasDataByName(name, language.ToCulture());
+    }
+
+    public IEnumerable<MapAreaData> GetMapAreasDataByName(string name, CultureInfo? culture = null)
     {
         var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -86,18 +97,23 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.ToString(culture).NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
 
-    public string GetMapAreaNameById(int id)
+    public string GetMapAreaNameById(int id, Language language)
+    {
+        return GetMapAreaNameById(id, language.ToCulture());
+    }
+
+    public string GetMapAreaNameById(int id, CultureInfo? culture = null)
     {
         var mapAreaData = GetMapAreaDataById(id);
 
         return mapAreaData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : mapAreaData.Name;
+            ? Translation.UnknownData(id, culture)
+            : mapAreaData.Name.ToString(culture);
     }
 
     public MapSubAreaData? GetMapSubAreaDataById(int id)
@@ -106,7 +122,12 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         return mapSubAreaData;
     }
 
-    public IEnumerable<MapSubAreaData> GetMapSubAreasDataByName(string name)
+    public IEnumerable<MapSubAreaData> GetMapSubAreasDataByName(string name, Language language)
+    {
+        return GetMapSubAreasDataByName(name, language.ToCulture());
+    }
+
+    public IEnumerable<MapSubAreaData> GetMapSubAreasDataByName(string name, CultureInfo? culture = null)
     {
         var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -114,18 +135,23 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.ToString(culture).NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
 
-    public string GetMapSubAreaNameById(int id)
+    public string GetMapSubAreaNameById(int id, Language language)
+    {
+        return GetMapSubAreaNameById(id, language.ToCulture());
+    }
+
+    public string GetMapSubAreaNameById(int id, CultureInfo? culture = null)
     {
         var mapSubAreaData = GetMapSubAreaDataById(id);
 
         return mapSubAreaData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : mapSubAreaData.Name.ToString().TrimStart('/');
+            ? Translation.UnknownData(id, culture)
+            : mapSubAreaData.Name.ToString(culture).TrimStart('/');
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

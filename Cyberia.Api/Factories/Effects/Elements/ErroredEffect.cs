@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api.Factories.Effects;
+﻿using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record ErroredEffect : Effect
 {
@@ -10,8 +12,8 @@ public sealed record ErroredEffect : Effect
         CompressedEffect = compressedEffect;
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return new(ApiTranslations.Effect_Errored, CompressedEffect);
+        return new DescriptionString(Translation.Get<ApiTranslations>("Effect.Errored", culture), CompressedEffect);
     }
 }

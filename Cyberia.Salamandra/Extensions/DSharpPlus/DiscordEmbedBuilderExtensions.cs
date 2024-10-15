@@ -4,12 +4,16 @@ using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.Factories.QuestObjectives;
+using Cyberia.Api.Factories.QuestObjectives.Elements;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
 
+using System.Globalization;
 using System.Text;
 
 namespace Cyberia.Salamandra.Extensions.DSharpPlus;
@@ -63,43 +67,43 @@ public static class DiscordEmbedBuilderExtensions
         return embed.AddField(name, builder.ToString(), inline);
     }
 
-    public static DiscordEmbedBuilder AddEffectFields(this DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool sort, bool inline = false)
+    public static DiscordEmbedBuilder AddEffectFields(this DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, bool inline = false)
     {
-        var effectsParse = GetEffectsParse(effects, sort, x => Formatter.Bold(Formatter.Sanitize(x)));
+        var effectsParse = GetEffectsParse(effects, sort, culture, x => Formatter.Bold(Formatter.Sanitize(x)));
         return embed.AddFields(name, effectsParse, inline);
     }
 
-    public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, CriteriaReadOnlyCollection criteria, bool inline = false)
+    public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, CriteriaReadOnlyCollection criteria, CultureInfo? culture, bool inline = false)
     {
-        var criteriaParse = GetCriteriaParse(criteria, x => Formatter.Bold(Formatter.Sanitize(x)));
-        return embed.AddFields(BotTranslations.Embed_Field_Criteria_Title, criteriaParse, inline);
+        var criteriaParse = GetCriteriaParse(criteria, culture, x => Formatter.Bold(Formatter.Sanitize(x)));
+        return embed.AddFields(Translation.Get<BotTranslations>("Embed.Field.Criteria.Title", culture), criteriaParse, inline);
     }
 
-    public static DiscordEmbedBuilder AddQuestObjectiveFields(this DiscordEmbedBuilder embed, IEnumerable<IQuestObjective> questObjectives, bool inline = false)
+    public static DiscordEmbedBuilder AddQuestObjectivesFields(this DiscordEmbedBuilder embed, IEnumerable<IQuestObjective> questObjectives, CultureInfo? culture, bool inline = false)
     {
         List<string> questObjectivesParse = [];
 
         foreach (var questObjective in questObjectives)
         {
             var questObjectiveDescription = questObjective is FreeFormQuestObjective
-                ? questObjective.GetDescription()
-                : questObjective.GetDescription().ToString(x => Formatter.Bold(Formatter.Sanitize(x)));
+                ? questObjective.GetDescription(culture)
+                : questObjective.GetDescription(culture).ToString(x => Formatter.Bold(Formatter.Sanitize(x)));
 
             questObjectivesParse.Add(questObjectiveDescription);
         }
 
-        return embed.AddFields(BotTranslations.Embed_Field_QuestObjectives_Title, questObjectivesParse, inline);
+        return embed.AddFields(Translation.Get<BotTranslations>("Embed.Field.QuestObjectives.Title", culture), questObjectivesParse, inline);
     }
 
-    public static DiscordEmbedBuilder WithCraftDescription(this DiscordEmbedBuilder embed, CraftData craftData, int quantity, bool recursive)
+    public static DiscordEmbedBuilder WithCraftDescription(this DiscordEmbedBuilder embed, CraftData craftData, int quantity, bool recursive, CultureInfo? culture)
     {
         List<string> result = [];
 
         var ingredients = recursive ? craftData.GetIngredientsWithSubCraft(quantity) : craftData.GetIngredients(quantity);
         foreach (var ingredient in ingredients)
         {
-            var quantityFormatted = Formatter.Bold(ingredient.Value.ToFormattedString());
-            var itemName = Formatter.Sanitize(ingredient.Key.Name);
+            var quantityFormatted = Formatter.Bold(ingredient.Value.ToFormattedString(culture));
+            var itemName = Formatter.Sanitize(ingredient.Key.Name.ToString(culture));
 
             if (!recursive)
             {
@@ -116,40 +120,40 @@ public static class DiscordEmbedBuilderExtensions
         return embed.WithDescription(string.Join('\n', result));
     }
 
-    public static DiscordEmbedBuilder AddCraftField(this DiscordEmbedBuilder embed, CraftData craftData, int quantity, bool inline = false)
+    public static DiscordEmbedBuilder AddCraftField(this DiscordEmbedBuilder embed, CraftData craftData, int quantity, CultureInfo? culture, bool inline = false)
     {
         List<string> result = [];
 
         foreach (var ingredient in craftData.GetIngredients(quantity))
         {
-            var quantityFormatted = Formatter.Bold(ingredient.Value.ToFormattedString());
-            var itemName = Formatter.Sanitize(ingredient.Key.Name);
+            var quantityFormatted = Formatter.Bold(ingredient.Value.ToFormattedString(culture));
+            var itemName = Formatter.Sanitize(ingredient.Key.Name.ToString(culture));
 
             result.Add($"{quantityFormatted}x {itemName}");
         }
 
-        return embed.AddField(BotTranslations.Embed_Field_Craft_Title, string.Join(" + ", result), inline);
+        return embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Craft.Title", culture), string.Join(" + ", result), inline);
     }
 
-    public static DiscordEmbedBuilder AddWeaponInfosField(this DiscordEmbedBuilder embed, ItemWeaponData itemWeaponData, bool twoHanded, ItemTypeData? itemTypeData, bool inline = false)
+    public static DiscordEmbedBuilder AddWeaponInfosField(this DiscordEmbedBuilder embed, ItemWeaponData itemWeaponData, bool twoHanded, ItemTypeData? itemTypeData, CultureInfo? culture, bool inline = false)
     {
         StringBuilder builder = new();
 
-        builder.Append(BotTranslations.Embed_Field_Weapon_Content_AP);
+        builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.AP", culture));
         builder.Append(' ');
         builder.Append(Formatter.Bold(itemWeaponData.ActionPointCost.ToString()));
         builder.Append('\n');
 
-        builder.Append(BotTranslations.Embed_Field_Weapon_Content_Range);
+        builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.Range", culture));
         builder.Append(' ');
         builder.Append(Formatter.Bold(itemWeaponData.MinRange.ToString()));
-        builder.Append(BotTranslations.to);
+        builder.Append(Translation.Get<BotTranslations>("to", culture));
         builder.Append(Formatter.Bold(itemWeaponData.MaxRange.ToString()));
         builder.Append('\n');
 
         if (itemWeaponData.CriticalBonus != 0)
         {
-            builder.Append(BotTranslations.Embed_Field_Weapon_Content_CriticalHitBonus);
+            builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.CriticalHitBonus", culture));
             builder.Append(' ');
             builder.Append(Formatter.Bold(itemWeaponData.CriticalBonus.ToString()));
             builder.Append('\n');
@@ -157,7 +161,7 @@ public static class DiscordEmbedBuilderExtensions
 
         if (itemWeaponData.CriticalHitRate != 0)
         {
-            builder.Append(BotTranslations.Embed_Field_Weapon_Content_CriticalHit);
+            builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.CriticalHit", culture));
             builder.Append(" 1/");
             builder.Append(Formatter.Bold(itemWeaponData.CriticalHitRate.ToString()));
         }
@@ -165,7 +169,7 @@ public static class DiscordEmbedBuilderExtensions
         if (itemWeaponData.CriticalFailureRate != 0)
         {
             builder.Append(" - ");
-            builder.Append(BotTranslations.Embed_Field_Weapon_Content_CriticalFailure);
+            builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.CriticalFailure", culture));
             builder.Append(" 1/");
             builder.Append(Formatter.Bold(itemWeaponData.CriticalFailureRate.ToString()));
             builder.Append('\n');
@@ -177,42 +181,44 @@ public static class DiscordEmbedBuilderExtensions
 
         if (itemWeaponData.Linear)
         {
-            builder.Append(BotTranslations.Embed_Field_Weapon_Content_Linear);
+            builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.Linear", culture));
             builder.Append('\n');
         }
 
         if (!itemWeaponData.LineOfSight && itemWeaponData.MaxRange > 1)
         {
-            builder.Append(BotTranslations.Embed_Field_Weapon_Content_LineOfSight);
+            builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.LineOfSight", culture));
             builder.Append('\n');
         }
 
-        builder.Append(twoHanded ? BotTranslations.Embed_Field_Weapon_Content_TwoHanded : BotTranslations.Embed_Field_Weapon_Content_OneHanded);
+        builder.Append(twoHanded
+            ? Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.TwoHanded", culture)
+            : Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.OneHanded", culture));
 
         if (itemTypeData is not null && itemTypeData.EffectArea != EffectAreaFactory.Default)
         {
             builder.Append('\n');
-            builder.Append(BotTranslations.Embed_Field_Weapon_Content_Area);
+            builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.Area", culture));
             builder.Append(' ');
             builder.Append(Emojis.EffectArea(itemTypeData.EffectArea.Id));
             builder.Append(' ');
-            builder.Append(itemTypeData.EffectArea.GetDescription().ToString(Formatter.Bold));
+            builder.Append(itemTypeData.EffectArea.GetDescription(culture).ToString(Formatter.Bold));
         }
 
-        return embed.AddField(BotTranslations.Embed_Field_Weapon_Title, builder.ToString(), inline);
+        return embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Weapon.Title", culture), builder.ToString(), inline);
     }
 
-    public static DiscordEmbedBuilder AddPetField(this DiscordEmbedBuilder embed, PetData petData, bool inline = false)
+    public static DiscordEmbedBuilder AddPetField(this DiscordEmbedBuilder embed, PetData petData, CultureInfo? culture, bool inline = false)
     {
         StringBuilder builder = new();
 
         if (petData.MinFoodInterval.HasValue && petData.MaxFoodInterval.HasValue)
         {
-            builder.Append(BotTranslations.Embed_Field_Pet_Content_MealBetween);
+            builder.Append(Translation.Get<BotTranslations>("Embed.Field.Pet.Content.MealBetween", culture));
             builder.Append(' ');
             builder.Append(Formatter.Bold(petData.MinFoodInterval.Value.TotalHours.ToString()));
             builder.Append('h');
-            builder.Append(BotTranslations.and);
+            builder.Append(Translation.Get<BotTranslations>("and", culture));
             builder.Append(Formatter.Bold(petData.MaxFoodInterval.Value.TotalHours.ToString()));
             builder.Append("h\n");
         }
@@ -221,13 +227,13 @@ public static class DiscordEmbedBuilderExtensions
         {
             builder.Append(Emojis.Effect(petFoodsData.Effect.Id));
             builder.Append(' ');
-            builder.Append(Formatter.Bold(petFoodsData.Effect.GetDescription()));
+            builder.Append(Formatter.Bold(petFoodsData.Effect.GetDescription(culture)));
             builder.Append(" :\n");
 
             if (petFoodsData.ItemsId.Count > 0)
             {
                 var itemsName = petFoodsData.ItemsId
-                    .Select(x => DofusApi.Datacenter.ItemsRepository.GetItemNameById(x));
+                    .Select(x => DofusApi.Datacenter.ItemsRepository.GetItemNameById(x, culture));
 
                 builder.Append(string.Join(", ", itemsName));
                 builder.Append('\n');
@@ -236,7 +242,7 @@ public static class DiscordEmbedBuilderExtensions
             if (petFoodsData.ItemTypesId.Count > 0)
             {
                 var itemTypesName = petFoodsData.ItemTypesId
-                    .Select(x => DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x));
+                    .Select(x => DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(x, culture));
 
                 builder.Append(string.Join(", ", itemTypesName));
                 builder.Append('\n');
@@ -247,7 +253,7 @@ public static class DiscordEmbedBuilderExtensions
                 foreach (var group in petFoodsData.MonstersIdQuantities.GroupBy(x => x.Value))
                 {
                     var monstersName = group
-                        .Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(x.Key));
+                        .Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(x.Key, culture));
 
                     builder.Append(Formatter.Bold(group.Key.ToString()));
                     builder.Append("x ");
@@ -261,7 +267,7 @@ public static class DiscordEmbedBuilderExtensions
                 foreach (var group in petFoodsData.MonsterRacesIdQuantities.GroupBy(x => x.Value))
                 {
                     var monsterRacesName = group
-                        .Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterRaceNameById(x.Key));
+                        .Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterRaceNameById(x.Key, culture));
 
                     builder.Append(Formatter.Bold(group.Key.ToString()));
                     builder.Append("x ");
@@ -275,7 +281,7 @@ public static class DiscordEmbedBuilderExtensions
                 foreach (var group in petFoodsData.MonsterSuperRacesIdQuantities.GroupBy(x => x.Value))
                 {
                     var monsterSuperRacesName = group
-                        .Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterSuperRaceNameById(x.Key));
+                        .Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterSuperRaceNameById(x.Key, culture));
 
                     builder.Append(Formatter.Bold(group.Key.ToString()));
                     builder.Append("x ");
@@ -286,10 +292,10 @@ public static class DiscordEmbedBuilderExtensions
             }
         }
 
-        return embed.AddField(BotTranslations.Embed_Field_Pet_Title, builder.ToString(), inline);
+        return embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Pet.Title", culture), builder.ToString(), inline);
     }
 
-    private static List<string> GetEffectsParse(IEnumerable<IEffect> effects, bool sort, Func<string, string>? parametersDecorator = null)
+    private static List<string> GetEffectsParse(IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
     {
         List<string> effectsParse = [];
 
@@ -302,25 +308,25 @@ public static class DiscordEmbedBuilderExtensions
                 var itemStatsData = replaceEffect.GetItemData()?.GetItemStatsData();
                 if (itemStatsData is not null)
                 {
-                    effectsParse.AddRange(GetEffectsParse(itemStatsData.Effects, sort, parametersDecorator));
+                    effectsParse.AddRange(GetEffectsParse(itemStatsData.Effects, sort, culture, parametersDecorator));
                 }
 
                 continue;
             }
 
             var effectDescription = parametersDecorator is null
-                ? effect.GetDescription()
-                : effect.GetDescription().ToString(parametersDecorator);
+                ? effect.GetDescription(culture)
+                : effect.GetDescription(culture).ToString(parametersDecorator);
 
             var areaInfo = effect.EffectArea.Size == EffectAreaFactory.Default.Size
                 ? string.Empty
-                : $" - {Emojis.EffectArea(effect.EffectArea.Id)} {effect.EffectArea.GetSize()}";
+                : $" - {Emojis.EffectArea(effect.EffectArea.Id)} {effect.EffectArea.GetSize(culture)}";
 
             var effectParse = $"{Emojis.Effect(effect.Id)} {effectDescription}{areaInfo}";
 
             if (effect.Criteria.Count > 0)
             {
-                var criteriaParse = GetCriteriaParse(effect.Criteria);
+                var criteriaParse = GetCriteriaParse(effect.Criteria, culture: culture);
                 effectParse += $" {Formatter.InlineCode(string.Join(' ', criteriaParse))}";
             }
 
@@ -330,7 +336,7 @@ public static class DiscordEmbedBuilderExtensions
         return effectsParse;
     }
 
-    private static List<string> GetCriteriaParse(CriteriaReadOnlyCollection criteria, Func<string, string>? parametersDecorator = null)
+    private static List<string> GetCriteriaParse(CriteriaReadOnlyCollection criteria, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
     {
         List<string> criteriaParse = [string.Empty];
 
@@ -339,22 +345,25 @@ public static class DiscordEmbedBuilderExtensions
             switch (element)
             {
                 case CriteriaLogicalOperator logicalOperator:
-                    criteriaParse[^1] += $"{logicalOperator.GetDescription()} ";
+                    criteriaParse[^1] += logicalOperator.GetDescription(culture) + ' ';
                     break;
                 case CriteriaReadOnlyCollection subCriteria:
-                    var subCriteriaParse = GetCriteriaParse(subCriteria, parametersDecorator);
-                    criteriaParse[^1] += '(' + subCriteriaParse[0];
+                    var subCriteriaParse = GetCriteriaParse(subCriteria, culture, parametersDecorator);
 
+                    criteriaParse[^1] += '(' + subCriteriaParse[0];
                     if (subCriteriaParse.Count > 1)
                     {
                         criteriaParse.AddRange(subCriteriaParse.GetRange(1, subCriteriaParse.Count - 1));
                     }
-
                     criteriaParse[^1] += ')';
+
                     criteriaParse.Add(string.Empty);
                     break;
                 case ICriterion criterion:
-                    criteriaParse[^1] += parametersDecorator is null ? criterion.GetDescription() : criterion.GetDescription().ToString(parametersDecorator);
+                    criteriaParse[^1] += parametersDecorator is null
+                        ? criterion.GetDescription(culture)
+                        : criterion.GetDescription(culture).ToString(parametersDecorator);
+
                     criteriaParse.Add(string.Empty);
                     break;
             }

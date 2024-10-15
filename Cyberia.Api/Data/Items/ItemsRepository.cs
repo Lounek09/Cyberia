@@ -4,6 +4,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Items;
@@ -60,13 +61,18 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
         return itemTypeData;
     }
 
-    public string GetItemTypeNameById(int id)
+    public string GetItemTypeNameById(int id, Language language)
+    {
+        return GetItemTypeNameById(id, language.ToCulture());
+    }
+
+    public string GetItemTypeNameById(int id, CultureInfo? culture = null)
     {
         var itemTypeData = GetItemTypeDataById(id);
 
         return itemTypeData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : itemTypeData.Name;
+            ? Translation.UnknownData(id, culture)
+            : itemTypeData.Name.ToString(culture);
     }
 
     public ItemData? GetItemDataById(int id)
@@ -75,7 +81,12 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
         return itemData;
     }
 
-    public IEnumerable<ItemData> GetItemsDataByName(string name)
+    public IEnumerable<ItemData> GetItemsDataByName(string typeName, Language language)
+    {
+        return GetItemsDataByName(typeName, language.ToCulture());
+    }
+
+    public IEnumerable<ItemData> GetItemsDataByName(string name, CultureInfo? culture = null)
     {
         var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -83,7 +94,7 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return x.NormalizedName.ToString().Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.NormalizedName.ToString(culture).Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
@@ -108,13 +119,18 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
         });
     }
 
-    public string GetItemNameById(int id)
+    public string GetItemNameById(int id, Language language)
+    {
+        return GetItemNameById(id, language.ToCulture());
+    }
+
+    public string GetItemNameById(int id, CultureInfo? culture = null)
     {
         var itemData = GetItemDataById(id);
 
         return itemData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : itemData.Name;
+            ? Translation.UnknownData(id, culture)
+            : itemData.Name.ToString(culture);
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

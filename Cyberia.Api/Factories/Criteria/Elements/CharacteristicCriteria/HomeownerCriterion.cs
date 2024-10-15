@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api.Factories.Criteria;
+﻿using System.Globalization;
+
+namespace Cyberia.Api.Factories.Criteria.Elements.Characteristics;
 
 public sealed record HomeownerCriterion : Criterion
 {
@@ -25,8 +27,8 @@ public sealed record HomeownerCriterion : Criterion
         return $"Criterion.Homeowner.{GetOperatorDescriptionKey()}.{IsHomeowner}";
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription([]);
+        return GetDescription(culture, []);
     }
 }

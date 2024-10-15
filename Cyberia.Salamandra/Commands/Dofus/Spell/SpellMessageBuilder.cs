@@ -16,6 +16,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 
 public sealed class SpellMessageBuilder : ICustomMessageBuilder
@@ -29,8 +31,9 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
     private readonly SpellLevelData? _spellLevelData;
     private readonly BreedData? _breedData;
     private readonly IncarnationData? _incarnationData;
+    private readonly CultureInfo? _culture;
 
-    public SpellMessageBuilder(EmbedBuilderService embedBuilderService, SpellData spell, int selectedLevel)
+    public SpellMessageBuilder(EmbedBuilderService embedBuilderService, SpellData spell, int selectedLevel, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _spellData = spell;
@@ -38,9 +41,10 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
         _spellLevelData = spell.GetSpellLevelData(selectedLevel);
         _breedData = spell.GetBreedData();
         _incarnationData = spell.GetIncarnationData();
+        _culture = culture;
     }
 
-    public static SpellMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static SpellMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -52,7 +56,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new SpellMessageBuilder(embedBuilderService, spellData, selectedLevel);
+                return new SpellMessageBuilder(embedBuilderService, spellData, selectedLevel, culture);
             }
         }
 
@@ -92,80 +96,97 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Spells, BotTranslations.Embed_Spell_Author)
-            .WithTitle($"{_spellData.Name} ({_spellData.Id}) - {BotTranslations.ShortLevel} {_selectedLevel}")
-            .WithDescription(string.IsNullOrEmpty(_spellData.Description) ? string.Empty : Formatter.Italic(_spellData.Description.ToString().Trim()))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Spells, Translation.Get<BotTranslations>("Embed.Spell.Author", _culture))
+            .WithTitle($"{_spellData.Name.ToString(_culture)} ({_spellData.Id}) - {Translation.Get<BotTranslations>("ShortLevel", _culture)} {_selectedLevel}")
             .WithThumbnail(await _spellData.GetIconImagePathAsync(CdnImageSize.Size128));
+
+        var description = _spellData.Description.ToString(_culture);
+        if (!string.IsNullOrEmpty(description))
+        {
+            embed.Description += Formatter.Italic(description);
+        }
 
         if (_spellLevelData is not null)
         {
-            embed.AddField(Constant.ZeroWidthSpace, $"{BotTranslations.Embed_Field_RequiredLevel_Title} {Formatter.Bold(_spellLevelData.NeededLevel.ToString())}", true);
+            embed.AddField(
+                Constant.ZeroWidthSpace,
+                $"{Translation.Get<BotTranslations>("Embed.Field.RequiredLevel.Title", _culture)} {Formatter.Bold(_spellLevelData.NeededLevel.ToString())}",
+                true);
 
-            var range = $"{Formatter.Bold(_spellLevelData.MinRange.ToString())}{(_spellLevelData.MinRange == _spellLevelData.MaxRange ? string.Empty : $"{BotTranslations.to}{Formatter.Bold(_spellLevelData.MaxRange.ToString())}")} {BotTranslations.ShortRange}";
-            var apCost = $"{Formatter.Bold(_spellLevelData.ActionPointCost.ToString())} {BotTranslations.ShortActionPoint}";
+            var range = $"{Formatter.Bold(_spellLevelData.MinRange.ToString())}{(_spellLevelData.MinRange == _spellLevelData.MaxRange ? string.Empty : $"{Translation.Get<BotTranslations>("to", _culture)}{Formatter.Bold(_spellLevelData.MaxRange.ToString())}")} {Translation.Get<BotTranslations>("ShortRange", _culture)}";
+            var apCost = $"{Formatter.Bold(_spellLevelData.ActionPointCost.ToString())} {Translation.Get<BotTranslations>("ShortActionPoint", _culture)}";
             embed.AddField(Constant.ZeroWidthSpace, $"{range}\n{apCost}", true);
 
-            embed.AddField(BotTranslations.Embed_Field_Category_Title, _spellData.SpellCategory.GetDescription(), true);
+            embed.AddField(
+                Translation.Get<BotTranslations>("Embed.Field.Category.Title", _culture),
+                _spellData.SpellCategory.GetDescription(_culture),
+                true);
 
-            var requiredStatesData = _spellLevelData.GetRequiredStatesData().ToList();
-            if (requiredStatesData.Count > 0)
+            var requiredStatesData = _spellLevelData.GetRequiredStatesData();
+            if (requiredStatesData.Any())
             {
-                embed.AddField(BotTranslations.Embed_Field_RequiredStates_Title, string.Join(", ", requiredStatesData.Select(x => x.Name)), true);
+                embed.AddField(
+                    Translation.Get<BotTranslations>("Embed.Field.RequiredStates.Title", _culture),
+                    string.Join(", ", requiredStatesData.Select(x => x.Name.ToString(_culture))),
+                    true);
             }
 
-            var forbiddenStatesData = _spellLevelData.GetForbiddenStatesData().ToList();
-            if (forbiddenStatesData.Count > 0)
+            var forbiddenStatesData = _spellLevelData.GetForbiddenStatesData();
+            if (forbiddenStatesData.Any())
             {
-                embed.AddField(BotTranslations.Embed_Field_ForbiddenStates_Title, string.Join(", ", forbiddenStatesData.Select(x => x.Name)), true);
+                embed.AddField(
+                    Translation.Get<BotTranslations>("Embed.Field.ForbiddenStates.Title", _culture),
+                    string.Join(", ", forbiddenStatesData.Select(x => x.Name.ToString(_culture))),
+                    true);
             }
 
             if (_spellData.Id == 101 || _spellData.Id == 2083)
             {
-                embed.AddField(BotTranslations.Embed_Field_Effects_Title, "Fuck");
+                embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), "Fuck");
             }
             else
             {
                 var effects = _spellLevelData.Effects;
                 if (effects.Count > 0)
                 {
-                    embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects, false);
+                    embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, false, _culture);
                 }
 
                 var trapEffects = _spellLevelData.GetTrapEffects();
                 if (trapEffects.Count > 0)
                 {
-                    embed.AddEffectFields(BotTranslations.Embed_Field_TrapEffects_Title, trapEffects, false);
+                    embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.TrapEffects.Title", _culture), trapEffects, false, _culture);
                 }
 
                 var glyphEffects = _spellLevelData.GetGlyphEffects();
                 if (glyphEffects.Count > 0)
                 {
-                    embed.AddEffectFields(BotTranslations.Embed_Field_GlyphEffects_Title, glyphEffects, false);
+                    embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.GlyphEffects.Title", _culture), glyphEffects, false, _culture);
                 }
 
                 var criticalEffects = _spellLevelData.CriticalEffects;
                 if (criticalEffects.Count > 0)
                 {
-                    embed.AddEffectFields(BotTranslations.Embed_Field_CriticalEffects_Title, criticalEffects, false);
+                    embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.CriticalEffects.Title", _culture), criticalEffects, false, _culture);
                 }
             }
 
             var caracteristics = $"""
-                 {BotTranslations.Embed_Field_Characteristics_Content_CriticalHit} {Formatter.Bold(_spellLevelData.CriticalHitRate == 0 ? "-" : $"1/{_spellLevelData.CriticalHitRate}")}
-                 {BotTranslations.Embed_Field_Characteristics_Content_CriticalFailure} {Formatter.Bold(_spellLevelData.CriticalFailureRate == 0 ? "-" : $"1/{_spellLevelData.CriticalFailureRate}")}
-                 {BotTranslations.Embed_Field_Characteristics_Content_CastPerTurn} {Formatter.Bold(_spellLevelData.CastPerTurn == 0 ? "-" : _spellLevelData.CastPerTurn.ToString())}
-                 {BotTranslations.Embed_Field_Characteristics_Content_CastPerPlayer} {Formatter.Bold(_spellLevelData.CastPerPlayer == 0 ? "-" : _spellLevelData.CastPerPlayer.ToString())}
-                 {BotTranslations.Embed_Field_Characteristics_Content_TurnsBetweenCast} {Formatter.Bold(_spellLevelData.TurnsBetweenCast == 0 ? "-" : _spellLevelData.TurnsBetweenCast == 63 ? BotTranslations.ShortInfinity : _spellLevelData.TurnsBetweenCast.ToString())}
-                 {(_spellData.GlobalInterval ? BotTranslations.Embed_Field_Characteristics_Content_GlobalRecast : string.Empty)}
+                 {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.CriticalHit", _culture)} {Formatter.Bold(_spellLevelData.CriticalHitRate == 0 ? " - " : $"1/{_spellLevelData.CriticalHitRate}")}
+                 {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.CriticalFailure", _culture)} {Formatter.Bold(_spellLevelData.CriticalFailureRate == 0 ? " - " : $"1/{_spellLevelData.CriticalFailureRate}")}
+                 {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.CastPerTurn", _culture)} {Formatter.Bold(_spellLevelData.CastPerTurn == 0 ? " - " : _spellLevelData.CastPerTurn.ToString())}
+                 {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.CastPerPlayer", _culture)} {Formatter.Bold(_spellLevelData.CastPerPlayer == 0 ? " - " : _spellLevelData.CastPerPlayer.ToString())}
+                 {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.TurnsBetweenCast", _culture)} {Formatter.Bold(_spellLevelData.TurnsBetweenCast == 0 ? " - " : _spellLevelData.TurnsBetweenCast == 63 ? Translation.Get<BotTranslations>("ShortInfinity", _culture) : _spellLevelData.TurnsBetweenCast.ToString())}
+                 {(_spellData.GlobalInterval ? Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.GlobalRecast", _culture) : string.Empty)}
                  """;
-            embed.AddField(BotTranslations.Embed_Field_Characteristics_Title, caracteristics, true);
+            embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Characteristics.Title", _culture), caracteristics, true);
 
             caracteristics = $"""
-                {Emojis.Bool(_spellLevelData.AdjustableRange)} {BotTranslations.Embed_Field_Characteristics_Content_AdjustableRange}
-                {Emojis.Bool(_spellLevelData.LineOfSight)} {BotTranslations.Embed_Field_Characteristics_Content_LineOfSight}
-                {Emojis.Bool(_spellLevelData.Linear)} {BotTranslations.Embed_Field_Characteristics_Content_Linear}
-                {Emojis.Bool(_spellLevelData.NeedFreeCell)} {BotTranslations.Embed_Field_Characteristics_Content_NeedFreeCell}
-                {Emojis.Bool(_spellLevelData.CricalFailureEndTheTurn)} {BotTranslations.Embed_Field_Characteristics_Content_CriticalFailureEndTurn}
+                {Emojis.Bool(_spellLevelData.AdjustableRange)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.AdjustableRange", _culture)}
+                {Emojis.Bool(_spellLevelData.LineOfSight)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.LineOfSight", _culture)}
+                {Emojis.Bool(_spellLevelData.Linear)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.Linear", _culture)}
+                {Emojis.Bool(_spellLevelData.NeedFreeCell)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.NeedFreeCell", _culture)}
+                {Emojis.Bool(_spellLevelData.CricalFailureEndTheTurn)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.CriticalFailureEndTurn", _culture)}
                 """;
             embed.AddField(Constant.ZeroWidthSpace, caracteristics, true);
         }
@@ -197,12 +218,12 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
     {
         if (_breedData is not null)
         {
-            yield return BreedComponentsBuilder.BreedButtonBuilder(_breedData);
+            yield return BreedComponentsBuilder.BreedButtonBuilder(_breedData, _culture);
         }
 
         if (_incarnationData is not null)
         {
-            yield return IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData);
+            yield return IncarnationComponentsBuilder.IncarnationButtonBuilder(_incarnationData, _culture);
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Cyberia.Api.Data.Monsters;
 using Cyberia.Api.Data.Quests;
 
-namespace Cyberia.Api.Factories.QuestObjectives;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.QuestObjectives.Elements;
 
 public sealed record MultiFightMonsterQuestObjective : QuestObjective
 {
@@ -31,10 +33,10 @@ public sealed record MultiFightMonsterQuestObjective : QuestObjective
         return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
+        var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId, culture);
 
-        return GetDescription(monsterName, Quantity);
+        return GetDescription(culture, monsterName, Quantity);
     }
 }

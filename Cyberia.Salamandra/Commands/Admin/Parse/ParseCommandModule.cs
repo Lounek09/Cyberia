@@ -32,7 +32,7 @@ public sealed class ParseCommandModule
         [Parameter("value"), Description("Effects of an item")]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var effects = EffectFactory.CreateMany(value);
 
@@ -40,7 +40,7 @@ public sealed class ParseCommandModule
         {
             var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
                 .WithTitle("Item effects parser")
-                .AddEffectFields("Effects :", effects, true);
+                .AddEffectFields("Effects :", effects, true, culture);
 
             await ctx.RespondAsync(embed);
             return;
@@ -55,7 +55,7 @@ public sealed class ParseCommandModule
         [Parameter("value"), Description("Criteria")]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var criteria = CriterionFactory.CreateMany(value);
 
@@ -63,7 +63,7 @@ public sealed class ParseCommandModule
         {
             var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
                 .WithTitle("Criteria parser")
-                .AddCriteriaFields(criteria);
+                .AddCriteriaFields(criteria, culture);
 
             await ctx.RespondAsync(embed);
             return;

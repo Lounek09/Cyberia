@@ -1,9 +1,12 @@
 ﻿using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Managers;
+using Cyberia.Langzilla.Enums;
 
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Incarnations;
@@ -48,6 +51,16 @@ public sealed class IncarnationData : IDofusData<int>
     public ItemData? GetItemData()
     {
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(Id);
+    }
+
+    public string GetItemName(Language language)
+    {
+        return GetItemName(language.ToCulture());
+    }
+
+    public string GetItemName(CultureInfo? culture = null)
+    {
+        return DofusApi.Datacenter.ItemsRepository.GetItemNameById(Id, culture);
     }
 
     public IEnumerable<SpellData> GetSpellsData()

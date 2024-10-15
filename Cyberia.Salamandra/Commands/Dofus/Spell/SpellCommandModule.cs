@@ -36,7 +36,7 @@ public sealed class SpellCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -45,23 +45,26 @@ public sealed class SpellCommandModule
             var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(id);
             if (spellData is not null)
             {
-                response = await new SpellMessageBuilder(_embedBuilderService, spellData, spellData.GetMaxLevelNumber()).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new SpellMessageBuilder(_embedBuilderService, spellData, spellData.GetMaxLevelNumber(), culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
         {
-            var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(value).ToList();
+            var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(value, culture).ToList();
             if (spellsData.Count == 1)
             {
-                response = await new SpellMessageBuilder(_embedBuilderService, spellsData[0], spellsData[0].GetMaxLevelNumber()).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new SpellMessageBuilder(_embedBuilderService, spellsData[0], spellsData[0].GetMaxLevelNumber(), culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (spellsData.Count > 1)
             {
-                response = await new PaginatedSpellMessageBuilder(_embedBuilderService, spellsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedSpellMessageBuilder(_embedBuilderService, spellsData, value, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Spell_NotFound);
+        response ??= new DiscordInteractionResponseBuilder().WithContent(Translation.Get<BotTranslations>("Spell.NotFound", culture));
         await ctx.RespondAsync(response);
     }
 }

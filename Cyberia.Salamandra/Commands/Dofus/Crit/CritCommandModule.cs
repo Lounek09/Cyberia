@@ -44,19 +44,19 @@ public sealed class CritCommandModule
         [MinMaxValue(1, 99999)]
         int agility)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var rate = Formulas.GetCriticalRate(number, targetRate, agility);
         var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, targetRate);
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Crit_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Crit.Author", culture))
             .WithDescription(Translation.Format(
-                BotTranslations.Embed_Crit_Description,
+                Translation.Get<BotTranslations>("Embed.Crit.Description", culture),
                 Formatter.Bold($"1/{rate}"),
                 Formatter.Bold($"1/{targetRate}"),
                 Formatter.Bold(number.ToString()),
-                Formatter.Bold(agility.ToFormattedString()),
-                Formatter.Bold(agilityNeeded.ToFormattedString())));
+                Formatter.Bold(agility.ToFormattedString(culture)),
+                Formatter.Bold(agilityNeeded.ToFormattedString(culture))));
 
         await ctx.RespondAsync(embed);
     }

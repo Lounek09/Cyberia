@@ -1,7 +1,7 @@
 ﻿@model IReadOnlyList<CultureOption>
 
 <form class="culture" hx-post="@Url.Action("SetCookie", "Culture")" hx-target="body" hx-trigger="change" hx-push-url="true">
-	<select name="culture" title="@WebTranslations.Layout_CultureSelection">
+	<select name="culture" title="@(Translation.Get<WebTranslations>("Layout.CultureSelection"))">
 		@foreach (var culture in Model)
 		{
 			<!option value="@culture.CultureInfo.TwoLetterISOLanguageName" @culture.Selected>@culture.CultureInfo.TwoLetterISOLanguageName.ToUpper()</!option>

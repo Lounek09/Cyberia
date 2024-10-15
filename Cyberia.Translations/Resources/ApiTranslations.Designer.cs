@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cyberia.Translations {
+namespace Cyberia.Translations.Resources {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace Cyberia.Translations {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ApiTranslations {
+    internal class ApiTranslations {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Cyberia.Translations {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cyberia.Translations.Resources.ApiTranslations", typeof(ApiTranslations).Assembly);
@@ -51,7 +51,7 @@ namespace Cyberia.Translations {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Errored AlignmentFeatEffect #1 (#1).
         /// </summary>
-        public static string AlignmentFeatEffect_Errored {
+        internal static string AlignmentFeatEffect_Errored {
             get {
                 return ResourceManager.GetString("AlignmentFeatEffect.Errored", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Unknown AlignmentFeatEffect #1 (#2).
         /// </summary>
-        public static string AlignmentFeatEffect_Unknown {
+        internal static string AlignmentFeatEffect_Unknown {
             get {
                 return ResourceManager.GetString("AlignmentFeatEffect.Unknown", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Four of a kind.
         /// </summary>
-        public static string CardCombination_FourOfAKind {
+        internal static string CardCombination_FourOfAKind {
             get {
                 return ResourceManager.GetString("CardCombination.FourOfAKind", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
-        public static string CardCombination_None {
+        internal static string CardCombination_None {
             get {
                 return ResourceManager.GetString("CardCombination.None", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Pair.
         /// </summary>
-        public static string CardCombination_Pair {
+        internal static string CardCombination_Pair {
             get {
                 return ResourceManager.GetString("CardCombination.Pair", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Thee of a kind.
         /// </summary>
-        public static string CardCombination_ThreeOfAKind {
+        internal static string CardCombination_ThreeOfAKind {
             get {
                 return ResourceManager.GetString("CardCombination.ThreeOfAKind", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Two pair.
         /// </summary>
-        public static string CardCombination_TwoPair {
+        internal static string CardCombination_TwoPair {
             get {
                 return ResourceManager.GetString("CardCombination.TwoPair", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Obese.
         /// </summary>
-        public static string Corpulence_Obese {
+        internal static string Corpulence_Obese {
             get {
                 return ResourceManager.GetString("Corpulence.Obese", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Satisfied.
         /// </summary>
-        public static string Corpulence_Satisfied {
+        internal static string Corpulence_Satisfied {
             get {
                 return ResourceManager.GetString("Corpulence.Satisfied", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Skinny.
         /// </summary>
-        public static string Corpulence_Skinny {
+        internal static string Corpulence_Skinny {
             get {
                 return ResourceManager.GetString("Corpulence.Skinny", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to AP ≠ #1.
         /// </summary>
-        public static string Criterion_ActionPoint_Different {
+        internal static string Criterion_ActionPoint_Different {
             get {
                 return ResourceManager.GetString("Criterion.ActionPoint.Different", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to AP = #1.
         /// </summary>
-        public static string Criterion_ActionPoint_Equal {
+        internal static string Criterion_ActionPoint_Equal {
             get {
                 return ResourceManager.GetString("Criterion.ActionPoint.Equal", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to AP &lt; #1.
         /// </summary>
-        public static string Criterion_ActionPoint_Inferior {
+        internal static string Criterion_ActionPoint_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.ActionPoint.Inferior", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to AP &gt; #1.
         /// </summary>
-        public static string Criterion_ActionPoint_Superior {
+        internal static string Criterion_ActionPoint_Superior {
             get {
                 return ResourceManager.GetString("Criterion.ActionPoint.Superior", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility ≠ #1.
         /// </summary>
-        public static string Criterion_Agility_Different {
+        internal static string Criterion_Agility_Different {
             get {
                 return ResourceManager.GetString("Criterion.Agility.Different", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility = #1.
         /// </summary>
-        public static string Criterion_Agility_Equal {
+        internal static string Criterion_Agility_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Agility.Equal", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility &lt; #1.
         /// </summary>
-        public static string Criterion_Agility_Inferior {
+        internal static string Criterion_Agility_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Agility.Inferior", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility &gt; #1.
         /// </summary>
-        public static string Criterion_Agility_Superior {
+        internal static string Criterion_Agility_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Agility.Superior", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Alignment ≠ #1.
         /// </summary>
-        public static string Criterion_Alignment_Different {
+        internal static string Criterion_Alignment_Different {
             get {
                 return ResourceManager.GetString("Criterion.Alignment.Different", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Alignment = #1.
         /// </summary>
-        public static string Criterion_Alignment_Equal {
+        internal static string Criterion_Alignment_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Alignment.Equal", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Gift ≠ #1.
         /// </summary>
-        public static string Criterion_AlignmentFeat_Different {
+        internal static string Criterion_AlignmentFeat_Different {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentFeat.Different", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Gift #1 ≠ #2.
         /// </summary>
-        public static string Criterion_AlignmentFeat_Different_Level {
+        internal static string Criterion_AlignmentFeat_Different_Level {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentFeat.Different.Level", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Gift = #1.
         /// </summary>
-        public static string Criterion_AlignmentFeat_Equal {
+        internal static string Criterion_AlignmentFeat_Equal {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentFeat.Equal", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Gift #1 = #2.
         /// </summary>
-        public static string Criterion_AlignmentFeat_Equal_Level {
+        internal static string Criterion_AlignmentFeat_Equal_Level {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentFeat.Equal.Level", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Gift &lt; #1.
         /// </summary>
-        public static string Criterion_AlignmentFeat_Inferior {
+        internal static string Criterion_AlignmentFeat_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentFeat.Inferior", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Gift #1 &lt; #2.
         /// </summary>
-        public static string Criterion_AlignmentFeat_Inferior_Level {
+        internal static string Criterion_AlignmentFeat_Inferior_Level {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentFeat.Inferior.Level", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Gift &gt; #1.
         /// </summary>
-        public static string Criterion_AlignmentFeat_Superior {
+        internal static string Criterion_AlignmentFeat_Superior {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentFeat.Superior", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Gift #1 &gt; #2.
         /// </summary>
-        public static string Criterion_AlignmentFeat_Superior_Level {
+        internal static string Criterion_AlignmentFeat_Superior_Level {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentFeat.Superior.Level", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Alignment level ≠ #1.
         /// </summary>
-        public static string Criterion_AlignmentLevel_Different {
+        internal static string Criterion_AlignmentLevel_Different {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentLevel.Different", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Alignment level = #1.
         /// </summary>
-        public static string Criterion_AlignmentLevel_Equal {
+        internal static string Criterion_AlignmentLevel_Equal {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentLevel.Equal", resourceCulture);
             }
@@ -333,7 +333,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Alignment level &lt; #1.
         /// </summary>
-        public static string Criterion_AlignmentLevel_Inferior {
+        internal static string Criterion_AlignmentLevel_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentLevel.Inferior", resourceCulture);
             }
@@ -342,7 +342,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Alignment level &gt; #1.
         /// </summary>
-        public static string Criterion_AlignmentLevel_Superior {
+        internal static string Criterion_AlignmentLevel_Superior {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentLevel.Superior", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rank ≠ #1.
         /// </summary>
-        public static string Criterion_AlignmentRank_Different {
+        internal static string Criterion_AlignmentRank_Different {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentRank.Different", resourceCulture);
             }
@@ -360,7 +360,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rank = #1.
         /// </summary>
-        public static string Criterion_AlignmentRank_Equal {
+        internal static string Criterion_AlignmentRank_Equal {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentRank.Equal", resourceCulture);
             }
@@ -369,7 +369,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rank &lt; #1.
         /// </summary>
-        public static string Criterion_AlignmentRank_Inferior {
+        internal static string Criterion_AlignmentRank_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentRank.Inferior", resourceCulture);
             }
@@ -378,7 +378,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rank &gt; #1.
         /// </summary>
-        public static string Criterion_AlignmentRank_Superior {
+        internal static string Criterion_AlignmentRank_Superior {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentRank.Superior", resourceCulture);
             }
@@ -387,7 +387,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Specialization ≠ #1.
         /// </summary>
-        public static string Criterion_AlignmentSpecialization_Different {
+        internal static string Criterion_AlignmentSpecialization_Different {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentSpecialization.Different", resourceCulture);
             }
@@ -396,7 +396,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Specialization = #1.
         /// </summary>
-        public static string Criterion_AlignmentSpecialization_Equal {
+        internal static string Criterion_AlignmentSpecialization_Equal {
             get {
                 return ResourceManager.GetString("Criterion.AlignmentSpecialization.Equal", resourceCulture);
             }
@@ -405,7 +405,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to and.
         /// </summary>
-        public static string Criterion_And {
+        internal static string Criterion_And {
             get {
                 return ResourceManager.GetString("Criterion.And", resourceCulture);
             }
@@ -414,7 +414,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Summonable creature available ≠ #1.
         /// </summary>
-        public static string Criterion_AvailableSummon_Different {
+        internal static string Criterion_AvailableSummon_Different {
             get {
                 return ResourceManager.GetString("Criterion.AvailableSummon.Different", resourceCulture);
             }
@@ -423,7 +423,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Summonable creature available = #1.
         /// </summary>
-        public static string Criterion_AvailableSummon_Equal {
+        internal static string Criterion_AvailableSummon_Equal {
             get {
                 return ResourceManager.GetString("Criterion.AvailableSummon.Equal", resourceCulture);
             }
@@ -432,7 +432,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Summonable creature available &lt; #1.
         /// </summary>
-        public static string Criterion_AvailableSummon_Inferior {
+        internal static string Criterion_AvailableSummon_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.AvailableSummon.Inferior", resourceCulture);
             }
@@ -441,7 +441,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Summonable creature available &gt; #1.
         /// </summary>
-        public static string Criterion_AvailableSummon_Superior {
+        internal static string Criterion_AvailableSummon_Superior {
             get {
                 return ResourceManager.GetString("Criterion.AvailableSummon.Superior", resourceCulture);
             }
@@ -450,7 +450,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility additional ≠ #1.
         /// </summary>
-        public static string Criterion_BaseAgility_Different {
+        internal static string Criterion_BaseAgility_Different {
             get {
                 return ResourceManager.GetString("Criterion.BaseAgility.Different", resourceCulture);
             }
@@ -459,7 +459,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility additional = #1.
         /// </summary>
-        public static string Criterion_BaseAgility_Equal {
+        internal static string Criterion_BaseAgility_Equal {
             get {
                 return ResourceManager.GetString("Criterion.BaseAgility.Equal", resourceCulture);
             }
@@ -468,7 +468,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility additional &lt; #1.
         /// </summary>
-        public static string Criterion_BaseAgility_Inferior {
+        internal static string Criterion_BaseAgility_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.BaseAgility.Inferior", resourceCulture);
             }
@@ -477,7 +477,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility additional &gt; #1.
         /// </summary>
-        public static string Criterion_BaseAgility_Superior {
+        internal static string Criterion_BaseAgility_Superior {
             get {
                 return ResourceManager.GetString("Criterion.BaseAgility.Superior", resourceCulture);
             }
@@ -486,7 +486,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance additional ≠ #1.
         /// </summary>
-        public static string Criterion_BaseChance_Different {
+        internal static string Criterion_BaseChance_Different {
             get {
                 return ResourceManager.GetString("Criterion.BaseChance.Different", resourceCulture);
             }
@@ -495,7 +495,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance additional = #1.
         /// </summary>
-        public static string Criterion_BaseChance_Equal {
+        internal static string Criterion_BaseChance_Equal {
             get {
                 return ResourceManager.GetString("Criterion.BaseChance.Equal", resourceCulture);
             }
@@ -504,7 +504,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance additional &lt; #1.
         /// </summary>
-        public static string Criterion_BaseChance_Inferior {
+        internal static string Criterion_BaseChance_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.BaseChance.Inferior", resourceCulture);
             }
@@ -513,7 +513,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance additional &gt; #1.
         /// </summary>
-        public static string Criterion_BaseChance_Superior {
+        internal static string Criterion_BaseChance_Superior {
             get {
                 return ResourceManager.GetString("Criterion.BaseChance.Superior", resourceCulture);
             }
@@ -522,7 +522,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence additional ≠ #1.
         /// </summary>
-        public static string Criterion_BaseIntelligence_Different {
+        internal static string Criterion_BaseIntelligence_Different {
             get {
                 return ResourceManager.GetString("Criterion.BaseIntelligence.Different", resourceCulture);
             }
@@ -531,7 +531,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence additional = #1.
         /// </summary>
-        public static string Criterion_BaseIntelligence_Equal {
+        internal static string Criterion_BaseIntelligence_Equal {
             get {
                 return ResourceManager.GetString("Criterion.BaseIntelligence.Equal", resourceCulture);
             }
@@ -540,7 +540,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence additional &lt; #1.
         /// </summary>
-        public static string Criterion_BaseIntelligence_Inferior {
+        internal static string Criterion_BaseIntelligence_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.BaseIntelligence.Inferior", resourceCulture);
             }
@@ -549,7 +549,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence additional &gt; #1.
         /// </summary>
-        public static string Criterion_BaseIntelligence_Superior {
+        internal static string Criterion_BaseIntelligence_Superior {
             get {
                 return ResourceManager.GetString("Criterion.BaseIntelligence.Superior", resourceCulture);
             }
@@ -558,7 +558,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength additional ≠ #1.
         /// </summary>
-        public static string Criterion_BaseStrength_Different {
+        internal static string Criterion_BaseStrength_Different {
             get {
                 return ResourceManager.GetString("Criterion.BaseStrength.Different", resourceCulture);
             }
@@ -567,7 +567,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength additional = #1.
         /// </summary>
-        public static string Criterion_BaseStrength_Equal {
+        internal static string Criterion_BaseStrength_Equal {
             get {
                 return ResourceManager.GetString("Criterion.BaseStrength.Equal", resourceCulture);
             }
@@ -576,7 +576,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength additional &lt; #1.
         /// </summary>
-        public static string Criterion_BaseStrength_Inferior {
+        internal static string Criterion_BaseStrength_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.BaseStrength.Inferior", resourceCulture);
             }
@@ -585,7 +585,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength additional &gt; #1.
         /// </summary>
-        public static string Criterion_BaseStrength_Superior {
+        internal static string Criterion_BaseStrength_Superior {
             get {
                 return ResourceManager.GetString("Criterion.BaseStrength.Superior", resourceCulture);
             }
@@ -594,7 +594,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality additional ≠ #1.
         /// </summary>
-        public static string Criterion_BaseVitality_Different {
+        internal static string Criterion_BaseVitality_Different {
             get {
                 return ResourceManager.GetString("Criterion.BaseVitality.Different", resourceCulture);
             }
@@ -603,7 +603,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality additional = #1.
         /// </summary>
-        public static string Criterion_BaseVitality_Equal {
+        internal static string Criterion_BaseVitality_Equal {
             get {
                 return ResourceManager.GetString("Criterion.BaseVitality.Equal", resourceCulture);
             }
@@ -612,7 +612,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality additional &lt; #1.
         /// </summary>
-        public static string Criterion_BaseVitality_Inferior {
+        internal static string Criterion_BaseVitality_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.BaseVitality.Inferior", resourceCulture);
             }
@@ -621,7 +621,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality additional &gt; #1.
         /// </summary>
-        public static string Criterion_BaseVitality_Superior {
+        internal static string Criterion_BaseVitality_Superior {
             get {
                 return ResourceManager.GetString("Criterion.BaseVitality.Superior", resourceCulture);
             }
@@ -630,7 +630,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Wisdom additional ≠ #1.
         /// </summary>
-        public static string Criterion_BaseWisdom_Different {
+        internal static string Criterion_BaseWisdom_Different {
             get {
                 return ResourceManager.GetString("Criterion.BaseWisdom.Different", resourceCulture);
             }
@@ -639,7 +639,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Wisdom additional = #1.
         /// </summary>
-        public static string Criterion_BaseWisdom_Equal {
+        internal static string Criterion_BaseWisdom_Equal {
             get {
                 return ResourceManager.GetString("Criterion.BaseWisdom.Equal", resourceCulture);
             }
@@ -648,7 +648,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Wisdom additional &lt; #1.
         /// </summary>
-        public static string Criterion_BaseWisdom_Inferior {
+        internal static string Criterion_BaseWisdom_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.BaseWisdom.Inferior", resourceCulture);
             }
@@ -657,7 +657,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Wisdom additional &gt; #1.
         /// </summary>
-        public static string Criterion_BaseWisdom_Superior {
+        internal static string Criterion_BaseWisdom_Superior {
             get {
                 return ResourceManager.GetString("Criterion.BaseWisdom.Superior", resourceCulture);
             }
@@ -666,7 +666,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Best element ≠ #1.
         /// </summary>
-        public static string Criterion_BestElement_Different {
+        internal static string Criterion_BestElement_Different {
             get {
                 return ResourceManager.GetString("Criterion.BestElement.Different", resourceCulture);
             }
@@ -675,7 +675,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Best element = #1.
         /// </summary>
-        public static string Criterion_BestElement_Equal {
+        internal static string Criterion_BestElement_Equal {
             get {
                 return ResourceManager.GetString("Criterion.BestElement.Equal", resourceCulture);
             }
@@ -684,7 +684,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Class ≠ #1.
         /// </summary>
-        public static string Criterion_Breed_Different {
+        internal static string Criterion_Breed_Different {
             get {
                 return ResourceManager.GetString("Criterion.Breed.Different", resourceCulture);
             }
@@ -693,7 +693,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Class = #1.
         /// </summary>
-        public static string Criterion_Breed_Equal {
+        internal static string Criterion_Breed_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Breed.Equal", resourceCulture);
             }
@@ -702,7 +702,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Hand ≠ #1.
         /// </summary>
-        public static string Criterion_CardCombination_Different {
+        internal static string Criterion_CardCombination_Different {
             get {
                 return ResourceManager.GetString("Criterion.CardCombination.Different", resourceCulture);
             }
@@ -711,7 +711,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Hand = #1.
         /// </summary>
-        public static string Criterion_CardCombination_Equal {
+        internal static string Criterion_CardCombination_Equal {
             get {
                 return ResourceManager.GetString("Criterion.CardCombination.Equal", resourceCulture);
             }
@@ -720,7 +720,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance ≠ #1.
         /// </summary>
-        public static string Criterion_Chance_Different {
+        internal static string Criterion_Chance_Different {
             get {
                 return ResourceManager.GetString("Criterion.Chance.Different", resourceCulture);
             }
@@ -729,7 +729,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance = #1.
         /// </summary>
-        public static string Criterion_Chance_Equal {
+        internal static string Criterion_Chance_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Chance.Equal", resourceCulture);
             }
@@ -738,7 +738,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance &lt; #1.
         /// </summary>
-        public static string Criterion_Chance_Inferior {
+        internal static string Criterion_Chance_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Chance.Inferior", resourceCulture);
             }
@@ -747,7 +747,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance &gt; #1.
         /// </summary>
-        public static string Criterion_Chance_Superior {
+        internal static string Criterion_Chance_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Chance.Superior", resourceCulture);
             }
@@ -756,7 +756,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to AP ≠ #1.
         /// </summary>
-        public static string Criterion_CurrentActionPoint_Different {
+        internal static string Criterion_CurrentActionPoint_Different {
             get {
                 return ResourceManager.GetString("Criterion.CurrentActionPoint.Different", resourceCulture);
             }
@@ -765,7 +765,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to AP = #1.
         /// </summary>
-        public static string Criterion_CurrentActionPoint_Equal {
+        internal static string Criterion_CurrentActionPoint_Equal {
             get {
                 return ResourceManager.GetString("Criterion.CurrentActionPoint.Equal", resourceCulture);
             }
@@ -774,7 +774,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to AP &lt; #1.
         /// </summary>
-        public static string Criterion_CurrentActionPoint_Inferior {
+        internal static string Criterion_CurrentActionPoint_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.CurrentActionPoint.Inferior", resourceCulture);
             }
@@ -783,7 +783,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to AP &gt; #1.
         /// </summary>
-        public static string Criterion_CurrentActionPoint_Superior {
+        internal static string Criterion_CurrentActionPoint_Superior {
             get {
                 return ResourceManager.GetString("Criterion.CurrentActionPoint.Superior", resourceCulture);
             }
@@ -792,7 +792,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to MP ≠ #1.
         /// </summary>
-        public static string Criterion_CurrentMovementPoint_Different {
+        internal static string Criterion_CurrentMovementPoint_Different {
             get {
                 return ResourceManager.GetString("Criterion.CurrentMovementPoint.Different", resourceCulture);
             }
@@ -801,7 +801,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to MP = #1.
         /// </summary>
-        public static string Criterion_CurrentMovementPoint_Equal {
+        internal static string Criterion_CurrentMovementPoint_Equal {
             get {
                 return ResourceManager.GetString("Criterion.CurrentMovementPoint.Equal", resourceCulture);
             }
@@ -810,7 +810,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to MP &lt; #1.
         /// </summary>
-        public static string Criterion_CurrentMovementPoint_Inferior {
+        internal static string Criterion_CurrentMovementPoint_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.CurrentMovementPoint.Inferior", resourceCulture);
             }
@@ -819,7 +819,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to MP &gt; #1.
         /// </summary>
-        public static string Criterion_CurrentMovementPoint_Superior {
+        internal static string Criterion_CurrentMovementPoint_Superior {
             get {
                 return ResourceManager.GetString("Criterion.CurrentMovementPoint.Superior", resourceCulture);
             }
@@ -828,7 +828,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Disgrace points ≠ #1.
         /// </summary>
-        public static string Criterion_DisgracePoint_Different {
+        internal static string Criterion_DisgracePoint_Different {
             get {
                 return ResourceManager.GetString("Criterion.DisgracePoint.Different", resourceCulture);
             }
@@ -837,7 +837,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Disgrace points = #1.
         /// </summary>
-        public static string Criterion_DisgracePoint_Equal {
+        internal static string Criterion_DisgracePoint_Equal {
             get {
                 return ResourceManager.GetString("Criterion.DisgracePoint.Equal", resourceCulture);
             }
@@ -846,7 +846,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Disgrace points &lt; #1.
         /// </summary>
-        public static string Criterion_DisgracePoint_Inferior {
+        internal static string Criterion_DisgracePoint_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.DisgracePoint.Inferior", resourceCulture);
             }
@@ -855,7 +855,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Disgrace points &gt; #1.
         /// </summary>
-        public static string Criterion_DisgracePoint_Superior {
+        internal static string Criterion_DisgracePoint_Superior {
             get {
                 return ResourceManager.GetString("Criterion.DisgracePoint.Superior", resourceCulture);
             }
@@ -864,7 +864,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not be in a dungeon.
         /// </summary>
-        public static string Criterion_Dungeon_Equal_False {
+        internal static string Criterion_Dungeon_Equal_False {
             get {
                 return ResourceManager.GetString("Criterion.Dungeon.Equal.False", resourceCulture);
             }
@@ -873,7 +873,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Be in a dungeon.
         /// </summary>
-        public static string Criterion_Dungeon_Equal_True {
+        internal static string Criterion_Dungeon_Equal_True {
             get {
                 return ResourceManager.GetString("Criterion.Dungeon.Equal.True", resourceCulture);
             }
@@ -882,7 +882,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Not knowing the emote #1.
         /// </summary>
-        public static string Criterion_Emote_Different {
+        internal static string Criterion_Emote_Different {
             get {
                 return ResourceManager.GetString("Criterion.Emote.Different", resourceCulture);
             }
@@ -891,7 +891,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Know the emote #1.
         /// </summary>
-        public static string Criterion_Emote_Equal {
+        internal static string Criterion_Emote_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Emote.Equal", resourceCulture);
             }
@@ -900,7 +900,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Energy points ≠ #1.
         /// </summary>
-        public static string Criterion_EnergyPoints_Different {
+        internal static string Criterion_EnergyPoints_Different {
             get {
                 return ResourceManager.GetString("Criterion.EnergyPoints.Different", resourceCulture);
             }
@@ -909,7 +909,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Energy points = #1.
         /// </summary>
-        public static string Criterion_EnergyPoints_Equal {
+        internal static string Criterion_EnergyPoints_Equal {
             get {
                 return ResourceManager.GetString("Criterion.EnergyPoints.Equal", resourceCulture);
             }
@@ -918,7 +918,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Energy points &lt; #1.
         /// </summary>
-        public static string Criterion_EnergyPoints_Inferior {
+        internal static string Criterion_EnergyPoints_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.EnergyPoints.Inferior", resourceCulture);
             }
@@ -927,7 +927,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Energy points &gt; #1.
         /// </summary>
-        public static string Criterion_EnergyPoints_Superior {
+        internal static string Criterion_EnergyPoints_Superior {
             get {
                 return ResourceManager.GetString("Criterion.EnergyPoints.Superior", resourceCulture);
             }
@@ -936,7 +936,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Errored criterion (#1).
         /// </summary>
-        public static string Criterion_Errored {
+        internal static string Criterion_Errored {
             get {
                 return ResourceManager.GetString("Criterion.Errored", resourceCulture);
             }
@@ -945,7 +945,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Free pods ≠ #1.
         /// </summary>
-        public static string Criterion_FreeWeight_Different {
+        internal static string Criterion_FreeWeight_Different {
             get {
                 return ResourceManager.GetString("Criterion.FreeWeight.Different", resourceCulture);
             }
@@ -954,7 +954,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Free pods = #1.
         /// </summary>
-        public static string Criterion_FreeWeight_Equal {
+        internal static string Criterion_FreeWeight_Equal {
             get {
                 return ResourceManager.GetString("Criterion.FreeWeight.Equal", resourceCulture);
             }
@@ -963,7 +963,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Free pods &lt; #1.
         /// </summary>
-        public static string Criterion_FreeWeight_Inferior {
+        internal static string Criterion_FreeWeight_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.FreeWeight.Inferior", resourceCulture);
             }
@@ -972,7 +972,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Free pods &gt; #1.
         /// </summary>
-        public static string Criterion_FreeWeight_Superior {
+        internal static string Criterion_FreeWeight_Superior {
             get {
                 return ResourceManager.GetString("Criterion.FreeWeight.Superior", resourceCulture);
             }
@@ -981,7 +981,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Sex ≠ #1.
         /// </summary>
-        public static string Criterion_Gender_Different {
+        internal static string Criterion_Gender_Different {
             get {
                 return ResourceManager.GetString("Criterion.Gender.Different", resourceCulture);
             }
@@ -990,7 +990,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Sex = #1.
         /// </summary>
-        public static string Criterion_Gender_Equal {
+        internal static string Criterion_Gender_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Gender.Equal", resourceCulture);
             }
@@ -999,7 +999,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not own a house.
         /// </summary>
-        public static string Criterion_Homeowner_Equal_False {
+        internal static string Criterion_Homeowner_Equal_False {
             get {
                 return ResourceManager.GetString("Criterion.Homeowner.Equal.False", resourceCulture);
             }
@@ -1008,7 +1008,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Own a house.
         /// </summary>
-        public static string Criterion_Homeowner_Equal_True {
+        internal static string Criterion_Homeowner_Equal_True {
             get {
                 return ResourceManager.GetString("Criterion.Homeowner.Equal.True", resourceCulture);
             }
@@ -1017,7 +1017,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Honor points ≠ #1.
         /// </summary>
-        public static string Criterion_HonorPoint_Different {
+        internal static string Criterion_HonorPoint_Different {
             get {
                 return ResourceManager.GetString("Criterion.HonorPoint.Different", resourceCulture);
             }
@@ -1026,7 +1026,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Honor points = #1.
         /// </summary>
-        public static string Criterion_HonorPoint_Equal {
+        internal static string Criterion_HonorPoint_Equal {
             get {
                 return ResourceManager.GetString("Criterion.HonorPoint.Equal", resourceCulture);
             }
@@ -1035,7 +1035,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Honor points &lt; #1.
         /// </summary>
-        public static string Criterion_HonorPoint_Inferior {
+        internal static string Criterion_HonorPoint_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.HonorPoint.Inferior", resourceCulture);
             }
@@ -1044,7 +1044,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Honor points &gt; #1.
         /// </summary>
-        public static string Criterion_HonorPoint_Superior {
+        internal static string Criterion_HonorPoint_Superior {
             get {
                 return ResourceManager.GetString("Criterion.HonorPoint.Superior", resourceCulture);
             }
@@ -1053,7 +1053,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence ≠ #1.
         /// </summary>
-        public static string Criterion_Intelligence_Different {
+        internal static string Criterion_Intelligence_Different {
             get {
                 return ResourceManager.GetString("Criterion.Intelligence.Different", resourceCulture);
             }
@@ -1062,7 +1062,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence = #1.
         /// </summary>
-        public static string Criterion_Intelligence_Equal {
+        internal static string Criterion_Intelligence_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Intelligence.Equal", resourceCulture);
             }
@@ -1071,7 +1071,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence &lt; #1.
         /// </summary>
-        public static string Criterion_Intelligence_Inferior {
+        internal static string Criterion_Intelligence_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Intelligence.Inferior", resourceCulture);
             }
@@ -1080,7 +1080,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence &gt; #1.
         /// </summary>
-        public static string Criterion_Intelligence_Superior {
+        internal static string Criterion_Intelligence_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Intelligence.Superior", resourceCulture);
             }
@@ -1089,7 +1089,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not possess the item #1.
         /// </summary>
-        public static string Criterion_Item_Different {
+        internal static string Criterion_Item_Different {
             get {
                 return ResourceManager.GetString("Criterion.Item.Different", resourceCulture);
             }
@@ -1098,7 +1098,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not possess #2 time(s) the item #1.
         /// </summary>
-        public static string Criterion_Item_Different_Quantity {
+        internal static string Criterion_Item_Different_Quantity {
             get {
                 return ResourceManager.GetString("Criterion.Item.Different.Quantity", resourceCulture);
             }
@@ -1107,7 +1107,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Possess the item #1.
         /// </summary>
-        public static string Criterion_Item_Equal {
+        internal static string Criterion_Item_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Item.Equal", resourceCulture);
             }
@@ -1116,7 +1116,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Possess #2 time(s) the item #1.
         /// </summary>
-        public static string Criterion_Item_Equal_Quantity {
+        internal static string Criterion_Item_Equal_Quantity {
             get {
                 return ResourceManager.GetString("Criterion.Item.Equal.Quantity", resourceCulture);
             }
@@ -1125,7 +1125,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Be equipped with the item #1.
         /// </summary>
-        public static string Criterion_Item_Equiped {
+        internal static string Criterion_Item_Equiped {
             get {
                 return ResourceManager.GetString("Criterion.Item.Equiped", resourceCulture);
             }
@@ -1134,7 +1134,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Have the item #1 equipped #2 time(s).
         /// </summary>
-        public static string Criterion_Item_Equiped_Quantity {
+        internal static string Criterion_Item_Equiped_Quantity {
             get {
                 return ResourceManager.GetString("Criterion.Item.Equiped.Quantity", resourceCulture);
             }
@@ -1143,7 +1143,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not possess the item #1.
         /// </summary>
-        public static string Criterion_Item_Inferior {
+        internal static string Criterion_Item_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Item.Inferior", resourceCulture);
             }
@@ -1152,7 +1152,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Possess #2 time(s) or less the item #1.
         /// </summary>
-        public static string Criterion_Item_Inferior_Quantity {
+        internal static string Criterion_Item_Inferior_Quantity {
             get {
                 return ResourceManager.GetString("Criterion.Item.Inferior.Quantity", resourceCulture);
             }
@@ -1161,7 +1161,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Not being equipped with the item #1.
         /// </summary>
-        public static string Criterion_Item_NotEquiped {
+        internal static string Criterion_Item_NotEquiped {
             get {
                 return ResourceManager.GetString("Criterion.Item.NotEquiped", resourceCulture);
             }
@@ -1170,7 +1170,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Not being equipped with the item #1 #2 time(s).
         /// </summary>
-        public static string Criterion_Item_NotEquiped_Quantity {
+        internal static string Criterion_Item_NotEquiped_Quantity {
             get {
                 return ResourceManager.GetString("Criterion.Item.NotEquiped.Quantity", resourceCulture);
             }
@@ -1179,7 +1179,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Possess the item #1.
         /// </summary>
-        public static string Criterion_Item_Superior {
+        internal static string Criterion_Item_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Item.Superior", resourceCulture);
             }
@@ -1188,7 +1188,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Possess #2 time(s) or more the item #1.
         /// </summary>
-        public static string Criterion_Item_Superior_Quantity {
+        internal static string Criterion_Item_Superior_Quantity {
             get {
                 return ResourceManager.GetString("Criterion.Item.Superior.Quantity", resourceCulture);
             }
@@ -1197,7 +1197,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Job ≠ #1.
         /// </summary>
-        public static string Criterion_Job_Different {
+        internal static string Criterion_Job_Different {
             get {
                 return ResourceManager.GetString("Criterion.Job.Different", resourceCulture);
             }
@@ -1206,7 +1206,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Job #1 ≠ #2.
         /// </summary>
-        public static string Criterion_Job_Different_Level {
+        internal static string Criterion_Job_Different_Level {
             get {
                 return ResourceManager.GetString("Criterion.Job.Different.Level", resourceCulture);
             }
@@ -1215,7 +1215,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Job = #1.
         /// </summary>
-        public static string Criterion_Job_Equal {
+        internal static string Criterion_Job_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Job.Equal", resourceCulture);
             }
@@ -1224,7 +1224,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Job #1 = #2.
         /// </summary>
-        public static string Criterion_Job_Equal_Level {
+        internal static string Criterion_Job_Equal_Level {
             get {
                 return ResourceManager.GetString("Criterion.Job.Equal.Level", resourceCulture);
             }
@@ -1233,7 +1233,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Job &lt; #1.
         /// </summary>
-        public static string Criterion_Job_Inferior {
+        internal static string Criterion_Job_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Job.Inferior", resourceCulture);
             }
@@ -1242,7 +1242,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Job #1 &lt; #2.
         /// </summary>
-        public static string Criterion_Job_Inferior_Level {
+        internal static string Criterion_Job_Inferior_Level {
             get {
                 return ResourceManager.GetString("Criterion.Job.Inferior.Level", resourceCulture);
             }
@@ -1251,7 +1251,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Job &gt; #1.
         /// </summary>
-        public static string Criterion_Job_Superior {
+        internal static string Criterion_Job_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Job.Superior", resourceCulture);
             }
@@ -1260,7 +1260,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Job #1 &gt; #2.
         /// </summary>
-        public static string Criterion_Job_Superior_Level {
+        internal static string Criterion_Job_Superior_Level {
             get {
                 return ResourceManager.GetString("Criterion.Job.Superior.Level", resourceCulture);
             }
@@ -1269,7 +1269,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Kamas ≠ #1.
         /// </summary>
-        public static string Criterion_Kamas_Different {
+        internal static string Criterion_Kamas_Different {
             get {
                 return ResourceManager.GetString("Criterion.Kamas.Different", resourceCulture);
             }
@@ -1278,7 +1278,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Kamas = #1.
         /// </summary>
-        public static string Criterion_Kamas_Equal {
+        internal static string Criterion_Kamas_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Kamas.Equal", resourceCulture);
             }
@@ -1287,7 +1287,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Kamas &lt; #1.
         /// </summary>
-        public static string Criterion_Kamas_Inferior {
+        internal static string Criterion_Kamas_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Kamas.Inferior", resourceCulture);
             }
@@ -1296,7 +1296,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Kamas &gt; #1.
         /// </summary>
-        public static string Criterion_Kamas_Superior {
+        internal static string Criterion_Kamas_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Kamas.Superior", resourceCulture);
             }
@@ -1305,7 +1305,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Level ≠ #1.
         /// </summary>
-        public static string Criterion_Level_Different {
+        internal static string Criterion_Level_Different {
             get {
                 return ResourceManager.GetString("Criterion.Level.Different", resourceCulture);
             }
@@ -1314,7 +1314,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Level = #1.
         /// </summary>
-        public static string Criterion_Level_Equal {
+        internal static string Criterion_Level_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Level.Equal", resourceCulture);
             }
@@ -1323,7 +1323,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Level &lt; #1.
         /// </summary>
-        public static string Criterion_Level_Inferior {
+        internal static string Criterion_Level_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Level.Inferior", resourceCulture);
             }
@@ -1332,7 +1332,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Level &gt; #1.
         /// </summary>
-        public static string Criterion_Level_Superior {
+        internal static string Criterion_Level_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Level.Superior", resourceCulture);
             }
@@ -1341,7 +1341,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Modulated level ≠ #1.
         /// </summary>
-        public static string Criterion_LevelModulation_Different {
+        internal static string Criterion_LevelModulation_Different {
             get {
                 return ResourceManager.GetString("Criterion.LevelModulation.Different", resourceCulture);
             }
@@ -1350,7 +1350,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Modulated level = #1.
         /// </summary>
-        public static string Criterion_LevelModulation_Equal {
+        internal static string Criterion_LevelModulation_Equal {
             get {
                 return ResourceManager.GetString("Criterion.LevelModulation.Equal", resourceCulture);
             }
@@ -1359,7 +1359,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Modulated level &lt; #1.
         /// </summary>
-        public static string Criterion_LevelModulation_Inferior {
+        internal static string Criterion_LevelModulation_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.LevelModulation.Inferior", resourceCulture);
             }
@@ -1368,7 +1368,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Modulated level &gt; #1.
         /// </summary>
-        public static string Criterion_LevelModulation_Superior {
+        internal static string Criterion_LevelModulation_Superior {
             get {
                 return ResourceManager.GetString("Criterion.LevelModulation.Superior", resourceCulture);
             }
@@ -1377,7 +1377,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Look ≠ #1.
         /// </summary>
-        public static string Criterion_Look_Different {
+        internal static string Criterion_Look_Different {
             get {
                 return ResourceManager.GetString("Criterion.Look.Different", resourceCulture);
             }
@@ -1386,7 +1386,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Look = #1.
         /// </summary>
-        public static string Criterion_Look_Equal {
+        internal static string Criterion_Look_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Look.Equal", resourceCulture);
             }
@@ -1395,7 +1395,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not be on the map #1 (#2).
         /// </summary>
-        public static string Criterion_Map_Different {
+        internal static string Criterion_Map_Different {
             get {
                 return ResourceManager.GetString("Criterion.Map.Different", resourceCulture);
             }
@@ -1404,7 +1404,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Be on the map #1 (#2).
         /// </summary>
-        public static string Criterion_Map_Equal {
+        internal static string Criterion_Map_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Map.Equal", resourceCulture);
             }
@@ -1413,7 +1413,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Dot not be in the area #1.
         /// </summary>
-        public static string Criterion_MapArea_Different {
+        internal static string Criterion_MapArea_Different {
             get {
                 return ResourceManager.GetString("Criterion.MapArea.Different", resourceCulture);
             }
@@ -1422,7 +1422,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Be in the are #1.
         /// </summary>
-        public static string Criterion_MapArea_Equal {
+        internal static string Criterion_MapArea_Equal {
             get {
                 return ResourceManager.GetString("Criterion.MapArea.Equal", resourceCulture);
             }
@@ -1431,7 +1431,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Number of players on the map #1 (#2) ≠ #3.
         /// </summary>
-        public static string Criterion_MapPlayer_Different {
+        internal static string Criterion_MapPlayer_Different {
             get {
                 return ResourceManager.GetString("Criterion.MapPlayer.Different", resourceCulture);
             }
@@ -1440,7 +1440,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Number of players on the map #1 (#2) = #3.
         /// </summary>
-        public static string Criterion_MapPlayer_Equal {
+        internal static string Criterion_MapPlayer_Equal {
             get {
                 return ResourceManager.GetString("Criterion.MapPlayer.Equal", resourceCulture);
             }
@@ -1449,7 +1449,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Number of players on the map #1 (#2) &lt; #3.
         /// </summary>
-        public static string Criterion_MapPlayer_Inferior {
+        internal static string Criterion_MapPlayer_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.MapPlayer.Inferior", resourceCulture);
             }
@@ -1458,7 +1458,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Number of players on the map #1 (#2) &gt; #3.
         /// </summary>
-        public static string Criterion_MapPlayer_Superior {
+        internal static string Criterion_MapPlayer_Superior {
             get {
                 return ResourceManager.GetString("Criterion.MapPlayer.Superior", resourceCulture);
             }
@@ -1467,7 +1467,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not be in the subarea #1.
         /// </summary>
-        public static string Criterion_MapSubArea_Different {
+        internal static string Criterion_MapSubArea_Different {
             get {
                 return ResourceManager.GetString("Criterion.MapSubArea.Different", resourceCulture);
             }
@@ -1476,7 +1476,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Be in the subarea #1.
         /// </summary>
-        public static string Criterion_MapSubArea_Equal {
+        internal static string Criterion_MapSubArea_Equal {
             get {
                 return ResourceManager.GetString("Criterion.MapSubArea.Equal", resourceCulture);
             }
@@ -1485,7 +1485,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Be #1.
         /// </summary>
-        public static string Criterion_MaritalStatus_Equal {
+        internal static string Criterion_MaritalStatus_Equal {
             get {
                 return ResourceManager.GetString("Criterion.MaritalStatus.Equal", resourceCulture);
             }
@@ -1494,7 +1494,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Max energy points ≠ #1.
         /// </summary>
-        public static string Criterion_MaxEnergyPoints_Different {
+        internal static string Criterion_MaxEnergyPoints_Different {
             get {
                 return ResourceManager.GetString("Criterion.MaxEnergyPoints.Different", resourceCulture);
             }
@@ -1503,7 +1503,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Max energy points = #1.
         /// </summary>
-        public static string Criterion_MaxEnergyPoints_Equal {
+        internal static string Criterion_MaxEnergyPoints_Equal {
             get {
                 return ResourceManager.GetString("Criterion.MaxEnergyPoints.Equal", resourceCulture);
             }
@@ -1512,7 +1512,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Max energy points &lt; #1.
         /// </summary>
-        public static string Criterion_MaxEnergyPoints_Inferior {
+        internal static string Criterion_MaxEnergyPoints_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.MaxEnergyPoints.Inferior", resourceCulture);
             }
@@ -1521,7 +1521,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Max energy points &gt; #1.
         /// </summary>
-        public static string Criterion_MaxEnergyPoints_Superior {
+        internal static string Criterion_MaxEnergyPoints_Superior {
             get {
                 return ResourceManager.GetString("Criterion.MaxEnergyPoints.Superior", resourceCulture);
             }
@@ -1530,7 +1530,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Minute ≠ #1.
         /// </summary>
-        public static string Criterion_Minute_Different {
+        internal static string Criterion_Minute_Different {
             get {
                 return ResourceManager.GetString("Criterion.Minute.Different", resourceCulture);
             }
@@ -1539,7 +1539,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Minute = #1.
         /// </summary>
-        public static string Criterion_Minute_Equal {
+        internal static string Criterion_Minute_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Minute.Equal", resourceCulture);
             }
@@ -1548,7 +1548,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Minute &lt; #1.
         /// </summary>
-        public static string Criterion_Minute_Inferior {
+        internal static string Criterion_Minute_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Minute.Inferior", resourceCulture);
             }
@@ -1557,7 +1557,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Minute &gt; #1.
         /// </summary>
-        public static string Criterion_Minute_Superior {
+        internal static string Criterion_Minute_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Minute.Superior", resourceCulture);
             }
@@ -1566,7 +1566,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to The monster #1 is not summoned in the friendly team.
         /// </summary>
-        public static string Criterion_MonsterSummon_Different {
+        internal static string Criterion_MonsterSummon_Different {
             get {
                 return ResourceManager.GetString("Criterion.MonsterSummon.Different", resourceCulture);
             }
@@ -1575,7 +1575,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to The monster #1 is summoned in the friendly team.
         /// </summary>
-        public static string Criterion_MonsterSummon_Equal {
+        internal static string Criterion_MonsterSummon_Equal {
             get {
                 return ResourceManager.GetString("Criterion.MonsterSummon.Equal", resourceCulture);
             }
@@ -1584,7 +1584,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to MP ≠ #1.
         /// </summary>
-        public static string Criterion_MovementPoint_Different {
+        internal static string Criterion_MovementPoint_Different {
             get {
                 return ResourceManager.GetString("Criterion.MovementPoint.Different", resourceCulture);
             }
@@ -1593,7 +1593,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to MP = #1.
         /// </summary>
-        public static string Criterion_MovementPoint_Equal {
+        internal static string Criterion_MovementPoint_Equal {
             get {
                 return ResourceManager.GetString("Criterion.MovementPoint.Equal", resourceCulture);
             }
@@ -1602,7 +1602,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to MP &lt; #1.
         /// </summary>
-        public static string Criterion_MovementPoint_Inferior {
+        internal static string Criterion_MovementPoint_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.MovementPoint.Inferior", resourceCulture);
             }
@@ -1611,7 +1611,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to MP &gt; #1.
         /// </summary>
-        public static string Criterion_MovementPoint_Superior {
+        internal static string Criterion_MovementPoint_Superior {
             get {
                 return ResourceManager.GetString("Criterion.MovementPoint.Superior", resourceCulture);
             }
@@ -1620,7 +1620,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Name ≠ #1.
         /// </summary>
-        public static string Criterion_Name_Different {
+        internal static string Criterion_Name_Different {
             get {
                 return ResourceManager.GetString("Criterion.Name.Different", resourceCulture);
             }
@@ -1629,7 +1629,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Name = #1.
         /// </summary>
-        public static string Criterion_Name_Equal {
+        internal static string Criterion_Name_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Name.Equal", resourceCulture);
             }
@@ -1638,7 +1638,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Name ≈ #1.
         /// </summary>
-        public static string Criterion_Name_SoftEqual {
+        internal static string Criterion_Name_SoftEqual {
             get {
                 return ResourceManager.GetString("Criterion.Name.SoftEqual", resourceCulture);
             }
@@ -1647,7 +1647,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to or.
         /// </summary>
-        public static string Criterion_Or {
+        internal static string Criterion_Or {
             get {
                 return ResourceManager.GetString("Criterion.Or", resourceCulture);
             }
@@ -1656,7 +1656,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality ≠ #1%.
         /// </summary>
-        public static string Criterion_PercentVitality_Different {
+        internal static string Criterion_PercentVitality_Different {
             get {
                 return ResourceManager.GetString("Criterion.PercentVitality.Different", resourceCulture);
             }
@@ -1665,7 +1665,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality = #1%.
         /// </summary>
-        public static string Criterion_PercentVitality_Equal {
+        internal static string Criterion_PercentVitality_Equal {
             get {
                 return ResourceManager.GetString("Criterion.PercentVitality.Equal", resourceCulture);
             }
@@ -1674,7 +1674,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality &lt; #1%.
         /// </summary>
-        public static string Criterion_PercentVitality_Inferior {
+        internal static string Criterion_PercentVitality_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.PercentVitality.Inferior", resourceCulture);
             }
@@ -1683,7 +1683,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality &gt; #1%.
         /// </summary>
-        public static string Criterion_PercentVitality_Superior {
+        internal static string Criterion_PercentVitality_Superior {
             get {
                 return ResourceManager.GetString("Criterion.PercentVitality.Superior", resourceCulture);
             }
@@ -1692,7 +1692,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Admin level ≠ #1.
         /// </summary>
-        public static string Criterion_PlayerRights_Different {
+        internal static string Criterion_PlayerRights_Different {
             get {
                 return ResourceManager.GetString("Criterion.PlayerRights.Different", resourceCulture);
             }
@@ -1701,7 +1701,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Admin level = #1.
         /// </summary>
-        public static string Criterion_PlayerRights_Equal {
+        internal static string Criterion_PlayerRights_Equal {
             get {
                 return ResourceManager.GetString("Criterion.PlayerRights.Equal", resourceCulture);
             }
@@ -1710,7 +1710,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Admin level &lt; #1.
         /// </summary>
-        public static string Criterion_PlayerRights_Inferior {
+        internal static string Criterion_PlayerRights_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.PlayerRights.Inferior", resourceCulture);
             }
@@ -1719,7 +1719,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Admin level &gt; #1.
         /// </summary>
-        public static string Criterion_PlayerRights_Superior {
+        internal static string Criterion_PlayerRights_Superior {
             get {
                 return ResourceManager.GetString("Criterion.PlayerRights.Superior", resourceCulture);
             }
@@ -1728,7 +1728,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not have started the quest #1.
         /// </summary>
-        public static string Criterion_Quest_Different {
+        internal static string Criterion_Quest_Different {
             get {
                 return ResourceManager.GetString("Criterion.Quest.Different", resourceCulture);
             }
@@ -1737,7 +1737,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest #1 in progress.
         /// </summary>
-        public static string Criterion_Quest_Equal {
+        internal static string Criterion_Quest_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Quest.Equal", resourceCulture);
             }
@@ -1746,7 +1746,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest #1 unavailable.
         /// </summary>
-        public static string Criterion_QuestAvailable_Different {
+        internal static string Criterion_QuestAvailable_Different {
             get {
                 return ResourceManager.GetString("Criterion.QuestAvailable.Different", resourceCulture);
             }
@@ -1755,7 +1755,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest #1 available.
         /// </summary>
-        public static string Criterion_QuestAvailable_Equal {
+        internal static string Criterion_QuestAvailable_Equal {
             get {
                 return ResourceManager.GetString("Criterion.QuestAvailable.Equal", resourceCulture);
             }
@@ -1764,7 +1764,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not have finished the quest #1.
         /// </summary>
-        public static string Criterion_QuestFinished_Different {
+        internal static string Criterion_QuestFinished_Different {
             get {
                 return ResourceManager.GetString("Criterion.QuestFinished.Different", resourceCulture);
             }
@@ -1773,7 +1773,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest #1 finished.
         /// </summary>
-        public static string Criterion_QuestFinished_Equal {
+        internal static string Criterion_QuestFinished_Equal {
             get {
                 return ResourceManager.GetString("Criterion.QuestFinished.Equal", resourceCulture);
             }
@@ -1782,7 +1782,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest #1 finished less than #2 time(s).
         /// </summary>
-        public static string Criterion_QuestFinishedCount_Inferior {
+        internal static string Criterion_QuestFinishedCount_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.QuestFinishedCount.Inferior", resourceCulture);
             }
@@ -1791,7 +1791,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest #1 finished more than #2 time(s).
         /// </summary>
-        public static string Criterion_QuestFinishedCount_Superior {
+        internal static string Criterion_QuestFinishedCount_Superior {
             get {
                 return ResourceManager.GetString("Criterion.QuestFinishedCount.Superior", resourceCulture);
             }
@@ -1800,7 +1800,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest objective #1 not in progress.
         /// </summary>
-        public static string Criterion_QuestObjective_Different {
+        internal static string Criterion_QuestObjective_Different {
             get {
                 return ResourceManager.GetString("Criterion.QuestObjective.Different", resourceCulture);
             }
@@ -1809,7 +1809,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest objective #1 in progress.
         /// </summary>
-        public static string Criterion_QuestObjective_Equal {
+        internal static string Criterion_QuestObjective_Equal {
             get {
                 return ResourceManager.GetString("Criterion.QuestObjective.Equal", resourceCulture);
             }
@@ -1818,7 +1818,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest objective #1 not completed.
         /// </summary>
-        public static string Criterion_QuestObjective_Inferior {
+        internal static string Criterion_QuestObjective_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.QuestObjective.Inferior", resourceCulture);
             }
@@ -1827,7 +1827,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest objective #1 completed.
         /// </summary>
-        public static string Criterion_QuestObjective_Superior {
+        internal static string Criterion_QuestObjective_Superior {
             get {
                 return ResourceManager.GetString("Criterion.QuestObjective.Superior", resourceCulture);
             }
@@ -1836,7 +1836,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest step #1 not in progress.
         /// </summary>
-        public static string Criterion_QuestStep_Different {
+        internal static string Criterion_QuestStep_Different {
             get {
                 return ResourceManager.GetString("Criterion.QuestStep.Different", resourceCulture);
             }
@@ -1845,7 +1845,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest step #1 in progress.
         /// </summary>
-        public static string Criterion_QuestStep_Equal {
+        internal static string Criterion_QuestStep_Equal {
             get {
                 return ResourceManager.GetString("Criterion.QuestStep.Equal", resourceCulture);
             }
@@ -1854,7 +1854,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest step #1 not completed.
         /// </summary>
-        public static string Criterion_QuestStep_Inferior {
+        internal static string Criterion_QuestStep_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.QuestStep.Inferior", resourceCulture);
             }
@@ -1863,7 +1863,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest step #1 completed.
         /// </summary>
-        public static string Criterion_QuestStep_Superior {
+        internal static string Criterion_QuestStep_Superior {
             get {
                 return ResourceManager.GetString("Criterion.QuestStep.Superior", resourceCulture);
             }
@@ -1872,7 +1872,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not be on the server #1.
         /// </summary>
-        public static string Criterion_Server_Different {
+        internal static string Criterion_Server_Different {
             get {
                 return ResourceManager.GetString("Criterion.Server.Different", resourceCulture);
             }
@@ -1881,7 +1881,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Be on the server #1.
         /// </summary>
-        public static string Criterion_Server_Equal {
+        internal static string Criterion_Server_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Server.Equal", resourceCulture);
             }
@@ -1890,7 +1890,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Content no.#1 disabled.
         /// </summary>
-        public static string Criterion_ServerContent_Different {
+        internal static string Criterion_ServerContent_Different {
             get {
                 return ResourceManager.GetString("Criterion.ServerContent.Different", resourceCulture);
             }
@@ -1899,7 +1899,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to content no.#1 enabled.
         /// </summary>
-        public static string Criterion_ServerContent_Equal {
+        internal static string Criterion_ServerContent_Equal {
             get {
                 return ResourceManager.GetString("Criterion.ServerContent.Equal", resourceCulture);
             }
@@ -1908,7 +1908,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Slot #1 free.
         /// </summary>
-        public static string Criterion_Slot_Different {
+        internal static string Criterion_Slot_Different {
             get {
                 return ResourceManager.GetString("Criterion.Slot.Different", resourceCulture);
             }
@@ -1917,7 +1917,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Slot #1 occupied.
         /// </summary>
-        public static string Criterion_Slot_Equal {
+        internal static string Criterion_Slot_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Slot.Equal", resourceCulture);
             }
@@ -1926,7 +1926,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not be in the state #1.
         /// </summary>
-        public static string Criterion_State_Different {
+        internal static string Criterion_State_Different {
             get {
                 return ResourceManager.GetString("Criterion.State.Different", resourceCulture);
             }
@@ -1935,7 +1935,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Be in the state #1.
         /// </summary>
-        public static string Criterion_State_Equal {
+        internal static string Criterion_State_Equal {
             get {
                 return ResourceManager.GetString("Criterion.State.Equal", resourceCulture);
             }
@@ -1944,7 +1944,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength ≠ #1.
         /// </summary>
-        public static string Criterion_Strength_Different {
+        internal static string Criterion_Strength_Different {
             get {
                 return ResourceManager.GetString("Criterion.Strength.Different", resourceCulture);
             }
@@ -1953,7 +1953,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength = #1.
         /// </summary>
-        public static string Criterion_Strength_Equal {
+        internal static string Criterion_Strength_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Strength.Equal", resourceCulture);
             }
@@ -1962,7 +1962,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength &lt; #1.
         /// </summary>
-        public static string Criterion_Strength_Inferior {
+        internal static string Criterion_Strength_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Strength.Inferior", resourceCulture);
             }
@@ -1971,7 +1971,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength &gt; #1.
         /// </summary>
-        public static string Criterion_Strength_Superior {
+        internal static string Criterion_Strength_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Strength.Superior", resourceCulture);
             }
@@ -1980,7 +1980,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Do not be subscribe.
         /// </summary>
-        public static string Criterion_Subscribe_Equal_False {
+        internal static string Criterion_Subscribe_Equal_False {
             get {
                 return ResourceManager.GetString("Criterion.Subscribe.Equal.False", resourceCulture);
             }
@@ -1989,7 +1989,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Be subscribe.
         /// </summary>
-        public static string Criterion_Subscribe_Equal_True {
+        internal static string Criterion_Subscribe_Equal_True {
             get {
                 return ResourceManager.GetString("Criterion.Subscribe.Equal.True", resourceCulture);
             }
@@ -1998,7 +1998,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Turn ≠ #1.
         /// </summary>
-        public static string Criterion_Turn_Different {
+        internal static string Criterion_Turn_Different {
             get {
                 return ResourceManager.GetString("Criterion.Turn.Different", resourceCulture);
             }
@@ -2007,7 +2007,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Turn = #1.
         /// </summary>
-        public static string Criterion_Turn_Equal {
+        internal static string Criterion_Turn_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Turn.Equal", resourceCulture);
             }
@@ -2016,7 +2016,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Even turn.
         /// </summary>
-        public static string Criterion_Turn_Even {
+        internal static string Criterion_Turn_Even {
             get {
                 return ResourceManager.GetString("Criterion.Turn.Even", resourceCulture);
             }
@@ -2025,7 +2025,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Turn &lt; #1.
         /// </summary>
-        public static string Criterion_Turn_Inferior {
+        internal static string Criterion_Turn_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Turn.Inferior", resourceCulture);
             }
@@ -2034,7 +2034,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Odd turn.
         /// </summary>
-        public static string Criterion_Turn_Odd {
+        internal static string Criterion_Turn_Odd {
             get {
                 return ResourceManager.GetString("Criterion.Turn.Odd", resourceCulture);
             }
@@ -2043,7 +2043,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Turn &gt; #1.
         /// </summary>
-        public static string Criterion_Turn_Superior {
+        internal static string Criterion_Turn_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Turn.Superior", resourceCulture);
             }
@@ -2052,7 +2052,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Unknown criterion #1 (#2).
         /// </summary>
-        public static string Criterion_Unknown {
+        internal static string Criterion_Unknown {
             get {
                 return ResourceManager.GetString("Criterion.Unknown", resourceCulture);
             }
@@ -2061,7 +2061,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Unusable.
         /// </summary>
-        public static string Criterion_UnusableItem_Equal {
+        internal static string Criterion_UnusableItem_Equal {
             get {
                 return ResourceManager.GetString("Criterion.UnusableItem.Equal", resourceCulture);
             }
@@ -2070,7 +2070,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality ≠ #1.
         /// </summary>
-        public static string Criterion_Vitality_Different {
+        internal static string Criterion_Vitality_Different {
             get {
                 return ResourceManager.GetString("Criterion.Vitality.Different", resourceCulture);
             }
@@ -2079,7 +2079,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality = #1.
         /// </summary>
-        public static string Criterion_Vitality_Equal {
+        internal static string Criterion_Vitality_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Vitality.Equal", resourceCulture);
             }
@@ -2088,7 +2088,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality &lt; #1.
         /// </summary>
-        public static string Criterion_Vitality_Inferior {
+        internal static string Criterion_Vitality_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Vitality.Inferior", resourceCulture);
             }
@@ -2097,7 +2097,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality &gt; #1.
         /// </summary>
-        public static string Criterion_Vitality_Superior {
+        internal static string Criterion_Vitality_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Vitality.Superior", resourceCulture);
             }
@@ -2106,7 +2106,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Wisdom ≠ #1.
         /// </summary>
-        public static string Criterion_Wisdom_Different {
+        internal static string Criterion_Wisdom_Different {
             get {
                 return ResourceManager.GetString("Criterion.Wisdom.Different", resourceCulture);
             }
@@ -2115,7 +2115,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Wisdom = #1.
         /// </summary>
-        public static string Criterion_Wisdom_Equal {
+        internal static string Criterion_Wisdom_Equal {
             get {
                 return ResourceManager.GetString("Criterion.Wisdom.Equal", resourceCulture);
             }
@@ -2124,7 +2124,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Wisdom &lt; #1.
         /// </summary>
-        public static string Criterion_Wisdom_Inferior {
+        internal static string Criterion_Wisdom_Inferior {
             get {
                 return ResourceManager.GetString("Criterion.Wisdom.Inferior", resourceCulture);
             }
@@ -2133,7 +2133,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Wisdom &gt; #1.
         /// </summary>
-        public static string Criterion_Wisdom_Superior {
+        internal static string Criterion_Wisdom_Superior {
             get {
                 return ResourceManager.GetString("Criterion.Wisdom.Superior", resourceCulture);
             }
@@ -2142,7 +2142,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Errored effect (#1).
         /// </summary>
-        public static string Effect_Errored {
+        internal static string Effect_Errored {
             get {
                 return ResourceManager.GetString("Effect.Errored", resourceCulture);
             }
@@ -2151,7 +2151,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Linked to account.
         /// </summary>
-        public static string Effect_LinkedToAccount {
+        internal static string Effect_LinkedToAccount {
             get {
                 return ResourceManager.GetString("Effect.LinkedToAccount", resourceCulture);
             }
@@ -2160,7 +2160,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to In #1% of cases.
         /// </summary>
-        public static string Effect_Probability {
+        internal static string Effect_Probability {
             get {
                 return ResourceManager.GetString("Effect.Probability", resourceCulture);
             }
@@ -2169,7 +2169,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to #1 turn(s).
         /// </summary>
-        public static string Effect_Turn {
+        internal static string Effect_Turn {
             get {
                 return ResourceManager.GetString("Effect.Turn", resourceCulture);
             }
@@ -2178,7 +2178,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Unknown effect #1 (#2).
         /// </summary>
-        public static string Effect_Unknown {
+        internal static string Effect_Unknown {
             get {
                 return ResourceManager.GetString("Effect.Unknown", resourceCulture);
             }
@@ -2187,7 +2187,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Cross.
         /// </summary>
-        public static string EffectArea_1 {
+        internal static string EffectArea_1 {
             get {
                 return ResourceManager.GetString("EffectArea.1", resourceCulture);
             }
@@ -2196,7 +2196,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Cone.
         /// </summary>
-        public static string EffectArea_10 {
+        internal static string EffectArea_10 {
             get {
                 return ResourceManager.GetString("EffectArea.10", resourceCulture);
             }
@@ -2205,7 +2205,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Diagonal cross.
         /// </summary>
-        public static string EffectArea_11 {
+        internal static string EffectArea_11 {
             get {
                 return ResourceManager.GetString("EffectArea.11", resourceCulture);
             }
@@ -2214,7 +2214,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to In T.
         /// </summary>
-        public static string EffectArea_12 {
+        internal static string EffectArea_12 {
             get {
                 return ResourceManager.GetString("EffectArea.12", resourceCulture);
             }
@@ -2223,7 +2223,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to In T.
         /// </summary>
-        public static string EffectArea_13 {
+        internal static string EffectArea_13 {
             get {
                 return ResourceManager.GetString("EffectArea.13", resourceCulture);
             }
@@ -2232,7 +2232,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Unknown (14).
         /// </summary>
-        public static string EffectArea_14 {
+        internal static string EffectArea_14 {
             get {
                 return ResourceManager.GetString("EffectArea.14", resourceCulture);
             }
@@ -2241,7 +2241,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Void cross.
         /// </summary>
-        public static string EffectArea_15 {
+        internal static string EffectArea_15 {
             get {
                 return ResourceManager.GetString("EffectArea.15", resourceCulture);
             }
@@ -2250,7 +2250,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Wide line.
         /// </summary>
-        public static string EffectArea_16 {
+        internal static string EffectArea_16 {
             get {
                 return ResourceManager.GetString("EffectArea.16", resourceCulture);
             }
@@ -2259,7 +2259,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Point.
         /// </summary>
-        public static string EffectArea_17 {
+        internal static string EffectArea_17 {
             get {
                 return ResourceManager.GetString("EffectArea.17", resourceCulture);
             }
@@ -2268,7 +2268,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Perpendicular line.
         /// </summary>
-        public static string EffectArea_2 {
+        internal static string EffectArea_2 {
             get {
                 return ResourceManager.GetString("EffectArea.2", resourceCulture);
             }
@@ -2277,7 +2277,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Star.
         /// </summary>
-        public static string EffectArea_21 {
+        internal static string EffectArea_21 {
             get {
                 return ResourceManager.GetString("EffectArea.21", resourceCulture);
             }
@@ -2286,7 +2286,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Unknown (22).
         /// </summary>
-        public static string EffectArea_22 {
+        internal static string EffectArea_22 {
             get {
                 return ResourceManager.GetString("EffectArea.22", resourceCulture);
             }
@@ -2295,7 +2295,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Fork.
         /// </summary>
-        public static string EffectArea_23 {
+        internal static string EffectArea_23 {
             get {
                 return ResourceManager.GetString("EffectArea.23", resourceCulture);
             }
@@ -2304,7 +2304,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Circle.
         /// </summary>
-        public static string EffectArea_3 {
+        internal static string EffectArea_3 {
             get {
                 return ResourceManager.GetString("EffectArea.3", resourceCulture);
             }
@@ -2313,7 +2313,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Dot.
         /// </summary>
-        public static string EffectArea_4 {
+        internal static string EffectArea_4 {
             get {
                 return ResourceManager.GetString("EffectArea.4", resourceCulture);
             }
@@ -2322,7 +2322,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Line.
         /// </summary>
-        public static string EffectArea_5 {
+        internal static string EffectArea_5 {
             get {
                 return ResourceManager.GetString("EffectArea.5", resourceCulture);
             }
@@ -2331,7 +2331,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Checked patern.
         /// </summary>
-        public static string EffectArea_6 {
+        internal static string EffectArea_6 {
             get {
                 return ResourceManager.GetString("EffectArea.6", resourceCulture);
             }
@@ -2340,7 +2340,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Circle.
         /// </summary>
-        public static string EffectArea_67 {
+        internal static string EffectArea_67 {
             get {
                 return ResourceManager.GetString("EffectArea.67", resourceCulture);
             }
@@ -2349,7 +2349,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Checked patern.
         /// </summary>
-        public static string EffectArea_68 {
+        internal static string EffectArea_68 {
             get {
                 return ResourceManager.GetString("EffectArea.68", resourceCulture);
             }
@@ -2358,7 +2358,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Ring.
         /// </summary>
-        public static string EffectArea_7 {
+        internal static string EffectArea_7 {
             get {
                 return ResourceManager.GetString("EffectArea.7", resourceCulture);
             }
@@ -2367,7 +2367,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Line.
         /// </summary>
-        public static string EffectArea_76 {
+        internal static string EffectArea_76 {
             get {
                 return ResourceManager.GetString("EffectArea.76", resourceCulture);
             }
@@ -2376,7 +2376,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Ring.
         /// </summary>
-        public static string EffectArea_79 {
+        internal static string EffectArea_79 {
             get {
                 return ResourceManager.GetString("EffectArea.79", resourceCulture);
             }
@@ -2385,7 +2385,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Square.
         /// </summary>
-        public static string EffectArea_8 {
+        internal static string EffectArea_8 {
             get {
                 return ResourceManager.GetString("EffectArea.8", resourceCulture);
             }
@@ -2394,7 +2394,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Dot.
         /// </summary>
-        public static string EffectArea_80 {
+        internal static string EffectArea_80 {
             get {
                 return ResourceManager.GetString("EffectArea.80", resourceCulture);
             }
@@ -2403,7 +2403,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Perpendicular line.
         /// </summary>
-        public static string EffectArea_84 {
+        internal static string EffectArea_84 {
             get {
                 return ResourceManager.GetString("EffectArea.84", resourceCulture);
             }
@@ -2412,7 +2412,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Cross.
         /// </summary>
-        public static string EffectArea_88 {
+        internal static string EffectArea_88 {
             get {
                 return ResourceManager.GetString("EffectArea.88", resourceCulture);
             }
@@ -2421,7 +2421,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Void square.
         /// </summary>
-        public static string EffectArea_9 {
+        internal static string EffectArea_9 {
             get {
                 return ResourceManager.GetString("EffectArea.9", resourceCulture);
             }
@@ -2430,7 +2430,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility.
         /// </summary>
-        public static string Element_Agility {
+        internal static string Element_Agility {
             get {
                 return ResourceManager.GetString("Element.Agility", resourceCulture);
             }
@@ -2439,7 +2439,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance.
         /// </summary>
-        public static string Element_Chance {
+        internal static string Element_Chance {
             get {
                 return ResourceManager.GetString("Element.Chance", resourceCulture);
             }
@@ -2448,7 +2448,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence.
         /// </summary>
-        public static string Element_Intelligence {
+        internal static string Element_Intelligence {
             get {
                 return ResourceManager.GetString("Element.Intelligence", resourceCulture);
             }
@@ -2457,7 +2457,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Neutral.
         /// </summary>
-        public static string Element_Neutral {
+        internal static string Element_Neutral {
             get {
                 return ResourceManager.GetString("Element.Neutral", resourceCulture);
             }
@@ -2466,7 +2466,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength.
         /// </summary>
-        public static string Element_Strength {
+        internal static string Element_Strength {
             get {
                 return ResourceManager.GetString("Element.Strength", resourceCulture);
             }
@@ -2475,7 +2475,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Women.
         /// </summary>
-        public static string Gender_Female {
+        internal static string Gender_Female {
             get {
                 return ResourceManager.GetString("Gender.Female", resourceCulture);
             }
@@ -2484,7 +2484,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Man.
         /// </summary>
-        public static string Gender_Male {
+        internal static string Gender_Male {
             get {
                 return ResourceManager.GetString("Gender.Male", resourceCulture);
             }
@@ -2493,7 +2493,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Thrower, check lanceur.
         /// </summary>
-        public static string GiveItemTarget_CasterCheckCaster {
+        internal static string GiveItemTarget_CasterCheckCaster {
             get {
                 return ResourceManager.GetString("GiveItemTarget.CasterCheckCaster", resourceCulture);
             }
@@ -2502,7 +2502,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Thrower, check thrower.
         /// </summary>
-        public static string GiveItemTarget_CasterCheckTarget {
+        internal static string GiveItemTarget_CasterCheckTarget {
             get {
                 return ResourceManager.GetString("GiveItemTarget.CasterCheckTarget", resourceCulture);
             }
@@ -2511,7 +2511,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Target, check target.
         /// </summary>
-        public static string GiveItemTarget_TargetCheckTarget {
+        internal static string GiveItemTarget_TargetCheckTarget {
             get {
                 return ResourceManager.GetString("GiveItemTarget.TargetCheckTarget", resourceCulture);
             }
@@ -2520,7 +2520,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to House.
         /// </summary>
-        public static string GuildProperty_House {
+        internal static string GuildProperty_House {
             get {
                 return ResourceManager.GetString("GuildProperty.House", resourceCulture);
             }
@@ -2529,7 +2529,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
-        public static string GuildProperty_None {
+        internal static string GuildProperty_None {
             get {
                 return ResourceManager.GetString("GuildProperty.None", resourceCulture);
             }
@@ -2538,7 +2538,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Paddock.
         /// </summary>
-        public static string GuildProperty_Paddock {
+        internal static string GuildProperty_Paddock {
             get {
                 return ResourceManager.GetString("GuildProperty.Paddock", resourceCulture);
             }
@@ -2547,7 +2547,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Infertile.
         /// </summary>
-        public static string Infertile {
+        internal static string Infertile {
             get {
                 return ResourceManager.GetString("Infertile", resourceCulture);
             }
@@ -2556,7 +2556,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Weapon.
         /// </summary>
-        public static string ItemSuperType__Weapon {
+        internal static string ItemSuperType__Weapon {
             get {
                 return ResourceManager.GetString("ItemSuperType..Weapon", resourceCulture);
             }
@@ -2565,7 +2565,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Amulet.
         /// </summary>
-        public static string ItemSuperType_Amulet {
+        internal static string ItemSuperType_Amulet {
             get {
                 return ResourceManager.GetString("ItemSuperType.Amulet", resourceCulture);
             }
@@ -2574,7 +2574,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
-        public static string ItemSuperType_Back {
+        internal static string ItemSuperType_Back {
             get {
                 return ResourceManager.GetString("ItemSuperType.Back", resourceCulture);
             }
@@ -2583,7 +2583,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Belt.
         /// </summary>
-        public static string ItemSuperType_Belt {
+        internal static string ItemSuperType_Belt {
             get {
                 return ResourceManager.GetString("ItemSuperType.Belt", resourceCulture);
             }
@@ -2592,7 +2592,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Blessing.
         /// </summary>
-        public static string ItemSuperType_Blessing {
+        internal static string ItemSuperType_Blessing {
             get {
                 return ResourceManager.GetString("ItemSuperType.Blessing", resourceCulture);
             }
@@ -2601,7 +2601,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Boots.
         /// </summary>
-        public static string ItemSuperType_Boots {
+        internal static string ItemSuperType_Boots {
             get {
                 return ResourceManager.GetString("ItemSuperType.Boots", resourceCulture);
             }
@@ -2610,7 +2610,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Capture weapon.
         /// </summary>
-        public static string ItemSuperType_CaptureWeapon {
+        internal static string ItemSuperType_CaptureWeapon {
             get {
                 return ResourceManager.GetString("ItemSuperType.CaptureWeapon", resourceCulture);
             }
@@ -2619,7 +2619,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Consumable.
         /// </summary>
-        public static string ItemSuperType_Consumable {
+        internal static string ItemSuperType_Consumable {
             get {
                 return ResourceManager.GetString("ItemSuperType.Consumable", resourceCulture);
             }
@@ -2628,7 +2628,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Curse.
         /// </summary>
-        public static string ItemSuperType_Curse {
+        internal static string ItemSuperType_Curse {
             get {
                 return ResourceManager.GetString("ItemSuperType.Curse", resourceCulture);
             }
@@ -2637,7 +2637,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Dofus.
         /// </summary>
-        public static string ItemSuperType_Dofus {
+        internal static string ItemSuperType_Dofus {
             get {
                 return ResourceManager.GetString("ItemSuperType.Dofus", resourceCulture);
             }
@@ -2646,7 +2646,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Following character.
         /// </summary>
-        public static string ItemSuperType_FollowingCharacter {
+        internal static string ItemSuperType_FollowingCharacter {
             get {
                 return ResourceManager.GetString("ItemSuperType.FollowingCharacter", resourceCulture);
             }
@@ -2655,7 +2655,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Food boost.
         /// </summary>
-        public static string ItemSuperType_FoodBoost {
+        internal static string ItemSuperType_FoodBoost {
             get {
                 return ResourceManager.GetString("ItemSuperType.FoodBoost", resourceCulture);
             }
@@ -2664,7 +2664,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Full soul stone.
         /// </summary>
-        public static string ItemSuperType_FullSoulStone {
+        internal static string ItemSuperType_FullSoulStone {
             get {
                 return ResourceManager.GetString("ItemSuperType.FullSoulStone", resourceCulture);
             }
@@ -2673,7 +2673,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Hat.
         /// </summary>
-        public static string ItemSuperType_Hat {
+        internal static string ItemSuperType_Hat {
             get {
                 return ResourceManager.GetString("ItemSuperType.Hat", resourceCulture);
             }
@@ -2682,7 +2682,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to LivingItem.
         /// </summary>
-        public static string ItemSuperType_LivingItem {
+        internal static string ItemSuperType_LivingItem {
             get {
                 return ResourceManager.GetString("ItemSuperType.LivingItem", resourceCulture);
             }
@@ -2691,7 +2691,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Mount.
         /// </summary>
-        public static string ItemSuperType_Mount {
+        internal static string ItemSuperType_Mount {
             get {
                 return ResourceManager.GetString("ItemSuperType.Mount", resourceCulture);
             }
@@ -2700,7 +2700,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Mutation.
         /// </summary>
-        public static string ItemSuperType_Mutation {
+        internal static string ItemSuperType_Mutation {
             get {
                 return ResourceManager.GetString("ItemSuperType.Mutation", resourceCulture);
             }
@@ -2709,7 +2709,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
-        public static string ItemSuperType_None {
+        internal static string ItemSuperType_None {
             get {
                 return ResourceManager.GetString("ItemSuperType.None", resourceCulture);
             }
@@ -2718,7 +2718,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Pet.
         /// </summary>
-        public static string ItemSuperType_Pet {
+        internal static string ItemSuperType_Pet {
             get {
                 return ResourceManager.GetString("ItemSuperType.Pet", resourceCulture);
             }
@@ -2727,7 +2727,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest.
         /// </summary>
-        public static string ItemSuperType_Quest {
+        internal static string ItemSuperType_Quest {
             get {
                 return ResourceManager.GetString("ItemSuperType.Quest", resourceCulture);
             }
@@ -2736,7 +2736,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Resource.
         /// </summary>
-        public static string ItemSuperType_Resource {
+        internal static string ItemSuperType_Resource {
             get {
                 return ResourceManager.GetString("ItemSuperType.Resource", resourceCulture);
             }
@@ -2745,7 +2745,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Ring.
         /// </summary>
-        public static string ItemSuperType_Ring {
+        internal static string ItemSuperType_Ring {
             get {
                 return ResourceManager.GetString("ItemSuperType.Ring", resourceCulture);
             }
@@ -2754,7 +2754,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Roleplay buff.
         /// </summary>
-        public static string ItemSuperType_RoleplayBuff {
+        internal static string ItemSuperType_RoleplayBuff {
             get {
                 return ResourceManager.GetString("ItemSuperType.RoleplayBuff", resourceCulture);
             }
@@ -2763,7 +2763,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rune.
         /// </summary>
-        public static string ItemSuperType_Rune {
+        internal static string ItemSuperType_Rune {
             get {
                 return ResourceManager.GetString("ItemSuperType.Rune", resourceCulture);
             }
@@ -2772,7 +2772,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Shield.
         /// </summary>
-        public static string ItemSuperType_Shield {
+        internal static string ItemSuperType_Shield {
             get {
                 return ResourceManager.GetString("ItemSuperType.Shield", resourceCulture);
             }
@@ -2781,7 +2781,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Tonic.
         /// </summary>
-        public static string ItemSuperType_Tonic {
+        internal static string ItemSuperType_Tonic {
             get {
                 return ResourceManager.GetString("ItemSuperType.Tonic", resourceCulture);
             }
@@ -2790,7 +2790,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to TTG card.
         /// </summary>
-        public static string ItemSuperType_TTGCard {
+        internal static string ItemSuperType_TTGCard {
             get {
                 return ResourceManager.GetString("ItemSuperType.TTGCard", resourceCulture);
             }
@@ -2799,7 +2799,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
-        public static string LastMeal_None {
+        internal static string LastMeal_None {
             get {
                 return ResourceManager.GetString("LastMeal.None", resourceCulture);
             }
@@ -2808,7 +2808,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Married.
         /// </summary>
-        public static string MaritalStatus_Married {
+        internal static string MaritalStatus_Married {
             get {
                 return ResourceManager.GetString("MaritalStatus.Married", resourceCulture);
             }
@@ -2817,7 +2817,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Single.
         /// </summary>
-        public static string MaritalStatus_Single {
+        internal static string MaritalStatus_Single {
             get {
                 return ResourceManager.GetString("MaritalStatus.Single", resourceCulture);
             }
@@ -2826,7 +2826,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Original appearance.
         /// </summary>
-        public static string OriginalAppearance {
+        internal static string OriginalAppearance {
             get {
                 return ResourceManager.GetString("OriginalAppearance", resourceCulture);
             }
@@ -2835,7 +2835,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Errored questObjectiveType #1 (#2).
         /// </summary>
-        public static string QuestObjectiveType_Errored {
+        internal static string QuestObjectiveType_Errored {
             get {
                 return ResourceManager.GetString("QuestObjectiveType.Errored", resourceCulture);
             }
@@ -2844,7 +2844,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Unknown questObjectiveType #1 (#2).
         /// </summary>
-        public static string QuestObjectiveType_Unknown {
+        internal static string QuestObjectiveType_Unknown {
             get {
                 return ResourceManager.GetString("QuestObjectiveType.Unknown", resourceCulture);
             }
@@ -2853,7 +2853,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rune.
         /// </summary>
-        public static string Rune {
+        internal static string Rune {
             get {
                 return ResourceManager.GetString("Rune", resourceCulture);
             }
@@ -2862,7 +2862,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to inf..
         /// </summary>
-        public static string ShortInfinity {
+        internal static string ShortInfinity {
             get {
                 return ResourceManager.GetString("ShortInfinity", resourceCulture);
             }
@@ -2871,7 +2871,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Class.
         /// </summary>
-        public static string SpellCategory_Breed {
+        internal static string SpellCategory_Breed {
             get {
                 return ResourceManager.GetString("SpellCategory.Breed", resourceCulture);
             }
@@ -2880,7 +2880,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Elementary.
         /// </summary>
-        public static string SpellCategory_Elementary {
+        internal static string SpellCategory_Elementary {
             get {
                 return ResourceManager.GetString("SpellCategory.Elementary", resourceCulture);
             }
@@ -2889,7 +2889,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Event.
         /// </summary>
-        public static string SpellCategory_Event {
+        internal static string SpellCategory_Event {
             get {
                 return ResourceManager.GetString("SpellCategory.Event", resourceCulture);
             }
@@ -2898,7 +2898,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Fairywork.
         /// </summary>
-        public static string SpellCategory_Fairywork {
+        internal static string SpellCategory_Fairywork {
             get {
                 return ResourceManager.GetString("SpellCategory.Fairywork", resourceCulture);
             }
@@ -2907,7 +2907,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
-        public static string SpellCategory_None {
+        internal static string SpellCategory_None {
             get {
                 return ResourceManager.GetString("SpellCategory.None", resourceCulture);
             }
@@ -2916,7 +2916,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Perceptor.
         /// </summary>
-        public static string SpellCategory_Perceptor {
+        internal static string SpellCategory_Perceptor {
             get {
                 return ResourceManager.GetString("SpellCategory.Perceptor", resourceCulture);
             }
@@ -2925,7 +2925,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Special.
         /// </summary>
-        public static string SpellCategory_Special {
+        internal static string SpellCategory_Special {
             get {
                 return ResourceManager.GetString("SpellCategory.Special", resourceCulture);
             }
@@ -2934,7 +2934,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Summon.
         /// </summary>
-        public static string SpellCategory_Summon {
+        internal static string SpellCategory_Summon {
             get {
                 return ResourceManager.GetString("SpellCategory.Summon", resourceCulture);
             }
@@ -2943,7 +2943,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Class - Temporis 2.
         /// </summary>
-        public static string SpellCategory_Temporis2Breed {
+        internal static string SpellCategory_Temporis2Breed {
             get {
                 return ResourceManager.GetString("SpellCategory.Temporis2Breed", resourceCulture);
             }
@@ -2952,7 +2952,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Common - Temporis 2.
         /// </summary>
-        public static string SpellCategory_Temporis2Common {
+        internal static string SpellCategory_Temporis2Common {
             get {
                 return ResourceManager.GetString("SpellCategory.Temporis2Common", resourceCulture);
             }
@@ -2961,7 +2961,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Epic - Temporis 2.
         /// </summary>
-        public static string SpellCategory_Temporis2Epic {
+        internal static string SpellCategory_Temporis2Epic {
             get {
                 return ResourceManager.GetString("SpellCategory.Temporis2Epic", resourceCulture);
             }
@@ -2970,7 +2970,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Legendary - Temporis 2.
         /// </summary>
-        public static string SpellCategory_Temporis2Legendary {
+        internal static string SpellCategory_Temporis2Legendary {
             get {
                 return ResourceManager.GetString("SpellCategory.Temporis2Legendary", resourceCulture);
             }
@@ -2979,7 +2979,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Monster - Temporis 2.
         /// </summary>
-        public static string SpellCategory_Temporis2Monster {
+        internal static string SpellCategory_Temporis2Monster {
             get {
                 return ResourceManager.GetString("SpellCategory.Temporis2Monster", resourceCulture);
             }
@@ -2988,7 +2988,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rare - Temporis 2.
         /// </summary>
-        public static string SpellCategory_Temporis2Rare {
+        internal static string SpellCategory_Temporis2Rare {
             get {
                 return ResourceManager.GetString("SpellCategory.Temporis2Rare", resourceCulture);
             }
@@ -2997,7 +2997,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Triggered spell - Temporis 2.
         /// </summary>
-        public static string SpellCategory_Temporis2Triggered {
+        internal static string SpellCategory_Temporis2Triggered {
             get {
                 return ResourceManager.GetString("SpellCategory.Temporis2Triggered", resourceCulture);
             }
@@ -3006,7 +3006,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Class - Temporis 3.
         /// </summary>
-        public static string SpellCategory_Temporis3Breed {
+        internal static string SpellCategory_Temporis3Breed {
             get {
                 return ResourceManager.GetString("SpellCategory.Temporis3Breed", resourceCulture);
             }
@@ -3015,7 +3015,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Monster - Temporis 3.
         /// </summary>
-        public static string SpellCategory_Temporis3Monster {
+        internal static string SpellCategory_Temporis3Monster {
             get {
                 return ResourceManager.GetString("SpellCategory.Temporis3Monster", resourceCulture);
             }
@@ -3024,7 +3024,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Triggered spell - Temporis 3.
         /// </summary>
-        public static string SpellCategory_Temporis3Triggered {
+        internal static string SpellCategory_Temporis3Triggered {
             get {
                 return ResourceManager.GetString("SpellCategory.Temporis3Triggered", resourceCulture);
             }
@@ -3033,7 +3033,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Weapon skill.
         /// </summary>
-        public static string SpellCategory_WeaponSkill {
+        internal static string SpellCategory_WeaponSkill {
             get {
                 return ResourceManager.GetString("SpellCategory.WeaponSkill", resourceCulture);
             }
@@ -3042,7 +3042,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Class.
         /// </summary>
-        public static string SpellLevelCategory_Breed {
+        internal static string SpellLevelCategory_Breed {
             get {
                 return ResourceManager.GetString("SpellLevelCategory.Breed", resourceCulture);
             }
@@ -3051,7 +3051,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Elementary.
         /// </summary>
-        public static string SpellLevelCategory_Elementary {
+        internal static string SpellLevelCategory_Elementary {
             get {
                 return ResourceManager.GetString("SpellLevelCategory.Elementary", resourceCulture);
             }
@@ -3060,7 +3060,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Special.
         /// </summary>
-        public static string SpellLevelCategory_Special {
+        internal static string SpellLevelCategory_Special {
             get {
                 return ResourceManager.GetString("SpellLevelCategory.Special", resourceCulture);
             }
@@ -3069,7 +3069,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Summon.
         /// </summary>
-        public static string SpellLevelCategory_Summon {
+        internal static string SpellLevelCategory_Summon {
             get {
                 return ResourceManager.GetString("SpellLevelCategory.Summon", resourceCulture);
             }
@@ -3078,7 +3078,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Weapon skill.
         /// </summary>
-        public static string SpellLevelCategory_WeaponSkill {
+        internal static string SpellLevelCategory_WeaponSkill {
             get {
                 return ResourceManager.GetString("SpellLevelCategory.WeaponSkill", resourceCulture);
             }
@@ -3087,7 +3087,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Craft.
         /// </summary>
-        public static string SpellOrigin_Craft {
+        internal static string SpellOrigin_Craft {
             get {
                 return ResourceManager.GetString("SpellOrigin.Craft", resourceCulture);
             }
@@ -3096,7 +3096,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Drop.
         /// </summary>
-        public static string SpellOrigin_Drop {
+        internal static string SpellOrigin_Drop {
             get {
                 return ResourceManager.GetString("SpellOrigin.Drop", resourceCulture);
             }
@@ -3105,7 +3105,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
-        public static string SpellOrigin_None {
+        internal static string SpellOrigin_None {
             get {
                 return ResourceManager.GetString("SpellOrigin.None", resourceCulture);
             }
@@ -3114,7 +3114,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
-        public static string SpellOrigin_Unknown {
+        internal static string SpellOrigin_Unknown {
             get {
                 return ResourceManager.GetString("SpellOrigin.Unknown", resourceCulture);
             }
@@ -3123,7 +3123,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility.
         /// </summary>
-        public static string SpellType_Agility {
+        internal static string SpellType_Agility {
             get {
                 return ResourceManager.GetString("SpellType.Agility", resourceCulture);
             }
@@ -3132,7 +3132,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance.
         /// </summary>
-        public static string SpellType_Chance {
+        internal static string SpellType_Chance {
             get {
                 return ResourceManager.GetString("SpellType.Chance", resourceCulture);
             }
@@ -3141,7 +3141,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Heal.
         /// </summary>
-        public static string SpellType_Heal {
+        internal static string SpellType_Heal {
             get {
                 return ResourceManager.GetString("SpellType.Heal", resourceCulture);
             }
@@ -3150,7 +3150,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence.
         /// </summary>
-        public static string SpellType_Intelligence {
+        internal static string SpellType_Intelligence {
             get {
                 return ResourceManager.GetString("SpellType.Intelligence", resourceCulture);
             }
@@ -3159,7 +3159,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multi element.
         /// </summary>
-        public static string SpellType_MultiElement {
+        internal static string SpellType_MultiElement {
             get {
                 return ResourceManager.GetString("SpellType.MultiElement", resourceCulture);
             }
@@ -3168,7 +3168,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Neutral.
         /// </summary>
-        public static string SpellType_Neutral {
+        internal static string SpellType_Neutral {
             get {
                 return ResourceManager.GetString("SpellType.Neutral", resourceCulture);
             }
@@ -3177,7 +3177,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
-        public static string SpellType_None {
+        internal static string SpellType_None {
             get {
                 return ResourceManager.GetString("SpellType.None", resourceCulture);
             }
@@ -3186,7 +3186,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength.
         /// </summary>
-        public static string SpellType_Strength {
+        internal static string SpellType_Strength {
             get {
                 return ResourceManager.GetString("SpellType.Strength", resourceCulture);
             }
@@ -3195,7 +3195,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Summon.
         /// </summary>
-        public static string SpellType_Summon {
+        internal static string SpellType_Summon {
             get {
                 return ResourceManager.GetString("SpellType.Summon", resourceCulture);
             }
@@ -3204,7 +3204,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Utility.
         /// </summary>
-        public static string SpellType_Utility {
+        internal static string SpellType_Utility {
             get {
                 return ResourceManager.GetString("SpellType.Utility", resourceCulture);
             }
@@ -3213,7 +3213,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Common.
         /// </summary>
-        public static string TTGCardRarity_Common {
+        internal static string TTGCardRarity_Common {
             get {
                 return ResourceManager.GetString("TTGCardRarity.Common", resourceCulture);
             }
@@ -3222,7 +3222,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Epic.
         /// </summary>
-        public static string TTGCardRarity_Epic {
+        internal static string TTGCardRarity_Epic {
             get {
                 return ResourceManager.GetString("TTGCardRarity.Epic", resourceCulture);
             }
@@ -3231,7 +3231,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rare.
         /// </summary>
-        public static string TTGCardRarity_Rare {
+        internal static string TTGCardRarity_Rare {
             get {
                 return ResourceManager.GetString("TTGCardRarity.Rare", resourceCulture);
             }
@@ -3240,7 +3240,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Ultimate.
         /// </summary>
-        public static string TTGCardRarity_Ultimate {
+        internal static string TTGCardRarity_Ultimate {
             get {
                 return ResourceManager.GetString("TTGCardRarity.Ultimate", resourceCulture);
             }
@@ -3249,7 +3249,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Unknown (#1).
         /// </summary>
-        public static string Unknown_Data {
+        internal static string Unknown_Data {
             get {
                 return ResourceManager.GetString("Unknown.Data", resourceCulture);
             }
@@ -3258,7 +3258,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Weapons.
         /// </summary>
-        public static string Weapons {
+        internal static string Weapons {
             get {
                 return ResourceManager.GetString("Weapons", resourceCulture);
             }

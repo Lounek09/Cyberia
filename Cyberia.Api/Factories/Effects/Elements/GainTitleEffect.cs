@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Titles;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record GainTitleEffect : Effect
 {
@@ -24,10 +26,10 @@ public sealed record GainTitleEffect : Effect
         return DofusApi.Datacenter.TitlesRepository.GetTitleDataById(TitleId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var titleName = DofusApi.Datacenter.TitlesRepository.GetTitleNameById(TitleId);
+        var titleName = DofusApi.Datacenter.TitlesRepository.GetTitleNameById(TitleId, culture);
 
-        return GetDescription(string.Empty, string.Empty, titleName);
+        return GetDescription(culture, string.Empty, string.Empty, titleName);
     }
 }

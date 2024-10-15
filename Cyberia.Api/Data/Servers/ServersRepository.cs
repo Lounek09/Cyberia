@@ -4,6 +4,7 @@ using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Servers;
@@ -52,13 +53,18 @@ public sealed class ServersRepository : DofusRepository, IDofusRepository
         return serverData;
     }
 
-    public string GetServerNameById(int id)
+    public string GetServerNameById(int id, Language language)
+    {
+        return GetServerNameById(id, language.ToCulture());
+    }
+
+    public string GetServerNameById(int id, CultureInfo? culture = null)
     {
         var serverData = GetServerDataById(id);
 
         return serverData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : serverData.Name;
+            ? Translation.UnknownData(id, culture)
+            : serverData.Name.ToString(culture);
     }
 
     public ServerPopulationData? GetServerPopulationDataById(int id)

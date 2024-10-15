@@ -14,6 +14,7 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
 using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Breed;
@@ -28,17 +29,19 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
     private readonly IEnumerable<SpellData> _spellsData;
     private readonly SpellData? _specialSpellData;
     private readonly ItemSetData? _itemSetData;
+    private readonly CultureInfo? _culture;
 
-    public BreedMessageBuilder(EmbedBuilderService embedBuilderService, BreedData breedData)
+    public BreedMessageBuilder(EmbedBuilderService embedBuilderService, BreedData breedData, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _breedData = breedData;
         _spellsData = breedData.GetSpellsData();
         _specialSpellData = breedData.GetSpecialSpellData();
         _itemSetData = breedData.GetItemSetData();
+        _culture = culture;
     }
 
-    public static BreedMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static BreedMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&
@@ -49,7 +52,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, breedData);
+                return new(embedBuilderService, breedData, culture);
             }
         }
 
@@ -68,7 +71,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
         if (_spellsData.Any())
         {
-            message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData));
+            message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData, _culture));
         }
 
         var buttons = ButtonsBuilder();
@@ -82,17 +85,22 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Breeds, BotTranslations.Embed_Breed_Author)
-            .WithTitle($"{_breedData.LongName} ({_breedData.Id})")
-            .WithDescription(Formatter.Italic(_breedData.Description))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Breeds, Translation.Get<BotTranslations>("Embed.Breed.Author", _culture))
+            .WithTitle($"{_breedData.LongName.ToString(_culture)} ({_breedData.Id})")
+            .WithDescription(Formatter.Italic(_breedData.Description.ToString(_culture)))
             .WithThumbnail(await _breedData.GetIconImagePathAsync(CdnImageSize.Size128))
             .WithImageUrl(await _breedData.GetWeaponsPreferenceImagePathAsync())
-            .AddField(BotTranslations.Embed_Field_Characteristics_Title, CharacteristicsFieldContent());
+            .AddField(Translation.Get<BotTranslations>("Embed.Field.Characteristics.Title", _culture), CharacteristicsFieldContent());
 
         if (_spellsData.Any())
         {
-            embed.AddField(BotTranslations.Embed_Field_Spells_Title,
-                string.Join('\n', _spellsData.Select(x => $"- {BotTranslations.ShortLevel}{x.GetNeededLevel()} {Formatter.Bold(x.Name)}")));
+            embed.AddField(
+                Translation.Get<BotTranslations>("Embed.Field.Spells.Title", _culture),
+                string.Join('\n', _spellsData.Select(x =>
+                {
+                    return $"- {Translation.Get<BotTranslations>("ShortLevel", _culture)}{x.GetNeededLevel()} {Formatter.Bold(x.Name.ToString(_culture))}";
+                }))
+            );
         }
 
         return embed;
@@ -103,39 +111,39 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
         StringBuilder builder = new();
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold(BotTranslations.Vitality));
+        builder.Append(Formatter.Bold(Translation.Get<BotTranslations>("Vitality", _culture)));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.VitalityBoostCost);
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold(BotTranslations.Wisdom));
+        builder.Append(Formatter.Bold(Translation.Get<BotTranslations>("Wisdom", _culture)));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.WisdomBoostCost);
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold(BotTranslations.Strength));
+        builder.Append(Formatter.Bold(Translation.Get<BotTranslations>("Strength", _culture)));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.StrengthBoostCost);
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold(BotTranslations.Intelligence));
+        builder.Append(Formatter.Bold(Translation.Get<BotTranslations>("Intelligence", _culture)));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.IntelligenceBoostCost);
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold(BotTranslations.Chance));
+        builder.Append(Formatter.Bold(Translation.Get<BotTranslations>("Chance", _culture)));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.ChanceBoostCost);
 
         builder.Append("- ");
-        builder.Append(Formatter.Bold(BotTranslations.Agility));
+        builder.Append(Formatter.Bold(Translation.Get<BotTranslations>("Agility", _culture)));
         builder.Append(" :\n");
         AppendStatBoostCost(builder, _breedData.AgilityBoostCost);
 
         return builder.ToString();
     }
 
-    private static void AppendStatBoostCost(StringBuilder builder, IReadOnlyList<IReadOnlyList<int>> boostCost)
+    private void AppendStatBoostCost(StringBuilder builder, IReadOnlyList<IReadOnlyList<int>> boostCost)
     {
         for (var i = 0; i < boostCost.Count; i++)
         {
@@ -146,9 +154,9 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
             builder.Append(" - ");
             builder.Append(boostCost[i].Count > 2 ? boostCost[i][2] : 1);
-            builder.Append(BotTranslations._for);
+            builder.Append(Translation.Get<BotTranslations>("for", _culture));
             builder.Append(boostCost[i][1]);
-            builder.Append(BotTranslations.from);
+            builder.Append(Translation.Get<BotTranslations>("from", _culture));
             builder.Append(boostCost[i][0]);
             builder.Append('\n');
         }
@@ -158,12 +166,12 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
     {
         if (_specialSpellData is not null)
         {
-            yield return SpellComponentsBuilder.SpellButtonBuilder(_specialSpellData);
+            yield return SpellComponentsBuilder.SpellButtonBuilder(_specialSpellData, _culture);
         }
 
         if (_itemSetData is not null)
         {
-            yield return ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData);
+            yield return ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData, _culture);
         }
     }
 }

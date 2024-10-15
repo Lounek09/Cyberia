@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.Data.Quests;
 
-namespace Cyberia.Api.Factories.QuestObjectives;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.QuestObjectives.Elements;
 
 public sealed record DiscoverMapQuestObjective : QuestObjective
 {
@@ -23,8 +25,8 @@ public sealed record DiscoverMapQuestObjective : QuestObjective
         return null;
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(MapDescription);
+        return GetDescription(culture, MapDescription);
     }
 }

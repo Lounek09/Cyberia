@@ -19,6 +19,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Cyberia.Salamandra.EventHandlers;
@@ -28,7 +29,7 @@ namespace Cyberia.Salamandra.EventHandlers;
 /// </summary>
 public sealed partial class InteractionsEventHandler : IEventHandler<ComponentInteractionCreatedEventArgs>
 {
-    private static readonly FrozenDictionary<string, Func<IServiceProvider, int, string[], ICustomMessageBuilder?>> s_factory = new Dictionary<string, Func<IServiceProvider, int, string[], ICustomMessageBuilder?>>()
+    private static readonly FrozenDictionary<string, Func<IServiceProvider, int, CultureInfo?, string[], ICustomMessageBuilder?>> s_factory = new Dictionary<string, Func<IServiceProvider, int, CultureInfo?, string[], ICustomMessageBuilder?>>()
     {
         { BreedMessageBuilder.PacketHeader, BreedMessageBuilder.Create },
         { CraftMessageBuilder.PacketHeader, CraftMessageBuilder.Create },
@@ -80,7 +81,7 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
             return;
         }
 
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(args.Interaction));
+        var culture = await _cultureService.GetCultureAsync(args.Interaction);
 
         var response = new DiscordInteractionResponseBuilder().AsEphemeral();
 
@@ -89,7 +90,7 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
 
         if (decomposedPacket.Length < 2)
         {
-            response.WithContent(BotTranslations.Command_Error_Component);
+            response.WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture));
             await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
@@ -98,7 +99,7 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
 
         if (!s_factory.TryGetValue(header, out var builder))
         {
-            response.WithContent(BotTranslations.Command_Error_Component);
+            response.WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture));
             await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
@@ -106,10 +107,10 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
         var version = int.Parse(decomposedPacket[1]);
         var parameters = decomposedPacket.Length > 2 ? decomposedPacket[2..] : [];
 
-        var message = builder(_serviceProvider, version, parameters);
+        var message = builder(_serviceProvider, version, culture, parameters);
         if (message is null)
         {
-            response.WithContent(BotTranslations.Command_Error_Component);
+            response.WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture));
             await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
             return;
         }

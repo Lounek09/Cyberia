@@ -38,12 +38,12 @@ public sealed class RgpdCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task GetExecuteAsync(SlashCommandContext ctx)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var user = await _discordCachedUserRepository.GetAsync(ctx.Interaction.User.Id);
         if (user is null)
         {
-            await ctx.RespondAsync(BotTranslations.Rgpd_NoData, true);
+            await ctx.RespondAsync(Translation.Get<BotTranslations>("Rgpd.NoData", culture), true);
             return;
         }
 
@@ -51,7 +51,7 @@ public sealed class RgpdCommandModule
         using MemoryStream stream = new(Encoding.UTF8.GetBytes(json));
 
         var message = new DiscordInteractionResponseBuilder()
-            .WithContent(BotTranslations.Rgpd_Data)
+            .WithContent(Translation.Get<BotTranslations>("Rgpd.Data", culture))
             .AddFile("data.json", stream)
             .AsEphemeral();
 
@@ -63,16 +63,16 @@ public sealed class RgpdCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task DeleteExecuteAsync(SlashCommandContext ctx)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var success = await _discordCachedUserRepository.DeleteAsync(ctx.Interaction.User.Id);
         if (success)
         {
-            await ctx.RespondAsync(BotTranslations.Rgpd_Deleted, true);
+            await ctx.RespondAsync(Translation.Get<BotTranslations>("Rgpd.Deleted", culture), true);
             return;
         }
 
-        await ctx.RespondAsync(BotTranslations.Rgpd_NoData, true);
+        await ctx.RespondAsync(Translation.Get<BotTranslations>("Rgpd.NoData", culture), true);
     }
 }
 

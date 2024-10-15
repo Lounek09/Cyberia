@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Monsters;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record LadderRaceEffect : Effect
 {
@@ -27,10 +29,10 @@ public sealed record LadderRaceEffect : Effect
         return DofusApi.Datacenter.MonstersRepository.GetMonsterRaceDataById(MonsterRaceId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var monsterRaceName = DofusApi.Datacenter.MonstersRepository.GetMonsterRaceNameById(MonsterRaceId);
+        var monsterRaceName = DofusApi.Datacenter.MonstersRepository.GetMonsterRaceNameById(MonsterRaceId, culture);
 
-        return GetDescription(monsterRaceName, string.Empty, Count);
+        return GetDescription(culture, monsterRaceName, string.Empty, Count);
     }
 }

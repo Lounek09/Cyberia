@@ -1,8 +1,8 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects.Templates;
 
-namespace Cyberia.Api.Factories.Effects;
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterSummonDeadAllyInFightEffect : MinMaxEffect
 {

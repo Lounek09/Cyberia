@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.Quests;
 using Cyberia.Api.Factories.QuestObjectives;
+using Cyberia.Api.Factories.QuestObjectives.Elements;
 
 using System.Collections.Frozen;
 

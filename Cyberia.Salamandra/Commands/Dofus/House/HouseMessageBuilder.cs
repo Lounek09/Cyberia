@@ -10,6 +10,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.House;
 
 public sealed class HouseMessageBuilder : ICustomMessageBuilder
@@ -22,17 +24,19 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
     private readonly int _selectedMapIndex;
     private readonly MapData? _outdoorMapData;
     private readonly List<MapData> _mapsData;
+    private readonly CultureInfo? _culture;
 
-    public HouseMessageBuilder(EmbedBuilderService embedBuilderService, HouseData houseData, int selectedMapIndex = -1)
+    public HouseMessageBuilder(EmbedBuilderService embedBuilderService, HouseData houseData, CultureInfo? culture, int selectedMapIndex = -1)
     {
         _embedBuilderService = embedBuilderService;
         _houseData = houseData;
         _outdoorMapData = houseData.GetOutdoorMapData();
         _mapsData = houseData.GetMapsData().ToList();
         _selectedMapIndex = selectedMapIndex;
+        _culture = culture;
     }
 
-    public static HouseMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static HouseMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -44,7 +48,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, houseData, selectedMapIndex);
+                return new(embedBuilderService, houseData, culture, selectedMapIndex);
             }
         }
 
@@ -71,12 +75,26 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Houses, BotTranslations.Embed_House_Author)
-            .WithTitle($"{_houseData.Name} {_houseData.GetCoordinate()} ({_houseData.Id})")
-            .WithDescription(string.IsNullOrEmpty(_houseData.Description) ? string.Empty : Formatter.Italic(_houseData.Description))
-            .AddField(BotTranslations.Embed_Field_Room_Title, _houseData.RoomNumber == 0 ? "?" : _houseData.RoomNumber.ToString(), true)
-            .AddField(BotTranslations.Embed_Field_Chest_Title, _houseData.ChestNumber == 0 ? "?" : _houseData.ChestNumber.ToString(), true)
-            .AddField(BotTranslations.Embed_Field_Price_Title, _houseData.Price == 0 ? "?" : _houseData.Price.ToFormattedString(), true);
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Houses, Translation.Get<BotTranslations>("Embed.House.Author", _culture))
+            .WithTitle($"{_houseData.Name.ToString(_culture)} {_houseData.GetCoordinate()} ({_houseData.Id})")
+            .AddField(
+                Translation.Get<BotTranslations>("Embed.Field.Room.Title", _culture),
+                _houseData.RoomNumber == 0 ? "?" : _houseData.RoomNumber.ToString(),
+                true)
+            .AddField(
+                Translation.Get<BotTranslations>("Embed.Field.Chest.Title", _culture),
+                _houseData.ChestNumber == 0 ? "?" : _houseData.ChestNumber.ToString(),
+                true)
+            .AddField(
+                Translation.Get<BotTranslations>("Embed.Field.Price.Title", _culture),
+                _houseData.Price == 0 ? "?" : _houseData.Price.ToFormattedString(_culture),
+                true);
+
+        var description = _houseData.Description.ToString(_culture);
+        if (!string.IsNullOrEmpty(description))
+        {
+            embed.WithDescription(Formatter.Italic(description));
+        }
 
         var currentMapData = _selectedMapIndex == -1 ? _outdoorMapData : _mapsData[_selectedMapIndex];
         if (currentMapData is not null)
@@ -93,15 +111,24 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
         {
             if (_outdoorMapData is not null)
             {
-                yield return new DiscordSelectComponentOption(BotTranslations.Select_HouseMap_Option_Outdoors, GetPacket(_houseData.Id), isDefault: _selectedMapIndex == -1);
+                yield return new DiscordSelectComponentOption(
+                    Translation.Get<BotTranslations>("Select.HouseMap.Option.Outdoors", _culture),
+                    GetPacket(_houseData.Id),
+                    isDefault: _selectedMapIndex == -1);
             }
 
             for (var i = 0; i < _mapsData.Count; i++)
             {
-                yield return new DiscordSelectComponentOption($"{BotTranslations.Select_HouseMap_Option_Room} {i + 1}", GetPacket(_houseData.Id, i), isDefault: i == _selectedMapIndex);
+                yield return new DiscordSelectComponentOption(
+                    $"{Translation.Get<BotTranslations>("Select.HouseMap.Option.Room", _culture)} {i + 1}",
+                    GetPacket(_houseData.Id, i),
+                    isDefault: i == _selectedMapIndex);
             }
         }
 
-        return new DiscordSelectComponent(PacketFormatter.Select(0), BotTranslations.Select_HouseMap_Placeholder, OptionsGenerator());
+        return new DiscordSelectComponent(
+            PacketFormatter.Select(0),
+            Translation.Get<BotTranslations>("Select.HouseMap.Placeholder", _culture),
+            OptionsGenerator());
     }
 }

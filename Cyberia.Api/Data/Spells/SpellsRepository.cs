@@ -4,6 +4,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Spells;
@@ -28,7 +29,12 @@ public sealed class SpellsRepository : DofusRepository, IDofusRepository
         return spellData;
     }
 
-    public IEnumerable<SpellData> GetSpellsDataByName(string name)
+    public IEnumerable<SpellData> GetSpellsDataByName(string name, Language language)
+    {
+        return GetSpellsDataByName(name, language.ToCulture());
+    }
+
+    public IEnumerable<SpellData> GetSpellsDataByName(string name, CultureInfo? culture = null)
     {
         var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -36,7 +42,7 @@ public sealed class SpellsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.ToString(culture).NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
@@ -68,13 +74,18 @@ public sealed class SpellsRepository : DofusRepository, IDofusRepository
         });
     }
 
-    public string GetSpellNameById(int id)
+    public string GetSpellNameById(int id, Language language)
+    {
+        return GetSpellNameById(id, language.ToCulture());
+    }
+
+    public string GetSpellNameById(int id, CultureInfo? culture = null)
     {
         var spellData = GetSpellDataById(id);
 
         return spellData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : spellData.Name;
+            ? Translation.UnknownData(id, culture)
+            : spellData.Name.ToString(culture);
     }
 
     public SpellLevelData? GetSpellLevelDataById(int id)

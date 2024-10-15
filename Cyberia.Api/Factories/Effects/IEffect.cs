@@ -1,6 +1,9 @@
 ﻿using Cyberia.Api.Data.Effects;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Langzilla.Enums;
+
+using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects;
 
@@ -41,8 +44,16 @@ public interface IEffect : IComparable<IEffect>
     EffectData? GetEffectData();
 
     /// <summary>
-    /// Generates a human-readable description of the effect.
+    /// Generates a human-readable description of the effect for the specified language.
     /// </summary>
-    /// <returns>The <see cref="DescriptionString"/> object containing the description of the effect.</returns>
-    DescriptionString GetDescription();
+    /// <param name="language">The language to generate the description for.</param>
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the effect for the specified language.</returns>
+    DescriptionString GetDescription(Language language);
+
+    /// <summary>
+    /// Generates a human-readable description of the effect for the specified culture.
+    /// </summary>
+    /// <param name="culture">The culture to generate the description for.</param>
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the effect for the specified culture.</returns>
+    DescriptionString GetDescription(CultureInfo? culture = null);
 }

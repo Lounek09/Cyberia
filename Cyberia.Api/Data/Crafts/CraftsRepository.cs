@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Crafts;
@@ -25,7 +27,12 @@ public sealed class CraftsRepository : DofusRepository, IDofusRepository
         return craftData;
     }
 
-    public IEnumerable<CraftData> GetCraftsDataByItemName(string itemName)
+    public IEnumerable<CraftData> GetCraftsDataByItemName(string itemName, Language language)
+    {
+        return GetCraftsDataByItemName(itemName, language.ToCulture());
+    }
+
+    public IEnumerable<CraftData> GetCraftsDataByItemName(string itemName, CultureInfo? culture = null)
     {
         var itemNames = itemName.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -33,7 +40,7 @@ public sealed class CraftsRepository : DofusRepository, IDofusRepository
         {
             var itemData = craftData.GetItemData();
             if (itemData is not null &&
-                itemNames.All(x => itemData.NormalizedName.ToString().Contains(x, StringComparison.OrdinalIgnoreCase)))
+                itemNames.All(x => itemData.NormalizedName.ToString(culture).Contains(x, StringComparison.OrdinalIgnoreCase)))
             {
                 yield return craftData;
             }

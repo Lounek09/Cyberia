@@ -1,19 +1,19 @@
 ﻿@page
 @model PrivacyModel
 @{
-	ViewBag.Title = $"{WebTranslations.Page_Salamandra_Title} - {WebTranslations.Page_SalamandraPrivacy_Title}";
+	ViewBag.Title = $"{Translation.Get<WebTranslations>("Page.Salamandra.Title")} - {Translation.Get<WebTranslations>("Page.SalamandraPrivacy.Title")}";
 	ViewBag.Favicon = "favicon-salamandra.png";
 	ViewBag.PageStyle = "salamandra.css";
 }
 
 <div class="content">
-	<h1>@WebTranslations.Page_SalamandraPrivacy_Title</h1>
+	<h1>@(Translation.Get<WebTranslations>("Page.SalamandraPrivacy.Title"))</h1>
 
-	@Html.Raw(WebTranslations.Page_SalamandraPrivacy_Content)
+	@Html.Raw(Translation.Get<WebTranslations>("Page.SalamandraPrivacy.Content"))
 
 	<nav>
-		<a asp-culture-page="/salamandra/tos">@WebTranslations.Page_SalamandraTos_Title</a>
+		<a asp-culture-page="/salamandra/tos">@(Translation.Get<WebTranslations>("Page.SalamandraTos.Title"))</a>
 		<span>-</span>
-		<a asp-culture-page="/salamandra/privacy" disabled>@WebTranslations.Page_SalamandraPrivacy_Title</a>
+		<a asp-culture-page="/salamandra/privacy" disabled>@(Translation.Get<WebTranslations>("Page.SalamandraPrivacy.Title"))</a>
 	</nav>
 </div>

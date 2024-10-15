@@ -5,6 +5,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests;
@@ -44,7 +45,12 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
         return questData;
     }
 
-    public IEnumerable<QuestData> GetQuestsDataByName(string name)
+    public IEnumerable<QuestData> GetQuestDataByName(string name, Language language)
+    {
+        return GetQuestsDataByName(name, language.ToCulture());
+    }
+
+    public IEnumerable<QuestData> GetQuestsDataByName(string name, CultureInfo? culture = null)
     {
         var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -52,18 +58,23 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.ToString(culture).NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
 
-    public string GetQuestNameById(int id)
+    public string GetQuestNameById(int id, Language language)
+    {
+        return GetQuestNameById(id, language.ToCulture());
+    }
+
+    public string GetQuestNameById(int id, CultureInfo? culture = null)
     {
         var questData = GetQuestDataById(id);
 
         return questData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : questData.Name;
+            ? Translation.UnknownData(id, culture)
+            : questData.Name.ToString(culture);
     }
 
     public QuestStepData? GetQuestStepDataById(int id)
@@ -72,13 +83,18 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
         return questStepData;
     }
 
-    public string GetQuestStepNameById(int id)
+    public string GetQuestStepNameById(int id, Language language)
+    {
+        return GetQuestStepNameById(id, language.ToCulture());
+    }
+
+    public string GetQuestStepNameById(int id, CultureInfo? culture = null)
     {
         var questStepData = GetQuestStepDataById(id);
 
         return questStepData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : questStepData.Name;
+            ? Translation.UnknownData(id, culture)
+            : questStepData.Name.ToString(culture);
     }
 
     public QuestObjectiveData? GetQuestObjectiveDataById(int id)
@@ -87,13 +103,18 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
         return questObjectiveData;
     }
 
-    public DescriptionString GetQuestObjectiveDescriptionById(int id)
+    public DescriptionString GetQuestObjectiveDescriptionById(int id, Language language)
+    {
+        return GetQuestObjectiveDescriptionById(id, language.ToCulture());
+    }
+
+    public DescriptionString GetQuestObjectiveDescriptionById(int id, CultureInfo? culture = null)
     {
         var questObjectiveData = GetQuestObjectiveDataById(id);
 
         return questObjectiveData is null
-            ? new DescriptionString(ApiTranslations.Unknown_Data, id.ToString())
-            : QuestObjectiveFactory.Create(questObjectiveData).GetDescription();
+            ? new DescriptionString(Translation.UnknownData(id, culture))
+            : QuestObjectiveFactory.Create(questObjectiveData).GetDescription(culture);
     }
 
     public QuestObjectiveTypeData? GetQuestObjectiveTypeDataById(int id)

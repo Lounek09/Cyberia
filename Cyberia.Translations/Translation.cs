@@ -33,8 +33,6 @@ public static class Translation
     public static string Get<T>(string key, CultureInfo? culture = null)
         where T : ITranslationsWrapper
     {
-        culture ??= CultureInfo.CurrentUICulture;
-
         return T.ResourceManager.GetString(key, culture) ?? key;
     }
 
@@ -46,7 +44,7 @@ public static class Translation
     /// <param name="language">The language of the localized string.</param>
     /// <param name="value">The value of the string localized for the specified language, or the key if the resource is not found.</param>
     /// <returns><see langword="true"/> if the string was found; otherwise, <see langword="false"/>.</returns>
-    public static bool TryGet<T>(string key, Language language, out string value)
+    public static bool TryGet<T>(string key, out string value, Language language)
         where T : ITranslationsWrapper
     {
         return TryGet<T>(key, out value, language.ToCulture());
@@ -63,7 +61,6 @@ public static class Translation
     public static bool TryGet<T>(string key, out string value, CultureInfo? culture = null)
         where T : ITranslationsWrapper
     {
-        culture ??= CultureInfo.CurrentUICulture;
         value = T.ResourceManager.GetString(key, culture) ?? key;
 
         return value is not null;
@@ -90,8 +87,7 @@ public static class Translation
     /// <returns>The string localized for the specified culture</returns>
     public static string UnknownData<T>(T id, CultureInfo? culture = null)
     {
-        culture ??= CultureInfo.CurrentUICulture;
-        var template = Get<Api>("Unknown.Data", culture);
+        var template = Get<ApiTranslations>("Unknown.Data", culture);
 
         return Format(template, id);
     }

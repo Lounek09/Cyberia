@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Rides;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterGainRideEffect : Effect
 {
@@ -33,21 +35,21 @@ public sealed record CharacterGainRideEffect : Effect
         return DofusApi.Datacenter.RidesRepository.GetRideAbilityDataById(RideAbilityId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var value = DofusApi.Datacenter.RidesRepository.GetRideNameById(RideId);
+        var value = DofusApi.Datacenter.RidesRepository.GetRideNameById(RideId, culture);
 
         var rideAbility = GetRideAbilityData();
         if (rideAbility is not null)
         {
-            value += $" {rideAbility.Name}";
+            value += ' ' + rideAbility.Name.ToString(culture);
         }
 
         if (Infertile)
         {
-            value += $" {ApiTranslations.Infertile}";
+            value += ' ' + Translation.Get<ApiTranslations>("Infertile", culture);
         }
 
-        return GetDescription(value);
+        return GetDescription(culture, value);
     }
 }

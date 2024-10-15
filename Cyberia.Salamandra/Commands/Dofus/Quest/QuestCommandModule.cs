@@ -36,7 +36,7 @@ public sealed class QuestCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -45,23 +45,26 @@ public sealed class QuestCommandModule
             var questData = DofusApi.Datacenter.QuestsRepository.GetQuestDataById(id);
             if (questData is not null)
             {
-                response = await new QuestMessageBuilder(_embedBuilderService, questData).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new QuestMessageBuilder(_embedBuilderService, questData, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
         {
-            var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(value).ToList();
+            var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(value, culture).ToList();
             if (questsData.Count == 1)
             {
-                response = await new QuestMessageBuilder(_embedBuilderService, questsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new QuestMessageBuilder(_embedBuilderService, questsData[0], culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (questsData.Count > 1)
             {
-                response = await new PaginatedQuestMessageBuilder(_embedBuilderService, questsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedQuestMessageBuilder(_embedBuilderService, questsData, value, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Quest_NotFound);
+        response ??= new DiscordInteractionResponseBuilder().WithContent(Translation.Get<BotTranslations>("Quest.NotFound", culture));
         await ctx.RespondAsync(response);
     }
 }

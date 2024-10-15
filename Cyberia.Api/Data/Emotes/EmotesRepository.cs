@@ -3,6 +3,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Emotes;
@@ -27,13 +28,18 @@ public sealed class EmotesRepository : DofusRepository, IDofusRepository
         return emoteData;
     }
 
-    public string GetEmoteNameById(int id)
+    public string GetEmoteNameById(int id, Language language)
+    {
+        return GetEmoteNameById(id, language.ToCulture());
+    }
+
+    public string GetEmoteNameById(int id, CultureInfo? culture = null)
     {
         var emoteData = GetEmoteDataById(id);
 
         return emoteData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : emoteData.Name;
+            ? Translation.UnknownData(id, culture)
+            : emoteData.Name.ToString(culture);
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

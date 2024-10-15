@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Items;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record ItemMimysymbicAppearanceEffect : Effect
 {
@@ -24,10 +26,10 @@ public sealed record ItemMimysymbicAppearanceEffect : Effect
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
+        var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId, culture);
 
-        return GetDescription(string.Empty, string.Empty, itemName);
+        return GetDescription(culture, string.Empty, string.Empty, itemName);
     }
 }

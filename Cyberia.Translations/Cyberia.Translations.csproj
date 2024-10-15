@@ -31,19 +31,19 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Resources\ApiTranslations.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ApiTranslations.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Cyberia.Translations</CustomToolNamespace>
+      <CustomToolNamespace>Cyberia.Translations.Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\BotTranslations.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BotTranslations.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Cyberia.Translations</CustomToolNamespace>
+      <CustomToolNamespace>Cyberia.Translations.Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\WebTranslations.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WebTranslations.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Cyberia.Translations</CustomToolNamespace>
+      <CustomToolNamespace>Cyberia.Translations.Resources</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   

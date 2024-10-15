@@ -3,6 +3,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TTG;
@@ -43,13 +44,18 @@ public sealed class TTGRepository : DofusRepository, IDofusRepository
         return ttgEntityData;
     }
 
-    public string GetTTGEntityNameById(int id)
+    public string GetTTGEntityNameById(int id, Language language)
+    {
+        return GetTTGEntityNameById(id, language.ToCulture());
+    }
+
+    public string GetTTGEntityNameById(int id, CultureInfo? culture = null)
     {
         var ttgEntityData = GetTTGEntityDataById(id);
 
         return ttgEntityData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : ttgEntityData.Name;
+            ? Translation.UnknownData(id, culture)
+            : ttgEntityData.Name.ToString(culture);
     }
 
     public TTGFamilyData? GetTTGFamilyDataById(int id)
@@ -58,13 +64,18 @@ public sealed class TTGRepository : DofusRepository, IDofusRepository
         return ttgFamilyData;
     }
 
-    public string GetTTGFamilyNameById(int id)
+    public string GetTTGFamilyNameById(int id, Language language)
+    {
+        return GetTTGFamilyNameById(id, language.ToCulture());
+    }
+
+    public string GetTTGFamilyNameById(int id, CultureInfo? culture = null)
     {
         var ttgFamilyData = GetTTGFamilyDataById(id);
 
         return ttgFamilyData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : ttgFamilyData.Name;
+            ? Translation.UnknownData(id, culture)
+            : ttgFamilyData.Name.ToString(culture);
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

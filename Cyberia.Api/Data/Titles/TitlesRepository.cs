@@ -3,6 +3,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Titles;
@@ -27,13 +28,18 @@ public sealed class TitlesRepository : DofusRepository, IDofusRepository
         return titleData;
     }
 
-    public string GetTitleNameById(int id)
+    public string GetTitleNameById(int id, Language language)
+    {
+        return GetTitleNameById(id, language.ToCulture());
+    }
+
+    public string GetTitleNameById(int id, CultureInfo? culture = null)
     {
         var titleData = GetTitleDataById(id);
 
         return titleData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : titleData.Name;
+            ? Translation.UnknownData(id, culture)
+            : titleData.Name.ToString(culture);
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

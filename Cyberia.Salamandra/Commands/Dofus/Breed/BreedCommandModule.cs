@@ -34,16 +34,17 @@ public sealed class BreedCommandModule
         [SlashAutoCompleteProvider<BreedAutocompleteProvider>]
         int breedId)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
 
         if (breedData is null)
         {
-            await ctx.RespondAsync(BotTranslations.Breed_NotFound);
+            await ctx.RespondAsync(Translation.Get<BotTranslations>("Breed.NotFound", culture));
             return;
         }
 
-        await ctx.RespondAsync(await new BreedMessageBuilder(_embedBuilderService, breedData).BuildAsync<DiscordInteractionResponseBuilder>());
+        await ctx.RespondAsync(await new BreedMessageBuilder(_embedBuilderService, breedData, culture)
+            .BuildAsync<DiscordInteractionResponseBuilder>());
     }
 }

@@ -9,6 +9,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
 public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder<IncarnationData>
@@ -16,24 +18,35 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
     public const string PacketHeader = "PINCA";
     public const int PacketVersion = 2;
 
-    public PaginatedIncarnationMessageBuilder(EmbedBuilderService embedBuilderService, List<IncarnationData> incarnationsData, string search, int selectedPageIndex = 0)
-        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author), BotTranslations.Embed_PaginatedIncarnation_Title, incarnationsData, search, selectedPageIndex)
+    public PaginatedIncarnationMessageBuilder(
+        EmbedBuilderService embedBuilderService,
+        List<IncarnationData> incarnationsData,
+        string search,
+        CultureInfo? culture,
+        int selectedPageIndex = 0)
+    : base(
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.Incarnation.Author", culture)),
+        Translation.Get<BotTranslations>("Embed.PaginatedIncarnation.Title", culture),
+        incarnationsData,
+        search,
+        culture,
+        selectedPageIndex)
     {
 
     }
 
-    public static PaginatedIncarnationMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static PaginatedIncarnationMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(parameters[1]).ToList();
+            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(parameters[1], culture).ToList();
             if (incarnationsData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, incarnationsData, parameters[1], selectedPageIndex);
+                return new(embedBuilderService, incarnationsData, parameters[1], culture, selectedPageIndex);
             }
         }
 
@@ -49,17 +62,13 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
     {
         foreach (var incarnationData in _data)
         {
-            var itemData = incarnationData.GetItemData();
-            if (itemData is not null)
-            {
-                yield return $"- {Formatter.Bold(Formatter.Sanitize(itemData.Name))} ({incarnationData.Id})";
-            }
+            yield return $"- {Formatter.Bold(Formatter.Sanitize(incarnationData.GetItemName(_culture)))} ({incarnationData.Id})";
         }
     }
 
     protected override DiscordSelectComponent SelectBuilder()
     {
-        return IncarnationComponentsBuilder.IncarnationsSelectBuilder(0, _data);
+        return IncarnationComponentsBuilder.IncarnationsSelectBuilder(0, _data, _culture);
     }
 
     protected override string PreviousPacketBuilder()

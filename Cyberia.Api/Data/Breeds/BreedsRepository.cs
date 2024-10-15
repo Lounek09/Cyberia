@@ -4,6 +4,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Breeds;
@@ -28,14 +29,24 @@ public sealed class BreedsRepository : DofusRepository, IDofusRepository
         return breedData;
     }
 
-    public BreedData? GetBreedDataByName(string name)
+    public BreedData? GetBreedDataByName(string name, Language language)
+    {
+        return GetBreedDataByName(name, language.ToCulture());
+    }
+
+    public BreedData? GetBreedDataByName(string name, CultureInfo? culture = null)
     {
         name = name.NormalizeToAscii();
 
-        return Breeds.Values.FirstOrDefault(x => StringExtensions.NormalizeToAscii(x.Name).Equals(name));
+        return Breeds.Values.FirstOrDefault(x => x.Name.ToString(culture).NormalizeToAscii().Equals(name));
     }
 
-    public IEnumerable<BreedData> GetBreedsDataByName(string name)
+    public IEnumerable<BreedData> GetBreedsDataByName(string name, Language language)
+    {
+        return GetBreedsDataByName(name, language.ToCulture());
+    }
+
+    public IEnumerable<BreedData> GetBreedsDataByName(string name, CultureInfo? culture = null)
     {
         var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -43,18 +54,23 @@ public sealed class BreedsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.ToString(culture).NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
 
-    public string GetBreedNameById(int id)
+    public string GetBreedNameById(int id, Language language)
+    {
+        return GetBreedNameById(id, language.ToCulture());
+    }
+
+    public string GetBreedNameById(int id, CultureInfo? culture = null)
     {
         var breed = GetBreedDataById(id);
 
         return breed is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : breed.Name;
+            ? Translation.UnknownData(id, culture)
+            : breed.Name.ToString(culture);
     }
 
     protected override void LoadCustomData()

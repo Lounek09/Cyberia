@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api.Factories.Criteria;
+﻿using System.Globalization;
+
+namespace Cyberia.Api.Factories.Criteria.Elements;
 
 public sealed record ErroredCriterion : Criterion
 {
@@ -24,8 +26,8 @@ public sealed record ErroredCriterion : Criterion
         return "Criterion.Errored";
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(CompressedCriterion);
+        return GetDescription(culture, CompressedCriterion);
     }
 }

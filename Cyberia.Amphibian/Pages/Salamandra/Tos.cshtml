@@ -1,19 +1,19 @@
 ﻿@page
 @model TosModel
 @{
-	ViewBag.Title = $"{WebTranslations.Page_Salamandra_Title} - {WebTranslations.Page_SalamandraTos_Title}";
+	ViewBag.Title = $"{Translation.Get<WebTranslations>("Page.Salamandra.Title")} - {Translation.Get<WebTranslations>("Page.SalamandraTos.Title")}";
 	ViewBag.Favicon = "favicon-salamandra.png";
 	ViewBag.PageStyle = "salamandra.css";
 }
 
 <div class="content">
-	<h1>@WebTranslations.Page_SalamandraTos_Title</h1>
+	<h1>@(Translation.Get<WebTranslations>("Page.SalamandraTos.Title"))</h1>
 
-	@Html.Raw(WebTranslations.Page_SalamandraTos_Content)
+	@Html.Raw(Translation.Get<WebTranslations>("Page.SalamandraTos.Content"))
 
 	<nav>
-		<a asp-culture-page="/salamandra/tos" disabled>@WebTranslations.Page_SalamandraTos_Title</a>
+		<a asp-culture-page="/salamandra/tos" disabled>@(Translation.Get<WebTranslations>("Page.SalamandraTos.Title"))</a>
 		<span>-</span>
-		<a asp-culture-page="/salamandra/privacy">@WebTranslations.Page_SalamandraPrivacy_Title</a>
+		<a asp-culture-page="/salamandra/privacy">@(Translation.Get<WebTranslations>("Page.SalamandraPrivacy.Title"))</a>
 	</nav>
 </div>

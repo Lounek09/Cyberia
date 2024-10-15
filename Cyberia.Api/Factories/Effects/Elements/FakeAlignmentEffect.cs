@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Alignments;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record FakeAlignmentEffect : Effect
 {
@@ -24,10 +26,10 @@ public sealed record FakeAlignmentEffect : Effect
         return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentDataById(AlignmentId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var alignmentName = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentNameById(AlignmentId);
+        var alignmentName = DofusApi.Datacenter.AlignmentsRepository.GetAlignmentNameById(AlignmentId, culture);
 
-        return GetDescription(string.Empty, string.Empty, alignmentName);
+        return GetDescription(culture, string.Empty, string.Empty, alignmentName);
     }
 }

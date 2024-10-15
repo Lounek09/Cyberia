@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Factories.AlignmentFeatEffects;
 
+using System.Text.Json.Serialization;
+
 namespace Cyberia.Api.Data.Alignments;
 
 public sealed class AlignmentFeatParametersData
@@ -10,13 +12,14 @@ public sealed class AlignmentFeatParametersData
 
     public IAlignmentFeatEffect? AlignmentFeatEffect { get; init; }
 
+    [JsonConstructor]
+    internal AlignmentFeatParametersData()
+    {
+
+    }
+
     public AlignmentFeatData? GetAlignmentFeatData()
     {
         return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentFeatDataById(AlignmentFeatId);
-    }
-
-    public AlignmentFeatParametersData()
-    {
-
     }
 }

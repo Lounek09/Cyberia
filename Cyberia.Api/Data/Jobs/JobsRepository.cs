@@ -3,6 +3,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Jobs;
@@ -27,13 +28,18 @@ public sealed class JobsRepository : DofusRepository, IDofusRepository
         return jobData;
     }
 
-    public string GetJobNameById(int id)
+    public string GetJobNameById(int id, Language language)
+    {
+        return GetJobNameById(id, language.ToCulture());
+    }
+
+    public string GetJobNameById(int id, CultureInfo? culture = null)
     {
         var jobData = GetJobDataById(id);
 
         return jobData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : jobData.Name;
+            ? Translation.UnknownData(id, culture)
+            : jobData.Name.ToString(culture);
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

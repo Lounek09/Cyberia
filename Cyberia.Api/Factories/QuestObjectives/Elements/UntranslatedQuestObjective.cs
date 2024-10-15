@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.Data.Quests;
 
-namespace Cyberia.Api.Factories.QuestObjectives;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.QuestObjectives.Elements;
 
 public sealed record UntranslatedQuestObjective : QuestObjective
 {
@@ -10,8 +12,8 @@ public sealed record UntranslatedQuestObjective : QuestObjective
 
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription([]);
+        return GetDescription(culture, QuestObjectiveData.Parameters);
     }
 }

@@ -18,14 +18,13 @@ public sealed class ItemAutocompleteProvider : IAutoCompleteProvider
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        return DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(ctx.UserInput ?? string.Empty)
+        return DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(ctx.UserInput ?? string.Empty, culture)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {
-                return new DiscordAutoCompleteChoice($"{StringExtensions.WithMaxLength(x.Name, 90)} ({x.Id})", x.Id.ToString());
-            })
-            .ToList();
+                return new DiscordAutoCompleteChoice($"{x.Name.ToString(culture).WithMaxLength(90)} ({x.Id})", x.Id.ToString());
+            });
     }
 }

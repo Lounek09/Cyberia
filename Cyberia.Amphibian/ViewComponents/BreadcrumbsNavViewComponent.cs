@@ -19,7 +19,7 @@ public sealed class BreadcrumbsNavViewComponent : ViewComponent
         }
 
         // Handle first slash
-        items.Add(new BreadCrumbsItem(WebTranslations.Page_Index_Title, "/index"));
+        items.Add(new BreadCrumbsItem(Translation.Get<WebTranslations>("Page.Index.Title"), "/index"));
         path = path[1..];
 
         // Handle culture segment
@@ -42,7 +42,10 @@ public sealed class BreadcrumbsNavViewComponent : ViewComponent
             routeBuilder.Append('/').Append(segment);
 
             //TODO: Need a more robust way to handle this
-            var name = WebTranslations.ResourceManager.GetString($"Page.{translationKeyBuilder}.Title") ?? segment;
+            if (!Translation.TryGet<WebTranslations>($"Page.{translationKeyBuilder}.Title", out var name))
+            {
+                name = segment;
+            }
 
             items.Add(new BreadCrumbsItem(name, routeBuilder.ToString()));
 

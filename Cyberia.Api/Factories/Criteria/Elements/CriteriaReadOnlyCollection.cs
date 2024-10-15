@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Factories.Criteria;
+namespace Cyberia.Api.Factories.Criteria.Elements;
 
 /// <summary>
 /// Represents a read-only collection of criteria.

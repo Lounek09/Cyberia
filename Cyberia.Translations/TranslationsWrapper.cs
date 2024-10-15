@@ -2,18 +2,23 @@
 
 namespace Cyberia.Translations;
 
-public sealed class Api : ITranslationsWrapper
+public interface ITranslationsWrapper
 {
-    public static ResourceManager ResourceManager => ApiTranslations.ResourceManager;
+    static abstract ResourceManager ResourceManager { get; }
 }
 
-public sealed class Bot : ITranslationsWrapper
+public sealed class ApiTranslations : ITranslationsWrapper
 {
-    public static ResourceManager ResourceManager => BotTranslations.ResourceManager;
+    public static ResourceManager ResourceManager => Resources.ApiTranslations.ResourceManager;
 }
 
-public sealed class Web : ITranslationsWrapper
+public sealed class BotTranslations : ITranslationsWrapper
 {
-    public static ResourceManager ResourceManager => WebTranslations.ResourceManager;
+    public static ResourceManager ResourceManager => Resources.BotTranslations.ResourceManager;
+}
+
+public sealed class WebTranslations : ITranslationsWrapper
+{
+    public static ResourceManager ResourceManager => Resources.WebTranslations.ResourceManager;
 }
 

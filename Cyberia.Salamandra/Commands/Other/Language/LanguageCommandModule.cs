@@ -42,9 +42,9 @@ public sealed class LanguageCommandModule
             Locale = value
         });
 
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        await ctx.RespondAsync(Translation.Format(BotTranslations.Language_Set, Formatter.Bold(value)), true);
+        await ctx.RespondAsync(Translation.Format(Translation.Get<BotTranslations>("Language.Set", culture), Formatter.Bold(value)), true);
     }
 }
 

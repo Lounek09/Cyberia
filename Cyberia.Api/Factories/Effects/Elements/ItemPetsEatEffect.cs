@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Items;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record ItemPetsEatEffect : Effect
 {
@@ -24,10 +26,12 @@ public sealed record ItemPetsEatEffect : Effect
         return DofusApi.Datacenter.ItemsRepository.GetItemDataById(ItemId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var itemName = ItemId == 0 ? ApiTranslations.LastMeal_None : DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId);
+        var itemName = ItemId == 0
+            ? Translation.Get<ApiTranslations>("LastMeal.None", culture)
+            : DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId, culture);
 
-        return GetDescription(itemName);
+        return GetDescription(culture, itemName);
     }
 }

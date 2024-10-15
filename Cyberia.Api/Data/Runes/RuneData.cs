@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Enums;
+using Cyberia.Langzilla.Enums;
 
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Runes;
@@ -30,9 +32,14 @@ public sealed class RuneData : IDofusData<int>
         Name = string.Empty;
     }
 
-    public string GetFullName()
+    public string GetFullName(Language language)
     {
-        return $"{ApiTranslations.Rune} {Name}";
+        return GetFullName(language.ToCulture());
+    }
+
+    public string GetFullName(CultureInfo? culture = null)
+    {
+        return $"{Translation.Get<ApiTranslations>("Rune", culture)} {Name}";
     }
 
     public int GetPower(RuneType type)

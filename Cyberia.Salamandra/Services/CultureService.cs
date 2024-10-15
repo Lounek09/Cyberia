@@ -23,6 +23,13 @@ public sealed class CultureService
         _discordCachedUserRepository = discordCachedUserRepository;
     }
 
+    public async Task<string?> GetDiscordLocaleAsync(DiscordInteraction interaction)
+    {
+        var user = await _discordCachedUserRepository.GetAsync(interaction.User.Id);
+
+        return user?.Locale ?? interaction.Locale ?? interaction.GuildLocale;
+    }
+
     /// <summary>
     /// Gets the culture of the user from the database or the provided interaction if not found.
     /// </summary>

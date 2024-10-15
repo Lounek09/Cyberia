@@ -1,7 +1,10 @@
 ﻿using Cyberia.Api.Data.Effects;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Elements;
+using Cyberia.Langzilla.Enums;
 
+using System.Globalization;
 using System.Text;
 
 namespace Cyberia.Api.Factories.Effects;
@@ -37,35 +40,40 @@ public abstract record Effect : IEffect
         return DofusApi.Datacenter.EffectsRepository.GetEffectDataById(Id);
     }
 
-    public abstract DescriptionString GetDescription();
+    public DescriptionString GetDescription(Language language)
+    {
+        return GetDescription(language.ToCulture());
+    }
+
+    public abstract DescriptionString GetDescription(CultureInfo? culture = null);
 
     /// <inheritdoc cref="IEffect.GetDescription"/>
-    protected DescriptionString GetDescription<T>(T parameter)
+    protected DescriptionString GetDescription<T>(CultureInfo? culture, T parameter)
     {
-        return GetDescription(parameter?.ToString() ?? string.Empty);
+        return GetDescription(culture, parameter?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="IEffect.GetDescription"/>
-    protected DescriptionString GetDescription<T0, T1>(T0 parameter0, T1 parameter1)
+    protected DescriptionString GetDescription<T0, T1>(CultureInfo? culture, T0 parameter0, T1 parameter1)
     {
-        return GetDescription(
+        return GetDescription(culture,
             parameter0?.ToString() ?? string.Empty,
             parameter1?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="IEffect.GetDescription"/>
-    protected DescriptionString GetDescription<T0, T1, T2>(T0 parameter0, T1 parameter1, T2 parameter2)
+    protected DescriptionString GetDescription<T0, T1, T2>(CultureInfo? culture, T0 parameter0, T1 parameter1, T2 parameter2)
     {
-        return GetDescription(
+        return GetDescription(culture,
             parameter0?.ToString() ?? string.Empty,
             parameter1?.ToString() ?? string.Empty,
             parameter2?.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc cref="IEffect.GetDescription"/>
-    protected DescriptionString GetDescription<T0, T1, T2, T3>(T0 parameter0, T1 parameter1, T2 parameter2, T3 parameter3)
+    protected DescriptionString GetDescription<T0, T1, T2, T3>(CultureInfo? culture, T0 parameter0, T1 parameter1, T2 parameter2, T3 parameter3)
     {
-        return GetDescription(
+        return GetDescription(culture,
             parameter0?.ToString() ?? string.Empty,
             parameter1?.ToString() ?? string.Empty,
             parameter2?.ToString() ?? string.Empty,
@@ -73,7 +81,7 @@ public abstract record Effect : IEffect
     }
 
     /// <inheritdoc cref="IEffect.GetDescription"/>
-    protected DescriptionString GetDescription(params string[] parameters)
+    protected DescriptionString GetDescription(CultureInfo? culture, params string[] parameters)
     {
         var effectData = GetEffectData();
         if (effectData is null)
@@ -83,7 +91,7 @@ public abstract record Effect : IEffect
                 Log.Warning("Unknown EffectData {@Effect}", this);
             }
 
-            return new(ApiTranslations.Effect_Unknown,
+            return new DescriptionString(Translation.Get<ApiTranslations>("Effect.Unknown", culture),
                 Id.ToString(),
                 string.Join(',', parameters));
         }
@@ -92,26 +100,26 @@ public abstract record Effect : IEffect
 
         if (Probability > 0)
         {
-            builder.Append(Translation.Format(ApiTranslations.Effect_Probability, Probability));
+            builder.Append(Translation.Format(Translation.Get<ApiTranslations>("Effect.Probability", culture), Probability));
             builder.Append(" : ");
         }
 
-        builder.Append(effectData.Description);
+        builder.Append(effectData.Description.ToString(culture));
 
         if (Duration <= -1 || Duration >= 63)
         {
             builder.Append(" (");
-            builder.Append(ApiTranslations.ShortInfinity);
+            builder.Append(Translation.Get<ApiTranslations>("ShortInfinity", culture));
             builder.Append(')');
         }
         else if (Duration != 0)
         {
             builder.Append(" (");
-            builder.Append(Translation.Format(ApiTranslations.Effect_Turn, Duration));
+            builder.Append(Translation.Format(Translation.Get<ApiTranslations>("Effect.Turn", culture), Duration));
             builder.Append(')');
         }
 
-        return new(builder.ToString(), parameters);
+        return new DescriptionString(builder.ToString(), parameters);
     }
 
     public int CompareTo(IEffect? other)

@@ -4,28 +4,38 @@ using Cyberia.Salamandra.Formatters;
 
 using DSharpPlus.Entities;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
 public static class CraftComponentsBuilder
 {
-    public static DiscordButtonComponent CraftButtonBuilder(CraftData craftData, int quantity = 1, bool disable = false)
+    public static DiscordButtonComponent CraftButtonBuilder(CraftData craftData, int quantity, CultureInfo? culture, bool disable = false)
     {
-        return new(DiscordButtonStyle.Success, CraftMessageBuilder.GetPacket(craftData.Id, quantity), BotTranslations.Button_Craft, disable);
+        return new DiscordButtonComponent(
+            DiscordButtonStyle.Success,
+            CraftMessageBuilder.GetPacket(craftData.Id, quantity),
+            Translation.Get<BotTranslations>("Button.Craft", culture),
+            disable);
     }
 
-    public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, IEnumerable<CraftData> craftsData, int quantity = 1, bool disable = false)
+    public static DiscordSelectComponent CraftsSelectBuilder(int uniqueIndex, IEnumerable<CraftData> craftsData, int quantity, CultureInfo? culture, bool disable = false)
     {
         var options = craftsData
             .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
-                var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id);
+                var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id, culture);
                 return new DiscordSelectComponentOption(
                     itemName.WithMaxLength(100),
                     CraftMessageBuilder.GetPacket(x.Id, quantity),
                     x.Id.ToString());
             });
 
-        return new(PacketFormatter.Select(uniqueIndex), BotTranslations.Select_Craft_Placeholder, options, disable);
+        return new DiscordSelectComponent(
+            PacketFormatter.Select(uniqueIndex),
+            Translation.Get<BotTranslations>("Select.Craft.Placeholder", culture),
+            options,
+            disable);
     }
 }

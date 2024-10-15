@@ -9,6 +9,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 
 public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<SpellData>
@@ -16,24 +18,35 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
     public const string PacketHeader = "PS";
     public const int PacketVersion = 2;
 
-    public PaginatedSpellMessageBuilder(EmbedBuilderService embedBuilderService, List<SpellData> spellsData, string search, int selectedPageIndex = 0)
-        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Spells, BotTranslations.Embed_Spell_Author), BotTranslations.Embed_PaginatedSpell_Title, spellsData, search, selectedPageIndex)
+    public PaginatedSpellMessageBuilder(
+        EmbedBuilderService embedBuilderService,
+        List<SpellData> spellsData,
+        string search,
+        CultureInfo? culture,
+        int selectedPageIndex = 0)
+    : base(
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Spells, Translation.Get<BotTranslations>("Embed.Spell.Author", culture)),
+        Translation.Get<BotTranslations>("Embed.PaginatedSpell.Title", culture),
+        spellsData,
+        search,
+        culture,
+        selectedPageIndex)
     {
 
     }
 
-    public static PaginatedSpellMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static PaginatedSpellMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(parameters[1]).ToList();
+            var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(parameters[1], culture).ToList();
             if (spellsData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, spellsData, parameters[1], selectedPageIndex);
+                return new(embedBuilderService, spellsData, parameters[1], culture, selectedPageIndex);
             }
         }
 
@@ -47,12 +60,12 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {(x.GetNeededLevel() == 0 ? string.Empty : $"{BotTranslations.ShortLevel}{x.GetNeededLevel()}")} {Formatter.Bold(x.Name)} ({x.Id})");
+        return _data.Select(x => $"- {(x.GetNeededLevel() == 0 ? string.Empty : $"{Translation.Get<BotTranslations>("ShortLevel", _culture)}{x.GetNeededLevel()}")} {Formatter.Bold(x.Name.ToString(_culture))} ({x.Id})");
     }
 
     protected override DiscordSelectComponent SelectBuilder()
     {
-        return SpellComponentsBuilder.SpellsSelectBuilder(0, _data);
+        return SpellComponentsBuilder.SpellsSelectBuilder(0, _data, _culture);
     }
 
     protected override string PreviousPacketBuilder()

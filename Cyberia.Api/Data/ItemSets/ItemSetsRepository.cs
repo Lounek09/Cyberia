@@ -4,6 +4,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.ItemSets;
@@ -28,7 +29,12 @@ public sealed class ItemSetsRepository : DofusRepository, IDofusRepository
         return itemSetData;
     }
 
-    public IEnumerable<ItemSetData> GetItemSetsDataByName(string name)
+    public IEnumerable<ItemSetData> GetItemSetsDataByName(string name, Language language)
+    {
+        return GetItemSetsDataByName(name, language.ToCulture());
+    }
+
+    public IEnumerable<ItemSetData> GetItemSetsDataByName(string name, CultureInfo? culture = null)
     {
         var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -36,18 +42,23 @@ public sealed class ItemSetsRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.ToString(culture).NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }
 
-    public string GetItemSetNameById(int id)
+    public string GetItemSetNameById(int id, Language language)
+    {
+        return GetItemSetNameById(id, language.ToCulture());
+    }
+
+    public string GetItemSetNameById(int id, CultureInfo? culture = null)
     {
         var itemSetData = GetItemSetDataById(id);
 
         return itemSetData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : itemSetData.Name;
+            ? Translation.UnknownData(id, culture)
+            : itemSetData.Name.ToString(culture);
     }
 
     protected override void LoadCustomData()

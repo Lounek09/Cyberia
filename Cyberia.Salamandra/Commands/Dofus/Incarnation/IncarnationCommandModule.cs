@@ -36,7 +36,7 @@ public sealed class IncarnationCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -45,23 +45,26 @@ public sealed class IncarnationCommandModule
             var incarnationData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(id);
             if (incarnationData is not null)
             {
-                response = await new IncarnationMessageBuilder(_embedBuilderService, incarnationData).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new IncarnationMessageBuilder(_embedBuilderService, incarnationData, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
         {
-            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(value).ToList();
+            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(value, culture).ToList();
             if (incarnationsData.Count == 1)
             {
-                response = await new IncarnationMessageBuilder(_embedBuilderService, incarnationsData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new IncarnationMessageBuilder(_embedBuilderService, incarnationsData[0], culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (incarnationsData.Count > 1)
             {
-                response = await new PaginatedIncarnationMessageBuilder(_embedBuilderService, incarnationsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedIncarnationMessageBuilder(_embedBuilderService, incarnationsData, value, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Incarnation_NotFound);
+        response ??= new DiscordInteractionResponseBuilder().WithContent(Translation.Get<BotTranslations>("Incarnation.NotFound", culture));
         await ctx.RespondAsync(response);
     }
 }

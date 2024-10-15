@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Monsters;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterTransform2Effect : Effect
 {
@@ -24,10 +26,10 @@ public sealed record CharacterTransform2Effect : Effect
         return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
+        var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId, culture);
 
-        return GetDescription(monsterName);
+        return GetDescription(culture, monsterName);
     }
 }

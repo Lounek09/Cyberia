@@ -1,9 +1,11 @@
 ﻿using Cyberia.Api.Enums;
 using Cyberia.Api.Extensions;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record OpenGuildPropertiesUIEffect : Effect
 {
@@ -20,8 +22,8 @@ public sealed record OpenGuildPropertiesUIEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (GuildProperty)parameters.Param3);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(string.Empty, string.Empty, GuildProperty.GetDescription());
+        return GetDescription(culture, string.Empty, string.Empty, GuildProperty.GetDescription(culture));
     }
 }

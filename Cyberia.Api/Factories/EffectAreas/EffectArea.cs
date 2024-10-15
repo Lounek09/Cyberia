@@ -1,7 +1,9 @@
 ﻿using Cyberia.Api.Data;
 using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Managers;
+using Cyberia.Langzilla.Enums;
 
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Factories.EffectAreas;
@@ -44,32 +46,55 @@ public readonly record struct EffectArea
     }
 
     /// <summary>
-    /// Gets the size of the effect area as a string.
+    /// Gets the size of the effect area as a string for the specified language.
     /// </summary>
-    /// <returns>A string representing the size of the effect area. Returns "Infinity" if the size is greater than or equal to 63.</returns>
-    public string GetSize()
+    /// <param name="language">The language to get the size for.</param>
+    /// <returns>A string representation of the size of the effect area for the specified language.</returns>
+    public string GetSize(Language language)
     {
-        return Size >= 63 ? ApiTranslations.ShortInfinity : Size.ToString();
+        return GetSize(language.ToCulture());
     }
 
     /// <summary>
-    /// Generates a human-readable description of the effect area.
+    /// Gets the size of the effect area as a string for the specified culture.
     /// </summary>
-    /// <returns>The <see cref="DescriptionString"/> object containing the description of the effect area.</returns>
-    public DescriptionString GetDescription()
+    /// <param name="culture">The culture to get the size for.</param>
+    /// <returns>A string representation of the size of the effect area for the specified culture.</returns>
+    public string GetSize(CultureInfo? culture = null)
+    {
+        return Size >= 63
+            ? Translation.Get<ApiTranslations>("ShortInfinity", culture)
+            : Size.ToString();
+    }
+
+    /// <summary>
+    /// Generates a human-readable description of the effect area for the specified language.
+    /// </summary>
+    /// <param name="language">The language to generate the description for.</param>
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the effect area for the specified language.</returns>
+    public DescriptionString GetDescription(Language language)
+    {
+        return GetDescription(language.ToCulture());
+    }
+
+    /// <summary>
+    /// Generates a human-readable description of the effect area for the specified culture.
+    /// </summary>
+    /// <param name="culture">The culture to generate the description for.</param>
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the effect area for the specified culture.</returns>
+    public DescriptionString GetDescription(CultureInfo? culture = null)
     {
         if (Id == EffectAreaFactory.Default.Id)
         {
             return DescriptionString.Empty;
         }
 
-        var effectAreaName = ApiTranslations.ResourceManager.GetString($"EffectArea.{Id}");
-        if (effectAreaName is null)
+        if (!Translation.TryGet<ApiTranslations>($"EffectArea.{Id}", out var effectAreaName, culture))
         {
             Log.Warning("Unknown {EffectArea} {EffectAreaId}", nameof(EffectArea), Id);
-            effectAreaName = Translation.Format(ApiTranslations.Unknown_Data, Id);
+            effectAreaName = Translation.UnknownData(Id, culture);
         }
 
-        return new($"#1 - {effectAreaName}", GetSize());
+        return new DescriptionString($"#1 - {effectAreaName}", GetSize(culture));
     }
 }

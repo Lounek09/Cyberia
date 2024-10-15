@@ -3,6 +3,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Npcs;
@@ -38,13 +39,18 @@ public sealed class NpcsRepository : DofusRepository, IDofusRepository
         return npcData;
     }
 
-    public string GetNpcNameById(int id)
+    public string GetNpcNameById(int id, Language language)
+    {
+        return GetNpcNameById(id, language.ToCulture());
+    }
+
+    public string GetNpcNameById(int id, CultureInfo? culture = null)
     {
         var npc = GetNpcDataById(id);
 
         return npc is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : npc.Name;
+            ? Translation.UnknownData(id, culture)
+            : npc.Name.ToString(culture);
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

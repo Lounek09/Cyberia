@@ -523,7 +523,7 @@ To escape at 100%, you will need at minimum #4 agi.</value>
   <data name="Button.RuneItem" xml:space="preserve">
     <value>Runes calculator</value>
   </data>
-  <data name="Select.RuneItem.Splaceholder" xml:space="preserve">
+  <data name="Select.RuneItem.Placeholder" xml:space="preserve">
     <value>Select an item to calculate the runes that can be obtained</value>
   </data>
   <data name="Embed.RuneItem.Description" xml:space="preserve">

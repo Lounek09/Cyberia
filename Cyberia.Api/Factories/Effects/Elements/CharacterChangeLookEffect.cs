@@ -1,7 +1,9 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterChangeLookEffect : Effect
 {
@@ -18,12 +20,12 @@ public sealed record CharacterChangeLookEffect : Effect
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
         var spriteName = SpriteId == -1
-            ? ApiTranslations.OriginalAppearance
+            ? Translation.Get<ApiTranslations>("OriginalAppearance", culture)
             : SpriteId.ToString();
 
-        return GetDescription(string.Empty, string.Empty, spriteName);
+        return GetDescription(culture, string.Empty, string.Empty, spriteName);
     }
 }

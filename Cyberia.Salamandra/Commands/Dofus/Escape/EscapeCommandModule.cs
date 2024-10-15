@@ -40,18 +40,18 @@ public sealed class EscapeCommandModule
         [MinMaxValue(1, 99999)]
         int enemyAgility)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var escapePercent = Formulas.GetEscapePercent(agility, enemyAgility);
         var agilityToEscapeForSure = Formulas.GetAgilityToEscapeForSure(enemyAgility);
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Escape_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Escape.Author", culture))
             .WithDescription(Translation.Format(
-                BotTranslations.Embed_Escape_Description,
-                Formatter.Bold(agility.ToFormattedString()),
+                Translation.Get<BotTranslations>("Embed.Escape.Description", culture),
+                Formatter.Bold(agility.ToFormattedString(culture)),
                 Formatter.Bold(escapePercent.ToString()),
-                Formatter.Bold(enemyAgility.ToFormattedString()),
-                Formatter.Bold(agilityToEscapeForSure.ToFormattedString())));
+                Formatter.Bold(enemyAgility.ToFormattedString(culture)),
+                Formatter.Bold(agilityToEscapeForSure.ToFormattedString(culture))));
 
         await ctx.RespondAsync(embed);
     }

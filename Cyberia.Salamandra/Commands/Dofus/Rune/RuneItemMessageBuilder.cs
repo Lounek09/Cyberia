@@ -12,6 +12,7 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
 using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Rune;
@@ -25,15 +26,17 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
     private readonly EmbedBuilderService _embedBuilderService;
     private readonly ItemData _itemData;
     private readonly int _quantity;
+    private readonly CultureInfo? _culture;
 
-    public RuneItemMessageBuilder(EmbedBuilderService embedBuilderService, ItemData itemData, int quantity = 1)
+    public RuneItemMessageBuilder(EmbedBuilderService embedBuilderService, ItemData itemData, int quantity, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _itemData = itemData;
         _quantity = quantity;
+        _culture = culture;
     }
 
-    public static RuneItemMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static RuneItemMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -45,7 +48,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, itemData, quantity);
+                return new(embedBuilderService, itemData, quantity, culture);
             }
         }
 
@@ -70,22 +73,22 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Rune_Author)
-            .WithTitle($"{BotTranslations.Embed_RuneItem_Description} {_quantity.ToFormattedString()}x {Formatter.Sanitize(_itemData.Name)} ({_itemData.Id})")
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Rune.Author", _culture))
+            .WithTitle($"{Translation.Get<BotTranslations>("Embed.RuneItem.Description", _culture)} {_quantity.ToFormattedString(_culture)}x {Formatter.Sanitize(_itemData.Name.ToString(_culture))} ({_itemData.Id})")
             .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128));
 
         StringBuilder descriptionBuilder = new();
 
         foreach (var runeBundle in RuneManager.GetRuneBundlesFromItem(_itemData, _quantity))
         {
-            descriptionBuilder.Append(Formatter.Bold(runeBundle.BaAmount.ToFormattedString()));
+            descriptionBuilder.Append(Formatter.Bold(runeBundle.BaAmount.ToFormattedString(_culture)));
             descriptionBuilder.Append(' ');
             descriptionBuilder.Append(Emojis.BaRune(runeBundle.RuneData.Id));
 
             if (runeBundle.PaAmount > 0)
             {
                 descriptionBuilder.Append(" - ");
-                descriptionBuilder.Append(Formatter.Bold(runeBundle.PaAmount.ToFormattedString()));
+                descriptionBuilder.Append(Formatter.Bold(runeBundle.PaAmount.ToFormattedString(_culture)));
                 descriptionBuilder.Append(' ');
                 descriptionBuilder.Append(Emojis.PaRune(runeBundle.RuneData.Id));
             }
@@ -93,7 +96,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
             if (runeBundle.RaAmount > 0)
             {
                 descriptionBuilder.Append(" - ");
-                descriptionBuilder.Append(Formatter.Bold(runeBundle.RaAmount.ToFormattedString()));
+                descriptionBuilder.Append(Formatter.Bold(runeBundle.RaAmount.ToFormattedString(_culture)));
                 descriptionBuilder.Append(' ');
                 descriptionBuilder.Append(Emojis.RaRune(runeBundle.RuneData.Id));
             }
@@ -122,7 +125,11 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
-        yield return new DiscordButtonComponent(DiscordButtonStyle.Primary, GetPacket(_itemData.Id, _quantity), BotTranslations.Button_Resimulate);
-        yield return ItemComponentsBuilder.ItemButtonBuilder(_itemData, _quantity);
+        yield return new DiscordButtonComponent(
+            DiscordButtonStyle.Primary,
+            GetPacket(_itemData.Id, _quantity),
+            Translation.Get<BotTranslations>("Button.Resimulate", _culture));
+
+        yield return ItemComponentsBuilder.ItemButtonBuilder(_itemData, _quantity, _culture);
     }
 }

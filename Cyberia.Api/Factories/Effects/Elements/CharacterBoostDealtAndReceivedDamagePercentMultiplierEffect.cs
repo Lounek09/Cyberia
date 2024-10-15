@@ -1,7 +1,9 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect : Effect
 {
@@ -44,11 +46,11 @@ public sealed record CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect
         return new(effectId, duration, probability, criteria, effectArea, param1, param2, param3, param4);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
         var maxDealtDamagePercent = MaxDealtDamagePercent == 0 ? string.Empty : MaxDealtDamagePercent.ToString();
         var maxReceivedDamagePercent = MaxReceivedDamagePercent == 0 ? string.Empty : MaxReceivedDamagePercent.ToString();
 
-        return GetDescription(MinDealtDamagePercent, MinReceivedDamagePercent, maxDealtDamagePercent, maxReceivedDamagePercent);
+        return GetDescription(culture, MinDealtDamagePercent, MinReceivedDamagePercent, maxDealtDamagePercent, maxReceivedDamagePercent);
     }
 }

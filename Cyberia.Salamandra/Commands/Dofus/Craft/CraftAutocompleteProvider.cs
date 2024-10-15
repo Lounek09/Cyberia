@@ -18,15 +18,14 @@ public sealed class CraftAutocompleteProvider : IAutoCompleteProvider
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        return DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(ctx.UserInput ?? string.Empty)
+        return DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(ctx.UserInput ?? string.Empty, culture)
            .Take(Constant.MaxChoice)
            .Select(x =>
            {
-               var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id);
+               var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id, culture);
                return new DiscordAutoCompleteChoice($"{itemName.WithMaxLength(90)} ({x.Id})", x.Id.ToString());
-           })
-           .ToList();
+           });
     }
 }

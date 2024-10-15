@@ -31,7 +31,7 @@ public sealed class RunesRepository : DofusCustomRepository, IDofusRepository
 
         return Runes.Values.FirstOrDefault(x =>
         {
-            return StringExtensions.NormalizeToAscii(x.Name).Equals(name, StringComparison.OrdinalIgnoreCase);
+            return x.Name.NormalizeToAscii().Equals(name, StringComparison.OrdinalIgnoreCase);
         });
     }
 
@@ -43,7 +43,7 @@ public sealed class RunesRepository : DofusCustomRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

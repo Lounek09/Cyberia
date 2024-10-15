@@ -2,7 +2,9 @@
 using Cyberia.Api.Data.Npcs;
 using Cyberia.Api.Data.Quests;
 
-namespace Cyberia.Api.Factories.QuestObjectives;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.QuestObjectives.Elements;
 
 public sealed record BringSoulToNpcQuestObjective : QuestObjective
 {
@@ -39,12 +41,12 @@ public sealed record BringSoulToNpcQuestObjective : QuestObjective
         return DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(MonsterId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId);
-        var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId);
+        var npcName = DofusApi.Datacenter.NpcsRepository.GetNpcNameById(NpcId, culture);
+        var monsterName = DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(MonsterId, culture);
 
-        return GetDescription(npcName, monsterName, Quantity);
+        return GetDescription(culture, npcName, monsterName, Quantity);
     }
 }
 

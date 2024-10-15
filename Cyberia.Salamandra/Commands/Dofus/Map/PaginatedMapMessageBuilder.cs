@@ -9,6 +9,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
 public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData>
@@ -18,13 +20,25 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
 
     private readonly MapSearchCategory _searchCategory;
 
-    public PaginatedMapMessageBuilder(EmbedBuilderService embedBuilderService, List<MapData> mapsData, MapSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, BotTranslations.Embed_Map_Author), BotTranslations.Embed_PaginatedMap_Title, mapsData, search, selectedPageIndex)
+    public PaginatedMapMessageBuilder(
+        EmbedBuilderService embedBuilderService,
+        List<MapData> mapsData,
+        MapSearchCategory searchCategory,
+        string search,
+        CultureInfo? culture,
+        int selectedPageIndex = 0)
+    : base(
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, Translation.Get<BotTranslations>("Embed.Map.Author", culture)),
+        Translation.Get<BotTranslations>("Embed.PaginatedMap.Title", culture),
+        mapsData,
+        search,
+        culture,
+        selectedPageIndex)
     {
         _searchCategory = searchCategory;
     }
 
-    public static PaginatedMapMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static PaginatedMapMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -64,7 +78,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, mapsData, searchCategory, search, selectedPageIndex);
+                return new(embedBuilderService, mapsData, searchCategory, search, culture, selectedPageIndex);
             }
         }
 
@@ -78,12 +92,12 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {Formatter.Bold(x.GetCoordinate())} {x.GetMapAreaName()} ({x.Id}) {(x.IsHouse() ? Emojis.House : string.Empty)}");
+        return _data.Select(x => $"- {Formatter.Bold(x.GetCoordinate())} {x.GetMapAreaName(_culture)} ({x.Id}) {(x.IsHouse() ? Emojis.House : string.Empty)}");
     }
 
     protected override DiscordSelectComponent SelectBuilder()
     {
-        return MapComponentsBuilder.MapsSelectBuilder(0, _data);
+        return MapComponentsBuilder.MapsSelectBuilder(0, _data, _culture);
     }
 
     protected override string PreviousPacketBuilder()

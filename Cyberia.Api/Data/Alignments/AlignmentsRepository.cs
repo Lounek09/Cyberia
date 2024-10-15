@@ -4,6 +4,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -69,13 +70,18 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
         return alignmentData;
     }
 
-    public string GetAlignmentNameById(int id)
+    public string GetAlignmentNameById(int id, Language language)
+    {
+        return GetAlignmentNameById(id, language.ToCulture());
+    }
+
+    public string GetAlignmentNameById(int id, CultureInfo? culture = null)
     {
         var alignmentData = GetAlignmentDataById(id);
 
         return alignmentData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : alignmentData.Name;
+            ? Translation.UnknownData(id, culture)
+            : alignmentData.Name.ToString(culture);
     }
 
     internal AlignmentJoinData? GetAlignmentJoinDataById(int id)
@@ -108,13 +114,18 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
         return alignmentFeatData;
     }
 
-    public string GetAlignmentFeatNameById(int id)
+    public string GetAlignmentFeatNameById(int id, Language language)
+    {
+        return GetAlignmentFeatNameById(id, language.ToCulture());
+    }
+
+    public string GetAlignmentFeatNameById(int id, CultureInfo? culture = null)
     {
         var alignmentFeatData = GetAlignmentFeatDataById(id);
 
         return alignmentFeatData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : alignmentFeatData.Name;
+            ? Translation.UnknownData(id, culture)
+            : alignmentFeatData.Name.ToString(culture);
     }
 
     public AlignmentFeatEffectData? GetAlignmentFeatEffectDataById(int id)
@@ -135,13 +146,18 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
         return alignmentSpecializationData;
     }
 
-    public string GetAlignmentSpecializationNameById(int id)
+    public string GetAlignmentSpecializationNameById(int id, Language language)
+    {
+        return GetAlignmentSpecializationNameById(id, language.ToCulture());
+    }
+
+    public string GetAlignmentSpecializationNameById(int id, CultureInfo? culture = null)
     {
         var alignmentSpecializationData = GetAlignmentSpecializationDataById(id);
 
         return alignmentSpecializationData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : alignmentSpecializationData.Name;
+            ? Translation.UnknownData(id, culture)
+            : alignmentSpecializationData.Name.ToString(culture);
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

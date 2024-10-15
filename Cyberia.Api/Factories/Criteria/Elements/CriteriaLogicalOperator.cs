@@ -1,4 +1,8 @@
-﻿namespace Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Langzilla.Enums;
+
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Criteria.Elements;
 
 /// <summary>
 /// Represents a logical operator in a criteria.
@@ -20,15 +24,26 @@ public sealed record CriteriaLogicalOperator : ICriteriaElement
     }
 
     /// <summary>
-    /// Gets the human-readable description of the logical operator.
+    /// Generates the human-readable description of the logical operator for the specified language.
     /// </summary>
-    /// <returns>The description of the logical operator.</returns>
-    public string GetDescription()
+    /// <param name="language">The language to generate the description for.</param>
+    /// <returns>The description of the logical operator for the specified language.</returns>
+    public string GetDescription(Language language)
+    {
+        return GetDescription(language.ToCulture());
+    }
+
+    /// <summary>
+    /// Generates the human-readable description of the logical operator for the specified culture.
+    /// </summary>
+    /// <param name="culture">The culture to generate the description for.</param>
+    /// <returns>The description of the logical operator for the specified culture.</returns>
+    public string GetDescription(CultureInfo? culture = null)
     {
         return Operator switch
         {
-            '&' => ApiTranslations.Criterion_And,
-            '|' => ApiTranslations.Criterion_Or,
+            '&' => Translation.Get<ApiTranslations>("Criterion.And", culture),
+            '|' => Translation.Get<ApiTranslations>("Criterion.Or", culture),
             _ => Operator.ToString()
         };
     }

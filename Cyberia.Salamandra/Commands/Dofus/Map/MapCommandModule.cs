@@ -40,16 +40,17 @@ public sealed class MapCommandModule
         [MinMaxValue(1, 99999)]
         int id)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById((int)id);
+        var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById(id);
         if (mapData is null)
         {
-            await ctx.RespondAsync(BotTranslations.Map_NotFound);
+            await ctx.RespondAsync(Translation.Get<BotTranslations>("Map.NotFound", culture));
             return;
         }
 
-        await ctx.RespondAsync(await new MapMessageBuilder(_embedBuilderService, mapData).BuildAsync<DiscordInteractionResponseBuilder>());
+        await ctx.RespondAsync(await new MapMessageBuilder(_embedBuilderService, mapData, culture)
+            .BuildAsync<DiscordInteractionResponseBuilder>());
     }
 
 
@@ -66,23 +67,24 @@ public sealed class MapCommandModule
         [MinMaxValue(-666, 666)]
         int y)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
 
         if (mapsData.Count == 0)
         {
-            await ctx.RespondAsync(Translation.Format(BotTranslations.Map_NotFound_Coordinate, x, y));
+            await ctx.RespondAsync(Translation.Format(Translation.Get<BotTranslations>("Map.NotFound.Coordinate", culture), x, y));
             return;
         }
 
         if (mapsData.Count == 1)
         {
-            await ctx.RespondAsync(await new MapMessageBuilder(_embedBuilderService, mapsData[0]).BuildAsync<DiscordInteractionResponseBuilder>());
+            await ctx.RespondAsync(await new MapMessageBuilder(_embedBuilderService, mapsData[0], culture)
+                .BuildAsync<DiscordInteractionResponseBuilder>());
             return;
         }
         
-        await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.Coordinate, $"{x}{PacketFormatter.Separator}{y}")
+        await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.Coordinate, $"{x}{PacketFormatter.Separator}{y}", culture)
             .BuildAsync<DiscordInteractionResponseBuilder>());
     }
 
@@ -97,7 +99,7 @@ public sealed class MapCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         MapSubAreaData? mapSubAreaData = null;
 
@@ -108,7 +110,7 @@ public sealed class MapCommandModule
 
         if (mapSubAreaData is null)
         {
-            await ctx.RespondAsync(BotTranslations.MapSubArea_NotFound);
+            await ctx.RespondAsync(Translation.Get<BotTranslations>("MapSubArea.NotFound", culture));
         }
         else
         {
@@ -116,11 +118,11 @@ public sealed class MapCommandModule
 
             if (mapsData.Count == 0)
             {
-                await ctx.RespondAsync(Translation.Format(BotTranslations.Map_NotFound_MapSubArea, Formatter.Bold(mapSubAreaData.Name)));
+                await ctx.RespondAsync(Translation.Format(Translation.Get<BotTranslations>("Map.NotFound.MapSubArea", culture), Formatter.Bold(mapSubAreaData.Name)));
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.MapSubArea, value)
+                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.MapSubArea, value, culture)
                     .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }
@@ -137,7 +139,7 @@ public sealed class MapCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         MapAreaData? mapAreaData = null;
 
@@ -148,7 +150,7 @@ public sealed class MapCommandModule
 
         if (mapAreaData is null)
         {
-            await ctx.RespondAsync(BotTranslations.MapArea_NotFound);
+            await ctx.RespondAsync(Translation.Get<BotTranslations>("MapArea.NotFound", culture));
         }
         else
         {
@@ -156,11 +158,11 @@ public sealed class MapCommandModule
 
             if (mapsData.Count == 0)
             {
-                await ctx.RespondAsync(Translation.Format(BotTranslations.Map_NotFound_MapSubArea, Formatter.Bold(mapAreaData.Name)));
+                await ctx.RespondAsync(Translation.Format(Translation.Get<BotTranslations>("Map.NotFound.MapSubArea", culture), Formatter.Bold(mapAreaData.Name)));
             }
             else
             {
-                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.MapArea, value)
+                await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.MapArea, value, culture)
                     .BuildAsync<DiscordInteractionResponseBuilder>());
             }
         }

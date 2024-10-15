@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cyberia.Translations {
+namespace Cyberia.Translations.Resources {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace Cyberia.Translations {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class WebTranslations {
+    internal class WebTranslations {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Cyberia.Translations {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cyberia.Translations.Resources.WebTranslations", typeof(WebTranslations).Assembly);
@@ -51,7 +51,7 @@ namespace Cyberia.Translations {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Language selection.
         /// </summary>
-        public static string Layout_CultureSelection {
+        internal static string Layout_CultureSelection {
             get {
                 return ResourceManager.GetString("Layout.CultureSelection", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Developed by .
         /// </summary>
-        public static string Layout_DevelopedBy {
+        internal static string Layout_DevelopedBy {
             get {
                 return ResourceManager.GetString("Layout.DevelopedBy", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to is a fansite not affiliated with.
         /// </summary>
-        public static string Layout_NotAffiliated {
+        internal static string Layout_NotAffiliated {
             get {
                 return ResourceManager.GetString("Layout.NotAffiliated", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Classes.
         /// </summary>
-        public static string Page_Breeds_Title {
+        internal static string Page_Breeds_Title {
             get {
                 return ResourceManager.GetString("Page.Breeds.Title", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Dungeons.
         /// </summary>
-        public static string Page_Dungeons_Title {
+        internal static string Page_Dungeons_Title {
             get {
                 return ResourceManager.GetString("Page.Dungeons.Title", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
-        public static string Page_Index_Title {
+        internal static string Page_Index_Title {
             get {
                 return ResourceManager.GetString("Page.Index.Title", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Items.
         /// </summary>
-        public static string Page_Items_Title {
+        internal static string Page_Items_Title {
             get {
                 return ResourceManager.GetString("Page.Items.Title", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Monsters.
         /// </summary>
-        public static string Page_Monsters_Title {
+        internal static string Page_Monsters_Title {
             get {
                 return ResourceManager.GetString("Page.Monsters.Title", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quests.
         /// </summary>
-        public static string Page_Quests_Title {
+        internal static string Page_Quests_Title {
             get {
                 return ResourceManager.GetString("Page.Quests.Title", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Salamandra.
         /// </summary>
-        public static string Page_Salamandra_Title {
+        internal static string Page_Salamandra_Title {
             get {
                 return ResourceManager.GetString("Page.Salamandra.Title", resourceCulture);
             }
@@ -158,9 +158,9 @@ namespace Cyberia.Translations {
         ///&lt;h3&gt;3. How we use your information&lt;/h3&gt;
         ///&lt;p&gt;Your Discord user ID is used solely to adapt the language of commands you receive from Salamandra.&lt;/p&gt;
         ///&lt;h3&gt;4. Temporarily stored information&lt;/h3&gt;
-        ///&lt;p&gt;Salamandra may keep information in an internal caching mechanism for a certain amount o [rest of string was truncated]&quot;;.
+        ///&lt;p&gt;Salamandra may keep information in an internal caching mechanism for a certain amount of time. [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string Page_SalamandraPrivacy_Content {
+        internal static string Page_SalamandraPrivacy_Content {
             get {
                 return ResourceManager.GetString("Page.SalamandraPrivacy.Content", resourceCulture);
             }
@@ -169,7 +169,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Privacy policy.
         /// </summary>
-        public static string Page_SalamandraPrivacy_Title {
+        internal static string Page_SalamandraPrivacy_Title {
             get {
                 return ResourceManager.GetString("Page.SalamandraPrivacy.Title", resourceCulture);
             }
@@ -179,9 +179,9 @@ namespace Cyberia.Translations {
         ///   Looks up a localized string similar to &lt;h3&gt;1. Terms&lt;/h3&gt;
         ///&lt;p&gt;By using this Bot you are agreeing to be bound by these Terms of service and agree that you are responsible for the agreement with any applicable local laws. If you disagree with any of these terms, you are prohibited from using this bot.&lt;/p&gt;
         ///&lt;h3&gt;2. Disclaimer&lt;/h3&gt;
-        ///&lt;p&gt;All Salamandra materials are provided &quot;as is&quot;. Salamandra makes no warranties, expressed or implied, and therefore disclaims all other warranties. Further, Salamandra makes no representations concerning the accuracy or  [rest of string was truncated]&quot;;.
+        ///&lt;p&gt;All Salamandra materials are provided &quot;as is&quot;. Salamandra makes no warranties, expressed or implied, and therefore disclaims all other warranties. Further, Salamandra makes no representations concerning the accuracy or rel [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string Page_SalamandraTos_Content {
+        internal static string Page_SalamandraTos_Content {
             get {
                 return ResourceManager.GetString("Page.SalamandraTos.Content", resourceCulture);
             }
@@ -190,7 +190,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Terms of service.
         /// </summary>
-        public static string Page_SalamandraTos_Title {
+        internal static string Page_SalamandraTos_Title {
             get {
                 return ResourceManager.GetString("Page.SalamandraTos.Title", resourceCulture);
             }
@@ -199,7 +199,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Spells.
         /// </summary>
-        public static string Page_Spells_Title {
+        internal static string Page_Spells_Title {
             get {
                 return ResourceManager.GetString("Page.Spells.Title", resourceCulture);
             }
@@ -208,7 +208,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Tools.
         /// </summary>
-        public static string Page_Tools_Title {
+        internal static string Page_Tools_Title {
             get {
                 return ResourceManager.GetString("Page.Tools.Title", resourceCulture);
             }

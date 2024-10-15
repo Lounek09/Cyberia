@@ -13,6 +13,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
 public sealed class CraftMessageBuilder : ICustomMessageBuilder
@@ -26,17 +28,19 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
     private readonly ItemData? _itemData;
     private readonly int _quantity;
     private readonly bool _recursive;
+    private readonly CultureInfo? _culture;
 
-    public CraftMessageBuilder(EmbedBuilderService embedBuilderService, CraftData craftData, int quantity = 1, bool recursive = false)
+    public CraftMessageBuilder(EmbedBuilderService embedBuilderService, CraftData craftData, int quantity, bool recursive, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _craftData = craftData;
         _itemData = craftData.GetItemData();
         _quantity = quantity;
         _recursive = recursive;
+        _culture = culture;
     }
 
-    public static CraftMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static CraftMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -49,7 +53,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, craftData, quantity, recursive);
+                return new(embedBuilderService, craftData, quantity, recursive, culture);
             }
         }
 
@@ -79,20 +83,20 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Jobs, BotTranslations.Embed_Craft_Author)
-            .WithCraftDescription(_craftData, _quantity, _recursive);
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Jobs, Translation.Get<BotTranslations>("Embed.Craft.Author", _culture))
+            .WithCraftDescription(_craftData, _quantity, _recursive, _culture);
 
         if (_itemData is not null)
         {
-            embed.WithTitle($"{BotTranslations.Embed_Craft_Title}{_quantity.ToFormattedString()}x {Formatter.Sanitize(_itemData.Name)} ({_craftData.Id})")
+            embed.WithTitle($"{Translation.Get<BotTranslations>("Embed.Craft.Title", _culture)} {_quantity.ToFormattedString(_culture)}x {Formatter.Sanitize(_itemData.Name.ToString(_culture))} ({_craftData.Id})")
                 .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128));
         }
 
         var weight = _recursive ? _craftData.GetWeightWithSubCraft() : _craftData.GetWeight();
-        var formattedWeight = Formatter.Bold(weight.ToFormattedString());
+        var formattedWeight = Formatter.Bold(weight.ToFormattedString(_culture));
 
         var totalWeight = weight * _quantity;
-        var formattedTotalWeight = _quantity > 1 ? Formatter.Bold(totalWeight.ToFormattedString()) : string.Empty;
+        var formattedTotalWeight = _quantity > 1 ? Formatter.Bold(totalWeight.ToFormattedString(_culture)) : string.Empty;
 
         var time = _recursive ? _craftData.GetTimePerCraftWithSubCraft(1) : _craftData.GetTimePerCraft(1);
         var formattedTime = Formatter.Bold(time.ToString(@"mm\mss\sfff"));
@@ -106,8 +110,11 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
             formattedTotalTime = Formatter.Bold(totalTime.ToString(format));
         }
 
-        embed.AddField(BotTranslations.Embed_Field_Weight_Title, Translation.Format(BotTranslations.Embed_Field_Weight_Content, formattedWeight, formattedTotalWeight));
-        embed.AddField(BotTranslations.Embed_Field_CraftTime_Title, Translation.Format(BotTranslations.Embed_Field_CraftTime_Content, formattedTime, formattedTotalTime));
+        embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Weight.Title", _culture),
+            Translation.Format(Translation.Get<BotTranslations>("Embed.Field.Weight.Content", _culture), formattedWeight, formattedTotalWeight));
+
+        embed.AddField(Translation.Get<BotTranslations>("Embed.Field.CraftTime.Title", _culture),
+            Translation.Format(Translation.Get<BotTranslations>("Embed.Field.CraftTime.Content", _culture), formattedTime, formattedTotalTime));
 
         return embed;
     }
@@ -130,12 +137,19 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
-        var subCraftButtonlabel = _recursive ? BotTranslations.Button_SubCraft_Hide : BotTranslations.Button_SubCraft_Display;
-        yield return new(DiscordButtonStyle.Primary, GetPacket(_craftData.Id, _quantity, !_recursive), subCraftButtonlabel, !_craftData.HasSubCraft());
+        var subCraftButtonlabel = _recursive
+            ? Translation.Get<BotTranslations>("Button.SubCraft.Hide", _culture)
+            : Translation.Get<BotTranslations>("Button.SubCraft.Display", _culture);
+
+        yield return new DiscordButtonComponent(
+            DiscordButtonStyle.Primary,
+            GetPacket(_craftData.Id, _quantity, !_recursive),
+            subCraftButtonlabel,
+            !_craftData.HasSubCraft());
 
         if (_itemData is not null)
         {
-            yield return ItemComponentsBuilder.ItemButtonBuilder(_itemData, _quantity);
+            yield return ItemComponentsBuilder.ItemButtonBuilder(_itemData, _quantity, _culture);
         }
     }
 }

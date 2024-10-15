@@ -1,6 +1,7 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Factories.Effects.Elements;
 
 using System.Collections.Frozen;
 using System.Text.Json;

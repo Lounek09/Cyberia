@@ -1,7 +1,9 @@
 ﻿using Cyberia.Api.Enums;
 using Cyberia.Api.Extensions;
 
-namespace Cyberia.Api.Factories.Criteria;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Criteria.Elements.Characteristics;
 
 public sealed record BestElementCriterion : Criterion
 {
@@ -28,8 +30,8 @@ public sealed record BestElementCriterion : Criterion
         return $"Criterion.BestElement.{GetOperatorDescriptionKey()}";
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(Element.GetDescription());
+        return GetDescription(culture, Element.GetDescription(culture));
     }
 }

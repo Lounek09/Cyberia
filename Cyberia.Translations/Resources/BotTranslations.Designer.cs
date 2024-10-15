@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cyberia.Translations {
+namespace Cyberia.Translations.Resources {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace Cyberia.Translations {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class BotTranslations {
+    internal class BotTranslations {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Cyberia.Translations {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cyberia.Translations.Resources.BotTranslations", typeof(BotTranslations).Assembly);
@@ -51,7 +51,7 @@ namespace Cyberia.Translations {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to  for .
         /// </summary>
-        public static string _for {
+        internal static string _for {
             get {
                 return ResourceManager.GetString("for", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Agility.
         /// </summary>
-        public static string Agility {
+        internal static string Agility {
             get {
                 return ResourceManager.GetString("Agility", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to  and .
         /// </summary>
-        public static string and {
+        internal static string and {
             get {
                 return ResourceManager.GetString("and", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Class not found..
         /// </summary>
-        public static string Breed_NotFound {
+        internal static string Breed_NotFound {
             get {
                 return ResourceManager.GetString("Breed.NotFound", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Craft.
         /// </summary>
-        public static string Button_Craft {
+        internal static string Button_Craft {
             get {
                 return ResourceManager.GetString("Button.Craft", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
-        public static string Button_Next {
+        internal static string Button_Next {
             get {
                 return ResourceManager.GetString("Button.Next", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Previous.
         /// </summary>
-        public static string Button_Previous {
+        internal static string Button_Previous {
             get {
                 return ResourceManager.GetString("Button.Previous", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Resimulate.
         /// </summary>
-        public static string Button_Resimulate {
+        internal static string Button_Resimulate {
             get {
                 return ResourceManager.GetString("Button.Resimulate", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Runes calculator.
         /// </summary>
-        public static string Button_RuneItem {
+        internal static string Button_RuneItem {
             get {
                 return ResourceManager.GetString("Button.RuneItem", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Display subcrafts.
         /// </summary>
-        public static string Button_SubCraft_Display {
+        internal static string Button_SubCraft_Display {
             get {
                 return ResourceManager.GetString("Button.SubCraft.Display", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Hide subcrafts.
         /// </summary>
-        public static string Button_SubCraft_Hide {
+        internal static string Button_SubCraft_Hide {
             get {
                 return ResourceManager.GetString("Button.SubCraft.Hide", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chance.
         /// </summary>
-        public static string Chance {
+        internal static string Chance {
             get {
                 return ResourceManager.GetString("Chance", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to This command can only be used by the bot owner..
         /// </summary>
-        public static string Command_Error_Check_RequireApplicationOwner {
+        internal static string Command_Error_Check_RequireApplicationOwner {
             get {
                 return ResourceManager.GetString("Command.Error.Check.RequireApplicationOwner", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to This command can only be used in a server..
         /// </summary>
-        public static string Command_Error_Check_RequireGuild {
+        internal static string Command_Error_Check_RequireGuild {
             get {
                 return ResourceManager.GetString("Command.Error.Check.RequireGuild", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to The control of type #1 for this command failed..
         /// </summary>
-        public static string Command_Error_Check_Unknown {
+        internal static string Command_Error_Check_Unknown {
             get {
                 return ResourceManager.GetString("Command.Error.Check.Unknown", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to There was a problem creating the reply, the message is probably too old..
         /// </summary>
-        public static string Command_Error_Component {
+        internal static string Command_Error_Component {
             get {
                 return ResourceManager.GetString("Command.Error.Component", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to The command has run into a problem, a bug report has been sent automatically to the bot owner..
         /// </summary>
-        public static string Command_Error_UserResponse {
+        internal static string Command_Error_UserResponse {
             get {
                 return ResourceManager.GetString("Command.Error.UserResponse", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Craft not found..
         /// </summary>
-        public static string Craft_NotFound {
+        internal static string Craft_NotFound {
             get {
                 return ResourceManager.GetString("Craft.NotFound", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Classes.
         /// </summary>
-        public static string Embed_Breed_Author {
+        internal static string Embed_Breed_Author {
             get {
                 return ResourceManager.GetString("Embed.Breed.Author", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Crafts calculator.
         /// </summary>
-        public static string Embed_Craft_Author {
+        internal static string Embed_Craft_Author {
             get {
                 return ResourceManager.GetString("Embed.Craft.Author", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Craft :.
         /// </summary>
-        public static string Embed_Craft_Title {
+        internal static string Embed_Craft_Title {
             get {
                 return ResourceManager.GetString("Embed.Craft.Title", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Critical hit calculator.
         /// </summary>
-        public static string Embed_Crit_Author {
+        internal static string Embed_Crit_Author {
             get {
                 return ResourceManager.GetString("Embed.Crit.Author", resourceCulture);
             }
@@ -262,7 +262,7 @@ namespace Cyberia.Translations {
         ///   Looks up a localized string similar to You will be #1 at #2 with #3 crit and #4 agi.
         ///To reach 1/2, you will need at least #5 agi..
         /// </summary>
-        public static string Embed_Crit_Description {
+        internal static string Embed_Crit_Description {
             get {
                 return ResourceManager.GetString("Embed.Crit.Description", resourceCulture);
             }
@@ -271,7 +271,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Escape % calculator.
         /// </summary>
-        public static string Embed_Escape_Author {
+        internal static string Embed_Escape_Author {
             get {
                 return ResourceManager.GetString("Embed.Escape.Author", resourceCulture);
             }
@@ -281,7 +281,7 @@ namespace Cyberia.Translations {
         ///   Looks up a localized string similar to With #1 agi, you will have a #2% chance of escape against #3 agi.
         ///To escape at 100%, you will need at minimum #4 agi..
         /// </summary>
-        public static string Embed_Escape_Description {
+        internal static string Embed_Escape_Description {
             get {
                 return ResourceManager.GetString("Embed.Escape.Description", resourceCulture);
             }
@@ -290,7 +290,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Alignment :.
         /// </summary>
-        public static string Embed_Field_Alignment_Title {
+        internal static string Embed_Field_Alignment_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Alignment.Title", resourceCulture);
             }
@@ -299,7 +299,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Category :.
         /// </summary>
-        public static string Embed_Field_Category_Title {
+        internal static string Embed_Field_Category_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Category.Title", resourceCulture);
             }
@@ -308,7 +308,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Adjustable range.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_AdjustableRange {
+        internal static string Embed_Field_Characteristics_Content_AdjustableRange {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.AdjustableRange", resourceCulture);
             }
@@ -317,7 +317,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Nb. of casts per turn and per player :.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_CastPerPlayer {
+        internal static string Embed_Field_Characteristics_Content_CastPerPlayer {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.CastPerPlayer", resourceCulture);
             }
@@ -326,7 +326,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Nb. of casts per turn :.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_CastPerTurn {
+        internal static string Embed_Field_Characteristics_Content_CastPerTurn {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.CastPerTurn", resourceCulture);
             }
@@ -335,7 +335,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Failure probability :.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_CriticalFailure {
+        internal static string Embed_Field_Characteristics_Content_CriticalFailure {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.CriticalFailure", resourceCulture);
             }
@@ -344,7 +344,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to CF ends turn.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_CriticalFailureEndTurn {
+        internal static string Embed_Field_Characteristics_Content_CriticalFailureEndTurn {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.CriticalFailureEndTurn", resourceCulture);
             }
@@ -353,7 +353,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Critical hit probability :.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_CriticalHit {
+        internal static string Embed_Field_Characteristics_Content_CriticalHit {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.CriticalHit", resourceCulture);
             }
@@ -362,7 +362,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Global recast interval.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_GlobalRecast {
+        internal static string Embed_Field_Characteristics_Content_GlobalRecast {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.GlobalRecast", resourceCulture);
             }
@@ -371,7 +371,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Linear.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_Linear {
+        internal static string Embed_Field_Characteristics_Content_Linear {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.Linear", resourceCulture);
             }
@@ -380,7 +380,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Line of sight.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_LineOfSight {
+        internal static string Embed_Field_Characteristics_Content_LineOfSight {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.LineOfSight", resourceCulture);
             }
@@ -389,7 +389,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Free squares.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_NeedFreeCell {
+        internal static string Embed_Field_Characteristics_Content_NeedFreeCell {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.NeedFreeCell", resourceCulture);
             }
@@ -398,7 +398,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Nb. of turns between two casts :.
         /// </summary>
-        public static string Embed_Field_Characteristics_Content_TurnsBetweenCast {
+        internal static string Embed_Field_Characteristics_Content_TurnsBetweenCast {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Content.TurnsBetweenCast", resourceCulture);
             }
@@ -407,7 +407,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Characteristics :.
         /// </summary>
-        public static string Embed_Field_Characteristics_Title {
+        internal static string Embed_Field_Characteristics_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Characteristics.Title", resourceCulture);
             }
@@ -416,7 +416,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Chest :.
         /// </summary>
-        public static string Embed_Field_Chest_Title {
+        internal static string Embed_Field_Chest_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Chest.Title", resourceCulture);
             }
@@ -425,7 +425,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Craft :.
         /// </summary>
-        public static string Embed_Field_Craft_Title {
+        internal static string Embed_Field_Craft_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Craft.Title", resourceCulture);
             }
@@ -435,7 +435,7 @@ namespace Cyberia.Translations {
         ///   Looks up a localized string similar to #1 per craft{~2
         ///}#2{~2 in total}.
         /// </summary>
-        public static string Embed_Field_CraftTime_Content {
+        internal static string Embed_Field_CraftTime_Content {
             get {
                 return ResourceManager.GetString("Embed.Field.CraftTime.Content", resourceCulture);
             }
@@ -444,7 +444,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Approximated craft time :.
         /// </summary>
-        public static string Embed_Field_CraftTime_Title {
+        internal static string Embed_Field_CraftTime_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.CraftTime.Title", resourceCulture);
             }
@@ -453,7 +453,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Criteria :.
         /// </summary>
-        public static string Embed_Field_Criteria_Title {
+        internal static string Embed_Field_Criteria_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Criteria.Title", resourceCulture);
             }
@@ -462,7 +462,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Critical effects :.
         /// </summary>
-        public static string Embed_Field_CriticalEffects_Title {
+        internal static string Embed_Field_CriticalEffects_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.CriticalEffects.Title", resourceCulture);
             }
@@ -471,7 +471,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Dialog :.
         /// </summary>
-        public static string Embed_Field_Dialog_Title {
+        internal static string Embed_Field_Dialog_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Dialog.Title", resourceCulture);
             }
@@ -480,7 +480,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Effects :.
         /// </summary>
-        public static string Embed_Field_Effects_Title {
+        internal static string Embed_Field_Effects_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Effects.Title", resourceCulture);
             }
@@ -489,7 +489,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Forbidden states :.
         /// </summary>
-        public static string Embed_Field_ForbiddenStates_Title {
+        internal static string Embed_Field_ForbiddenStates_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.ForbiddenStates.Title", resourceCulture);
             }
@@ -498,7 +498,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Glyph effects :.
         /// </summary>
-        public static string Embed_Field_GlyphEffects_Title {
+        internal static string Embed_Field_GlyphEffects_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.GlyphEffects.Title", resourceCulture);
             }
@@ -507,7 +507,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Items :.
         /// </summary>
-        public static string Embed_Field_Items_Title {
+        internal static string Embed_Field_Items_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Items.Title", resourceCulture);
             }
@@ -516,7 +516,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Set :.
         /// </summary>
-        public static string Embed_Field_ItemSet_Title {
+        internal static string Embed_Field_ItemSet_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.ItemSet.Title", resourceCulture);
             }
@@ -525,7 +525,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Type :.
         /// </summary>
-        public static string Embed_Field_ItemType_Title {
+        internal static string Embed_Field_ItemType_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.ItemType.Title", resourceCulture);
             }
@@ -534,7 +534,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Level :.
         /// </summary>
-        public static string Embed_Field_Level_Title {
+        internal static string Embed_Field_Level_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Level.Title", resourceCulture);
             }
@@ -543,7 +543,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to ceremonial item.
         /// </summary>
-        public static string Embed_Field_Miscellaneous_Content_Ceremonial {
+        internal static string Embed_Field_Miscellaneous_Content_Ceremonial {
             get {
                 return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.Ceremonial", resourceCulture);
             }
@@ -552,7 +552,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to cursed.
         /// </summary>
-        public static string Embed_Field_Miscellaneous_Content_Cursed {
+        internal static string Embed_Field_Miscellaneous_Content_Cursed {
             get {
                 return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.Cursed", resourceCulture);
             }
@@ -561,7 +561,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to smithmageable.
         /// </summary>
-        public static string Embed_Field_Miscellaneous_Content_Enhanceable {
+        internal static string Embed_Field_Miscellaneous_Content_Enhanceable {
             get {
                 return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.Enhanceable", resourceCulture);
             }
@@ -570,7 +570,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to ethereal item.
         /// </summary>
-        public static string Embed_Field_Miscellaneous_Content_Ethereal {
+        internal static string Embed_Field_Miscellaneous_Content_Ethereal {
             get {
                 return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.Ethereal", resourceCulture);
             }
@@ -579,7 +579,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to sells for #1 #2 at npcs.
         /// </summary>
-        public static string Embed_Field_Miscellaneous_Content_Price {
+        internal static string Embed_Field_Miscellaneous_Content_Price {
             get {
                 return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.Price", resourceCulture);
             }
@@ -588,7 +588,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to is targetable.
         /// </summary>
-        public static string Embed_Field_Miscellaneous_Content_Targetable {
+        internal static string Embed_Field_Miscellaneous_Content_Targetable {
             get {
                 return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.Targetable", resourceCulture);
             }
@@ -597,7 +597,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to is usable.
         /// </summary>
-        public static string Embed_Field_Miscellaneous_Content_Usable {
+        internal static string Embed_Field_Miscellaneous_Content_Usable {
             get {
                 return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.Usable", resourceCulture);
             }
@@ -606,7 +606,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to pod(s).
         /// </summary>
-        public static string Embed_Field_Miscellaneous_Content_Weight {
+        internal static string Embed_Field_Miscellaneous_Content_Weight {
             get {
                 return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.Weight", resourceCulture);
             }
@@ -615,7 +615,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Miscellaneous :.
         /// </summary>
-        public static string Embed_Field_Miscellaneous_Title {
+        internal static string Embed_Field_Miscellaneous_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Miscellaneous.Title", resourceCulture);
             }
@@ -624,7 +624,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Breed :.
         /// </summary>
-        public static string Embed_Field_MonsterRaceData_Title {
+        internal static string Embed_Field_MonsterRaceData_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.MonsterRaceData.Title", resourceCulture);
             }
@@ -633,7 +633,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Ecosystem :.
         /// </summary>
-        public static string Embed_Field_MonsterSuperRaceData_Title {
+        internal static string Embed_Field_MonsterSuperRaceData_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.MonsterSuperRaceData.Title", resourceCulture);
             }
@@ -642,7 +642,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Optimal level :.
         /// </summary>
-        public static string Embed_Field_OptimalLevel_Title {
+        internal static string Embed_Field_OptimalLevel_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.OptimalLevel.Title", resourceCulture);
             }
@@ -651,7 +651,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Page.
         /// </summary>
-        public static string Embed_Field_Page_Content {
+        internal static string Embed_Field_Page_Content {
             get {
                 return ResourceManager.GetString("Embed.Field.Page.Content", resourceCulture);
             }
@@ -660,7 +660,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Meal between.
         /// </summary>
-        public static string Embed_Field_Pet_Content_MealBetween {
+        internal static string Embed_Field_Pet_Content_MealBetween {
             get {
                 return ResourceManager.GetString("Embed.Field.Pet.Content.MealBetween", resourceCulture);
             }
@@ -669,7 +669,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Pet :.
         /// </summary>
-        public static string Embed_Field_Pet_Title {
+        internal static string Embed_Field_Pet_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Pet.Title", resourceCulture);
             }
@@ -678,7 +678,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Price :.
         /// </summary>
-        public static string Embed_Field_Price_Title {
+        internal static string Embed_Field_Price_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Price.Title", resourceCulture);
             }
@@ -687,7 +687,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Objectives :.
         /// </summary>
-        public static string Embed_Field_QuestObjectives_Title {
+        internal static string Embed_Field_QuestObjectives_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.QuestObjectives.Title", resourceCulture);
             }
@@ -696,7 +696,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Required level :.
         /// </summary>
-        public static string Embed_Field_RequiredLevel_Title {
+        internal static string Embed_Field_RequiredLevel_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.RequiredLevel.Title", resourceCulture);
             }
@@ -705,7 +705,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Required states :.
         /// </summary>
-        public static string Embed_Field_RequiredStates_Title {
+        internal static string Embed_Field_RequiredStates_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.RequiredStates.Title", resourceCulture);
             }
@@ -714,7 +714,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Emotes :.
         /// </summary>
-        public static string Embed_Field_Rewards_Content_Emotes {
+        internal static string Embed_Field_Rewards_Content_Emotes {
             get {
                 return ResourceManager.GetString("Embed.Field.Rewards.Content.Emotes", resourceCulture);
             }
@@ -723,7 +723,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Jobs :.
         /// </summary>
-        public static string Embed_Field_Rewards_Content_Jobs {
+        internal static string Embed_Field_Rewards_Content_Jobs {
             get {
                 return ResourceManager.GetString("Embed.Field.Rewards.Content.Jobs", resourceCulture);
             }
@@ -732,7 +732,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Spells :.
         /// </summary>
-        public static string Embed_Field_Rewards_Content_Spells {
+        internal static string Embed_Field_Rewards_Content_Spells {
             get {
                 return ResourceManager.GetString("Embed.Field.Rewards.Content.Spells", resourceCulture);
             }
@@ -741,7 +741,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rewards :.
         /// </summary>
-        public static string Embed_Field_Rewards_Title {
+        internal static string Embed_Field_Rewards_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Rewards.Title", resourceCulture);
             }
@@ -750,7 +750,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Room :.
         /// </summary>
-        public static string Embed_Field_Room_Title {
+        internal static string Embed_Field_Room_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Room.Title", resourceCulture);
             }
@@ -759,7 +759,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Pa rate :.
         /// </summary>
-        public static string Embed_Field_RunePaRate_Title {
+        internal static string Embed_Field_RunePaRate_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.RunePaRate.Title", resourceCulture);
             }
@@ -768,7 +768,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Ra rate :.
         /// </summary>
-        public static string Embed_Field_RuneRaRate_Title {
+        internal static string Embed_Field_RuneRaRate_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.RuneRaRate.Title", resourceCulture);
             }
@@ -777,7 +777,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Source :.
         /// </summary>
-        public static string Embed_Field_Source_Title {
+        internal static string Embed_Field_Source_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Source.Title", resourceCulture);
             }
@@ -786,7 +786,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Spells :.
         /// </summary>
-        public static string Embed_Field_Spells_Title {
+        internal static string Embed_Field_Spells_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Spells.Title", resourceCulture);
             }
@@ -795,7 +795,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Trap effects :.
         /// </summary>
-        public static string Embed_Field_TrapEffects_Title {
+        internal static string Embed_Field_TrapEffects_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.TrapEffects.Title", resourceCulture);
             }
@@ -804,7 +804,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to AP :.
         /// </summary>
-        public static string Embed_Field_Weapon_Content_AP {
+        internal static string Embed_Field_Weapon_Content_AP {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Content.AP", resourceCulture);
             }
@@ -813,7 +813,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Area :.
         /// </summary>
-        public static string Embed_Field_Weapon_Content_Area {
+        internal static string Embed_Field_Weapon_Content_Area {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Content.Area", resourceCulture);
             }
@@ -822,7 +822,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Failure :.
         /// </summary>
-        public static string Embed_Field_Weapon_Content_CriticalFailure {
+        internal static string Embed_Field_Weapon_Content_CriticalFailure {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Content.CriticalFailure", resourceCulture);
             }
@@ -831,7 +831,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Critical hit :.
         /// </summary>
-        public static string Embed_Field_Weapon_Content_CriticalHit {
+        internal static string Embed_Field_Weapon_Content_CriticalHit {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Content.CriticalHit", resourceCulture);
             }
@@ -840,7 +840,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Critical hit bonus :.
         /// </summary>
-        public static string Embed_Field_Weapon_Content_CriticalHitBonus {
+        internal static string Embed_Field_Weapon_Content_CriticalHitBonus {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Content.CriticalHitBonus", resourceCulture);
             }
@@ -849,7 +849,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Linear only.
         /// </summary>
-        public static string Embed_Field_Weapon_Content_Linear {
+        internal static string Embed_Field_Weapon_Content_Linear {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Content.Linear", resourceCulture);
             }
@@ -858,7 +858,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to No line of sight.
         /// </summary>
-        public static string Embed_Field_Weapon_Content_LineOfSight {
+        internal static string Embed_Field_Weapon_Content_LineOfSight {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Content.LineOfSight", resourceCulture);
             }
@@ -867,7 +867,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to One-handed weapon.
         /// </summary>
-        public static string Embed_Field_Weapon_Content_OneHanded {
+        internal static string Embed_Field_Weapon_Content_OneHanded {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Content.OneHanded", resourceCulture);
             }
@@ -876,7 +876,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Range :.
         /// </summary>
-        public static string Embed_Field_Weapon_Content_Range {
+        internal static string Embed_Field_Weapon_Content_Range {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Content.Range", resourceCulture);
             }
@@ -885,7 +885,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Two-handed weapon.
         /// </summary>
-        public static string Embed_Field_Weapon_Content_TwoHanded {
+        internal static string Embed_Field_Weapon_Content_TwoHanded {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Content.TwoHanded", resourceCulture);
             }
@@ -894,7 +894,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Characteristics :.
         /// </summary>
-        public static string Embed_Field_Weapon_Title {
+        internal static string Embed_Field_Weapon_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Weapon.Title", resourceCulture);
             }
@@ -903,7 +903,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to #1 pod(s) per craft{~2, }#2{~2 in total}.
         /// </summary>
-        public static string Embed_Field_Weight_Content {
+        internal static string Embed_Field_Weight_Content {
             get {
                 return ResourceManager.GetString("Embed.Field.Weight.Content", resourceCulture);
             }
@@ -912,7 +912,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Weight :.
         /// </summary>
-        public static string Embed_Field_Weight_Title {
+        internal static string Embed_Field_Weight_Title {
             get {
                 return ResourceManager.GetString("Embed.Field.Weight.Title", resourceCulture);
             }
@@ -921,7 +921,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Estate agency.
         /// </summary>
-        public static string Embed_House_Author {
+        internal static string Embed_House_Author {
             get {
                 return ResourceManager.GetString("Embed.House.Author", resourceCulture);
             }
@@ -930,7 +930,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Incarnations.
         /// </summary>
-        public static string Embed_Incarnation_Author {
+        internal static string Embed_Incarnation_Author {
             get {
                 return ResourceManager.GetString("Embed.Incarnation.Author", resourceCulture);
             }
@@ -939,7 +939,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Incarnation not existing in the game data..
         /// </summary>
-        public static string Embed_Incarnation_Description_NotFound {
+        internal static string Embed_Incarnation_Description_NotFound {
             get {
                 return ResourceManager.GetString("Embed.Incarnation.Description.NotFound", resourceCulture);
             }
@@ -948,7 +948,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Items.
         /// </summary>
-        public static string Embed_Item_Author {
+        internal static string Embed_Item_Author {
             get {
                 return ResourceManager.GetString("Embed.Item.Author", resourceCulture);
             }
@@ -957,7 +957,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Sets.
         /// </summary>
-        public static string Embed_ItemSet_Author {
+        internal static string Embed_ItemSet_Author {
             get {
                 return ResourceManager.GetString("Embed.ItemSet.Author", resourceCulture);
             }
@@ -966,7 +966,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to World map.
         /// </summary>
-        public static string Embed_Map_Author {
+        internal static string Embed_Map_Author {
             get {
                 return ResourceManager.GetString("Embed.Map.Author", resourceCulture);
             }
@@ -975,7 +975,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Bestiary.
         /// </summary>
-        public static string Embed_Monster_Author {
+        internal static string Embed_Monster_Author {
             get {
                 return ResourceManager.GetString("Embed.Monster.Author", resourceCulture);
             }
@@ -984,7 +984,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple crafts found :.
         /// </summary>
-        public static string Embed_PaginatedCraft_Title {
+        internal static string Embed_PaginatedCraft_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedCraft.Title", resourceCulture);
             }
@@ -993,7 +993,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple houses found :.
         /// </summary>
-        public static string Embed_PaginatedHouse_Title {
+        internal static string Embed_PaginatedHouse_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedHouse.Title", resourceCulture);
             }
@@ -1002,7 +1002,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple incarnations found :.
         /// </summary>
-        public static string Embed_PaginatedIncarnation_Title {
+        internal static string Embed_PaginatedIncarnation_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedIncarnation.Title", resourceCulture);
             }
@@ -1011,7 +1011,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple items found :.
         /// </summary>
-        public static string Embed_PaginatedItem_Title {
+        internal static string Embed_PaginatedItem_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedItem.Title", resourceCulture);
             }
@@ -1020,7 +1020,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple sets found :.
         /// </summary>
-        public static string Embed_PaginatedItemSet_Title {
+        internal static string Embed_PaginatedItemSet_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedItemSet.Title", resourceCulture);
             }
@@ -1029,7 +1029,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple maps found :.
         /// </summary>
-        public static string Embed_PaginatedMap_Title {
+        internal static string Embed_PaginatedMap_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedMap.Title", resourceCulture);
             }
@@ -1038,7 +1038,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple areas found :.
         /// </summary>
-        public static string Embed_PaginatedMapArea_Title {
+        internal static string Embed_PaginatedMapArea_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedMapArea.Title", resourceCulture);
             }
@@ -1047,7 +1047,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple subareas found :.
         /// </summary>
-        public static string Embed_PaginatedMapSubArea_Title {
+        internal static string Embed_PaginatedMapSubArea_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedMapSubArea.Title", resourceCulture);
             }
@@ -1056,7 +1056,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple monsters found :.
         /// </summary>
-        public static string Embed_PaginatedMonster_Title {
+        internal static string Embed_PaginatedMonster_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedMonster.Title", resourceCulture);
             }
@@ -1065,7 +1065,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple quests found :.
         /// </summary>
-        public static string Embed_PaginatedQuest_Title {
+        internal static string Embed_PaginatedQuest_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedQuest.Title", resourceCulture);
             }
@@ -1074,7 +1074,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Multiple spells found :.
         /// </summary>
-        public static string Embed_PaginatedSpell_Title {
+        internal static string Embed_PaginatedSpell_Title {
             get {
                 return ResourceManager.GetString("Embed.PaginatedSpell.Title", resourceCulture);
             }
@@ -1083,7 +1083,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest book.
         /// </summary>
-        public static string Embed_Quest_Author {
+        internal static string Embed_Quest_Author {
             get {
                 return ResourceManager.GetString("Embed.Quest.Author", resourceCulture);
             }
@@ -1092,7 +1092,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Runes calculator.
         /// </summary>
-        public static string Embed_Rune_Author {
+        internal static string Embed_Rune_Author {
             get {
                 return ResourceManager.GetString("Embed.Rune.Author", resourceCulture);
             }
@@ -1101,7 +1101,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to #1 #2% chance on a level #3 item with #4 stats..
         /// </summary>
-        public static string Embed_Rune_Description_Multiple {
+        internal static string Embed_Rune_Description_Multiple {
             get {
                 return ResourceManager.GetString("Embed.Rune.Description.Multiple", resourceCulture);
             }
@@ -1110,7 +1110,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to #1 #2% chance on a level #3 item..
         /// </summary>
-        public static string Embed_Rune_Description_One {
+        internal static string Embed_Rune_Description_One {
             get {
                 return ResourceManager.GetString("Embed.Rune.Description.One", resourceCulture);
             }
@@ -1119,7 +1119,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rune generation simulation :.
         /// </summary>
-        public static string Embed_RuneItem_Description {
+        internal static string Embed_RuneItem_Description {
             get {
                 return ResourceManager.GetString("Embed.RuneItem.Description", resourceCulture);
             }
@@ -1128,7 +1128,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Spells book.
         /// </summary>
-        public static string Embed_Spell_Author {
+        internal static string Embed_Spell_Author {
             get {
                 return ResourceManager.GetString("Embed.Spell.Author", resourceCulture);
             }
@@ -1137,7 +1137,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to  from .
         /// </summary>
-        public static string from {
+        internal static string from {
             get {
                 return ResourceManager.GetString("from", resourceCulture);
             }
@@ -1146,7 +1146,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to House not found..
         /// </summary>
-        public static string House_NotFound {
+        internal static string House_NotFound {
             get {
                 return ResourceManager.GetString("House.NotFound", resourceCulture);
             }
@@ -1155,7 +1155,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to There is no house at [#1, #2]..
         /// </summary>
-        public static string House_NotFound_Coordinate {
+        internal static string House_NotFound_Coordinate {
             get {
                 return ResourceManager.GetString("House.NotFound.Coordinate", resourceCulture);
             }
@@ -1164,7 +1164,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to The #1 area does not contain any house..
         /// </summary>
-        public static string House_NotFound_MapArea {
+        internal static string House_NotFound_MapArea {
             get {
                 return ResourceManager.GetString("House.NotFound.MapArea", resourceCulture);
             }
@@ -1173,7 +1173,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to The #1 subarea does not contain any house..
         /// </summary>
-        public static string House_NotFound_MapSubArea {
+        internal static string House_NotFound_MapSubArea {
             get {
                 return ResourceManager.GetString("House.NotFound.MapSubArea", resourceCulture);
             }
@@ -1182,7 +1182,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Incarnation not found..
         /// </summary>
-        public static string Incarnation_NotFound {
+        internal static string Incarnation_NotFound {
             get {
                 return ResourceManager.GetString("Incarnation.NotFound", resourceCulture);
             }
@@ -1191,7 +1191,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Incorrect parameter.
         /// </summary>
-        public static string IncorrectParameter {
+        internal static string IncorrectParameter {
             get {
                 return ResourceManager.GetString("IncorrectParameter", resourceCulture);
             }
@@ -1200,7 +1200,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Intelligence.
         /// </summary>
-        public static string Intelligence {
+        internal static string Intelligence {
             get {
                 return ResourceManager.GetString("Intelligence", resourceCulture);
             }
@@ -1209,7 +1209,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Item not found..
         /// </summary>
-        public static string Item_NotFound {
+        internal static string Item_NotFound {
             get {
                 return ResourceManager.GetString("Item.NotFound", resourceCulture);
             }
@@ -1218,7 +1218,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Set not found..
         /// </summary>
-        public static string ItemSet_NotFound {
+        internal static string ItemSet_NotFound {
             get {
                 return ResourceManager.GetString("ItemSet.NotFound", resourceCulture);
             }
@@ -1227,7 +1227,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Your language has been modified to #1..
         /// </summary>
-        public static string Language_Set {
+        internal static string Language_Set {
             get {
                 return ResourceManager.GetString("Language.Set", resourceCulture);
             }
@@ -1236,7 +1236,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Map not found..
         /// </summary>
-        public static string Map_NotFound {
+        internal static string Map_NotFound {
             get {
                 return ResourceManager.GetString("Map.NotFound", resourceCulture);
             }
@@ -1245,7 +1245,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to There is no map at [#1, #2]..
         /// </summary>
-        public static string Map_NotFound_Coordinate {
+        internal static string Map_NotFound_Coordinate {
             get {
                 return ResourceManager.GetString("Map.NotFound.Coordinate", resourceCulture);
             }
@@ -1254,7 +1254,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to The #1 area does not contain any map..
         /// </summary>
-        public static string Map_NotFound_MapArea {
+        internal static string Map_NotFound_MapArea {
             get {
                 return ResourceManager.GetString("Map.NotFound.MapArea", resourceCulture);
             }
@@ -1263,7 +1263,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to The #1 subarea does not contain any map..
         /// </summary>
-        public static string Map_NotFound_MapSubArea {
+        internal static string Map_NotFound_MapSubArea {
             get {
                 return ResourceManager.GetString("Map.NotFound.MapSubArea", resourceCulture);
             }
@@ -1272,7 +1272,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Area not found..
         /// </summary>
-        public static string MapArea_NotFound {
+        internal static string MapArea_NotFound {
             get {
                 return ResourceManager.GetString("MapArea.NotFound", resourceCulture);
             }
@@ -1281,7 +1281,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Subarea not found..
         /// </summary>
-        public static string MapSubArea_NotFound {
+        internal static string MapSubArea_NotFound {
             get {
                 return ResourceManager.GetString("MapSubArea.NotFound", resourceCulture);
             }
@@ -1290,7 +1290,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Monster not found..
         /// </summary>
-        public static string Monster_NotFound {
+        internal static string Monster_NotFound {
             get {
                 return ResourceManager.GetString("Monster.NotFound", resourceCulture);
             }
@@ -1299,7 +1299,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Possible values :.
         /// </summary>
-        public static string PossibleValues {
+        internal static string PossibleValues {
             get {
                 return ResourceManager.GetString("PossibleValues", resourceCulture);
             }
@@ -1308,7 +1308,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Quest not found..
         /// </summary>
-        public static string Quest_NotFound {
+        internal static string Quest_NotFound {
             get {
                 return ResourceManager.GetString("Quest.NotFound", resourceCulture);
             }
@@ -1317,7 +1317,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Rank.
         /// </summary>
-        public static string Rank {
+        internal static string Rank {
             get {
                 return ResourceManager.GetString("Rank", resourceCulture);
             }
@@ -1326,7 +1326,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Here is the personal information currently stored about you:.
         /// </summary>
-        public static string Rgpd_Data {
+        internal static string Rgpd_Data {
             get {
                 return ResourceManager.GetString("Rgpd.Data", resourceCulture);
             }
@@ -1335,7 +1335,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to All your personal data has been deleted..
         /// </summary>
-        public static string Rgpd_Deleted {
+        internal static string Rgpd_Deleted {
             get {
                 return ResourceManager.GetString("Rgpd.Deleted", resourceCulture);
             }
@@ -1344,7 +1344,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to No personal data is currently stored about you..
         /// </summary>
-        public static string Rgpd_NoData {
+        internal static string Rgpd_NoData {
             get {
                 return ResourceManager.GetString("Rgpd.NoData", resourceCulture);
             }
@@ -1353,7 +1353,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select an item to calculate its craft.
         /// </summary>
-        public static string Select_Craft_Placeholder {
+        internal static string Select_Craft_Placeholder {
             get {
                 return ResourceManager.GetString("Select.Craft.Placeholder", resourceCulture);
             }
@@ -1362,7 +1362,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select a house to display it.
         /// </summary>
-        public static string Select_House_Placeholder {
+        internal static string Select_House_Placeholder {
             get {
                 return ResourceManager.GetString("Select.House.Placeholder", resourceCulture);
             }
@@ -1371,7 +1371,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Outdoors.
         /// </summary>
-        public static string Select_HouseMap_Option_Outdoors {
+        internal static string Select_HouseMap_Option_Outdoors {
             get {
                 return ResourceManager.GetString("Select.HouseMap.Option.Outdoors", resourceCulture);
             }
@@ -1380,7 +1380,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Room.
         /// </summary>
-        public static string Select_HouseMap_Option_Room {
+        internal static string Select_HouseMap_Option_Room {
             get {
                 return ResourceManager.GetString("Select.HouseMap.Option.Room", resourceCulture);
             }
@@ -1389,7 +1389,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select a room do display it.
         /// </summary>
-        public static string Select_HouseMap_Placeholder {
+        internal static string Select_HouseMap_Placeholder {
             get {
                 return ResourceManager.GetString("Select.HouseMap.Placeholder", resourceCulture);
             }
@@ -1398,7 +1398,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select an incarnation to display it.
         /// </summary>
-        public static string Select_Incarnation_Placeholder {
+        internal static string Select_Incarnation_Placeholder {
             get {
                 return ResourceManager.GetString("Select.Incarnation.Placeholder", resourceCulture);
             }
@@ -1407,7 +1407,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select an item to display it.
         /// </summary>
-        public static string Select_Item_Placeholder {
+        internal static string Select_Item_Placeholder {
             get {
                 return ResourceManager.GetString("Select.Item.Placeholder", resourceCulture);
             }
@@ -1416,7 +1416,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select a set to display it.
         /// </summary>
-        public static string Select_ItemSet_Placeholder {
+        internal static string Select_ItemSet_Placeholder {
             get {
                 return ResourceManager.GetString("Select.ItemSet.Placeholder", resourceCulture);
             }
@@ -1425,7 +1425,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select a map to display it.
         /// </summary>
-        public static string Select_Map_Placeholder {
+        internal static string Select_Map_Placeholder {
             get {
                 return ResourceManager.GetString("Select.Map.Placeholder", resourceCulture);
             }
@@ -1434,7 +1434,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select an area to display its maps.
         /// </summary>
-        public static string Select_MapArea_Placeholder {
+        internal static string Select_MapArea_Placeholder {
             get {
                 return ResourceManager.GetString("Select.MapArea.Placeholder", resourceCulture);
             }
@@ -1443,7 +1443,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select a subarea to display its maps.
         /// </summary>
-        public static string Select_MapSubArea_Placeholder {
+        internal static string Select_MapSubArea_Placeholder {
             get {
                 return ResourceManager.GetString("Select.MapSubArea.Placeholder", resourceCulture);
             }
@@ -1452,7 +1452,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select a monster to display it.
         /// </summary>
-        public static string Select_Monster_Placeholder {
+        internal static string Select_Monster_Placeholder {
             get {
                 return ResourceManager.GetString("Select.Monster.Placeholder", resourceCulture);
             }
@@ -1461,7 +1461,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select a quest to display it.
         /// </summary>
-        public static string Select_Quest_Placeholder {
+        internal static string Select_Quest_Placeholder {
             get {
                 return ResourceManager.GetString("Select.Quest.Placeholder", resourceCulture);
             }
@@ -1470,7 +1470,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Step.
         /// </summary>
-        public static string Select_QuestStep_Content_Step {
+        internal static string Select_QuestStep_Content_Step {
             get {
                 return ResourceManager.GetString("Select.QuestStep.Content.Step", resourceCulture);
             }
@@ -1479,7 +1479,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select a step to display it.
         /// </summary>
-        public static string Select_QuestStep_Placeholder {
+        internal static string Select_QuestStep_Placeholder {
             get {
                 return ResourceManager.GetString("Select.QuestStep.Placeholder", resourceCulture);
             }
@@ -1488,16 +1488,16 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Select an item to calculate the runes that can be obtained.
         /// </summary>
-        public static string Select_RuneItem_Splaceholder {
+        internal static string Select_RuneItem_Placeholder {
             get {
-                return ResourceManager.GetString("Select.RuneItem.Splaceholder", resourceCulture);
+                return ResourceManager.GetString("Select.RuneItem.Placeholder", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Select a spell to display it.
         /// </summary>
-        public static string Select_Spell_Placeholder {
+        internal static string Select_Spell_Placeholder {
             get {
                 return ResourceManager.GetString("Select.Spell.Placeholder", resourceCulture);
             }
@@ -1506,7 +1506,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to AP.
         /// </summary>
-        public static string ShortActionPoint {
+        internal static string ShortActionPoint {
             get {
                 return ResourceManager.GetString("ShortActionPoint", resourceCulture);
             }
@@ -1515,7 +1515,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Avg..
         /// </summary>
-        public static string ShortAverage {
+        internal static string ShortAverage {
             get {
                 return ResourceManager.GetString("ShortAverage", resourceCulture);
             }
@@ -1524,7 +1524,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to inf..
         /// </summary>
-        public static string ShortInfinity {
+        internal static string ShortInfinity {
             get {
                 return ResourceManager.GetString("ShortInfinity", resourceCulture);
             }
@@ -1533,7 +1533,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Lv..
         /// </summary>
-        public static string ShortLevel {
+        internal static string ShortLevel {
             get {
                 return ResourceManager.GetString("ShortLevel", resourceCulture);
             }
@@ -1542,7 +1542,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Max..
         /// </summary>
-        public static string ShortMaximum {
+        internal static string ShortMaximum {
             get {
                 return ResourceManager.GetString("ShortMaximum", resourceCulture);
             }
@@ -1551,7 +1551,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Min..
         /// </summary>
-        public static string ShortMinimum {
+        internal static string ShortMinimum {
             get {
                 return ResourceManager.GetString("ShortMinimum", resourceCulture);
             }
@@ -1560,7 +1560,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to RA.
         /// </summary>
-        public static string ShortRange {
+        internal static string ShortRange {
             get {
                 return ResourceManager.GetString("ShortRange", resourceCulture);
             }
@@ -1569,7 +1569,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Spell not found..
         /// </summary>
-        public static string Spell_NotFound {
+        internal static string Spell_NotFound {
             get {
                 return ResourceManager.GetString("Spell.NotFound", resourceCulture);
             }
@@ -1578,7 +1578,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Strength.
         /// </summary>
-        public static string Strength {
+        internal static string Strength {
             get {
                 return ResourceManager.GetString("Strength", resourceCulture);
             }
@@ -1587,7 +1587,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Summon.
         /// </summary>
-        public static string Summon {
+        internal static string Summon {
             get {
                 return ResourceManager.GetString("Summon", resourceCulture);
             }
@@ -1596,7 +1596,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to  to .
         /// </summary>
-        public static string to {
+        internal static string to {
             get {
                 return ResourceManager.GetString("to", resourceCulture);
             }
@@ -1605,7 +1605,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Vitality.
         /// </summary>
-        public static string Vitality {
+        internal static string Vitality {
             get {
                 return ResourceManager.GetString("Vitality", resourceCulture);
             }
@@ -1614,7 +1614,7 @@ namespace Cyberia.Translations {
         /// <summary>
         ///   Looks up a localized string similar to Wisdom.
         /// </summary>
-        public static string Wisdom {
+        internal static string Wisdom {
             get {
                 return ResourceManager.GetString("Wisdom", resourceCulture);
             }

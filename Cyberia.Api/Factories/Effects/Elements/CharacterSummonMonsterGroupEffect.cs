@@ -1,10 +1,10 @@
 ﻿using Cyberia.Api.Data.Monsters;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
 using System.Globalization;
 
-namespace Cyberia.Api.Factories.Effects;
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterSummonMonsterGroupEffect : Effect
 {
@@ -37,10 +37,10 @@ public sealed record CharacterSummonMonsterGroupEffect : Effect
         }
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var monstersName = string.Join(", ", MonstersId.Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(x)));
+        var monstersName = string.Join(", ", MonstersId.Select(x => DofusApi.Datacenter.MonstersRepository.GetMonsterNameById(x, culture)));
 
-        return GetDescription(string.Empty, string.Empty, monstersName);
+        return GetDescription(culture, string.Empty, string.Empty, monstersName);
     }
 }

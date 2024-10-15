@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Maps;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record GotoMapEffect : Effect
 {
@@ -26,12 +28,12 @@ public sealed record GotoMapEffect : Effect
         return DofusApi.Datacenter.MapsRepository.GetMapDataById(MapId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
         var map = GetMapData();
-        var mapAreaSubAreaName = map is null ? Translation.Format(ApiTranslations.Unknown_Data, MapId) : map.GetMapAreaName();
+        var mapAreaSubAreaName = map is null ? Translation.UnknownData(MapId, culture) : map.GetMapAreaName(culture);
         var coordinate = map is null ? "[x, x]" : map.GetCoordinate();
 
-        return GetDescription(mapAreaSubAreaName, coordinate);
+        return GetDescription(culture, mapAreaSubAreaName, coordinate);
     }
 }

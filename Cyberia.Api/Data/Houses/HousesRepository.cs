@@ -5,6 +5,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Houses;
@@ -38,7 +39,12 @@ public sealed class HousesRepository : DofusRepository, IDofusRepository
         return houseData;
     }
 
-    public IEnumerable<HouseData> GetHousesDataByName(string name)
+    public IEnumerable<HouseData> GetHousesDataByName(string name, Language language)
+    {
+        return GetHousesDataByName(name, language.ToCulture());
+    }
+
+    public IEnumerable<HouseData> GetHousesDataByName(string name, CultureInfo? culture = null)
     {
         var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -46,7 +52,7 @@ public sealed class HousesRepository : DofusRepository, IDofusRepository
         {
             return names.All(y =>
             {
-                return StringExtensions.NormalizeToAscii(x.Name).Contains(y, StringComparison.OrdinalIgnoreCase);
+                return x.Name.ToString(culture).NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
             });
         });
     }

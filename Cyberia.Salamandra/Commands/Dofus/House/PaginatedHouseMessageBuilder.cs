@@ -9,6 +9,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.House;
 
 public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<HouseData>
@@ -18,13 +20,25 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
 
     private readonly HouseSearchCategory _searchCategory;
 
-    public PaginatedHouseMessageBuilder(EmbedBuilderService embedBuilderService, List<HouseData> housesData, HouseSearchCategory searchCategory, string search, int selectedPageIndex = 0)
-        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Houses, BotTranslations.Embed_House_Author), BotTranslations.Embed_PaginatedHouse_Title, housesData, search, selectedPageIndex)
+    public PaginatedHouseMessageBuilder(
+        EmbedBuilderService embedBuilderService,
+        List<HouseData> housesData,
+        HouseSearchCategory searchCategory,
+        string search,
+        CultureInfo? culture,
+        int selectedPageIndex = 0)
+    : base(
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Houses, Translation.Get<BotTranslations>("Embed.House.Author", culture)),
+        Translation.Get<BotTranslations>("Embed.PaginatedHouse.Title", culture),
+        housesData,
+        search,
+        culture,
+        selectedPageIndex)
     {
         _searchCategory = searchCategory;
     }
 
-    public static PaginatedHouseMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static PaginatedHouseMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&
@@ -36,7 +50,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
             switch (searchCategory)
             {
                 case HouseSearchCategory.Name:
-                    housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(parameters[2]).ToList();
+                    housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(parameters[2], culture).ToList();
                     search = parameters[2];
                     break;
                 case HouseSearchCategory.Coordinate:
@@ -68,7 +82,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, housesData, searchCategory, search, selectedPageIndex);
+                return new(embedBuilderService, housesData, searchCategory, search, culture, selectedPageIndex);
             }
         }
 
@@ -82,12 +96,12 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {Formatter.Bold(x.Name)} {x.GetCoordinate()} ({x.Id})");
+        return _data.Select(x => $"- {Formatter.Bold(x.Name.ToString(_culture))} {x.GetCoordinate()} ({x.Id})");
     }
 
     protected override DiscordSelectComponent SelectBuilder()
     {
-        return HouseComponentsBuilder.HousesSelectBuilder(0, _data);
+        return HouseComponentsBuilder.HousesSelectBuilder(0, _data, _culture);
     }
 
     protected override string PreviousPacketBuilder()

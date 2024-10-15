@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Rides;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record RideGainAbilityEffect : Effect
 {
@@ -24,10 +26,10 @@ public sealed record RideGainAbilityEffect : Effect
         return DofusApi.Datacenter.RidesRepository.GetRideAbilityDataById(RideAbilityId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var rideAbilityName = DofusApi.Datacenter.RidesRepository.GetRideAbilityNameById(RideAbilityId);
+        var rideAbilityName = DofusApi.Datacenter.RidesRepository.GetRideAbilityNameById(RideAbilityId, culture);
 
-        return GetDescription(string.Empty, string.Empty, rideAbilityName);
+        return GetDescription(culture, string.Empty, string.Empty, rideAbilityName);
     }
 }

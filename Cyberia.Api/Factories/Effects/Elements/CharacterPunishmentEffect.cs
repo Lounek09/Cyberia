@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Effects;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterPunishmentEffect : Effect
 {
@@ -28,8 +30,8 @@ public sealed record CharacterPunishmentEffect : Effect
         return DofusApi.Datacenter.EffectsRepository.GetEffectDataById(BoostEffectId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(string.Empty, MaxBoost, Turn);
+        return GetDescription(culture, string.Empty, MaxBoost, Turn);
     }
 }

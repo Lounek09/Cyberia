@@ -18,14 +18,17 @@ namespace Cyberia.Salamandra.Services;
 public sealed class CommandsService
 {
     private readonly CachedChannelsManager _cachedChannelsManager;
+    private readonly CultureService _cultureService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CommandsService"/> class.
     /// </summary>
     /// <param name="cachedChannelsManager">The manager to get the channels from.</param>
-    public CommandsService(CachedChannelsManager cachedChannelsManager)
+    /// <param name="cultureService">The service to get the culture from.</param>
+    public CommandsService(CachedChannelsManager cachedChannelsManager, CultureService cultureService)
     {
         _cachedChannelsManager = cachedChannelsManager;
+        _cultureService = cultureService;
     }
 
     /// <summary>
@@ -36,17 +39,17 @@ public sealed class CommandsService
     public async Task OnCommandErrored(CommandsExtension _, CommandErroredEventArgs args)
     {
         var ctx = args.Context.As<SlashCommandContext>();
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
         var exception = args.Exception;
 
         if (exception is ChecksFailedException checkFailedException)
         {
-            var message = string.Join('\n',
-                checkFailedException.Errors.Select(x => x.ContextCheckAttribute switch
-                {
-                    RequireApplicationOwnerAttribute => BotTranslations.Command_Error_Check_RequireApplicationOwner,
-                    RequireGuildAttribute => BotTranslations.Command_Error_Check_RequireGuild,
-                    _ => Translation.Format(BotTranslations.Command_Error_Check_Unknown, x.ContextCheckAttribute.GetType().Name)
-                }));
+            var message = string.Join('\n', checkFailedException.Errors.Select(x => x.ContextCheckAttribute switch
+            {
+                RequireApplicationOwnerAttribute => Translation.Get<BotTranslations>("Command.Error.Check.RequireApplicationOwner", culture),
+                RequireGuildAttribute => Translation.Get<BotTranslations>("Command.Error.Check.RequireGuild", culture),
+                _ => Translation.Format(Translation.Get<BotTranslations>("Command.Error.Check.Unknown", culture), x.ContextCheckAttribute.GetType().Name)
+            }));
 
             await ctx.RespondAsync(message, true);
             return;
@@ -94,11 +97,11 @@ public sealed class CommandsService
 
         if (ctx.Interaction.ResponseState == DiscordInteractionResponseState.Unacknowledged)
         {
-            await ctx.RespondAsync(BotTranslations.Command_Error_UserResponse, true);
+            await ctx.RespondAsync(Translation.Get<BotTranslations>("Command.Error.UserResponse", culture), true);
         }
         else
         {
-            await ctx.FollowupAsync(BotTranslations.Command_Error_UserResponse, true);
+            await ctx.FollowupAsync(Translation.Get<BotTranslations>("Command.Error.UserResponse", culture), true);
         }
     }
 }

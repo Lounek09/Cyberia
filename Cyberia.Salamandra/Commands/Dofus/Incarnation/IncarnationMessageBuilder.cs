@@ -16,6 +16,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
 public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
@@ -29,20 +31,20 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     private readonly string _itemName;
     private readonly ItemTypeData? _itemTypeData;
     private readonly IEnumerable<SpellData> _spellsData;
+    private readonly CultureInfo? _culture;
 
-    public IncarnationMessageBuilder(EmbedBuilderService embedBuilderService, IncarnationData incarnationData)
+    public IncarnationMessageBuilder(EmbedBuilderService embedBuilderService, IncarnationData incarnationData, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _incarnationData = incarnationData;
         _itemData = incarnationData.GetItemData();
-        _itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(incarnationData.Id);
+        _itemName = incarnationData.GetItemName(culture);
         _itemTypeData = _itemData?.GetItemTypeData();
         _spellsData = incarnationData.GetSpellsData();
+        _culture = culture;
     }
 
-    public ItemTypeData? ItemTypeData => _itemTypeData;
-
-    public static IncarnationMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static IncarnationMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&
@@ -53,7 +55,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, incarnartionData);
+                return new(embedBuilderService, incarnartionData, culture);
             }
         }
 
@@ -72,12 +74,12 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
         if (_spellsData.Any())
         {
-            message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData));
+            message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData, _culture));
         }
 
         if (_itemData is not null)
         {
-            message.AddComponents(ItemComponentsBuilder.ItemButtonBuilder(_itemData));
+            message.AddComponents(ItemComponentsBuilder.ItemButtonBuilder(_itemData, 1, _culture));
         }
 
         return (T)message;
@@ -85,38 +87,41 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_Incarnation_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.Incarnation.Author", _culture))
             .WithTitle($"{_itemName} ({_incarnationData.Id})")
             .WithImageUrl(await _incarnationData.GetBigImagePathAsync(CdnImageSize.Size512));
 
         if (_itemData is not null)
         {
-            embed.WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description))
+            embed.WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description.ToString(_culture)))
                 .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128))
-                .AddField(BotTranslations.Embed_Field_Level_Title, _itemData.Level.ToString(), true)
-                .AddField(BotTranslations.Embed_Field_ItemType_Title, DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(_itemData.ItemTypeId), true)
+                .AddField(Translation.Get<BotTranslations>("Embed.Field.Level.Title", _culture), _itemData.Level.ToString(), true)
+                .AddField(
+                    Translation.Get<BotTranslations>("Embed.Field.ItemType.Title", _culture), _itemData.GetItemTypeName(_culture), true)
                 .AddEmptyField(true);
 
             IEnumerable<IEffect> effects = _incarnationData.GetRealEffects();
             if (effects.Any())
             {
-                embed.AddEffectFields(BotTranslations.Embed_Field_Effects_Title, effects, true);
+                embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
             }
 
             if (_itemData.WeaponData is not null)
             {
-                embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, ItemTypeData);
+                embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, _itemTypeData, _culture);
             }
         }
         else
         {
-            embed.WithDescription(Formatter.Italic(BotTranslations.Embed_Incarnation_Description_NotFound))
+            embed.WithDescription(Formatter.Italic(Translation.Get<BotTranslations>("Embed.Incarnation.Description.NotFound", _culture)))
                 .WithThumbnail($"{DofusApi.Config.CdnUrl}/images/items/unknown.png");
         }
 
         if (_spellsData.Any())
         {
-            embed.AddField(BotTranslations.Embed_Field_Spells_Title, string.Join('\n', _spellsData.Select(x => $"- {Formatter.Bold(x.Name)}")));
+            embed.AddField(
+                Translation.Get<BotTranslations>("Embed.Field.Spells.Title", _culture),
+                string.Join('\n', _spellsData.Select(x => $" - {Formatter.Bold(x.Name.ToString(_culture))}")));
         }
 
         return embed;

@@ -1,8 +1,10 @@
-﻿using Cyberia.Api.Factories.Criteria;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Managers;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record MarkNotTradableEffect : Effect
 {
@@ -24,13 +26,13 @@ public sealed record MarkNotTradableEffect : Effect
         return DateTime == DateTime.MaxValue;
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
         if (IsLinkedToAccount())
         {
-            return GetDescription(ApiTranslations.Effect_LinkedToAccount);
+            return GetDescription(culture, Translation.Get<ApiTranslations>("Effect.LinkedToAccount", culture));
         }
 
-        return GetDescription(DateTime.ToString("dd/MM/yyy HH:mm"));
+        return GetDescription(culture, DateTime.ToString(culture?.DateTimeFormat ?? CultureInfo.CurrentCulture.DateTimeFormat));
     }
 }

@@ -5,10 +5,12 @@ using Cyberia.Api.Data.ItemStats;
 using Cyberia.Api.Data.Npcs;
 using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Enums;
-using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Factories.Criteria.Elements;
+using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.Managers;
+using Cyberia.Langzilla.Enums;
 
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Items;
@@ -98,6 +100,16 @@ public sealed class ItemData : IDofusData<int>
     public ItemTypeData? GetItemTypeData()
     {
         return DofusApi.Datacenter.ItemsRepository.GetItemTypeDataById(ItemTypeId);
+    }
+
+    public string GetItemTypeName(Language language)
+    {
+        return GetItemTypeName(language.ToCulture());
+    }
+
+    public string GetItemTypeName(CultureInfo? culture = null)
+    {
+        return DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(ItemTypeId, culture);
     }
 
     public ItemStatsData? GetItemStatsData()

@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.Effects;
 
 using System.Buffers;

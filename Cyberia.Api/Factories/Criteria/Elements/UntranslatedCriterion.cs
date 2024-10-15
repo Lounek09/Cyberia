@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api.Factories.Criteria;
+﻿using System.Globalization;
+
+namespace Cyberia.Api.Factories.Criteria.Elements;
 
 public sealed record UntranslatedCriterion : Criterion
 {
@@ -17,8 +19,8 @@ public sealed record UntranslatedCriterion : Criterion
         return "Criterion.Unknown";
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(Id, CompressedCriterion);
+        return GetDescription(culture, Id, CompressedCriterion);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.Data.Houses;
 using Cyberia.Api.Managers;
+using Cyberia.Langzilla.Enums;
 
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Maps;
@@ -66,15 +68,22 @@ public sealed class MapData : IDofusData<int>
         return DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(MapSubAreaId);
     }
 
-    public string GetMapAreaName()
+    public string GetMapAreaName(Language language)
+    {
+        return GetMapAreaName(language.ToCulture());
+    }
+
+    public string GetMapAreaName(CultureInfo? culture = null)
     {
         var mapSubAreaData = GetMapSubAreaData();
         var mapSubAreaName = mapSubAreaData is null
-            ? $"{nameof(MapSubAreaData)} {Translation.Format(ApiTranslations.Unknown_Data, MapSubAreaId)}"
-            : mapSubAreaData.Name.ToString().TrimStart('/');
+            ? $"{nameof(MapSubAreaData)} {Translation.UnknownData(MapSubAreaId, culture)}"
+            : mapSubAreaData.Name.ToString(culture).TrimStart('/');
 
         var mapAreaData = mapSubAreaData?.GetMapAreaData();
-        var mapAreaName = mapAreaData is null ? $"{nameof(MapAreaData)} {Translation.Format(ApiTranslations.Unknown_Data, mapSubAreaData?.MapAreaId ?? 0)}" : mapAreaData.Name;
+        var mapAreaName = mapAreaData is null
+            ? $"{nameof(MapAreaData)} {Translation.UnknownData(mapSubAreaData?.MapAreaId ?? 0, culture)}"
+            : mapAreaData.Name.ToString(culture);
 
         return mapAreaName + (mapAreaName.Equals(mapSubAreaName) ? string.Empty : $" ({mapSubAreaName})");
     }

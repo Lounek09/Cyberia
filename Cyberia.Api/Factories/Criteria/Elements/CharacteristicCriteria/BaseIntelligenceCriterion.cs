@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api.Factories.Criteria;
+﻿using System.Globalization;
+
+namespace Cyberia.Api.Factories.Criteria.Elements.Characteristics;
 
 public sealed record BaseIntelligenceCriterion : Criterion
 {
@@ -25,8 +27,8 @@ public sealed record BaseIntelligenceCriterion : Criterion
         return $"Criterion.BaseIntelligence.{GetOperatorDescriptionKey()}";
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(Value);
+        return GetDescription(culture, Value);
     }
 }

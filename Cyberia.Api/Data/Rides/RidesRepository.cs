@@ -4,6 +4,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Rides;
@@ -33,13 +34,18 @@ public sealed class RidesRepository : DofusRepository, IDofusRepository
         return rideData;
     }
 
-    public string GetRideNameById(int id)
+    public string GetRideNameById(int id, Language language)
+    {
+        return GetRideNameById(id, language.ToCulture());
+    }
+
+    public string GetRideNameById(int id, CultureInfo? culture = null)
     {
         var rideData = GetRideDataById(id);
 
         return rideData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : rideData.Name;
+            ? Translation.UnknownData(id, culture)
+            : rideData.Name.ToString(culture);
     }
 
     public RideAbilityData? GetRideAbilityDataById(int id)
@@ -48,11 +54,18 @@ public sealed class RidesRepository : DofusRepository, IDofusRepository
         return rideAbilityData;
     }
 
-    public string GetRideAbilityNameById(int id)
+    public string GetRideAbilityNameById(int id, Language language)
+    {
+        return GetRideAbilityNameById(id, language.ToCulture());
+    }
+
+    public string GetRideAbilityNameById(int id, CultureInfo? culture = null)
     {
         var rideAbilityData = GetRideAbilityDataById(id);
 
-        return rideAbilityData is null ? Translation.Format(ApiTranslations.Unknown_Data, id) : rideAbilityData.Name;
+        return rideAbilityData is null
+            ? Translation.UnknownData(id, culture)
+            : rideAbilityData.Name.ToString(culture);
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

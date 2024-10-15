@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api.Factories.Criteria;
+﻿using System.Globalization;
+
+namespace Cyberia.Api.Factories.Criteria.Elements.Characteristics;
 
 public sealed record MovementPointCriterion : Criterion
 {
@@ -25,8 +27,8 @@ public sealed record MovementPointCriterion : Criterion
         return $"Criterion.MovementPoint.{GetOperatorDescriptionKey()}";
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(Value);
+        return GetDescription(culture, Value);
     }
 }

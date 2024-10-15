@@ -1,4 +1,7 @@
 ﻿using Cyberia.Api.Data.Quests;
+using Cyberia.Langzilla.Enums;
+
+using System.Globalization;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
 
@@ -13,8 +16,16 @@ public interface IQuestObjective
     QuestObjectiveData QuestObjectiveData { get; init; }
 
     /// <summary>
-    /// Generates a human-readable description of the quest objective.
+    /// Generates a human-readable description of the quest objective for the specified language.
     /// </summary>
-    /// <returns>The <see cref="DescriptionString"/> object containing the description of the quest objective.</returns>
-    DescriptionString GetDescription();
+    /// <param name="language">The language to generate the description for.</param>
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the quest objective for the specified language.</returns>
+    DescriptionString GetDescription(Language language);
+
+    /// <summary>
+    /// Generates a human-readable description of the quest objective for the specified culture.
+    /// </summary>
+    /// <param name="culture">The culture to generate the description for.</param>
+    /// <returns>The <see cref="DescriptionString"/> object containing the description of the quest objective for the specified culture.</returns>
+    DescriptionString GetDescription(CultureInfo? culture = null);
 }

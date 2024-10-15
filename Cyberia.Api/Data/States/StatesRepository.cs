@@ -3,6 +3,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.States;
@@ -27,13 +28,18 @@ public sealed class StatesRepository : DofusRepository, IDofusRepository
         return stateData;
     }
 
-    public string GetStateNameById(int id)
+    public string GetStateNameById(int id, Language language)
+    {
+        return GetStateNameById(id, language.ToCulture());
+    }
+
+    public string GetStateNameById(int id, CultureInfo? culture = null)
     {
         var stateData = GetStateDataById(id);
 
         return stateData is null
-            ? Translation.Format(ApiTranslations.Unknown_Data, id)
-            : stateData.Name;
+            ? Translation.UnknownData(id, culture)
+            : stateData.Name.ToString(culture);
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

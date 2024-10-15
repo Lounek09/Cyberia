@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Quests;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record QuestEndEffect : Effect
 {
@@ -24,10 +26,10 @@ public sealed record QuestEndEffect : Effect
         return DofusApi.Datacenter.QuestsRepository.GetQuestDataById(QuestId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var questName = DofusApi.Datacenter.QuestsRepository.GetQuestNameById(QuestId);
+        var questName = DofusApi.Datacenter.QuestsRepository.GetQuestNameById(QuestId, culture);
 
-        return GetDescription(string.Empty, string.Empty, questName);
+        return GetDescription(culture, string.Empty, string.Empty, questName);
     }
 }

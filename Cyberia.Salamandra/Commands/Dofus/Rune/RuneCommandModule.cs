@@ -14,6 +14,7 @@ using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
 
 using System.ComponentModel;
+using System.Globalization;
 using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Rune;
@@ -47,7 +48,7 @@ public sealed class RuneCommandModule
         [MinMaxValue(1, RuneItemMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -56,23 +57,26 @@ public sealed class RuneCommandModule
             var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                response = await new RuneItemMessageBuilder(_embedBuilderService, itemData, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new RuneItemMessageBuilder(_embedBuilderService, itemData, quantity, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
         {
-            var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(value).ToList();
+            var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(value, culture).ToList();
             if (itemsData.Count == 1)
             {
-                response = await new RuneItemMessageBuilder(_embedBuilderService, itemsData[0], quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new RuneItemMessageBuilder(_embedBuilderService, itemsData[0], quantity, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (itemsData.Count > 1)
             {
-                response = await new PaginatedRuneItemMessageBuilder(_embedBuilderService, itemsData, value, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedRuneItemMessageBuilder(_embedBuilderService, itemsData, value, quantity, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Item_NotFound);
+        response ??= new DiscordInteractionResponseBuilder().WithContent(Translation.Get<BotTranslations>("Item.NotFound", culture));
         await ctx.RespondAsync(response);
     }
 
@@ -94,27 +98,27 @@ public sealed class RuneCommandModule
         [MinMaxLength(1, 70)]
         string runeName)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var runeData = DofusApi.Datacenter.RunesRepository.GetRuneDataByName(runeName);
         if (runeData is null)
         {
             await ctx.RespondAsync($"""
-                {BotTranslations.IncorrectParameter}
-                {Formatter.Italic(BotTranslations.PossibleValues)} {Formatter.InlineCode(DofusApi.Datacenter.RunesRepository.GetAllRuneName())}
+                {Translation.Get<BotTranslations>("IncorrectParameter", culture)}
+                {Formatter.Italic(Translation.Get<BotTranslations>("PossibleValues", culture))} {Formatter.InlineCode(DofusApi.Datacenter.RunesRepository.GetAllRuneName())}
                 """);
             return;
         }
 
         var percentRuneExtractable = Math.Round(RuneManager.GetPercentStatExtractable(runeData, itemLvl, statAmount), 2);
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, BotTranslations.Embed_Rune_Author)
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Rune.Author", culture))
             .WithTitle(runeData.GetFullName());
 
         if (statAmount == 1)
         {
             embed.WithDescription(Translation.Format(
-                BotTranslations.Embed_Rune_Description_One,
+                Translation.Get<BotTranslations>("Embed.Rune.Description.One", culture),
                 Emojis.BaRune(runeData.Id),
                 Formatter.Bold(percentRuneExtractable.ToString()),
                 Formatter.Bold(itemLvl.ToString())));
@@ -122,7 +126,7 @@ public sealed class RuneCommandModule
         else
         {
             embed.WithDescription(Translation.Format(
-                BotTranslations.Embed_Rune_Description_Multiple,
+                Translation.Get<BotTranslations>("Embed.Rune.Description.Multiple", culture),
                 Emojis.BaRune(runeData.Id),
                 Formatter.Bold(percentRuneExtractable.ToString()),
                 Formatter.Bold(itemLvl.ToString()),
@@ -132,7 +136,7 @@ public sealed class RuneCommandModule
             {
                 var runeBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AverageMultiplicator);
 
-                embed.AddField(BotTranslations.ShortAverage, $"{Emojis.BaRune(runeData.Id)} {Formatter.Bold(runeBundle.BaAmount.ToString())}");
+                embed.AddField(Translation.Get<BotTranslations>("ShortAverage", culture), $"{Emojis.BaRune(runeData.Id)} {Formatter.Bold(runeBundle.BaAmount.ToString())}");
             }
             else
             {
@@ -140,35 +144,35 @@ public sealed class RuneCommandModule
                 var averageRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AverageMultiplicator);
                 var maxRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.MaxMultiplicator);
 
-                embed.AddField(BotTranslations.ShortMinimum, GetRuneBundleContentFieldStatCommand(minRuneBundle), true);
-                embed.AddField(BotTranslations.ShortAverage, GetRuneBundleContentFieldStatCommand(averageRuneBundle), true);
-                embed.AddField(BotTranslations.ShortMaximum, GetRuneBundleContentFieldStatCommand(maxRuneBundle), true);
+                embed.AddField(Translation.Get<BotTranslations>("ShortMinimum", culture), GetRuneBundleContentFieldStatCommand(minRuneBundle, culture), true);
+                embed.AddField(Translation.Get<BotTranslations>("ShortAverage", culture), GetRuneBundleContentFieldStatCommand(averageRuneBundle, culture), true);
+                embed.AddField(Translation.Get<BotTranslations>("ShortMaximum", culture), GetRuneBundleContentFieldStatCommand(maxRuneBundle, culture), true);
 
                 if (runeData.HasRa && maxRuneBundle.RaAmount == 1 && minRuneBundle.RaAmount == 0)
                 {
                     var percentRaObtention = Math.Round(RuneManager.GetPercentToObtainRune(runeData, RuneType.RA, itemLvl, statAmount), 2);
-                    embed.AddField(BotTranslations.Embed_Field_RuneRaRate_Title, $"{Emojis.RaRune(runeData.Id)} {Formatter.Bold(percentRaObtention.ToString())}%");
+                    embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RuneRaRate.Title", culture), $"{Emojis.RaRune(runeData.Id)} {Formatter.Bold(percentRaObtention.ToString())}%");
                 }
                 else if (runeData.HasPa && maxRuneBundle.PaAmount == 1 && minRuneBundle.PaAmount == 0)
                 {
                     var percentPaObtention = Math.Round(RuneManager.GetPercentToObtainRune(runeData, RuneType.PA, itemLvl, statAmount), 2);
-                    embed.AddField(BotTranslations.Embed_Field_RunePaRate_Title, $"{Emojis.PaRune(runeData.Id)} {Formatter.Bold(percentPaObtention.ToString())}%");
+                    embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RunePaRate.Title", culture), $"{Emojis.PaRune(runeData.Id)} {Formatter.Bold(percentPaObtention.ToString())}%");
                 }
             }
         }
 
-        embed.AddField(BotTranslations.Embed_Field_Source_Title, "https://forums.jeuxonline.info/sujet/1045383/les-taux-de-brisage");
+        embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Source.Title", culture), "https://forums.jeuxonline.info/sujet/1045383/les-taux-de-brisage");
 
         await ctx.RespondAsync(embed);
     }
 
-    private static string GetRuneBundleContentFieldStatCommand(RuneBundle runeBundle)
+    private static string GetRuneBundleContentFieldStatCommand(RuneBundle runeBundle, CultureInfo? culture)
     {
         StringBuilder builder = new();
 
         builder.Append(Emojis.BaRune(runeBundle.RuneData.Id));
         builder.Append(' ');
-        builder.Append(Formatter.Bold(runeBundle.BaAmount.ToFormattedString()));
+        builder.Append(Formatter.Bold(runeBundle.BaAmount.ToFormattedString(culture)));
 
         if (runeBundle.RemainingBaPercent > 0)
         {
@@ -182,7 +186,7 @@ public sealed class RuneCommandModule
             builder.Append('\n');
             builder.Append(Emojis.PaRune(runeBundle.RuneData.Id));
             builder.Append(' ');
-            builder.Append(Formatter.Bold(runeBundle.PaAmount.ToFormattedString()));
+            builder.Append(Formatter.Bold(runeBundle.PaAmount.ToFormattedString(culture)));
         }
 
         if (runeBundle.RaAmount > 0)
@@ -190,7 +194,7 @@ public sealed class RuneCommandModule
             builder.Append('\n');
             builder.Append(Emojis.RaRune(runeBundle.RuneData.Id));
             builder.Append(' ');
-            builder.Append(Formatter.Bold(runeBundle.RaAmount.ToFormattedString()));
+            builder.Append(Formatter.Bold(runeBundle.RaAmount.ToFormattedString(culture)));
         }
 
         return builder.ToString();

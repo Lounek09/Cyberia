@@ -1,4 +1,8 @@
 ﻿using Cyberia.Api.Data.Alignments;
+using Cyberia.Api.Factories.AlignmentFeatEffects.Elements;
+using Cyberia.Langzilla.Enums;
+
+using System.Globalization;
 
 namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
@@ -21,10 +25,15 @@ public abstract record AlignmentFeatEffect : IAlignmentFeatEffect
         return DofusApi.Datacenter.AlignmentsRepository.GetAlignmentFeatEffectDataById(Id);
     }
 
-    public abstract DescriptionString GetDescription();
+    public DescriptionString GetDescription(Language language)
+    {
+        return GetDescription(language.ToCulture());
+    }
+
+    public abstract DescriptionString GetDescription(CultureInfo? culture = null);
 
     /// <inheritdoc cref="IAlignmentFeatEffect.GetDescription"/>/>
-    protected DescriptionString GetDescription(params int[] parameters)
+    protected DescriptionString GetDescription(CultureInfo? culture, params int[] parameters)
     {
         var alignmentFeatEffect = GetAlignmentFeatEffectData();
         if (alignmentFeatEffect is null)
@@ -34,11 +43,11 @@ public abstract record AlignmentFeatEffect : IAlignmentFeatEffect
                 Log.Warning("Unknown AlignmentFeatEffectData {@AlignmentFeatEffect}", this);
             }
 
-            return new(ApiTranslations.AlignmentFeatEffect_Unknown,
+            return new DescriptionString(Translation.Get<ApiTranslations>("AlignmentFeatEffect.Unknown", culture),
                 Id.ToString(),
                 string.Join(',', parameters));
         }
 
-        return new(alignmentFeatEffect.Description, Array.ConvertAll(parameters, x => x.ToString()));
+        return new DescriptionString(alignmentFeatEffect.Description.ToString(culture), Array.ConvertAll(parameters, x => x.ToString()));
     }
 }

@@ -36,7 +36,7 @@ public sealed class MonsterCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -45,23 +45,26 @@ public sealed class MonsterCommandModule
             var monsterData = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(id);
             if (monsterData is not null)
             {
-                response = await new MonsterMessageBuilder(_embedBuilderService, monsterData).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new MonsterMessageBuilder(_embedBuilderService, monsterData, 1, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
         {
-            var monstersData = DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(value).ToList();
+            var monstersData = DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(value, culture).ToList();
             if (monstersData.Count == 1)
             {
-                response = await new MonsterMessageBuilder(_embedBuilderService, monstersData[0]).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new MonsterMessageBuilder(_embedBuilderService, monstersData[0], 1, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (monstersData.Count > 1)
             {
-                response = await new PaginatedMonsterMessageBuilder(_embedBuilderService, monstersData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedMonsterMessageBuilder(_embedBuilderService, monstersData, value, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Monster_NotFound);
+        response ??= new DiscordInteractionResponseBuilder().WithContent(Translation.Get<BotTranslations>("Monster.NotFound", culture));
         await ctx.RespondAsync(response);
     }
 }

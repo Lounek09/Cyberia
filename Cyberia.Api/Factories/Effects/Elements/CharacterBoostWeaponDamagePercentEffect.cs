@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.Items;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterBoostWeaponDamagePercentEffect : Effect
 {
@@ -26,12 +28,12 @@ public sealed record CharacterBoostWeaponDamagePercentEffect : Effect
         return DofusApi.Datacenter.ItemsRepository.GetItemTypeDataById(ItemTypeId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
         var itemTypeName = ItemTypeId == 0
-            ? ApiTranslations.Weapons
-            : DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(ItemTypeId);
+            ? Translation.Get<ApiTranslations>("Weapons", culture)
+            : DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(ItemTypeId, culture);
 
-        return GetDescription(itemTypeName, PercentDamage);
+        return GetDescription(culture, itemTypeName, PercentDamage);
     }
 }

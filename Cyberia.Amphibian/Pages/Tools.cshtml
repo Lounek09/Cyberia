@@ -1,7 +1,7 @@
 ﻿@page
 @model ToolsPageModel
 @{
-	ViewBag.Title = WebTranslations.Page_Tools_Title;
+	ViewBag.Title = Translation.Get<WebTranslations>("Page.Tools.Title");
 }
 
-<h1>@WebTranslations.Page_Tools_Title</h1>
+<h1>@ViewBag.Title</h1>

@@ -1,8 +1,10 @@
 ﻿using Cyberia.Api.Data.TTG;
-using Cyberia.Api.Factories.Criteria;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
 
-namespace Cyberia.Api.Factories.Effects;
+using System.Globalization;
+
+namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record GiveTTGCardFromFamilyEffect : Effect
 {
@@ -24,10 +26,10 @@ public sealed record GiveTTGCardFromFamilyEffect : Effect
         return DofusApi.Datacenter.TTGRepository.GetTTGFamilyDataById(TTGFamilyId);
     }
 
-    public override DescriptionString GetDescription()
+    public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var ttgFamilyName = DofusApi.Datacenter.TTGRepository.GetTTGFamilyNameById(TTGFamilyId);
+        var ttgFamilyName = DofusApi.Datacenter.TTGRepository.GetTTGFamilyNameById(TTGFamilyId, culture);
 
-        return GetDescription(string.Empty, string.Empty, ttgFamilyName);
+        return GetDescription(culture, string.Empty, string.Empty, ttgFamilyName);
     }
 }

@@ -36,7 +36,7 @@ public sealed class ItemSetCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -45,23 +45,26 @@ public sealed class ItemSetCommandModule
             var itemSetData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(id);
             if (itemSetData is not null)
             {
-                response = await new ItemSetMessageBuilder(_embedBuilderService, itemSetData, itemSetData.Effects.Count).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new ItemSetMessageBuilder(_embedBuilderService, itemSetData, itemSetData.Effects.Count, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
         {
-            var itemSetsData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(value).ToList();
+            var itemSetsData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(value, culture).ToList();
             if (itemSetsData.Count == 1)
             {
-                response = await new ItemSetMessageBuilder(_embedBuilderService, itemSetsData[0], itemSetsData[0].Effects.Count).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new ItemSetMessageBuilder(_embedBuilderService, itemSetsData[0], itemSetsData[0].Effects.Count, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (itemSetsData.Count > 1)
             {
-                response = await new PaginatedItemSetMessageBuilder(_embedBuilderService, itemSetsData, value).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedItemSetMessageBuilder(_embedBuilderService, itemSetsData, value, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.ItemSet_NotFound);
+        response ??= new DiscordInteractionResponseBuilder().WithContent(Translation.Get<BotTranslations>("ItemSet.NotFound", culture));
         await ctx.RespondAsync(response);
     }
 }

@@ -11,6 +11,7 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
 using System.Text;
 
 namespace Cyberia.Salamandra.Commands.Dofus.Monster;
@@ -27,8 +28,9 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
     private readonly MonsterRaceData? _monsterRaceData;
     private readonly MonsterSuperRaceData? _monsterSuperRaceData;
     private readonly AlignmentData? _alignmentData;
+    private readonly CultureInfo? _culture;
 
-    public MonsterMessageBuilder(EmbedBuilderService embedBuilderService, MonsterData monster, int selectedGrade = 1)
+    public MonsterMessageBuilder(EmbedBuilderService embedBuilderService, MonsterData monster, int selectedGrade, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _monsterData = monster;
@@ -37,9 +39,10 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
         _monsterRaceData = monster.GetMonsterRaceData();
         _monsterSuperRaceData = _monsterRaceData?.GetMonsterSuperRaceData();
         _alignmentData = _monsterData.GetAlignmentData();
+        _culture = culture;
     }
 
-    public static MonsterMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static MonsterMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -51,7 +54,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new MonsterMessageBuilder(embedBuilderService, monsterData, selectedGrade);
+                return new MonsterMessageBuilder(embedBuilderService, monsterData, selectedGrade, culture);
             }
         }
 
@@ -85,30 +88,39 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Bestiary, BotTranslations.Embed_Monster_Author)
-            .WithTitle($"{_monsterData.Name} ({_monsterData.Id}) - {BotTranslations.Rank} {_selectedGrade}")
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Bestiary, Translation.Get<BotTranslations>("Embed.Monster.Author", _culture))
+            .WithTitle($"{_monsterData.Name.ToString(_culture)} ({_monsterData.Id}) - {Translation.Get<BotTranslations>("Rank", _culture)} {_selectedGrade}")
             .WithThumbnail(await _monsterData.GetBigImagePathAsync(CdnImageSize.Size128));
 
         if (_monsterSuperRaceData is not null)
         {
-            embed.AddField(BotTranslations.Embed_Field_MonsterSuperRaceData_Title, _monsterSuperRaceData.Name, true);
+            embed.AddField(
+                Translation.Get<BotTranslations>("Embed.Field.MonsterSuperRaceData.Title", _culture),
+                _monsterSuperRaceData.Name.ToString(_culture),
+                true);
         }
 
         if (_monsterRaceData is not null)
         {
-            embed.AddField(BotTranslations.Embed_Field_MonsterRaceData_Title, _monsterRaceData.Name, true);
+            embed.AddField(
+                Translation.Get<BotTranslations>("Embed.Field.MonsterRaceData.Title", _culture),
+                _monsterRaceData.Name.ToString(_culture),
+                true);
+        }
+
+        if (_alignmentData is not null)
+        {
+            embed.AddField(
+                Translation.Get<BotTranslations>("Embed.Field.Alignment.Title", _culture),
+                _alignmentData.Name.ToString(_culture),
+                true);
         }
 
         if (_monsterGradeData is not null)
         {
-            if (_alignmentData is not null)
-            {
-                embed.AddField(BotTranslations.Embed_Field_Alignment_Title, _alignmentData.Name, true);
-            }
-
             StringBuilder characBuilder = new();
 
-            characBuilder.Append(BotTranslations.ShortLevel);
+            characBuilder.Append(Translation.Get<BotTranslations>("ShortLevel", _culture));
             characBuilder.Append(' ');
             characBuilder.Append(Formatter.Bold(_monsterGradeData.Level.ToString()));
             characBuilder.Append('\n');
@@ -116,53 +128,53 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             if (_monsterGradeData.LifePoint is not null)
             {
                 characBuilder.Append(Emojis.EffectHealthPoint);
-                characBuilder.Append(Formatter.Bold(_monsterGradeData.LifePoint.Value.ToFormattedString()));
+                characBuilder.Append(Formatter.Bold(_monsterGradeData.LifePoint.Value.ToFormattedString(_culture)));
                 characBuilder.Append(' ');
             }
 
             if (_monsterGradeData.ActionPoint is not null)
             {
                 characBuilder.Append(Emojis.EffectAp);
-                characBuilder.Append(Formatter.Bold(_monsterGradeData.ActionPoint.Value.ToFormattedString()));
+                characBuilder.Append(Formatter.Bold(_monsterGradeData.ActionPoint.Value.ToFormattedString(_culture)));
                 characBuilder.Append(' ');
             }
 
             if (_monsterGradeData.MovementPoint is not null)
             {
                 characBuilder.Append(Emojis.EffectMp);
-                characBuilder.Append(Formatter.Bold(_monsterGradeData.MovementPoint.Value.ToFormattedString()));
+                characBuilder.Append(Formatter.Bold(_monsterGradeData.MovementPoint.Value.ToFormattedString(_culture)));
                 characBuilder.Append(' ');
             }
 
             characBuilder.Append(Emojis.EffectApResistance);
-            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetActionPointDodge().ToFormattedString()));
+            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetActionPointDodge().ToFormattedString(_culture)));
             characBuilder.Append("% ");
 
             characBuilder.Append(Emojis.EffectMpResistance);
-            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetMovementPointDodge().ToFormattedString()));
+            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetMovementPointDodge().ToFormattedString(_culture)));
             characBuilder.Append("%\n");
 
             characBuilder.Append(Emojis.EffectNeutralResistance);
-            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetNeutralResistance().ToFormattedString()));
+            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetNeutralResistance().ToFormattedString(_culture)));
             characBuilder.Append("% ");
 
             characBuilder.Append(Emojis.EffectEarthResistance);
-            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetEarthResistance().ToFormattedString()));
+            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetEarthResistance().ToFormattedString(_culture)));
             characBuilder.Append("% ");
 
             characBuilder.Append(Emojis.EffectFireResistance);
-            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetFireResistance().ToFormattedString()));
+            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetFireResistance().ToFormattedString(_culture)));
             characBuilder.Append("% ");
 
             characBuilder.Append(Emojis.EffectWaterResistance);
-            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetWaterResistance().ToFormattedString()));
+            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetWaterResistance().ToFormattedString(_culture)));
             characBuilder.Append("% ");
 
             characBuilder.Append(Emojis.EffectAirResistance);
-            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetAirResistance().ToFormattedString()));
+            characBuilder.Append(Formatter.Bold(_monsterGradeData.GetAirResistance().ToFormattedString(_culture)));
             characBuilder.Append('%');
 
-            embed.AddField(BotTranslations.Embed_Field_Characteristics_Title, characBuilder.ToString());
+            embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Characteristics.Title", _culture), characBuilder.ToString());
 
             if (!string.IsNullOrEmpty(_monsterData.TrelloUrl))
             {
@@ -180,7 +192,11 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             var y = i + 1;
             if (_monsterData.GetMonsterGradeData(y) is not null)
             {
-                yield return new(DiscordButtonStyle.Primary, GetPacket(_monsterData.Id,y), y.ToString(), _selectedGrade == y);
+                yield return new DiscordButtonComponent(
+                    DiscordButtonStyle.Primary,
+                    GetPacket(_monsterData.Id, y),
+                    y.ToString(),
+                    _selectedGrade == y);
             }
         }
     }
@@ -192,7 +208,11 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             var y = i + 1;
             if (_monsterData.GetMonsterGradeData(y) is not null)
             {
-                yield return new(DiscordButtonStyle.Primary, GetPacket(_monsterData.Id, y), y.ToString(), _selectedGrade == y);
+                yield return new DiscordButtonComponent(
+                    DiscordButtonStyle.Primary,
+                    GetPacket(_monsterData.Id, y),
+                    y.ToString(),
+                    _selectedGrade == y);
             }
         }
     }

@@ -40,7 +40,7 @@ public sealed class CraftCommandModule
         [MinMaxValue(1, CraftMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
-        using CultureScope scope = new(await _cultureService.GetCultureAsync(ctx.Interaction));
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -49,23 +49,26 @@ public sealed class CraftCommandModule
             var craftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(id);
             if (craftData is not null)
             {
-                response = await new CraftMessageBuilder(_embedBuilderService, craftData, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(_embedBuilderService, craftData, quantity, false, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
         {
-            var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(value).ToList();
+            var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(value, culture).ToList();
             if (craftsData.Count == 1)
             {
-                response = await new CraftMessageBuilder(_embedBuilderService, craftsData[0], quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new CraftMessageBuilder(_embedBuilderService, craftsData[0], quantity, false, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (craftsData.Count > 1)
             {
-                response = await new PaginatedCraftMessageBuilder(_embedBuilderService, craftsData, value, quantity).BuildAsync<DiscordInteractionResponseBuilder>();
+                response = await new PaginatedCraftMessageBuilder(_embedBuilderService, craftsData, value, quantity, culture)
+                    .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
 
-        response ??= new DiscordInteractionResponseBuilder().WithContent(BotTranslations.Craft_NotFound);
+        response ??= new DiscordInteractionResponseBuilder().WithContent(Translation.Get<BotTranslations>("Craft.NotFound", culture));
         await ctx.RespondAsync(response);
     }
 }

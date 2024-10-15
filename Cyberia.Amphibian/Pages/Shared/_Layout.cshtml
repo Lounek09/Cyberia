@@ -22,15 +22,15 @@
 		<vc:culture-form />
 		<nav class="menu">
 			<ul>
-				<li><a asp-culture-page="/breeds" main-menu-item>@WebTranslations.Page_Breeds_Title</a></li>
-				<li><a asp-culture-page="/items" main-menu-item>@WebTranslations.Page_Items_Title</a></li>
-				<li><a asp-culture-page="/spells" main-menu-item>@WebTranslations.Page_Spells_Title</a></li>
-				<li><a asp-culture-page="/monsters" main-menu-item>@WebTranslations.Page_Monsters_Title</a></li>
-				<li><a asp-culture-page="/dungeons" main-menu-item>@WebTranslations.Page_Dungeons_Title</a></li>
-				<li><a asp-culture-page="/quests" main-menu-item>@WebTranslations.Page_Quests_Title</a></li>
-				<li><a asp-culture-page="/tools" main-menu-item>@WebTranslations.Page_Tools_Title</a></li>
+				<li><a asp-culture-page="/breeds" main-menu-item>@(Translation.Get<WebTranslations>("Page.Breeds.Title"))</a></li>
+				<li><a asp-culture-page="/items" main-menu-item>@(Translation.Get<WebTranslations>("Page.Items.Title"))</a></li>
+				<li><a asp-culture-page="/spells" main-menu-item>@(Translation.Get<WebTranslations>("Page.Spells.Title"))</a></li>
+				<li><a asp-culture-page="/monsters" main-menu-item>@(Translation.Get<WebTranslations>("Page.Monsters.Title"))</a></li>
+				<li><a asp-culture-page="/dungeons" main-menu-item>@(Translation.Get<WebTranslations>("Page.Dungeons.Title"))</a></li>
+				<li><a asp-culture-page="/quests" main-menu-item>@(Translation.Get<WebTranslations>("Page.Quests.Title"))</a></li>
+				<li><a asp-culture-page="/tools" main-menu-item>@(Translation.Get<WebTranslations>("Page.Tools.Title"))</a></li>
 				<li></li>
-				<li><a asp-culture-page="/salamandra" main-menu-item>@WebTranslations.Page_Salamandra_Title</a></li>
+				<li><a asp-culture-page="/salamandra" main-menu-item>@(Translation.Get<WebTranslations>("Page.Salamandra.Title"))</a></li>
 			</ul>
 		</nav>
 		<vc:breadcrumbs-nav />
@@ -42,8 +42,8 @@
 
 	<footer>
 		<div class="left">
-			<p><span class="icon-code"></span>&nbsp;@WebTranslations.Layout_DevelopedBy Lounek</p>
-			<p><a href="@($"{Context.Request.Scheme}://{Context.Request.Host}")">@Context.Request.Host</a>&nbsp;@WebTranslations.Layout_NotAffiliated&nbsp;<a href="https://www.ankama.com">Ankama Games</a></p>
+			<p><span class="icon-code"></span>&nbsp;@(Translation.Get<WebTranslations>("Layout.DevelopedBy")) Lounek</p>
+			<p><a href="@($"{Context.Request.Scheme}://{Context.Request.Host}")">@Context.Request.Host</a>&nbsp;@(Translation.Get<WebTranslations>("Layout.NotAffiliated"))&nbsp;<a href="https://www.ankama.com">Ankama Games</a></p>
 		</div>
 		<div class="right">
 			@if (!string.IsNullOrEmpty(DofusApi.Config.DiscordInviteUrl))

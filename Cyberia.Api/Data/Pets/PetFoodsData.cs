@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Monsters;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;

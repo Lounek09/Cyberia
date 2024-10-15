@@ -9,6 +9,8 @@ using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra.Commands.Dofus.ItemSet;
 
 public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<ItemSetData>
@@ -16,23 +18,35 @@ public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<Ite
     public const string PacketHeader = "PIS";
     public const int PacketVersion = 2;
 
-    public PaginatedItemSetMessageBuilder(EmbedBuilderService embedBuilderService, List<ItemSetData> itemSetsData, string search, int selectedPageIndex = 0)
-        : base(embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, BotTranslations.Embed_ItemSet_Author), BotTranslations.Embed_PaginatedItemSet_Title, itemSetsData, search, selectedPageIndex)
+    public PaginatedItemSetMessageBuilder(
+        EmbedBuilderService embedBuilderService,
+        List<ItemSetData> itemSetsData,
+        string search,
+        CultureInfo? culture,
+        int selectedPageIndex = 0)
+    : base(
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.ItemSet.Author", culture)),
+        Translation.Get<BotTranslations>("Embed.PaginatedItemSet.Title", culture),
+        itemSetsData,
+        search,
+        culture,
+        selectedPageIndex)
     {
+
     }
 
-    public static PaginatedItemSetMessageBuilder? Create(IServiceProvider provider, int version, string[] parameters)
+    public static PaginatedItemSetMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var itemSetsData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(parameters[1]).ToList();
+            var itemSetsData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(parameters[1], culture).ToList();
             if (itemSetsData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, itemSetsData, parameters[1], selectedPageIndex);
+                return new(embedBuilderService, itemSetsData, parameters[1], culture, selectedPageIndex);
             }
         }
 
@@ -46,12 +60,12 @@ public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<Ite
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {BotTranslations.ShortLevel}{x.GetLevel()} {Formatter.Bold(x.Name)} ({x.Id})");
+        return _data.Select(x => $"- {Translation.Get<BotTranslations>("ShortLevel", _culture)}{x.GetLevel()} {Formatter.Bold(x.Name.ToString(_culture))} ({x.Id})");
     }
 
     protected override DiscordSelectComponent SelectBuilder()
     {
-        return ItemSetComponentsBuilder.ItemSetsSelectBuilder(0, _data);
+        return ItemSetComponentsBuilder.ItemSetsSelectBuilder(0, _data, _culture);
     }
 
     protected override string PreviousPacketBuilder()
