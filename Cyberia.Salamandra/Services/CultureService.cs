@@ -41,6 +41,6 @@ public sealed class CultureService
 
         return string.IsNullOrEmpty(user?.Locale)
             ? interaction.GetCulture()
-            : new CultureInfo(user.Locale);
+            : CultureInfo.GetCultureInfo(user.Locale);
     }
 }

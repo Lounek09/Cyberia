@@ -43,15 +43,15 @@ public enum Language
 /// </summary>
 public static class LanguageExtensions
 {
-    internal static readonly FrozenDictionary<Language, CultureInfo> _toCultures = new Dictionary<Language, CultureInfo>()
+    private static readonly FrozenDictionary<Language, CultureInfo> s_cachedCultureByLanguage = new Dictionary<Language, CultureInfo>()
     {
-        { Language.fr, new CultureInfo("fr") },
-        { Language.en, new CultureInfo("en") },
-        { Language.es, new CultureInfo("es") },
-        { Language.de, new CultureInfo("de") },
-        { Language.it, new CultureInfo("it") },
-        { Language.nl, new CultureInfo("nl") },
-        { Language.pt, new CultureInfo("pt") }
+        { Language.fr, CultureInfo.GetCultureInfo("fr") },
+        { Language.en, CultureInfo.GetCultureInfo("en") },
+        { Language.es, CultureInfo.GetCultureInfo("es") },
+        { Language.de, CultureInfo.GetCultureInfo("de") },
+        { Language.it, CultureInfo.GetCultureInfo("it") },
+        { Language.nl, CultureInfo.GetCultureInfo("nl") },
+        { Language.pt, CultureInfo.GetCultureInfo("pt") }
     }.ToFrozenDictionary();
 
     public static string ToStringFast(this Language language)
@@ -66,7 +66,8 @@ public static class LanguageExtensions
     /// <returns>The corresponding <see cref="CultureInfo"/>; if not found, the <see cref="CultureInfo"/> for <see cref="Language.en"/>.</returns>
     public static CultureInfo ToCulture(this Language language)
     {
-        return _toCultures.TryGetValue(language, out var result) ? result : _toCultures[Language.en];
+        s_cachedCultureByLanguage.TryGetValue(language, out var result);
+        return result ?? s_cachedCultureByLanguage[Language.en];
     }
 
     /// <summary>

@@ -7,6 +7,9 @@ using System.Globalization;
 
 namespace Cyberia.Salamandra.Extensions.DSharpPlus;
 
+/// <summary>
+/// Provides extension methods for the <see cref="DiscordInteraction"/> class.
+/// </summary>
 public static class DiscordInteractionExtensions
 {
     /// <summary>
@@ -24,11 +27,11 @@ public static class DiscordInteractionExtensions
 
         try
         {
-            return new CultureInfo(locale[..2]);
+            return CultureInfo.GetCultureInfo(locale[..2]);
         }
         catch (CultureNotFoundException e)
         {
-            Log.Error(e, $"Unknown culture {locale} from Discord.");
+            Log.Error(e, $"Unknown {locale} culture from Discord.");
         }
 
         return DofusApi.Config.SupportedLanguages[0].ToCulture();
