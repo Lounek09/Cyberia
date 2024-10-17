@@ -41,7 +41,10 @@ public sealed class CommandsService
         var ctx = args.Context.As<SlashCommandContext>();
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
         var exception = args.Exception;
+        var interaction = ctx.Interaction;
+        var commandName = ctx.Command?.FullName ?? "NotFound";
 
+        // If the exception is a checks failed exception, we just need to respond to the user.
         if (exception is ChecksFailedException checkFailedException)
         {
             var message = string.Join('\n', checkFailedException.Errors.Select(x => x.ContextCheckAttribute switch
@@ -55,37 +58,37 @@ public sealed class CommandsService
             return;
         }
 
-        var commandName = ctx.Command?.FullName ?? "NotFound";
-
-        Log.Error(
-            exception,
-            "An error occurred when {UserName} ({UserId}) used the {CommandName} command",
-            ctx.User.Username,
-            ctx.User.Id,
-            commandName);
-
-        if (exception is DiscordException discordException)
-        {
-            Log.Error("With JsonMessage:\n{JsonMessage}", discordException.JsonMessage);
-        }
-
+        // If the interaction timed out, we ignore it.
         if (exception is TaskCanceledException && exception.InnerException is TimeoutException)
         {
             return;
         }
 
-        var commandArgs = string.Join('\n',
-            ctx.Arguments.Select(x => $"- {x.Key.Name} : {Formatter.InlineCode(x.Value is null ? "null" : x.Value.ToString() ?? string.Empty)}"));
+        // If the exception is a discord exception, we get the json message.
+        string exceptionBlock;
+        if (exception is DiscordException discordException)
+        {
+            Log.Error(exception, "A discord error occurred when {UserName} ({UserId}) used the {CommandName} command.\n{JsonMessage}",
+                interaction.User.Username, interaction.User.Id, commandName, discordException.JsonMessage);
+
+            exceptionBlock = $"{exception.Message}\n{discordException.JsonMessage}\n{exception.StackTrace}";
+        }
+        else
+        {
+            Log.Error(exception, "An error occurred when {UserName} ({UserId}) used the {CommandName} command",
+                interaction.User.Username, interaction.User.Id, commandName);
+
+            exceptionBlock = $"{exception.Message}\n{exception.StackTrace}";
+        }
 
         DiscordEmbedBuilder embed = new()
         {
             Title = "An error occurred when executing a slash command",
             Description = $"""
-            An error occurred when {Formatter.Sanitize(ctx.User.Username)} ({ctx.User.Mention}) used the {Formatter.Bold(commandName)} command.
-            {(commandArgs.Length > 0 ? $"\n{Formatter.Bold("Arguments :")}\n{commandArgs}\n" : string.Empty)}
-            {Formatter.Bold($"{exception.GetType().Name} :")}
-            {Formatter.BlockCode($"{exception.Message}\n{exception.StackTrace}".WithMaxLength(Constant.MaxEmbedDescriptionSize - 500))}
-            """,
+                An error occurred when {Formatter.Sanitize(interaction.User.Username)} ({interaction.User.Mention}) used the {Formatter.Bold(commandName)} command.
+                {Formatter.Bold($"{exception.GetType().Name} :")}
+                {Formatter.BlockCode(exceptionBlock.WithMaxLength(Constant.MaxEmbedDescriptionSize - 500))}
+                """,
             Color = DiscordColor.Red
         };
 
@@ -95,13 +98,14 @@ public sealed class CommandsService
         await _cachedChannelsManager.SendErrorMessage(embed);
 #endif
 
-        if (ctx.Interaction.ResponseState == DiscordInteractionResponseState.Unacknowledged)
+        var response = Translation.Get<BotTranslations>("Command.Error.Internal", culture);
+        if (interaction.ResponseState == DiscordInteractionResponseState.Unacknowledged)
         {
-            await ctx.RespondAsync(Translation.Get<BotTranslations>("Command.Error.UserResponse", culture), true);
+            await ctx.RespondAsync(response, true);
         }
         else
         {
-            await ctx.FollowupAsync(Translation.Get<BotTranslations>("Command.Error.UserResponse", culture), true);
+            await ctx.FollowupAsync(response, true);
         }
     }
 }
