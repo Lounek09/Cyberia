@@ -21,19 +21,22 @@ public sealed class GuildsEventHandler : IEventHandler<GuildCreatedEventArgs>, I
         _cachedChannelsManager = cachedChannelsManager;
     }
 
-    public async Task HandleEventAsync(DiscordClient _, GuildCreatedEventArgs args)
+    public async Task HandleEventAsync(DiscordClient _, GuildCreatedEventArgs eventArgs)
     {
-        var owner = await args.Guild.GetGuildOwnerAsync();
+        var guild = eventArgs.Guild;
+        var owner = await guild.GetGuildOwnerAsync();
 
         await _cachedChannelsManager.SendLogMessage($"""
-            [NEW] {Formatter.Bold(Formatter.Sanitize(args.Guild.Name))} ({args.Guild.Id})
-            created on : {args.Guild.CreationTimestamp}
+            [NEW] {Formatter.Bold(Formatter.Sanitize(guild.Name))} ({guild.Id})
+            created on : {guild.CreationTimestamp}
             Owner : {Formatter.Sanitize(owner.Username)} ({owner.Mention})
             """);
     }
 
-    public async Task HandleEventAsync(DiscordClient _, GuildDeletedEventArgs args)
+    public async Task HandleEventAsync(DiscordClient _, GuildDeletedEventArgs eventArgs)
     {
-        await _cachedChannelsManager.SendLogMessage($"[LOSE] {Formatter.Bold(Formatter.Sanitize(args.Guild.Name))} ({args.Guild.Id})");
+        var guild = eventArgs.Guild;
+
+        await _cachedChannelsManager.SendLogMessage($"[LOSE] {Formatter.Bold(Formatter.Sanitize(guild.Name))} ({guild.Id})");
     }
 }

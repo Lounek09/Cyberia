@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
             .ConfigureEventHandlers(eventHandler =>
             {
                 eventHandler.AddEventHandlers<ClientEventHandler>(ServiceLifetime.Singleton);
+                eventHandler.AddEventHandlers<CommandsEventHandler>();
                 eventHandler.AddEventHandlers<GuildsEventHandler>();
                 eventHandler.AddEventHandlers<InteractionsEventHandler>();
             })
@@ -49,7 +50,9 @@ public static class ServiceCollectionExtensions
                     setup.AddProcessor(new SlashCommandProcessor());
                     setup.AddProcessor(new UserCommandProcessor());
                     setup.RegisterCommands(config.AdminGuildId);
-                    setup.CommandErrored += provider.GetRequiredService<CommandsService>().OnCommandErrored;
+
+                    //TODO: Remove this when the extension supports the IEventHandler interface.
+                    setup.CommandErrored += provider.GetRequiredService<CommandsEventHandler>().HandleEventAsync;
                 },
                 new CommandsConfiguration()
                 {
@@ -58,7 +61,6 @@ public static class ServiceCollectionExtensions
                 }
             );
 
-        services.AddTransient<CommandsService>();
         services.AddTransient<CultureService>();
         services.AddTransient<CytrusService>();
         services.AddTransient<LangsService>();

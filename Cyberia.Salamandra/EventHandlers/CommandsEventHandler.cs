@@ -1,5 +1,6 @@
 ﻿using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Managers;
+using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
@@ -10,39 +11,33 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Entities;
 using DSharpPlus.Exceptions;
 
-namespace Cyberia.Salamandra.Services;
+namespace Cyberia.Salamandra.EventHandlers;
 
 /// <summary>
-/// Represents a service to handle commands events.
+/// Represents the handler for events related to commands.
 /// </summary>
-public sealed class CommandsService
+public sealed class CommandsEventHandler : IEventHandler<CommandErroredEventArgs>
 {
     private readonly CachedChannelsManager _cachedChannelsManager;
     private readonly CultureService _cultureService;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CommandsService"/> class.
+    /// Initializes a new instance of the <see cref="CommandsEventHandler"/> class.
     /// </summary>
     /// <param name="cachedChannelsManager">The manager to get the channels from.</param>
     /// <param name="cultureService">The service to get the culture from.</param>
-    public CommandsService(CachedChannelsManager cachedChannelsManager, CultureService cultureService)
+    public CommandsEventHandler(CachedChannelsManager cachedChannelsManager, CultureService cultureService)
     {
         _cachedChannelsManager = cachedChannelsManager;
         _cultureService = cultureService;
     }
 
-    /// <summary>
-    /// Handles the event when a command execution results in an error.
-    /// </summary>
-    /// <param name="_">Ignored.</param>
-    /// <param name="args">The event arguments.</param>
-    public async Task OnCommandErrored(CommandsExtension _, CommandErroredEventArgs args)
+    public async Task HandleEventAsync(CommandsExtension sender, CommandErroredEventArgs eventArgs)
     {
-        var ctx = args.Context.As<SlashCommandContext>();
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
-        var exception = args.Exception;
+        var ctx = eventArgs.Context.As<SlashCommandContext>();
         var interaction = ctx.Interaction;
-        var commandName = ctx.Command?.FullName ?? "NotFound";
+        var exception = eventArgs.Exception;
+        var culture = await _cultureService.GetCultureAsync(interaction);
 
         // If the exception is a checks failed exception, we just need to respond to the user.
         if (exception is ChecksFailedException checkFailedException)
@@ -63,6 +58,8 @@ public sealed class CommandsService
         {
             return;
         }
+
+        var commandName = ctx.Command?.FullName ?? "NotFound";
 
         // If the exception is a discord exception, we get the json message.
         string exceptionBlock;
@@ -86,6 +83,7 @@ public sealed class CommandsService
             Title = "An error occurred when executing a slash command",
             Description = $"""
                 An error occurred when {Formatter.Sanitize(interaction.User.Username)} ({interaction.User.Mention}) used the {Formatter.Bold(commandName)} command.
+
                 {Formatter.Bold($"{exception.GetType().Name} :")}
                 {Formatter.BlockCode(exceptionBlock.WithMaxLength(Constant.MaxEmbedDescriptionSize - 500))}
                 """,
@@ -98,7 +96,7 @@ public sealed class CommandsService
         await _cachedChannelsManager.SendErrorMessage(embed);
 #endif
 
-        var response = Translation.Get<BotTranslations>("Command.Error.Internal", culture);
+        var response = Translation.Get<BotTranslations>("Command.Error.UserResponse", culture);
         if (interaction.ResponseState == DiscordInteractionResponseState.Unacknowledged)
         {
             await ctx.RespondAsync(response, true);
@@ -107,5 +105,11 @@ public sealed class CommandsService
         {
             await ctx.FollowupAsync(response, true);
         }
+    }
+
+    public Task HandleEventAsync(DiscordClient sender, CommandErroredEventArgs eventArgs)
+    {
+        //TODO: Move the upper method to this one when the extension supports the IEventHandler interface.
+        return Task.CompletedTask;
     }
 }

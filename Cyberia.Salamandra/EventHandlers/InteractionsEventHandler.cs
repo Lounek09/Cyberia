@@ -74,24 +74,25 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
         _cultureService = cultureService;
     }
 
-    public async Task HandleEventAsync(DiscordClient sender, ComponentInteractionCreatedEventArgs args)
+    public async Task HandleEventAsync(DiscordClient sender, ComponentInteractionCreatedEventArgs eventArgs)
     {
-        if (args.User.IsBot || string.IsNullOrEmpty(args.Id))
+        if (eventArgs.User.IsBot || string.IsNullOrEmpty(eventArgs.Id))
         {
             return;
         }
 
-        var culture = await _cultureService.GetCultureAsync(args.Interaction);
+        var interaction = eventArgs.Interaction;
+        var culture = await _cultureService.GetCultureAsync(interaction);
 
         var response = new DiscordInteractionResponseBuilder().AsEphemeral();
 
-        var decomposedPacket = (SelectComponentPacketRegex().IsMatch(args.Id) ? args.Values[0] : args.Id)
+        var decomposedPacket = (SelectComponentPacketRegex().IsMatch(eventArgs.Id) ? eventArgs.Values[0] : eventArgs.Id)
             .Split(PacketFormatter.Separator, StringSplitOptions.RemoveEmptyEntries);
 
         if (decomposedPacket.Length < 2)
         {
             response.WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture));
-            await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
+            await interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
@@ -100,7 +101,7 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
         if (!s_factory.TryGetValue(header, out var builder))
         {
             response.WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture));
-            await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
+            await interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
@@ -111,11 +112,11 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
         if (message is null)
         {
             response.WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture));
-            await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
+            await interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
         response = await message.BuildAsync<DiscordInteractionResponseBuilder>();
-        await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.UpdateMessage, response);
+        await interaction.CreateResponseAsync(DiscordInteractionResponseType.UpdateMessage, response);
     }
 }
