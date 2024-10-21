@@ -24,6 +24,6 @@ public sealed record CaptureSoulEffect : Effect
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(culture, CapturePercent, Power);
+        return GetDescription(culture, CapturePercent, string.Empty, Power);
     }
 }
