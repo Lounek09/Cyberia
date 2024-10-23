@@ -49,35 +49,13 @@ public sealed class JsonLangParser : IDisposable
             throw new FileNotFoundException($"The {lang.Name} lang has never been decompiled.");
         }
 
-        JsonLangParser langParser = new(filePath);
-        langParser.Parse();
-
-        return langParser;
-    }
-
-    /// <summary>
-    /// Returns the string from the internal <see cref="StringBuilder"/> that represents the lang data parsed to JSON.
-    /// </summary>
-    /// <returns>The JSON representation of the lang data.</returns>
-    public override string ToString()
-    {
-        return _builder.ToString();
-    }
-
-    public void Dispose()
-    {
-        if (!_disposed)
-        {
-            _fileStream.Dispose();
-            _streamReader.Dispose();
-            _disposed = true;
-        }
+        return new JsonLangParser(filePath);
     }
 
     /// <summary>
     /// Parses the lang data.
     /// </summary>
-    private void Parse()
+    public void Parse()
     {
         var currentPartName = ReadOnlySpan<char>.Empty;
         JsonLangPartBuilder? currentBuilder = null;
@@ -110,6 +88,25 @@ public sealed class JsonLangParser : IDisposable
         }
 
         FinalizeParsing();
+    }
+
+    /// <summary>
+    /// Returns the string from the internal <see cref="StringBuilder"/> that represents the lang data parsed to JSON.
+    /// </summary>
+    /// <returns>The JSON representation of the lang data.</returns>
+    public override string ToString()
+    {
+        return _builder.ToString();
+    }
+
+    public void Dispose()
+    {
+        if (!_disposed)
+        {
+            _fileStream.Dispose();
+            _streamReader.Dispose();
+            _disposed = true;
+        }
     }
 
     /// <summary>

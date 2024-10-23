@@ -173,6 +173,8 @@ internal sealed class JsonLangPartBuilder
                         _valueSanitizerBuilder.Append('"');
                         i += 9;
                         break;
+                    case ' ':
+                        break;
                     case '\'':
                         inString = true;
                         _valueSanitizerBuilder.Append('"');

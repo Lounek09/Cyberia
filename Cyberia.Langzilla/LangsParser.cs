@@ -42,6 +42,8 @@ public sealed class LangsParser
                 if (!IgnoredLangs.Contains(lang.Name))
                 {
                     using var parser = JsonLangParser.Create(lang);
+                    parser.Parse();
+
                     File.WriteAllText(Path.Join(outputPath, $"{lang.Name}.json"), parser.ToString());
                 }
             }
