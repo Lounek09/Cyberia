@@ -55,8 +55,11 @@ public sealed class JsonLangParser : IDisposable
     /// <summary>
     /// Parses the lang data.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">Thrown when the parser has been disposed.</exception>
     public void Parse()
     {
+        ObjectDisposedException.ThrowIf(_disposed, this);
+
         var currentPartName = ReadOnlySpan<char>.Empty;
         JsonLangPartBuilder? currentBuilder = null;
 
