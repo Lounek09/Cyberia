@@ -78,7 +78,7 @@ public sealed class JsonLangParser : IDisposable
             var valueSegment = currentLine[(indexOfSeparator + c_lineSeparator.Length)..];
 
             var newPartName = FindName(keySegment);
-            if (currentPartName.IsEmpty || !currentPartName.Equals(newPartName, StringComparison.Ordinal))
+            if (!currentPartName.Equals(newPartName, StringComparison.Ordinal))
             {
                 currentPartName = newPartName;
                 currentBuilder = GetOrCreateLangPartBuilder(currentPartName.ToString(), keySegment);
