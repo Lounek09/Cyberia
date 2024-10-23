@@ -120,8 +120,8 @@ public sealed class LangsCommandModule
         var startTime = Stopwatch.GetTimestamp();
 
         var success = language is null
-            ? _langsParser.ParseAll(type)
-            : _langsParser.Parse(type, language.Value);
+            ? await _langsParser.ParseAllAsync(type)
+            : await _langsParser.ParseAsync(type, language.Value);
 
         var elapsedTime = Stopwatch.GetElapsedTime(startTime);
 

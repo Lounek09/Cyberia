@@ -28,12 +28,14 @@ public sealed class LangsParser
     /// <param name="type">The type of langs to parse.</param>
     /// <param name="language">The language of langs to parse.</param>
     /// <returns><see langword="true"/> if the langs were parsed successfully; otherwise, <see langword="false"/>.</returns>
-    public bool Parse(LangType type, Language language)
+    public async Task<bool> ParseAsync(LangType type, Language language)
     {
         var repository = _langsWatcher.GetRepository(type, language);
 
         var outputPath = Path.Join(OutputPath, type.ToStringFast().ToLower(), language.ToStringFast());
         Directory.CreateDirectory(outputPath);
+
+        List<Task> tasks = [];
 
         try
         {
@@ -41,12 +43,17 @@ public sealed class LangsParser
             {
                 if (!IgnoredLangs.Contains(lang.Name))
                 {
-                    using var parser = JsonLangParser.Create(lang);
-                    parser.Parse();
+                    tasks.Add(Task.Run(() =>
+                    {
+                        using var parser = JsonLangParser.Create(lang);
+                        parser.Parse();
 
-                    File.WriteAllText(Path.Join(outputPath, $"{lang.Name}.json"), parser.ToString());
+                        File.WriteAllText(Path.Join(outputPath, $"{lang.Name}.json"), parser.ToString());
+                    }));
                 }
             }
+
+            await Task.WhenAll(tasks);
         }
         catch (Exception e)
         {
@@ -62,8 +69,10 @@ public sealed class LangsParser
     /// </summary>
     /// <param name="type">The type of langs to parse.</param>
     /// <returns><see langword="true"/> if the langs for each languages were parsed successfully; otherwise, <see langword="false"/>.</returns>"
-    public bool ParseAll(LangType type)
+    public async Task<bool> ParseAllAsync(LangType type)
     {
-        return Enum.GetValues<Language>().All(x => Parse(type, x));
+        var tasks = Enum.GetValues<Language>().Select(language => ParseAsync(type, language));
+        var results = await Task.WhenAll(tasks);
+        return results.All(x => x);
     }
 }
