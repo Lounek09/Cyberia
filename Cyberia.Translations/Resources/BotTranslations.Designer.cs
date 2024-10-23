@@ -478,6 +478,15 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string Embed_Field_Effects_Content_None {
+            get {
+                return ResourceManager.GetString("Embed.Field.Effects.Content.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Effects :.
         /// </summary>
         internal static string Embed_Field_Effects_Title {

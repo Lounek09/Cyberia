@@ -69,8 +69,13 @@ public static class DiscordEmbedBuilderExtensions
 
     public static DiscordEmbedBuilder AddEffectFields(this DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, bool inline = false)
     {
-        var effectsParse = GetEffectsParse(effects, sort, culture, x => Formatter.Bold(Formatter.Sanitize(x)));
-        return embed.AddFields(name, effectsParse, inline);
+        if (effects.Any())
+        {
+            var effectsParse = GetEffectsParse(effects, sort, culture, x => Formatter.Bold(Formatter.Sanitize(x)));
+            return embed.AddFields(name, effectsParse, inline);
+        }
+
+        return embed.AddField(name, Translation.Get<BotTranslations>("Embed.Field.Effects.Content.None", culture), inline);
     }
 
     public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, CriteriaReadOnlyCollection criteria, CultureInfo? culture, bool inline = false)

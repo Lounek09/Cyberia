@@ -116,10 +116,8 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             embed.AddField(Translation.Get<BotTranslations>("Embed.Field.ItemSet.Title", _culture), _itemSetData.Name.ToString(_culture), true);
         }
 
-        if (_itemStatsData is not null)
-        {
-            embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.ItemSet.Title", _culture), _itemStatsData.Effects, true, _culture);
-        }
+        var effects = _itemStatsData?.Effects ?? Enumerable.Empty<IEffect>();
+        embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.ItemSet.Title", _culture), effects, true, _culture);
 
         if (_itemData.Criteria.Count > 0)
         {

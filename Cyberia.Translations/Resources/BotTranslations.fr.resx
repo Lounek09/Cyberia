@@ -619,4 +619,7 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
   <data name="Rgpd.Deleted" xml:space="preserve">
     <value>Toutes vos données personnelles ont été supprimées.</value>
   </data>
+  <data name="Embed.Field.Effects.Content.None" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
 </root>

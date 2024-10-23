@@ -3,7 +3,6 @@ using Cyberia.Api.Data;
 using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Spells;
-using Cyberia.Api.Factories.Effects;
 using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Commands.Dofus.Spell;
 using Cyberia.Salamandra.Enums;
@@ -100,11 +99,8 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
                     Translation.Get<BotTranslations>("Embed.Field.ItemType.Title", _culture), _itemData.GetItemTypeName(_culture), true)
                 .AddEmptyField(true);
 
-            IEnumerable<IEffect> effects = _incarnationData.GetRealEffects();
-            if (effects.Any())
-            {
-                embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
-            }
+            var effects = _incarnationData.GetRealEffects();
+            embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
 
             if (_itemData.WeaponData is not null)
             {

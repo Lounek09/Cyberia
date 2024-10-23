@@ -113,10 +113,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
         }
 
         var effects = _itemSetData.GetEffects(_nbItemSelected);
-        if (effects.Count > 0)
-        {
-            embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
-        }
+        embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
 
         return Task.FromResult(embed);
     }

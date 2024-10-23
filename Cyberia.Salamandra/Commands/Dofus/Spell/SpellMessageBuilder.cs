@@ -146,11 +146,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             }
             else
             {
-                var effects = _spellLevelData.Effects;
-                if (effects.Count > 0)
-                {
-                    embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, false, _culture);
-                }
+                embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), _spellLevelData.Effects, false, _culture);
 
                 var trapEffects = _spellLevelData.GetTrapEffects();
                 if (trapEffects.Count > 0)

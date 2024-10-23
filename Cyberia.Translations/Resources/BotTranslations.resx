@@ -619,4 +619,7 @@ To escape at 100%, you will need at minimum #4 agi.</value>
   <data name="Rgpd.Deleted" xml:space="preserve">
     <value>All your personal data has been deleted.</value>
   </data>
+  <data name="Embed.Field.Effects.Content.None" xml:space="preserve">
+    <value>None</value>
+  </data>
 </root>
