@@ -6,7 +6,6 @@ using Cyberia.Salamandra.Extensions.DSharpPlus;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
-using DSharpPlus.Exceptions;
 
 using System.Text;
 
@@ -133,17 +132,8 @@ public sealed class LangsService
             postBuilder.AddTag(languageTag);
         }
 
-    Retry:
-        try
-        {
-            var post = await forum.CreateForumPostAsync(postBuilder);
-            return post.Channel;
-        }
-        catch (RateLimitException)
-        {
-            await Task.Delay(1000);
-            goto Retry;
-        }
+        var post = await forum.CreateForumPostAsync(postBuilder);
+        return post.Channel;
     }
 
     /// <summary>
