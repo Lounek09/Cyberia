@@ -53,16 +53,6 @@ public sealed class LangsWatcher
     }
 
     /// <summary>
-    /// Event that is triggered when a lang check is started.
-    /// </summary>
-    public event EventHandler<CheckLangStartedEventArgs>? CheckLangStarted;
-
-    /// <summary>
-    /// Event that is triggered when a lang check is finished.
-    /// </summary>
-    public event EventHandler<CheckLangFinishedEventArgs>? CheckLangFinished;
-
-    /// <summary>
     /// Gets the lang repository from its type and language.
     /// </summary>
     /// <param name="type">The type of the langs in the repository.</param>
@@ -109,12 +99,12 @@ public sealed class LangsWatcher
     /// </remarks>
     public async Task CheckAsync(LangsRepository repository, bool force = false)
     {
-        CheckLangStarted?.Invoke(null, new CheckLangStartedEventArgs(repository));
+        await OnCheckLangStarted(new CheckLangStartedEventArgs(repository));
 
         var versions = await FetchVersionsAsync(repository, force);
         if (string.IsNullOrEmpty(versions))
         {
-            CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(repository, []));
+            await OnCheckLangFinished(new CheckLangFinishedEventArgs(repository, []));
             return;
         }
 
@@ -136,7 +126,7 @@ public sealed class LangsWatcher
             updatedLang.SelfDiff();
         }
 
-        CheckLangFinished?.Invoke(null, new CheckLangFinishedEventArgs(repository, updatedLangs));
+        await OnCheckLangFinished(new CheckLangFinishedEventArgs(repository, updatedLangs));
     }
 
     /// <summary>
@@ -300,4 +290,52 @@ public sealed class LangsWatcher
 
         return true;
     }
+
+    #region Events
+
+    /// <summary>
+    /// Delegate for the CheckLangStarted event.
+    /// </summary>
+    public delegate ValueTask CheckLangStartedEventHandler(LangsWatcher sender, CheckLangStartedEventArgs eventArgs);
+
+    /// <summary>
+    /// Event that is triggered when a lang check is started.
+    /// </summary>
+    public event CheckLangStartedEventHandler? CheckLangStarted;
+
+    /// <summary>
+    /// Triggers the CheckLangStarted event.
+    /// </summary>
+    internal async ValueTask OnCheckLangStarted(CheckLangStartedEventArgs eventArgs)
+    {
+        var handler = CheckLangStarted;
+        if (handler is not null)
+        {
+            await handler.Invoke(this, eventArgs);
+        }
+    }
+
+    /// <summary>
+    /// Delegate for the CheckLangFinished event.
+    /// </summary>
+    public delegate ValueTask CheckLangFinishedEventHandler(LangsWatcher sender, CheckLangFinishedEventArgs eventArgs);
+
+    /// <summary>
+    /// Event that is triggered when a lang check is finished.
+    /// </summary>
+    public event CheckLangFinishedEventHandler? CheckLangFinished;
+
+    /// <summary>
+    /// Triggers the CheckLangFinished event.
+    /// </summary>
+    internal async ValueTask OnCheckLangFinished(CheckLangFinishedEventArgs eventArgs)
+    {
+        var handler = CheckLangFinished;
+        if (handler is not null)
+        {
+            await handler.Invoke(this, eventArgs);
+        }
+    }
+
+    #endregion
 }

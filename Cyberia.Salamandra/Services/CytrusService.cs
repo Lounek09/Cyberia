@@ -42,7 +42,7 @@ public sealed class CytrusService
     /// </summary>
     /// <param name="_">Ignored.</param>
     /// <param name="args">The event arguments.</param>
-    public async void OnNewCytrusFileDetected(object? _, NewCytrusFileDetectedEventArgs args)
+    public async ValueTask OnNewCytrusFileDetected(CytrusWatcher _, NewCytrusFileDetectedEventArgs args)
     {
         await SendCytrusDiffAsync(args);
         await SendManifestDiffAsync(args);

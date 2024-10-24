@@ -50,11 +50,6 @@ public sealed class CytrusWatcher
     }
 
     /// <summary>
-    /// Event that is triggered when a new Cytrus file is detected.
-    /// </summary>
-    public event EventHandler<NewCytrusFileDetectedEventArgs>? NewCytrusFileDetected;
-
-    /// <summary>
     /// Starts watching for updates of Cytrus.
     /// </summary>
     /// <param name="dueTime">The amount of time to delay before the first check.</param>
@@ -108,7 +103,7 @@ public sealed class CytrusWatcher
         Cytrus = Cytrus.Load(json);
 
         Log.Information("Cytrus update detected :\n{CytrusDiff}", diff);
-        NewCytrusFileDetected?.Invoke(null, new NewCytrusFileDetectedEventArgs(Cytrus, OldCytrus, diff));
+        await OnNewCytrusFileDetected(new NewCytrusFileDetectedEventArgs(Cytrus, OldCytrus, diff));
 
         if (File.Exists(CytrusPath))
         {
@@ -116,4 +111,32 @@ public sealed class CytrusWatcher
         }
         File.WriteAllText(CytrusPath, json);
     }
+
+    #region Events
+
+    /// <summary>
+    /// Delegate for the NewCytrusFileDetected event.
+    /// </summary>
+    public delegate ValueTask NewCytrusFileDetectedEventHandler(CytrusWatcher sender, NewCytrusFileDetectedEventArgs eventArgs);
+
+    /// <summary>
+    /// Event that is triggered when a new Cytrus file is detected.
+    /// </summary>
+    public event NewCytrusFileDetectedEventHandler? NewCytrusFileDetected;
+
+    /// <summary>
+    /// Triggers the NewCytrusFileDetected event.
+    /// </summary>
+    /// <param name="eventArgs"></param>
+    /// <returns></returns>
+    internal async ValueTask OnNewCytrusFileDetected(NewCytrusFileDetectedEventArgs eventArgs)
+    {
+        var handler = NewCytrusFileDetected;
+        if (handler is not null)
+        {
+            await handler.Invoke(this, eventArgs);
+        }
+    }
+
+    #endregion
 }

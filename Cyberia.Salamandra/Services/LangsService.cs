@@ -38,7 +38,7 @@ public sealed class LangsService
     /// </summary>
     /// <param name="_">Ignored.</param>
     /// <param name="args">The event arguments.</param>
-    public async void OnCheckLangFinished(object? _, CheckLangFinishedEventArgs args)
+    public async ValueTask OnCheckLangFinished(LangsWatcher _, CheckLangFinishedEventArgs args)
     {
         if (args.UpdatedLangs.Count == 0)
         {

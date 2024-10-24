@@ -48,14 +48,14 @@ public sealed class CytrusWatcherTests
             BaseAddress = new Uri(CytrusWatcher.BaseUrl)
         };
 
-        Mock<EventHandler<NewCytrusFileDetectedEventArgs>> mockHandler = new();
+        Mock<CytrusWatcher.NewCytrusFileDetectedEventHandler> mockHandler = new();
         _cytrusWatcher.NewCytrusFileDetected += mockHandler.Object;
 
         await _cytrusWatcher.CheckAsync();
 
         Assert.AreEqual(6, _cytrusWatcher.Cytrus.Version);
         Assert.AreEqual("production", _cytrusWatcher.Cytrus.Name);
-        mockHandler.Verify(x => x(It.IsAny<object>(), It.IsAny<NewCytrusFileDetectedEventArgs>()), Times.Once);
+        mockHandler.Verify(x => x(It.IsAny<CytrusWatcher>(), It.IsAny<NewCytrusFileDetectedEventArgs>()), Times.Once);
     }
 
     #endregion
