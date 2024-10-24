@@ -3,7 +3,6 @@ using Cyberia.Cytrusaurus.EventArgs;
 using Cyberia.Cytrusaurus.Extensions;
 using Cyberia.Cytrusaurus.Models;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
-using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -18,21 +17,21 @@ namespace Cyberia.Salamandra.Services;
 /// </summary>
 public sealed class CytrusService
 {
+    private readonly CachedChannelsService _cachedChannelsService;
     private readonly CytrusManifestFetcher _cytrusManifestFetcher;
     private readonly CytrusWatcher _cytrusWatcher;
-    private readonly CachedChannelsManager _cachedChannelsManager;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusService"/> class.
     /// </summary>
+    /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
     /// <param name="cytrusManifestFetcher">The fetcher to get the manifest from.</param>
     /// <param name="cytrusWatcher">The watcher to get the Cytrus data from.</param>
-    /// <param name="cachedChannelsManager">The manager to get the cached channels from.</param>
-    public CytrusService(CytrusManifestFetcher cytrusManifestFetcher, CytrusWatcher cytrusWatcher, CachedChannelsManager cachedChannelsManager)
+    public CytrusService(CachedChannelsService cachedChannelsService, CytrusManifestFetcher cytrusManifestFetcher, CytrusWatcher cytrusWatcher)
     {
+        _cachedChannelsService = cachedChannelsService;
         _cytrusManifestFetcher = cytrusManifestFetcher;
         _cytrusWatcher = cytrusWatcher;
-        _cachedChannelsManager = cachedChannelsManager;
 
         _cytrusWatcher.NewCytrusFileDetected += OnNewCytrusFileDetected;
     }
@@ -88,7 +87,7 @@ public sealed class CytrusService
     /// <param name="args">The event arguments containing the diff.</param>
     private async Task SendCytrusDiffAsync(NewCytrusFileDetectedEventArgs args)
     {
-        var channel = _cachedChannelsManager.CytrusChannel;
+        var channel = _cachedChannelsService.CytrusChannel;
         if (channel is null)
         {
             return;
@@ -112,7 +111,7 @@ public sealed class CytrusService
     /// <param name="args">The event arguments containing the diff.</param>
     private async Task SendManifestDiffAsync(NewCytrusFileDetectedEventArgs args)
     {
-        var channel = _cachedChannelsManager.CytrusManifestChannel;
+        var channel = _cachedChannelsService.CytrusManifestChannel;
         if (channel is null)
         {
             return;

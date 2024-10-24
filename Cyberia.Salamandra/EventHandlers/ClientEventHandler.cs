@@ -1,5 +1,4 @@
-﻿using Cyberia.Salamandra.Managers;
-
+﻿using Cyberia.Salamandra.Services;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
 
@@ -10,17 +9,17 @@ namespace Cyberia.Salamandra.EventHandlers;
 /// </summary>
 public sealed class ClientEventHandler : IEventHandler<GuildDownloadCompletedEventArgs>
 {
-    private readonly CachedChannelsManager _cachedChannelsManager;
+    private readonly CachedChannelsService _cachedChannelsService;
 
     private bool _isInitialized;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ClientEventHandler"/> class.
     /// </summary>
-    /// <param name="cachedChannelsManager">The manager to get the cached channels from.</param>
-    public ClientEventHandler(CachedChannelsManager cachedChannelsManager)
+    /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
+    public ClientEventHandler(CachedChannelsService cachedChannelsService)
     {
-        _cachedChannelsManager = cachedChannelsManager;
+        _cachedChannelsService = cachedChannelsService;
 
         _isInitialized = false;
     }
@@ -32,10 +31,10 @@ public sealed class ClientEventHandler : IEventHandler<GuildDownloadCompletedEve
             return;
         }
 
-        await _cachedChannelsManager.LoadChannelsAsync();
+        await _cachedChannelsService.LoadChannelsAsync();
 
 #if !DEBUG
-        await _cachedChannelsManager.SendLogMessage($"{Formatter.Bold(sender.CurrentUser.Username)} started successfully !");
+        await _cachedChannelsService.SendLogMessage($"{Formatter.Bold(sender.CurrentUser.Username)} started successfully !");
 #endif
 
         _isInitialized = true;

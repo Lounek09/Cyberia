@@ -1,6 +1,5 @@
 ﻿using Cyberia.Salamandra.EventHandlers;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -62,12 +61,11 @@ public static class ServiceCollectionExtensions
             );
 
         services.AddTransient<CultureService>();
-        services.AddTransient<CytrusService>();
-        services.AddTransient<LangsService>();
 
+        services.AddSingleton<CytrusService>();
+        services.AddSingleton<LangsService>();
         services.AddSingleton<EmbedBuilderService>();
-
-        services.AddSingleton<CachedChannelsManager>();
+        services.AddSingleton<CachedChannelsService>();
 
         return services;
     }

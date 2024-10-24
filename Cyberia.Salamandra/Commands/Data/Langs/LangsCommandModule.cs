@@ -1,6 +1,5 @@
 ﻿using Cyberia.Langzilla;
 using Cyberia.Langzilla.Enums;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -21,15 +20,15 @@ namespace Cyberia.Salamandra.Commands.Data.Langs;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class LangsCommandModule
 {
-    private readonly CachedChannelsManager _cachedChannelsManager;
+    private readonly CachedChannelsService _cachedChannelsService;
     private readonly EmbedBuilderService _embedBuilderService;
     private readonly LangsParser _langsParser;
     private readonly LangsWatcher _langsWatcher;
     private readonly LangsService _langsService;
 
-    public LangsCommandModule(CachedChannelsManager cachedChannelsManager, EmbedBuilderService embedBuilderService, LangsParser langsParser, LangsWatcher langsWatcher, LangsService langsService)
+    public LangsCommandModule(CachedChannelsService cachedChannelsService, EmbedBuilderService embedBuilderService, LangsParser langsParser, LangsWatcher langsWatcher, LangsService langsService)
     {
-        _cachedChannelsManager = cachedChannelsManager;
+        _cachedChannelsService = cachedChannelsService;
         _embedBuilderService = embedBuilderService;
         _langsParser = langsParser;
         _langsWatcher = langsWatcher;
@@ -86,7 +85,7 @@ public sealed class LangsCommandModule
         [Parameter("language"), Description("The language to diff; if empty, diff all language simultaneously")]
         Language? language = null)
     {
-        if (_cachedChannelsManager.LangsForumChannel is null)
+        if (_cachedChannelsService.LangsForumChannel is null)
         {
             await ctx.RespondAsync("The lang forum channel is not defined.");
             return;

@@ -1,5 +1,4 @@
 ﻿using Cyberia.Salamandra.Extensions.DSharpPlus;
-using Cyberia.Salamandra.Managers;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -18,17 +17,17 @@ namespace Cyberia.Salamandra.EventHandlers;
 /// </summary>
 public sealed class CommandsEventHandler : IEventHandler<CommandErroredEventArgs>
 {
-    private readonly CachedChannelsManager _cachedChannelsManager;
+    private readonly CachedChannelsService _cachedChannelsService;
     private readonly CultureService _cultureService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CommandsEventHandler"/> class.
     /// </summary>
-    /// <param name="cachedChannelsManager">The manager to get the channels from.</param>
+    /// <param name="cachedChannelsService">The service to get the channels from.</param>
     /// <param name="cultureService">The service to get the culture from.</param>
-    public CommandsEventHandler(CachedChannelsManager cachedChannelsManager, CultureService cultureService)
+    public CommandsEventHandler(CachedChannelsService cachedChannelsService, CultureService cultureService)
     {
-        _cachedChannelsManager = cachedChannelsManager;
+        _cachedChannelsService = cachedChannelsService;
         _cultureService = cultureService;
     }
 
@@ -93,7 +92,7 @@ public sealed class CommandsEventHandler : IEventHandler<CommandErroredEventArgs
 #if DEBUG
         await ctx.Channel.SendMessageSafeAsync(embed);
 #else
-        await _cachedChannelsManager.SendErrorMessage(embed);
+        await _cachedChannelsService.SendErrorMessage(embed);
 #endif
 
         var response = Translation.Get<BotTranslations>("Command.Error.UserResponse", culture);

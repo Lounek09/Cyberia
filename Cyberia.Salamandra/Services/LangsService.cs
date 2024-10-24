@@ -3,7 +3,6 @@ using Cyberia.Langzilla.Enums;
 using Cyberia.Langzilla.EventArgs;
 using Cyberia.Langzilla.Models;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
-using Cyberia.Salamandra.Managers;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -18,18 +17,18 @@ namespace Cyberia.Salamandra.Services;
 /// </summary>
 public sealed class LangsService
 {
+    private readonly CachedChannelsService _cachedChannelsService;
     private readonly LangsWatcher _langsWatcher;
-    private readonly CachedChannelsManager _cachedChannelsManager;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsService"/> class.
     /// </summary>
+    /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
     /// <param name="langsWatcher">The watcher to get the langs from.</param>
-    /// <param name="cachedChannelsManager">The manager to get the cached channels from.</param>
-    public LangsService(LangsWatcher langsWatcher, CachedChannelsManager cachedChannelsManager)
+    public LangsService(CachedChannelsService cachedChannelsService, LangsWatcher langsWatcher)
     {
+        _cachedChannelsService = cachedChannelsService;
         _langsWatcher = langsWatcher;
-        _cachedChannelsManager = cachedChannelsManager;
 
         _langsWatcher.CheckLangFinished += OnCheckLangFinished;
     }
@@ -46,7 +45,7 @@ public sealed class LangsService
             return;
         }
 
-        var forum = _cachedChannelsManager.LangsForumChannel;
+        var forum = _cachedChannelsService.LangsForumChannel;
         if (forum is null)
         {
             return;
@@ -72,7 +71,7 @@ public sealed class LangsService
     /// <param name="language">The language of the langs.</param>
     public async Task LaunchManualDiff(LangType currentType, LangType modelType, Language language)
     {
-        var forum = _cachedChannelsManager.LangsForumChannel;
+        var forum = _cachedChannelsService.LangsForumChannel;
         if (forum is null)
         {
             return;
