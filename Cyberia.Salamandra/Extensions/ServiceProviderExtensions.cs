@@ -15,14 +15,16 @@ namespace Cyberia.Salamandra.Extensions;
 public static class ServiceProviderExtensions
 {
     /// <summary>
-    /// Registers Salamandra specific events from the service provider.
+    /// Starts the Salamandra discord client from the service provider.
     /// </summary>
-    /// <param name="provider">The service provider to register the events from.</param>
+    /// <param name="provider">The service provider to get the discord client from.</param>
     /// <returns>The service provider.</returns>
-    public static IServiceProvider RegisterSalamandraEvents(this IServiceProvider provider)
+    public static async Task<IServiceProvider> StartSalamandraAsync(this IServiceProvider provider)
     {
-        provider.GetRequiredService<CytrusWatcher>().NewCytrusFileDetected += provider.GetRequiredService<CytrusService>().OnNewCytrusDetected;
-        provider.GetRequiredService<LangsWatcher>().CheckLangFinished += provider.GetRequiredService<LangsService>().OnCheckLangFinished;
+        var discordClient = provider.GetRequiredService<DiscordClient>();
+
+        DiscordActivity activity = new("Dofus Retro", DiscordActivityType.Playing);
+        await discordClient.ConnectAsync(activity);
 
         return provider;
     }

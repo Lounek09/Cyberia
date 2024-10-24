@@ -19,25 +19,31 @@ namespace Cyberia.Salamandra.Services;
 public sealed class CytrusService
 {
     private readonly CytrusManifestFetcher _cytrusManifestFetcher;
+    private readonly CytrusWatcher _cytrusWatcher;
     private readonly CachedChannelsManager _cachedChannelsManager;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusService"/> class.
     /// </summary>
     /// <param name="cytrusManifestFetcher">The fetcher to get the manifest from.</param>
+    /// <param name="cytrusWatcher">The watcher to get the Cytrus data from.</param>
     /// <param name="cachedChannelsManager">The manager to get the cached channels from.</param>
-    public CytrusService(CytrusManifestFetcher cytrusManifestFetcher, CachedChannelsManager cachedChannelsManager)
+    public CytrusService(CytrusManifestFetcher cytrusManifestFetcher, CytrusWatcher cytrusWatcher, CachedChannelsManager cachedChannelsManager)
     {
         _cytrusManifestFetcher = cytrusManifestFetcher;
+        _cytrusWatcher = cytrusWatcher;
         _cachedChannelsManager = cachedChannelsManager;
+
+        _cytrusWatcher.NewCytrusFileDetected += OnNewCytrusFileDetected;
     }
+
 
     /// <summary>
     /// Handles the event when a new Cytrus is detected.
     /// </summary>
     /// <param name="_">Ignored.</param>
     /// <param name="args">The event arguments.</param>
-    public async void OnNewCytrusDetected(object? _, NewCytrusFileDetectedEventArgs args)
+    public async void OnNewCytrusFileDetected(object? _, NewCytrusFileDetectedEventArgs args)
     {
         await SendCytrusDiffAsync(args);
         await SendManifestDiffAsync(args);

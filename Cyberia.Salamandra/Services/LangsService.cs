@@ -30,6 +30,8 @@ public sealed class LangsService
     {
         _langsWatcher = langsWatcher;
         _cachedChannelsManager = cachedChannelsManager;
+
+        _langsWatcher.CheckLangFinished += OnCheckLangFinished;
     }
 
     /// <summary>
