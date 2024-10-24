@@ -62,10 +62,10 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<CultureService>();
 
+        services.AddSingleton<CachedChannelsService>();
         services.AddSingleton<CytrusService>();
         services.AddSingleton<LangsService>();
         services.AddSingleton<EmbedBuilderService>();
-        services.AddSingleton<CachedChannelsService>();
 
         return services;
     }
