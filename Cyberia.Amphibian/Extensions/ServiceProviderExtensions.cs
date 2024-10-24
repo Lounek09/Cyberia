@@ -12,7 +12,7 @@ public static class ServiceProviderExtensions
     /// <summary>
     /// Starts the Amphibian web application from the services.
     /// </summary>
-    /// <param name="provider">The service provider to start the web application from.</param>
+    /// <param name="provider">The service provider to get the web application from.</param>
     /// <returns>The service provider.</returns>
     public static IServiceProvider StartAmphibian(this IServiceProvider provider)
     {
@@ -26,7 +26,7 @@ public static class ServiceProviderExtensions
     /// <summary>
     /// Stops the Amphibian web application from the services.
     /// </summary>
-    /// <param name="provider">The service provider to stop the web application from.</param>
+    /// <param name="provider">The service provider to get the web application from.</param>
     /// <returns>The service provider.</returns>
     public static async Task<IServiceProvider> StopAmphibianAsync(this IServiceProvider provider)
     {

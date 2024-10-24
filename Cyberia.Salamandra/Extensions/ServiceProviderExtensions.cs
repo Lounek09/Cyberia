@@ -1,8 +1,4 @@
-﻿using Cyberia.Cytrusaurus;
-using Cyberia.Langzilla;
-using Cyberia.Salamandra.Services;
-
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -30,16 +26,15 @@ public static class ServiceProviderExtensions
     }
 
     /// <summary>
-    /// Starts the Salamandra discord client from the service provider.
+    /// Stops the Salamandra discord client from the service provider.
     /// </summary>
-    /// <param name="provider">The service provider to start the discord client from.</param>
+    /// <param name="provider">The service provider to get the discord client from.</param>
     /// <returns>The service provider.</returns>
-    public static async Task<IServiceProvider> StartSalamandraAsync(this IServiceProvider provider)
+    public static async Task<IServiceProvider> StopSalamandraAsync(this IServiceProvider provider)
     {
         var discordClient = provider.GetRequiredService<DiscordClient>();
 
-        DiscordActivity activity = new("Dofus Retro", DiscordActivityType.Playing);
-        await discordClient.ConnectAsync(activity);
+        await discordClient.DisconnectAsync();
 
         return provider;
     }
