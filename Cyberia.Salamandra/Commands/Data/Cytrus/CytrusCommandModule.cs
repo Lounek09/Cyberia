@@ -35,6 +35,7 @@ public sealed class CytrusCommandModule
 
     [Command("check"), Description("[Owner] Launch a check to see if there is a new version of Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     [RequireApplicationOwner]
     public async Task CheckExecuteAsync(SlashCommandContext ctx)
     {
@@ -47,6 +48,7 @@ public sealed class CytrusCommandModule
 
     [Command("show"), Description("Display the information of the currently online Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task ShowExecuteAsync(SlashCommandContext ctx)
     {
         var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus")
@@ -81,6 +83,7 @@ public sealed class CytrusCommandModule
 
     [Command("diff"), Description("List the differences between the files of two versions of a game on Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task DiffExecuteAsync(SlashCommandContext ctx,
         [Parameter("game"), Description("Name of the game")]
         [SlashChoiceProvider<CytrusGameChoiceProvider>]

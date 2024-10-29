@@ -37,6 +37,7 @@ public sealed class LangsCommandModule
 
     [Command("check"), Description("[Owner] Launch a check to see if there is a new version of the langs")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     [RequireApplicationOwner]
     public async Task CheckExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type to check")]
@@ -76,6 +77,7 @@ public sealed class LangsCommandModule
 
     [Command("diff"), Description("[Owner] List the differences between to type of langs")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     [RequireApplicationOwner]
     public async Task DiffExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type to diff")]
@@ -106,7 +108,7 @@ public sealed class LangsCommandModule
     }
 
     [Command("parse"), Description("[Owner] Launch the parsing of the langs into JSON")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)][RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     [RequireApplicationOwner]
     public async Task ParseExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type to parse")]
@@ -133,6 +135,7 @@ public sealed class LangsCommandModule
 
     [Command("show"), Description("Display the information of the currently online langs")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task ShowExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type to display")]
         LangType type = LangType.Official,
@@ -146,6 +149,7 @@ public sealed class LangsCommandModule
 
     [Command("get"), Description("Returns the requested decompiled lang")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task GetExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The requested type")]
         LangType type,

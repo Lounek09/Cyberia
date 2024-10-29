@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api;
 
 using DSharpPlus.Commands;
+using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
@@ -17,6 +18,7 @@ public sealed class DiscordCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<DiscordInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public static async Task ExecuteAsync(SlashCommandContext ctx)
     {
         await ctx.RespondAsync(DofusApi.Config.DiscordInviteUrl, true);
