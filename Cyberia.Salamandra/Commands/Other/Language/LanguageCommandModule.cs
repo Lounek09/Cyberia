@@ -30,7 +30,7 @@ public sealed class LanguageCommandModule
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<LanguageInteractionLocalizer>]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(LanguageInteractionLocalizer.Value_ParameterName), Description(LanguageInteractionLocalizer.Value_ParameterDescription)]
