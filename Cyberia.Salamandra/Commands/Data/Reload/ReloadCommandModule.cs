@@ -17,7 +17,6 @@ public sealed class ReloadCommandModule
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type of langs to load; if empty, use the value in the config")]

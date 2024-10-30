@@ -4,7 +4,6 @@ using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
 using DSharpPlus.Commands;
-using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Localization;
@@ -31,7 +30,6 @@ public sealed class LanguageCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<LanguageInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(LanguageInteractionLocalizer.Value_ParameterName), Description(LanguageInteractionLocalizer.Value_ParameterDescription)]
         [InteractionLocalizer<LanguageInteractionLocalizer>]

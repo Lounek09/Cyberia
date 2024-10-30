@@ -5,7 +5,6 @@ using Cyberia.Salamandra.Services;
 using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
-using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
@@ -31,7 +30,6 @@ public sealed class SearchCommandModule
 
     [Command("effect"), Description("Search where the effect is used")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task EffectExecuteAsync(SlashCommandContext ctx,
         [Parameter("where"), Description("Where to look for the effect")]
         SearchLocation location,
@@ -79,7 +77,6 @@ public sealed class SearchCommandModule
 
     [Command("criterion"), Description("Search where the criterion is used")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task CriterionExecuteAsync(SlashCommandContext ctx,
         [Parameter("where"), Description("Where to look for the criterion")]
         SearchLocation location,

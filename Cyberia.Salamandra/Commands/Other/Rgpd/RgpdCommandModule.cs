@@ -2,7 +2,6 @@
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
-using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
@@ -37,7 +36,6 @@ public sealed class RgpdCommandModule
     [Command(RgpdInteractionLocalizer.Get_CommandName), Description(RgpdInteractionLocalizer.Get_CommandDescription)]
     [InteractionLocalizer<RgpdInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task GetExecuteAsync(SlashCommandContext ctx)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
@@ -63,7 +61,6 @@ public sealed class RgpdCommandModule
     [Command(RgpdInteractionLocalizer.Delete_CommandName), Description(RgpdInteractionLocalizer.Delete_CommandDescription)]
     [InteractionLocalizer<RgpdInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task DeleteExecuteAsync(SlashCommandContext ctx)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);

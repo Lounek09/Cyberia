@@ -4,7 +4,6 @@ using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
-using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
 using DSharpPlus.Entities;
@@ -29,7 +28,6 @@ public sealed class ParseCommandModule
 
     [Command("effects"), Description("Parse the effects of an item")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task EffectsExecuteAsync(SlashCommandContext ctx,
         [Parameter("value"), Description("Effects of an item")]
         string value)
@@ -53,7 +51,6 @@ public sealed class ParseCommandModule
 
     [Command("criteria"), Description("Parse the critera")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task CriteriaExecuteAsync(SlashCommandContext ctx,
         [Parameter("value"), Description("Criteria")]
         string value)

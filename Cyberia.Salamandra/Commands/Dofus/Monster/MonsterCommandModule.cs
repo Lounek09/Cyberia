@@ -3,7 +3,6 @@ using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
-using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Localization;
@@ -30,7 +29,6 @@ public sealed class MonsterCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<MonsterInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(MonsterInteractionLocalizer.Value_ParameterName), Description(MonsterInteractionLocalizer.Value_ParameterDescription)]
         [InteractionLocalizer<MonsterInteractionLocalizer>]

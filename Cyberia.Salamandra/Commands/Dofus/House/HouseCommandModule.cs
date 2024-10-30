@@ -7,7 +7,6 @@ using Cyberia.Salamandra.Services;
 using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
-using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Localization;
@@ -36,7 +35,6 @@ public sealed class HouseCommandModule
     [Command(HouseInteractionLocalizer.Name_CommandName), Description(HouseInteractionLocalizer.Name_CommandDescription)]
     [InteractionLocalizer<HouseInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task NameExecuteAsync(SlashCommandContext ctx,
         [Parameter(HouseInteractionLocalizer.Name_Value_ParameterName), Description(HouseInteractionLocalizer.Name_Value_ParameterDescription)]
         [InteractionLocalizer<HouseInteractionLocalizer>]
@@ -80,7 +78,6 @@ public sealed class HouseCommandModule
     [Command(HouseInteractionLocalizer.Coordinates_CommandName), Description(HouseInteractionLocalizer.Coordinates_CommandDescription)]
     [InteractionLocalizer<HouseInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter(HouseInteractionLocalizer.Coordinates_X_ParameterName), Description(HouseInteractionLocalizer.Coordinates_X_ParameterDescription)]
         [InteractionLocalizer<HouseInteractionLocalizer>]
@@ -115,7 +112,6 @@ public sealed class HouseCommandModule
     [Command(HouseInteractionLocalizer.SubArea_CommandName), Description(HouseInteractionLocalizer.SubArea_CommandDescription)]
     [InteractionLocalizer<HouseInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter(HouseInteractionLocalizer.SubArea_Value_ParameterName), Description(HouseInteractionLocalizer.SubArea_Value_ParameterDescription)]
         [InteractionLocalizer<HouseInteractionLocalizer>]
@@ -161,7 +157,6 @@ public sealed class HouseCommandModule
     [Command(HouseInteractionLocalizer.Area_CommandName), Description(HouseInteractionLocalizer.Area_CommandDescription)]
     [InteractionLocalizer<HouseInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task MapAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter(HouseInteractionLocalizer.Area_Value_ParameterName), Description(HouseInteractionLocalizer.Area_Value_ParameterDescription)]
         [InteractionLocalizer<HouseInteractionLocalizer>]

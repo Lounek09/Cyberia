@@ -5,7 +5,6 @@ using Cyberia.Salamandra.Services;
 using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
-using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.Localization;
 using DSharpPlus.Commands.Processors.SlashCommands.Metadata;
@@ -31,7 +30,6 @@ public sealed class EscapeCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<EscapeInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(EscapeInteractionLocalizer.Agility_ParameterName), Description(EscapeInteractionLocalizer.Agility_ParameterDescription)]
         [InteractionLocalizer<EscapeInteractionLocalizer>]

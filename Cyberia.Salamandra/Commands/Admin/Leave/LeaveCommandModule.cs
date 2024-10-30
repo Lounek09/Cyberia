@@ -16,7 +16,6 @@ public sealed class LeaveCommandModule
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     [RequireApplicationOwner]
     public static async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("id"), Description("Guild's id")]

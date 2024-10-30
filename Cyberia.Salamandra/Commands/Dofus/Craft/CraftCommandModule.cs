@@ -3,7 +3,6 @@ using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
-using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Localization;
@@ -30,7 +29,6 @@ public sealed class CraftCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<CraftInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(CraftInteractionLocalizer.Value_ParameterName), Description(CraftInteractionLocalizer.Value_ParameterDescription)]
         [InteractionLocalizer<CraftInteractionLocalizer>]

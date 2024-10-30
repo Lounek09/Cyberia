@@ -3,7 +3,6 @@ using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
-using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Localization;
@@ -30,7 +29,6 @@ public sealed class QuestCommandModule
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<QuestInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter(QuestInteractionLocalizer.Value_ParameterName), Description(QuestInteractionLocalizer.Value_ParameterDescription)]
         [InteractionLocalizer<QuestInteractionLocalizer>]

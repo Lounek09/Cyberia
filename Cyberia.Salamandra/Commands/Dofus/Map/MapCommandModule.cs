@@ -6,7 +6,6 @@ using Cyberia.Salamandra.Services;
 using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.ArgumentModifiers;
-using DSharpPlus.Commands.ContextChecks;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Processors.SlashCommands.Localization;
@@ -35,7 +34,6 @@ public sealed class MapCommandModule
     [Command(MapInteractionLocalizer.Id_CommandName), Description(MapInteractionLocalizer.Id_CommandDescription)]
     [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task IdExecuteAsync(SlashCommandContext ctx,
         [Parameter(MapInteractionLocalizer.Id_Id_ParameterName), Description(MapInteractionLocalizer.Id_Id_ParameterDescription)]
         [InteractionLocalizer<MapInteractionLocalizer>]
@@ -59,7 +57,6 @@ public sealed class MapCommandModule
     [Command(MapInteractionLocalizer.Coordinates_CommandName), Description(MapInteractionLocalizer.Coordinates_CommandDescription)]
     [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task CoordinateExecuteAsync(SlashCommandContext ctx,
         [Parameter(MapInteractionLocalizer.Coordinates_X_ParameterName), Description(MapInteractionLocalizer.Coordinates_X_ParameterDescription)]
         [InteractionLocalizer<MapInteractionLocalizer>]
@@ -95,7 +92,6 @@ public sealed class MapCommandModule
     [Command(MapInteractionLocalizer.SubArea_CommandName), Description(MapInteractionLocalizer.SubArea_CommandDescription)]
     [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task MapSubAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter(MapInteractionLocalizer.SubArea_Value_ParameterName), Description(MapInteractionLocalizer.SubArea_Value_ParameterDescription)]
         [InteractionLocalizer<MapInteractionLocalizer>]
@@ -136,7 +132,6 @@ public sealed class MapCommandModule
     [Command(MapInteractionLocalizer.Area_CommandName), Description(MapInteractionLocalizer.Area_CommandDescription)]
     [InteractionLocalizer<MapInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     public async Task MapAreaExecuteAsync(SlashCommandContext ctx,
         [Parameter(MapInteractionLocalizer.Area_Value_ParameterName), Description(MapInteractionLocalizer.Area_Value_ParameterDescription)]
         [InteractionLocalizer<MapInteractionLocalizer>]
