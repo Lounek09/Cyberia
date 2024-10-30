@@ -5,7 +5,7 @@ public sealed class DiscordCachedUser : IDatabaseEntity
     /// <summary>
     /// Gets the id of the user.
     /// </summary>
-    public ulong Id { get; init; }
+    public required ulong Id { get; init; }
 
     /// <summary>
     /// Gets or sets the locale of the user.

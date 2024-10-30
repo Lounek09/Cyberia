@@ -2,8 +2,6 @@
 
 using Dapper;
 
-using System.Data;
-
 namespace Cyberia.Database.Repositories;
 
 /// <summary>
@@ -11,15 +9,15 @@ namespace Cyberia.Database.Repositories;
 /// </summary>
 public sealed class DiscordCachedUserRepository : IDatabaseRepository
 {
-    private readonly IDbConnection _connection;
+    private readonly IDbConnectionFactory _connectionFactory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordCachedUserRepository"/> class.
     /// </summary>
-    /// <param name="connectionString">The connection string to the database.</param>
-    public DiscordCachedUserRepository(IDbConnection connection)
+    /// <param name="connectionFactory">The connection factory.</param>
+    public DiscordCachedUserRepository(IDbConnectionFactory connectionFactory)
     {
-        _connection = connection;
+        _connectionFactory = connectionFactory;
     }
 
     /// <summary>
@@ -34,7 +32,8 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
                 Locale TEXT
             );";
 
-        return await _connection.ExecuteAsync(query) > 0;
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.ExecuteAsync(query) > 0;
     }
 
     /// <summary>
@@ -48,7 +47,8 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
             SELECT * FROM DiscordCachedUser
             WHERE Id = @Id";
 
-        return await _connection.QueryFirstOrDefaultAsync<DiscordCachedUser>(query, new { Id = id });
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.QueryFirstOrDefaultAsync<DiscordCachedUser>(query, new { Id = id });
     }
 
     /// <summary>
@@ -63,7 +63,8 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
             VALUES (@Id, @Locale)
             ON CONFLICT(Id) DO UPDATE SET Locale = @Locale";
 
-        return await _connection.ExecuteAsync(query, user) > 0;
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.ExecuteAsync(query, user) > 0;
     }
 
     /// <summary>
@@ -77,6 +78,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
             DELETE FROM DiscordCachedUser
             WHERE Id = @Id";
 
-        return await _connection.ExecuteAsync(query, new { Id = id }) > 0;
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.ExecuteAsync(query, new { Id = id }) > 0;
     }
 }

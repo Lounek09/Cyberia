@@ -108,7 +108,8 @@ public sealed class LangsCommandModule
     }
 
     [Command("parse"), Description("[Owner] Launch the parsing of the langs into JSON")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)][RequirePermissions(DiscordPermissions.UseApplicationCommands)]
+    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
+    [RequirePermissions(DiscordPermissions.UseApplicationCommands)]
     [RequireApplicationOwner]
     public async Task ParseExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type to parse")]

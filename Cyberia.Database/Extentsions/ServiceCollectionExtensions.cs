@@ -2,9 +2,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-using System.Data;
-using System.Data.SQLite;
-
 namespace Cyberia.Database.Extentsions;
 
 /// <summary>
@@ -20,15 +17,19 @@ public static class ServiceCollectionExtensions
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
     {
-        services.AddScoped<IDbConnection>(x =>
-        {
-            SQLiteConnection connection = new(connectionString);
-            connection.Open();
+        services.AddSingleton<IDbConnectionFactory>(_ => new SQLiteDbConnectionFactory(connectionString));
 
-            return connection;
+        var assembly = typeof(IDatabaseRepository).Assembly;
+        var repositoryTypes = assembly.GetTypes().Where(x =>
+        {
+            return x.IsClass && !x.IsAbstract && typeof(IDatabaseRepository).IsAssignableFrom(x);
         });
 
-        services.AddScoped<DiscordCachedUserRepository>();
+        foreach (var repositoryType in repositoryTypes)
+        {
+            services.AddSingleton(repositoryType);
+            services.AddSingleton(typeof(IDatabaseRepository), repositoryType);
+        }
 
         return services;
     }

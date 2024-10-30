@@ -33,9 +33,9 @@ public static class ServiceCollectionExtensions
             .ConfigureEventHandlers(eventHandler =>
             {
                 eventHandler.AddEventHandlers<ClientEventHandler>(ServiceLifetime.Singleton);
-                eventHandler.AddEventHandlers<CommandsEventHandler>();
-                eventHandler.AddEventHandlers<GuildsEventHandler>();
-                eventHandler.AddEventHandlers<InteractionsEventHandler>();
+                eventHandler.AddEventHandlers<CommandsEventHandler>(ServiceLifetime.Singleton);
+                eventHandler.AddEventHandlers<GuildsEventHandler>(ServiceLifetime.Singleton);
+                eventHandler.AddEventHandlers<InteractionsEventHandler>(ServiceLifetime.Singleton);
             })
             .Configure<DiscordConfiguration>(config =>
             {
@@ -60,9 +60,8 @@ public static class ServiceCollectionExtensions
                 }
             );
 
-        services.AddTransient<CultureService>();
-
         services.AddSingleton<CachedChannelsService>();
+        services.AddSingleton<CultureService>();
         services.AddSingleton<CytrusService>();
         services.AddSingleton<LangsService>();
         services.AddSingleton<EmbedBuilderService>();

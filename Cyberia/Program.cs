@@ -67,7 +67,7 @@ public static class Program
 
             var provider = services.BuildServiceProvider();
 
-            await provider.CreateTablesAsync();
+            await provider.CreateDatabaseTablesAsync();
 
             if (cyberiaConfig.EnableSalamandra)
             {

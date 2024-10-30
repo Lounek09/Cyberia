@@ -10,15 +10,17 @@ namespace Cyberia.Database.Extentsions;
 public static class ServiceProviderExtensions
 {
     /// <summary>
-    /// Creates the tables for the database.
+    /// Creates the tables of the database.
     /// </summary>
     /// <param name="provider">The service provider.</param>
     /// <returns>The service provider.</returns>
-    public static async Task<IServiceProvider> CreateTablesAsync(this IServiceProvider provider)
+    public static async Task<IServiceProvider> CreateDatabaseTablesAsync(this IServiceProvider provider)
     {
-        var scope = provider.CreateScope();
-
-        await scope.ServiceProvider.GetRequiredService<DiscordCachedUserRepository>().CreateTableAsync();
+        var repositories = provider.GetServices<IDatabaseRepository>();
+        foreach (var repository in repositories)
+        {
+            await repository.CreateTableAsync();
+        }
 
         return provider;
     }
