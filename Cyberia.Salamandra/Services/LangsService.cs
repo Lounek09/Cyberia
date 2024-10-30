@@ -28,38 +28,6 @@ public sealed class LangsService
     {
         _cachedChannelsService = cachedChannelsService;
         _langsWatcher = langsWatcher;
-
-        _langsWatcher.CheckLangFinished += OnCheckLangFinished;
-    }
-
-    /// <summary>
-    /// Handles the event when the check of langs is finished.
-    /// </summary>
-    /// <param name="_">Ignored.</param>
-    /// <param name="args">The event arguments.</param>
-    public async ValueTask OnCheckLangFinished(LangsWatcher _, CheckLangFinishedEventArgs args)
-    {
-        if (args.UpdatedLangs.Count == 0)
-        {
-            return;
-        }
-
-        var forum = _cachedChannelsService.LangsForumChannel;
-        if (forum is null)
-        {
-            return;
-        }
-
-        var thread = await CreateAutoDiffPostAsync(forum, args.Repository);
-
-        foreach (var updatedLang in args.UpdatedLangs)
-        {
-            var delay = Task.Delay(1000);
-
-            await SendAutoDiffLangMessageAsync(thread, updatedLang);
-
-            await delay;
-        }
     }
 
     /// <summary>
@@ -100,6 +68,36 @@ public sealed class LangsService
             }
 
             await rateLimit;
+        }
+    }
+
+    /// <summary>
+    /// Handles the event when the check of langs is finished.
+    /// </summary>
+    /// <param name="_">Ignored.</param>
+    /// <param name="eventArgs">The event arguments.</param>
+    internal async ValueTask OnCheckLangsFinished(LangsWatcher _, CheckLangFinishedEventArgs eventArgs)
+    {
+        if (eventArgs.UpdatedLangs.Count == 0)
+        {
+            return;
+        }
+
+        var forum = _cachedChannelsService.LangsForumChannel;
+        if (forum is null)
+        {
+            return;
+        }
+
+        var thread = await CreateAutoDiffPostAsync(forum, eventArgs.Repository);
+
+        foreach (var updatedLang in eventArgs.UpdatedLangs)
+        {
+            var delay = Task.Delay(1000);
+
+            await SendAutoDiffLangMessageAsync(thread, updatedLang);
+
+            await delay;
         }
     }
 

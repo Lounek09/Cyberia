@@ -71,6 +71,7 @@ public static class Program
 
             if (cyberiaConfig.EnableSalamandra)
             {
+                provider.RegisterSalamandraEvents();
                 await provider.StartSalamandraAsync();
             }
 

@@ -91,10 +91,10 @@ public sealed class LangsWatcher
     /// <list type="number">
     ///     <item>Triggers the <see cref="CheckLangStarted"/> event.</item>
     ///     <item>Fetches the version of the langs.</item>
-    ///     <item>If the version is empty, triggers the <see cref="CheckLangFinished"/> event and returns.</item>
+    ///     <item>If the version is empty, triggers the <see cref="CheckLangsFinished"/> event and returns.</item>
     ///     <item>Gets the updated langs from the versions.</item>
     ///     <item>Downloads, extracts, and diffs the updated langs.</item>
-    ///     <item>Triggers the <see cref="CheckLangFinished"/> event.</item>
+    ///     <item>Triggers the <see cref="CheckLangsFinished"/> event.</item>
     /// </list>
     /// </remarks>
     public async Task CheckAsync(LangsRepository repository, bool force = false)
@@ -318,19 +318,19 @@ public sealed class LangsWatcher
     /// <summary>
     /// Delegate for the CheckLangFinished event.
     /// </summary>
-    public delegate ValueTask CheckLangFinishedEventHandler(LangsWatcher sender, CheckLangFinishedEventArgs eventArgs);
+    public delegate ValueTask CheckLangsFinishedEventHandler(LangsWatcher sender, CheckLangFinishedEventArgs eventArgs);
 
     /// <summary>
-    /// Event that is triggered when a lang check is finished.
+    /// Event that is triggered when a langs check is finished.
     /// </summary>
-    public event CheckLangFinishedEventHandler? CheckLangFinished;
+    public event CheckLangsFinishedEventHandler? CheckLangsFinished;
 
     /// <summary>
     /// Triggers the CheckLangFinished event.
     /// </summary>
     internal async ValueTask OnCheckLangFinished(CheckLangFinishedEventArgs eventArgs)
     {
-        var handler = CheckLangFinished;
+        var handler = CheckLangsFinished;
         if (handler is not null)
         {
             await handler.Invoke(this, eventArgs);

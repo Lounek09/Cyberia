@@ -32,20 +32,6 @@ public sealed class CytrusService
         _cachedChannelsService = cachedChannelsService;
         _cytrusManifestFetcher = cytrusManifestFetcher;
         _cytrusWatcher = cytrusWatcher;
-
-        _cytrusWatcher.NewCytrusFileDetected += OnNewCytrusFileDetected;
-    }
-
-
-    /// <summary>
-    /// Handles the event when a new Cytrus is detected.
-    /// </summary>
-    /// <param name="_">Ignored.</param>
-    /// <param name="args">The event arguments.</param>
-    public async ValueTask OnNewCytrusFileDetected(CytrusWatcher _, NewCytrusFileDetectedEventArgs args)
-    {
-        await SendCytrusDiffAsync(args);
-        await SendManifestDiffAsync(args);
     }
 
     /// <summary>
@@ -82,10 +68,21 @@ public sealed class CytrusService
     }
 
     /// <summary>
+    /// Handles the event when a new Cytrus is detected.
+    /// </summary>
+    /// <param name="_">Ignored.</param>
+    /// <param name="eventArgs">The event arguments.</param>
+    internal async ValueTask OnNewCytrusFileDetected(CytrusWatcher _, NewCytrusFileDetectedEventArgs eventArgs)
+    {
+        await SendCytrusDiffAsync(eventArgs);
+        await SendManifestDiffAsync(eventArgs);
+    }
+
+    /// <summary>
     /// Sends the Cytrus diff to the Cytrus channel.
     /// </summary>
-    /// <param name="args">The event arguments containing the diff.</param>
-    private async Task SendCytrusDiffAsync(NewCytrusFileDetectedEventArgs args)
+    /// <param name="eventArgs">The event arguments containing the diff.</param>
+    private async Task SendCytrusDiffAsync(NewCytrusFileDetectedEventArgs eventArgs)
     {
         var channel = _cachedChannelsService.CytrusChannel;
         if (channel is null)
@@ -93,11 +90,11 @@ public sealed class CytrusService
             return;
         }
 
-        var content = Formatter.BlockCode(args.Diff, "json");
+        var content = Formatter.BlockCode(eventArgs.Diff, "json");
 
         if (content.Length > Constant.MaxMessageSize)
         {
-            using MemoryStream stream = new(Encoding.UTF8.GetBytes(args.Diff));
+            using MemoryStream stream = new(Encoding.UTF8.GetBytes(eventArgs.Diff));
             await channel.SendMessageSafeAsync("cytrus_diff.json", stream);
             return;
         }
@@ -108,8 +105,8 @@ public sealed class CytrusService
     /// <summary>
     /// Sends the manifest diff of the windows platform if it exists to the Cytrus manifest channel.
     /// </summary>
-    /// <param name="args">The event arguments containing the diff.</param>
-    private async Task SendManifestDiffAsync(NewCytrusFileDetectedEventArgs args)
+    /// <param name="eventArgs">The event arguments containing the diff.</param>
+    private async Task SendManifestDiffAsync(NewCytrusFileDetectedEventArgs eventArgs)
     {
         var channel = _cachedChannelsService.CytrusManifestChannel;
         if (channel is null)
@@ -117,7 +114,7 @@ public sealed class CytrusService
             return;
         }
 
-        var document = JsonDocument.Parse(args.Diff);
+        var document = JsonDocument.Parse(eventArgs.Diff);
         var root = document.RootElement;
 
         if (!root.TryGetProperty("games", out var games) ||

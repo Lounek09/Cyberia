@@ -1,4 +1,8 @@
-﻿using DSharpPlus;
+﻿using Cyberia.Cytrusaurus;
+using Cyberia.Langzilla;
+using Cyberia.Salamandra.Services;
+
+using DSharpPlus;
 using DSharpPlus.Entities;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +14,20 @@ namespace Cyberia.Salamandra.Extensions;
 /// </summary>
 public static class ServiceProviderExtensions
 {
+    /// <summary>
+    /// Registers Salamandra specific events from the service provider.
+    /// </summary>
+    /// <param name="provider">The service provider to register the events from.</param>
+    /// <returns>The service provider.</returns>
+    public static IServiceProvider RegisterSalamandraEvents(this IServiceProvider provider)
+    {
+        provider.GetRequiredService<CytrusWatcher>().NewCytrusFileDetected += provider.GetRequiredService<CytrusService>().OnNewCytrusFileDetected;
+        provider.GetRequiredService<LangsWatcher>().CheckLangsFinished += provider.GetRequiredService<LangsService>().OnCheckLangsFinished;
+
+        return provider;
+    }
+
+
     /// <summary>
     /// Starts the Salamandra discord client from the service provider.
     /// </summary>
