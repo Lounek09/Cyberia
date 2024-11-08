@@ -140,6 +140,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
                     true);
             }
 
+            // Fuck Roulette
             if (_spellData.Id == 101 || _spellData.Id == 2083)
             {
                 embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), "Fuck");
