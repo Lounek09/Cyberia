@@ -62,7 +62,7 @@ public sealed class CommandsEventHandler : IEventHandler<CommandErroredEventArgs
 
         // If the exception is a discord exception, we get the json message.
         string exceptionBlock;
-        if (exception is DiscordException discordException)
+        if (exception is DiscordException discordException && !string.IsNullOrEmpty(discordException.JsonMessage))
         {
             Log.Error(exception, "A discord error occurred when {UserName} ({UserId}) used the {CommandName} command.\n{JsonMessage}",
                 interaction.User.Username, interaction.User.Id, commandName, discordException.JsonMessage);
