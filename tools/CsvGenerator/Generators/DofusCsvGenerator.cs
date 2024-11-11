@@ -51,7 +51,6 @@ public abstract class DofusCsvGenerator<T> : ICsvGenerator
         return _items;
     }
 
-
     protected abstract void AppendItem(T item);
 
     private void Save()
