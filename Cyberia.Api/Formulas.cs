@@ -4,12 +4,22 @@ public static class Formulas
 {
     public static int GetCriticalRate(int crit, int targetRate, int agility)
     {
-        double withoutAgility = targetRate - crit;
+        var withoutAgility = targetRate - crit;
         var withAgility = Math.Floor((targetRate - crit) * 2.9901 / Math.Log(agility + 12));
 
-        var critRate = Math.Max(2, Math.Min(withoutAgility, withAgility));
+        var critRate = Math.Min(withoutAgility, withAgility);
 
-        return critRate > int.MaxValue ? int.MaxValue : Convert.ToInt32(critRate);
+        if (critRate < 2)
+        {
+            return 2;
+        }
+
+        if (critRate > int.MaxValue)
+        {
+            return int.MaxValue;
+        }
+
+        return Convert.ToInt32(critRate);
 
     }
 
@@ -17,21 +27,51 @@ public static class Formulas
     {
         var agility = Math.Exp((targetCrit - crit) * 2.9901 / 3) - 12;
 
-        return agility > int.MaxValue ? int.MaxValue : Convert.ToInt32(agility);
+        if (agility < 0)
+        {
+            return 0;
+        }
+
+        if (agility > int.MaxValue)
+        {
+            return int.MaxValue;
+        }
+
+        return Convert.ToInt32(agility);
     }
 
     public static double GetEscapePercent(int agility, int enemyAgility)
     {
         var escapePercent = 300 * ((double)agility + 25) / ((double)agility + enemyAgility + 50) - 100;
 
-        return Math.Max(0, Math.Min(100, Math.Round(escapePercent, 2)));
+        if (escapePercent < 0)
+        {
+            return 0;
+        }
+
+        if (escapePercent > 100)
+        {
+            return 100;
+        }
+
+        return Math.Round(escapePercent, 2);
     }
 
     public static int GetAgilityToEscapeForSure(int enemyAgility)
     {
         var agility = 25 + 2D * enemyAgility;
 
-        return agility > int.MaxValue ? int.MaxValue : Convert.ToInt32(agility);
+        if (agility < 0)
+        {
+            return 0;
+        }
+
+        if (agility > int.MaxValue)
+        {
+            return int.MaxValue;
+        }
+
+        return Convert.ToInt32(agility);
     }
 
     public static TimeSpan GetTimePerCraft(int quantity, int slot)
