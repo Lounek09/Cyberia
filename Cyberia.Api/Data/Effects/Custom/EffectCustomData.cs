@@ -23,13 +23,12 @@ public sealed class EffectCustomData : IDofusData<int>
     public bool ShowInDiceModePossible { get; init; }
 
     [JsonPropertyName("e")]
-    public string Element { get; init; }
+    public char? Element { get; init; }
 
     [JsonConstructor]
     internal EffectCustomData()
     {
         Description = string.Empty;
         Operator = string.Empty;
-        Element = string.Empty;
     }
 }

@@ -29,19 +29,20 @@ public sealed class EffectData : IDofusData<int>, IComparable<EffectData>
     public bool DisplayableInDiceMode { get; init; }
 
     [JsonPropertyName("e")]
-    public string Element { get; init; }
+    public char? Element { get; init; }
 
     [JsonConstructor]
     internal EffectData()
     {
         Description = LocalizedString.Empty;
         Operator = string.Empty;
-        Element = string.Empty;
     }
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("effects", Id, size);
+        var iconName = Element is null ? CharacteristicId.ToString() : Element.Value.ToString();
+
+        return await CdnManager.GetImagePathAsync("effects", iconName, size);
     }
 
     public int CompareTo(EffectData? other)

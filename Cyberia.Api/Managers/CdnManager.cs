@@ -11,7 +11,12 @@ public static class CdnManager
 
     public static async Task<string> GetImagePathAsync(string category, int id, CdnImageSize size, string ext = "png")
     {
-        var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{(int)size}/{id}.{ext}";
+        return await GetImagePathAsync(category, id.ToString(), size, ext);
+    }
+
+    public static async Task<string> GetImagePathAsync(string category, string name, CdnImageSize size, string ext = "png")
+    {
+        var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{(int)size}/{name}.{ext}";
         var exists = await ExistsAsync(url);
 
         return exists ? url : $"{DofusApi.Config.CdnUrl}/images/dofus/others/{(int)size}/unknown.png";
@@ -19,13 +24,18 @@ public static class CdnManager
 
     public static async Task<string> GetImagePathAsync(string category, int id, string ext = "png")
     {
-        var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{id}.{ext}";
+        return await GetImagePathAsync(category, id.ToString(), ext);
+    }
+
+    public static async Task<string> GetImagePathAsync(string category, string name, string ext = "png")
+    {
+        var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{category}/{name}.{ext}";
         var exists = await ExistsAsync(url);
 
         return exists ? url : $"{DofusApi.Config.CdnUrl}/images/dofus/others/{(int)CdnImageSize.Size128}/unknown.png";
     }
 
-    public static void ClearCache()
+    internal static void ClearCache()
     {
         s_cachedUrl.Clear();
     }
