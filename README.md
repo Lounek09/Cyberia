@@ -104,7 +104,7 @@
    ```
 
 9. **First-time Launch:**  
-   If this is your first time launching the application, you need to generate the JSON data used by the API. You can either wait for the automatic Lang check to occur or manually trigger it using the `/langs check` command in Discord. After the check is complete, use the `/langs parse` command to parse the data to JSON. Finally, either restart the application or use the `/reload` command to hot reload the data.
+   If this is your first time launching the application, you will need to generate the JSON data used by the API. You can either wait for the automatic Lang check to occur or manually trigger it using the `/langs check` command in Discord. After the check is complete, use the `/langs parse` command to parse the data to JSON. Then, restart the application or use the `/reload` command to hot reload the data. Finally, use the command `/emoji upload` to upload the emojis to your Discord application.
 
 ## Configuration
 
