@@ -16,19 +16,19 @@ public static class DiscordChannelExtensions
     {
         var permissions = channel.Guild.CurrentMember.PermissionsIn(channel);
 
-        if (!permissions.HasPermission(DiscordPermissions.AccessChannels))
+        if (!permissions.HasPermission(DiscordPermission.ViewChannel))
         {
-            Log.Error("No permission to access to this channel {ChannelId}", channel.Id);
+            Log.Error("No permission to view this channel {ChannelId}", channel.Id);
             return;
         }
 
-        if (!permissions.HasPermission(DiscordPermissions.SendMessages))
+        if (!permissions.HasPermission(DiscordPermission.SendMessages))
         {
-            Log.Error("No permission to send message in this channel {ChannelId}", channel.Id);
+            Log.Error("No permission to send messages in this channel {ChannelId}", channel.Id);
             return;
         }
 
-        if (message.Files.Count > 0 && !permissions.HasPermission(DiscordPermissions.AttachFiles))
+        if (message.Files.Count > 0 && !permissions.HasPermission(DiscordPermission.AttachFiles))
         {
             Log.Error("No permission to attach files in this channel {ChannelId}", channel.Id);
             return;
