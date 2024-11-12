@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.Runes;
 
-namespace Cyberia.Api.Factories.Effects;
+namespace Cyberia.Api.Factories.Effects.Templates;
 
 public interface IRuneGeneratorEffect
 {

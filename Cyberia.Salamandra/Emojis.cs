@@ -5,6 +5,7 @@ using Cyberia.Api.Data.States;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Elements;
+using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Salamandra.Services;
 
 using System.Collections.Frozen;
@@ -40,11 +41,8 @@ public static class Emojis
         var emoji = effect switch
         {
             CharacterLearnEmoteEffect characterLearnEmoteEffect => Emote(characterLearnEmoteEffect.GetEmoteData()),
-            FightSetStateEffect fightSetStateEffect => State(fightSetStateEffect.GetStateData()),
-            FightUnsetStateEffect fightUnsetStateEffect => State(fightUnsetStateEffect.GetStateData()),
-            CharacterGainJobXpEffect characterGainJobXpEffect => Job(characterGainJobXpEffect.GetJobData()),
-            CharacterLearnJobEffect characterLearnJobEffect => Job(characterLearnJobEffect.GetJobData()),
-            CharacterUnlearnJobEffect characterUnlearnJobEffect => Job(characterUnlearnJobEffect.GetJobData()),
+            IStateEffect stateEffect => State(stateEffect.GetStateData()),
+            IJobEffect jobEffect => Job(jobEffect.GetJobData()),
             _ => null
         };
 

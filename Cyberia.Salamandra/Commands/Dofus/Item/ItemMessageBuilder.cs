@@ -7,6 +7,7 @@ using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.ItemStats;
 using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Salamandra.Commands.Dofus.Craft;
 using Cyberia.Salamandra.Commands.Dofus.Incarnation;
 using Cyberia.Salamandra.Commands.Dofus.ItemSet;

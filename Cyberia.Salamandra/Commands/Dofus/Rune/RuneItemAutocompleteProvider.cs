@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api;
-using Cyberia.Api.Factories.Effects;
+using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
