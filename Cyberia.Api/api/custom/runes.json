@@ -2,251 +2,180 @@
   "RU": [
     {
       "id": 1,
-      "n": "Fo",
       "w": 1,
-      "p": 1,
-      "pa": true,
-      "ra": true
+      "ba": 1519,
+      "pa": 1545,
+      "ra": 1551
     },
     {
       "id": 2,
-      "n": "Sa",
       "w": 3,
-      "p": 1,
-      "pa": true,
-      "ra": true
+      "ba": 1521,
+      "pa": 1546,
+      "ra": 1552
     },
     {
       "id": 3,
-      "n": "Ine",
       "w": 1,
-      "p": 1,
-      "pa": true,
-      "ra": true
+      "ba": 1522,
+      "pa": 1547,
+      "ra": 1553
     },
     {
       "id": 4,
-      "n": "Vi",
       "w": 0.25,
-      "p": 3,
-      "pa": true,
-      "ra": true
+      "ba": 1523,
+      "pa": 1548,
+      "ra": 1554
     },
     {
       "id": 5,
-      "n": "Age",
       "w": 1,
-      "p": 1,
-      "pa": true,
-      "ra": true
+      "ba": 1524,
+      "pa": 1549,
+      "ra": 1555
     },
     {
       "id": 6,
-      "n": "Cha",
       "w": 1,
-      "p": 1,
-      "pa": true,
-      "ra": true
+      "ba": 1525,
+      "pa": 1550,
+      "ra": 1556
     },
     {
       "id": 7,
-      "n": "Ga Pa",
       "w": 100,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 1557
     },
     {
       "id": 8,
-      "n": "Ga Pme",
       "w": 90,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 1558
     },
     {
       "id": 9,
-      "n": "Cri",
       "w": 30,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7433
     },
     {
       "id": 10,
-      "n": "So",
       "w": 20,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7434
     },
     {
       "id": 11,
-      "n": "Do",
       "w": 20,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7435
     },
     {
       "id": 12,
-      "n": "Do Per",
       "w": 2,
-      "p": 1,
-      "pa": true,
-      "ra": true
+      "ba": 7436,
+      "pa": 10618,
+      "ra": 10619
     },
     {
       "id": 13,
-      "n": "Do Ren",
       "w": 30,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7437
     },
     {
       "id": 14,
-      "n": "Po",
       "w": 51,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7438
     },
     {
       "id": 15,
-      "n": "Invo",
       "w": 30,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7442
     },
     {
       "id": 16,
-      "n": "Pod",
       "w": 0.25,
-      "p": 10,
-      "pa": true,
-      "ra": true
+      "ba": 7443,
+      "pa": 7444,
+      "ra": 7445
     },
     {
       "id": 17,
-      "n": "Pi",
       "w": 15,
-      "p": 1,
-      "pa": true,
-      "ra": false
+      "ba": 7446,
+      "pa": 10613
     },
     {
       "id": 18,
-      "n": "Pi Per",
       "w": 2,
-      "p": 1,
-      "pa": true,
-      "ra": true
+      "ba": 7447,
+      "pa": 10615,
+      "ra": 10616
     },
     {
       "id": 19,
-      "n": "Ini",
       "w": 0.1,
-      "p": 10,
-      "pa": true,
-      "ra": true
+      "ba": 7448,
+      "pa": 7449,
+      "ra": 7450
     },
     {
       "id": 20,
-      "n": "Prospe",
       "w": 3,
-      "p": 1,
-      "pa": true,
-      "ra": false
+      "ba": 7451,
+      "pa": 10662
     },
     {
       "id": 21,
-      "n": "Ré Feu",
       "w": 5,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7452
     },
     {
       "id": 22,
-      "n": "Ré Air",
       "w": 5,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7453
     },
     {
       "id": 23,
-      "n": "Ré Eau",
       "w": 5,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7454
     },
     {
       "id": 24,
-      "n": "Ré Terre",
       "w": 5,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7455
     },
     {
       "id": 25,
-      "n": "Ré Neutre",
       "w": 5,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7456
     },
     {
       "id": 26,
-      "n": "Ré Per Feu",
       "w": 4,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7457
     },
     {
       "id": 27,
-      "n": "Ré Per Air",
       "w": 4,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7458
     },
     {
       "id": 28,
-      "n": "Ré Per Terre",
       "w": 4,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7459
     },
     {
       "id": 29,
-      "n": "Ré Per Neutre",
       "w": 4,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7460
     },
     {
       "id": 30,
-      "n": "Ré Per Eau",
       "w": 4,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 7560
     },
     {
       "id": 31,
-      "n": "Chasse",
       "w": 5,
-      "p": 1,
-      "pa": false,
-      "ra": false
+      "ba": 10057
     }
   ]
 }

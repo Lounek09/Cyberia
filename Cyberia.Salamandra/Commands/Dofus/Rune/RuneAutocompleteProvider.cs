@@ -20,11 +20,12 @@ public sealed class RuneAutocompleteProvider : IAutoCompleteProvider
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        return DofusApi.Datacenter.RunesRepository.GetRunesDataByName(ctx.UserInput ?? string.Empty)
+        return DofusApi.Datacenter.RunesRepository.GetRunesDataByItemName(ctx.UserInput ?? string.Empty)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {
-                return new DiscordAutoCompleteChoice(x.Name, x.Name);
+                var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.BaRuneItemId, culture);
+                return new DiscordAutoCompleteChoice(itemName.WithMaxLength(100), x.Id);
             });
     }
 }

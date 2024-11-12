@@ -96,24 +96,21 @@ public sealed class RuneCommandModule
         [InteractionLocalizer<RuneInteractionLocalizer>]
         [SlashAutoCompleteProvider<RuneAutocompleteProvider>]
         [MinMaxLength(1, 70)]
-        string runeName)
+        int runeId)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var runeData = DofusApi.Datacenter.RunesRepository.GetRuneDataByName(runeName);
+        var runeData = DofusApi.Datacenter.RunesRepository.GetRuneDataById(runeId);
         if (runeData is null)
         {
-            await ctx.RespondAsync($"""
-                {Translation.Get<BotTranslations>("IncorrectParameter", culture)}
-                {Formatter.Italic(Translation.Get<BotTranslations>("PossibleValues", culture))} {Formatter.InlineCode(DofusApi.Datacenter.RunesRepository.GetAllRuneName())}
-                """);
+            await ctx.RespondAsync(Translation.Get<BotTranslations>("Rune.NotFound", culture));
             return;
         }
 
         var percentRuneExtractable = Math.Round(RuneManager.GetPercentStatExtractable(runeData, itemLvl, statAmount), 2);
 
         var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Rune.Author", culture))
-            .WithTitle(runeData.GetFullName());
+            .WithTitle(DofusApi.Datacenter.ItemsRepository.GetItemNameById(runeData.BaRuneItemId));
 
         if (statAmount == 1)
         {
@@ -132,7 +129,7 @@ public sealed class RuneCommandModule
                 Formatter.Bold(itemLvl.ToString()),
                 Formatter.Bold(statAmount.ToString())));
 
-            if (!runeData.HasPa && !runeData.HasRa)
+            if (runeData.PaRuneItemId is null && runeData.RaRuneItemId is null)
             {
                 var runeBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AverageMultiplicator);
 
@@ -148,12 +145,12 @@ public sealed class RuneCommandModule
                 embed.AddField(Translation.Get<BotTranslations>("ShortAverage", culture), GetRuneBundleContentFieldStatCommand(averageRuneBundle, culture), true);
                 embed.AddField(Translation.Get<BotTranslations>("ShortMaximum", culture), GetRuneBundleContentFieldStatCommand(maxRuneBundle, culture), true);
 
-                if (runeData.HasRa && maxRuneBundle.RaAmount == 1 && minRuneBundle.RaAmount == 0)
+                if (runeData.RaRuneItemId is not null && maxRuneBundle.RaAmount == 1 && minRuneBundle.RaAmount == 0)
                 {
                     var percentRaObtention = Math.Round(RuneManager.GetPercentToObtainRune(runeData, RuneType.RA, itemLvl, statAmount), 2);
                     embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RuneRaRate.Title", culture), $"{Emojis.RaRune(runeData.Id)} {Formatter.Bold(percentRaObtention.ToString())}%");
                 }
-                else if (runeData.HasPa && maxRuneBundle.PaAmount == 1 && minRuneBundle.PaAmount == 0)
+                else if (runeData.PaRuneItemId is not null && maxRuneBundle.PaAmount == 1 && minRuneBundle.PaAmount == 0)
                 {
                     var percentPaObtention = Math.Round(RuneManager.GetPercentToObtainRune(runeData, RuneType.PA, itemLvl, statAmount), 2);
                     embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RunePaRate.Title", culture), $"{Emojis.PaRune(runeData.Id)} {Formatter.Bold(percentPaObtention.ToString())}%");

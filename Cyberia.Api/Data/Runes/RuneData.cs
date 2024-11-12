@@ -1,7 +1,7 @@
-﻿using Cyberia.Api.Enums;
-using Cyberia.Langzilla.Enums;
+﻿using Cyberia.Api.Data.Items;
+using Cyberia.Api.Enums;
+using Cyberia.Api.Factories.Effects.Elements;
 
-using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Runes;
@@ -11,45 +11,54 @@ public sealed class RuneData : IDofusData<int>
     [JsonPropertyName("id")]
     public int Id { get; init; }
 
-    [JsonPropertyName("n")]
-    public string Name { get; init; }
-
     [JsonPropertyName("w")]
     public double Weight { get; init; }
 
-    [JsonPropertyName("p")]
-    public int Power { get; init; }
+    [JsonPropertyName("ba")]
+    public int BaRuneItemId { get; init; }
 
     [JsonPropertyName("pa")]
-    public bool HasPa { get; init; }
+    public int? PaRuneItemId { get; init; }
 
     [JsonPropertyName("ra")]
-    public bool HasRa { get; init; }
+    public int? RaRuneItemId { get; init; }
 
     [JsonConstructor]
     internal RuneData()
     {
-        Name = string.Empty;
+
     }
 
-    public string GetFullName(Language language)
+    public ItemData? GetBaRuneItemData()
     {
-        return GetFullName(language.ToCulture());
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(BaRuneItemId);
     }
 
-    public string GetFullName(CultureInfo? culture = null)
+    public ItemData? GetPaRuneItemData()
     {
-        return $"{Translation.Get<ApiTranslations>("Rune", culture)} {Name}";
+        return PaRuneItemId.HasValue ? DofusApi.Datacenter.ItemsRepository.GetItemDataById(PaRuneItemId.Value) : null;
+    }
+
+    public ItemData? GetRaRuneItemData()
+    {
+        return RaRuneItemId.HasValue ? DofusApi.Datacenter.ItemsRepository.GetItemDataById(RaRuneItemId.Value) : null;
     }
 
     public int GetPower(RuneType type)
     {
-        return type switch
+        var itemData = type switch
         {
-            RuneType.BA => Power,
-            RuneType.PA => Power * 3 + (Id == 4 ? 1 : 0),
-            RuneType.RA => Power * 10,
-            _ => 0,
+            RuneType.BA => GetBaRuneItemData(),
+            RuneType.PA => GetPaRuneItemData(),
+            RuneType.RA => GetRaRuneItemData(),
+            _ => null
         };
+
+        if (itemData is null || itemData.GetItemStatsData()?.Effects.FirstOrDefault(x => x is ItemAddEffectEffect) is not ItemAddEffectEffect itemAddEffect)
+        {
+            return 0;
+        }
+
+        return itemAddEffect.Min;
     }
 }

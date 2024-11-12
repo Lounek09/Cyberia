@@ -2851,15 +2851,6 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rune.
-        /// </summary>
-        internal static string Rune {
-            get {
-                return ResourceManager.GetString("Rune", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to inf..
         /// </summary>
         internal static string ShortInfinity {

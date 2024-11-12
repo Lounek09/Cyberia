@@ -1198,15 +1198,6 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incorrect parameter.
-        /// </summary>
-        internal static string IncorrectParameter {
-            get {
-                return ResourceManager.GetString("IncorrectParameter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Intelligence.
         /// </summary>
         internal static string Intelligence {
@@ -1306,15 +1297,6 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Possible values :.
-        /// </summary>
-        internal static string PossibleValues {
-            get {
-                return ResourceManager.GetString("PossibleValues", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Quest not found..
         /// </summary>
         internal static string Quest_NotFound {
@@ -1356,6 +1338,15 @@ namespace Cyberia.Translations.Resources {
         internal static string Rgpd_NoData {
             get {
                 return ResourceManager.GetString("Rgpd.NoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rune not found..
+        /// </summary>
+        internal static string Rune_NotFound {
+            get {
+                return ResourceManager.GetString("Rune.NotFound", resourceCulture);
             }
         }
         

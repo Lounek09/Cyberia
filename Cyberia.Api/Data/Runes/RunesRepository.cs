@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.JsonConverters;
+using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Runes;
@@ -25,31 +27,23 @@ public sealed class RunesRepository : DofusCustomRepository, IDofusRepository
         return runeData;
     }
 
-    public RuneData? GetRuneDataByName(string name)
+    public IEnumerable<RuneData> GetRunesDataByItemName(string itemName, Language language)
     {
-        name = name.NormalizeToAscii();
-
-        return Runes.Values.FirstOrDefault(x =>
-        {
-            return x.Name.NormalizeToAscii().Equals(name, StringComparison.OrdinalIgnoreCase);
-        });
+        return GetRunesDataByItemName(itemName, language.ToCulture());
     }
 
-    public IEnumerable<RuneData> GetRunesDataByName(string name)
+    public IEnumerable<RuneData> GetRunesDataByItemName(string itemName, CultureInfo? culture = null)
     {
-        var names = name.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var itemNames = itemName.NormalizeToAscii().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-        return Runes.Values.Where(x =>
+        foreach (var runeData in Runes.Values)
         {
-            return names.All(y =>
+            var itemData = runeData.GetBaRuneItemData();
+            if (itemData is not null &&
+                itemNames.All(x => itemData.NormalizedName.ToString(culture).Contains(x, StringComparison.OrdinalIgnoreCase)))
             {
-                return x.Name.NormalizeToAscii().Contains(y, StringComparison.OrdinalIgnoreCase);
-            });
-        });
-    }
-
-    public string GetAllRuneName()
-    {
-        return string.Join(", ", Runes.Values.Select(x => x.Name));
+                yield return runeData;
+            }
+        }
     }
 }

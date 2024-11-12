@@ -487,11 +487,8 @@ To escape at 100%, you will need at minimum #4 agi.</value>
   <data name="Embed.PaginatedQuest.Title" xml:space="preserve">
     <value>Multiple quests found :</value>
   </data>
-  <data name="IncorrectParameter" xml:space="preserve">
-    <value>Incorrect parameter</value>
-  </data>
-  <data name="PossibleValues" xml:space="preserve">
-    <value>Possible values :</value>
+  <data name="Rune.NotFound" xml:space="preserve">
+    <value>Rune not found.</value>
   </data>
   <data name="Embed.Rune.Author" xml:space="preserve">
     <value>Runes calculator</value>

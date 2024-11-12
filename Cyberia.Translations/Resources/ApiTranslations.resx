@@ -948,9 +948,6 @@
   <data name="QuestObjectiveType.Unknown" xml:space="preserve">
     <value>Unknown questObjectiveType #1 (#2)</value>
   </data>
-  <data name="Rune" xml:space="preserve">
-    <value>Rune</value>
-  </data>
   <data name="SpellCategory.Breed" xml:space="preserve">
     <value>Class</value>
   </data>

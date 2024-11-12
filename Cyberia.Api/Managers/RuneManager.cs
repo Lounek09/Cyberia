@@ -49,7 +49,7 @@ public static class RuneManager
             ? GetStatAmountExtractable(runeData, itemLvl, statAmount, multiplicator.Value)
             : GetStatAmountExtractable(runeData, itemLvl, statAmount, GetRandomMultiplicator());
 
-        if (runeData.HasRa)
+        if (runeData.RaRuneItemId is not null)
         {
             var amontBeforeRa = amountExtractable;
             double transitionalRaRate = GetRequiredStatAmountExtractableToObtainRune(runeData, RuneType.RA);
@@ -66,7 +66,7 @@ public static class RuneManager
             }
         }
 
-        if (runeData.HasPa)
+        if (runeData.PaRuneItemId is not null)
         {
             var amontBeforePa = amountExtractable;
             double transitionalPaRate = GetRequiredStatAmountExtractableToObtainRune(runeData, RuneType.PA);

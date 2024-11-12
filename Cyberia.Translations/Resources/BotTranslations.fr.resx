@@ -487,11 +487,8 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
   <data name="Embed.PaginatedQuest.Title" xml:space="preserve">
     <value>Plusieurs quêtes trouvées :</value>
   </data>
-  <data name="IncorrectParameter" xml:space="preserve">
-    <value>Paramètre incorrect</value>
-  </data>
-  <data name="PossibleValues" xml:space="preserve">
-    <value>Valeurs possible :</value>
+  <data name="Rune.NotFound" xml:space="preserve">
+    <value>Rune introuvable.</value>
   </data>
   <data name="Embed.Rune.Author" xml:space="preserve">
     <value>Calculateur de runes</value>
