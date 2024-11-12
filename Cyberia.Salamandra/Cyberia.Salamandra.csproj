@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-02405" />
     <PackageReference Include="DSharpPlus.Commands" Version="5.0.0-nightly-02405" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
     <PackageReference Include="Serilog" Version="4.1.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
   </ItemGroup>
