@@ -40,9 +40,12 @@ public sealed class EffectData : IDofusData<int>, IComparable<EffectData>
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        var iconName = Element is null ? CharacteristicId.ToString() : Element.Value.ToString();
+        return await CdnManager.GetImagePathAsync("effects", GetIconId(), size);
+    }
 
-        return await CdnManager.GetImagePathAsync("effects", iconName, size);
+    public string GetIconId()
+    {
+        return Element is null ? CharacteristicId.ToString() : Element.Value.ToString();
     }
 
     public int CompareTo(EffectData? other)

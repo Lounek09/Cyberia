@@ -205,7 +205,7 @@ public static class DiscordEmbedBuilderExtensions
             builder.Append('\n');
             builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.Area", culture));
             builder.Append(' ');
-            builder.Append(Emojis.EffectArea(itemTypeData.EffectArea.Id));
+            builder.Append(Emojis.EffectArea(itemTypeData.EffectArea));
             builder.Append(' ');
             builder.Append(itemTypeData.EffectArea.GetDescription(culture).ToString(Formatter.Bold));
         }
@@ -230,7 +230,7 @@ public static class DiscordEmbedBuilderExtensions
 
         foreach (var petFoodsData in petData.Foods)
         {
-            builder.Append(Emojis.Effect(petFoodsData.Effect.Id));
+            builder.Append(Emojis.Effect(petFoodsData.Effect));
             builder.Append(' ');
             builder.Append(Formatter.Bold(petFoodsData.Effect.GetDescription(culture)));
             builder.Append(" :\n");
@@ -300,6 +300,7 @@ public static class DiscordEmbedBuilderExtensions
         return embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Pet.Title", culture), builder.ToString(), inline);
     }
 
+    //TODO: Use a string builder
     private static List<string> GetEffectsParse(IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
     {
         List<string> effectsParse = [];
@@ -325,9 +326,9 @@ public static class DiscordEmbedBuilderExtensions
 
             var areaInfo = effect.EffectArea.Size == EffectAreaFactory.Default.Size
                 ? string.Empty
-                : $" - {Emojis.EffectArea(effect.EffectArea.Id)} {effect.EffectArea.GetSize(culture)}";
+                : $" - {Emojis.EffectArea(effect.EffectArea)} {effect.EffectArea.GetSize(culture)}";
 
-            var effectParse = $"{Emojis.Effect(effect.Id)} {effectDescription}{areaInfo}";
+            var effectParse = $"{Emojis.Effect(effect)} {effectDescription}{areaInfo}";
 
             if (effect.Criteria.Count > 0)
             {

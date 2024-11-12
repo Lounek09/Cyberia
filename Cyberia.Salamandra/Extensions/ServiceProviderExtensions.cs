@@ -36,9 +36,12 @@ public static class ServiceProviderExtensions
     public static async Task<IServiceProvider> StartSalamandraAsync(this IServiceProvider provider)
     {
         var discordClient = provider.GetRequiredService<DiscordClient>();
+        var emojisService = provider.GetRequiredService<EmojisService>();
 
         DiscordActivity activity = new("Dofus Retro", DiscordActivityType.Playing);
         await discordClient.ConnectAsync(activity);
+
+        await emojisService.LoadEmojisAsync();
 
         return provider;
     }

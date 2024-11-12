@@ -63,6 +63,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<CachedChannelsService>();
         services.AddSingleton<CultureService>();
         services.AddSingleton<CytrusService>();
+        services.AddSingleton<EmojisService>();
         services.AddSingleton<LangsService>();
         services.AddSingleton<EmbedBuilderService>();
 

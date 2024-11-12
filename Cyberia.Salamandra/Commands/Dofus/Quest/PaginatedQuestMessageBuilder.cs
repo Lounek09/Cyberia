@@ -60,7 +60,7 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {Formatter.Bold(x.Name.ToString(_culture))} ({x.Id}) {Emojis.Quest(x.Repeatable, x.Account)}{(x.HasDungeon ? Emojis.Dungeon : string.Empty)}");
+        return _data.Select(x => $"- {Formatter.Bold(x.Name.ToString(_culture))} ({x.Id}) {Emojis.Quest(x)}{(x.HasDungeon ? Emojis.Dungeon : string.Empty)}");
     }
 
     protected override DiscordSelectComponent SelectBuilder()

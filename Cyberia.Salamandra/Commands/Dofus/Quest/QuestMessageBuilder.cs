@@ -87,7 +87,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, Translation.Get<BotTranslations>("Embed.Quest.Author", _culture))
-            .WithTitle($"{_questData.Name.ToString(_culture)} ({_questData.Id}) {Emojis.Quest(_questData.Repeatable, _questData.Account)}{(_questData.HasDungeon ? Emojis.Dungeon : string.Empty)}");
+            .WithTitle($"{_questData.Name.ToString(_culture)} ({_questData.Id}) {Emojis.Quest(_questData)}{(_questData.HasDungeon ? Emojis.Dungeon : string.Empty)}");
 
         if (_questStepData is not null)
         {
@@ -144,26 +144,26 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                     rewardsBuilder.Append('\n');
                 }
 
-                var emotesReward = _questStepData.RewardsData.GetEmotesData().ToList();
-                if (emotesReward.Count > 0)
+                var emotesReward = _questStepData.RewardsData.GetEmotesData();
+                if (emotesReward.Any())
                 {
                     rewardsBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Rewards.Content.Emotes", _culture));
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(string.Join(", ", emotesReward.Select(x => x.Name.ToString(_culture))));
+                    rewardsBuilder.Append(string.Join(", ", emotesReward.Select(x => Emojis.Emote(x) + x.Name.ToString(_culture))));
                     rewardsBuilder.Append('\n');
                 }
 
-                var jobsReward = _questStepData.RewardsData.GetJobsData().ToList();
-                if (jobsReward.Count > 0)
+                var jobsReward = _questStepData.RewardsData.GetJobsData();
+                if (jobsReward.Any())
                 {
                     rewardsBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Rewards.Content.Jobs", _culture));
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(string.Join(", ", jobsReward.Select(x => x.Name.ToString(_culture))));
+                    rewardsBuilder.Append(string.Join(", ", jobsReward.Select(x => Emojis.Job(x) + x.Name.ToString(_culture))));
                     rewardsBuilder.Append('\n');
                 }
 
-                var spellsReward = _questStepData.RewardsData.GetSpellsData().ToList();
-                if (spellsReward.Count > 0)
+                var spellsReward = _questStepData.RewardsData.GetSpellsData();
+                if (spellsReward.Any())
                 {
                     rewardsBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Rewards.Content.Spells", _culture));
                     rewardsBuilder.Append(' ');
