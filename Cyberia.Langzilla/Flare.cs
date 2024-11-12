@@ -7,7 +7,7 @@ namespace Cyberia.Langzilla;
 /// </summary>
 internal static class Flare
 {
-    private static readonly object s_lock = new();
+    private static readonly Lock s_lock = new();
     private static readonly string s_flarePath = GetFlarePath();
 
     /// <summary>
