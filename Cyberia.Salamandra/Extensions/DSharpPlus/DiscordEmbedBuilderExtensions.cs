@@ -71,7 +71,7 @@ public static class DiscordEmbedBuilderExtensions
     {
         if (effects.Any())
         {
-            var effectsParse = GetEffectsParse(effects, sort, culture, x => Formatter.Bold(Formatter.Sanitize(x)));
+            var effectsParse = GetEffectsDescription(effects, sort, culture, x => Formatter.Bold(Formatter.Sanitize(x)));
             return embed.AddFields(name, effectsParse, inline);
         }
 
@@ -80,7 +80,7 @@ public static class DiscordEmbedBuilderExtensions
 
     public static DiscordEmbedBuilder AddCriteriaFields(this DiscordEmbedBuilder embed, CriteriaReadOnlyCollection criteria, CultureInfo? culture, bool inline = false)
     {
-        var criteriaParse = GetCriteriaParse(criteria, culture, x => Formatter.Bold(Formatter.Sanitize(x)));
+        var criteriaParse = GetCriteriaDescription(criteria, culture, x => Formatter.Bold(Formatter.Sanitize(x)));
         return embed.AddFields(Translation.Get<BotTranslations>("Embed.Field.Criteria.Title", culture), criteriaParse, inline);
     }
 
@@ -300,10 +300,10 @@ public static class DiscordEmbedBuilderExtensions
         return embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Pet.Title", culture), builder.ToString(), inline);
     }
 
-    //TODO: Use a string builder
-    private static List<string> GetEffectsParse(IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
+    private static List<string> GetEffectsDescription(IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
     {
-        List<string> effectsParse = [];
+        List<string> effectsDescription = [];
+        StringBuilder effectDescriptionBuilder = new();
 
         var sortedEffects = sort ? effects.OrderByDescending(x => x) : effects;
 
@@ -314,72 +314,83 @@ public static class DiscordEmbedBuilderExtensions
                 var itemStatsData = replaceEffect.GetItemData()?.GetItemStatsData();
                 if (itemStatsData is not null)
                 {
-                    effectsParse.AddRange(GetEffectsParse(itemStatsData.Effects, sort, culture, parametersDecorator));
+                    effectsDescription.AddRange(GetEffectsDescription(itemStatsData.Effects, sort, culture, parametersDecorator));
+                    continue;
                 }
-
-                continue;
             }
 
-            var effectDescription = parametersDecorator is null
-                ? effect.GetDescription(culture)
-                : effect.GetDescription(culture).ToString(parametersDecorator);
+            effectDescriptionBuilder.Append(Emojis.Effect(effect));
+            effectDescriptionBuilder.Append(' ');
 
-            var areaInfo = effect.EffectArea.Size == EffectAreaFactory.Default.Size
-                ? string.Empty
-                : $" - {Emojis.EffectArea(effect.EffectArea)} {effect.EffectArea.GetSize(culture)}";
+            if (parametersDecorator is null)
+            {
+                effectDescriptionBuilder.Append(effect.GetDescription(culture));
+            }
+            else
+            {
+                effectDescriptionBuilder.Append(effect.GetDescription(culture).ToString(parametersDecorator));
+            }
 
-            var effectParse = $"{Emojis.Effect(effect)} {effectDescription}{areaInfo}";
+            if (effect.EffectArea.Size != EffectAreaFactory.Default.Size)
+            {
+                effectDescriptionBuilder.Append(" - ");
+                effectDescriptionBuilder.Append(Emojis.EffectArea(effect.EffectArea));
+                effectDescriptionBuilder.Append(' ');
+                effectDescriptionBuilder.Append(effect.EffectArea.GetSize(culture));
+            }
 
             if (effect.Criteria.Count > 0)
             {
-                var criteriaParse = GetCriteriaParse(effect.Criteria, culture: culture);
-                effectParse += $" {Formatter.InlineCode(string.Join(' ', criteriaParse))}";
+                var criteriaParse = GetCriteriaDescription(effect.Criteria, culture: culture);
+                effectDescriptionBuilder.Append(' ');
+                effectDescriptionBuilder.Append(Formatter.InlineCode(string.Join(' ', criteriaParse)));
             }
 
-            effectsParse.Add(effectParse);
+            effectsDescription.Add(effectDescriptionBuilder.ToString());
+            effectDescriptionBuilder.Clear();
         }
 
-        return effectsParse;
+        return effectsDescription;
     }
 
-    private static List<string> GetCriteriaParse(CriteriaReadOnlyCollection criteria, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
+    private static List<string> GetCriteriaDescription(CriteriaReadOnlyCollection criteria, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
     {
-        List<string> criteriaParse = [string.Empty];
+        List<string> criteriaDescription = [string.Empty];
 
         foreach (var element in criteria)
         {
             switch (element)
             {
                 case CriteriaLogicalOperator logicalOperator:
-                    criteriaParse[^1] += logicalOperator.GetDescription(culture) + ' ';
+                    criteriaDescription[^1] += logicalOperator.GetDescription(culture) + ' ';
                     break;
                 case CriteriaReadOnlyCollection subCriteria:
-                    var subCriteriaParse = GetCriteriaParse(subCriteria, culture, parametersDecorator);
+                    var subCriteriaParse = GetCriteriaDescription(subCriteria, culture, parametersDecorator);
 
-                    criteriaParse[^1] += '(' + subCriteriaParse[0];
+                    criteriaDescription[^1] += '(' + subCriteriaParse[0];
                     if (subCriteriaParse.Count > 1)
                     {
-                        criteriaParse.AddRange(subCriteriaParse.GetRange(1, subCriteriaParse.Count - 1));
+                        criteriaDescription.AddRange(subCriteriaParse.GetRange(1, subCriteriaParse.Count - 1));
                     }
-                    criteriaParse[^1] += ')';
+                    criteriaDescription[^1] += ')';
 
-                    criteriaParse.Add(string.Empty);
+                    criteriaDescription.Add(string.Empty);
                     break;
                 case ICriterion criterion:
-                    criteriaParse[^1] += parametersDecorator is null
+                    criteriaDescription[^1] += parametersDecorator is null
                         ? criterion.GetDescription(culture)
                         : criterion.GetDescription(culture).ToString(parametersDecorator);
 
-                    criteriaParse.Add(string.Empty);
+                    criteriaDescription.Add(string.Empty);
                     break;
             }
         }
 
-        if (string.IsNullOrEmpty(criteriaParse[^1]))
+        if (string.IsNullOrEmpty(criteriaDescription[^1]))
         {
-            criteriaParse.RemoveAt(criteriaParse.Count - 1);
+            criteriaDescription.RemoveAt(criteriaDescription.Count - 1);
         }
 
-        return criteriaParse;
+        return criteriaDescription;
     }
 }
