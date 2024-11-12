@@ -1,14 +1,13 @@
 ﻿using Cyberia.Api.Data.Emotes;
 using Cyberia.Api.Data.Jobs;
 using Cyberia.Api.Data.Quests;
+using Cyberia.Api.Data.Runes;
 using Cyberia.Api.Data.States;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Salamandra.Services;
-
-using System.Collections.Frozen;
 
 namespace Cyberia.Salamandra;
 
@@ -57,7 +56,7 @@ public static class Emojis
             return Empty;
         }
 
-        emoji = EmojisService.GetEmojiStringByName($"effect_{effectData.GetIconId()}");
+        emoji = EmojisService.GetEmojiStringByName($"effect_{effectData.GfxId}");
         if (string.IsNullOrEmpty(emoji))
         {
             return Empty;
@@ -126,84 +125,55 @@ public static class Emojis
     }
 
     // Runes
-    private static readonly FrozenDictionary<int, string> s_baRunes = new Dictionary<int, string>()
+    public static string BaRune(RuneData? runeData)
     {
-        { 1, "<:rune_fo:1238075386387234847>" },
-        { 2, "<:rune_sa:1238075626095771699>" },
-        { 3, "<:rune_ine:1238075428510634036>" },
-        { 4, "<:rune_vi:1238075719238549504>" },
-        { 5, "<:rune_age:1238075332091838527>" },
-        { 6, "<:rune_cha:1238075336252457063>" },
-        { 7, "<:rune_ga_pa:1238075387800453130>" },
-        { 8, "<:rune_ga_pme:1238075389251944488>" },
-        { 9, "<:rune_cri:1238075330607054949>" },
-        { 10, "<:rune_so:1238075627714641990>" },
-        { 11, "<:rune_do:1238075357345878017>" },
-        { 12, "<:rune_do_per:1238075359799414905>" },
-        { 13, "<:rune_do_ren:1238075361426669629>" },
-        { 14, "<:rune_po:1238075528053919785>" },
-        { 15, "<:rune_summo:1238075622048403537>" },
-        { 16, "<:rune_pod:1238075560521891920>" },
-        { 17, "<:rune_pi:1238075531585519656>" },
-        { 18, "<:rune_pi_per:1238075526443307110>" },
-        { 19, "<:rune_ini:1238075429768925204>" },
-        { 20, "<:rune_prospe:1238075553911803924>" },
-        { 21, "<:rune_fire_re:1238075390468034590>" },
-        { 22, "<:rune_air_re:1238075333127831663>" },
-        { 23, "<:rune_water_re:1238075720429867008>" },
-        { 24, "<:rune_earth_re:1238075355374551110>" },
-        { 25, "<:rune_neutral_re:1238075431106908160>" },
-        { 26, "<:rune_fire_re_per:1238075391676121260>" },
-        { 27, "<:rune_air_re_per:1238075334885244928>" },
-        { 28, "<:rune_earth_re_per:1238075356502822924>" },
-        { 29, "<:rune_neutral_re_per:1238075432062947371>" },
-        { 30, "<:rune_water_re_per:1238075717959422002>" },
-        { 31, "<:rune_hunting:1238075433602256976>" }
-    }.ToFrozenDictionary();
+        var itemData = runeData?.GetBaRuneItemData();
+        if (itemData is null)
+        {
+            return Empty;
+        }
 
-    public static string BaRune(int id)
-    {
-        return s_baRunes.TryGetValue(id, out var emoji) ? emoji : Empty;
+        var emoji = EmojisService.GetEmojiStringByName($"item_{itemData.ItemTypeId}_{itemData.GfxId}");
+        if (string.IsNullOrEmpty(emoji))
+        {
+            return Empty;
+        }
+
+        return emoji;
     }
 
-    private static readonly FrozenDictionary<int, string> s_paRunes = new Dictionary<int, string>()
+    public static string PaRune(RuneData? runeData)
     {
-        { 1, "<:rune_pa_fo:1238075466649309235>" },
-        { 2, "<:rune_pa_sa:1238075529060417567>" },
-        { 3, "<:rune_pa_ine:1238075461028806717>" },
-        { 4, "<:rune_pa_vi:1238075530453192756>" },
-        { 5, "<:rune_pa_age:1238075462295486464>" },
-        { 6, "<:rune_pa_cha:1238075463528747098>" },
-        { 12, "<:rune_pa_do_per:1238075465298608139>" },
-        { 16, "<:rune_pa_pod:1238075494843289640>" },
-        { 17, "<:rune_pa_pi:1238075499553488976>" },
-        { 18, "<:rune_pa_pi_per:1238075500648464414>" },
-        { 19, "<:rune_pa_ini:1238075497544548404>" },
-        { 20, "<:rune_pa_prospe:1238075496349171732>" }
-    }.ToFrozenDictionary();
+        var itemData = runeData?.GetPaRuneItemData();
+        if (itemData is null)
+        {
+            return Empty;
+        }
 
-    public static string PaRune(int id)
-    {
-        return s_paRunes.TryGetValue(id, out var emoji) ? emoji : Empty;
+        var emoji = EmojisService.GetEmojiStringByName($"item_{itemData.ItemTypeId}_{itemData.GfxId}");
+        if (string.IsNullOrEmpty(emoji))
+        {
+            return Empty;
+        }
+
+        return emoji;
     }
 
-    private static readonly FrozenDictionary<int, string> s_raRunes = new Dictionary<int, string>()
+    public static string RaRune(RuneData? runeData)
     {
-        { 1, "<:rune_ra_fo:1238075593220685866>" },
-        { 2, "<:rune_ra_sa:1238075623088459786>" },
-        { 3, "<:rune_ra_ine:1238075594537832549>" },
-        { 4, "<:rune_ra_vi:1238075624535621702>" },
-        { 5, "<:rune_ra_age:1238075556743086121>" },
-        { 6, "<:rune_ra_cha:1238075558051577967>" },
-        { 12, "<:rune_ra_do_per:1238075559339229194>" },
-        { 16, "<:rune_ra_pod:1238075591689900133>" },
-        { 18, "<:rune_ra_pi_per:1238075597658525826>" },
-        { 19, "<:rune_ra_ini:1238075596060364841>" }
-    }.ToFrozenDictionary();
+        var itemData = runeData?.GetRaRuneItemData();
+        if (itemData is null)
+        {
+            return Empty;
+        }
 
-    public static string RaRune(int id)
-    {
-        return s_raRunes.TryGetValue(id, out var emoji) ? emoji : Empty;
+        var emoji = EmojisService.GetEmojiStringByName($"item_{itemData.ItemTypeId}_{itemData.GfxId}");
+        if (string.IsNullOrEmpty(emoji))
+        {
+            return Empty;
+        }
+
+        return emoji;
     }
 
     // States

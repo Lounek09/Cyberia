@@ -31,6 +31,9 @@ public sealed class EffectData : IDofusData<int>, IComparable<EffectData>
     [JsonPropertyName("e")]
     public char? Element { get; init; }
 
+    [JsonIgnore]
+    public string GfxId => Element is null ? CharacteristicId.ToString() : Element.Value.ToString();
+
     [JsonConstructor]
     internal EffectData()
     {
@@ -40,12 +43,7 @@ public sealed class EffectData : IDofusData<int>, IComparable<EffectData>
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("effects", GetIconId(), size);
-    }
-
-    public string GetIconId()
-    {
-        return Element is null ? CharacteristicId.ToString() : Element.Value.ToString();
+        return await CdnManager.GetImagePathAsync("effects", GfxId, size);
     }
 
     public int CompareTo(EffectData? other)

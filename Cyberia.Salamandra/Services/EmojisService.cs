@@ -126,7 +126,7 @@ public sealed class EmojisService
         // Effects
         foreach (var effectData in DofusApi.Datacenter.EffectsRepository.Effects.Values)
         {
-            var emojiName = $"effect_{effectData.GetIconId()}";
+            var emojiName = $"effect_{effectData.GfxId}";
             var emojiRoute = $"{baseRoute}/effects/{emojiName}.png";
 
             await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
@@ -148,6 +148,37 @@ public sealed class EmojisService
             var emojiRoute = $"{baseRoute}/jobs/{emojiName}.png";
 
             await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+        }
+
+        // Items
+        foreach (var runeData in DofusApi.Datacenter.RunesRepository.Runes.Values)
+        {
+            var baRuneItemData = runeData.GetBaRuneItemData();
+            if (baRuneItemData is not null)
+            {
+                var emojiName = $"item_{baRuneItemData.ItemTypeId}_{baRuneItemData.GfxId}";
+                var emojiRoute = $"{baseRoute}/items/{baRuneItemData.ItemTypeId}/{emojiName}.png";
+
+                await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+            }
+
+            var paRuneItemData = runeData.GetPaRuneItemData();
+            if (paRuneItemData is not null)
+            {
+                var emojiName = $"item_{paRuneItemData.ItemTypeId}_{paRuneItemData.GfxId}";
+                var emojiRoute = $"{baseRoute}/items/{paRuneItemData.ItemTypeId}/{emojiName}.png";
+
+                await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+            }
+
+            var raRuneItemData = runeData.GetRaRuneItemData();
+            if (raRuneItemData is not null)
+            {
+                var emojiName = $"item_{raRuneItemData.ItemTypeId}_{raRuneItemData.GfxId}";
+                var emojiRoute = $"{baseRoute}/items/{raRuneItemData.ItemTypeId}/{emojiName}.png";
+
+                await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+            }
         }
 
         // States

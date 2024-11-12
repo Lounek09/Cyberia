@@ -83,14 +83,14 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
         {
             descriptionBuilder.Append(Formatter.Bold(runeBundle.BaAmount.ToFormattedString(_culture)));
             descriptionBuilder.Append(' ');
-            descriptionBuilder.Append(Emojis.BaRune(runeBundle.RuneData.Id));
+            descriptionBuilder.Append(Emojis.BaRune(runeBundle.RuneData));
 
             if (runeBundle.PaAmount > 0)
             {
                 descriptionBuilder.Append(" - ");
                 descriptionBuilder.Append(Formatter.Bold(runeBundle.PaAmount.ToFormattedString(_culture)));
                 descriptionBuilder.Append(' ');
-                descriptionBuilder.Append(Emojis.PaRune(runeBundle.RuneData.Id));
+                descriptionBuilder.Append(Emojis.PaRune(runeBundle.RuneData));
             }
 
             if (runeBundle.RaAmount > 0)
@@ -98,7 +98,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
                 descriptionBuilder.Append(" - ");
                 descriptionBuilder.Append(Formatter.Bold(runeBundle.RaAmount.ToFormattedString(_culture)));
                 descriptionBuilder.Append(' ');
-                descriptionBuilder.Append(Emojis.RaRune(runeBundle.RuneData.Id));
+                descriptionBuilder.Append(Emojis.RaRune(runeBundle.RuneData));
             }
 
             descriptionBuilder.Append('\n');

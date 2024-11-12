@@ -116,7 +116,7 @@ public sealed class RuneCommandModule
         {
             embed.WithDescription(Translation.Format(
                 Translation.Get<BotTranslations>("Embed.Rune.Description.One", culture),
-                Emojis.BaRune(runeData.Id),
+                Emojis.BaRune(runeData),
                 Formatter.Bold(percentRuneExtractable.ToString()),
                 Formatter.Bold(itemLvl.ToString())));
         }
@@ -124,7 +124,7 @@ public sealed class RuneCommandModule
         {
             embed.WithDescription(Translation.Format(
                 Translation.Get<BotTranslations>("Embed.Rune.Description.Multiple", culture),
-                Emojis.BaRune(runeData.Id),
+                Emojis.BaRune(runeData),
                 Formatter.Bold(percentRuneExtractable.ToString()),
                 Formatter.Bold(itemLvl.ToString()),
                 Formatter.Bold(statAmount.ToString())));
@@ -133,7 +133,7 @@ public sealed class RuneCommandModule
             {
                 var runeBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AverageMultiplicator);
 
-                embed.AddField(Translation.Get<BotTranslations>("ShortAverage", culture), $"{Emojis.BaRune(runeData.Id)} {Formatter.Bold(runeBundle.BaAmount.ToString())}");
+                embed.AddField(Translation.Get<BotTranslations>("ShortAverage", culture), $"{Emojis.BaRune(runeData)} {Formatter.Bold(runeBundle.BaAmount.ToString())}");
             }
             else
             {
@@ -148,12 +148,12 @@ public sealed class RuneCommandModule
                 if (runeData.RaRuneItemId is not null && maxRuneBundle.RaAmount == 1 && minRuneBundle.RaAmount == 0)
                 {
                     var percentRaObtention = Math.Round(RuneManager.GetPercentToObtainRune(runeData, RuneType.RA, itemLvl, statAmount), 2);
-                    embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RuneRaRate.Title", culture), $"{Emojis.RaRune(runeData.Id)} {Formatter.Bold(percentRaObtention.ToString())}%");
+                    embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RuneRaRate.Title", culture), $"{Emojis.RaRune(runeData)} {Formatter.Bold(percentRaObtention.ToString())}%");
                 }
                 else if (runeData.PaRuneItemId is not null && maxRuneBundle.PaAmount == 1 && minRuneBundle.PaAmount == 0)
                 {
                     var percentPaObtention = Math.Round(RuneManager.GetPercentToObtainRune(runeData, RuneType.PA, itemLvl, statAmount), 2);
-                    embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RunePaRate.Title", culture), $"{Emojis.PaRune(runeData.Id)} {Formatter.Bold(percentPaObtention.ToString())}%");
+                    embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RunePaRate.Title", culture), $"{Emojis.PaRune(runeData)} {Formatter.Bold(percentPaObtention.ToString())}%");
                 }
             }
         }
@@ -167,7 +167,7 @@ public sealed class RuneCommandModule
     {
         StringBuilder builder = new();
 
-        builder.Append(Emojis.BaRune(runeBundle.RuneData.Id));
+        builder.Append(Emojis.BaRune(runeBundle.RuneData));
         builder.Append(' ');
         builder.Append(Formatter.Bold(runeBundle.BaAmount.ToFormattedString(culture)));
 
@@ -181,7 +181,7 @@ public sealed class RuneCommandModule
         if (runeBundle.PaAmount > 0)
         {
             builder.Append('\n');
-            builder.Append(Emojis.PaRune(runeBundle.RuneData.Id));
+            builder.Append(Emojis.PaRune(runeBundle.RuneData));
             builder.Append(' ');
             builder.Append(Formatter.Bold(runeBundle.PaAmount.ToFormattedString(culture)));
         }
@@ -189,7 +189,7 @@ public sealed class RuneCommandModule
         if (runeBundle.RaAmount > 0)
         {
             builder.Append('\n');
-            builder.Append(Emojis.RaRune(runeBundle.RuneData.Id));
+            builder.Append(Emojis.RaRune(runeBundle.RuneData));
             builder.Append(' ');
             builder.Append(Formatter.Bold(runeBundle.RaAmount.ToFormattedString(culture)));
         }
