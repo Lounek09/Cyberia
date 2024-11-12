@@ -12,7 +12,7 @@ public sealed record AlignmentLevelCriterion : Criterion
         Level = level;
     }
 
-    internal static AlignmentLevelCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static AlignmentLevelCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var level))
         {

@@ -12,7 +12,7 @@ public sealed record NameCriterion : Criterion
         Name = name;
     }
 
-    internal static NameCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static NameCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0)
         {

@@ -12,7 +12,7 @@ public sealed record CharacterBoostMaximumEnergyPointsAlignmentFeatEffect : Alig
         Value = value;
     }
 
-    internal static CharacterBoostMaximumEnergyPointsAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostMaximumEnergyPointsAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

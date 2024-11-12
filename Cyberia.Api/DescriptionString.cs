@@ -10,8 +10,6 @@ public readonly record struct DescriptionString
     /// </summary>
     public static readonly DescriptionString Empty = new();
 
-    private readonly string[] _parameters;
-
     /// <summary>
     /// Gets the template.
     /// </summary>
@@ -20,7 +18,7 @@ public readonly record struct DescriptionString
     /// <summary>
     /// Gets the parameters.
     /// </summary>
-    public IReadOnlyList<string> Parameters => _parameters.AsReadOnly();
+    public IReadOnlyList<string> Parameters { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DescriptionString"/> struct.
@@ -28,7 +26,7 @@ public readonly record struct DescriptionString
     public DescriptionString()
     {
         Template = string.Empty;
-        _parameters = [];
+        Parameters = [];
     }
 
     /// <summary>
@@ -36,23 +34,31 @@ public readonly record struct DescriptionString
     /// </summary>
     /// <param name="template">The template.</param>
     /// <param name="parameters">The parameters.</param>
-    public DescriptionString(string template, params string[] parameters)
+    public DescriptionString(string template, params IReadOnlyList<string> parameters)
     {
         Template = template;
-        _parameters = parameters;
+        Parameters = parameters;
     }
 
     /// <summary>
     /// Returns a string formed by the template populated with its parameters.
     /// </summary>
     /// <returns>The formatted string.</returns>
-    public override string ToString() => Translation.Format(Template, _parameters);
+    public override string ToString() => Translation.Format(Template, Parameters);
 
     /// <inheritdoc cref="ToString()"/>
     /// <param name="decorator">The decorator function to apply to each parameter.</param>
     public string ToString(Func<string, string> decorator)
     {
-        return Translation.Format(Template, Array.ConvertAll(_parameters, x => string.IsNullOrEmpty(x) ? x : decorator(x)));
+        var length = Parameters.Count;
+        var formattedParameters = length > 0 ? new string[length] : Span<string>.Empty;
+        for (var i = 0; i < length; i++)
+        {
+            var parameter = Parameters[i];
+            formattedParameters[i] = string.IsNullOrEmpty(parameter) ? parameter : decorator(parameter);
+        }
+
+        return Translation.Format(Template, formattedParameters);
     }
 
     public static implicit operator string(DescriptionString description) => description.ToString();

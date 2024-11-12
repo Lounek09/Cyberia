@@ -15,7 +15,7 @@ public sealed record BestElementCriterion : Criterion
         Element = element;
     }
 
-    internal static BestElementCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static BestElementCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && Enum.TryParse(parameters[0], out Element element))
         {

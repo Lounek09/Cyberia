@@ -12,7 +12,7 @@ public sealed record StoreDiscountAlignmentFeatEffect : AlignmentFeatEffect
         DiscountPercent = discountPercent;
     }
 
-    internal static StoreDiscountAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static StoreDiscountAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

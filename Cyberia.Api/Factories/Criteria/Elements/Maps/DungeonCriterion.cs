@@ -12,7 +12,7 @@ public sealed record DungeonCriterion : Criterion
         InDungeon = inDungeon;
     }
 
-    internal static DungeonCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static DungeonCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0)
         {

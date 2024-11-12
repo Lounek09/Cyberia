@@ -12,7 +12,7 @@ public sealed record HomeownerCriterion : Criterion
         IsHomeowner = isHomeowner;
     }
 
-    internal static HomeownerCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static HomeownerCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0)
         {

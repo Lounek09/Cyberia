@@ -12,7 +12,7 @@ public sealed record CharacterBoostActionPointsLostAlignmentFeatEffect : Alignme
         Value = value;
     }
 
-    internal static CharacterBoostActionPointsLostAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostActionPointsLostAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

@@ -12,7 +12,7 @@ public sealed record PlayerRightsCriterion : Criterion
         RightsLevel = rightsLevel;
     }
 
-    internal static PlayerRightsCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static PlayerRightsCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var rightsLevel))
         {

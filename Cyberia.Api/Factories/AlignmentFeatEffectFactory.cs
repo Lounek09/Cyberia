@@ -13,8 +13,8 @@ public static class AlignmentFeatEffectFactory
     /// <summary>
     /// A dictionary mapping alignment feat effect identifiers to their factory methods.
     /// </summary>
-    private static readonly FrozenDictionary<int, Func<int, int[], IAlignmentFeatEffect?>> s_factories =
-       new Dictionary<int, Func<int, int[], IAlignmentFeatEffect?>>()
+    private static readonly FrozenDictionary<int, Func<int, ReadOnlySpan<int>, IAlignmentFeatEffect?>> s_factories =
+       new Dictionary<int, Func<int, ReadOnlySpan<int>, IAlignmentFeatEffect?>>()
        {
            { 1, CharacterBoostRangeAlignmentFeatEffect.Create },
            { 2, CharacterBoostInitiativeAlignmentFeatEffect.Create },
@@ -63,8 +63,10 @@ public static class AlignmentFeatEffectFactory
     /// <param name="id">The unique identifier of the alignment feat effect.</param>
     /// <param name="parameters">The parameters of the alignment feat effect.</param>
     /// <returns>The created <see cref="IAlignmentFeatEffect"/> if successful; otherwise, an <see cref="ErroredAlignmentFeatEffect"/> or <see cref="UntranslatedAlignmentFeatEffect"/> instance.</returns>
-    public static IAlignmentFeatEffect Create(int id, params int[] parameters)
+    public static IAlignmentFeatEffect Create(int id, params ReadOnlySpan<int> parameters)
     {
+        int[] arrayParameters;
+
         if (s_factories.TryGetValue(id, out var builder))
         {
             var alignmentFeatEffect = builder(id, parameters);
@@ -73,15 +75,15 @@ public static class AlignmentFeatEffectFactory
                 return alignmentFeatEffect;
             }
 
-            Log.Error("Failed to create AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}",
-                id,
-                parameters);
-            return new ErroredAlignmentFeatEffect(id, parameters);
+            arrayParameters = parameters.ToArray();
+            Log.Error("Failed to create AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}", id, arrayParameters);
+
+            return new ErroredAlignmentFeatEffect(id, arrayParameters);
         }
 
-        Log.Warning("Unknown AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}",
-            id,
-            parameters);
-        return new UntranslatedAlignmentFeatEffect(id, parameters);
+        arrayParameters = parameters.ToArray();
+        Log.Warning("Unknown AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}", id, arrayParameters);
+
+        return new UntranslatedAlignmentFeatEffect(id, arrayParameters);
     }
 }

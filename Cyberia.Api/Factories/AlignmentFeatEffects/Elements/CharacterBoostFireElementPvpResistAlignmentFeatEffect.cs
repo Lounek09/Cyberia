@@ -12,7 +12,7 @@ public sealed record CharacterBoostFireElementPvpResistAlignmentFeatEffect : Ali
         Value = value;
     }
 
-    internal static CharacterBoostFireElementPvpResistAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostFireElementPvpResistAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

@@ -12,7 +12,7 @@ public sealed record CharacterEnergyLossBoostAlignmentFeatEffect : AlignmentFeat
         Value = value;
     }
 
-    internal static CharacterEnergyLossBoostAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterEnergyLossBoostAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

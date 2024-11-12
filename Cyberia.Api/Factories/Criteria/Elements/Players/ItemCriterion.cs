@@ -16,7 +16,7 @@ public sealed record ItemCriterion : Criterion
         Quantity = quantity;
     }
 
-    internal static ItemCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static ItemCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 1 && int.TryParse(parameters[0], out var itemId) && int.TryParse(parameters[1], out var quantity))
         {

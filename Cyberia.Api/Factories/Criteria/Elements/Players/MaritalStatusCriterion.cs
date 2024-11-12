@@ -15,7 +15,7 @@ public sealed record MaritalStatusCriterion : Criterion
         MaritalStatus = maritalStatus;
     }
 
-    internal static MaritalStatusCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static MaritalStatusCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && Enum.TryParse(parameters[0], out MaritalStatus maritalStatus))
         {

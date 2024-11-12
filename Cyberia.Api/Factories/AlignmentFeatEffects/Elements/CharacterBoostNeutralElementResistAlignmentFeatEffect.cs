@@ -12,7 +12,7 @@ public sealed record CharacterBoostNeutralElementResistAlignmentFeatEffect : Ali
         Value = value;
     }
 
-    internal static CharacterBoostNeutralElementResistAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostNeutralElementResistAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

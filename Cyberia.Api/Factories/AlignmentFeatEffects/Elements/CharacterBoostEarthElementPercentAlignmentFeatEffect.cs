@@ -12,7 +12,7 @@ public sealed record CharacterBoostEarthElementPercentAlignmentFeatEffect : Alig
         Value = value;
     }
 
-    internal static CharacterBoostEarthElementPercentAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostEarthElementPercentAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

@@ -16,7 +16,7 @@ public sealed record MapPlayerCriterion : Criterion
         MaxPlayers = maxPlayers;
     }
 
-    internal static MapPlayerCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static MapPlayerCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 1 && int.TryParse(parameters[0], out var mapId) && int.TryParse(parameters[1], out var maxPlayers))
         {

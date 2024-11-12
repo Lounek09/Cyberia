@@ -12,7 +12,7 @@ public sealed record KamasCriterion : Criterion
         Value = value;
     }
 
-    internal static KamasCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static KamasCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var value))
         {

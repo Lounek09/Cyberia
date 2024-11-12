@@ -16,7 +16,7 @@ public sealed record AlignmentFeatCriterion : Criterion
         Level = level;
     }
 
-    internal static AlignmentFeatCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static AlignmentFeatCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 1 && int.TryParse(parameters[0], out var alignmentFeatId) && int.TryParse(parameters[1], out var level))
         {

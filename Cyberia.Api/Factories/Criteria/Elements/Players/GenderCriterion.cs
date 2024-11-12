@@ -15,7 +15,7 @@ public sealed record GenderCriterion : Criterion
         Gender = gender;
     }
 
-    internal static GenderCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static GenderCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && Enum.TryParse(parameters[0], out Gender gender))
         {

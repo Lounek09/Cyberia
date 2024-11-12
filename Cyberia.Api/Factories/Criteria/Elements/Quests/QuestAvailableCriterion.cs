@@ -14,7 +14,7 @@ public sealed record QuestAvailableCriterion : Criterion
         QuestId = questId;
     }
 
-    internal static QuestAvailableCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static QuestAvailableCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var questId))
         {

@@ -12,7 +12,7 @@ public sealed record CharacterBoostAirElementPvpPercentAlignmentFeatEffect : Ali
         Value = value;
     }
 
-    internal static CharacterBoostAirElementPvpPercentAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostAirElementPvpPercentAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

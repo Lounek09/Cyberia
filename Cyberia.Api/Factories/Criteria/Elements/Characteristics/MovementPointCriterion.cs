@@ -2,17 +2,17 @@
 
 namespace Cyberia.Api.Factories.Criteria.Elements.Characteristics;
 
-public sealed record DisgracePointCriterion : Criterion
+public sealed record MovementPointCriterion : Criterion
 {
     public int Value { get; init; }
 
-    private DisgracePointCriterion(string id, char @operator, int value)
+    private MovementPointCriterion(string id, char @operator, int value)
         : base(id, @operator)
     {
         Value = value;
     }
 
-    internal static DisgracePointCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static MovementPointCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var value))
         {
@@ -24,7 +24,7 @@ public sealed record DisgracePointCriterion : Criterion
 
     protected override string GetDescriptionKey()
     {
-        return $"Criterion.DisgracePoint.{GetOperatorDescriptionKey()}";
+        return $"Criterion.MovementPoint.{GetOperatorDescriptionKey()}";
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

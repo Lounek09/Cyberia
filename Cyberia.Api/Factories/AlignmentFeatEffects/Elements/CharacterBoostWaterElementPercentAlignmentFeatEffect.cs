@@ -12,7 +12,7 @@ public sealed record CharacterBoostWaterElementPercentAlignmentFeatEffect : Alig
         Value = value;
     }
 
-    internal static CharacterBoostWaterElementPercentAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostWaterElementPercentAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

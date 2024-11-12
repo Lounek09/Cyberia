@@ -12,7 +12,7 @@ public sealed record CharacterBoostWaterElementResistAlignmentFeatEffect : Align
         Value = value;
     }
 
-    internal static CharacterBoostWaterElementResistAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostWaterElementResistAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

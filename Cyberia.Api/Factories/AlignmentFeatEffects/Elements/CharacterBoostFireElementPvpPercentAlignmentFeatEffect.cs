@@ -12,7 +12,7 @@ public sealed record CharacterBoostFireElementPvpPercentAlignmentFeatEffect : Al
         Value = value;
     }
 
-    internal static CharacterBoostFireElementPvpPercentAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostFireElementPvpPercentAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

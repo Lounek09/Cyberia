@@ -14,7 +14,7 @@ public sealed record StateCriterion : Criterion
         StateId = stateId;
     }
 
-    internal static StateCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static StateCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var stateId))
         {

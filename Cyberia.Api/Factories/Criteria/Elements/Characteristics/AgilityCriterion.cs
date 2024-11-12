@@ -2,17 +2,17 @@
 
 namespace Cyberia.Api.Factories.Criteria.Elements.Characteristics;
 
-public sealed record WisdomCriterion : Criterion
+public sealed record AgilityCriterion : Criterion
 {
     public int Value { get; init; }
 
-    private WisdomCriterion(string id, char @operator, int value)
+    private AgilityCriterion(string id, char @operator, int value)
         : base(id, @operator)
     {
         Value = value;
     }
 
-    internal static WisdomCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static AgilityCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var value))
         {
@@ -24,7 +24,7 @@ public sealed record WisdomCriterion : Criterion
 
     protected override string GetDescriptionKey()
     {
-        return $"Criterion.Wisdom.{GetOperatorDescriptionKey()}";
+        return $"Criterion.Agility.{GetOperatorDescriptionKey()}";
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

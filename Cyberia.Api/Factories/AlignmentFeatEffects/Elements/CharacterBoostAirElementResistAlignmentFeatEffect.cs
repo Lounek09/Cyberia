@@ -12,7 +12,7 @@ public sealed record CharacterBoostAirElementResistAlignmentFeatEffect : Alignme
         Value = value;
     }
 
-    internal static CharacterBoostAirElementResistAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostAirElementResistAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

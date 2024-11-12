@@ -12,7 +12,7 @@ public sealed record UnusableItemCriterion : Criterion
         Value = value;
     }
 
-    internal static UnusableItemCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static UnusableItemCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0)
         {

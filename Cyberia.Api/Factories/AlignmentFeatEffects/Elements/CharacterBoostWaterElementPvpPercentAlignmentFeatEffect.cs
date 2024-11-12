@@ -12,7 +12,7 @@ public sealed record CharacterBoostWaterElementPvpPercentAlignmentFeatEffect : A
         Value = value;
     }
 
-    internal static CharacterBoostWaterElementPvpPercentAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostWaterElementPvpPercentAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

@@ -2,17 +2,17 @@
 
 namespace Cyberia.Api.Factories.Criteria.Elements.Characteristics;
 
-public sealed record IntelligenceCriterion : Criterion
+public sealed record EnergyPointsCriterion : Criterion
 {
     public int Value { get; init; }
 
-    private IntelligenceCriterion(string id, char @operator, int value)
+    private EnergyPointsCriterion(string id, char @operator, int value)
         : base(id, @operator)
     {
         Value = value;
     }
 
-    internal static IntelligenceCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static EnergyPointsCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var value))
         {
@@ -24,7 +24,7 @@ public sealed record IntelligenceCriterion : Criterion
 
     protected override string GetDescriptionKey()
     {
-        return $"Criterion.Intelligence.{GetOperatorDescriptionKey()}";
+        return $"Criterion.EnergyPoints.{GetOperatorDescriptionKey()}";
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

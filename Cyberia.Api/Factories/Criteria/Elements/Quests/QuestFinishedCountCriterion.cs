@@ -16,7 +16,7 @@ public sealed record QuestFinishedCountCriterion : Criterion
         Count = count;
     }
 
-    internal static QuestFinishedCountCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static QuestFinishedCountCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 1 && int.TryParse(parameters[0], out var questId) && int.TryParse(parameters[1], out var count))
         {

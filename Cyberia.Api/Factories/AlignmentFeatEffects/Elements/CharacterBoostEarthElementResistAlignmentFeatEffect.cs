@@ -12,7 +12,7 @@ public sealed record CharacterBoostEarthElementResistAlignmentFeatEffect : Align
         Value = value;
     }
 
-    internal static CharacterBoostEarthElementResistAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostEarthElementResistAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

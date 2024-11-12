@@ -65,7 +65,7 @@ public abstract record Criterion : ICriterion
     }
 
     /// <inheritdoc cref="ICriterion.GetDescription"/>
-    protected DescriptionString GetDescription(CultureInfo? culture, params string[] parameters)
+    protected DescriptionString GetDescription(CultureInfo? culture, params IReadOnlyList<string> parameters)
     {
         var descriptionKey = GetDescriptionKey();
 

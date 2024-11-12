@@ -16,7 +16,7 @@ public sealed record JobCriterion : Criterion
         Level = level;
     }
 
-    internal static JobCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static JobCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 1 && int.TryParse(parameters[0], out var jobId) && int.TryParse(parameters[1], out var level))
         {

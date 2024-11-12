@@ -12,7 +12,7 @@ public sealed record SubscribeCriterion : Criterion
         Subscribed = subscribed;
     }
 
-    internal static SubscribeCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static SubscribeCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0)
         {

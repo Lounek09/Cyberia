@@ -11,7 +11,7 @@ public static class ApplicationBuilderExtensions
     /// <param name="builder">The application builder.</param>
     /// <param name="urls">The URLs to check for HTTPS.</param>
     /// <returns>The updated application builder.</returns>
-    public static IApplicationBuilder UseHttpsRedirectionIfNeeded(this IApplicationBuilder builder, params string[] urls)
+    public static IApplicationBuilder UseHttpsRedirectionIfNeeded(this IApplicationBuilder builder, params IReadOnlyList<string> urls)
     {
         var hasHttps = urls.Any(url => url.StartsWith("https://"));
         var hasHttp = urls.Any(url => url.StartsWith("http://"));

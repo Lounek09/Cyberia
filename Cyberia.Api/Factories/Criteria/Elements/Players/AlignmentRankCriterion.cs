@@ -12,7 +12,7 @@ public sealed record AlignmentRankCriterion : Criterion
         Rank = rank;
     }
 
-    internal static AlignmentRankCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static AlignmentRankCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var rank))
         {

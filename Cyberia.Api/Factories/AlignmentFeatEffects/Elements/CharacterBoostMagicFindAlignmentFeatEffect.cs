@@ -12,7 +12,7 @@ public sealed record CharacterBoostMagicFindAlignmentFeatEffect : AlignmentFeatE
         Value = value;
     }
 
-    internal static CharacterBoostMagicFindAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostMagicFindAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

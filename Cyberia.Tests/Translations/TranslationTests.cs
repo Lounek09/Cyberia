@@ -50,7 +50,7 @@ public sealed class TranslationTests
     [TestMethod]
     public void Format_WithNoParameters_ReturnFormatedString()
     {
-        var result = Translation.Format("Hello, World!");
+        var result = Translation.Format("Hello, World!", ReadOnlySpan<string>.Empty);
 
         Assert.AreEqual("Hello, World!", result);
     }

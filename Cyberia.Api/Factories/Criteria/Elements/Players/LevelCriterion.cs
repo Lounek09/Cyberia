@@ -12,7 +12,7 @@ public sealed record LevelCriterion : Criterion
         Value = value;
     }
 
-    internal static LevelCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static LevelCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var value))
         {

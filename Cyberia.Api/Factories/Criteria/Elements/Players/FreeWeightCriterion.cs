@@ -12,7 +12,7 @@ public sealed record FreeWeightCriterion : Criterion
         Value = value;
     }
 
-    internal static FreeWeightCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static FreeWeightCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var value))
         {

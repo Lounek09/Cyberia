@@ -52,7 +52,7 @@ public abstract record QuestObjective : IQuestObjective
     }
 
     /// <inheritdoc cref="IQuestObjective.GetDescription"/>
-    protected DescriptionString GetDescription(CultureInfo? culture, params string[] parameters)
+    protected DescriptionString GetDescription(CultureInfo? culture, params IReadOnlyList<string> parameters)
     {
         var questObjectiveTypeData = QuestObjectiveData.GetQuestObjectiveTypeData();
         if (questObjectiveTypeData is null)

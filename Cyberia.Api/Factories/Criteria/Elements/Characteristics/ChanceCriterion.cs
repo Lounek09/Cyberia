@@ -2,17 +2,17 @@
 
 namespace Cyberia.Api.Factories.Criteria.Elements.Characteristics;
 
-public sealed record CurrentActionPointCriterion : Criterion
+public sealed record ChanceCriterion : Criterion
 {
     public int Value { get; init; }
 
-    private CurrentActionPointCriterion(string id, char @operator, int value)
+    private ChanceCriterion(string id, char @operator, int value)
         : base(id, @operator)
     {
         Value = value;
     }
 
-    internal static CurrentActionPointCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static ChanceCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var value))
         {
@@ -24,7 +24,7 @@ public sealed record CurrentActionPointCriterion : Criterion
 
     protected override string GetDescriptionKey()
     {
-        return $"Criterion.CurrentActionPoint.{GetOperatorDescriptionKey()}";
+        return $"Criterion.Chance.{GetOperatorDescriptionKey()}";
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

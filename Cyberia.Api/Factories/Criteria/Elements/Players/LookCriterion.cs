@@ -12,7 +12,7 @@ public sealed record LookCriterion : Criterion
         LookId = lookId;
     }
 
-    internal static LookCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static LookCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0)
         {

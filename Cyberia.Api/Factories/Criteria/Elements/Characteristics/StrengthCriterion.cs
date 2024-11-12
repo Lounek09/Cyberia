@@ -2,17 +2,17 @@
 
 namespace Cyberia.Api.Factories.Criteria.Elements.Characteristics;
 
-public sealed record BaseVitalityCriterion : Criterion
+public sealed record StrengthCriterion : Criterion
 {
     public int Value { get; init; }
 
-    private BaseVitalityCriterion(string id, char @operator, int value)
+    private StrengthCriterion(string id, char @operator, int value)
         : base(id, @operator)
     {
         Value = value;
     }
 
-    internal static BaseVitalityCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static StrengthCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var value))
         {
@@ -24,7 +24,7 @@ public sealed record BaseVitalityCriterion : Criterion
 
     protected override string GetDescriptionKey()
     {
-        return $"Criterion.BaseVitality.{GetOperatorDescriptionKey()}";
+        return $"Criterion.Strength.{GetOperatorDescriptionKey()}";
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

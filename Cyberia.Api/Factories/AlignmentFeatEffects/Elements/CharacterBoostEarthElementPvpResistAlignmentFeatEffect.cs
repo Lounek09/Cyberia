@@ -12,7 +12,7 @@ public sealed record CharacterBoostEarthElementPvpResistAlignmentFeatEffect : Al
         Value = value;
     }
 
-    internal static CharacterBoostEarthElementPvpResistAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostEarthElementPvpResistAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

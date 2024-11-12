@@ -2,17 +2,17 @@
 
 namespace Cyberia.Api.Factories.Criteria.Elements.Characteristics;
 
-public sealed record MovementPointCriterion : Criterion
+public sealed record ActionPointCriterion : Criterion
 {
     public int Value { get; init; }
 
-    private MovementPointCriterion(string id, char @operator, int value)
+    private ActionPointCriterion(string id, char @operator, int value)
         : base(id, @operator)
     {
         Value = value;
     }
 
-    internal static MovementPointCriterion? Create(string id, char @operator, params string[] parameters)
+    internal static ActionPointCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         if (parameters.Length > 0 && int.TryParse(parameters[0], out var value))
         {
@@ -24,7 +24,7 @@ public sealed record MovementPointCriterion : Criterion
 
     protected override string GetDescriptionKey()
     {
-        return $"Criterion.MovementPoint.{GetOperatorDescriptionKey()}";
+        return $"Criterion.ActionPoint.{GetOperatorDescriptionKey()}";
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

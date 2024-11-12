@@ -146,9 +146,16 @@ public static class Translation
     /// <param name="template">The template to format.</param>
     /// <param name="parameters">The parameters to use in the template.</param>
     /// <returns>The formatted string.</returns>
-    public static string Format(string template, params object[] parameters)
+    public static string Format(string template, params ReadOnlySpan<object?> parameters)
     {
-        return Format(template, Array.ConvertAll(parameters, x => x?.ToString() ?? string.Empty));
+        var length = parameters.Length;
+        var strings = length > 0 ? new string[length] : Span<string>.Empty;
+        for (var i = 0; i < length; i++)
+        {
+            strings[i] = parameters[i]?.ToString() ?? string.Empty;
+        }
+
+        return Format(template, strings);
     }
 
     /// <summary>
@@ -157,11 +164,12 @@ public static class Translation
     /// <param name="template">The template to format.</param>
     /// <param name="parameters">The parameters to use in the template.</param>
     /// <returns>The formatted string.</returns>
-    public static string Format(string template, params string[] parameters) //TODO: .NET9 Use ReadOnlySpan<string>
+    public static string Format(string template, params ReadOnlySpan<string> parameters)
     {
         StringBuilder builder = new(template);
 
-        for (var i = 0; i < parameters.Length; i++)
+        var length = parameters.Length;
+        for (var i = 0; i < length; i++)
         {
             builder.Replace($"#{i + 1}", parameters[i]);
         }
@@ -176,7 +184,7 @@ public static class Translation
             }
 
             var replacement = template[(indexOfOpenBrace + 1)..indexOfCloseBrace];
-            for (var i = 0; i < parameters.Length; i++)
+            for (var i = 0; i < length; i++)
             {
                 if (!template[(indexOfOpenBrace + 1)..indexOfCloseBrace].Contains($"~{i + 1}"))
                 {

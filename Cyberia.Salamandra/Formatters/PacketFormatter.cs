@@ -19,7 +19,7 @@ public static class PacketFormatter
     /// <param name="version">The version of the packet.</param>
     /// <param name="parameters">The parameters of the packet.</param>
     /// <returns>The formatted packet as a string.</returns>
-    public static string Action(string header, int version, params object[] parameters)
+    public static string Action(string header, int version, params ReadOnlySpan<object?> parameters)
     {
         StringBuilder packetBuilder = new();
 

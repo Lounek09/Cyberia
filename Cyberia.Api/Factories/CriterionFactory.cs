@@ -20,8 +20,8 @@ public static class CriterionFactory
     /// <summary>
     /// A dictionary mapping criterion identifiers to their factory methods.
     /// </summary>
-    private static readonly FrozenDictionary<string, Func<string, char, string[], ICriterion?>> s_factories =
-        new Dictionary<string, Func<string, char, string[], ICriterion?>>()
+    private static readonly FrozenDictionary<string, Func<string, char, ReadOnlySpan<string>, ICriterion?>> s_factories =
+        new Dictionary<string, Func<string, char, ReadOnlySpan<string>, ICriterion?>>()
         {
             { "BI", UnusableItemCriterion.Create },
             { "CA", AgilityCriterion.Create },
@@ -111,9 +111,10 @@ public static class CriterionFactory
     /// <param name="operator">The operator character indicating the type of comparison or operation.</param>
     /// <param name="parameters">The parameters of the criterion.</param>
     /// <returns>The created <see cref="ICriterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
-    public static ICriterion Create(string id, char @operator, params string[] parameters)
+    public static ICriterion Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         string compressedCriterion;
+        string[] arrayParameters;
 
         if (s_factories.TryGetValue(id, out var builder))
         {
@@ -123,14 +124,18 @@ public static class CriterionFactory
                 return criterion;
             }
 
-            compressedCriterion = $"{id}{@operator}{string.Join(',', parameters)}";
+            arrayParameters = parameters.ToArray();
+            compressedCriterion = $"{id}{@operator}{string.Join(',', arrayParameters)}";
             Log.Error("Failed to create Criterion from {CompressedCriterion}", compressedCriterion);
-            return new ErroredCriterion(id, @operator, parameters, compressedCriterion);
+
+            return new ErroredCriterion(id, @operator, arrayParameters, compressedCriterion);
         }
 
-        compressedCriterion = $"{id}{@operator}{string.Join(',', parameters)}";
+        arrayParameters = parameters.ToArray();
+        compressedCriterion = $"{id}{@operator}{string.Join(',', arrayParameters)}";
         Log.Warning("Unknown Criterion {CompressedCriterion}", compressedCriterion);
-        return new UntranslatedCriterion(id, @operator, parameters, compressedCriterion);
+
+        return new UntranslatedCriterion(id, @operator, arrayParameters, compressedCriterion);
     }
 
     /// <summary>
@@ -144,6 +149,7 @@ public static class CriterionFactory
         {
             var compressedCriterionStr = compressedCriterion.ToString();
             Log.Error("Failed to create Criterion from {CompressedCriterion}", compressedCriterionStr);
+
             return new ErroredCriterion(compressedCriterionStr);
         }
 

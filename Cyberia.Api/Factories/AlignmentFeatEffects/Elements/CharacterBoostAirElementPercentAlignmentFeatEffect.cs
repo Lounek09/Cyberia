@@ -12,7 +12,7 @@ public sealed record CharacterBoostAirElementPercentAlignmentFeatEffect : Alignm
         Value = value;
     }
 
-    internal static CharacterBoostAirElementPercentAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostAirElementPercentAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {

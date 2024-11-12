@@ -12,7 +12,7 @@ public sealed record CharacterBoostIntelligenceAlignmentFeatEffect : AlignmentFe
         Value = value;
     }
 
-    internal static CharacterBoostIntelligenceAlignmentFeatEffect? Create(int effectId, params int[] parameters)
+    internal static CharacterBoostIntelligenceAlignmentFeatEffect? Create(int effectId, params ReadOnlySpan<int> parameters)
     {
         if (parameters.Length > 0)
         {
