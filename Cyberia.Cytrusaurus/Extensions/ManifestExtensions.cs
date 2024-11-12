@@ -37,8 +37,8 @@ public static class ManifestExtensions
         var modelFragments = model.GetFragments().ToList();
 
         var modelFragmentsByIndex = modelFragments
-            .Select((fragment, index) => (fragment.Name, Index: index)) //TODO: .NET9 Use new Index() instead
-            .ToDictionary(x => x.Name, x => x.Index);
+            .Index()
+            .ToDictionary(x => x.Item.Name, x => x.Index);
 
         for (var i = 0; i < currentFragments.Count; i++)
         {

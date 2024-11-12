@@ -38,8 +38,8 @@ public static class FragmentExtensions
         var modelGameFiles = model.GetGameFiles().ToList();
 
         var modelGameFilesByIndex = modelGameFiles
-            .Select((file, index) => (file.Name, Index: index)) //TODO: .NET9 Use new Index() instead
-            .ToDictionary(x => x.Name, x => x.Index);
+            .Index()
+            .ToDictionary(x => x.Item.Name, x => x.Index);
 
         for (var i = 0; i < currentGameFiles.Count; i++)
         {

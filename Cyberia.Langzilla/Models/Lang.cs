@@ -133,12 +133,12 @@ public sealed class Lang
         }
 
         var currentLinesByIndex = File.ReadLines(CurrentDecompiledFilePath)
-            .Select((line, index) => (Line: line, Index: index)) //TODO: .NET9 Use new Index() instead
-            .ToDictionary(x => x.Index, x => x.Line);
+            .Index()
+            .ToDictionary(x => x.Index, x => x.Item);
 
         var modelLinesByIndex = File.ReadLines(modelDecompiledFilePath)
-            .Select((line, index) => (Line: line, Index: index)) //TODO: .NET9 Use new Index() instead
-            .ToDictionary(x => x.Index, x => x.Line);
+            .Index()
+            .ToDictionary(x => x.Index, x => x.Item);
 
         List<KeyValuePair<int, string>> diff = new();
 
