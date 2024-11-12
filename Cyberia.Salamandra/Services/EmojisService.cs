@@ -3,8 +3,6 @@
 using DSharpPlus;
 using DSharpPlus.Entities;
 
-using System.Collections.Frozen;
-
 namespace Cyberia.Salamandra.Services;
 
 /// <summary>
@@ -12,7 +10,7 @@ namespace Cyberia.Salamandra.Services;
 /// </summary>
 public sealed class EmojisService
 {
-    private static FrozenDictionary<string, DiscordEmoji> s_cachedEmojis = FrozenDictionary<string, DiscordEmoji>.Empty;
+    private static Dictionary<string, DiscordEmoji> s_cachedEmojis = [];
 
     private readonly DiscordClient _discordClient;
     private readonly HttpClient _httpClient;
@@ -30,6 +28,21 @@ public sealed class EmojisService
         };
     }
 
+    /// <summary>
+    /// Gets the emojis that contain the specified name.
+    /// </summary>
+    /// <param name="name">The name to search for.</param>
+    /// <returns>An enumerable of emojis that contain the specified name.</returns>
+    public static IEnumerable<DiscordEmoji> GetEmojisByName(string name)
+    {
+        return s_cachedEmojis.Values.Where(x => x.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
+    /// Gets the string representation of the emoji with the specified name.
+    /// </summary>
+    /// <param name="name">The name of the emoji.</param>
+    /// <returns>The string representation of the emoji, or an empty string if the emoji was not found.</returns>
     public static string GetEmojiStringByName(string name)
     {
         s_cachedEmojis.TryGetValue(name, out var emoji);
@@ -43,7 +56,30 @@ public sealed class EmojisService
     {
         var emojis = await _discordClient.GetApplicationEmojisAsync();
 
-        s_cachedEmojis = emojis.ToFrozenDictionary(x => x.Name, x => x);
+        s_cachedEmojis = emojis.ToDictionary(x => x.Name, x => x);
+    }
+
+    /// <summary>
+    /// Deletes the emoji with the specified name.
+    /// </summary>
+    /// <param name="name">The name of the emoji.</param>
+    /// <returns><see langword="true"/> if the emoji was deleted, <see langword="false"/> otherwise.</returns>
+    public async Task<bool> DeleteEmojiAsync(string name)
+    {
+        if (!s_cachedEmojis.TryGetValue(name, out var emoji))
+        {
+            return false;
+        }
+
+        try
+        {
+            await _discordClient.DeleteApplicationEmojiAsync(emoji.Id);
+            return s_cachedEmojis.Remove(name);
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     /// <summary>
@@ -140,7 +176,7 @@ public sealed class EmojisService
         await CreateEmojiAsync("unknown", $"{baseRoute}/others/unknown.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("xp", $"{baseRoute}/others/xp.png", emojis, checkedEmojiRoutes);
 
-        s_cachedEmojis = emojis.ToFrozenDictionary();
+        s_cachedEmojis = emojis.ToDictionary();
     }
 
     /// <summary>
