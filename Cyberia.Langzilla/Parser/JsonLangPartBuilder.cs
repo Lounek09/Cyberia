@@ -10,7 +10,7 @@ namespace Cyberia.Langzilla.Parser;
 /// </summary>
 internal sealed class JsonLangPartBuilder
 {
-    private readonly string _name;
+    private readonly int _nameLength;
     private readonly JsonValueKind _valueKind;
     private readonly StringBuilder _builder;
     private readonly StringBuilder _valueSanitizerBuilder;
@@ -20,9 +20,9 @@ internal sealed class JsonLangPartBuilder
     /// </summary>
     /// <param name="name">The name of the part to be built.</param>
     /// <param name="valueKind">Indicates whether the part to build should be formatted as an array.</param>
-    private JsonLangPartBuilder(string name, JsonValueKind valueKind)
+    private JsonLangPartBuilder(ReadOnlySpan<char> name, JsonValueKind valueKind)
     {
-        _name = name;
+        _nameLength = name.Length;
         _valueKind = valueKind;
         _builder = new();
         _valueSanitizerBuilder = new();
@@ -37,7 +37,7 @@ internal sealed class JsonLangPartBuilder
     /// <param name="name">The name of the part.</param>
     /// <param name="keySegment">The key segment used to determine the value kind of the part.</param>
     /// <returns>A new instance of <see cref="JsonLangPartBuilder"/>.</returns>
-    public static JsonLangPartBuilder Create(string name, ReadOnlySpan<char> keySegment)
+    public static JsonLangPartBuilder Create(ReadOnlySpan<char> name, ReadOnlySpan<char> keySegment)
     {
         var truncatedKeySegment = keySegment[name.Length..];
         var firstChar = truncatedKeySegment.IsEmpty ? '\0' : truncatedKeySegment[0];
@@ -59,7 +59,7 @@ internal sealed class JsonLangPartBuilder
     /// <returns>A reference to this instance after the append operation has completed.</returns>
     public JsonLangPartBuilder Append(ReadOnlySpan<char> keySegment, ReadOnlySpan<char> valueSegment)
     {
-        var truncatedKeySegment = _name.Length > keySegment.Length ? ReadOnlySpan<char>.Empty : keySegment[_name.Length..];
+        var truncatedKeySegment = _nameLength > keySegment.Length ? ReadOnlySpan<char>.Empty : keySegment[_nameLength..];
         var sanitizedValueSegment = SanitizeValueSegment(valueSegment);
 
         if (_valueKind == JsonValueKind.Undefined || truncatedKeySegment.IsEmpty)
