@@ -62,8 +62,7 @@ public sealed class JsonLangParser : IDisposable
     {
         ObjectDisposedException.ThrowIf(_disposed, this);
 
-        var currentPartName = ReadOnlySpan<char>.Empty;
-        JsonLangPartBuilder? currentBuilder = null;
+        JsonLangPartBuilder currentBuilder;
 
         while (!_streamReader.EndOfStream)
         {
@@ -80,16 +79,11 @@ public sealed class JsonLangParser : IDisposable
             }
 
             var keySegment = currentLine[..indexOfSeparator];
+            var keySegmentName = FindKeySegmentName(keySegment);
             var valueSegment = currentLine[(indexOfSeparator + c_lineSeparator.Length)..];
 
-            var newPartName = FindName(keySegment);
-            if (!currentPartName.Equals(newPartName, StringComparison.Ordinal))
-            {
-                currentPartName = newPartName;
-                currentBuilder = GetOrCreateLangPartBuilder(currentPartName.ToString(), keySegment);
-            }
-
-            currentBuilder?.Append(keySegment, valueSegment);
+            currentBuilder = GetOrCreateLangPartBuilder(keySegmentName, keySegment);
+            currentBuilder.Append(keySegment, valueSegment);
         }
 
         FinalizeParsing();
@@ -142,7 +136,7 @@ public sealed class JsonLangParser : IDisposable
     /// </summary>
     /// <param name="keySegment">The key segment to find the name of.</param>
     /// <returns>The name found.</returns>
-    private static ReadOnlySpan<char> FindName(ReadOnlySpan<char> keySegment)
+    private static ReadOnlySpan<char> FindKeySegmentName(ReadOnlySpan<char> keySegment)
     {
         var indexOfOpenBracket = keySegment.IndexOf('[');
         if (indexOfOpenBracket != -1)
