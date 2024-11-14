@@ -64,6 +64,7 @@ public sealed class JsonLangParser : IDisposable
 
         JsonLangPartBuilder currentBuilder;
 
+        // Create the parts
         while (!_streamReader.EndOfStream)
         {
             var currentLine = _streamReader.ReadLine().AsSpan();
@@ -80,13 +81,42 @@ public sealed class JsonLangParser : IDisposable
 
             var keySegment = currentLine[..indexOfSeparator];
             var keySegmentName = FindKeySegmentName(keySegment);
+            var truncatedKeySegment = keySegment[keySegmentName.Length..];
             var valueSegment = currentLine[(indexOfSeparator + c_lineSeparator.Length)..];
 
-            currentBuilder = GetOrCreateLangPartBuilder(keySegmentName, keySegment);
-            currentBuilder.Append(keySegment, valueSegment);
+            currentBuilder = GetOrCreateLangPartBuilder(keySegmentName, truncatedKeySegment);
+            currentBuilder.Append(truncatedKeySegment, valueSegment);
         }
 
-        FinalizeParsing();
+        // Concatenate the parts
+        List<StringBuilder> builtParts = [];
+        var capacity = 1;
+
+        foreach (var partBuilder in _partBuilders.Values)
+        {
+            var builtPart = partBuilder.Build();
+            builtParts.Add(builtPart);
+            capacity += builtPart.Length + 1;
+        }
+
+        _builder.Capacity = capacity;
+
+        _builder.Append('{');
+
+        foreach (var builtPart in builtParts)
+        {
+            _builder.Append(builtPart);
+            _builder.Append(',');
+        }
+
+        if (_builder.Length > 1)
+        {
+            _builder[^1] = '}';
+        }
+        else
+        {
+            _builder.Append('}');
+        }
     }
 
     /// <summary>
@@ -163,51 +193,16 @@ public sealed class JsonLangParser : IDisposable
     /// Gets or creates a builder that represents a part of the lang.
     /// </summary>
     /// <param name="name">The name of the builder.</param>
-    /// <param name="keySegment">The key segment used to determine the value kind of the created part.</param>
+    /// <param name="truncatedKeySegment">The key segment truncated by the name used to determine the value kind of the created part.</param>
     /// <returns>The builder.</returns>
-    private JsonLangPartBuilder GetOrCreateLangPartBuilder(ReadOnlySpan<char> name, ReadOnlySpan<char> keySegment)
+    private JsonLangPartBuilder GetOrCreateLangPartBuilder(ReadOnlySpan<char> name, ReadOnlySpan<char> truncatedKeySegment)
     {
         if (!_alternatePartBuilders.TryGetValue(name, out var builder))
         {
-            builder = JsonLangPartBuilder.Create(name, keySegment);
+            builder = JsonLangPartBuilder.Create(name, truncatedKeySegment);
             _alternatePartBuilders[name] = builder;
         }
 
         return builder;
-    }
-
-    /// <summary>
-    /// Finalizes the parsing.
-    /// </summary>
-    private void FinalizeParsing()
-    {
-        List<StringBuilder> builtParts = [];
-        var capacity = 1;
-
-        foreach (var partBuilder in _partBuilders.Values)
-        {
-            var builtPart = partBuilder.Build();
-            builtParts.Add(builtPart);
-            capacity += builtPart.Length + 1;
-        }
-
-        _builder.Capacity = capacity;
-
-        _builder.Append('{');
-
-        foreach (var builtPart in builtParts)
-        {
-            _builder.Append(builtPart);
-            _builder.Append(',');
-        }
-
-        if (_builder.Length > 1)
-        {
-            _builder[^1] = '}';
-        }
-        else
-        {
-            _builder.Append('}');
-        }
     }
 }
