@@ -15,7 +15,7 @@ public sealed class JsonLangParser : IDisposable
     internal static readonly SearchValues<char> DigitsSearch = SearchValues.Create("0123456789");
 
     private const string c_lineSeparator = " = ";
-    private static readonly IReadOnlyList<string> s_ignoredEndingLines = ["new Object();", "new Array();"];
+    private static readonly string[] s_ignoredEndingLines = ["new Object();", "new Array();"];
 
     private readonly FileStream _fileStream;
     private readonly StreamReader _streamReader;
@@ -150,9 +150,11 @@ public sealed class JsonLangParser : IDisposable
             return true;
         }
 
-        foreach (var ignoredEndingLine in s_ignoredEndingLines)
+        var ignoredEndingLines = s_ignoredEndingLines.AsSpan();
+        var length = ignoredEndingLines.Length;
+        for (var i = 0; i < length; i++)
         {
-            if (line.EndsWith(ignoredEndingLine, StringComparison.Ordinal))
+            if (line.EndsWith(ignoredEndingLines[i], StringComparison.Ordinal))
             {
                 return true;
             }
@@ -175,7 +177,7 @@ public sealed class JsonLangParser : IDisposable
         }
 
         var indexOfDot = keySegment.IndexOf('.');
-        if (indexOfDot == -1 || indexOfDot + 1 == keySegment.Length)
+        if (indexOfDot == -1)
         {
             return keySegment;
         }
