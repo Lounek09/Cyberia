@@ -1,5 +1,4 @@
-﻿using Cyberia.Langzilla.Parser.Extensions;
-
+﻿using System.Buffers;
 using System.Text;
 using System.Text.Json;
 
@@ -10,10 +9,11 @@ namespace Cyberia.Langzilla.Parser;
 /// </summary>
 internal sealed class JsonLangPartBuilder
 {
+    private static readonly ArrayPool<char> s_arrayPool = ArrayPool<char>.Shared;
+
     private readonly int _nameLength;
     private readonly JsonValueKind _valueKind;
     private readonly StringBuilder _builder;
-    private readonly StringBuilder _valueSanitizerBuilder;
 
     /// <summary>
     /// Initializes a new instance of the LangPartBuilder class.
@@ -25,7 +25,6 @@ internal sealed class JsonLangPartBuilder
         _nameLength = name.Length;
         _valueKind = valueKind;
         _builder = new();
-        _valueSanitizerBuilder = new();
 
         _builder.Append('"').Append(name).Append('"').Append(':');
         _builder.AppendStartJsonToken(valueKind);
@@ -128,7 +127,7 @@ internal sealed class JsonLangPartBuilder
     /// </summary>
     /// <param name="valueSegment">The value segment to sanitize.</param>
     /// <returns>A <see cref="ReadOnlySpan{T}"/> of <see cref="char"/> containing the sanitized value.</returns>
-    private ReadOnlySpan<char> SanitizeValueSegment(ReadOnlySpan<char> valueSegment)
+    private static ReadOnlySpan<char> SanitizeValueSegment(ReadOnlySpan<char> valueSegment)
     {
         var firstChar = valueSegment[0];
         if (firstChar is not ('[' or '{' or '\''))
@@ -136,64 +135,74 @@ internal sealed class JsonLangPartBuilder
             return valueSegment[..^1];
         }
 
-        _valueSanitizerBuilder.Clear();
+        var buffer = s_arrayPool.Rent(valueSegment.Length * 2);
+        var bufferSpan = buffer.AsSpan();
+        var bufferIndex = 0;
 
-        var inString = firstChar == '\'';
-        _valueSanitizerBuilder.Append(inString ? '"' : firstChar);
-
-        var length = valueSegment.Length - 1;
-        for (var i = 1; i < length; i++)
+        try
         {
-            var previousChar = valueSegment[i - 1];
-            var currentChar = valueSegment[i];
-            var nextChar = valueSegment[i + 1];
+            var inString = firstChar == '\'';
+            bufferSpan[bufferIndex++] = inString ? '"' : firstChar;
 
-            if (inString)
+            var length = valueSegment.Length - 1;
+            for (var i = 1; i < length; i++)
             {
-                switch (currentChar)
+                var previousChar = valueSegment[i - 1];
+                var currentChar = valueSegment[i];
+                var nextChar = valueSegment[i + 1];
+
+                if (inString)
                 {
-                    case '\\' when nextChar == '\'':
-                        _valueSanitizerBuilder.Append('\'');
-                        i++;
-                        break;
-                    case '\'':
-                        inString = false;
-                        _valueSanitizerBuilder.Append('"');
-                        break;
-                    case '"':
-                        _valueSanitizerBuilder.Append('\\').Append('"');
-                        break;
-                    case < (char)32:
-                        _valueSanitizerBuilder.AppendEscapedChar(currentChar);
-                        break;
-                    default:
-                        _valueSanitizerBuilder.Append(currentChar);
-                        break;
+                    switch (currentChar)
+                    {
+                        case '\\' when nextChar == '\'':
+                            bufferSpan[bufferIndex++] = '\'';
+                            i++;
+                            break;
+                        case '\'':
+                            inString = false;
+                            bufferSpan[bufferIndex++] = '"';
+                            break;
+                        case '"':
+                            bufferSpan[bufferIndex++] = '\\';
+                            bufferSpan[bufferIndex++] = '"';
+                            break;
+                        case < (char)32:
+                            bufferSpan.AppendEscapedChar(currentChar, ref bufferIndex);
+                            break;
+                        default:
+                            bufferSpan[bufferIndex++] = currentChar;
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (currentChar)
+                    {
+                        case ' ' when previousChar == '\'' && nextChar == '+':
+                            inString = true;
+                            bufferSpan[bufferIndex - 1] = '\\';
+                            bufferSpan[bufferIndex++] = '"';
+                            i += 9;
+                            break;
+                        case ' ':
+                            break;
+                        case '\'':
+                            inString = true;
+                            bufferSpan[bufferIndex++] = '"';
+                            break;
+                        default:
+                            bufferSpan[bufferIndex++] = currentChar;
+                            break;
+                    }
                 }
             }
-            else
-            {
-                switch (currentChar)
-                {
-                    case ' ' when previousChar == '\'' && nextChar == '+':
-                        inString = true;
-                        _valueSanitizerBuilder[^1] = '\\';
-                        _valueSanitizerBuilder.Append('"');
-                        i += 9;
-                        break;
-                    case ' ':
-                        break;
-                    case '\'':
-                        inString = true;
-                        _valueSanitizerBuilder.Append('"');
-                        break;
-                    default:
-                        _valueSanitizerBuilder.Append(currentChar);
-                        break;
-                }
-            }
+
+            return bufferSpan[..bufferIndex];
         }
-
-        return _valueSanitizerBuilder.ToString().AsSpan();
+        finally
+        {
+            s_arrayPool.Return(buffer);
+        }
     }
 }

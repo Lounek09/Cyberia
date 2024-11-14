@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace Cyberia.Langzilla.Parser.Extensions;
+namespace Cyberia.Langzilla.Parser;
 
-internal static class StringBuilderExtensions
+public static class JsonLangParserUtils
 {
-    private static readonly IReadOnlyList<char> s_hexDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+    private static readonly char[] s_hexDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
 
     /// <summary>
     /// Appends the start of a JSON token based on the specified <see cref="JsonValueKind"/>.
@@ -62,17 +62,21 @@ internal static class StringBuilderExtensions
     }
 
     /// <summary>
-    /// Appends the specified character to the StringBuilder as a Unicode escape sequence (\uXXXX).
+    /// Appends the specified character at the specified index to the Span as a Unicode escape sequence (\uXXXX).
+    /// Make sure the buffer has enough space to append the character (length of buffer - index >= 6).
     /// </summary>
-    /// <param name="builder">The StringBuilder instance to which the escape sequence will be appended.</param>
-    /// <param name="value">The character to be escaped and appended.</param>
-    /// <returns>A reference to this instance after the append operation has completed.</returns>
-    public static StringBuilder AppendEscapedChar(this StringBuilder builder, char value)
+    /// <param name="buffer">The Span to which the escape sequence will be appended.</param>
+    /// <param name="value">The character to be escaped and appended./param>
+    /// <param name="index">The index at which the character will be appended.</param>
+    public static void AppendEscapedChar(this Span<char> buffer, char value, ref int index)
     {
-        return builder.Append('\\').Append('u')
-            .Append(s_hexDigits[(value >> 12) & 0xF])
-            .Append(s_hexDigits[(value >> 8) & 0xF])
-            .Append(s_hexDigits[(value >> 4) & 0xF])
-            .Append(s_hexDigits[value & 0xF]);
+        var hexDigits = s_hexDigits.AsSpan();
+
+        buffer[index++] = '\\';
+        buffer[index++] = 'u';
+        buffer[index++] = hexDigits[value >> 12 & 0xF];
+        buffer[index++] = hexDigits[value >> 8 & 0xF];
+        buffer[index++] = hexDigits[value >> 4 & 0xF];
+        buffer[index++] = hexDigits[value & 0xF];
     }
 }
