@@ -152,7 +152,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
                 continue;
             }
 
-            builder.Append(" - ");
+            builder.Append("  - ");
             builder.Append(boostCost[i].Count > 2 ? boostCost[i][2] : 1);
             builder.Append(Translation.Get<BotTranslations>("for", _culture));
             builder.Append(boostCost[i][1]);

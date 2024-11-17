@@ -105,7 +105,7 @@ internal sealed class JsonLangPartBuilder
                     break;
             }
         }
-        
+
         _builder.Append(',');
         return this;
     }
