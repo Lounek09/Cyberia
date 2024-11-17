@@ -61,9 +61,16 @@ public static class Translation
     public static bool TryGet<T>(string key, out string value, CultureInfo? culture = null)
         where T : ITranslationsWrapper
     {
-        value = T.ResourceManager.GetString(key, culture) ?? key;
+        var nullableValue = T.ResourceManager.GetString(key, culture);
 
-        return value is not null;
+        if (nullableValue is null)
+        {
+            value = key;
+            return false;
+        }
+
+        value = nullableValue;
+        return true;
     }
 
     /// <summary>
