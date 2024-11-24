@@ -44,14 +44,27 @@ public readonly record struct DescriptionString
     /// Returns a string formed by the template populated with its parameters.
     /// </summary>
     /// <returns>The formatted string.</returns>
-    public override string ToString() => Translation.Format(Template, Parameters);
+    public override string ToString()
+    {
+        if (Parameters.Count == 0)
+        {
+            return Template;
+        }
+
+        return Translation.Format(Template, Parameters);
+    }
 
     /// <inheritdoc cref="ToString()"/>
     /// <param name="decorator">The decorator function to apply to each parameter.</param>
     public string ToString(Func<string, string> decorator)
     {
         var length = Parameters.Count;
-        var formattedParameters = length > 0 ? new string[length] : Span<string>.Empty;
+        if (length == 0)
+        {
+            return Template;
+        }
+
+        var formattedParameters = new string[length];
         for (var i = 0; i < length; i++)
         {
             var parameter = Parameters[i];

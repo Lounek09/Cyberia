@@ -3,6 +3,7 @@ using Cyberia.Api.Factories.QuestObjectives.Elements;
 using Cyberia.Langzilla.Enums;
 
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Cyberia.Api.Factories.QuestObjectives;
@@ -26,15 +27,16 @@ public abstract record QuestObjective : IQuestObjective
         return GetDescription(language.ToCulture());
     }
 
+    [OverloadResolutionPriority(2)]
     public abstract DescriptionString GetDescription(CultureInfo? culture = null);
 
-    /// <inheritdoc cref="IQuestObjective.GetDescription"/>
+    /// <inheritdoc cref="IQuestObjective.GetDescription(CultureInfo)"/>
     protected DescriptionString GetDescription<T>(CultureInfo? culture, T parameter)
     {
         return GetDescription(culture, parameter?.ToString() ?? string.Empty);
     }
 
-    /// <inheritdoc cref="IQuestObjective.GetDescription"/>
+    /// <inheritdoc cref="IQuestObjective.GetDescription(CultureInfo)"/>
     protected DescriptionString GetDescription<T0, T1>(CultureInfo? culture, T0 parameter0, T1 parameter1)
     {
         return GetDescription(culture,
@@ -42,7 +44,7 @@ public abstract record QuestObjective : IQuestObjective
             parameter1?.ToString() ?? string.Empty);
     }
 
-    /// <inheritdoc cref="IQuestObjective.GetDescription"/>
+    /// <inheritdoc cref="IQuestObjective.GetDescription(CultureInfo)"/>
     protected DescriptionString GetDescription<T0, T1, T2>(CultureInfo? culture, T0 parameter0, T1 parameter1, T2 parameter2)
     {
         return GetDescription(culture,
@@ -51,7 +53,8 @@ public abstract record QuestObjective : IQuestObjective
             parameter2?.ToString() ?? string.Empty);
     }
 
-    /// <inheritdoc cref="IQuestObjective.GetDescription"/>
+    /// <inheritdoc cref="IQuestObjective.GetDescription(CultureInfo)"/>
+    [OverloadResolutionPriority(1)]
     protected DescriptionString GetDescription(CultureInfo? culture, params IReadOnlyList<string> parameters)
     {
         var questObjectiveTypeData = QuestObjectiveData.GetQuestObjectiveTypeData();
@@ -76,6 +79,6 @@ public abstract record QuestObjective : IQuestObjective
             builder.Append(coordinate);
         }
 
-        return new DescriptionString(builder.ToString(), parameters);
+        return new DescriptionString(builder.ToString(), parameters.ToArray());
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Cyberia.Langzilla.Enums;
 
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Cyberia.Translations;
@@ -99,28 +100,20 @@ public static class Translation
         return Format(template, id);
     }
 
-    /// <summary>
-    /// Formats the specified template using the provided parameter.
-    /// </summary>
+    /// <inheritdoc cref="Translation.Format(string, ReadOnlySpan{string})"/>
     /// <typeparam name="T">The type of the parameter.</typeparam>
-    /// <param name="template">The template to format.</param>
     /// <param name="parameter">The parameter to use in the template.</param>
-    /// <returns>The formatted string.</returns>
     public static string Format<T>(string template, T parameter)
     {
         return Format(template,
             parameter?.ToString() ?? string.Empty);
     }
 
-    /// <summary>
-    /// Formats the specified template using the provided parameters.
-    /// </summary>
+    /// <inheritdoc cref="Translation.Format(string, ReadOnlySpan{string})"/>
     /// <typeparam name="T0">The type of the first parameter.</typeparam>
     /// <typeparam name="T1">The type of the second parameter.</typeparam>
-    /// <param name="template">The template to format.</param>
     /// <param name="parameter0">The first parameter to use in the template.</param>
     /// <param name="parameter1">The second parameter to use in the template.</param>
-    /// <returns>The formatted string.</returns>
     public static string Format<T0, T1>(string template, T0 parameter0, T1 parameter1)
     {
         return Format(template,
@@ -128,17 +121,13 @@ public static class Translation
             parameter1?.ToString() ?? string.Empty);
     }
 
-    /// <summary>
-    /// Formats the specified template using the provided parameters.
-    /// </summary>
+    /// <inheritdoc cref="Translation.Format(string, ReadOnlySpan{string})"/>
     /// <typeparam name="T0">The type of the first parameter.</typeparam>
     /// <typeparam name="T1">The type of the second parameter.</typeparam>
     /// <typeparam name="T2">The type of the third parameter.</typeparam>
-    /// <param name="template">The template to format.</param>
     /// <param name="parameter0">The first parameter to use in the template.</param>
     /// <param name="parameter1">The second parameter to use in the template.</param>
     /// <param name="parameter2">The third parameter to use in the template.</param>
-    /// <returns>The formatted string.</returns>
     public static string Format<T0, T1, T2>(string template, T0 parameter0, T1 parameter1, T2 parameter2)
     {
         return Format(template,
@@ -147,12 +136,7 @@ public static class Translation
             parameter2?.ToString() ?? string.Empty);
     }
 
-    /// <summary>
-    /// Formats the specified template using the provided parameters.
-    /// </summary>
-    /// <param name="template">The template to format.</param>
-    /// <param name="parameters">The parameters to use in the template.</param>
-    /// <returns>The formatted string.</returns>
+    /// <inheritdoc cref="Translation.Format(string, ReadOnlySpan{string})"/>
     public static string Format(string template, params ReadOnlySpan<object?> parameters)
     {
         var length = parameters.Length;
@@ -165,12 +149,20 @@ public static class Translation
         return Format(template, strings);
     }
 
+    /// <inheritdoc cref="Translation.Format(string, ReadOnlySpan{string})"/>
+    [OverloadResolutionPriority(1)]
+    public static string Format(string template, params IEnumerable<string> parameters)
+    {
+        return Format(template, parameters.ToArray());
+    }
+
     /// <summary>
     /// Formats the specified template using the provided parameters.
     /// </summary>
     /// <param name="template">The template to format.</param>
     /// <param name="parameters">The parameters to use in the template.</param>
     /// <returns>The formatted string.</returns>
+    [OverloadResolutionPriority(2)]
     public static string Format(string template, params ReadOnlySpan<string> parameters)
     {
         StringBuilder builder = new(template);

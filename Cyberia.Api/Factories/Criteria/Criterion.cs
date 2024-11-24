@@ -2,6 +2,7 @@
 using Cyberia.Langzilla.Enums;
 
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace Cyberia.Api.Factories.Criteria;
 
@@ -27,6 +28,7 @@ public abstract record Criterion : ICriterion
         return GetDescription(language.ToCulture());
     }
 
+    [OverloadResolutionPriority(2)]
     public abstract DescriptionString GetDescription(CultureInfo? culture = null);
 
     /// <inheritdoc cref="CriterionFactory.GetOperatorDescriptionKey"/>
@@ -41,13 +43,13 @@ public abstract record Criterion : ICriterion
     /// <returns>The key of the description in the resource file.</returns>
     protected abstract string GetDescriptionKey();
 
-    /// <inheritdoc cref="ICriterion.GetDescription"/>
+    /// <inheritdoc cref="ICriterion.GetDescription(CultureInfo)"/>
     protected DescriptionString GetDescription<T>(CultureInfo? culture, T parameter)
     {
         return GetDescription(culture, parameter?.ToString() ?? string.Empty);
     }
 
-    /// <inheritdoc cref="ICriterion.GetDescription"/>
+    /// <inheritdoc cref="ICriterion.GetDescription(CultureInfo)"/>
     protected DescriptionString GetDescription<T0, T1>(CultureInfo? culture, T0 parameter0, T1 parameter1)
     {
         return GetDescription(culture,
@@ -55,7 +57,7 @@ public abstract record Criterion : ICriterion
             parameter1?.ToString() ?? string.Empty);
     }
 
-    /// <inheritdoc cref="ICriterion.GetDescription"/>
+    /// <inheritdoc cref="ICriterion.GetDescription(CultureInfo)"/>
     protected DescriptionString GetDescription<T0, T1, T2>(CultureInfo? culture, T0 parameter0, T1 parameter1, T2 parameter2)
     {
         return GetDescription(culture,
@@ -64,7 +66,8 @@ public abstract record Criterion : ICriterion
             parameter2?.ToString() ?? string.Empty);
     }
 
-    /// <inheritdoc cref="ICriterion.GetDescription"/>
+    /// <inheritdoc cref="ICriterion.GetDescription(CultureInfo)"/>
+    [OverloadResolutionPriority(1)]
     protected DescriptionString GetDescription(CultureInfo? culture, params IReadOnlyList<string> parameters)
     {
         var descriptionKey = GetDescriptionKey();

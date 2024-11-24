@@ -3,6 +3,7 @@ using Cyberia.Api.Factories.AlignmentFeatEffects.Elements;
 using Cyberia.Langzilla.Enums;
 
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace Cyberia.Api.Factories.AlignmentFeatEffects;
 
@@ -30,9 +31,11 @@ public abstract record AlignmentFeatEffect : IAlignmentFeatEffect
         return GetDescription(language.ToCulture());
     }
 
+    [OverloadResolutionPriority(2)]
     public abstract DescriptionString GetDescription(CultureInfo? culture = null);
 
-    /// <inheritdoc cref="IAlignmentFeatEffect.GetDescription"/>/>
+    /// <inheritdoc cref="IAlignmentFeatEffect.GetDescription(CultureInfo)"/>
+    [OverloadResolutionPriority(1)]
     protected DescriptionString GetDescription(CultureInfo? culture, params int[] parameters)
     {
         var alignmentFeatEffect = GetAlignmentFeatEffectData();
