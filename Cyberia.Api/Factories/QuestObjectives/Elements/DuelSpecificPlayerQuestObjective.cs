@@ -27,6 +27,6 @@ public sealed record DuelSpecificPlayerQuestObjective : QuestObjective
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(culture, SpecificPlayer);
+        return GetDescription(culture, SpecificPlayer.ToString(culture));
     }
 }

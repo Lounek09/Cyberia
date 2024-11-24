@@ -27,6 +27,6 @@ public sealed record FreeFormQuestObjective : QuestObjective
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(culture, Description);
+        return GetDescription(culture, Description.ToString(culture));
     }
 }

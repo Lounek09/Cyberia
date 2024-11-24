@@ -27,6 +27,6 @@ public sealed record DiscoverMapQuestObjective : QuestObjective
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(culture, MapDescription);
+        return GetDescription(culture, MapDescription.ToString(culture));
     }
 }
