@@ -2,6 +2,7 @@
 
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Cyberia.Translations;
@@ -100,7 +101,7 @@ public static class Translation
         return Format(template, id);
     }
 
-    /// <inheritdoc cref="Translation.Format(string, ReadOnlySpan{string})"/>
+    /// <inheritdoc cref="Format(string, ReadOnlySpan{string})"/>
     /// <typeparam name="T">The type of the parameter.</typeparam>
     /// <param name="parameter">The parameter to use in the template.</param>
     public static string Format<T>(string template, T parameter)
@@ -109,7 +110,7 @@ public static class Translation
             parameter?.ToString() ?? string.Empty);
     }
 
-    /// <inheritdoc cref="Translation.Format(string, ReadOnlySpan{string})"/>
+    /// <inheritdoc cref="Format(string, ReadOnlySpan{string})"/>
     /// <typeparam name="T0">The type of the first parameter.</typeparam>
     /// <typeparam name="T1">The type of the second parameter.</typeparam>
     /// <param name="parameter0">The first parameter to use in the template.</param>
@@ -121,7 +122,7 @@ public static class Translation
             parameter1?.ToString() ?? string.Empty);
     }
 
-    /// <inheritdoc cref="Translation.Format(string, ReadOnlySpan{string})"/>
+    /// <inheritdoc cref="Format(string, ReadOnlySpan{string})"/>
     /// <typeparam name="T0">The type of the first parameter.</typeparam>
     /// <typeparam name="T1">The type of the second parameter.</typeparam>
     /// <typeparam name="T2">The type of the third parameter.</typeparam>
@@ -136,7 +137,7 @@ public static class Translation
             parameter2?.ToString() ?? string.Empty);
     }
 
-    /// <inheritdoc cref="Translation.Format(string, ReadOnlySpan{string})"/>
+    /// <inheritdoc cref="Format(string, ReadOnlySpan{string})"/>
     public static string Format(string template, params ReadOnlySpan<object?> parameters)
     {
         var length = parameters.Length;
@@ -149,10 +150,20 @@ public static class Translation
         return Format(template, strings);
     }
 
-    /// <inheritdoc cref="Translation.Format(string, ReadOnlySpan{string})"/>
+    /// <inheritdoc cref="Format(string, ReadOnlySpan{string})"/>
     [OverloadResolutionPriority(1)]
     public static string Format(string template, params IEnumerable<string> parameters)
     {
+        if (parameters is List<string> list)
+        {
+            return Format(template, CollectionsMarshal.AsSpan(list));
+        }
+
+        if (parameters is string[] array)
+        {
+            return Format(template, array.AsSpan());
+        }
+
         return Format(template, parameters.ToArray());
     }
 
