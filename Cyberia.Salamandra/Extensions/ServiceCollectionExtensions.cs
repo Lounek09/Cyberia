@@ -5,6 +5,7 @@ using Cyberia.Salamandra.Services;
 using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
+using DSharpPlus.Commands.Processors.SlashCommands.InteractionNamingPolicies;
 using DSharpPlus.Commands.Processors.UserCommands;
 using DSharpPlus.Extensions;
 
@@ -44,14 +45,20 @@ public static class ServiceCollectionExtensions
             })
             .AddCommandsExtension
             (
-                (provider, setup) =>
+                (provider, extention) =>
                 {
-                    setup.AddProcessor(new SlashCommandProcessor());
-                    setup.AddProcessor(new UserCommandProcessor());
-                    setup.RegisterCommands(config.AdminGuildId);
+                    extention.AddProcessor(new SlashCommandProcessor(new SlashCommandConfiguration()
+                    {
+#if DEBUG
+                        UnconditionallyOverwriteCommands = true,
+#endif
+                        NamingPolicy = new SnakeCaseNamingFixer()
+                    }));
+                    extention.AddProcessor(new UserCommandProcessor());
+                    extention.RegisterCommands(config.AdminGuildId);
 
                     //TODO: Remove this when the extension supports the IEventHandler interface.
-                    setup.CommandErrored += provider.GetRequiredService<CommandsEventHandler>().HandleEventAsync;
+                    extention.CommandErrored += provider.GetRequiredService<CommandsEventHandler>().HandleEventAsync;
                 },
                 new CommandsConfiguration()
                 {
