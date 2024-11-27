@@ -6,7 +6,6 @@ using DSharpPlus;
 using DSharpPlus.Commands;
 using DSharpPlus.Commands.Processors.SlashCommands;
 using DSharpPlus.Commands.Processors.SlashCommands.InteractionNamingPolicies;
-using DSharpPlus.Commands.Processors.UserCommands;
 using DSharpPlus.Extensions;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -54,7 +53,6 @@ public static class ServiceCollectionExtensions
 #endif
                         NamingPolicy = new SnakeCaseNamingFixer()
                     }));
-                    extention.AddProcessor(new UserCommandProcessor());
                     extention.RegisterCommands(config.AdminGuildId);
 
                     //TODO: Remove this when the extension supports the IEventHandler interface.
