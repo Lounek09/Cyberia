@@ -42,6 +42,8 @@ public static class Emojis
             CharacterLearnEmoteEffect characterLearnEmoteEffect => Emote(characterLearnEmoteEffect.GetEmoteData()),
             IStateEffect stateEffect => State(stateEffect.GetStateData()),
             IJobEffect jobEffect => Job(jobEffect.GetJobData()),
+            GladiatroolGivePermanentStatsAtEndFightEffect gladiatroolGivePermanentStatsAtEndFightEffect => EmojisService.GetEmojiStringByName($"effect_{gladiatroolGivePermanentStatsAtEndFightEffect.CharacteristicId}"),
+            GladiatroolBoostEndFightPermanentStatsGainEffect gladiatroolBoostEndFightPermanentStatsGainEffect => EmojisService.GetEmojiStringByName($"effect_{gladiatroolBoostEndFightPermanentStatsGainEffect.CharacteristicId}"),
             _ => null
         };
 

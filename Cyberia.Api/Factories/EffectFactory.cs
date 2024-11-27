@@ -446,7 +446,7 @@ public static class EffectFactory
             { 2166, GladiatroolBoostEndFightPermanentStatsGainEffect.Create },
             { 2169, CharacterStealDamageEffect.Create },
             { 2170, CharacterStealCriticalHitEffect.Create },
-            { 2171, CharacterLifePointsWinFromBestElement.Create }, //Check
+            { 2171, CharacterLifePointsWinFromBestElement.Create },
             { 2172, GladiatroolIncreaseSpellLevelEffect.Create },
             { 2173, GladiatroolChangeSpellToBestElementEffect.Create }
         }.ToFrozenDictionary();

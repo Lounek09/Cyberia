@@ -32,7 +32,12 @@ public sealed class EffectData : IDofusData<int>, IComparable<EffectData>
     public char? Element { get; init; }
 
     [JsonIgnore]
-    public string GfxId => Element is null ? CharacteristicId.ToString() : Element.Value.ToString();
+    public string GfxId => Id switch
+    {
+        995 => "hand",
+        604 or 722 or 2172 or 2173 => "wand",
+        _ => Element is null ? CharacteristicId.ToString() : Element.Value.ToString(),
+    };
 
     [JsonConstructor]
     internal EffectData()
