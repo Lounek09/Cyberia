@@ -258,7 +258,7 @@ public static class EffectFactory
             { 615, CharacterUnlearnJobEffect.Create },
             { 616, ForgetSpellEffect.Create },
             { 620, CharacterReadBookEffect.Create },
-            { 621, ChracterSummonMonsterEffect.Create },
+            { 621, CharacterSummonMonsterEffect.Create },
             { 622, GotoHouseEffect.Create },
             { 623, CharacterSummonMonsterGroupEffect.Create },
             { 624, CharacterUnlearnGuildSpellEffect.Create },
@@ -438,6 +438,17 @@ public static class EffectFactory
             { 2157, CharacterBoostReceivedDamagePercentMultiplierEffect.Create },
             { 2158, CharacterDeboostReceivedDamagePercentMultiplierEffect.Create },
             { 2159, CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect.Create },
+            { 2161, GladiatroolGiveTokenAtEndFightEffect.Create },
+            { 2162, GladiatroolGiveTokenAtEndFightMonsterEffect.Create },
+            { 2163, GladiatroolGiveTokenAtEndFightTonicEffect.Create },
+            { 2164, GladiatroolGiveTokenAtEndFightShopResetEffect.Create },
+            { 2165, GladiatroolGivePermanentStatsAtEndFightEffect.Create },
+            { 2166, GladiatroolBoostEndFightPermanentStatsGainEffect.Create },
+            { 2169, CharacterStealDamageEffect.Create },
+            { 2170, CharacterStealCriticalHitEffect.Create },
+            { 2171, CharacterLifePointsWinFromBestElement.Create }, //Check
+            { 2172, GladiatroolIncreaseSpellLevelEffect.Create },
+            { 2173, GladiatroolChangeSpellToBestElementEffect.Create }
         }.ToFrozenDictionary();
 
     /// <summary>

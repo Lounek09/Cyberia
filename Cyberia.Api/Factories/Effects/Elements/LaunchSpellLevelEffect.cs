@@ -31,9 +31,9 @@ public sealed record LaunchSpellLevelEffect : Effect
         var spellLevelData = GetSpellLevelData();
         if (spellLevelData is null)
         {
-            return GetDescription(culture, $"{nameof(SpellLevelData)} {Translation.UnknownData(SpellLevelId, culture)}", 0);
+            return GetDescription(culture, 0, string.Empty, $"{nameof(SpellLevelData)} {Translation.UnknownData(SpellLevelId, culture)}");
         }
 
-        return GetDescription(culture, spellLevelData.SpellData.Name.ToString(culture), spellLevelData.Rank);
+        return GetDescription(culture, spellLevelData.Rank, string.Empty, spellLevelData.SpellData.Name.ToString(culture));
     }
 }

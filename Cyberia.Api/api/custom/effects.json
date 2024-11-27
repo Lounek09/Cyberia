@@ -126,7 +126,7 @@
     },
     {
       "id": 216,
-      "d": "#1{~1~2 à }#2% de faiblesse face à l'eau "
+      "d": "#1{~1~2 à }#2% de faiblesse face à l'eau"
     },
     {
       "id": 217,
@@ -241,7 +241,7 @@
     },
     {
       "id": 300,
-      "d": "Lance #1 au rang #2",
+      "d": "Lance le sort #3 au rang #1",
       "c": 29,
       "o": "/"
     },
@@ -307,16 +307,12 @@
     },
     {
       "id": 722,
-      "d": "Apprend temporairement le sort #3 au rang #1",
+      "d": "Donne le sort #3 au rang #1",
       "t": true
     },
     {
       "id": 723,
       "d": "Ajoute l'aura #3"
-    },
-    {
-      "id": 724,
-      "d": "Affiche le titre : « #3 »"
     },
     {
       "id": 725,
