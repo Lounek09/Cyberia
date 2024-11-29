@@ -2,12 +2,13 @@
 using Cyberia.Api.Extensions;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Templates;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record GladiatroolBoostEndFightPermanentStatsGainEffect : Effect
+public sealed record GladiatroolBoostEndFightPermanentStatsGainEffect : Effect, ICharacteristicEffect
 {
     public int CharacteristicId { get; init; }
     public int BoostPercent { get; init; }
