@@ -2896,6 +2896,42 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Class damage - Gladiatrool.
+        /// </summary>
+        internal static string SpellCategory_GladiatroolBreedDamage {
+            get {
+                return ResourceManager.GetString("SpellCategory.GladiatroolBreedDamage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Class support - Gladiatrool.
+        /// </summary>
+        internal static string SpellCategory_GladiatroolBreedSupport {
+            get {
+                return ResourceManager.GetString("SpellCategory.GladiatroolBreedSupport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other - Gladiatrool.
+        /// </summary>
+        internal static string SpellCategory_GladiatroolOther {
+            get {
+                return ResourceManager.GetString("SpellCategory.GladiatroolOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passive - Gladiatrool.
+        /// </summary>
+        internal static string SpellCategory_GladiatroolPassive {
+            get {
+                return ResourceManager.GetString("SpellCategory.GladiatroolPassive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
         internal static string SpellCategory_None {

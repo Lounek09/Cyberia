@@ -1182,4 +1182,16 @@
   <data name="ItemSuperType.Tonic" xml:space="preserve">
     <value>Tonic</value>
   </data>
+  <data name="SpellCategory.GladiatroolBreedDamage" xml:space="preserve">
+    <value>Class damage - Gladiatrool</value>
+  </data>
+  <data name="SpellCategory.GladiatroolPassive" xml:space="preserve">
+    <value>Passive - Gladiatrool</value>
+  </data>
+  <data name="SpellCategory.GladiatroolOther" xml:space="preserve">
+    <value>Other - Gladiatrool</value>
+  </data>
+  <data name="SpellCategory.GladiatroolBreedSupport" xml:space="preserve">
+    <value>Class support - Gladiatrool</value>
+  </data>
 </root>
