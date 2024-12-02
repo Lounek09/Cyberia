@@ -73,7 +73,12 @@ public sealed class SpellData : IDofusData<int>
     public BreedData? GetBreedData()
     {
         return DofusApi.Datacenter.BreedsRepository.GetBreedDataById(BreedId) ??
-            DofusApi.Datacenter.BreedsRepository.Breeds.Values.FirstOrDefault(x => x.SpecialSpellId == Id);
+            DofusApi.Datacenter.BreedsRepository.GetBreedDataBySpecialSpellId(Id);
+    }
+
+    public BreedData? GetGladiatroolBreedData()
+    {
+        return DofusApi.Datacenter.BreedsRepository.GetBreedDataByGladiatroolSpellId(Id);
     }
 
     public SpellLevelData? GetSpellLevelData(int level = 1)

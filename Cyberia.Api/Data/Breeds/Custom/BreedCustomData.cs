@@ -13,10 +13,16 @@ internal sealed class BreedCustomData : IDofusData<int>
     [JsonPropertyName("is")]
     public int ItemSetId { get; init; }
 
+    [JsonPropertyName("gw")]
+    public int GladiatroolWeaponItemId { get; init; }
+
+    [JsonPropertyName("gs")]
+    public IReadOnlyList<int> GladiatroolSpellsId { get; init; }
+
     [JsonConstructor]
     internal BreedCustomData()
     {
-
+        GladiatroolSpellsId = [];
     }
 }
 

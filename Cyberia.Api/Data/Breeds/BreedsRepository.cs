@@ -29,6 +29,21 @@ public sealed class BreedsRepository : DofusRepository, IDofusRepository
         return breedData;
     }
 
+    public BreedData? GetBreedDataBySpecialSpellId(int spellId)
+    {
+        return Breeds.Values.FirstOrDefault(x => x.SpecialSpellId == spellId);
+    }
+
+    public BreedData? GetBreedDataByGladiatroolWeaponItemId(int itemId)
+    {
+        return Breeds.Values.FirstOrDefault(x => x.GladiatroolWeaponItemId == itemId);
+    }
+
+    public BreedData? GetBreedDataByGladiatroolSpellId(int spellId)
+    {
+        return Breeds.Values.FirstOrDefault(x => x.GladiatroolSpellsId.Contains(spellId));
+    }
+
     public BreedData? GetBreedDataByName(string name, Language language)
     {
         return GetBreedDataByName(name, language.ToCulture());
@@ -84,6 +99,8 @@ public sealed class BreedsRepository : DofusRepository, IDofusRepository
             {
                 breedData.SpecialSpellId = breedCustomData.SpecialSpellId;
                 breedData.ItemSetId = breedCustomData.ItemSetId;
+                breedData.GladiatroolWeaponItemId = breedCustomData.GladiatroolWeaponItemId;
+                breedData.GladiatroolSpellsId = breedCustomData.GladiatroolSpellsId;
             }
         }
     }

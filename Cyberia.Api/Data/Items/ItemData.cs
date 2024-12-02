@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data.Crafts;
+﻿using Cyberia.Api.Data.Breeds;
+using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.ItemStats;
@@ -135,6 +136,11 @@ public sealed class ItemData : IDofusData<int>
     public IncarnationData? GetIncarnationData()
     {
         return DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(Id);
+    }
+
+    public BreedData? GetGladiatroolBreedData()
+    {
+        return DofusApi.Datacenter.BreedsRepository.GetBreedDataByGladiatroolWeaponItemId(Id);
     }
 
     public bool IsWeapon()

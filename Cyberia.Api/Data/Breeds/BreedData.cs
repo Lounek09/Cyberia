@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Data.ItemSets;
+﻿using Cyberia.Api.Data.Items;
+using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Enums;
 using Cyberia.Api.Managers;
@@ -74,6 +75,12 @@ public sealed class BreedData : IDofusData<int>
     [JsonIgnore]
     public int ItemSetId { get; internal set; }
 
+    [JsonIgnore]
+    public int GladiatroolWeaponItemId { get; internal set; }
+
+    [JsonIgnore]
+    public IReadOnlyList<int> GladiatroolSpellsId { get; internal set; }
+
     [JsonConstructor]
     internal BreedData()
     {
@@ -91,6 +98,7 @@ public sealed class BreedData : IDofusData<int>
         ChanceBoostCost = [];
         AgilityBoostCost = [];
         IntelligenceBoostCost = [];
+        GladiatroolSpellsId = [];
     }
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
@@ -156,5 +164,22 @@ public sealed class BreedData : IDofusData<int>
     public ItemSetData? GetItemSetData()
     {
         return DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(ItemSetId);
+    }
+
+    public ItemData? GetGladiatroolWeaponItemData()
+    {
+        return DofusApi.Datacenter.ItemsRepository.GetItemDataById(GladiatroolWeaponItemId);
+    }
+
+    public IEnumerable<SpellData> GetGladiatroolSpellsData()
+    {
+        foreach (var spellId in GladiatroolSpellsId)
+        {
+            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spellId);
+            if (spellData is not null)
+            {
+                yield return spellData;
+            }
+        }
     }
 }
