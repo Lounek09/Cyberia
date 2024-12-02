@@ -619,4 +619,7 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
   <data name="Embed.Field.Effects.Content.None" xml:space="preserve">
     <value>Aucun</value>
   </data>
+  <data name="Gladiatrool" xml:space="preserve">
+    <value>Gladiatrool</value>
+  </data>
 </root>

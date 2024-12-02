@@ -30,6 +30,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
     private readonly int _selectedLevel;
     private readonly SpellLevelData? _spellLevelData;
     private readonly BreedData? _breedData;
+    private readonly BreedData? _gladiatroolBreedData;
     private readonly IncarnationData? _incarnationData;
     private readonly CultureInfo? _culture;
 
@@ -40,6 +41,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
         _selectedLevel = selectedLevel;
         _spellLevelData = spell.GetSpellLevelData(selectedLevel);
         _breedData = spell.GetBreedData();
+        _gladiatroolBreedData = spell.GetGladiatroolBreedData();
         _incarnationData = spell.GetIncarnationData();
         _culture = culture;
     }
@@ -216,6 +218,11 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
         if (_breedData is not null)
         {
             yield return BreedComponentsBuilder.BreedButtonBuilder(_breedData, _culture);
+        }
+
+        if (_gladiatroolBreedData is not null)
+        {
+            yield return BreedComponentsBuilder.GladiatroolBreedButtonBuilder(_gladiatroolBreedData, true, _culture);
         }
 
         if (_incarnationData is not null)

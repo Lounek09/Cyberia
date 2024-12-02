@@ -32,6 +32,7 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
     private static readonly FrozenDictionary<string, Func<IServiceProvider, int, CultureInfo?, string[], ICustomMessageBuilder?>> s_factory = new Dictionary<string, Func<IServiceProvider, int, CultureInfo?, string[], ICustomMessageBuilder?>>()
     {
         { BreedMessageBuilder.PacketHeader, BreedMessageBuilder.Create },
+        { GladiatroolBreedMessageBuilder.PacketHeader, GladiatroolBreedMessageBuilder.Create },
         { CraftMessageBuilder.PacketHeader, CraftMessageBuilder.Create },
         { PaginatedCraftMessageBuilder.PacketHeader, PaginatedCraftMessageBuilder.Create },
         { HouseMessageBuilder.PacketHeader, HouseMessageBuilder.Create },

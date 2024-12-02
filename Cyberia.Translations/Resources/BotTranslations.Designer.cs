@@ -1153,6 +1153,15 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gladiatrool.
+        /// </summary>
+        internal static string Gladiatrool {
+            get {
+                return ResourceManager.GetString("Gladiatrool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to House not found..
         /// </summary>
         internal static string House_NotFound {

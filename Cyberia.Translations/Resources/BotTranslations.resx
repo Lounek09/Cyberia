@@ -619,4 +619,7 @@ To escape at 100%, you will need at minimum #4 agi.</value>
   <data name="Embed.Field.Effects.Content.None" xml:space="preserve">
     <value>None</value>
   </data>
+  <data name="Gladiatrool" xml:space="preserve">
+    <value>Gladiatrool</value>
+  </data>
 </root>

@@ -95,8 +95,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
             embed.WithDescription(string.IsNullOrEmpty(_itemData.Description) ? string.Empty : Formatter.Italic(_itemData.Description.ToString(_culture)))
                 .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128))
                 .AddField(Translation.Get<BotTranslations>("Embed.Field.Level.Title", _culture), _itemData.Level.ToString(), true)
-                .AddField(
-                    Translation.Get<BotTranslations>("Embed.Field.ItemType.Title", _culture), _itemData.GetItemTypeName(_culture), true)
+                .AddField(Translation.Get<BotTranslations>("Embed.Field.ItemType.Title", _culture), _itemData.GetItemTypeName(_culture), true)
                 .AddEmptyField(true);
 
             var effects = _incarnationData.GetRealEffects();

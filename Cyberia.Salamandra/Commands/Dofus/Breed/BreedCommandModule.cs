@@ -32,7 +32,10 @@ public sealed class BreedCommandModule
         [Parameter(BreedInteractionLocalizer.BreedId_ParameterName), Description(BreedInteractionLocalizer.BreedId_ParameterDescription)]
         [InteractionLocalizer<BreedInteractionLocalizer>]
         [SlashAutoCompleteProvider<BreedAutocompleteProvider>]
-        int breedId)
+        int breedId,
+        [Parameter(BreedInteractionLocalizer.Gladiatrool_ParameterName), Description(BreedInteractionLocalizer.Gladiatrool_ParameterDescription)]
+        [InteractionLocalizer<BreedInteractionLocalizer>]
+        bool gladiatrool = false)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
@@ -44,7 +47,10 @@ public sealed class BreedCommandModule
             return;
         }
 
-        await ctx.RespondAsync(await new BreedMessageBuilder(_embedBuilderService, breedData, culture)
-            .BuildAsync<DiscordInteractionResponseBuilder>());
+        var message = gladiatrool
+            ? await new GladiatroolBreedMessageBuilder(_embedBuilderService, breedData, culture).BuildAsync<DiscordInteractionResponseBuilder>()
+            : await new BreedMessageBuilder(_embedBuilderService, breedData, culture).BuildAsync<DiscordInteractionResponseBuilder>();
+        
+        await ctx.RespondAsync(message);
     }
 }

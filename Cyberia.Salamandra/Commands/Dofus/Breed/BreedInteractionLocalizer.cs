@@ -12,6 +12,9 @@ public sealed class BreedInteractionLocalizer : InteractionLocalizer
     public const string BreedId_ParameterName = "name";
     public const string BreedId_ParameterDescription = "Name of the class.";
 
+    public const string Gladiatrool_ParameterName = "gladiatrool";
+    public const string Gladiatrool_ParameterDescription = "Display the gladiatrool information.";
+
     protected override IReadOnlyDictionary<DiscordLocale, string> InternalTranslate(string fullSymbolName)
     {
         if (fullSymbolName.Equals(CommandName + c_name))
@@ -51,6 +54,26 @@ public sealed class BreedInteractionLocalizer : InteractionLocalizer
                 { DiscordLocale.en_US, BreedId_ParameterDescription },
                 { DiscordLocale.en_GB, BreedId_ParameterDescription },
                 { DiscordLocale.fr, "Nom de la classe." }
+            };
+        }
+
+        if (fullSymbolName.Equals(CommandName + c_parameters + Gladiatrool_ParameterName + c_name))
+        {
+            return new Dictionary<DiscordLocale, string>
+            {
+                { DiscordLocale.en_US, Gladiatrool_ParameterName },
+                { DiscordLocale.en_GB, Gladiatrool_ParameterName },
+                { DiscordLocale.fr, "gladiatrool" }
+            };
+        }
+
+        if (fullSymbolName.Equals(CommandName + c_parameters + Gladiatrool_ParameterName + c_description))
+        {
+            return new Dictionary<DiscordLocale, string>
+            {
+                { DiscordLocale.en_US, Gladiatrool_ParameterDescription },
+                { DiscordLocale.en_GB, Gladiatrool_ParameterDescription },
+                { DiscordLocale.fr, "Affiche les informations du gladiatrool." }
             };
         }
 

@@ -21,7 +21,7 @@ namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 
 public sealed class BreedMessageBuilder : ICustomMessageBuilder
 {
-    public const string PacketHeader = "G";
+    public const string PacketHeader = "B";
     public const int PacketVersion = 1;
 
     private readonly EmbedBuilderService _embedBuilderService;
@@ -164,6 +164,8 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
+        yield return BreedComponentsBuilder.GladiatroolBreedButtonBuilder(_breedData, false, _culture);
+
         if (_specialSpellData is not null)
         {
             yield return SpellComponentsBuilder.SpellButtonBuilder(_specialSpellData, _culture);

@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api;
 using Cyberia.Api.Data;
+using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Data.Items;
@@ -8,6 +9,7 @@ using Cyberia.Api.Data.ItemStats;
 using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Templates;
+using Cyberia.Salamandra.Commands.Dofus.Breed;
 using Cyberia.Salamandra.Commands.Dofus.Craft;
 using Cyberia.Salamandra.Commands.Dofus.Incarnation;
 using Cyberia.Salamandra.Commands.Dofus.ItemSet;
@@ -39,6 +41,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
     private readonly ItemStatsData? _itemStatsData;
     private readonly PetData? _petData;
     private readonly CraftData? _craftData;
+    private readonly BreedData? _gladiatroolBreedData;
     private readonly IncarnationData? _incarnationData;
     private readonly int _quantity;
     private readonly CultureInfo? _culture;
@@ -52,6 +55,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         _itemStatsData = itemData.GetItemStatsData();
         _petData = itemData.GetPetData();
         _craftData = itemData.GetCraftData();
+        _gladiatroolBreedData = itemData.GetGladiatroolBreedData();
         _incarnationData = itemData.GetIncarnationData();
         _quantity = quantity;
         _culture = culture;
@@ -201,6 +205,11 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         if (_itemSetData is not null)
         {
             yield return ItemSetComponentsBuilder.ItemSetButtonBuilder(_itemSetData, _culture);
+        }
+
+        if (_gladiatroolBreedData is not null)
+        {
+            yield return BreedComponentsBuilder.GladiatroolBreedButtonBuilder(_gladiatroolBreedData, true, _culture);
         }
 
         if (_incarnationData is not null)

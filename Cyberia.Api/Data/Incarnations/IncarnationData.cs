@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Managers;
 using Cyberia.Langzilla.Enums;
@@ -83,10 +82,7 @@ public sealed class IncarnationData : IDofusData<int>
             var itemStatsData = itemData.GetItemStatsData();
             if (itemStatsData is not null)
             {
-                var effects = itemStatsData.Effects.Where(x => x is not MarkNotTradableEffect).ToList();
-                effects.AddRange(Effects);
-
-                return effects;
+                return Effects.Concat(itemStatsData.Effects).ToList();
             }
         }
 

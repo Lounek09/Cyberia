@@ -16,4 +16,17 @@ public static class BreedComponentsBuilder
             breedData.Name.ToString(culture),
             disable);
     }
+
+    public static DiscordButtonComponent GladiatroolBreedButtonBuilder(BreedData breedData, bool displayBreedName, CultureInfo? culture, bool disable = false)
+    {
+        var label = displayBreedName
+            ? $"{breedData.Name.ToString(culture)} - {Translation.Get<BotTranslations>("Gladiatrool", culture)}"
+            : Translation.Get<BotTranslations>("Gladiatrool", culture);
+
+        return new DiscordButtonComponent(
+            DiscordButtonStyle.Success,
+            GladiatroolBreedMessageBuilder.GetPacket(breedData.Id),
+            label,
+            disable);
+    }
 }
