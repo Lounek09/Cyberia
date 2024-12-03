@@ -46,7 +46,7 @@ public abstract class DofusRepository
 
         repository.LoadCustomData();
 
-        foreach (var language in Enum.GetValues<Language>())
+        foreach (var language in DofusApi.Config.SupportedLanguages)
         {
             if (language == DofusApi.Config.BaseLanguage)
             {
