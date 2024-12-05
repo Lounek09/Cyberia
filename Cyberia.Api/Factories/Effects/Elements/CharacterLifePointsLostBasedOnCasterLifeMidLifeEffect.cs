@@ -4,15 +4,15 @@ using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record CharacterLifePointsLostBasedOnCasterLifeMidLifeEffect : MinMaxEffect
+public sealed record CharacterLifePointsLostBasedOnCasterLifeMidlifeEffect : MinMaxEffect
 {
-    private CharacterLifePointsLostBasedOnCasterLifeMidLifeEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
+    private CharacterLifePointsLostBasedOnCasterLifeMidlifeEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
         : base(id, duration, probability, criteria, effectArea, min, max)
     {
 
     }
 
-    internal static CharacterLifePointsLostBasedOnCasterLifeMidLifeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterLifePointsLostBasedOnCasterLifeMidlifeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }

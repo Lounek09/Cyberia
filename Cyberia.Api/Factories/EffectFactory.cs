@@ -281,7 +281,7 @@ public static class EffectFactory
             { 669, IncarnationEffect.Create },
             { 670, CharacterLifePointsLostBasedOnCasterLifeReducedByCasterEffect.Create },
             { 671, CharacterLifePointsLostBasedOnCasterLifeNotReducedEffect.Create },
-            { 672, CharacterLifePointsLostBasedOnCasterLifeMidLifeEffect.Create },
+            { 672, CharacterLifePointsLostBasedOnCasterLifeMidlifeEffect.Create },
             { 699, CharacterReferencementEffect.Create },
             { 700, ItemChangeEffectEffect.Create }, //Check params and description
             { 701, ItemAddEffectEffect.Create },
@@ -448,7 +448,9 @@ public static class EffectFactory
             { 2170, CharacterStealCriticalHitEffect.Create },
             { 2171, CharacterLifePointsWinFromBestElement.Create },
             { 2172, GladiatroolIncreaseSpellLevelEffect.Create },
-            { 2173, GladiatroolChangeSpellToBestElementEffect.Create }
+            { 2173, GladiatroolChangeSpellToBestElementEffect.Create },
+            { 2174, CharacterLifePointsLostBasedOnCasterLifeMidlifeFromEarthEffect.Create },
+            { 2175, CharacterLifePointsLostBasedOnCasterLifeMidlifeFromBestElementEffect.Create }
         }.ToFrozenDictionary();
 
     /// <summary>
