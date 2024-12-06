@@ -62,11 +62,11 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
     private static readonly FrozenDictionary<string, Func<IServiceProvider, int, CultureInfo?, ReadOnlySpan<string>, ICustomMessageBuilder?>>
         .AlternateLookup<ReadOnlySpan<char>> s_factoryLookup = s_factory.GetAlternateLookup<ReadOnlySpan<char>>();
 
-    private readonly IServiceProvider _serviceProvider;
-    private readonly CultureService _cultureService;
-
     [GeneratedRegex(@$"{PacketFormatter.SelectComponentHeader}\d+", RegexOptions.Compiled)]
     private static partial Regex SelectComponentPacketRegex();
+
+    private readonly IServiceProvider _serviceProvider;
+    private readonly CultureService _cultureService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InteractionsEventHandler"/> class.
