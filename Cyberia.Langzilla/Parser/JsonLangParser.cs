@@ -21,7 +21,7 @@ public sealed class JsonLangParser : IDisposable
     private readonly StreamReader _streamReader;
     private readonly StringBuilder _builder;
     private readonly Dictionary<string, JsonLangPartBuilder> _partBuilders;
-    private readonly Dictionary<string, JsonLangPartBuilder>.AlternateLookup<ReadOnlySpan<char>> _alternatePartBuilders;
+    private readonly Dictionary<string, JsonLangPartBuilder>.AlternateLookup<ReadOnlySpan<char>> _partBuildersLookup;
     private bool _disposed;
 
     /// <summary>
@@ -34,7 +34,7 @@ public sealed class JsonLangParser : IDisposable
         _streamReader = new(_fileStream);
         _builder = new();
         _partBuilders = [];
-        _alternatePartBuilders = _partBuilders.GetAlternateLookup<ReadOnlySpan<char>>();
+        _partBuildersLookup = _partBuilders.GetAlternateLookup<ReadOnlySpan<char>>();
     }
 
     /// <summary>
@@ -199,10 +199,10 @@ public sealed class JsonLangParser : IDisposable
     /// <returns>The builder.</returns>
     private JsonLangPartBuilder GetOrCreateLangPartBuilder(ReadOnlySpan<char> name, ReadOnlySpan<char> truncatedKeySegment)
     {
-        if (!_alternatePartBuilders.TryGetValue(name, out var builder))
+        if (!_partBuildersLookup.TryGetValue(name, out var builder))
         {
             builder = JsonLangPartBuilder.Create(name, truncatedKeySegment);
-            _alternatePartBuilders[name] = builder;
+            _partBuildersLookup[name] = builder;
         }
 
         return builder;

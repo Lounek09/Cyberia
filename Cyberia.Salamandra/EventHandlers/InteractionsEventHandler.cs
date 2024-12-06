@@ -30,7 +30,11 @@ namespace Cyberia.Salamandra.EventHandlers;
 /// </summary>
 public sealed partial class InteractionsEventHandler : IEventHandler<ComponentInteractionCreatedEventArgs>
 {
-    private static readonly FrozenDictionary<string, Func<IServiceProvider, int, CultureInfo?, ReadOnlySpan<string>, ICustomMessageBuilder?>> s_factory = new Dictionary<string, Func<IServiceProvider, int, CultureInfo?, ReadOnlySpan<string>, ICustomMessageBuilder?>>()
+
+    /// <summary>
+    /// A dictionary mapping the packet header to the factory method to create the message.
+    /// </summary>
+    private static readonly FrozenDictionary<string, Func<IServiceProvider, int, CultureInfo?, ReadOnlySpan<string>, ICustomMessageBuilder?>> s_factories = new Dictionary<string, Func<IServiceProvider, int, CultureInfo?, ReadOnlySpan<string>, ICustomMessageBuilder?>>()
     {
         { BreedMessageBuilder.PacketHeader, BreedMessageBuilder.Create },
         { GladiatroolBreedMessageBuilder.PacketHeader, GladiatroolBreedMessageBuilder.Create },
@@ -60,7 +64,7 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
     }.ToFrozenDictionary();
 
     private static readonly FrozenDictionary<string, Func<IServiceProvider, int, CultureInfo?, ReadOnlySpan<string>, ICustomMessageBuilder?>>
-        .AlternateLookup<ReadOnlySpan<char>> s_factoryLookup = s_factory.GetAlternateLookup<ReadOnlySpan<char>>();
+        .AlternateLookup<ReadOnlySpan<char>> s_factoriesLookup = s_factories.GetAlternateLookup<ReadOnlySpan<char>>();
 
     [GeneratedRegex(@$"{PacketFormatter.SelectComponentHeader}\d+", RegexOptions.Compiled)]
     private static partial Regex SelectComponentPacketRegex();
@@ -132,7 +136,7 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
         }
 
         var header = packet[..indexOfSeparator];
-        if (!s_factoryLookup.TryGetValue(header, out builder))
+        if (!s_factoriesLookup.TryGetValue(header, out builder))
         {
             return false;
         }

@@ -17,6 +17,8 @@ namespace Cyberia.Api.Factories;
 /// </summary>
 public static class CriterionFactory
 {
+    private const char c_parameterSeparator = ',';
+
     /// <summary>
     /// A dictionary mapping criterion identifiers to their factory methods.
     /// </summary>
@@ -105,9 +107,9 @@ public static class CriterionFactory
         }.ToFrozenDictionary();
 
     /// <summary>
-    /// Creates an <see cref="ICriterion"/>.
+    /// Creates an <see cref="ICriterion"/> from the specified criterion id.
     /// </summary>
-    /// <param name="id">The unique identifier of the criterion to create.</param>
+    /// <param name="id">The id of the criterion to create.</param>
     /// <param name="operator">The operator character indicating the type of comparison or operation.</param>
     /// <param name="parameters">The parameters of the criterion.</param>
     /// <returns>The created <see cref="ICriterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
@@ -143,7 +145,7 @@ public static class CriterionFactory
     /// </summary>
     /// <param name="compressedCriterion">The compressed string representation of the criterion.</param>
     /// <returns>The created <see cref="ICriterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
-    public static ICriterion Create(string compressedCriterion)
+    public static ICriterion Create(ReadOnlySpan<char> compressedCriterion)
     {
         if (compressedCriterion.Length < 4)
         {
@@ -153,9 +155,27 @@ public static class CriterionFactory
             return new ErroredCriterion(compressedCriterionStr);
         }
 
-        var id = compressedCriterion[0..2];
+        var id = compressedCriterion[0..2].ToString();
         var @operator = compressedCriterion[2];
-        var parameters = compressedCriterion[3..].Split(',');
+
+        compressedCriterion = compressedCriterion[3..];
+        if (compressedCriterion.IsEmpty)
+        {
+            return Create(id, @operator);
+        }
+
+        var parameterSize = compressedCriterion.Count(c_parameterSeparator) + 1;
+        if (parameterSize == 1)
+        {
+            return Create(id, @operator, compressedCriterion.ToString());
+        }
+
+        Span<string> parameters = new string[parameterSize];
+        var index = 0;
+        foreach (var range in compressedCriterion.Split(c_parameterSeparator))
+        {
+            parameters[index++] = compressedCriterion[range].ToString();
+        }
 
         return Create(id, @operator, parameters);
     }
