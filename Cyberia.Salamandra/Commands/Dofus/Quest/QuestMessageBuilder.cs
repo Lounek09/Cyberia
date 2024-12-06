@@ -40,7 +40,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
         _culture = culture;
     }
 
-    public static QuestMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static QuestMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&

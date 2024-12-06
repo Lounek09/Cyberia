@@ -36,7 +36,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
         _culture = culture;
     }
 
-    public static RuneItemMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static RuneItemMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&

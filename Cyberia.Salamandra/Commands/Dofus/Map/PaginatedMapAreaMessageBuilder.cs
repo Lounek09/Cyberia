@@ -35,7 +35,7 @@ public sealed class PaginatedMapAreaMessageBuilder : PaginatedMessageBuilder<Map
 
     }
 
-    public static PaginatedMapAreaMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static PaginatedMapAreaMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&

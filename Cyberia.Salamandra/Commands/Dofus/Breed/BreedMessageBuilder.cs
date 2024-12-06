@@ -41,7 +41,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
         _culture = culture;
     }
 
-    public static BreedMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static BreedMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&

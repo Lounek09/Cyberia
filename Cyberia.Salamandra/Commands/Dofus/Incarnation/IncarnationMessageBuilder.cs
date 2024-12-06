@@ -43,7 +43,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
         _culture = culture;
     }
 
-    public static IncarnationMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static IncarnationMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&

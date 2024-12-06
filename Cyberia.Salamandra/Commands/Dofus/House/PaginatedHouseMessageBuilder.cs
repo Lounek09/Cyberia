@@ -38,7 +38,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
         _searchCategory = searchCategory;
     }
 
-    public static PaginatedHouseMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static PaginatedHouseMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&

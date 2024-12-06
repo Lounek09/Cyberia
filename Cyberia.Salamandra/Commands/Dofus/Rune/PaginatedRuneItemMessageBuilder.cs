@@ -38,7 +38,7 @@ public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<It
         _quantity = quantity;
     }
 
-    public static PaginatedRuneItemMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static PaginatedRuneItemMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&

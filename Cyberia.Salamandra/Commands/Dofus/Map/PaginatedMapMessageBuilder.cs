@@ -38,7 +38,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
         _searchCategory = searchCategory;
     }
 
-    public static PaginatedMapMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static PaginatedMapMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&

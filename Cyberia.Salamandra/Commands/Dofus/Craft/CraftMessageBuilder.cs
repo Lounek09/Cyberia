@@ -40,7 +40,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
         _culture = culture;
     }
 
-    public static CraftMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static CraftMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&

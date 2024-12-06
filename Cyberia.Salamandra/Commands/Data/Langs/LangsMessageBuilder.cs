@@ -29,7 +29,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         _repository = repository;
     }
 
-    public static LangsMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? _, string[] parameters)
+    public static LangsMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? _, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&

@@ -13,6 +13,11 @@ public static class PacketFormatter
     public const char Separator = '|';
 
     /// <summary>
+    /// The header for a select component packet.
+    /// </summary>
+    public const string SelectComponentHeader = "SELECT";
+
+    /// <summary>
     /// Creates a packet that represents an action.
     /// </summary>
     /// <param name="header">The header of the packet.</param>
@@ -43,7 +48,7 @@ public static class PacketFormatter
     /// <returns>The formatted packet as a string.</returns>
     public static string Select(int uniqueIndex)
     {
-        return $"SELECT{uniqueIndex}";
+        return $"{SelectComponentHeader}{uniqueIndex}";
     }
 }
 

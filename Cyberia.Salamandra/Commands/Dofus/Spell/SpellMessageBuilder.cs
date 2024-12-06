@@ -46,7 +46,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
         _culture = culture;
     }
 
-    public static SpellMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static SpellMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&

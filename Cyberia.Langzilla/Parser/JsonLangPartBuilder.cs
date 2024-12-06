@@ -11,7 +11,6 @@ internal sealed class JsonLangPartBuilder
 {
     private static readonly ArrayPool<char> s_arrayPool = ArrayPool<char>.Shared;
 
-    private readonly int _nameLength;
     private readonly JsonValueKind _valueKind;
     private readonly StringBuilder _builder;
 
@@ -22,7 +21,6 @@ internal sealed class JsonLangPartBuilder
     /// <param name="valueKind">Indicates whether the part to build should be formatted as an array.</param>
     private JsonLangPartBuilder(ReadOnlySpan<char> name, JsonValueKind valueKind)
     {
-        _nameLength = name.Length;
         _valueKind = valueKind;
         _builder = new();
 

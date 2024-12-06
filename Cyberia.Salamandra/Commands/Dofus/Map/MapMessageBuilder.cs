@@ -36,7 +36,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
         _culture = culture;
     }
 
-    public static MapMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static MapMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&

@@ -44,7 +44,7 @@ public sealed class GladiatroolBreedMessageBuilder : ICustomMessageBuilder
         _culture = culture;
     }
 
-    public static GladiatroolBreedMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static GladiatroolBreedMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 0 &&

@@ -19,6 +19,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -29,7 +30,7 @@ namespace Cyberia.Salamandra.EventHandlers;
 /// </summary>
 public sealed partial class InteractionsEventHandler : IEventHandler<ComponentInteractionCreatedEventArgs>
 {
-    private static readonly FrozenDictionary<string, Func<IServiceProvider, int, CultureInfo?, string[], ICustomMessageBuilder?>> s_factory = new Dictionary<string, Func<IServiceProvider, int, CultureInfo?, string[], ICustomMessageBuilder?>>()
+    private static readonly FrozenDictionary<string, Func<IServiceProvider, int, CultureInfo?, ReadOnlySpan<string>, ICustomMessageBuilder?>> s_factory = new Dictionary<string, Func<IServiceProvider, int, CultureInfo?, ReadOnlySpan<string>, ICustomMessageBuilder?>>()
     {
         { BreedMessageBuilder.PacketHeader, BreedMessageBuilder.Create },
         { GladiatroolBreedMessageBuilder.PacketHeader, GladiatroolBreedMessageBuilder.Create },
@@ -58,11 +59,14 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
         { PaginatedSpellMessageBuilder.PacketHeader, PaginatedSpellMessageBuilder.Create }
     }.ToFrozenDictionary();
 
-    [GeneratedRegex(@"SELECT\d+", RegexOptions.Compiled)]
-    private static partial Regex SelectComponentPacketRegex();
+    private static readonly FrozenDictionary<string, Func<IServiceProvider, int, CultureInfo?, ReadOnlySpan<string>, ICustomMessageBuilder?>>
+        .AlternateLookup<ReadOnlySpan<char>> s_factoryLookup = s_factory.GetAlternateLookup<ReadOnlySpan<char>>();
 
     private readonly IServiceProvider _serviceProvider;
     private readonly CultureService _cultureService;
+
+    [GeneratedRegex(@$"{PacketFormatter.SelectComponentHeader}\d+", RegexOptions.Compiled)]
+    private static partial Regex SelectComponentPacketRegex();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InteractionsEventHandler"/> class.
@@ -85,39 +89,90 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
         var interaction = eventArgs.Interaction;
         var culture = await _cultureService.GetCultureAsync(interaction);
 
-        var response = new DiscordInteractionResponseBuilder().AsEphemeral();
-
-        var decomposedPacket = (SelectComponentPacketRegex().IsMatch(eventArgs.Id) ? eventArgs.Values[0] : eventArgs.Id)
-            .Split(PacketFormatter.Separator, StringSplitOptions.RemoveEmptyEntries);
-
-        if (decomposedPacket.Length < 2)
+        ReadOnlySpan<char> packet = SelectComponentPacketRegex().IsMatch(eventArgs.Id) ? eventArgs.Values[0] : eventArgs.Id;
+        if (!TryParsePacket(packet, out var builder, out var version, out var parameters))
         {
-            response.WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture));
-            await interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
+            await SendErrorResponse(interaction, culture);
             return;
         }
-
-        var header = decomposedPacket[0];
-
-        if (!s_factory.TryGetValue(header, out var builder))
-        {
-            response.WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture));
-            await interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
-            return;
-        }
-
-        var version = int.Parse(decomposedPacket[1]);
-        var parameters = decomposedPacket.Length > 2 ? decomposedPacket[2..] : [];
 
         var message = builder(_serviceProvider, version, culture, parameters);
         if (message is null)
         {
-            response.WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture));
-            await interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
+            await SendErrorResponse(interaction, culture);
             return;
         }
 
-        response = await message.BuildAsync<DiscordInteractionResponseBuilder>();
+        var response = await message.BuildAsync<DiscordInteractionResponseBuilder>();
         await interaction.CreateResponseAsync(DiscordInteractionResponseType.UpdateMessage, response);
+    }
+
+    /// <summary>
+    /// Tries to parse the interaction packet.
+    /// </summary>
+    /// <param name="packet">The packet to parse.</param>   
+    /// <param name="builder">The builder to use to create the message.</param>
+    /// <param name="version">The version of the packet.</param>
+    /// <param name="parameters">The parameters of the packet.</param>
+    /// <returns><see langword="true"/> if the packet was parsed successfully; otherwise, <see langword="false"/>.</returns>
+    private static bool TryParsePacket(
+        ReadOnlySpan<char> packet,
+        [NotNullWhen(true)] out Func<IServiceProvider, int, CultureInfo?, ReadOnlySpan<string>, ICustomMessageBuilder?>? builder,
+        out int version,
+        out Span<string> parameters)
+    {
+        builder = null;
+        version = 0;
+        parameters = Span<string>.Empty;
+
+        var indexOfSeparator = packet.IndexOf(PacketFormatter.Separator);
+        if (indexOfSeparator == -1)
+        {
+            return false;
+        }
+
+        var header = packet[..indexOfSeparator];
+        if (!s_factoryLookup.TryGetValue(header, out builder))
+        {
+            return false;
+        }
+
+        packet = packet[(indexOfSeparator + 1)..];
+
+        indexOfSeparator = packet.IndexOf(PacketFormatter.Separator);
+        if (indexOfSeparator == -1 || !int.TryParse(packet[..indexOfSeparator], out version))
+        {
+            return false;
+        }
+
+        packet = packet[(indexOfSeparator + 1)..];
+
+        if (!packet.IsEmpty)
+        {
+            var parameterSize = packet.Count(PacketFormatter.Separator) + 1;
+            parameters = new string[parameterSize];
+
+            var index = 0;
+            foreach (var range in packet.Split(PacketFormatter.Separator))
+            {
+                parameters[index++] = packet[range].ToString();
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Sends an error response when the interaction packet is invalid.
+    /// </summary>
+    /// <param name="interaction">The interaction to respond to.</param>
+    /// <param name="culture">The culture to use for the response.</param>
+    private static async Task SendErrorResponse(DiscordInteraction interaction, CultureInfo culture)
+    {
+        var response = new DiscordInteractionResponseBuilder()
+            .WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture))
+            .AsEphemeral();
+
+        await interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
     }
 }

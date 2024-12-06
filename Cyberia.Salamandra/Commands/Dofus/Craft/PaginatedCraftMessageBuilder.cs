@@ -38,7 +38,7 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
         _quantity = quantity;
     }
 
-    public static PaginatedCraftMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static PaginatedCraftMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 2 &&

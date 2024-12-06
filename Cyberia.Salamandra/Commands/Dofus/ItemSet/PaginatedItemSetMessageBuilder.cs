@@ -35,7 +35,7 @@ public sealed class PaginatedItemSetMessageBuilder : PaginatedMessageBuilder<Ite
 
     }
 
-    public static PaginatedItemSetMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, string[] parameters)
+    public static PaginatedItemSetMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
