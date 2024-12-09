@@ -22,7 +22,7 @@ html, body {
     flex-direction: column;
     background-color: var(--main-bg-color);
     color: var(--main-text-color);
-    font-family: monospace;
+    font-family: Consolas;
     font-size: calc(7px + 1vmin);
 }
 
