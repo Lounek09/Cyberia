@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
-public abstract record SpellModifierEffect : Effect
+public abstract record SpellModifierEffect : Effect, ISpellEffect
 {
     public int SpellId { get; init; }
     public int Value { get; init; }

@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
-public abstract record GlyphEffect : Effect
+public abstract record GlyphEffect : Effect, ISpellEffect
 {
     public int SpellId { get; init; }
     public int Level { get; init; }

@@ -40,24 +40,25 @@ public static class Emojis
         var emoji = effect switch
         {
             CharacterLearnEmoteEffect characterLearnEmoteEffect => Emote(characterLearnEmoteEffect.GetEmoteData()),
-            IStateEffect stateEffect => State(stateEffect.GetStateData()),
-            IJobEffect jobEffect => Job(jobEffect.GetJobData()),
+            RideDetailsEffect => Hand,
             ICharacteristicEffect characteristicEffect => EmojisService.GetEmojiStringByName($"effect_{characteristicEffect.CharacteristicId}"),
+            IJobEffect jobEffect => Job(jobEffect.GetJobData()),
+            IStateEffect stateEffect => State(stateEffect.GetStateData()),
+            ISpellEffect or ISpellLevelEffect => Wand,
             _ => null
         };
 
-        if (!string.IsNullOrEmpty(emoji))
+        if (emoji is null)
         {
-            return emoji;
+            var effectData = effect.GetEffectData();
+            if (effectData is null)
+            {
+                return Empty;
+            }
+
+            emoji = EmojisService.GetEmojiStringByName($"effect_{effectData.GfxId}");
         }
 
-        var effectData = effect.GetEffectData();
-        if (effectData is null)
-        {
-            return Empty;
-        }
-
-        emoji = EmojisService.GetEmojiStringByName($"effect_{effectData.GfxId}");
         if (string.IsNullOrEmpty(emoji))
         {
             return Empty;
@@ -195,20 +196,22 @@ public static class Emojis
     }
 
     // Others
-    public static string HealthPoint => EmojisService.GetEmojiStringByName("health");
     public static string ActionPoint => EmojisService.GetEmojiStringByName("effect_1");
-    public static string MovementPoint => EmojisService.GetEmojiStringByName("effect_23");
+    public static string AirResistance => EmojisService.GetEmojiStringByName("effect_36");
     public static string ApResistance => EmojisService.GetEmojiStringByName("ap_resistance");
+    public static string Dungeon => EmojisService.GetEmojiStringByName("dungeon");
+    public static string EarthResistance => EmojisService.GetEmojiStringByName("effect_33");
+    public static string Empty => EmojisService.GetEmojiStringByName("empty");
+    public static string FireResistance => EmojisService.GetEmojiStringByName("effect_34");
+    public static string Hand => EmojisService.GetEmojiStringByName("hand");
+    public static string HealthPoint => EmojisService.GetEmojiStringByName("health");
+    public static string House => EmojisService.GetEmojiStringByName("house");
+    public static string Kamas => EmojisService.GetEmojiStringByName("kamas");
+    public static string MovementPoint => EmojisService.GetEmojiStringByName("effect_23");
     public static string MpResistance => EmojisService.GetEmojiStringByName("mp_resistance");
     public static string NeutralResistance => EmojisService.GetEmojiStringByName("effect_37");
-    public static string EarthResistance => EmojisService.GetEmojiStringByName("effect_33");
-    public static string FireResistance => EmojisService.GetEmojiStringByName("effect_34");
-    public static string WaterResistance => EmojisService.GetEmojiStringByName("effect_35");
-    public static string AirResistance => EmojisService.GetEmojiStringByName("effect_36");
-    public static string Empty => EmojisService.GetEmojiStringByName("empty");
-    public static string House => EmojisService.GetEmojiStringByName("house");
-    public static string Dungeon => EmojisService.GetEmojiStringByName("dungeon");
-    public static string Kamas => EmojisService.GetEmojiStringByName("kamas");
-    public static string Xp => EmojisService.GetEmojiStringByName("xp");
     public static string Unknown => EmojisService.GetEmojiStringByName("unknown");
+    public static string Wand => EmojisService.GetEmojiStringByName("wand");
+    public static string WaterResistance => EmojisService.GetEmojiStringByName("effect_35");
+    public static string Xp => EmojisService.GetEmojiStringByName("xp");
 }

@@ -196,6 +196,7 @@ public sealed class EmojisService
         await CreateEmojiAsync("dungeon", $"{baseRoute}/others/dungeon.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("empty", $"{baseRoute}/others/empty.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("false", $"{baseRoute}/others/false.png", emojis, checkedEmojiRoutes);
+        await CreateEmojiAsync("hand", $"{baseRoute}/others/hand.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("health", $"{baseRoute}/others/health.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("hourglass", $"{baseRoute}/others/hourglass.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("house", $"{baseRoute}/others/house.png", emojis, checkedEmojiRoutes);
@@ -205,6 +206,7 @@ public sealed class EmojisService
         await CreateEmojiAsync("repeatable_quest", $"{baseRoute}/others/repeatable_quest.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("true", $"{baseRoute}/others/true.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("unknown", $"{baseRoute}/others/unknown.png", emojis, checkedEmojiRoutes);
+        await CreateEmojiAsync("wand", $"{baseRoute}/others/wand.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("xp", $"{baseRoute}/others/xp.png", emojis, checkedEmojiRoutes);
 
         s_cachedEmojis = emojis.ToDictionary();

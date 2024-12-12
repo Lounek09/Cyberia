@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
-public abstract record TrapEffect : Effect
+public abstract record TrapEffect : Effect, ISpellEffect
 {
     public int SpellId { get; init; }
     public int Level { get; init; }

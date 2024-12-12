@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Templates;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record CharacterLearnSpellTemporaryEffect : Effect
+public sealed record CharacterLearnSpellTemporaryEffect : Effect, ISpellLevelEffect
 {
     public int SpellLevelId { get; init; }
 
