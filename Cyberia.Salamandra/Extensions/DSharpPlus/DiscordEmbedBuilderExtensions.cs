@@ -339,6 +339,11 @@ public static class DiscordEmbedBuilderExtensions
                 effectDescriptionBuilder.Append(effect.EffectArea.GetSize(culture));
             }
 
+            if (!effect.Dispellable)
+            {
+                effectDescriptionBuilder.Append(" -\\🔒");
+            }
+
             if (effect.Criteria.Count > 0)
             {
                 var criteriaParse = GetCriteriaDescription(effect.Criteria, culture: culture);
