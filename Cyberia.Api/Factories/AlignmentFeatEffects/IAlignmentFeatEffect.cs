@@ -13,7 +13,7 @@ public interface IAlignmentFeatEffect
     /// <summary>
     /// Gets the unique identifier of the alignment feat effect.
     /// </summary>
-    int Id { get; init; }
+    int Id { get; }
 
     /// <summary>
     /// Gets the alignment feat effect data.

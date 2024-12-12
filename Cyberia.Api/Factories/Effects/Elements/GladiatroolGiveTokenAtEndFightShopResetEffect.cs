@@ -11,17 +11,17 @@ public sealed record GladiatroolGiveTokenAtEndFightShopResetEffect : Effect
     public int MaxShopReset { get; init; }
     public int Quantity { get; init; }
 
-    private GladiatroolGiveTokenAtEndFightShopResetEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int currentShopResetDone, int maxShopReset, int quantity)
-        : base(id, duration, probability, criteria, effectArea)
+    private GladiatroolGiveTokenAtEndFightShopResetEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int currentShopResetDone, int maxShopReset, int quantity)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         CurrentShopResetDone = currentShopResetDone;
         MaxShopReset = maxShopReset;
         Quantity = quantity;
     }
 
-    internal static GladiatroolGiveTokenAtEndFightShopResetEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static GladiatroolGiveTokenAtEndFightShopResetEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

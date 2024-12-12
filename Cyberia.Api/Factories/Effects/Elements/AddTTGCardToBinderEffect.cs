@@ -10,15 +10,15 @@ public sealed record AddTTGCardToBinderEffect : Effect
 {
     public int TTGCardId { get; init; }
 
-    private AddTTGCardToBinderEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int ttgCardId)
-        : base(id, duration, probability, criteria, effectArea)
+    private AddTTGCardToBinderEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int ttgCardId)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         TTGCardId = ttgCardId;
     }
 
-    internal static AddTTGCardToBinderEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static AddTTGCardToBinderEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
     }
 
     public TTGCardData? GetTTGCardData()

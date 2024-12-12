@@ -8,10 +8,25 @@ namespace Cyberia.Utils.Extensions;
 public static class JsonElementExtensions
 {
     /// <summary>
-    /// Gets the integer value of the <see cref="JsonElement"/>, or the <see langword="default"/> value if it's not a number.
+    /// Gets the boolean value of the <see cref="JsonElement"/>.
     /// </summary>
     /// <param name="element">The JsonElement instance.</param>
-    /// <returns>The integer value.</returns>
+    /// <returns>The boolean value, or <see langword="default"/> if it's not a boolean.</returns>
+    public static bool GetBooleanOrDefault(this JsonElement element)
+    {
+        if (element.ValueKind is JsonValueKind.True)
+        {
+            return true;
+        }
+
+        return default;
+    }
+
+    /// <summary>
+    /// Gets the integer value of the <see cref="JsonElement"/>.
+    /// </summary>
+    /// <param name="element">The JsonElement instance.</param>
+    /// <returns>The integer value, or <see langword="default"/> if it's not an integer.</returns>
     public static int GetInt32OrDefault(this JsonElement element)
     {
         if (element.ValueKind is not JsonValueKind.Number)
@@ -28,10 +43,10 @@ public static class JsonElementExtensions
     }
 
     /// <summary>
-    /// Gets the long integer value of the <see cref="JsonElement"/>, or the <see langword="default"/> value if it's not a number.
+    /// Gets the long integer value of the <see cref="JsonElement"/>.
     /// </summary>
     /// <param name="element">The JsonElement instance.</param>
-    /// <returns>The long integer value.</returns>
+    /// <returns>The long integer value, or <see langword="default"/> if it's not a long integer.</returns>
     public static long GetInt64OrDefault(this JsonElement element)
     {
         if (element.ValueKind is not JsonValueKind.Number)
@@ -48,10 +63,10 @@ public static class JsonElementExtensions
     }
 
     /// <summary>
-    /// Gets the string value of the <see cref="JsonElement">, or <see cref="string.Empty"/> if it's not a string.
+    /// Gets the string value of the <see cref="JsonElement"/>.
     /// </summary>
     /// <param name="element">The JsonElement instance.</param>
-    /// <returns>The string value.</returns>
+    /// <returns>The string value or <see cref="string.Empty"/> if it's not a string.</returns>
     public static string GetStringOrEmpty(this JsonElement element)
     {
         if (element.ValueKind is not JsonValueKind.String)

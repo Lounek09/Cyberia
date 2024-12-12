@@ -10,15 +10,15 @@ public sealed record CharacterLearnSpellTemporaryEffect : Effect
 {
     public int SpellLevelId { get; init; }
 
-    private CharacterLearnSpellTemporaryEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellLevelId)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterLearnSpellTemporaryEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int spellLevelId)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         SpellLevelId = spellLevelId;
     }
 
-    internal static CharacterLearnSpellTemporaryEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterLearnSpellTemporaryEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
     }
 
     public SpellLevelData? GetSpellLevelData()

@@ -9,15 +9,15 @@ public sealed record ShowTextEffect : Effect
 {
     public string Value { get; init; }
 
-    private ShowTextEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, string value)
-        : base(id, duration, probability, criteria, effectArea)
+    private ShowTextEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, string value)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         Value = value;
     }
 
-    internal static ShowTextEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static ShowTextEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param4);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, parameters.Param4);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

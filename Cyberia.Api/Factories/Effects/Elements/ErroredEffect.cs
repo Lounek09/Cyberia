@@ -7,7 +7,7 @@ public sealed record ErroredEffect : Effect
     public string CompressedEffect { get; init; }
 
     internal ErroredEffect(string compressedEffect)
-        : base(0, 0, 0, [], EffectAreaFactory.Default)
+        : base(0, 0, 0, [], false, EffectAreaFactory.Default)
     {
         CompressedEffect = compressedEffect;
     }

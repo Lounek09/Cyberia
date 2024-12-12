@@ -13,7 +13,7 @@ public interface IQuestObjective
     /// <summary>
     /// Gets the data of the quest objective.
     /// </summary>
-    QuestObjectiveData QuestObjectiveData { get; init; }
+    QuestObjectiveData QuestObjectiveData { get; }
 
     /// <summary>
     /// Generates a human-readable description of the quest objective for the specified language.

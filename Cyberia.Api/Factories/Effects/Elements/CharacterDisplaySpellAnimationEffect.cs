@@ -9,15 +9,15 @@ public sealed record CharacterDisplaySpellAnimationEffect : Effect
 {
     public int GfxId { get; init; }
 
-    private CharacterDisplaySpellAnimationEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int gfxId)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterDisplaySpellAnimationEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int gfxId)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         GfxId = gfxId;
     }
 
-    internal static CharacterDisplaySpellAnimationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterDisplaySpellAnimationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

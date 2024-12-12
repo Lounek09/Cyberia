@@ -8,14 +8,14 @@ public sealed record CharacterBoostWaterElementPercentEffect : MinMaxEffect, IRu
 {
     public int RuneId { get; init; }
 
-    private CharacterBoostWaterElementPercentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
-        : base(id, duration, probability, criteria, effectArea, min, max)
+    private CharacterBoostWaterElementPercentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int min, int max)
+        : base(id, duration, probability, criteria, dispellable, effectArea, min, max)
     {
         RuneId = 30;
     }
 
-    internal static CharacterBoostWaterElementPercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterBoostWaterElementPercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }
 }

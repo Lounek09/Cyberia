@@ -11,16 +11,16 @@ public sealed record CharacterInventoryAddItemRandomNoCheckEffect : Effect
     public int ItemId { get; init; }
     public int Quantity { get; init; }
 
-    private CharacterInventoryAddItemRandomNoCheckEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemId, int quantity)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterInventoryAddItemRandomNoCheckEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int itemId, int quantity)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         ItemId = itemId;
         Quantity = quantity;
     }
 
-    internal static CharacterInventoryAddItemRandomNoCheckEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterInventoryAddItemRandomNoCheckEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3, (int)parameters.Param2);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3, (int)parameters.Param2);
     }
 
     public ItemData? GetItemData()

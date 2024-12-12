@@ -11,15 +11,15 @@ public sealed record GiveTTGCardFromRarityEffect : Effect
 {
     public TTGCardRarity Rarity { get; init; }
 
-    private GiveTTGCardFromRarityEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, TTGCardRarity rarity)
-        : base(id, duration, probability, criteria, effectArea)
+    private GiveTTGCardFromRarityEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, TTGCardRarity rarity)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         Rarity = rarity;
     }
 
-    internal static GiveTTGCardFromRarityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static GiveTTGCardFromRarityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (TTGCardRarity)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (TTGCardRarity)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

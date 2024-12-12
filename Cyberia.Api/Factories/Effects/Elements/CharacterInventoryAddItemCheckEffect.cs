@@ -14,17 +14,17 @@ public sealed record CharacterInventoryAddItemCheckEffect : Effect
     public int Quantity { get; init; }
     public GiveItemTarget Target { get; init; }
 
-    private CharacterInventoryAddItemCheckEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemId, int quantity, GiveItemTarget giveItemTarget)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterInventoryAddItemCheckEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int itemId, int quantity, GiveItemTarget giveItemTarget)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         ItemId = itemId;
         Quantity = quantity;
         Target = giveItemTarget;
     }
 
-    internal static CharacterInventoryAddItemCheckEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterInventoryAddItemCheckEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3, (int)parameters.Param2, (GiveItemTarget)parameters.Param1);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3, (int)parameters.Param2, (GiveItemTarget)parameters.Param1);
     }
 
     public ItemData? GetItemData()

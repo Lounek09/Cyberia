@@ -10,15 +10,15 @@ public sealed record QuestEndEffect : Effect
 {
     public int QuestId { get; init; }
 
-    private QuestEndEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int questId)
-        : base(id, duration, probability, criteria, effectArea)
+    private QuestEndEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int questId)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         QuestId = questId;
     }
 
-    internal static QuestEndEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static QuestEndEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
     }
 
     public QuestData? GetQuestData()

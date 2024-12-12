@@ -11,15 +11,15 @@ public sealed record CharacterReferencementEffect : Effect, IJobEffect
 {
     public int JobId { get; init; }
 
-    private CharacterReferencementEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int jobId)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterReferencementEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int jobId)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         JobId = jobId;
     }
 
-    internal static CharacterReferencementEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterReferencementEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1);
     }
 
     public JobData? GetJobData()

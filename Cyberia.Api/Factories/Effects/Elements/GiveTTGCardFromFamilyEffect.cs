@@ -10,15 +10,15 @@ public sealed record GiveTTGCardFromFamilyEffect : Effect
 {
     public int TTGFamilyId { get; init; }
 
-    private GiveTTGCardFromFamilyEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int ttgFamilyId)
-        : base(id, duration, probability, criteria, effectArea)
+    private GiveTTGCardFromFamilyEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int ttgFamilyId)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         TTGFamilyId = ttgFamilyId;
     }
 
-    internal static GiveTTGCardFromFamilyEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static GiveTTGCardFromFamilyEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
     }
 
     public TTGFamilyData? GetTTGFamilyData()

@@ -9,15 +9,15 @@ public sealed record CaptureRideEffect : Effect
 {
     public int CapturePercent { get; init; }
 
-    private CaptureRideEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int capturePercent)
-        : base(id, duration, probability, criteria, effectArea)
+    private CaptureRideEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int capturePercent)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         CapturePercent = capturePercent;
     }
 
-    internal static CaptureRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CaptureRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

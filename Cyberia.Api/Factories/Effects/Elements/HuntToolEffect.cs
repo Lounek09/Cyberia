@@ -8,8 +8,8 @@ public sealed record HuntToolEffect : ParameterlessEffect, IRuneGeneratorEffect
 {
     public int RuneId { get; init; }
 
-    private HuntToolEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
-        : base(id, duration, probability, criteria, effectArea)
+    private HuntToolEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         RuneId = 31;
     }
@@ -19,8 +19,8 @@ public sealed record HuntToolEffect : ParameterlessEffect, IRuneGeneratorEffect
         return 1;
     }
 
-    internal static HuntToolEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static HuntToolEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea);
     }
 }

@@ -11,16 +11,16 @@ public sealed record AddMonsterToFightEffect : Effect
     public int MonsterId { get; init; }
     public int Grade { get; init; }
 
-    private AddMonsterToFightEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int monsterId, int grade)
-        : base(id, duration, probability, criteria, effectArea)
+    private AddMonsterToFightEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int monsterId, int grade)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         MonsterId = monsterId;
         Grade = grade;
     }
 
-    internal static AddMonsterToFightEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static AddMonsterToFightEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public MonsterData? GetMonsterData()

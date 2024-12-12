@@ -6,14 +6,14 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record ChangeSexeEffect : ParameterlessEffect
 {
-    private ChangeSexeEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
-        : base(id, duration, probability, criteria, effectArea)
+    private ChangeSexeEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
 
     }
 
-    internal static ChangeSexeEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static ChangeSexeEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea);
     }
 }

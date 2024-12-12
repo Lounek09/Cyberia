@@ -17,6 +17,7 @@ public abstract record Effect : IEffect
     public int Duration { get; init; }
     public int Probability { get; init; }
     public CriteriaReadOnlyCollection Criteria { get; init; }
+    public bool Dispellable { get; init; }
     public EffectArea EffectArea { get; init; }
 
     /// <summary>
@@ -27,12 +28,13 @@ public abstract record Effect : IEffect
     /// <param name="probability">The probability (as a percentage) that the effect will occur.</param>
     /// <param name="criteria">The criteria where the effect is applicable</param>
     /// <param name="effectArea">The area of the effect.</param>
-    protected Effect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    protected Effect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
         Id = id;
         Duration = duration;
         Probability = probability;
         Criteria = criteria;
+        Dispellable = dispellable;
         EffectArea = effectArea;
     }
 

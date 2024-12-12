@@ -10,15 +10,15 @@ public sealed record FakeAlignmentEffect : Effect
 {
     public int AlignmentId { get; init; }
 
-    private FakeAlignmentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int alignmentId)
-        : base(id, duration, probability, criteria, effectArea)
+    private FakeAlignmentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int alignmentId)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         AlignmentId = alignmentId;
     }
 
-    internal static FakeAlignmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static FakeAlignmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
     }
 
     public AlignmentData? GetAlignmentData()

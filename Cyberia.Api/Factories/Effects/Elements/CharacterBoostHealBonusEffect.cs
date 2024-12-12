@@ -8,14 +8,14 @@ public sealed record CharacterBoostHealBonusEffect : MinMaxEffect, IRuneGenerato
 {
     public int RuneId { get; init; }
 
-    private CharacterBoostHealBonusEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
-        : base(id, duration, probability, criteria, effectArea, min, max)
+    private CharacterBoostHealBonusEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int min, int max)
+        : base(id, duration, probability, criteria, dispellable, effectArea, min, max)
     {
         RuneId = 10;
     }
 
-    internal static CharacterBoostHealBonusEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterBoostHealBonusEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }
 }

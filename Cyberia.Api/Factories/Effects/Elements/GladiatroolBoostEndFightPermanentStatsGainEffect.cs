@@ -13,16 +13,16 @@ public sealed record GladiatroolBoostEndFightPermanentStatsGainEffect : Effect, 
     public int CharacteristicId { get; init; }
     public int BoostPercent { get; init; }
 
-    private GladiatroolBoostEndFightPermanentStatsGainEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int characteristicId, int boostPercent)
-        : base(id, duration, probability, criteria, effectArea)
+    private GladiatroolBoostEndFightPermanentStatsGainEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int characteristicId, int boostPercent)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         CharacteristicId = characteristicId;
         BoostPercent = boostPercent;
     }
 
-    internal static GladiatroolBoostEndFightPermanentStatsGainEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static GladiatroolBoostEndFightPermanentStatsGainEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }
 
     public Element? GetElement()

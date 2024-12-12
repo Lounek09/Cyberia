@@ -12,16 +12,16 @@ public sealed record LadderRaceEffect : Effect
     public int Count { get; init; }
 
 
-    private LadderRaceEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int monsterRaceId, int count)
-        : base(id, duration, probability, criteria, effectArea)
+    private LadderRaceEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int monsterRaceId, int count)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         MonsterRaceId = monsterRaceId;
         Count = count;
     }
 
-    internal static LadderRaceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static LadderRaceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }
 
     public MonsterRaceData? GetMonsterRaceData()

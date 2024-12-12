@@ -9,8 +9,8 @@ public sealed record UntranslatedEffect : Effect
 {
     public EffectParameters Parameters { get; init; }
 
-    internal UntranslatedEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, EffectParameters parameters)
-        : base(id, duration, probability, criteria, effectArea)
+    internal UntranslatedEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, EffectParameters parameters)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         Parameters = parameters;
     }

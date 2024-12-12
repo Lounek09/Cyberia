@@ -12,8 +12,8 @@ public sealed record CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect
     public int MaxDealtDamagePercent { get; init; }
     public int MaxReceivedDamagePercent { get; init; }
 
-    private CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int minDealtDamagePercent, int minReceivedDamagePercent, int maxDealtDamagePercent, int maxReceivedDamagePercent)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int minDealtDamagePercent, int minReceivedDamagePercent, int maxDealtDamagePercent, int maxReceivedDamagePercent)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         MinDealtDamagePercent = minDealtDamagePercent;
         MinReceivedDamagePercent = minReceivedDamagePercent;
@@ -21,7 +21,7 @@ public sealed record CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect
         MaxReceivedDamagePercent = maxReceivedDamagePercent;
     }
 
-    internal static CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
         int param1, param2, param3, param4;
 
@@ -43,7 +43,7 @@ public sealed record CharacterBoostDealtAndReceivedDamagePercentMultiplierEffect
             param4 = (int)tempReceived * 3 - 14;
         }
 
-        return new(effectId, duration, probability, criteria, effectArea, param1, param2, param3, param4);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, param1, param2, param3, param4);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

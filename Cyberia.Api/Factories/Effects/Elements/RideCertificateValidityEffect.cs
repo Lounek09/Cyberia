@@ -11,17 +11,17 @@ public sealed record RideCertificateValidityEffect : Effect
     public int Hours { get; init; }
     public int Minutes { get; init; }
 
-    private RideCertificateValidityEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int days, int hours, int minutes)
-        : base(id, duration, probability, criteria, effectArea)
+    private RideCertificateValidityEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int days, int hours, int minutes)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         Days = days;
         Hours = hours;
         Minutes = minutes;
     }
 
-    internal static RideCertificateValidityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static RideCertificateValidityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

@@ -11,16 +11,16 @@ public sealed record LadderIdEffect : Effect
     public int MonsterId { get; init; }
     public int Count { get; init; }
 
-    private LadderIdEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int monsterId, int count)
-        : base(id, duration, probability, criteria, effectArea)
+    private LadderIdEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int monsterId, int count)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         MonsterId = monsterId;
         Count = count;
     }
 
-    internal static LadderIdEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static LadderIdEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }
 
     public MonsterData? GetMonsterData()

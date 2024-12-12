@@ -10,16 +10,16 @@ public sealed record RideDetailsEffect : Effect
     public int ItemUuid { get; init; }
     public DateTime ExpirationDate { get; init; }
 
-    private RideDetailsEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int itemUuid, DateTime expirationDate)
-        : base(id, duration, probability, criteria, effectArea)
+    private RideDetailsEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int itemUuid, DateTime expirationDate)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         ItemUuid = itemUuid;
         ExpirationDate = expirationDate;
     }
 
-    internal static RideDetailsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static RideDetailsEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, DateTimeOffset.FromUnixTimeMilliseconds(parameters.Param2).UtcDateTime);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, DateTimeOffset.FromUnixTimeMilliseconds(parameters.Param2).UtcDateTime);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

@@ -9,15 +9,15 @@ public sealed record RideOwnerEffect : Effect
 {
     public string Name { get; init; }
 
-    private RideOwnerEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, string name)
-        : base(id, duration, probability, criteria, effectArea)
+    private RideOwnerEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, string name)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         Name = name;
     }
 
-    internal static RideOwnerEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static RideOwnerEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, parameters.Param4);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, parameters.Param4);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

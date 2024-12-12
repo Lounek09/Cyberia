@@ -10,15 +10,15 @@ public sealed record CharacterLearnEmoteEffect : Effect
 {
     public int EmoteId { get; init; }
 
-    private CharacterLearnEmoteEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int emoteId)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterLearnEmoteEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int emoteId)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         EmoteId = emoteId;
     }
 
-    internal static CharacterLearnEmoteEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterLearnEmoteEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
     }
 
     public EmoteData? GetEmoteData()

@@ -6,14 +6,14 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record DeboostSpellRangeMaxEffect : SpellModifierEffect
 {
-    private DeboostSpellRangeMaxEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int spellId, int value)
-        : base(id, duration, probability, criteria, effectArea, spellId, value)
+    private DeboostSpellRangeMaxEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int spellId, int value)
+        : base(id, duration, probability, criteria, dispellable, effectArea, spellId, value)
     {
 
     }
 
-    internal static DeboostSpellRangeMaxEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static DeboostSpellRangeMaxEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param3);
     }
 }

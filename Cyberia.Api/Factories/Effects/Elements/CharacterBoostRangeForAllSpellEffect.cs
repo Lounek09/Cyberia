@@ -9,15 +9,15 @@ public sealed record CharacterBoostRangeForAllSpellEffect : Effect
 {
     public int Range { get; init; }
 
-    private CharacterBoostRangeForAllSpellEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int range)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterBoostRangeForAllSpellEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int range)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         Range = range;
     }
 
-    internal static CharacterBoostRangeForAllSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterBoostRangeForAllSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

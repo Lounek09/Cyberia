@@ -9,15 +9,15 @@ public sealed record CharacterTeleportOnSameMapEffect : Effect
 {
     public int Distance { get; init; }
 
-    private CharacterTeleportOnSameMapEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int distance)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterTeleportOnSameMapEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int distance)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         Distance = distance;
     }
 
-    internal static CharacterTeleportOnSameMapEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterTeleportOnSameMapEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

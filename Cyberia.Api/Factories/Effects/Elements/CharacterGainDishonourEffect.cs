@@ -9,15 +9,15 @@ public sealed record CharacterGainDishonourEffect : Effect
 {
     public int Dishonour { get; init; }
 
-    private CharacterGainDishonourEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int dishonour)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterGainDishonourEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int dishonour)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         Dishonour = dishonour;
     }
 
-    internal static CharacterGainDishonourEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterGainDishonourEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

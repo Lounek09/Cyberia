@@ -11,17 +11,17 @@ public sealed record GladiatroolGiveTokenAtEndFightTonicEffect : Effect
     public int MaxTonicBuyable { get; init; }
     public int Quantity { get; init; }
 
-    private GladiatroolGiveTokenAtEndFightTonicEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int currentTonicBuy, int maxTonicBuyable, int quantity)
-        : base(id, duration, probability, criteria, effectArea)
+    private GladiatroolGiveTokenAtEndFightTonicEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int currentTonicBuy, int maxTonicBuyable, int quantity)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         CurrentTonicBuy = currentTonicBuy;
         MaxTonicBuyable = maxTonicBuyable;
         Quantity = quantity;
     }
 
-    internal static GladiatroolGiveTokenAtEndFightTonicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static GladiatroolGiveTokenAtEndFightTonicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

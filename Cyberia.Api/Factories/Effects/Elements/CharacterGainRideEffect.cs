@@ -12,17 +12,17 @@ public sealed record CharacterGainRideEffect : Effect
     public int RideAbilityId { get; init; }
     public bool Infertile { get; init; }
 
-    private CharacterGainRideEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int rideId, int rideAbilityId, bool infertile)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterGainRideEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int rideId, int rideAbilityId, bool infertile)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         RideId = rideId;
         RideAbilityId = rideAbilityId;
         Infertile = infertile;
     }
 
-    internal static CharacterGainRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterGainRideEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3, (int)parameters.Param2, parameters.Param1 == 1);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3, (int)parameters.Param2, parameters.Param1 == 1);
     }
 
     public RideData? GetRideData()

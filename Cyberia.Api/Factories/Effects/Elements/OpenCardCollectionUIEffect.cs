@@ -6,14 +6,14 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record OpenCardCollectionUIEffect : ParameterlessEffect
 {
-    private OpenCardCollectionUIEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
-        : base(id, duration, probability, criteria, effectArea)
+    private OpenCardCollectionUIEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
 
     }
 
-    internal static OpenCardCollectionUIEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static OpenCardCollectionUIEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea);
     }
 }

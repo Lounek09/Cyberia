@@ -9,15 +9,15 @@ public sealed record CreatedSinceEffect : Effect
 {
     public int Days { get; init; }
 
-    private CreatedSinceEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int days)
-        : base(id, duration, probability, criteria, effectArea)
+    private CreatedSinceEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int days)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         Days = days;
     }
 
-    internal static CreatedSinceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CreatedSinceEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param3);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

@@ -120,10 +120,10 @@ public static partial class StringExtensions
     }
 
     /// <summary>
-    /// Converts an hexadecimal string to a long integer, or returns the <see langword="default"/> value if the conversion fails.
+    /// Converts an hexadecimal string to a long integer.
     /// </summary>
     /// <param name="value">The hexadecimal string to convert.</param>
-    /// <returns>The converted long integer, or the default value if the conversion fails.</returns>
+    /// <returns>The converted long integer, or <see langword="default"/> if the conversion fails.</returns>
     public static long ToInt64OrDefaultFromHex(this string value)
     {
         return ToInt64OrDefaultFromHex(value.AsSpan());

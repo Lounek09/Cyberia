@@ -10,15 +10,15 @@ public sealed record CharacterTransform2Effect : Effect
 {
     public int MonsterId { get; init; }
 
-    private CharacterTransform2Effect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int monsterId)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterTransform2Effect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int monsterId)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         MonsterId = monsterId;
     }
 
-    internal static CharacterTransform2Effect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterTransform2Effect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1);
     }
 
     public MonsterData? GetMonsterData()

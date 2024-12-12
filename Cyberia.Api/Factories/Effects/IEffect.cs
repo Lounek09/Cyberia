@@ -15,27 +15,32 @@ public interface IEffect : IComparable<IEffect>
     /// <summary>
     /// Gets the unique identifier of the effect.
     /// </summary>
-    int Id { get; init; }
+    int Id { get; }
 
     /// <summary>
     /// Gets the duration of the effect.
     /// </summary>
-    int Duration { get; init; }
+    int Duration { get; }
 
     /// <summary>
     /// Gets the probability of the effect in percentage.
     /// </summary>
-    int Probability { get; init; }
+    int Probability { get; }
 
     /// <summary>
     /// Gets the criteria where the effect is applicable.
     /// </summary>
-    CriteriaReadOnlyCollection Criteria { get; init; }
+    CriteriaReadOnlyCollection Criteria { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the effect is dispellable.
+    /// </summary>
+    bool Dispellable { get; }
 
     /// <summary>
     /// Gets the area of the effect.
     /// </summary>
-    EffectArea EffectArea { get; init; }
+    EffectArea EffectArea { get; }
 
     /// <summary>
     /// Gets the data of the effect.

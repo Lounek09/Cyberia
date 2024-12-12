@@ -10,19 +10,19 @@ public sealed record CharacterSummonMonsterGroupEffect : Effect
 {
     public IReadOnlyList<int> MonstersId { get; init; }
 
-    private CharacterSummonMonsterGroupEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, List<int> monstersId)
-        : base(id, duration, probability, criteria, effectArea)
+    private CharacterSummonMonsterGroupEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, List<int> monstersId)
+        : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         MonstersId = monstersId;
     }
 
-    internal static CharacterSummonMonsterGroupEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterSummonMonsterGroupEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        var monstersId = parameters.Param4.Split(":", StringSplitOptions.RemoveEmptyEntries)
+        var monstersId = parameters.Param4.Split(':', StringSplitOptions.RemoveEmptyEntries)
             .Select(x => int.Parse(x, NumberStyles.HexNumber))
             .ToList();
 
-        return new(effectId, duration, probability, criteria, effectArea, monstersId);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, monstersId);
     }
 
     public IEnumerable<MonsterData> GetMonstersData()

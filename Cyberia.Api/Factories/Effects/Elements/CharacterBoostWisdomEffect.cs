@@ -8,14 +8,14 @@ public sealed record CharacterBoostWisdomEffect : MinMaxEffect, IRuneGeneratorEf
 {
     public int RuneId { get; init; }
 
-    private CharacterBoostWisdomEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea, int min, int max)
-        : base(id, duration, probability, criteria, effectArea, min, max)
+    private CharacterBoostWisdomEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int min, int max)
+        : base(id, duration, probability, criteria, dispellable, effectArea, min, max)
     {
         RuneId = 2;
     }
 
-    internal static CharacterBoostWisdomEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, EffectArea effectArea)
+    internal static CharacterBoostWisdomEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
     }
 }

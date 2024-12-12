@@ -12,12 +12,12 @@ public interface ICriterion : ICriteriaElement
     /// <summary>
     /// Gets the unique identifier of the criterion.
     /// </summary>
-    string Id { get; init; }
+    string Id { get; }
 
     /// <summary>
     /// Gets the operator of the criterion.
     /// </summary>
-    char Operator { get; init; }
+    char Operator { get; }
 
     /// <summary>
     /// Generates a human-readable description of the criterion for the specified language.
