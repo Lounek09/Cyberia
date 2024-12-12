@@ -534,7 +534,7 @@ public static class EffectFactory
         }
 
         EffectParameters effectParameters = new(parameters[0], parameters[1], parameters[2], lastParameter);
-        return Create((int)id, effectParameters, 0, 0, [], false, EffectAreaFactory.Default);
+        return Create((int)id, effectParameters, 0, 0, [], true, EffectAreaFactory.Default);
     }
 
     /// <summary>

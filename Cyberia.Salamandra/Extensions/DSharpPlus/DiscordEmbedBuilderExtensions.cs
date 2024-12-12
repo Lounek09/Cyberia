@@ -331,17 +331,17 @@ public static class DiscordEmbedBuilderExtensions
                 effectDescriptionBuilder.Append(effect.GetDescription(culture).ToString(parametersDecorator));
             }
 
+            if (!effect.Dispellable)
+            {
+                effectDescriptionBuilder.Append("\\🔒");
+            }
+
             if (effect.EffectArea.Size != EffectAreaFactory.Default.Size)
             {
                 effectDescriptionBuilder.Append(" - ");
                 effectDescriptionBuilder.Append(Emojis.EffectArea(effect.EffectArea));
                 effectDescriptionBuilder.Append(' ');
                 effectDescriptionBuilder.Append(effect.EffectArea.GetSize(culture));
-            }
-
-            if (!effect.Dispellable)
-            {
-                effectDescriptionBuilder.Append(" -\\🔒");
             }
 
             if (effect.Criteria.Count > 0)
