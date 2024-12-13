@@ -201,6 +201,7 @@ public sealed class EmojisService
         await CreateEmojiAsync("hourglass", $"{baseRoute}/others/hourglass.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("house", $"{baseRoute}/others/house.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("kamas", $"{baseRoute}/others/kamas.png", emojis, checkedEmojiRoutes);
+        await CreateEmojiAsync("lock", $"{baseRoute}/others/lock.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("mp_resistance", $"{baseRoute}/others/mp_resistance.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("quest", $"{baseRoute}/others/quest.png", emojis, checkedEmojiRoutes);
         await CreateEmojiAsync("repeatable_quest", $"{baseRoute}/others/repeatable_quest.png", emojis, checkedEmojiRoutes);

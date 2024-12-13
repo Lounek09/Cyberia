@@ -333,7 +333,7 @@ public static class DiscordEmbedBuilderExtensions
 
             if (!effect.Dispellable)
             {
-                effectDescriptionBuilder.Append("\\🔒");
+                effectDescriptionBuilder.Append(Emojis.Lock);
             }
 
             if (effect.EffectArea.Size != EffectAreaFactory.Default.Size)

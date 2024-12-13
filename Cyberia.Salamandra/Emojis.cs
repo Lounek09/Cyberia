@@ -207,6 +207,7 @@ public static class Emojis
     public static string HealthPoint => EmojisService.GetEmojiStringByName("health");
     public static string House => EmojisService.GetEmojiStringByName("house");
     public static string Kamas => EmojisService.GetEmojiStringByName("kamas");
+    public static string Lock => EmojisService.GetEmojiStringByName("lock");
     public static string MovementPoint => EmojisService.GetEmojiStringByName("effect_23");
     public static string MpResistance => EmojisService.GetEmojiStringByName("mp_resistance");
     public static string NeutralResistance => EmojisService.GetEmojiStringByName("effect_37");
