@@ -78,8 +78,14 @@ public sealed class ItemData : IDofusData<int>
     [JsonPropertyName("m")]
     public bool Cursed { get; init; }
 
+    [JsonPropertyName("h")]
+    public bool Hidden { get; init; }
+
     [JsonPropertyName("ce")]
     public bool Ceremonial { get; init; }
+
+    [JsonPropertyName("a")]
+    public bool AccountWide { get; init; }
 
     [JsonPropertyName("p")]
     public int Price { get; init; }

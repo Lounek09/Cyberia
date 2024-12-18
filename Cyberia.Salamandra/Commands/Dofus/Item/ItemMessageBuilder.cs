@@ -195,6 +195,18 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             miscellaneousBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Miscellaneous.Content.Cursed", _culture));
         }
 
+        if (_itemData.Hidden)
+        {
+            miscellaneousBuilder.Append(", ");
+            miscellaneousBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Miscellaneous.Content.Hidden", _culture));
+        }
+
+        if (_itemData.AccountWide)
+        {
+            miscellaneousBuilder.Append(", ");
+            miscellaneousBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Miscellaneous.Content.AccountWide", _culture));
+        }
+
         embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Miscellaneous.Title", _culture), miscellaneousBuilder.ToString());
 
         return embed;

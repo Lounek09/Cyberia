@@ -550,6 +550,15 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to account wide.
+        /// </summary>
+        internal static string Embed_Field_Miscellaneous_Content_AccountWide {
+            get {
+                return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.AccountWide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ceremonial item.
         /// </summary>
         internal static string Embed_Field_Miscellaneous_Content_Ceremonial {
@@ -582,6 +591,15 @@ namespace Cyberia.Translations.Resources {
         internal static string Embed_Field_Miscellaneous_Content_Ethereal {
             get {
                 return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.Ethereal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to hidden.
+        /// </summary>
+        internal static string Embed_Field_Miscellaneous_Content_Hidden {
+            get {
+                return ResourceManager.GetString("Embed.Field.Miscellaneous.Content.Hidden", resourceCulture);
             }
         }
         
