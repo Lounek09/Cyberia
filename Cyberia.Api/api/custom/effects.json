@@ -81,10 +81,6 @@
       "d": "Ajoute #2x #3 (#1)"
     },
     {
-      "id": 194,
-      "d": "Gagne #1{~1~2 à }#2 kamas"
-    },
-    {
       "id": 201,
       "d": "Pose un objet au sol (#3)"
     },
@@ -158,7 +154,7 @@
     },
     {
       "id": 233,
-      "d": "Retire #2 #3 aux personnages autour de vous"
+      "d": "Retire #2x #3 aux personnages autour de vous"
     },
     {
       "id": 250,
@@ -209,32 +205,38 @@
     {
       "id": 295,
       "d": "Augmente la portée minimale du sort #1 de #3",
-      "o": "-"
+      "o": "-",
+      "t": true
     },
     {
       "id": 296,
       "d": "Augmente le coût en PA du sort #1 de #3",
-      "o": "-"
+      "o": "-",
+      "t": true
     },
     {
       "id": 297,
       "d": "Désactive le lancer du sort #1 sur une case occupée",
-      "o": "-"
+      "o": "-",
+      "t": true
     },
     {
       "id": 298,
       "d": "Désactive le lancer du sort #1 sur une case libre",
-      "o": "-"
+      "o": "-",
+      "t": true
     },
     {
       "id": 299,
       "d": "Active le lancer du sort #1 sur une case libre",
-      "o": "+"
+      "o": "+",
+      "t": true
     },
     {
       "id": 300,
       "d": "Lance le sort #3 au rang #1",
       "c": 29,
+      "p": -100,
       "o": "/"
     },
     {
@@ -299,8 +301,7 @@
     },
     {
       "id": 722,
-      "d": "Donne le sort « #3 » au rang #1",
-      "t": true
+      "d": "Donne le sort « #3 » au rang #1"
     },
     {
       "id": 723,
@@ -357,6 +358,7 @@
     {
       "id": 826,
       "d": "Téléporte",
+      "p": -100,
       "o": "+",
       "t": true
     },
@@ -429,10 +431,6 @@
       "d": "Téléporte en #2 (#1)"
     },
     {
-      "id": 2001,
-      "d": "Gagne #1{~1~2 à }#2 kamas"
-    },
-    {
       "id": 2101,
       "d": "Contient une carte Tragic The Gardening (#3)"
     },
@@ -443,10 +441,6 @@
     {
       "id": 2107,
       "d": "Contient une carte Tragic The Gardening (#3)"
-    },
-    {
-      "id": 2111,
-      "d": "Diminue de #1{~1~2 à }#2 le renvoi de dommages"
     },
     {
       "id": 2135,
@@ -467,11 +461,13 @@
     {
       "id": 2153,
       "d": "Téléporte les membres du groupe",
+      "p": -100,
       "t": true
     },
     {
       "id": 2154,
       "d": "Verrouillé au compte jusqu'au : #1",
+      "p": -100,
       "o": "/",
       "t": true
     }
