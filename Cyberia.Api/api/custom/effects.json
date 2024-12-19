@@ -201,14 +201,6 @@
       "d": "#1{~1~2 à }#2% de faiblesse neutre face aux combattants"
     },
     {
-      "id": 260,
-      "d": "+#1{~1~2 à }#2 de res. terre face aux combattants"
-    },
-    {
-      "id": 261,
-      "d": "+#1{~1~2 à }#2 de res. eau face aux combattants"
-    },
-    {
       "id": 280,
       "d": "Diminue la portée minimale du sort #1 de #3",
       "o": "+",
