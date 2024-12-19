@@ -102,14 +102,14 @@ public sealed class CytrusWatcher
         OldCytrus = Cytrus;
         Cytrus = Cytrus.Load(json);
 
-        Log.Information("Cytrus update detected :\n{CytrusDiff}", diff);
-        await OnNewCytrusFileDetected(new NewCytrusFileDetectedEventArgs(Cytrus, OldCytrus, diff));
-
         if (File.Exists(CytrusPath))
         {
             File.Move(CytrusPath, OldCytrusPath, true);
         }
         File.WriteAllText(CytrusPath, json);
+
+        Log.Information("Cytrus update detected :\n{CytrusDiff}", diff);
+        await OnNewCytrusFileDetected(new NewCytrusFileDetectedEventArgs(Cytrus, OldCytrus, diff));
     }
 
     #region Events
