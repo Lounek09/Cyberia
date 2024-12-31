@@ -1,14 +1,6 @@
 ﻿{
   "CE": [
     {
-      "id": 4,
-      "d": "Téléporte à une distance de #1 cases maximum"
-    },
-    {
-      "id": 10,
-      "d": "Permet d'utiliser l'attitude #3"
-    },
-    {
       "id": 34,
       "d": "Commence la quête #3"
     },
@@ -39,22 +31,6 @@
     {
       "id": 149,
       "d": "Change l'apparence (#3)"
-    },
-    {
-      "id": 160,
-      "d": "+#1{~1~2 à }#2% de chance d'esquiver les pertes de PA"
-    },
-    {
-      "id": 161,
-      "d": "+#1{~1~2 à }#2% de chance d'esquiver les pertes de PM"
-    },
-    {
-      "id": 162,
-      "d": "-#1{~1~2 à }#2% de chance d'esquiver les pertes de PA"
-    },
-    {
-      "id": 163,
-      "d": "-#1{~1~2 à }#2% de chance d'esquiver les pertes de PM"
     },
     {
       "id": 168,
@@ -272,14 +248,6 @@
       "d": "Apprend le sort #3 au rang #2"
     },
     {
-      "id": 605,
-      "d": "+#1{~1~2 à }#2 points d'XP"
-    },
-    {
-      "id": 614,
-      "d": "+#1 d'XP dans le métier #2"
-    },
-    {
       "id": 626,
       "d": "Réinitialise les caractéristiques"
     },
@@ -346,10 +314,6 @@
     {
       "id": 787,
       "d": "Lance #1 au rang #2"
-    },
-    {
-      "id": 791,
-      "d": "Prépare #1{~1~2 à }#2 parchemins pour mercenaire"
     },
     {
       "id": 810,
