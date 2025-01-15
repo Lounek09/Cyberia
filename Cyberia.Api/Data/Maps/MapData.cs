@@ -40,6 +40,9 @@ public sealed class MapData : IDofusData<int>
     [JsonPropertyName("t")]
     public int MaxPlayerPerTeam { get; init; }
 
+    [JsonPropertyName("tournament")]
+    public bool Tournament { get; init; }
+
     [JsonPropertyName("ep")]
     public int Episode { get; init; }
 
