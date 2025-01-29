@@ -22,9 +22,9 @@ public sealed class CultureAnchorTagHelper : AnchorTagHelper
     {
         Page = CulturePage;
 
-        if (!RouteValues.TryGetValue("culture", out _))
+        if (ViewContext.ViewData.TryGetValue("Culture", out var value) && value is string culture)
         {
-            RouteValues.Add("culture", ViewContext.ViewBag.Culture);
+            RouteValues.Add("culture", culture);
         }
     }
 }

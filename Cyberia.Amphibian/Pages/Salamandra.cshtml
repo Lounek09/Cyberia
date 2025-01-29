@@ -2,9 +2,9 @@
 @using Cyberia.Api
 @model IndexModel
 @{
-	ViewBag.Title = Translation.Get<WebTranslations>("Page.Salamandra.Title");
-	ViewBag.Favicon = "favicon-salamandra.png";
-	ViewBag.PageStyle = "salamandra.css";
+	ViewData["Title"] = Translation.Get<WebTranslations>("Page.Salamandra.Title");
+	ViewData["Favicon"] = "favicon-salamandra.png";
+	ViewData["PageStyle"] = "salamandra.css";
 }
 
 <div class="logo">
@@ -12,7 +12,7 @@
 </div>
 
 <div class="content">
-	<h1>@ViewBag.Title</h1>
+	<h1>@ViewData["Title"]</h1>
 
 	<nav>
 		<a asp-culture-page="/salamandra/tos">@(Translation.Get<WebTranslations>("Page.SalamandraTos.Title"))</a>

@@ -1,5 +1,5 @@
 ﻿@{
 	Layout = "_Layout";
 
-	ViewBag.Culture = Context.Request.RouteValues["culture"];
+	ViewData["Culture"] = Context.Request.RouteValues["culture"];
 }

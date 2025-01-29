@@ -1,9 +1,9 @@
 ﻿@page
 @model PrivacyModel
 @{
-	ViewBag.Title = $"{Translation.Get<WebTranslations>("Page.Salamandra.Title")} - {Translation.Get<WebTranslations>("Page.SalamandraPrivacy.Title")}";
-	ViewBag.Favicon = "favicon-salamandra.png";
-	ViewBag.PageStyle = "salamandra.css";
+	ViewData["Title"] = $"{Translation.Get<WebTranslations>("Page.Salamandra.Title")} - {Translation.Get<WebTranslations>("Page.SalamandraPrivacy.Title")}";
+	ViewData["Favicon"] = "favicon-salamandra.png";
+	ViewData["PageStyle"] = "salamandra.css";
 }
 
 <div class="content">

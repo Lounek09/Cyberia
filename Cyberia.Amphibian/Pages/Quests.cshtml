@@ -1,7 +1,7 @@
 ﻿@page
 @model QuestsModel
 @{
-	ViewBag.Title = Translation.Get<WebTranslations>("Page.Quests.Title");
+	ViewData["Title"] = Translation.Get<WebTranslations>("Page.Quests.Title");
 }
 
-<h1>@ViewBag.Title</h1>
+<h1>@ViewData["Title"]</h1>
