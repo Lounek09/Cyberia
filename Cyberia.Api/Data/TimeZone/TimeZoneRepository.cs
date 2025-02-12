@@ -3,6 +3,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TimeZone;
@@ -30,17 +31,38 @@ public sealed class TimeZoneRepository : DofusRepository, IDofusRepository
         StartDayOfMonths = ReadOnlyDictionary<int, LocalizedString>.Empty;
     }
 
-    public string GetMonth(int dayOfYear)
+    public string GetMonthNameById(int id, Language language)
+    {
+        return GetMonthNameById(id, language.ToCulture());
+    }
+
+    public string GetMonthNameById(int id, CultureInfo? culture = null)
+    {
+        var indexMax = StartDayOfMonths.Count - 1;
+        if (id < 0 || id > indexMax)
+        {
+            return Translation.UnknownData(id, culture);
+        }
+
+        return StartDayOfMonths.ElementAt(indexMax - id).Value.ToString(culture);
+    }
+
+    public string GetMonthNameByDayOfYear(int dayOfYear, Language language)
+    {
+        return GetMonthNameByDayOfYear(dayOfYear, language.ToCulture());
+    }
+
+    public string GetMonthNameByDayOfYear(int dayOfYear, CultureInfo? culture = null)
     {
         foreach (var pair in StartDayOfMonths)
         {
             if (dayOfYear > pair.Key)
             {
-                return pair.Value;
+                return pair.Value.ToString(culture);
             }
         }
 
-        return string.Empty;
+        return Translation.UnknownData(dayOfYear, culture);
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

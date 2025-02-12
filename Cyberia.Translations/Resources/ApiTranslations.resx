@@ -745,22 +745,22 @@
     <value>Be subscribe</value>
   </data>
   <data name="Criterion.Turn.Different" xml:space="preserve">
-    <value>Turn ≠ #1</value>
+    <value>Current turn ≠ #1</value>
   </data>
   <data name="Criterion.Turn.Equal" xml:space="preserve">
-    <value>Turn = #1</value>
+    <value>Current turn = #1</value>
   </data>
   <data name="Criterion.Turn.Even" xml:space="preserve">
-    <value>Even turn</value>
+    <value>Current turn even</value>
   </data>
   <data name="Criterion.Turn.Inferior" xml:space="preserve">
-    <value>Turn &lt; #1</value>
+    <value>Current turn &lt; #1</value>
   </data>
   <data name="Criterion.Turn.Odd" xml:space="preserve">
-    <value>Odd turn</value>
+    <value>Current turn odd</value>
   </data>
   <data name="Criterion.Turn.Superior" xml:space="preserve">
-    <value>Turn &gt; #1</value>
+    <value>Current turn &gt; #1</value>
   </data>
   <data name="Criterion.Unknown" xml:space="preserve">
     <value>Unknown criterion #1 (#2)</value>
@@ -1193,5 +1193,29 @@
   </data>
   <data name="SpellCategory.GladiatroolBreedSupport" xml:space="preserve">
     <value>Class support - Gladiatrool</value>
+  </data>
+  <data name="Criterion.Month.Different" xml:space="preserve">
+    <value>Month ≠ #1</value>
+  </data>
+  <data name="Criterion.Month.Equal" xml:space="preserve">
+    <value>Month = #1</value>
+  </data>
+  <data name="Criterion.Month.Inferior" xml:space="preserve">
+    <value>Month &lt; #1</value>
+  </data>
+  <data name="Criterion.Month.Superior" xml:space="preserve">
+    <value>Month &gt; #1</value>
+  </data>
+  <data name="Criterion.DayOfMonth.Different" xml:space="preserve">
+    <value>Day of the month ≠ #1</value>
+  </data>
+  <data name="Criterion.DayOfMonth.Equal" xml:space="preserve">
+    <value>Day of the month = #1</value>
+  </data>
+  <data name="Criterion.DayOfMonth.Inferior" xml:space="preserve">
+    <value>Day of the month &lt; #1</value>
+  </data>
+  <data name="Criterion.DayOfMonth.Superior" xml:space="preserve">
+    <value>Day of the month &gt; #1</value>
   </data>
 </root>

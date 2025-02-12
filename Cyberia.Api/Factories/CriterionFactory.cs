@@ -87,6 +87,8 @@ public static class CriterionFactory
             { "Qo", QuestObjectiveCriterion.Create },
             { "Qs", QuestStepCriterion.Create },
             { "Sc", ServerContentCriterion.Create },
+            { "Sd", DayOfMonthCriterion.Create },
+            { "SG", MonthCriterion.Create },
             { "SI", ServerCriterion.Create },
             { "SM", MinuteCriterion.Create }
         }.ToFrozenDictionary();

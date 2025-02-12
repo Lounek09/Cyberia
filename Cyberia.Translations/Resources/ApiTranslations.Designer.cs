@@ -826,6 +826,42 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Day of the month ≠ #1.
+        /// </summary>
+        internal static string Criterion_DayOfMonth_Different {
+            get {
+                return ResourceManager.GetString("Criterion.DayOfMonth.Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Day of the month = #1.
+        /// </summary>
+        internal static string Criterion_DayOfMonth_Equal {
+            get {
+                return ResourceManager.GetString("Criterion.DayOfMonth.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Day of the month &lt; #1.
+        /// </summary>
+        internal static string Criterion_DayOfMonth_Inferior {
+            get {
+                return ResourceManager.GetString("Criterion.DayOfMonth.Inferior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Day of the month &gt; #1.
+        /// </summary>
+        internal static string Criterion_DayOfMonth_Superior {
+            get {
+                return ResourceManager.GetString("Criterion.DayOfMonth.Superior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disgrace points ≠ #1.
         /// </summary>
         internal static string Criterion_DisgracePoint_Different {
@@ -1582,6 +1618,42 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Month ≠ #1.
+        /// </summary>
+        internal static string Criterion_Month_Different {
+            get {
+                return ResourceManager.GetString("Criterion.Month.Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month = #1.
+        /// </summary>
+        internal static string Criterion_Month_Equal {
+            get {
+                return ResourceManager.GetString("Criterion.Month.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month &lt; #1.
+        /// </summary>
+        internal static string Criterion_Month_Inferior {
+            get {
+                return ResourceManager.GetString("Criterion.Month.Inferior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month &gt; #1.
+        /// </summary>
+        internal static string Criterion_Month_Superior {
+            get {
+                return ResourceManager.GetString("Criterion.Month.Superior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MP ≠ #1.
         /// </summary>
         internal static string Criterion_MovementPoint_Different {
@@ -1996,7 +2068,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turn ≠ #1.
+        ///   Looks up a localized string similar to Current turn ≠ #1.
         /// </summary>
         internal static string Criterion_Turn_Different {
             get {
@@ -2005,7 +2077,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turn = #1.
+        ///   Looks up a localized string similar to Current turn = #1.
         /// </summary>
         internal static string Criterion_Turn_Equal {
             get {
@@ -2014,7 +2086,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Even turn.
+        ///   Looks up a localized string similar to Current turn even.
         /// </summary>
         internal static string Criterion_Turn_Even {
             get {
@@ -2023,7 +2095,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turn &lt; #1.
+        ///   Looks up a localized string similar to Current turn &lt; #1.
         /// </summary>
         internal static string Criterion_Turn_Inferior {
             get {
@@ -2032,7 +2104,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Odd turn.
+        ///   Looks up a localized string similar to Current turn odd.
         /// </summary>
         internal static string Criterion_Turn_Odd {
             get {
@@ -2041,7 +2113,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turn &gt; #1.
+        ///   Looks up a localized string similar to Current turn &gt; #1.
         /// </summary>
         internal static string Criterion_Turn_Superior {
             get {

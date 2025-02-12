@@ -1,4 +1,7 @@
 ﻿using Cyberia.Api.Factories;
+using Cyberia.Langzilla.Enums;
+
+using System.Globalization;
 
 namespace Cyberia.Api.Managers;
 
@@ -25,10 +28,15 @@ public static class DateTimeManager
         return dateTime.AddYears(DofusApi.Datacenter.TimeZonesRepository.YearLess);
     }
 
-    public static string ToRolePlayString(this DateTime dateTime)
+    public static string ToRolePlayString(this DateTime dateTime, Language language)
+    {
+        return ToRolePlayString(dateTime, language.ToCulture());
+    }
+
+    public static string ToRolePlayString(this DateTime dateTime, CultureInfo? culture = null)
     {
         dateTime = dateTime.ToInGameDateTime();
 
-        return $"{dateTime:dd} {DofusApi.Datacenter.TimeZonesRepository.GetMonth(dateTime.DayOfYear)} {dateTime:yyy}";
+        return $"{dateTime:dd} {DofusApi.Datacenter.TimeZonesRepository.GetMonthNameByDayOfYear(dateTime.DayOfYear, culture)} {dateTime:yyy}";
     }
 }
