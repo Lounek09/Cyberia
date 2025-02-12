@@ -127,50 +127,50 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
             if (_monsterGradeData.LifePoint is not null)
             {
-                characBuilder.Append(Emojis.HealthPoint);
+                characBuilder.Append(Emojis.HealthPoint(_culture));
                 characBuilder.Append(Formatter.Bold(_monsterGradeData.LifePoint.Value.ToFormattedString(_culture)));
                 characBuilder.Append(' ');
             }
 
             if (_monsterGradeData.ActionPoint is not null)
             {
-                characBuilder.Append(Emojis.ActionPoint);
+                characBuilder.Append(Emojis.ActionPoint(_culture));
                 characBuilder.Append(Formatter.Bold(_monsterGradeData.ActionPoint.Value.ToFormattedString(_culture)));
                 characBuilder.Append(' ');
             }
 
             if (_monsterGradeData.MovementPoint is not null)
             {
-                characBuilder.Append(Emojis.MovementPoint);
+                characBuilder.Append(Emojis.MovementPoint(_culture));
                 characBuilder.Append(Formatter.Bold(_monsterGradeData.MovementPoint.Value.ToFormattedString(_culture)));
                 characBuilder.Append(' ');
             }
 
-            characBuilder.Append(Emojis.ApResistance);
+            characBuilder.Append(Emojis.ActionPointResistance(_culture));
             characBuilder.Append(Formatter.Bold(_monsterGradeData.GetActionPointDodge().ToFormattedString(_culture)));
             characBuilder.Append("% ");
 
-            characBuilder.Append(Emojis.MpResistance);
+            characBuilder.Append(Emojis.MovementPointResistance(_culture));
             characBuilder.Append(Formatter.Bold(_monsterGradeData.GetMovementPointDodge().ToFormattedString(_culture)));
             characBuilder.Append("%\n");
 
-            characBuilder.Append(Emojis.NeutralResistance);
+            characBuilder.Append(Emojis.NeutralResistance(_culture));
             characBuilder.Append(Formatter.Bold(_monsterGradeData.GetNeutralResistance().ToFormattedString(_culture)));
             characBuilder.Append("% ");
 
-            characBuilder.Append(Emojis.EarthResistance);
+            characBuilder.Append(Emojis.EarthResistance(_culture));
             characBuilder.Append(Formatter.Bold(_monsterGradeData.GetEarthResistance().ToFormattedString(_culture)));
             characBuilder.Append("% ");
 
-            characBuilder.Append(Emojis.FireResistance);
+            characBuilder.Append(Emojis.FireResistance(_culture));
             characBuilder.Append(Formatter.Bold(_monsterGradeData.GetFireResistance().ToFormattedString(_culture)));
             characBuilder.Append("% ");
 
-            characBuilder.Append(Emojis.WaterResistance);
+            characBuilder.Append(Emojis.WaterResistance(_culture));
             characBuilder.Append(Formatter.Bold(_monsterGradeData.GetWaterResistance().ToFormattedString(_culture)));
             characBuilder.Append("% ");
 
-            characBuilder.Append(Emojis.AirResistance);
+            characBuilder.Append(Emojis.AirResistance(_culture));
             characBuilder.Append(Formatter.Bold(_monsterGradeData.GetAirResistance().ToFormattedString(_culture)));
             characBuilder.Append('%');
 

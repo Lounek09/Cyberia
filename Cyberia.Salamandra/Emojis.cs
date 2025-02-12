@@ -9,42 +9,42 @@ using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Salamandra.Services;
 
+using System.Globalization;
+
 namespace Cyberia.Salamandra;
 
 public static class Emojis
 {
-    // Boolean
-    private static string True => EmojisService.GetEmojiStringByName("true");
-    private static string False => EmojisService.GetEmojiStringByName("false");
-
-    public static string Bool(bool value)
+    public static string Bool(bool value, CultureInfo? culture)
     {
-        return value ? True : False;
+        return value
+            ? EmojisService.GetEmojiStringByName("true", Translation.Get<BotTranslations>("True", culture))
+            : EmojisService.GetEmojiStringByName("false", Translation.Get<BotTranslations>("False", culture));
     }
 
     // EffectAreas
-    public static string EffectArea(EffectArea effectArea)
+    public static string EffectArea(EffectArea effectArea, CultureInfo? culture)
     {
-        var emoji = EmojisService.GetEmojiStringByName($"effectarea_{effectArea.Id}");
+        var emoji = EmojisService.GetEmojiStringByName($"effectarea_{effectArea.Id}", effectArea.GetName(culture));
         if (string.IsNullOrEmpty(emoji))
         {
-            return Unknown;
+            return Unknown(culture);
         }
 
         return emoji;
     }
 
     // Effects
-    public static string Effect(IEffect effect)
+    public static string Effect(IEffect effect, CultureInfo? culture)
     {
         var emoji = effect switch
         {
-            CharacterLearnEmoteEffect characterLearnEmoteEffect => Emote(characterLearnEmoteEffect.GetEmoteData()),
-            RideDetailsEffect => Hand,
+            CharacterLearnEmoteEffect characterLearnEmoteEffect => Emote(characterLearnEmoteEffect.GetEmoteData(), culture),
+            RideDetailsEffect => RideDetail(culture),
             ICharacteristicEffect characteristicEffect => EmojisService.GetEmojiStringByName($"effect_{characteristicEffect.CharacteristicId}"),
-            IJobEffect jobEffect => Job(jobEffect.GetJobData()),
-            IStateEffect stateEffect => State(stateEffect.GetStateData()),
-            ISpellEffect or ISpellLevelEffect => Wand,
+            IJobEffect jobEffect => Job(jobEffect.GetJobData(), culture),
+            IStateEffect stateEffect => State(stateEffect.GetStateData(), culture),
+            ISpellEffect or ISpellLevelEffect => Spell(culture),
             _ => null
         };
 
@@ -53,7 +53,7 @@ public static class Emojis
             var effectData = effect.GetEffectData();
             if (effectData is null)
             {
-                return Empty;
+                return Empty(culture);
             }
 
             emoji = EmojisService.GetEmojiStringByName($"effect_{effectData.GfxId}");
@@ -61,158 +61,230 @@ public static class Emojis
 
         if (string.IsNullOrEmpty(emoji))
         {
-            return Empty;
+            return Empty(culture);
         }
 
         return emoji;
     }
 
     // Emotes
-    public static string Emote(EmoteData? emoteData)
+    public static string Emote(EmoteData? emoteData, CultureInfo? culture)
     {
         if (emoteData is null)
         {
-            return Empty;
+            return Empty(culture);
         }
 
-        var emoji = EmojisService.GetEmojiStringByName($"emote_{emoteData.Id}");
+        var emoji = EmojisService.GetEmojiStringByName($"emote_{emoteData.Id}", emoteData.Name.ToString(culture));
         if (string.IsNullOrEmpty(emoji))
         {
-            return Empty;
+            return Empty(culture);
         }
 
         return emoji;
     }
 
     // Jobs
-    public static string Job(JobData? jobData)
+    public static string Job(JobData? jobData, CultureInfo? culture)
     {
         if (jobData is null)
         {
-            return Empty;
+            return Empty(culture);
         }
 
-        var emoji = EmojisService.GetEmojiStringByName($"job_{jobData.Id}");
+        var emoji = EmojisService.GetEmojiStringByName($"job_{jobData.Id}", jobData.Name.ToString(culture));
         if (string.IsNullOrEmpty(emoji))
         {
-            return Empty;
+            return Empty(culture);
         }
 
         return emoji;
     }
 
     // Quests
-    private static string ClassicQuest => EmojisService.GetEmojiStringByName("quest");
-    private static string RepeatableQuest => EmojisService.GetEmojiStringByName("repeatable_quest");
-    private static string AccountQuest => EmojisService.GetEmojiStringByName("account_quest");
-
-    public static string Quest(QuestData questData)
+    public static string Quest(QuestData questData, CultureInfo? culture)
     {
         if (questData.Repeatable && questData.Account)
         {
-            return RepeatableQuest + AccountQuest;
+            return EmojisService.GetEmojiStringByName("repeatable_quest", Translation.Get<BotTranslations>("RepeatableQuest", culture)) +
+                EmojisService.GetEmojiStringByName("account_quest", Translation.Get<BotTranslations>("AccountQuest", culture));
         }
 
         if (questData.Account)
         {
-            return AccountQuest;
+            return EmojisService.GetEmojiStringByName("account_quest", Translation.Get<BotTranslations>("AccountQuest", culture));
         }
 
         if (questData.Repeatable)
         {
-            return RepeatableQuest;
+            return EmojisService.GetEmojiStringByName("repeatable_quest", Translation.Get<BotTranslations>("RepeatableQuest", culture));
         }
 
-        return ClassicQuest;
+        return EmojisService.GetEmojiStringByName("quest", Translation.Get<BotTranslations>("Quest", culture));
     }
 
     // Runes
-    public static string BaRune(RuneData? runeData)
+    public static string BaRune(RuneData? runeData, CultureInfo? culture)
     {
         var itemData = runeData?.GetBaRuneItemData();
         if (itemData is null)
         {
-            return Empty;
+            return Empty(culture);
         }
 
-        var emoji = EmojisService.GetEmojiStringByName($"item_{itemData.ItemTypeId}_{itemData.GfxId}");
+        var emoji = EmojisService.GetEmojiStringByName($"item_{itemData.ItemTypeId}_{itemData.GfxId}", itemData.Name.ToString(culture));
         if (string.IsNullOrEmpty(emoji))
         {
-            return Empty;
+            return Empty(culture);
         }
 
         return emoji;
     }
 
-    public static string PaRune(RuneData? runeData)
+    public static string PaRune(RuneData? runeData, CultureInfo? culture)
     {
         var itemData = runeData?.GetPaRuneItemData();
         if (itemData is null)
         {
-            return Empty;
+            return Empty(culture);
         }
 
-        var emoji = EmojisService.GetEmojiStringByName($"item_{itemData.ItemTypeId}_{itemData.GfxId}");
+        var emoji = EmojisService.GetEmojiStringByName($"item_{itemData.ItemTypeId}_{itemData.GfxId}", itemData.Name.ToString(culture));
         if (string.IsNullOrEmpty(emoji))
         {
-            return Empty;
+            return Empty(culture);
         }
 
         return emoji;
     }
 
-    public static string RaRune(RuneData? runeData)
+    public static string RaRune(RuneData? runeData, CultureInfo? culture)
     {
         var itemData = runeData?.GetRaRuneItemData();
         if (itemData is null)
         {
-            return Empty;
+            return Empty(culture);
         }
 
-        var emoji = EmojisService.GetEmojiStringByName($"item_{itemData.ItemTypeId}_{itemData.GfxId}");
+        var emoji = EmojisService.GetEmojiStringByName($"item_{itemData.ItemTypeId}_{itemData.GfxId}", itemData.Name.ToString(culture));
         if (string.IsNullOrEmpty(emoji))
         {
-            return Empty;
+            return Empty(culture);
         }
 
         return emoji;
     }
 
     // States
-    public static string State(StateData? stateData)
+    public static string State(StateData? stateData, CultureInfo? culture)
     {
         if (stateData is null)
         {
-            return Empty;
+            return Empty(culture);
         }
 
-        var emoji = EmojisService.GetEmojiStringByName($"state_{stateData.Id}");
+        var emoji = EmojisService.GetEmojiStringByName($"state_{stateData.Id}", stateData.Name.ToString(culture));
         if (string.IsNullOrEmpty(emoji))
         {
-            return Empty;
+            return Empty(culture);
         }
 
         return emoji;
     }
 
     // Others
-    public static string ActionPoint => EmojisService.GetEmojiStringByName("effect_1");
-    public static string AirResistance => EmojisService.GetEmojiStringByName("effect_36");
-    public static string ApResistance => EmojisService.GetEmojiStringByName("ap_resistance");
-    public static string Dungeon => EmojisService.GetEmojiStringByName("dungeon");
-    public static string EarthResistance => EmojisService.GetEmojiStringByName("effect_33");
-    public static string Empty => EmojisService.GetEmojiStringByName("empty");
-    public static string FireResistance => EmojisService.GetEmojiStringByName("effect_34");
-    public static string Hand => EmojisService.GetEmojiStringByName("hand");
-    public static string HealthPoint => EmojisService.GetEmojiStringByName("health");
-    public static string House => EmojisService.GetEmojiStringByName("house");
-    public static string Kamas => EmojisService.GetEmojiStringByName("kamas");
-    public static string Lock => EmojisService.GetEmojiStringByName("lock");
-    public static string MovementPoint => EmojisService.GetEmojiStringByName("effect_23");
-    public static string MpResistance => EmojisService.GetEmojiStringByName("mp_resistance");
-    public static string NeutralResistance => EmojisService.GetEmojiStringByName("effect_37");
-    public static string Unknown => EmojisService.GetEmojiStringByName("unknown");
-    public static string Wand => EmojisService.GetEmojiStringByName("wand");
-    public static string WaterResistance => EmojisService.GetEmojiStringByName("effect_35");
-    public static string Xp => EmojisService.GetEmojiStringByName("xp");
+    public static string ActionPoint(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("effect_1", Translation.Get<BotTranslations>("ShortActionPoint", culture));
+    }
+
+    public static string ActionPointResistance(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("ap_resistance", Translation.Get<BotTranslations>("ActionPointResistance", culture));
+    }
+
+    public static string AirResistance(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("effect_36", Translation.Get<BotTranslations>("AirResistance", culture));
+    }
+
+    public static string Dispellable(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("lock", Translation.Get<BotTranslations>("Dispellable", culture));
+    }
+
+    public static string Dungeon(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("dungeon", Translation.Get<BotTranslations>("Dungeon", culture));
+    }
+
+    public static string EarthResistance(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("effect_33", Translation.Get<BotTranslations>("EarthResistance", culture));
+    }
+
+    public static string Empty(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("empty", Translation.Get<BotTranslations>("Empty", culture));
+    }
+
+    public static string FireResistance(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("effect_34", Translation.Get<BotTranslations>("FireResistance", culture));
+    }
+
+    public static string HealthPoint(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("health", Translation.Get<BotTranslations>("Vitality", culture));
+    }
+
+    public static string House(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("house", Translation.Get<BotTranslations>("House", culture));
+    }
+
+    public static string Kamas(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("kamas", Translation.Get<BotTranslations>("Kamas", culture));
+    }
+
+    public static string MovementPoint(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("effect_23", Translation.Get<BotTranslations>("ShortMovementPoint", culture));
+    }
+
+    public static string MovementPointResistance(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("mp_resistance", Translation.Get<BotTranslations>("MovementPointResistance", culture));
+    }
+
+    public static string NeutralResistance(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("effect_37", Translation.Get<BotTranslations>("NeutralResistance", culture));
+    }
+
+    public static string RideDetail(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("hand", Translation.Get<BotTranslations>("RideDetail", culture));
+    }
+
+    public static string Spell(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("wand", Translation.Get<BotTranslations>("Spell", culture));
+    }
+
+    public static string Unknown(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("unknown", Translation.Get<BotTranslations>("Unknown", culture));
+    }
+
+    public static string WaterResistance(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("effect_35", Translation.Get<BotTranslations>("WaterResistance", culture));
+    }
+
+    public static string Xp(CultureInfo? culture)
+    {
+        return EmojisService.GetEmojiStringByName("xp", Translation.Get<BotTranslations>("Experience", culture));
+    }
 }

@@ -3,17 +3,22 @@
 using DSharpPlus;
 using DSharpPlus.Entities;
 
+using System.Text.RegularExpressions;
+
 namespace Cyberia.Salamandra.Services;
 
 /// <summary>
 /// Represents a service for dealing with discord emojis.
 /// </summary>
-public sealed class EmojisService
+public sealed partial class EmojisService
 {
     private static Dictionary<string, DiscordEmoji> s_cachedEmojis = [];
 
     private readonly DiscordClient _discordClient;
     private readonly HttpClient _httpClient;
+
+    [GeneratedRegex(@"[^\w]")]
+    private static partial Regex EmojiNameSanitizationRegex();
 
     /// <summary>
     /// Initializes a new instance of <see cref="EmojisService"/>.
@@ -42,11 +47,29 @@ public sealed class EmojisService
     /// Gets the string representation of the emoji with the specified name.
     /// </summary>
     /// <param name="name">The name of the emoji.</param>
+    /// <param name="displayedName">The displayed name of the emoji.</param>
     /// <returns>The string representation of the emoji, or an empty string if the emoji was not found.</returns>
-    public static string GetEmojiStringByName(string name)
+    public static string GetEmojiStringByName(string name, string? displayedName = null)
     {
-        s_cachedEmojis.TryGetValue(name, out var emoji);
-        return emoji?.ToString() ?? string.Empty;
+        if (!s_cachedEmojis.TryGetValue(name, out var emoji))
+        {
+            return string.Empty;
+        }
+
+        if (displayedName is null)
+        {
+            return emoji.ToString();
+        }
+
+        displayedName = displayedName.NormalizeToAscii();
+        displayedName = displayedName.Replace(' ', '_');
+        displayedName = EmojiNameSanitizationRegex().Replace(displayedName, string.Empty);
+
+        var displayedNameSpan = displayedName.AsSpan(..Math.Min(displayedName.Length, Constant.MaxEmojiNameSize));
+
+        return emoji.IsAnimated
+            ? $"<a:{displayedNameSpan}:{emoji.Id}>"
+            : $"<:{displayedNameSpan}:{emoji.Id}>";
     }
 
     /// <summary>

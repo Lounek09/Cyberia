@@ -70,11 +70,38 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account quest.
+        /// </summary>
+        internal static string AccountQuest {
+            get {
+                return ResourceManager.GetString("AccountQuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AP dodge.
+        /// </summary>
+        internal static string ActionPointResistance {
+            get {
+                return ResourceManager.GetString("ActionPointResistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agility.
         /// </summary>
         internal static string Agility {
             get {
                 return ResourceManager.GetString("Agility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Air resistance.
+        /// </summary>
+        internal static string AirResistance {
+            get {
+                return ResourceManager.GetString("AirResistance", resourceCulture);
             }
         }
         
@@ -219,6 +246,33 @@ namespace Cyberia.Translations.Resources {
         internal static string Craft_NotFound {
             get {
                 return ResourceManager.GetString("Craft.NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dispellable.
+        /// </summary>
+        internal static string Dispellable {
+            get {
+                return ResourceManager.GetString("Dispellable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dungeon.
+        /// </summary>
+        internal static string Dungeon {
+            get {
+                return ResourceManager.GetString("Dungeon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Earth resistance.
+        /// </summary>
+        internal static string EarthResistance {
+            get {
+                return ResourceManager.GetString("EarthResistance", resourceCulture);
             }
         }
         
@@ -1162,6 +1216,42 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        internal static string Empty {
+            get {
+                return ResourceManager.GetString("Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Experience.
+        /// </summary>
+        internal static string Experience {
+            get {
+                return ResourceManager.GetString("Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to False.
+        /// </summary>
+        internal static string False {
+            get {
+                return ResourceManager.GetString("False", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fire resistance.
+        /// </summary>
+        internal static string FireResistance {
+            get {
+                return ResourceManager.GetString("FireResistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  from .
         /// </summary>
         internal static string from {
@@ -1176,6 +1266,15 @@ namespace Cyberia.Translations.Resources {
         internal static string Gladiatrool {
             get {
                 return ResourceManager.GetString("Gladiatrool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to House.
+        /// </summary>
+        internal static string House {
+            get {
+                return ResourceManager.GetString("House", resourceCulture);
             }
         }
         
@@ -1252,6 +1351,15 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kamas.
+        /// </summary>
+        internal static string Kamas {
+            get {
+                return ResourceManager.GetString("Kamas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your language has been modified to #1..
         /// </summary>
         internal static string Language_Set {
@@ -1324,6 +1432,33 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MP dodge.
+        /// </summary>
+        internal static string MovementPointResistance {
+            get {
+                return ResourceManager.GetString("MovementPointResistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neutral resistance.
+        /// </summary>
+        internal static string NeutralResistance {
+            get {
+                return ResourceManager.GetString("NeutralResistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quest.
+        /// </summary>
+        internal static string Quest {
+            get {
+                return ResourceManager.GetString("Quest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quest not found..
         /// </summary>
         internal static string Quest_NotFound {
@@ -1338,6 +1473,15 @@ namespace Cyberia.Translations.Resources {
         internal static string Rank {
             get {
                 return ResourceManager.GetString("Rank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeatable quest.
+        /// </summary>
+        internal static string RepeatableQuest {
+            get {
+                return ResourceManager.GetString("RepeatableQuest", resourceCulture);
             }
         }
         
@@ -1365,6 +1509,15 @@ namespace Cyberia.Translations.Resources {
         internal static string Rgpd_NoData {
             get {
                 return ResourceManager.GetString("Rgpd.NoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ride detail.
+        /// </summary>
+        internal static string RideDetail {
+            get {
+                return ResourceManager.GetString("RideDetail", resourceCulture);
             }
         }
         
@@ -1585,11 +1738,29 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MP.
+        /// </summary>
+        internal static string ShortMovementPoint {
+            get {
+                return ResourceManager.GetString("ShortMovementPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RA.
         /// </summary>
         internal static string ShortRange {
             get {
                 return ResourceManager.GetString("ShortRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spell.
+        /// </summary>
+        internal static string Spell {
+            get {
+                return ResourceManager.GetString("Spell", resourceCulture);
             }
         }
         
@@ -1630,11 +1801,38 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to True.
+        /// </summary>
+        internal static string True {
+            get {
+                return ResourceManager.GetString("True", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vitality.
         /// </summary>
         internal static string Vitality {
             get {
                 return ResourceManager.GetString("Vitality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Water resistance.
+        /// </summary>
+        internal static string WaterResistance {
+            get {
+                return ResourceManager.GetString("WaterResistance", resourceCulture);
             }
         }
         

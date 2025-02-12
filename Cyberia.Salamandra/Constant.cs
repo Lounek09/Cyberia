@@ -21,4 +21,6 @@ internal static class Constant
     public const int MaxSelectOption = 25;
     public const int MaxButtonPerRow = 5;
     public const int MaxComponentRowPerMessage = 5;
+
+    public const int MaxEmojiNameSize = 32;
 }

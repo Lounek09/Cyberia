@@ -181,11 +181,11 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Characteristics.Title", _culture), caracteristics, true);
 
             caracteristics = $"""
-                {Emojis.Bool(_spellLevelData.AdjustableRange)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.AdjustableRange", _culture)}
-                {Emojis.Bool(_spellLevelData.LineOfSight)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.LineOfSight", _culture)}
-                {Emojis.Bool(_spellLevelData.Linear)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.Linear", _culture)}
-                {Emojis.Bool(_spellLevelData.NeedFreeCell)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.NeedFreeCell", _culture)}
-                {Emojis.Bool(_spellLevelData.CricalFailureEndTheTurn)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.CriticalFailureEndTurn", _culture)}
+                {Emojis.Bool(_spellLevelData.AdjustableRange, _culture)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.AdjustableRange", _culture)}
+                {Emojis.Bool(_spellLevelData.LineOfSight, _culture)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.LineOfSight", _culture)}
+                {Emojis.Bool(_spellLevelData.Linear, _culture)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.Linear", _culture)}
+                {Emojis.Bool(_spellLevelData.NeedFreeCell, _culture)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.NeedFreeCell", _culture)}
+                {Emojis.Bool(_spellLevelData.CricalFailureEndTheTurn, _culture)} {Translation.Get<BotTranslations>("Embed.Field.Characteristics.Content.CriticalFailureEndTurn", _culture)}
                 """;
             embed.AddField(Constant.ZeroWidthSpace, caracteristics, true);
         }

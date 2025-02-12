@@ -87,7 +87,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
         var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, Translation.Get<BotTranslations>("Embed.Quest.Author", _culture), _culture)
-            .WithTitle($"{_questData.Name.ToString(_culture)} ({_questData.Id}) {Emojis.Quest(_questData)}{(_questData.HasDungeon ? Emojis.Dungeon : string.Empty)}");
+            .WithTitle($"{_questData.Name.ToString(_culture)} ({_questData.Id}) {Emojis.Quest(_questData, _culture)}{(_questData.HasDungeon ? Emojis.Dungeon(_culture) : string.Empty)}");
 
         if (_questStepData is not null)
         {
@@ -125,7 +125,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 {
                     rewardsBuilder.Append(_questStepData.RewardsData.Experience.ToFormattedString(_culture));
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(Emojis.Xp);
+                    rewardsBuilder.Append(Emojis.Xp(_culture));
                     rewardsBuilder.Append('\n');
                 }
 
@@ -133,7 +133,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 {
                     rewardsBuilder.Append(_questStepData.RewardsData.Kamas.ToFormattedString(_culture));
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(Emojis.Kamas);
+                    rewardsBuilder.Append(Emojis.Kamas(_culture));
                     rewardsBuilder.Append('\n');
                 }
 
@@ -149,7 +149,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 {
                     rewardsBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Rewards.Content.Emotes", _culture));
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(string.Join(", ", emotesReward.Select(x => Emojis.Emote(x) + x.Name.ToString(_culture))));
+                    rewardsBuilder.Append(string.Join(", ", emotesReward.Select(x => Emojis.Emote(x, _culture) + x.Name.ToString(_culture))));
                     rewardsBuilder.Append('\n');
                 }
 
@@ -158,7 +158,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 {
                     rewardsBuilder.Append(Translation.Get<BotTranslations>("Embed.Field.Rewards.Content.Jobs", _culture));
                     rewardsBuilder.Append(' ');
-                    rewardsBuilder.Append(string.Join(", ", jobsReward.Select(x => Emojis.Job(x) + x.Name.ToString(_culture))));
+                    rewardsBuilder.Append(string.Join(", ", jobsReward.Select(x => Emojis.Job(x, _culture) + x.Name.ToString(_culture))));
                     rewardsBuilder.Append('\n');
                 }
 

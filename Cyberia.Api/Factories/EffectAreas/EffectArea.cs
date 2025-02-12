@@ -45,6 +45,22 @@ public readonly record struct EffectArea
         return CdnManager.GetImagePathAsync("effectareas", Id, size);
     }
 
+    public string GetName(Language language)
+    {
+        return GetName(language.ToCulture());
+    }
+
+    public string GetName(CultureInfo? culture = null)
+    {
+        if (Translation.TryGet<ApiTranslations>($"EffectArea.{Id}", out var effectAreaName, culture))
+        {
+            Log.Warning("Unknown {EffectArea} {EffectAreaId}", nameof(EffectArea), Id);
+            return effectAreaName;
+        }
+
+        return Translation.UnknownData(Id, culture);
+    }
+
     /// <summary>
     /// Gets the size of the effect area as a string for the specified language.
     /// </summary>
@@ -89,12 +105,6 @@ public readonly record struct EffectArea
             return DescriptionString.Empty;
         }
 
-        if (!Translation.TryGet<ApiTranslations>($"EffectArea.{Id}", out var effectAreaName, culture))
-        {
-            Log.Warning("Unknown {EffectArea} {EffectAreaId}", nameof(EffectArea), Id);
-            effectAreaName = Translation.UnknownData(Id, culture);
-        }
-
-        return new DescriptionString($"#1 - {effectAreaName}", GetSize(culture));
+        return new DescriptionString($"#1 - {GetName(culture)}", GetSize(culture));
     }
 }

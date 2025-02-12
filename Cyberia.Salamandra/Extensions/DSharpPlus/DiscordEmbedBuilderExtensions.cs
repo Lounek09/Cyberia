@@ -205,7 +205,7 @@ public static class DiscordEmbedBuilderExtensions
             builder.Append('\n');
             builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.Area", culture));
             builder.Append(' ');
-            builder.Append(Emojis.EffectArea(itemTypeData.EffectArea));
+            builder.Append(Emojis.EffectArea(itemTypeData.EffectArea, culture));
             builder.Append(' ');
             builder.Append(itemTypeData.EffectArea.GetDescription(culture).ToString(Formatter.Bold));
         }
@@ -230,7 +230,7 @@ public static class DiscordEmbedBuilderExtensions
 
         foreach (var petFoodsData in petData.Foods)
         {
-            builder.Append(Emojis.Effect(petFoodsData.Effect));
+            builder.Append(Emojis.Effect(petFoodsData.Effect, culture));
             builder.Append(' ');
             builder.Append(Formatter.Bold(petFoodsData.Effect.GetDescription(culture)));
             builder.Append(" :\n");
@@ -319,7 +319,7 @@ public static class DiscordEmbedBuilderExtensions
                 }
             }
 
-            effectDescriptionBuilder.Append(Emojis.Effect(effect));
+            effectDescriptionBuilder.Append(Emojis.Effect(effect, culture));
             effectDescriptionBuilder.Append(' ');
 
             if (parametersDecorator is null)
@@ -333,13 +333,13 @@ public static class DiscordEmbedBuilderExtensions
 
             if (!effect.Dispellable)
             {
-                effectDescriptionBuilder.Append(Emojis.Lock);
+                effectDescriptionBuilder.Append(Emojis.Dispellable(culture));
             }
 
             if (effect.EffectArea.Size != EffectAreaFactory.Default.Size)
             {
                 effectDescriptionBuilder.Append(" - ");
-                effectDescriptionBuilder.Append(Emojis.EffectArea(effect.EffectArea));
+                effectDescriptionBuilder.Append(Emojis.EffectArea(effect.EffectArea, culture));
                 effectDescriptionBuilder.Append(' ');
                 effectDescriptionBuilder.Append(effect.EffectArea.GetSize(culture));
             }
