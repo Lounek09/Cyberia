@@ -460,7 +460,8 @@ public static class EffectFactory
             { 2172, GladiatroolIncreaseSpellLevelEffect.Create },
             { 2173, GladiatroolChangeSpellToBestElementEffect.Create },
             { 2174, CharacterLifePointsLostBasedOnCasterLifeMidlifeFromEarthEffect.Create },
-            { 2175, CharacterLifePointsLostBasedOnCasterLifeMidlifeFromBestElementEffect.Create }
+            { 2175, CharacterLifePointsLostBasedOnCasterLifeMidlifeFromBestElementEffect.Create },
+            { 2179, BoostCharacterXpBonusCoupleFightEffect.Create }
         }.ToFrozenDictionary();
 
     /// <summary>
