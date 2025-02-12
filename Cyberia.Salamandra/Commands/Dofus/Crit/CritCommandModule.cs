@@ -49,7 +49,7 @@ public sealed class CritCommandModule
         var rate = Formulas.GetCriticalRate(number, targetRate, agility);
         var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, targetRate);
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Crit.Author", culture))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Crit.Author", culture), culture)
             .WithDescription(Translation.Format(
                 Translation.Get<BotTranslations>("Embed.Crit.Description", culture),
                 Formatter.Bold($"1/{rate}"),

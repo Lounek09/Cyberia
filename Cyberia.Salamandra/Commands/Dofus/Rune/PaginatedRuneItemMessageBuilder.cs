@@ -28,7 +28,7 @@ public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<It
         CultureInfo? culture,
         int selectedPageIndex = 0)
     : base(
-        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.Item.Author", culture)),
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.Item.Author", culture), culture),
         Translation.Get<BotTranslations>("Embed.PaginatedItem.Title", culture),
         itemsData,
         search,

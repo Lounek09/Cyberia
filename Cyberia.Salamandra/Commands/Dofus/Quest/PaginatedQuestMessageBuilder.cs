@@ -25,7 +25,7 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
         CultureInfo? culture,
         int selectedPageIndex = 0)
     : base(
-        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, Translation.Get<BotTranslations>("Embed.Quest.Author", culture)),
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, Translation.Get<BotTranslations>("Embed.Quest.Author", culture), culture),
         Translation.Get<BotTranslations>("Embed.PaginatedQuest.Title", culture),
         questsData,
         search,

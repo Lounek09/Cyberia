@@ -28,7 +28,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
         CultureInfo? culture,
         int selectedPageIndex = 0)
     : base(
-        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Houses, Translation.Get<BotTranslations>("Embed.House.Author", culture)),
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Houses, Translation.Get<BotTranslations>("Embed.House.Author", culture), culture),
         Translation.Get<BotTranslations>("Embed.PaginatedHouse.Title", culture),
         housesData,
         search,

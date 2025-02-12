@@ -28,7 +28,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
         CultureInfo? culture,
         int selectedPageIndex = 0)
     : base(
-        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, Translation.Get<BotTranslations>("Embed.Map.Author", culture)),
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, Translation.Get<BotTranslations>("Embed.Map.Author", culture), culture),
         Translation.Get<BotTranslations>("Embed.PaginatedMap.Title", culture),
         mapsData,
         search,

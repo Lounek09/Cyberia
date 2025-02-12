@@ -37,12 +37,13 @@ public sealed class EmbedBuilderService
     /// </summary>
     /// <param name="category">The embed category.</param>
     /// <param name="authorText">The author text.</param>
+    /// <param name="culture">The culture to use for the date and time.</param>
     /// <returns>The created embed builder.</returns>
-    public DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText)
+    public DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture = null)
     {
         var now = DateTime.Now;
-        var date = now.ToRolePlayString();
-        var time = now.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
+        var date = now.ToRolePlayString(culture);
+        var time = now.ToString(culture?.DateTimeFormat.ShortTimePattern ?? CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
         return new DiscordEmbedBuilder()
             .WithColor(_embedColor)

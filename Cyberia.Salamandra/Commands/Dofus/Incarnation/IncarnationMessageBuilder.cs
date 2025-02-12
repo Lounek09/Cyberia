@@ -86,7 +86,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.Incarnation.Author", _culture))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.Incarnation.Author", _culture), _culture)
             .WithTitle($"{_itemName} ({_incarnationData.Id})")
             .WithImageUrl(await _incarnationData.GetBigImagePathAsync(CdnImageSize.Size512));
 

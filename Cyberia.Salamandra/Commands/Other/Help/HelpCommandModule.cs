@@ -32,6 +32,7 @@ public sealed class HelpCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task ExecuteAsync(SlashCommandContext ctx)
     {
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
         var locale = await _cultureService.GetDiscordLocaleAsync(ctx.Interaction) ?? string.Empty;
 
         StringBuilder descriptionBuilder = new();
@@ -77,7 +78,7 @@ public sealed class HelpCommandModule
             descriptionBuilder.Append('\n');
         }
 
-        await ctx.RespondAsync(_embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Help")
+        await ctx.RespondAsync(_embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Help", culture)
             .WithDescription(descriptionBuilder.ToString()));
     }
 }

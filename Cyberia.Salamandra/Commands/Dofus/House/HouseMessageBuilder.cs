@@ -75,7 +75,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Houses, Translation.Get<BotTranslations>("Embed.House.Author", _culture))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Houses, Translation.Get<BotTranslations>("Embed.House.Author", _culture), _culture)
             .WithTitle($"{_houseData.Name.ToString(_culture)} {_houseData.GetCoordinate()} ({_houseData.Id})")
             .AddField(
                 Translation.Get<BotTranslations>("Embed.Field.Room.Title", _culture),

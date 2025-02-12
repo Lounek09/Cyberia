@@ -88,7 +88,7 @@ public sealed class GladiatroolBreedMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Breeds, Translation.Get<BotTranslations>("Embed.Breed.Author", _culture))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Breeds, Translation.Get<BotTranslations>("Embed.Breed.Author", _culture), _culture)
             .WithTitle($"{_breedData.LongName.ToString(_culture)} - {Translation.Get<BotTranslations>("Gladiatrool", _culture)} ({_breedData.Id})");
 
         if (_weaponItemData is not null)

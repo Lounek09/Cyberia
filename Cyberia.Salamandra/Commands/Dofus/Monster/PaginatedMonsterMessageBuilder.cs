@@ -25,7 +25,7 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
         CultureInfo? culture,
         int selectedPageIndex = 0)
     : base(
-        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Bestiary, Translation.Get<BotTranslations>("Embed.Monster.Author", culture)),
+        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Bestiary, Translation.Get<BotTranslations>("Embed.Monster.Author", culture), culture),
         Translation.Get<BotTranslations>("Embed.PaginatedMonster.Title", culture),
         monstersData,
         search,

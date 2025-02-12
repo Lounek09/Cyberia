@@ -88,7 +88,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Bestiary, Translation.Get<BotTranslations>("Embed.Monster.Author", _culture))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Bestiary, Translation.Get<BotTranslations>("Embed.Monster.Author", _culture), _culture)
             .WithTitle($"{_monsterData.Name.ToString(_culture)} ({_monsterData.Id}) - {Translation.Get<BotTranslations>("Rank", _culture)} {_selectedGrade}")
             .WithThumbnail(await _monsterData.GetBigImagePathAsync(CdnImageSize.Size128));
 

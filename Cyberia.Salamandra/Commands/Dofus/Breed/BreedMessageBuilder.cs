@@ -85,7 +85,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Breeds, Translation.Get<BotTranslations>("Embed.Breed.Author", _culture))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Breeds, Translation.Get<BotTranslations>("Embed.Breed.Author", _culture), _culture)
             .WithTitle($"{_breedData.LongName.ToString(_culture)} ({_breedData.Id})")
             .WithDescription(Formatter.Italic(_breedData.Description.ToString(_culture)))
             .WithThumbnail(await _breedData.GetIconImagePathAsync(CdnImageSize.Size128))

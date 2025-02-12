@@ -109,7 +109,7 @@ public sealed class RuneCommandModule
 
         var percentRuneExtractable = Math.Round(RuneManager.GetPercentStatExtractable(runeData, itemLvl, statAmount), 2);
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Rune.Author", culture))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Rune.Author", culture), culture)
             .WithTitle(DofusApi.Datacenter.ItemsRepository.GetItemNameById(runeData.BaRuneItemId));
 
         if (statAmount == 1)

@@ -73,7 +73,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Rune.Author", _culture))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Rune.Author", _culture), _culture)
             .WithTitle($"{Translation.Get<BotTranslations>("Embed.RuneItem.Description", _culture)} {_quantity.ToFormattedString(_culture)}x {Formatter.Sanitize(_itemData.Name.ToString(_culture))} ({_itemData.Id})")
             .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128));
 

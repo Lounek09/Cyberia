@@ -45,7 +45,7 @@ public sealed class EscapeCommandModule
         var escapePercent = Formulas.GetEscapePercent(agility, enemyAgility);
         var agilityToEscapeForSure = Formulas.GetAgilityToEscapeForSure(enemyAgility);
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Escape.Author", culture))
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Escape.Author", culture), culture)
             .WithDescription(Translation.Format(
                 Translation.Get<BotTranslations>("Embed.Escape.Description", culture),
                 Formatter.Bold(agility.ToFormattedString(culture)),
