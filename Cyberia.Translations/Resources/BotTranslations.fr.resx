@@ -664,7 +664,7 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
     <value>Quête de compte</value>
   </data>
   <data name="ShortMovementPoint" xml:space="preserve">
-    <value>PA</value>
+    <value>PM</value>
   </data>
   <data name="AirResistance" xml:space="preserve">
     <value>Résistance air</value>
