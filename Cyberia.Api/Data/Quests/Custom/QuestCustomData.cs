@@ -16,12 +16,9 @@ internal sealed class QuestCustomData : IDofusData<int>
     [JsonPropertyName("d")]
     public bool HasDungeon { get; init; }
 
-    [JsonPropertyName("s")]
-    public IReadOnlyList<int> QuestStepsId { get; init; }
-
     [JsonConstructor]
     internal QuestCustomData()
     {
-        QuestStepsId = [];
+
     }
 }

@@ -135,7 +135,6 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
                 questData.Repeatable = questCustomData.Repeatable;
                 questData.Account = questCustomData.Account;
                 questData.HasDungeon = questCustomData.HasDungeon;
-                questData.QuestStepsId = questCustomData.QuestStepsId;
             }
         }
 

@@ -7,8 +7,11 @@ public sealed class QuestData : IDofusData<int>
     [JsonPropertyName("id")]
     public int Id { get; init; }
 
-    [JsonPropertyName("v")]
+    [JsonPropertyName("n")]
     public LocalizedString Name { get; init; }
+
+    [JsonPropertyName("s")]
+    public IReadOnlyList<int> QuestStepsId { get; init; }
 
     [JsonIgnore]
     public bool Repeatable { get; internal set; }
@@ -18,9 +21,6 @@ public sealed class QuestData : IDofusData<int>
 
     [JsonIgnore]
     public bool HasDungeon { get; internal set; }
-
-    [JsonIgnore]
-    public IReadOnlyList<int> QuestStepsId { get; internal set; }
 
     [JsonConstructor]
     internal QuestData()
