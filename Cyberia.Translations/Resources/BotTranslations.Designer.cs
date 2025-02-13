@@ -250,15 +250,6 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dispellable.
-        /// </summary>
-        internal static string Dispellable {
-            get {
-                return ResourceManager.GetString("Dispellable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Dungeon.
         /// </summary>
         internal static string Dungeon {
@@ -1446,6 +1437,15 @@ namespace Cyberia.Translations.Resources {
         internal static string NeutralResistance {
             get {
                 return ResourceManager.GetString("NeutralResistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non dispellable.
+        /// </summary>
+        internal static string NotDispellable {
+            get {
+                return ResourceManager.GetString("NotDispellable", resourceCulture);
             }
         }
         

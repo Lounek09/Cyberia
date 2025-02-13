@@ -693,8 +693,8 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
   <data name="House" xml:space="preserve">
     <value>Maison</value>
   </data>
-  <data name="Dispellable" xml:space="preserve">
-    <value>Désenvoutable</value>
+  <data name="NotDispellable" xml:space="preserve">
+    <value>Non désenvoutable</value>
   </data>
   <data name="NeutralResistance" xml:space="preserve">
     <value>Résistance neutre</value>

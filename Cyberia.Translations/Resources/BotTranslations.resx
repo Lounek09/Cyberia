@@ -697,8 +697,8 @@ To escape at 100%, you will need at minimum #4 agi.</value>
     <value>Kamas</value>
     <comment>@Invariant</comment>
   </data>
-  <data name="Dispellable" xml:space="preserve">
-    <value>Dispellable</value>
+  <data name="NotDispellable" xml:space="preserve">
+    <value>Non dispellable</value>
   </data>
   <data name="NeutralResistance" xml:space="preserve">
     <value>Neutral resistance</value>

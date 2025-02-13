@@ -210,7 +210,7 @@ public static class Emojis
 
     public static string Dispellable(CultureInfo? culture)
     {
-        return EmojisService.GetEmojiStringByName("lock", Translation.Get<BotTranslations>("Dispellable", culture));
+        return EmojisService.GetEmojiStringByName("lock", Translation.Get<BotTranslations>("NotDispellable", culture));
     }
 
     public static string Dungeon(CultureInfo? culture)
