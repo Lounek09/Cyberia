@@ -156,7 +156,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             miscellaneousBuilder.Append(Translation.Format(
                 Translation.Get<BotTranslations>("Embed.Field.Miscellaneous.Content.Price", _culture),
                 _itemData.GetNpcRetailPrice().ToFormattedString(_culture),
-                Emojis.Kamas(_culture));
+                Emojis.Kamas(_culture)));
         }
 
         if (_itemData.Ceremonial)
