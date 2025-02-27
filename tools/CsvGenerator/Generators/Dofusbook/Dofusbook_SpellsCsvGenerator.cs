@@ -51,15 +51,15 @@ public sealed class Dofusbook_SpellsCsvGenerator : DofusCsvGenerator<SpellData>
     {
         foreach (var spellLevelData in item.GetSpellLevelsData())
         {
-            //name
+            // name
             _builder.AppendCsvString(item.Name);
             _builder.Append(c_csvSeparator);
 
-            //official
+            // official
             _builder.Append(item.Id);
             _builder.Append(c_csvSeparator);
 
-            //breed
+            // breed
             var breedData = item.GetBreedData();
             if (breedData is not null)
             {
@@ -71,7 +71,7 @@ public sealed class Dofusbook_SpellsCsvGenerator : DofusCsvGenerator<SpellData>
             }
             _builder.Append(c_csvSeparator);
 
-            //summon
+            // summon
             var summon = spellLevelData.Effects.Any(x => x is SummonCreatureEffect or SummonStaticCreatureEffect);
             if (summon)
             {
@@ -79,46 +79,46 @@ public sealed class Dofusbook_SpellsCsvGenerator : DofusCsvGenerator<SpellData>
             }
             _builder.Append(c_csvSeparator);
 
-            //passive
+            // passive
             if (item.Passive)
             {
                 _builder.Append('x');
             }
             _builder.Append(c_csvSeparator);
 
-            //name_fr
+            // name_fr
             _builder.AppendCsvString(item.Name.ToString(Language.fr));
             _builder.Append(c_csvSeparator);
 
-            //name_en
+            // name_en
             _builder.AppendCsvString(item.Name.ToString(Language.en));
             _builder.Append(c_csvSeparator);
 
-            //name_es
+            // name_es
             _builder.AppendCsvString(item.Name.ToString(Language.es));
             _builder.Append(c_csvSeparator);
 
-            //desc_fr
+            // desc_fr
             _builder.AppendCsvString(item.Description.ToString(Language.fr));
             _builder.Append(c_csvSeparator);
 
-            //desc_en
+            // desc_en
             _builder.AppendCsvString(item.Description.ToString(Language.en));
             _builder.Append(c_csvSeparator);
 
-            //desc_es
+            // desc_es
             _builder.AppendCsvString(item.Description.ToString(Language.es));
             _builder.Append(c_csvSeparator);
 
-            //official_level
+            // official_level
             _builder.Append(spellLevelData.Id);
             _builder.Append(c_csvSeparator);
 
-            //level
+            // level
             _builder.Append(spellLevelData.NeededLevel);
             _builder.Append(c_csvSeparator);
 
-            //rank
+            // rank
             _builder.Append(spellLevelData.Rank);
             _builder.AppendLine();
         }

@@ -38,39 +38,39 @@ public sealed class Dofusbook_ItemSetsCsvGenerator : DofusCsvGenerator<ItemSetDa
                 continue;
             }
 
-            //name
+            // name
             _builder.AppendCsvString(item.Name);
             _builder.Append(c_csvSeparator);
 
-            //official
+            // official
             _builder.Append(item.Id);
             _builder.Append(c_csvSeparator);
 
-            //level
+            // level
             _builder.Append(item.GetLevel());
             _builder.Append(c_csvSeparator);
 
-            //no_item
+            // no_item
             _builder.Append(item.Effects.Count);
             _builder.Append(c_csvSeparator);
 
-            //name_fr
+            // name_fr
             _builder.AppendCsvString(item.Name.ToString(Language.fr));
             _builder.Append(c_csvSeparator);
 
-            //name_en
+            // name_en
             _builder.AppendCsvString(item.Name.ToString(Language.en));
             _builder.Append(c_csvSeparator);
 
-            //name_es
+            // name_es
             _builder.AppendCsvString(item.Name.ToString(Language.es));
             _builder.Append(c_csvSeparator);
 
-            //count_item
+            // count_item
             _builder.Append(i + 1);
             _builder.Append(c_csvSeparator);
 
-            //effect
+            // effect
             _builder.AppendEffects(effects);
             _builder.AppendLine();
         }

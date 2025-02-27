@@ -20,33 +20,28 @@ public static class StringBuilderExtensions
     {
         if (value.AsSpan().ContainsAny(s_csvChars))
         {
-            StringBuilder valueBuilder = new(value.Length + 16);
+            builder.Append('"');
+
             foreach (var character in value)
             {
                 switch (character)
                 {
                     case '"':
-                        valueBuilder.Append('"').Append('"');
+                        builder.Append('"').Append('"');
                         break;
                     case '\n':
-                        valueBuilder.Append(' ');
+                        builder.Append(' ');
                         break;
                     default:
-                        valueBuilder.Append(character);
+                        builder.Append(character);
                         break;
                 }
             }
 
-            builder.Append('"');
-            builder.Append(valueBuilder);
-            builder.Append('"');
-        }
-        else
-        {
-            builder.Append(value);
+            return builder.Append('"');
         }
 
-        return builder;
+        return builder.Append(value);
     }
 
     public static StringBuilder AppendEffects(this StringBuilder builder, IReadOnlyList<IEffect> effects)

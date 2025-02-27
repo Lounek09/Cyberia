@@ -26,23 +26,23 @@ public sealed class Dofusbook_TitlesCsvGenerator : DofusCsvGenerator<TitleData>
 
     protected override void AppendItem(TitleData item)
     {
-        //name
+        // name
         _builder.AppendCsvString(item.Name);
         _builder.Append(c_csvSeparator);
 
-        //official
+        // official
         _builder.Append(item.Id);
         _builder.Append(c_csvSeparator);
 
-        //name_fr
+        // name_fr
         _builder.AppendCsvString(item.Name.ToString(Language.fr));
         _builder.Append(c_csvSeparator);
 
-        //name_en
+        // name_en
         _builder.AppendCsvString(item.Name.ToString(Language.en));
         _builder.Append(c_csvSeparator);
 
-        //name_es
+        // name_es
         _builder.AppendCsvString(item.Name.ToString(Language.es));
         _builder.AppendLine();
     }

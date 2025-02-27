@@ -32,6 +32,7 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         "cc",
         "ec",
         "one_hand",
+        "etheral",
         "ceremonial",
         "incarnation",
         "craft"
@@ -88,28 +89,28 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         var itemStatsData = item.GetItemStatsData();
         var incarnationData = item.GetIncarnationData();
 
-        //name
+        // name
         _builder.AppendCsvString(item.Name);
         _builder.Append(c_csvSeparator);
 
-        //official
+        // official
         _builder.Append(item.Id);
         _builder.Append(c_csvSeparator);
 
-        //cloth_id
+        // cloth_id
         if (item.ItemSetId != 0)
         {
             _builder.Append(item.ItemSetId);
         }
         _builder.Append(c_csvSeparator);
 
-        //picture
+        // picture
         _builder.Append(item.ItemTypeId);
         _builder.Append('/');
         _builder.Append(item.GfxId);
         _builder.Append(c_csvSeparator);
 
-        //category
+        // category
         var itemTypeData = item.GetItemTypeData();
         if (itemTypeData is not null)
         {
@@ -117,35 +118,35 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         }
         _builder.Append(c_csvSeparator);
 
-        //level
+        // level
         _builder.Append(item.Level);
         _builder.Append(c_csvSeparator);
 
-        //name_fr
+        // name_fr
         _builder.AppendCsvString(item.Name.ToString(Language.fr));
         _builder.Append(c_csvSeparator);
 
-        //name_en
+        // name_en
         _builder.AppendCsvString(item.Name.ToString(Language.en));
         _builder.Append(c_csvSeparator);
 
-        //name_es
+        // name_es
         _builder.AppendCsvString(item.Name.ToString(Language.es));
         _builder.Append(c_csvSeparator);
 
-        //desc_fr
+        // desc_fr
         _builder.AppendCsvString(item.Description.ToString(Language.fr));
         _builder.Append(c_csvSeparator);
 
-        //desc_en
+        // desc_en
         _builder.AppendCsvString(item.Description.ToString(Language.en));
         _builder.Append(c_csvSeparator);
 
-        //desc_es
+        // desc_es
         _builder.AppendCsvString(item.Description.ToString(Language.es));
         _builder.Append(c_csvSeparator);
 
-        //effect
+        // effect
         List<IEffect> effects = [];
         if (itemStatsData is not null)
         {
@@ -163,58 +164,65 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         }
         _builder.Append(c_csvSeparator);
 
-        //constraint
+        // constraint
         _builder.AppendCriteria(item.Criteria);
         _builder.Append(c_csvSeparator);
 
         var weaponData = item.WeaponData;
 
-        //pa
+        // pa
         _builder.Append(weaponData?.ActionPointCost);
         _builder.Append(c_csvSeparator);
 
-        //po_min
+        // po_min
         _builder.Append(weaponData?.MinRange);
         _builder.Append(c_csvSeparator);
 
-        //po_max
+        // po_max
         _builder.Append(weaponData?.MaxRange);
         _builder.Append(c_csvSeparator);
 
-        //bonus_cc
+        // bonus_cc
         _builder.Append(weaponData?.CriticalBonus);
         _builder.Append(c_csvSeparator);
 
-        //cc
+        // cc
         _builder.Append(weaponData?.CriticalHitRate);
         _builder.Append(c_csvSeparator);
 
-        //ec
+        // ec
         _builder.Append(weaponData?.CriticalFailureRate);
         _builder.Append(c_csvSeparator);
 
-        //one_hand
+        // one_hand
         if (!item.TwoHanded)
         {
             _builder.Append('x');
         }
         _builder.Append(c_csvSeparator);
 
-        //ceremonial
+        // etheral
+        if (item.Cursed)
+        {
+            _builder.Append('x');
+        }
+        _builder.Append(c_csvSeparator);
+
+        // ceremonial
         if (item.Ceremonial)
         {
             _builder.Append('x');
         }
         _builder.Append(c_csvSeparator);
 
-        //incarnation
+        // incarnation
         if (incarnationData is not null)
         {
             _builder.Append('x');
         }
         _builder.Append(c_csvSeparator);
 
-        //craft
+        // craft
         var craftData = item.GetCraftData();
         if (craftData is not null)
         {
