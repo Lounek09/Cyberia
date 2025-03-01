@@ -202,7 +202,7 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         _builder.Append(c_csvSeparator);
 
         // etheral
-        if (item.Cursed)
+        if (item.Ethereal)
         {
             _builder.Append('x');
         }
