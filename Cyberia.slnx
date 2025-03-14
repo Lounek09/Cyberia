@@ -1,0 +1,32 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".git-blame-ignore-revs" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/" />
+  <Folder Name="/Solution Items/.github/workflows/">
+    <File Path=".github/workflows/build-validation.yml" />
+    <File Path=".github/workflows/publish.yml" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/CsvGenerator/CsvGenerator.csproj" />
+  </Folder>
+  <Project Path="Cyberia.Amphibian/Cyberia.Amphibian.csproj" />
+  <Project Path="Cyberia.Api/Cyberia.Api.csproj" />
+  <Project Path="Cyberia.Cytrusaurus/Cyberia.Cytrusaurus.csproj" />
+  <Project Path="Cyberia.Database/Cyberia.Database.csproj" />
+  <Project Path="Cyberia.Langzilla.Enums/Cyberia.Langzilla.Enums.csproj" />
+  <Project Path="Cyberia.Langzilla/Cyberia.Langzilla.csproj" />
+  <Project Path="Cyberia.Salamandra/Cyberia.Salamandra.csproj" />
+  <Project Path="Cyberia.Tests/Cyberia.Tests.csproj" />
+  <Project Path="Cyberia.Translations/Cyberia.Translations.csproj" />
+  <Project Path="Cyberia.Utils/Cyberia.Utils.csproj" />
+  <Project Path="Cyberia/Cyberia.csproj" />
+  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
+    <Property Name="RESX_NeutralResourcesLanguage" Value="en-US" />
+  </Properties>
+</Solution>
