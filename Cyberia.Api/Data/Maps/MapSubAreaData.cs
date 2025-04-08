@@ -21,12 +21,16 @@ public sealed class MapSubAreaData : IDofusData<int>
     [JsonPropertyName("v")]
     public IReadOnlyList<int> NearMapSubAreasId { get; init; }
 
+    [JsonPropertyName("tc")]
+    public IReadOnlyList<string> TacticalColors { get; init; }
+
     [JsonConstructor]
     internal MapSubAreaData()
     {
         Name = LocalizedString.Empty;
         FightAudioMusicId = [];
         NearMapSubAreasId = [];
+        TacticalColors = [];
     }
 
     public MapAreaData? GetMapAreaData()
