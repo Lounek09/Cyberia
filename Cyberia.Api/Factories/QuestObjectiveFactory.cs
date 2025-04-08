@@ -19,18 +19,23 @@ public static class QuestObjectiveFactory
         {
             { 0, FreeFormQuestObjective.Create },
             { 1, GoToNpcQuestObjective.Create },
-            { 2, BringItemToNpcQuestObjective.Create },
+            { 2, ShowItemToNpcQuestObjective.Create },
             { 3, BringItemToNpcQuestObjective.Create },
             { 4, DiscoverMapQuestObjective.Create },
             { 5, DiscoverMapSubAreaQuestObjective.Create },
             { 6, MultiFightMonsterQuestObjective.Create },
             { 7, FightMonsterQuestObjective.Create },
-            { 8, FreeFormQuestObjective.Create },
+            { 8, UseItemQuestObjective.Create },
             { 9, GoToNpcQuestObjective.Create },
-            { 10, BringItemToNpcQuestObjective.Create }, //Missing parameters in the langs
-            { 11, DuelSpecificPlayerQuestObjective.Create }, //Missing parameters in the langs
+            { 10, EscortQuestObjective.Create }, // Missing parameters in the langs
+            { 11, DuelSpecificPlayerQuestObjective.Create }, // Missing parameters in the langs
             { 12, BringSoulToNpcQuestObjective.Create },
-            { 13, FightMonsterQuestObjective.Create }
+            { 13, SeekHuntTargetQuestObjective.Create },
+            { 14, MakeHuntFightQuestObjective.Create },
+            { 15, CreateMagicFragmentQuestObjective.Create },
+            { 16, MultiFightFamilyMonsterQuestObjective.Create },
+            { 17, FinishDailyQuestQuestObjective.Create },
+            { 18, BringItemToNpcInAreaQuestObjective.Create },
         }.ToFrozenDictionary();
 
     /// <summary>
