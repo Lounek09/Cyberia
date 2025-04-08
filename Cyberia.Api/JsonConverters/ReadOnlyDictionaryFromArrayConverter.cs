@@ -19,9 +19,13 @@ public sealed class ReadOnlyDictionaryFromArrayConverter<TKey, TValue> : JsonCon
                 throw new JsonException();
             }
 
-            dictionary.Add(
-                JsonSerializer.Deserialize<TKey>(element[0], options) ?? throw new JsonException(),
-                JsonSerializer.Deserialize<TValue>(element[1], options) ?? throw new JsonException());
+            var key = JsonSerializer.Deserialize<TKey>(element[0], options) ?? throw new JsonException();
+            if (!dictionary.ContainsKey(key))
+            {
+                dictionary.Add(
+                    key,
+                    JsonSerializer.Deserialize<TValue>(element[1], options) ?? throw new JsonException());
+            }
         }
 
         return dictionary;
