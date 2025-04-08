@@ -32,7 +32,7 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         "cc",
         "ec",
         "one_hand",
-        "etheral",
+        "ethereal",
         "ceremonial",
         "incarnation",
         "craft"
@@ -201,7 +201,7 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         }
         _builder.Append(c_csvSeparator);
 
-        // etheral
+        // ethereal
         if (item.Ethereal)
         {
             _builder.Append('x');
