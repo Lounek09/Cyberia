@@ -134,13 +134,13 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
         foreach (var monsterSuperRaceLocalizedData in localizedRepository.MonsterSuperRaces)
         {
             var monsterSuperRaceData = GetMonsterSuperRaceDataById(monsterSuperRaceLocalizedData.Id);
-            monsterSuperRaceData?.Name.Add(twoLetterISOLanguageName, monsterSuperRaceLocalizedData.Name);
+            monsterSuperRaceData?.Name.TryAdd(twoLetterISOLanguageName, monsterSuperRaceLocalizedData.Name);
         }
 
         foreach (var monsterRaceLocalizedData in localizedRepository.MonsterRaces)
         {
             var monsterRaceData = GetMonsterRaceDataById(monsterRaceLocalizedData.Id);
-            monsterRaceData?.Name.Add(twoLetterISOLanguageName, monsterRaceLocalizedData.Name);
+            monsterRaceData?.Name.TryAdd(twoLetterISOLanguageName, monsterRaceLocalizedData.Name);
         }
 
         foreach (var monsterLocalizedData in localizedRepository.Monsters)
@@ -148,8 +148,8 @@ public sealed class MonstersRepository : DofusRepository, IDofusRepository
             var monsterData = GetMonsterDataById(monsterLocalizedData.Id);
             if (monsterData is not null)
             {
-                monsterData.Name.Add(twoLetterISOLanguageName, monsterLocalizedData.Name);
-                monsterData.NormalizedName.Add(twoLetterISOLanguageName, monsterLocalizedData.NormalizedName);
+                monsterData.Name.TryAdd(twoLetterISOLanguageName, monsterLocalizedData.Name);
+                monsterData.NormalizedName.TryAdd(twoLetterISOLanguageName, monsterLocalizedData.NormalizedName);
             }
         }
     }

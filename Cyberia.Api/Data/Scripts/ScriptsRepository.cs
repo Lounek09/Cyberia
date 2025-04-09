@@ -35,7 +35,7 @@ public sealed class ScriptsRepository : DofusRepository, IDofusRepository
         foreach (var scriptDialogLocalizedData in localizedRepository.ScriptDialogs)
         {
             var scriptDialogData = GetScriptDialogDataById(scriptDialogLocalizedData.Id);
-            scriptDialogData?.Message.Add(twoLetterISOLanguageName, scriptDialogLocalizedData.Message);
+            scriptDialogData?.Message.TryAdd(twoLetterISOLanguageName, scriptDialogLocalizedData.Message);
         }
     }
 }

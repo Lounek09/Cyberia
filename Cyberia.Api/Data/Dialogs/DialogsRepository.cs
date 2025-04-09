@@ -46,13 +46,13 @@ public sealed class DialogsRepository : DofusRepository, IDofusRepository
         foreach (var dialogQuestionLocalizedData in localizedRepository.DialogQuestions)
         {
             var dialogQuestionData = GetDialogQuestionDataById(dialogQuestionLocalizedData.Id);
-            dialogQuestionData?.Message.Add(twoLetterISOLanguageName, dialogQuestionLocalizedData.Message);
+            dialogQuestionData?.Message.TryAdd(twoLetterISOLanguageName, dialogQuestionLocalizedData.Message);
         }
 
         foreach (var dialogAnswerLocalizedData in localizedRepository.DialogAnswers)
         {
             var dialogAnswerData = GetDialogAnswerDataById(dialogAnswerLocalizedData.Id);
-            dialogAnswerData?.Message.Add(twoLetterISOLanguageName, dialogAnswerLocalizedData.Message);
+            dialogAnswerData?.Message.TryAdd(twoLetterISOLanguageName, dialogAnswerLocalizedData.Message);
         }
     }
 }

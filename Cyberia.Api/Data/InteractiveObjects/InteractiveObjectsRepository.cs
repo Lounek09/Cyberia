@@ -47,7 +47,7 @@ public sealed class InteractiveObjectsRepository : DofusRepository, IDofusReposi
         foreach (var interactiveObjectLocalizedData in localizedRepository.InteractiveObjects)
         {
             var interactiveObjectData = GetInteractiveObjectDataById(interactiveObjectLocalizedData.Id);
-            interactiveObjectData?.Name.Add(twoLetterISOLanguageName, interactiveObjectLocalizedData.Name);
+            interactiveObjectData?.Name.TryAdd(twoLetterISOLanguageName, interactiveObjectLocalizedData.Name);
         }
     }
     protected override void FinalizeLoading()

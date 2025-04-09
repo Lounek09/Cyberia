@@ -95,27 +95,27 @@ public sealed class ServersRepository : DofusRepository, IDofusRepository
             var serverData = GetServerDataById(serverLocalizedData.Id);
             if (serverData is not null)
             {
-                serverData.Name.Add(twoLetterISOLanguageName, serverLocalizedData.Name);
-                serverData.Description.Add(twoLetterISOLanguageName, serverLocalizedData.Description);
+                serverData.Name.TryAdd(twoLetterISOLanguageName, serverLocalizedData.Name);
+                serverData.Description.TryAdd(twoLetterISOLanguageName, serverLocalizedData.Description);
             }
         }
 
         foreach (var serverPopulationLocalizedData in localizedRepository.ServerPopulations)
         {
             var serverPopulationData = GetServerPopulationDataById(serverPopulationLocalizedData.Id);
-            serverPopulationData?.Name.Add(twoLetterISOLanguageName, serverPopulationLocalizedData.Name);
+            serverPopulationData?.Name.TryAdd(twoLetterISOLanguageName, serverPopulationLocalizedData.Name);
         }
 
         foreach (var serverCommunityLocalizedData in localizedRepository.ServerCommunities)
         {
             var serverCommunityData = GetServerCommunityDataById(serverCommunityLocalizedData.Id);
-            serverCommunityData?.Name.Add(twoLetterISOLanguageName, serverCommunityLocalizedData.Name);
+            serverCommunityData?.Name.TryAdd(twoLetterISOLanguageName, serverCommunityLocalizedData.Name);
         }
 
         foreach (var defaultServerSpecificTextLocalizedData in localizedRepository.DefaultServerSpecificTexts)
         {
             var defaultServerSpecificTextData = GetDefaultServerSpecificTextDataById(defaultServerSpecificTextLocalizedData.Id);
-            defaultServerSpecificTextData?.Description.Add(twoLetterISOLanguageName, defaultServerSpecificTextLocalizedData.Description);
+            defaultServerSpecificTextData?.Description.TryAdd(twoLetterISOLanguageName, defaultServerSpecificTextLocalizedData.Description);
         }
     }
 

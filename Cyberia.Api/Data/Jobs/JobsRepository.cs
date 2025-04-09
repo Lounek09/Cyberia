@@ -50,7 +50,7 @@ public sealed class JobsRepository : DofusRepository, IDofusRepository
         foreach (var jobLocalizedData in localizedRepository.Jobs)
         {
             var jobData = GetJobDataById(jobLocalizedData.Id);
-            jobData?.Name.Add(twoLetterISOLanguageName, jobLocalizedData.Name);
+            jobData?.Name.TryAdd(twoLetterISOLanguageName, jobLocalizedData.Name);
         }
     }
 }

@@ -158,7 +158,7 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
         foreach (var questLocalizedData in localizedRepository.Quests)
         {
             var questData = GetQuestDataById(questLocalizedData.Id);
-            questData?.Name.Add(twoLetterISOLanguageName, questLocalizedData.Name);
+            questData?.Name.TryAdd(twoLetterISOLanguageName, questLocalizedData.Name);
         }
 
         foreach (var questStepLocalizedData in localizedRepository.QuestSteps)
@@ -166,8 +166,8 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
             var questStepData = GetQuestStepDataById(questStepLocalizedData.Id);
             if (questStepData is not null)
             {
-                questStepData.Name.Add(twoLetterISOLanguageName, questStepLocalizedData.Name);
-                questStepData.Description.Add(twoLetterISOLanguageName, questStepLocalizedData.Description);
+                questStepData.Name.TryAdd(twoLetterISOLanguageName, questStepLocalizedData.Name);
+                questStepData.Description.TryAdd(twoLetterISOLanguageName, questStepLocalizedData.Description);
             }
         }
 
@@ -178,7 +178,7 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
             {
                 for (var i = 0; i < questObjectiveData.Parameters.Count; i++)
                 {
-                    questObjectiveData.Parameters[i].Add(twoLetterISOLanguageName, questObjectiveLocalizedData.Parameters[i]);
+                    questObjectiveData.Parameters[i].TryAdd(twoLetterISOLanguageName, questObjectiveLocalizedData.Parameters[i]);
                 }
             }
         }
@@ -186,7 +186,7 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
         foreach (var questObjectiveTypeLocalizedData in localizedRepository.QuestObjectiveTypes)
         {
             var questObjectiveTypeData = GetQuestObjectiveTypeDataById(questObjectiveTypeLocalizedData.Id);
-            questObjectiveTypeData?.Description.Add(twoLetterISOLanguageName, questObjectiveTypeLocalizedData.Description);
+            questObjectiveTypeData?.Description.TryAdd(twoLetterISOLanguageName, questObjectiveTypeLocalizedData.Description);
         }
     }
 

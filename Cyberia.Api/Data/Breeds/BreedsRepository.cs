@@ -115,12 +115,12 @@ public sealed class BreedsRepository : DofusRepository, IDofusRepository
             var breedData = GetBreedDataById(breedLocalizedData.Id);
             if (breedData is not null)
             {
-                breedData.Name.Add(twoLetterISOLanguageName, breedLocalizedData.Name);
-                breedData.LongName.Add(twoLetterISOLanguageName, breedLocalizedData.LongName);
-                breedData.Description.Add(twoLetterISOLanguageName, breedLocalizedData.Description);
-                breedData.ShortDescription.Add(twoLetterISOLanguageName, breedLocalizedData.ShortDescription);
-                breedData.TemporisPassiveName.Add(twoLetterISOLanguageName, breedLocalizedData.TemporisPassiveName);
-                breedData.TemporisPassiveDescription.Add(twoLetterISOLanguageName, breedLocalizedData.TemporisPassiveDescription);
+                breedData.Name.TryAdd(twoLetterISOLanguageName, breedLocalizedData.Name);
+                breedData.LongName.TryAdd(twoLetterISOLanguageName, breedLocalizedData.LongName);
+                breedData.Description.TryAdd(twoLetterISOLanguageName, breedLocalizedData.Description);
+                breedData.ShortDescription.TryAdd(twoLetterISOLanguageName, breedLocalizedData.ShortDescription);
+                breedData.TemporisPassiveName.TryAdd(twoLetterISOLanguageName, breedLocalizedData.TemporisPassiveName);
+                breedData.TemporisPassiveDescription.TryAdd(twoLetterISOLanguageName, breedLocalizedData.TemporisPassiveDescription);
             }
         }
     }

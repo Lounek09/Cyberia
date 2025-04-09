@@ -61,13 +61,13 @@ public sealed class NpcsRepository : DofusRepository, IDofusRepository
         foreach (var npcActionLocalizedData in localizedRepository.NpcActions)
         {
             var npcActionData = GetNpcActionDataById(npcActionLocalizedData.Id);
-            npcActionData?.Name.Add(twoLetterISOLanguageName, npcActionLocalizedData.Name);
+            npcActionData?.Name.TryAdd(twoLetterISOLanguageName, npcActionLocalizedData.Name);
         }
 
         foreach (var npcLocalizedData in localizedRepository.Npcs)
         {
             var npcData = GetNpcDataById(npcLocalizedData.Id);
-            npcData?.Name.Add(twoLetterISOLanguageName, npcLocalizedData.Name);
+            npcData?.Name.TryAdd(twoLetterISOLanguageName, npcLocalizedData.Name);
         }
     }
 }

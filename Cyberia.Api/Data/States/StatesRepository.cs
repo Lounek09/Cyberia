@@ -52,8 +52,8 @@ public sealed class StatesRepository : DofusRepository, IDofusRepository
             var stateData = GetStateDataById(stateLocalizedData.Id);
             if (stateData is not null)
             {
-                stateData.Name.Add(twoLetterISOLanguageName, stateLocalizedData.Name);
-                stateData.ShortName.Add(twoLetterISOLanguageName, stateLocalizedData.ShortName);
+                stateData.Name.TryAdd(twoLetterISOLanguageName, stateLocalizedData.Name);
+                stateData.ShortName.TryAdd(twoLetterISOLanguageName, stateLocalizedData.ShortName);
             }
         }
     }

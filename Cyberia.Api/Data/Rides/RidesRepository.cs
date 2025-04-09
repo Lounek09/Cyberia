@@ -76,7 +76,7 @@ public sealed class RidesRepository : DofusRepository, IDofusRepository
         foreach (var rideLocalizedData in localizedRepository.Rides)
         {
             var rideDate = GetRideDataById(rideLocalizedData.Id);
-            rideDate?.Name.Add(twoLetterISOLanguageName, rideLocalizedData.Name);
+            rideDate?.Name.TryAdd(twoLetterISOLanguageName, rideLocalizedData.Name);
         }
 
         foreach (var rideAbilityLocalizedData in localizedRepository.RideAbilities)
@@ -84,8 +84,8 @@ public sealed class RidesRepository : DofusRepository, IDofusRepository
             var rideAbilityData = GetRideAbilityDataById(rideAbilityLocalizedData.Id);
             if (rideAbilityData is not null)
             {
-                rideAbilityData.Name.Add(twoLetterISOLanguageName, rideAbilityLocalizedData.Name);
-                rideAbilityData.Description.Add(twoLetterISOLanguageName, rideAbilityLocalizedData.Description);
+                rideAbilityData.Name.TryAdd(twoLetterISOLanguageName, rideAbilityLocalizedData.Name);
+                rideAbilityData.Description.TryAdd(twoLetterISOLanguageName, rideAbilityLocalizedData.Description);
             }
         }
     }

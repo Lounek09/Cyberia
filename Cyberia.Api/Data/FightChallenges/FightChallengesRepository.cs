@@ -37,8 +37,8 @@ public sealed class FightChallengesRepository : DofusRepository, IDofusRepositor
             var fightChallengeData = GetFightChallengeDataById(fightChallengeLocalizedData.Id);
             if (fightChallengeData is not null)
             {
-                fightChallengeData.Name.Add(twoLetterISOLanguageName, fightChallengeLocalizedData.Name);
-                fightChallengeData.Description.Add(twoLetterISOLanguageName, fightChallengeLocalizedData.Description);
+                fightChallengeData.Name.TryAdd(twoLetterISOLanguageName, fightChallengeLocalizedData.Name);
+                fightChallengeData.Description.TryAdd(twoLetterISOLanguageName, fightChallengeLocalizedData.Description);
             }
         }
     }

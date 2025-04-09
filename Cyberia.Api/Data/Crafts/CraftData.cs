@@ -57,25 +57,19 @@ public sealed class CraftData : IDofusData<int>
             {
                 foreach (var subIngredient in subCraft.GetIngredientsWithSubCraft(ingredient.Value))
                 {
-                    if (ingredients.ContainsKey(subIngredient.Key))
+                    if (!ingredients.TryAdd(subIngredient.Key, subIngredient.Value))
                     {
                         ingredients[subIngredient.Key] += subIngredient.Value;
-                        continue;
                     }
-
-                    ingredients.Add(subIngredient.Key, subIngredient.Value);
                 }
 
                 continue;
             }
 
-            if (ingredients.ContainsKey(ingredient.Key))
+            if (!ingredients.TryAdd(ingredient.Key, ingredient.Value))
             {
                 ingredients[ingredient.Key] += ingredient.Value;
-                continue;
             }
-
-            ingredients.Add(ingredient.Key, ingredient.Value);
         }
 
         return ingredients;

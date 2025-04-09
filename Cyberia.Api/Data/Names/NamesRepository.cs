@@ -59,13 +59,13 @@ public sealed class NamesRepository : DofusRepository, IDofusRepository
         foreach (var taxCollectorLastNameLocalizedData in localizedRepository.TaxCollectorLastNames)
         {
             var taxCollectorLastNameData = GetTaxCollectorLastNameDataById(taxCollectorLastNameLocalizedData.Id);
-            taxCollectorLastNameData?.Name.Add(twoLetterISOLanguageName, taxCollectorLastNameLocalizedData.Name);
+            taxCollectorLastNameData?.Name.TryAdd(twoLetterISOLanguageName, taxCollectorLastNameLocalizedData.Name);
         }
 
         foreach (var taxCollectorFirstNameLocalizedData in localizedRepository.TaxCollectorFirstNames)
         {
             var taxCollectorFirstNameData = GetTaxCollectorFirstNameDataById(taxCollectorFirstNameLocalizedData.Id);
-            taxCollectorFirstNameData?.Name.Add(twoLetterISOLanguageName, taxCollectorFirstNameLocalizedData.Name);
+            taxCollectorFirstNameData?.Name.TryAdd(twoLetterISOLanguageName, taxCollectorFirstNameLocalizedData.Name);
         }
     }
 }

@@ -162,19 +162,19 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         foreach (var mapSuperAreaLocalizedData in localizedRepository.MapSuperAreas)
         {
             var mapSuperAreaData = GetMapSuperAreaDataById(mapSuperAreaLocalizedData.Id);
-            mapSuperAreaData?.Name.Add(twoLetterISOLanguageName, mapSuperAreaLocalizedData.Name);
+            mapSuperAreaData?.Name.TryAdd(twoLetterISOLanguageName, mapSuperAreaLocalizedData.Name);
         }
 
         foreach (var mapAreaLocalizedData in localizedRepository.MapAreas)
         {
             var mapAreaData = GetMapAreaDataById(mapAreaLocalizedData.Id);
-            mapAreaData?.Name.Add(twoLetterISOLanguageName, mapAreaLocalizedData.Name);
+            mapAreaData?.Name.TryAdd(twoLetterISOLanguageName, mapAreaLocalizedData.Name);
         }
 
         foreach (var mapSubAreaLocalizedData in localizedRepository.MapSubAreas)
         {
             var mapSubAreaData = GetMapSubAreaDataById(mapSubAreaLocalizedData.Id);
-            mapSubAreaData?.Name.Add(twoLetterISOLanguageName, mapSubAreaLocalizedData.Name);
+            mapSubAreaData?.Name.TryAdd(twoLetterISOLanguageName, mapSubAreaLocalizedData.Name);
         }
     }
 }

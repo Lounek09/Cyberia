@@ -83,7 +83,7 @@ public sealed class ItemSetsRepository : DofusRepository, IDofusRepository
         foreach (var itemSetLocalizedData in localizedRepository.ItemSets)
         {
             var itemSetData = GetItemSetDataById(itemSetLocalizedData.Id);
-            itemSetData?.Name.Add(twoLetterISOLanguageName, itemSetLocalizedData.Name);
+            itemSetData?.Name.TryAdd(twoLetterISOLanguageName, itemSetLocalizedData.Name);
         }
     }
 }

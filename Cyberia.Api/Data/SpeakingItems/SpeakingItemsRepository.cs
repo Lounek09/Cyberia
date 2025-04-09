@@ -46,7 +46,7 @@ public sealed class SpeakingItemsRepository : DofusRepository, IDofusRepository
         foreach (var speakingItemMessageLocalizedData in localizedRepository.SpeakingItemsMessages)
         {
             var speakingItemMessageData = GetSpeakingItemsMessageData(speakingItemMessageLocalizedData.Id);
-            speakingItemMessageData?.Message.Add(twoLetterISOLanguageName, speakingItemMessageLocalizedData.Message);
+            speakingItemMessageData?.Message.TryAdd(twoLetterISOLanguageName, speakingItemMessageLocalizedData.Message);
         }
     }
 }

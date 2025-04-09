@@ -168,31 +168,31 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
         foreach (var alignmentLocalizedData in localizedRepository.Alignments)
         {
             var alignmentData = GetAlignmentDataById(alignmentLocalizedData.Id);
-            alignmentData?.Name.Add(twoLetterISOLanguageName, alignmentLocalizedData.Name);
+            alignmentData?.Name.TryAdd(twoLetterISOLanguageName, alignmentLocalizedData.Name);
         }
 
         foreach (var alignmentOrderLocalizedData in localizedRepository.AlignmentOrders)
         {
             var alignmentOrderData = GetAlignmentOrderDataById(alignmentOrderLocalizedData.Id);
-            alignmentOrderData?.Name.Add(twoLetterISOLanguageName, alignmentOrderLocalizedData.Name);
+            alignmentOrderData?.Name.TryAdd(twoLetterISOLanguageName, alignmentOrderLocalizedData.Name);
         }
 
         foreach (var alignmentFeatLocalizedData in localizedRepository.AlignmentFeats)
         {
             var alignmentFeatData = GetAlignmentFeatDataById(alignmentFeatLocalizedData.Id);
-            alignmentFeatData?.Name.Add(twoLetterISOLanguageName, alignmentFeatLocalizedData.Name);
+            alignmentFeatData?.Name.TryAdd(twoLetterISOLanguageName, alignmentFeatLocalizedData.Name);
         }
 
         foreach (var alignmentFeatEffectLocalizedData in localizedRepository.AlignmentFeatEffects)
         {
             var alignmentFeatEffectData = GetAlignmentFeatEffectDataById(alignmentFeatEffectLocalizedData.Id);
-            alignmentFeatEffectData?.Description.Add(twoLetterISOLanguageName, alignmentFeatEffectLocalizedData.Description);
+            alignmentFeatEffectData?.Description.TryAdd(twoLetterISOLanguageName, alignmentFeatEffectLocalizedData.Description);
         }
 
         foreach (var alignmentBalanceLocalizedData in localizedRepository.AlignmentBalances)
         {
             var alignmentBalanceData = GetAlignmentBalanceDataById(alignmentBalanceLocalizedData.Id);
-            alignmentBalanceData?.Name.Add(twoLetterISOLanguageName, alignmentBalanceLocalizedData.Name);
+            alignmentBalanceData?.Name.TryAdd(twoLetterISOLanguageName, alignmentBalanceLocalizedData.Name);
         }
 
         foreach (var alignmentSpecializationLocalizedData in localizedRepository.AlignmentSpecializations)
@@ -200,8 +200,8 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
             var alignmentSpecializationData = GetAlignmentSpecializationDataById(alignmentSpecializationLocalizedData.Id);
             if (alignmentSpecializationData is not null)
             {
-                alignmentSpecializationData?.Name.Add(twoLetterISOLanguageName, alignmentSpecializationLocalizedData.Name);
-                alignmentSpecializationData?.Description.Add(twoLetterISOLanguageName, alignmentSpecializationLocalizedData.Description);
+                alignmentSpecializationData?.Name.TryAdd(twoLetterISOLanguageName, alignmentSpecializationLocalizedData.Name);
+                alignmentSpecializationData?.Description.TryAdd(twoLetterISOLanguageName, alignmentSpecializationLocalizedData.Description);
 
             }
         }

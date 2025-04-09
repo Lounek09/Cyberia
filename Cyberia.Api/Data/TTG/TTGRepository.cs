@@ -86,13 +86,13 @@ public sealed class TTGRepository : DofusRepository, IDofusRepository
         foreach (var ttgEntityLocalizedData in localizedRepository.TTGEntities)
         {
             var ttgEntityData = GetTTGEntityDataById(ttgEntityLocalizedData.Id);
-            ttgEntityData?.Name.Add(twoLetterISOLanguageName, ttgEntityLocalizedData.Name);
+            ttgEntityData?.Name.TryAdd(twoLetterISOLanguageName, ttgEntityLocalizedData.Name);
         }
 
         foreach (var ttgFamilyLocalizedData in localizedRepository.TTGFamilies)
         {
             var ttgFamilyData = GetTTGFamilyDataById(ttgFamilyLocalizedData.Id);
-            ttgFamilyData?.Name.Add(twoLetterISOLanguageName, ttgFamilyLocalizedData.Name);
+            ttgFamilyData?.Name.TryAdd(twoLetterISOLanguageName, ttgFamilyLocalizedData.Name);
         }
     }
 }

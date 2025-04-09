@@ -39,7 +39,7 @@ public sealed class HintsRepository : DofusRepository, IDofusRepository
         foreach (var hintCategoryLocalizedData in localizedRepository.HintCategories)
         {
             var hintCategoryData = GetHintCategoryDataById(hintCategoryLocalizedData.Id);
-            hintCategoryData?.Name.Add(twoLetterISOLanguageName, hintCategoryLocalizedData.Name);
+            hintCategoryData?.Name.TryAdd(twoLetterISOLanguageName, hintCategoryLocalizedData.Name);
         }
     }
 }

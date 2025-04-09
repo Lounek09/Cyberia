@@ -35,7 +35,7 @@ public sealed class RanksRepository : DofusRepository, IDofusRepository
         foreach (var guildRankLocalizedData in localizedRepository.GuildRanks)
         {
             var guildRankData = GetGuildRankDataById(guildRankLocalizedData.Id);
-            guildRankData?.Name.Add(twoLetterISOLanguageName, guildRankLocalizedData.Name);
+            guildRankData?.Name.TryAdd(twoLetterISOLanguageName, guildRankLocalizedData.Name);
         }
     }
 }

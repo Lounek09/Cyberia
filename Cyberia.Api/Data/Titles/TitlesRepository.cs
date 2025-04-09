@@ -50,7 +50,7 @@ public sealed class TitlesRepository : DofusRepository, IDofusRepository
         foreach (var titleLocalizedData in localizedRepository.Titles)
         {
             var titleData = GetTitleDataById(titleLocalizedData.Id);
-            titleData?.Name.Add(twoLetterISOLanguageName, titleLocalizedData.Name);
+            titleData?.Name.TryAdd(twoLetterISOLanguageName, titleLocalizedData.Name);
         }
     }
 }

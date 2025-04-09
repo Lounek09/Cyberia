@@ -141,13 +141,13 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
         foreach (var itemUnicStringLocalizedData in localizedRepository.ItemUnicStrings)
         {
             var itemUnicStringData = GetItemUnicStringDataById(itemUnicStringLocalizedData.Id);
-            itemUnicStringData?.Value.Add(twoLetterISOLanguageName, itemUnicStringLocalizedData.Value);
+            itemUnicStringData?.Value.TryAdd(twoLetterISOLanguageName, itemUnicStringLocalizedData.Value);
         }
 
         foreach (var itemTypeLocalizedData in localizedRepository.ItemTypes)
         {
             var itemTypeData = GetItemTypeDataById(itemTypeLocalizedData.Id);
-            itemTypeData?.Name.Add(twoLetterISOLanguageName, itemTypeLocalizedData.Name);
+            itemTypeData?.Name.TryAdd(twoLetterISOLanguageName, itemTypeLocalizedData.Name);
         }
 
         foreach (var itemLocalizedData in localizedRepository.Items)
@@ -155,9 +155,9 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
             var itemData = GetItemDataById(itemLocalizedData.Id);
             if (itemData is not null)
             {
-                itemData.Name.Add(twoLetterISOLanguageName, itemLocalizedData.Name);
-                itemData.NormalizedName.Add(twoLetterISOLanguageName, itemLocalizedData.NormalizedName);
-                itemData.Description.Add(twoLetterISOLanguageName, itemLocalizedData.Description);
+                itemData.Name.TryAdd(twoLetterISOLanguageName, itemLocalizedData.Name);
+                itemData.NormalizedName.TryAdd(twoLetterISOLanguageName, itemLocalizedData.NormalizedName);
+                itemData.Description.TryAdd(twoLetterISOLanguageName, itemLocalizedData.Description);
             }
         }
     }

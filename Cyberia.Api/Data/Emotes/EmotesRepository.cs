@@ -50,7 +50,7 @@ public sealed class EmotesRepository : DofusRepository, IDofusRepository
         foreach (var emoteLocalizedData in localizedRepository.Emotes)
         {
             var emoteData = GetEmoteDataById(emoteLocalizedData.Id);
-            emoteData?.Name.Add(twoLetterISOLanguageName, emoteLocalizedData.Name);
+            emoteData?.Name.TryAdd(twoLetterISOLanguageName, emoteLocalizedData.Name);
         }
     }
 }

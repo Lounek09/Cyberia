@@ -68,7 +68,7 @@ public sealed class EffectsRepository : DofusRepository, IDofusRepository
         foreach (var effectLocalizedData in localizedRepository.Effects)
         {
             var effectData = GetEffectDataById(effectLocalizedData.Id);
-            effectData?.Description.Add(twoLetterISOLanguageName, effectLocalizedData.Description);
+            effectData?.Description.TryAdd(twoLetterISOLanguageName, effectLocalizedData.Description);
         }
     }
 }

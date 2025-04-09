@@ -143,8 +143,8 @@ public sealed class HousesRepository : DofusRepository, IDofusRepository
             var houseData = GetHouseDataById(houseLocalizedData.Id);
             if (houseData is not null)
             {
-                houseData.Name.Add(twoLetterISOLanguageName, houseLocalizedData.Name);
-                houseData.Description.Add(twoLetterISOLanguageName, houseLocalizedData.Description);
+                houseData.Name.TryAdd(twoLetterISOLanguageName, houseLocalizedData.Name);
+                houseData.Description.TryAdd(twoLetterISOLanguageName, houseLocalizedData.Description);
             }
         }
     }

@@ -54,15 +54,9 @@ public readonly record struct LocalizedString
     /// <param name="twoLetterISOLanguageName">The ISO 639-1 two-letter code for the language.</param>
     /// <param name="translation">The translation.</param>
     /// <returns><see langword="true"/> if the translation was added; otherwise, <see langword="false"/>.</returns>
-    internal bool Add(string twoLetterISOLanguageName, string translation)
+    internal bool TryAdd(string twoLetterISOLanguageName, string translation)
     {
-        if (_translations.ContainsKey(twoLetterISOLanguageName))
-        {
-            return false;
-        }
-
-        _translations.Add(twoLetterISOLanguageName, translation);
-        return true;
+        return _translations.TryAdd(twoLetterISOLanguageName, translation);
     }
 
     /// <summary>

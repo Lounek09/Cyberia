@@ -38,8 +38,8 @@ public sealed class PvpRepository : DofusRepository, IDofusRepository
                 {
                     for (var j = 0; j < PvpGrades[i].Count; j++)
                     {
-                        PvpGrades[i][j].Name.Add(twoLetterISOLanguageName, localizedRepository.PvpGrades[i][j].Name);
-                        PvpGrades[i][j].ShortName.Add(twoLetterISOLanguageName, localizedRepository.PvpGrades[i][j].ShortName);
+                        PvpGrades[i][j].Name.TryAdd(twoLetterISOLanguageName, localizedRepository.PvpGrades[i][j].Name);
+                        PvpGrades[i][j].ShortName.TryAdd(twoLetterISOLanguageName, localizedRepository.PvpGrades[i][j].ShortName);
                     }
                 }
             }

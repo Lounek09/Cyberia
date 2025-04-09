@@ -114,8 +114,8 @@ public sealed class SpellsRepository : DofusRepository, IDofusRepository
             var spellData = GetSpellDataById(spellLocalizedData.Id);
             if (spellData is not null)
             {
-                spellData.Name.Add(twoLetterISOLanguageName, spellLocalizedData.Name);
-                spellData.Description.Add(twoLetterISOLanguageName, spellLocalizedData.Description);
+                spellData.Name.TryAdd(twoLetterISOLanguageName, spellLocalizedData.Name);
+                spellData.Description.TryAdd(twoLetterISOLanguageName, spellLocalizedData.Description);
             }
         }
     }

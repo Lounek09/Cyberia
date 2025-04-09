@@ -35,7 +35,7 @@ public sealed class SkillsRepository : DofusRepository, IDofusRepository
         foreach (var skillLocalizedData in localizedRepository.Skills)
         {
             var skillData = GetSkillDataById(skillLocalizedData.Id);
-            skillData?.Description.Add(twoLetterISOLanguageName, skillLocalizedData.Description);
+            skillData?.Description.TryAdd(twoLetterISOLanguageName, skillLocalizedData.Description);
         }
     }
 }

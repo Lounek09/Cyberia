@@ -74,7 +74,7 @@ public sealed class TimeZoneRepository : DofusRepository, IDofusRepository
         {
             foreach (var pair in localizedRepository.StartDayOfMonths)
             {
-                StartDayOfMonths[pair.Key].Add(twoLetterISOLanguageName, pair.Value);
+                StartDayOfMonths[pair.Key].TryAdd(twoLetterISOLanguageName, pair.Value);
             }
         }
     }
