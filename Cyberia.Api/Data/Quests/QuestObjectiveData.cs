@@ -13,7 +13,7 @@ public sealed class QuestObjectiveData : IDofusData<int>
     public int QuestObjectiveTypeId { get; init; }
 
     [JsonPropertyName("p")]
-    [JsonConverter(typeof(ConvertToReadOnlyListConverter<LocalizedString>))]
+    [JsonConverter(typeof(TypeCoercingReadOnlyListConverter<LocalizedString>))]
     public IReadOnlyList<LocalizedString> Parameters { get; init; }
 
     [JsonPropertyName("x")]

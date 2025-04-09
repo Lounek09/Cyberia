@@ -5,34 +5,53 @@ using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.JsonConverters;
 
+/// <summary>
+/// A specialized JSON converter for serializing and deserializing <see cref="QuestStepRewardsData"/> objects.
+/// </summary>
+/// <remarks>
+/// When reading JSON, this converter:
+/// <list type="bullet">
+///   <item>Expects a JSON array with 6 elements representing the properties of <see cref="QuestStepRewardsData"/></item>
+///   <item>Deserializes the array into a <see cref="QuestStepRewardsData"/> instance</item>
+/// </list>
+/// 
+/// When writing JSON, it:
+/// <list type="bullet">
+///   <item>Serializes the <see cref="QuestStepRewardsData"/> properties into a JSON array</item>
+/// </list>
+/// </remarks>
 public sealed class QuestStepRewardsDataConverter : JsonConverter<QuestStepRewardsData>
 {
     public override QuestStepRewardsData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
-
-        if (elements.Length < 6)
+        if (reader.TokenType != JsonTokenType.StartArray)
         {
-            throw new JsonException();
+            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}");
         }
 
-        var itemsIdQuantities = JsonSerializer.Deserialize<int[][]>(elements[2], options) ?? [];
-        Dictionary<int, int> itemsIdQuantitiesDictionary = [];
-
-        foreach (var item in itemsIdQuantities)
+        var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
+        if (elements.Length != 6)
         {
-            if (item.Length != 2)
-            {
-                throw new JsonException();
-            }
+            throw new JsonException($"Expected 6 elements but got {elements.Length}");
+        }
 
-            if (itemsIdQuantitiesDictionary.ContainsKey(item[0]))
+        Dictionary<int, int> itemsIdQuantities = [];
+        if (elements[2].ValueKind == JsonValueKind.Array)
+        {
+            foreach (var item in elements[2].EnumerateArray())
             {
-                itemsIdQuantitiesDictionary[item[0]] += item[1];
-            }
-            else
-            {
-                itemsIdQuantitiesDictionary[item[0]] = item[1];
+                if (item.ValueKind != JsonValueKind.Array || item.GetArrayLength() != 2)
+                {
+                    throw new JsonException($"Expected {JsonValueKind.Array} with 2 elements but got {item.ValueKind}");
+                }
+
+                var itemId = item[0].GetInt32();
+                var quantity = item[1].GetInt32();
+
+                if (!itemsIdQuantities.TryAdd(itemId, quantity))
+                {
+                    itemsIdQuantities[itemId] += quantity;
+                }
             }
         }
 
@@ -40,10 +59,10 @@ public sealed class QuestStepRewardsDataConverter : JsonConverter<QuestStepRewar
         {
             Experience = elements[0].GetInt32OrDefault(),
             Kamas = elements[1].GetInt32OrDefault(),
-            ItemsIdQuantities = itemsIdQuantitiesDictionary,
-            EmotesId = JsonSerializer.Deserialize<List<int>>(elements[3], options) ?? [],
-            JobsId = JsonSerializer.Deserialize<List<int>>(elements[4], options) ?? [],
-            SpellsId = JsonSerializer.Deserialize<List<int>>(elements[5], options) ?? []
+            ItemsIdQuantities = itemsIdQuantities.AsReadOnly(),
+            EmotesId = JsonSerializer.Deserialize<IReadOnlyList<int>>(elements[3], options) ?? [],
+            JobsId = JsonSerializer.Deserialize<IReadOnlyList<int>>(elements[4], options) ?? [],
+            SpellsId = JsonSerializer.Deserialize<IReadOnlyList<int>>(elements[5], options) ?? []
         };
     }
 
@@ -77,12 +96,12 @@ public sealed class QuestStepRewardsDataConverter : JsonConverter<QuestStepRewar
         {
             writer.WriteStartArray();
 
-            foreach (var pair in value.ItemsIdQuantities)
+            foreach (var (itemId, quantity) in value.ItemsIdQuantities)
             {
                 writer.WriteStartArray();
 
-                writer.WriteNumberValue(pair.Key);
-                writer.WriteNumberValue(pair.Value);
+                writer.WriteNumberValue(itemId);
+                writer.WriteNumberValue(quantity);
 
                 writer.WriteEndArray();
             }

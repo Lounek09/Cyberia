@@ -10,7 +10,7 @@ internal sealed class QuestObjectiveLocalizedData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("p")]
-    [JsonConverter(typeof(ConvertToReadOnlyListConverter<string>))]
+    [JsonConverter(typeof(TypeCoercingReadOnlyListConverter<string>))]
     public IReadOnlyList<string> Parameters { get; init; }
 
     [JsonConstructor]

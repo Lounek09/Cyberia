@@ -107,4 +107,13 @@ public readonly record struct EffectArea
 
         return new DescriptionString($"#1 - {GetName(culture)}", GetSize(culture));
     }
+
+    /// <summary>
+    /// Converts the effect area to it's compressed string representation.
+    /// </summary>
+    /// <returns>The compressed string representation of the effect area.</returns>
+    public string ToCompressedString()
+    {
+        return $"{(char)Id}{PatternDecoder.Base64IndexToChar(Size)}";
+    }
 }

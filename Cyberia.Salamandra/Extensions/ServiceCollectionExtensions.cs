@@ -37,10 +37,10 @@ public static class ServiceCollectionExtensions
                 eventHandler.AddEventHandlers<GuildsEventHandler>(ServiceLifetime.Singleton);
                 eventHandler.AddEventHandlers<InteractionsEventHandler>(ServiceLifetime.Singleton);
             })
-            .Configure<DiscordConfiguration>(config =>
+            .Configure<DiscordConfiguration>(discordConfig =>
             {
-                config.LogUnknownAuditlogs = false;
-                config.LogUnknownEvents = false;
+                discordConfig.LogUnknownAuditlogs = false;
+                discordConfig.LogUnknownEvents = false;
             })
             .AddCommandsExtension
             (
