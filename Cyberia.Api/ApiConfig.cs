@@ -15,17 +15,17 @@ public sealed class ApiConfig
     /// <summary>
     /// Gets the type of lang loaded at startup.
     /// </summary>
-    public LangType Type { get; init; }
+    public required LangType Type { get; init; }
 
     /// <summary>
     /// Gets the language of lang from which the base data is loaded, only the translations will be loaded from the others listed in <see cref="SupportedLanguages"/>.
     /// </summary>
-    public Language BaseLanguage { get; init; }
+    public required Language BaseLanguage { get; init; }
 
     /// <summary>
     /// Gets the list of the supported languages, the first one will be the default language.
     /// </summary>
-    public IReadOnlyList<Language> SupportedLanguages { get; init; }
+    public required IReadOnlyList<Language> SupportedLanguages { get; init; }
 
     /// <summary>
     /// Gets the invitation URL of the support Discord guild.
@@ -42,8 +42,7 @@ public sealed class ApiConfig
     /// </summary>
     public ApiConfig()
     {
-        CdnUrl = string.Empty;
-        SupportedLanguages = [];
+        CdnUrl = "https://raw.githubusercontent.com/Lounek09/Cyberia.Cdn/refs/heads/main";
         DiscordInviteUrl = string.Empty;
         GitRepositoryUrl = string.Empty;
     }

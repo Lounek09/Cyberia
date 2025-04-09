@@ -8,19 +8,18 @@ public sealed class WebConfig
     /// <summary>
     /// Gets the environment name.
     /// </summary>
-    public string Environment { get; init; }
+    public required string Environment { get; init; }
 
     /// <summary>
     /// Gets the URLs the host will listen on.
     /// </summary>
-    public IReadOnlyList<string> Urls { get; init; }
+    public required IReadOnlyList<string> Urls { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WebConfig"/> class.
     /// </summary>
     public WebConfig()
     {
-        Environment = string.Empty;
-        Urls = [];
+
     }
 }

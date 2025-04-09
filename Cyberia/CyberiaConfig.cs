@@ -12,76 +12,74 @@ public sealed class CyberiaConfig
     /// <summary>
     /// Gets a value indicating whether the bot is launched at startup.
     /// </summary>
-    public bool EnableSalamandra { get; init; }
+    public required bool EnableSalamandra { get; init; }
 
     /// <summary>
     /// Gets a value indicating whether the website is launched at startup.
     /// </summary>
-    public bool EnableAmphibian { get; init; }
+    public required bool EnableAmphibian { get; init; }
 
     /// <summary>
     /// Gets a value indicating whether the automatic check of Cytrus is enabled.
     /// </summary>
-    public bool EnableCheckCytrus { get; init; }
+    public required bool EnableCheckCytrus { get; init; }
 
     /// <summary>
     /// Gets the interval between each Cytrus check.
     /// </summary>
-    public TimeSpan CheckCytrusInterval { get; init; }
+    public required TimeSpan CheckCytrusInterval { get; init; }
 
     /// <summary>
     /// Gets a value indicating whether the automatic check of the Official lang is enabled.
     /// </summary>
-    public bool EnableCheckLang { get; init; }
+    public required bool EnableCheckLang { get; init; }
 
     /// <summary>
     /// Gets the interval between each Official lang check.
     /// </summary>
-    public TimeSpan CheckLangInterval { get; init; }
+    public required TimeSpan CheckLangInterval { get; init; }
 
     /// <summary>
     /// Gets a value indicating whether the automatic check of Beta Lang is enabled.
     /// </summary>
-    public bool EnableCheckBetaLang { get; init; }
+    public required bool EnableCheckBetaLang { get; init; }
 
     /// <summary>
     /// Gets the interval between each Beta Lang check.
     /// </summary>
-    public TimeSpan CheckBetaLangInterval { get; init; }
+    public required TimeSpan CheckBetaLangInterval { get; init; }
 
     /// <summary>
     /// Gets a value indicating whether the automatic check of Temporis Lang is enabled.
     /// </summary>
-    public bool EnableCheckTemporisLang { get; init; }
+    public required bool EnableCheckTemporisLang { get; init; }
 
     /// <summary>
     /// Gets the interval between each Temporis Lang check.
     /// </summary>
-    public TimeSpan CheckTemporisLangInterval { get; init; }
+    public required TimeSpan CheckTemporisLangInterval { get; init; }
 
     /// <summary>
     /// Gets the configuration related to the API.
     /// </summary>
-    public ApiConfig ApiConfig { get; init; }
+    public required ApiConfig ApiConfig { get; init; }
 
     /// <summary>
     /// Gets the configuration related to the bot.
     /// </summary>
-    public BotConfig BotConfig { get; init; }
+    public required BotConfig BotConfig { get; init; }
 
     /// <summary>
     /// Gets the configuration related to the website.
     /// </summary>
-    public WebConfig WebConfig { get; init; }
+    public required WebConfig WebConfig { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CyberiaConfig"/> class.
     /// </summary>
     public CyberiaConfig()
     {
-        ApiConfig = new();
-        BotConfig = new();
-        WebConfig = new();
+
     }
 
     public bool Validate()
@@ -90,6 +88,15 @@ public sealed class CyberiaConfig
         {
             Log.Error("You must specify at least one supported language in the API configuration.");
             return false;
+        }
+
+        if (EnableAmphibian)
+        {
+            if (WebConfig.Urls.Count == 0)
+            {
+                Log.Error("You must specify at least one URL in the Web configuration.");
+                return false;
+            }
         }
 
         return true;
