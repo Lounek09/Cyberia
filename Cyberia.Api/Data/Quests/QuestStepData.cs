@@ -19,6 +19,9 @@ public sealed class QuestStepData : IDofusData<int>
     [JsonPropertyName("r")]
     public QuestStepRewardsData RewardsData { get; init; }
 
+    [JsonPropertyName("rbl")]
+    public IReadOnlyList<QuestStepRewardsBaseLevelData> RewardsBaseLevelsData { get; init; }
+
     [JsonIgnore]
     public int DialogQuestionId { get; internal set; }
 
@@ -37,11 +40,12 @@ public sealed class QuestStepData : IDofusData<int>
         Name = LocalizedString.Empty;
         Description = LocalizedString.Empty;
         RewardsData = new();
+        RewardsBaseLevelsData = [];
         QuestObjectivesId = [];
         QuestObjectives = [];
     }
 
-    public bool HasReward()
+    public bool HasRewards()
     {
         return RewardsData.Experience > 0 ||
             RewardsData.Kamas > 0 ||
@@ -49,6 +53,16 @@ public sealed class QuestStepData : IDofusData<int>
             RewardsData.EmotesId.Count > 0 ||
             RewardsData.JobsId.Count > 0 ||
             RewardsData.SpellsId.Count > 0;
+    }
+
+    public bool HasRewardsBaseLevel()
+    {
+        return RewardsBaseLevelsData.Count > 0;
+    }
+
+    public QuestStepRewardsBaseLevelData? GetRewardsBaseLevelDataByLevel(int level)
+    {
+        return RewardsBaseLevelsData.FirstOrDefault(x => level >= x.MinLevel || level <= x.MaxLevel);
     }
 
     public DialogQuestionData? GetDialogQuestionData()

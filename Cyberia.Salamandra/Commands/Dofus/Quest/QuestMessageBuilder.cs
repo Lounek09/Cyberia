@@ -117,7 +117,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                 embed.AddQuestObjectivesFields(_questStepData.QuestObjectives, _culture);
             }
 
-            if (_questStepData.HasReward())
+            if (_questStepData.HasRewards())
             {
                 StringBuilder rewardsBuilder = new();
 
