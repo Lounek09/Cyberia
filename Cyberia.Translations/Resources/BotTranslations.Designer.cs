@@ -820,6 +820,15 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Level-based rewards :.
+        /// </summary>
+        internal static string Embed_Field_RewardsBaseLevel_Title {
+            get {
+                return ResourceManager.GetString("Embed.Field.RewardsBaseLevel.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Room :.
         /// </summary>
         internal static string Embed_Field_Room_Title {
@@ -1662,6 +1671,24 @@ namespace Cyberia.Translations.Resources {
         internal static string Select_QuestStep_Placeholder {
             get {
                 return ResourceManager.GetString("Select.QuestStep.Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rewards.
+        /// </summary>
+        internal static string Select_QuestStepRewardsBaseLevel_Content_Rewards {
+            get {
+                return ResourceManager.GetString("Select.QuestStepRewardsBaseLevel.Content.Rewards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a level to display it&apos;s rewards.
+        /// </summary>
+        internal static string Select_QuestStepRewardsBaseLevel_Placeholder {
+            get {
+                return ResourceManager.GetString("Select.QuestStepRewardsBaseLevel.Placeholder", resourceCulture);
             }
         }
         

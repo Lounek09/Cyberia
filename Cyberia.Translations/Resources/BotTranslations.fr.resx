@@ -711,4 +711,13 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
   <data name="Experience" xml:space="preserve">
     <value>Expérience</value>
   </data>
+  <data name="Embed.Field.RewardsBaseLevel.Title" xml:space="preserve">
+    <value>Récompenses basées sur le niveau :</value>
+  </data>
+  <data name="Select.QuestStepRewardsBaseLevel.Content.Rewards" xml:space="preserve">
+    <value>Récompenses</value>
+  </data>
+  <data name="Select.QuestStepRewardsBaseLevel.Placeholder" xml:space="preserve">
+    <value>Sélectionne un niveau pour afficher ses récompenses</value>
+  </data>
 </root>

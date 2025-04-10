@@ -715,4 +715,13 @@ To escape at 100%, you will need at minimum #4 agi.</value>
   <data name="Experience" xml:space="preserve">
     <value>Experience</value>
   </data>
+  <data name="Embed.Field.RewardsBaseLevel.Title" xml:space="preserve">
+    <value>Level-based rewards :</value>
+  </data>
+  <data name="Select.QuestStepRewardsBaseLevel.Content.Rewards" xml:space="preserve">
+    <value>Rewards</value>
+  </data>
+  <data name="Select.QuestStepRewardsBaseLevel.Placeholder" xml:space="preserve">
+    <value>Select a level to display it's rewards</value>
+  </data>
 </root>

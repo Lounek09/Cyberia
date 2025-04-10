@@ -13,7 +13,7 @@ public static class QuestComponentsBuilder
     {
         return new DiscordButtonComponent(
             DiscordButtonStyle.Primary,
-            QuestMessageBuilder.GetPacket(questData.Id),
+            QuestMessageBuilder.GetPacket(questData.Id, 0, null),
             questData.Name.ToString(culture),
             disable);
     }
@@ -26,7 +26,7 @@ public static class QuestComponentsBuilder
             {
                 return new DiscordSelectComponentOption(
                     x.Name.ToString(culture).WithMaxLength(100),
-                    QuestMessageBuilder.GetPacket(x.Id),
+                    QuestMessageBuilder.GetPacket(x.Id, 0, null),
                     x.Id.ToString());
             });
 

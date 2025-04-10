@@ -45,7 +45,7 @@ public sealed class QuestCommandModule
             var questData = DofusApi.Datacenter.QuestsRepository.GetQuestDataById(id);
             if (questData is not null)
             {
-                response = await new QuestMessageBuilder(_embedBuilderService, questData, culture)
+                response = await new QuestMessageBuilder(_embedBuilderService, questData, 0, null, culture)
                     .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
@@ -54,7 +54,7 @@ public sealed class QuestCommandModule
             var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(value, culture).ToList();
             if (questsData.Count == 1)
             {
-                response = await new QuestMessageBuilder(_embedBuilderService, questsData[0], culture)
+                response = await new QuestMessageBuilder(_embedBuilderService, questsData[0], 0, null, culture)
                     .BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (questsData.Count > 1)

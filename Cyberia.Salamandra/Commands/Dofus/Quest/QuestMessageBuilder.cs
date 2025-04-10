@@ -19,23 +19,38 @@ namespace Cyberia.Salamandra.Commands.Dofus.Quest;
 public sealed class QuestMessageBuilder : ICustomMessageBuilder
 {
     public const string PacketHeader = "Q";
-    public const int PacketVersion = 1;
+    public const int PacketVersion = 2;
 
     private readonly EmbedBuilderService _embedBuilderService;
     private readonly QuestData _questData;
     private readonly List<QuestStepData> _questStepsData;
     private readonly int _selectedQuestStepIndex;
+    private readonly bool _hasQuestStepRewardsBaseLevel;
+    private readonly int? _selectedQuestStepRewardBaseLevelIndex;
     private readonly QuestStepData? _questStepData;
     private readonly DialogQuestionData? _dialogQuestionData;
     private readonly CultureInfo? _culture;
 
-    public QuestMessageBuilder(EmbedBuilderService embedBuilderService, QuestData questData, CultureInfo? culture, int selectedQuestStepIndex = 0)
+    public QuestMessageBuilder(EmbedBuilderService embedBuilderService, QuestData questData, int selectedQuestStepIndex, int? selectedQuestStepRewardBaseLevelIndex, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _questData = questData;
         _questStepsData = questData.GetQuestStepsData().ToList();
         _selectedQuestStepIndex = selectedQuestStepIndex;
-        _questStepData = _questStepsData.Count > selectedQuestStepIndex ? _questStepsData[selectedQuestStepIndex] : null;
+        _questStepData = _questStepsData.Count > selectedQuestStepIndex
+            ? _questStepsData[selectedQuestStepIndex]
+            : null;
+        _hasQuestStepRewardsBaseLevel = _questStepData?.HasRewardsBaseLevel() ?? false;
+        if (_hasQuestStepRewardsBaseLevel &&
+            (selectedQuestStepRewardBaseLevelIndex is null || selectedQuestStepRewardBaseLevelIndex > _questStepData!.RewardsBaseLevelsData.Count - 1))
+        {
+            _selectedQuestStepRewardBaseLevelIndex = _questStepData!.RewardsBaseLevelsData.Count - 1;
+        }
+        else
+        {
+            _selectedQuestStepRewardBaseLevelIndex = selectedQuestStepRewardBaseLevelIndex;
+        }
+
         _dialogQuestionData = _questStepData?.GetDialogQuestionData();
         _culture = culture;
     }
@@ -43,7 +58,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
     public static QuestMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
-            parameters.Length > 1 &&
+            parameters.Length > 2 &&
             int.TryParse(parameters[0], out var questId) &&
             int.TryParse(parameters[1], out var selectedQuestStepIndex))
         {
@@ -52,16 +67,21 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new QuestMessageBuilder(embedBuilderService, questData, culture, selectedQuestStepIndex);
+                if (int.TryParse(parameters[2], out var selectedQuestStepRewardBaseLevelIndex))
+                {
+                    return new QuestMessageBuilder(embedBuilderService, questData, selectedQuestStepIndex, selectedQuestStepRewardBaseLevelIndex, culture);
+                }
+
+                return new QuestMessageBuilder(embedBuilderService, questData, selectedQuestStepIndex, null, culture);
             }
         }
 
         return null;
     }
 
-    public static string GetPacket(int questId, int selectedQuestStepIndex = 0)
+    public static string GetPacket(int questId, int selectedQuestStepIndex, int? selectedQuestStepRewardBaseLevelIndex)
     {
-        return PacketFormatter.Action(PacketHeader, PacketVersion, questId, selectedQuestStepIndex);
+        return PacketFormatter.Action(PacketHeader, PacketVersion, questId, selectedQuestStepIndex, selectedQuestStepRewardBaseLevelIndex);
     }
 
     public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()
@@ -69,16 +89,31 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
         var message = new T()
             .AddEmbed(await EmbedBuilder());
 
-        var select = SelectBuilder(0, 0);
+        var select = QuestStepSelectBuilder(0, 0);
         if (select.Options.Count > 1)
         {
             message.AddComponents(select);
         }
 
-        var select2 = SelectBuilder(1, Constant.MaxSelectOption);
-        if (select2.Options.Count > 0)
+        select = QuestStepSelectBuilder(1, Constant.MaxSelectOption);
+        if (select.Options.Count > 0)
         {
-            message.AddComponents(select2);
+            message.AddComponents(select);
+        }
+
+        if (_hasQuestStepRewardsBaseLevel)
+        {
+            select = QuestStepRewardsBaseLevelSelectBuilder(2, 0);
+            if (select.Options.Count > 1)
+            {
+                message.AddComponents(select);
+            }
+
+            select = QuestStepRewardsBaseLevelSelectBuilder(3, Constant.MaxSelectOption);
+            if (select.Options.Count > 0)
+            {
+                message.AddComponents(select);
+            }
         }
 
         return (T)message;
@@ -176,12 +211,39 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
                     embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Rewards.Title", _culture), rewardsBuilder.ToString());
                 }
             }
+
+            if (_hasQuestStepRewardsBaseLevel)
+            {
+                var questStepRewardBaseLevel = _questStepData.RewardsBaseLevelsData[_selectedQuestStepRewardBaseLevelIndex!.Value];
+                StringBuilder rewardsBaseLevelsBuilder = new();
+
+                if (questStepRewardBaseLevel.Experience > 0)
+                {
+                    rewardsBaseLevelsBuilder.Append(questStepRewardBaseLevel.Experience.ToFormattedString(_culture));
+                    rewardsBaseLevelsBuilder.Append(' ');
+                    rewardsBaseLevelsBuilder.Append(Emojis.Xp(_culture));
+                    rewardsBaseLevelsBuilder.Append('\n');
+                }
+
+                if (questStepRewardBaseLevel.Kamas > 0)
+                {
+                    rewardsBaseLevelsBuilder.Append(questStepRewardBaseLevel.Kamas.ToFormattedString(_culture));
+                    rewardsBaseLevelsBuilder.Append(' ');
+                    rewardsBaseLevelsBuilder.Append(Emojis.Kamas(_culture));
+                    rewardsBaseLevelsBuilder.Append('\n');
+                }
+
+                if (rewardsBaseLevelsBuilder.Length > 0)
+                {
+                    embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RewardsBaseLevel.Title", _culture), rewardsBaseLevelsBuilder.ToString());
+                }
+            }
         }
 
         return Task.FromResult(embed);
     }
 
-    private DiscordSelectComponent SelectBuilder(int selectIndex, int startIndex)
+    private DiscordSelectComponent QuestStepSelectBuilder(int selectIndex, int startIndex)
     {
         IEnumerable<DiscordSelectComponentOption> OptionsGenerator(int startIndex)
         {
@@ -190,7 +252,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             {
                 yield return new DiscordSelectComponentOption(
                     $"{Translation.Get<BotTranslations>("Select.QuestStep.Content.Step", _culture)} {i + 1}",
-                    GetPacket(_questData.Id, i),
+                    GetPacket(_questData.Id, i, null),
                     StringExtensions.WithMaxLength(_questStepsData[i].Name.ToString(_culture), 100),
                     isDefault: i == _selectedQuestStepIndex);
             }
@@ -199,6 +261,35 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
         return new DiscordSelectComponent(
             PacketFormatter.Select(selectIndex),
             Translation.Get<BotTranslations>("Select.QuestStep.Placeholder", _culture),
+            OptionsGenerator(startIndex));
+    }
+
+    private DiscordSelectComponent QuestStepRewardsBaseLevelSelectBuilder(int selectIndex, int startIndex)
+    {
+        IEnumerable<DiscordSelectComponentOption> OptionsGenerator(int startIndex)
+        {
+            if (_questStepData is null)
+            {
+                yield break;
+            }
+
+            var endIndex = Math.Min(startIndex + Constant.MaxSelectOption, _questStepData.RewardsBaseLevelsData.Count);
+            for (var i = startIndex; i < endIndex; i++)
+            {
+                var questStepRewardBaseLevel = _questStepData.RewardsBaseLevelsData[i];
+                var minLevel = questStepRewardBaseLevel.MinLevel;
+                var maxLevel = questStepRewardBaseLevel.MaxLevel;
+
+                yield return new DiscordSelectComponentOption(
+                    $"{Translation.Get<BotTranslations>("Select.QuestStepRewardsBaseLevel.Content.Rewards", _culture)} {Translation.Get<BotTranslations>("ShortLevel", _culture)}{minLevel}{(minLevel == maxLevel ? string.Empty : $"-{maxLevel}")}",
+                    GetPacket(_questData.Id, _selectedQuestStepIndex, i),
+                    isDefault: i == _selectedQuestStepRewardBaseLevelIndex);
+            }
+        }
+
+        return new DiscordSelectComponent(
+            PacketFormatter.Select(selectIndex),
+            Translation.Get<BotTranslations>("Select.QuestStepRewardsBaseLevel.Placeholder", _culture),
             OptionsGenerator(startIndex));
     }
 }
