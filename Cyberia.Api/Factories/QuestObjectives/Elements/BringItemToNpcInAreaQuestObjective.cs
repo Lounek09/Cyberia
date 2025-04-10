@@ -14,21 +14,21 @@ public sealed record BringItemToNpcInAreaQuestObjective : QuestObjective
     public int ItemId { get; init; }
     public int Quantity { get; init; }
 
-    private BringItemToNpcInAreaQuestObjective(QuestObjectiveData questObjectiveData, int npcId, int itemId, int quantity, int mapSubAreaId)
+    private BringItemToNpcInAreaQuestObjective(QuestObjectiveData questObjectiveData, int npcId, int mapSubAreaId, int itemId, int quantity)
         : base(questObjectiveData)
     {
         NpcId = npcId;
+        MapSubAreaId = mapSubAreaId;
         ItemId = itemId;
         Quantity = quantity;
-        MapSubAreaId = mapSubAreaId;
     }
 
     internal static BringItemToNpcInAreaQuestObjective? Create(QuestObjectiveData questObjectiveData)
     {
         var parameters = questObjectiveData.Parameters;
-        if (parameters.Count > 3 && int.TryParse(parameters[0], out var npcId) && int.TryParse(parameters[1], out var itemId) && int.TryParse(parameters[2], out var quantity) && int.TryParse(parameters[3], out var mapSubAreaId))
+        if (parameters.Count > 3 && int.TryParse(parameters[0], out var npcId) && int.TryParse(parameters[1], out var mapSubAreaId) && int.TryParse(parameters[2], out var itemId) && int.TryParse(parameters[3], out var quantity))
         {
-            return new(questObjectiveData, npcId, itemId, quantity, mapSubAreaId);
+            return new(questObjectiveData, npcId, mapSubAreaId, itemId, quantity);
         }
 
         return null;
@@ -55,6 +55,6 @@ public sealed record BringItemToNpcInAreaQuestObjective : QuestObjective
         var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(ItemId, culture);
         var mapSubAreaName = DofusApi.Datacenter.MapsRepository.GetMapSubAreaNameById(MapSubAreaId, culture);
 
-        return GetDescription(culture, npcName, itemName, Quantity, mapSubAreaName);
+        return GetDescription(culture, npcName, mapSubAreaName, itemName, Quantity);
     }
 }
