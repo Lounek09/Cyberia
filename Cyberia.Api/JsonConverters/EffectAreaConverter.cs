@@ -10,16 +10,8 @@ namespace Cyberia.Api.JsonConverters;
 /// A specialized JSON converter for serializing and deserializing <see cref="EffectArea"/> objects.
 /// </summary>
 /// <remarks>
-/// When reading JSON, this converter:
-/// <list type="bullet">
-///   <item>Expects a JSON string containing a compressed <see cref="EffectArea"/> representation</item>
-///   <item>Parses this string into a structured <see cref="EffectArea"/> using <see cref="EffectAreaFactory.Create"/></item>
-/// </list>
-/// 
-/// When writing JSON, it:
-/// <list type="bullet">
-///   <item>Converts the <see cref="EffectArea"/> back to its compressed string representation</item>
-/// </list>
+/// - Expects a JSON string containing a compressed <see cref="EffectArea"/> representation.<br />
+/// - Parses this string into a structured <see cref="EffectArea"/> using <see cref="EffectAreaFactory.Create"/>.
 /// </remarks>
 public sealed class EffectAreaConverter : JsonConverter<EffectArea>
 {
@@ -35,6 +27,6 @@ public sealed class EffectAreaConverter : JsonConverter<EffectArea>
 
     public override void Write(Utf8JsonWriter writer, EffectArea value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(value.ToCompressedString());
+        throw new NotImplementedException();
     }
 }

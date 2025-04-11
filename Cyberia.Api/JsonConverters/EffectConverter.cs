@@ -10,16 +10,8 @@ namespace Cyberia.Api.JsonConverters;
 /// A specialized JSON converter for serializing and deserializing <see cref="IEffect"/> objects.
 /// </summary>
 /// <remarks>
-/// When reading JSON, this converter:
-/// <list type="bullet">
-///   <item>Expects a JSON string containing a compressed <see cref="IEffect"/> representation</item>
-///   <item>Parses this string into a structured <see cref="IEffect"/> using <see cref="EffectFactory.Create"/></item>
-/// </list>
-/// 
-/// When writing JSON, it:
-/// <list type="bullet">
-///   <item>Converts the <see cref="IEffect"/> to its compressed string representation</item>
-/// </list>
+/// - Expects a JSON string containing a compressed <see cref="IEffect"/> representation.<br />
+/// - Parses this string into a structured <see cref="IEffect"/> using <see cref="EffectFactory.Create"/>.
 /// </remarks>
 public sealed class EffectConverter : JsonConverter<IEffect>
 {
@@ -35,7 +27,6 @@ public sealed class EffectConverter : JsonConverter<IEffect>
 
     public override void Write(Utf8JsonWriter writer, IEffect values, JsonSerializerOptions options)
     {
-        //TODO: Implement the write method to serialize IEffect to JSON.
         throw new NotImplementedException();
     }
 }

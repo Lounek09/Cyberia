@@ -8,17 +8,9 @@ namespace Cyberia.Api.JsonConverters;
 /// </summary>
 /// <typeparam name="T">The type of the list to convert to.</typeparam>
 /// <remarks>
-/// When reading JSON, this converter:
-/// <list type="bullet">
-///   <item>Expects a JSON array</item>
-///   <item>For string types, performs special type coercion from various JSON types (numbers, booleans, etc.) to strings</item>
-///   <item>For non-string types, uses the standard JSON deserialization process</item>
-/// </list>
-/// 
-/// When writing JSON, it:
-/// <list type="bullet">
-///   <item>Serializes the collection as a JSON array</item>
-/// </list>
+/// - Expects a JSON array.<br />
+/// - For string types, performs special type coercion from various JSON types (numbers, booleans, etc.) to strings.<br />
+/// - For non-string types, uses the standard JSON deserialization process.
 /// </remarks>
 public sealed class TypeCoercingReadOnlyListConverter<T> : JsonConverter<IReadOnlyList<T>>
 {

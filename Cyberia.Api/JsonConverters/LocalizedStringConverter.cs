@@ -7,16 +7,8 @@ namespace Cyberia.Api.JsonConverters;
 /// A specialized JSON converter for serializing and deserializing <see cref="LocalizedString"/> objects.
 /// </summary>
 /// <remarks>
-/// When reading JSON, this converter:
-/// <list type="bullet">
-///   <item>Expects a JSON string or number</item>
-///   <item>Converts to a <see cref="LocalizedString"/> with the value as the default translation</item>
-/// </list>
-/// 
-/// When writing JSON, it:
-/// <list type="bullet">
-///   <item>Serializes the <see cref="LocalizedString.Default"/> property as a JSON string</item>
-/// </list>
+/// - Expects a JSON string or number.<br />
+/// - Converts to a <see cref="LocalizedString"/> with the value as the default translation.
 /// </remarks>
 public sealed class LocalizedStringConverter : JsonConverter<LocalizedString>
 {
@@ -35,6 +27,6 @@ public sealed class LocalizedStringConverter : JsonConverter<LocalizedString>
 
     public override void Write(Utf8JsonWriter writer, LocalizedString value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(value.Default);
+        throw new NotImplementedException();
     }
 }

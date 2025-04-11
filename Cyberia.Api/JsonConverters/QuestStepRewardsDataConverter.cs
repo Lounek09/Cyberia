@@ -9,16 +9,8 @@ namespace Cyberia.Api.JsonConverters;
 /// A specialized JSON converter for serializing and deserializing <see cref="QuestStepRewardsData"/> objects.
 /// </summary>
 /// <remarks>
-/// When reading JSON, this converter:
-/// <list type="bullet">
-///   <item>Expects a JSON array with 6 elements representing the properties of <see cref="QuestStepRewardsData"/></item>
-///   <item>Deserializes the array into a <see cref="QuestStepRewardsData"/> instance</item>
-/// </list>
-/// 
-/// When writing JSON, it:
-/// <list type="bullet">
-///   <item>Serializes the <see cref="QuestStepRewardsData"/> properties into a JSON array</item>
-/// </list>
+/// - Expects a JSON array with 6 elements representing the properties of <see cref="QuestStepRewardsData"/>.<br />
+/// - Deserializes the array into a <see cref="QuestStepRewardsData"/> instance.
 /// </remarks>
 public sealed class QuestStepRewardsDataConverter : JsonConverter<QuestStepRewardsData>
 {
@@ -69,95 +61,6 @@ public sealed class QuestStepRewardsDataConverter : JsonConverter<QuestStepRewar
 
     public override void Write(Utf8JsonWriter writer, QuestStepRewardsData value, JsonSerializerOptions options)
     {
-        writer.WriteStartArray();
-
-        if (value.Experience == 0)
-        {
-            writer.WriteNullValue();
-        }
-        else
-        {
-            writer.WriteNumberValue(value.Experience);
-        }
-
-        if (value.Kamas == 0)
-        {
-            writer.WriteNullValue();
-        }
-        else
-        {
-            writer.WriteNumberValue(value.Kamas);
-        }
-
-        if (value.ItemsIdQuantities.Count == 0)
-        {
-            writer.WriteNullValue();
-        }
-        else
-        {
-            writer.WriteStartArray();
-
-            foreach (var (itemId, quantity) in value.ItemsIdQuantities)
-            {
-                writer.WriteStartArray();
-
-                writer.WriteNumberValue(itemId);
-                writer.WriteNumberValue(quantity);
-
-                writer.WriteEndArray();
-            }
-
-            writer.WriteEndArray();
-        }
-
-        if (value.EmotesId.Count == 0)
-        {
-            writer.WriteNullValue();
-        }
-        else
-        {
-            writer.WriteStartArray();
-
-            foreach (var emoteId in value.EmotesId)
-            {
-                writer.WriteNumberValue(emoteId);
-            }
-
-            writer.WriteEndArray();
-        }
-
-        if (value.JobsId.Count == 0)
-        {
-            writer.WriteNullValue();
-        }
-        else
-        {
-            writer.WriteStartArray();
-
-            foreach (var jobId in value.JobsId)
-            {
-                writer.WriteNumberValue(jobId);
-            }
-
-            writer.WriteEndArray();
-        }
-
-        if (value.SpellsId.Count == 0)
-        {
-            writer.WriteNullValue();
-        }
-        else
-        {
-            writer.WriteStartArray();
-
-            foreach (var spellId in value.SpellsId)
-            {
-                writer.WriteNumberValue(spellId);
-            }
-
-            writer.WriteEndArray();
-        }
-
-        writer.WriteEndArray();
+        throw new NotImplementedException();
     }
 }

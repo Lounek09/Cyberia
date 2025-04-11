@@ -9,15 +9,7 @@ namespace Cyberia.Api.JsonConverters;
 /// <typeparam name="TKey">The type of the dictionary keys. Must be non-nullable.</typeparam>
 /// <typeparam name="TValue">The type of the dictionary values.</typeparam>
 /// <remarks>
-/// When reading JSON, this converter:
-/// <list type="bullet">
-///   <item>Expects a JSON array where each element is a key-value pair represented as a JSON array with two elements</item>
-/// </list>
-/// 
-/// When writing JSON, it:
-/// <list type="bullet">
-///   <item>Serializes the dictionary as a JSON array where each key-value pair is represented as a JSON array with two elements</item>
-/// </list>
+/// - Expects a JSON array where each element is a key-value pair represented as a JSON array with two elements<br />
 /// </remarks>
 public sealed class ReadOnlyDictionaryFromArrayConverter<TKey, TValue> : JsonConverter<IReadOnlyDictionary<TKey, TValue>>
     where TKey : notnull
@@ -61,18 +53,6 @@ public sealed class ReadOnlyDictionaryFromArrayConverter<TKey, TValue> : JsonCon
 
     public override void Write(Utf8JsonWriter writer, IReadOnlyDictionary<TKey, TValue> values, JsonSerializerOptions options)
     {
-        writer.WriteStartArray();
-
-        foreach (var (key, value) in values)
-        {
-            writer.WriteStartArray();
-
-            JsonSerializer.Serialize(writer, key, options);
-            JsonSerializer.Serialize(writer, value, options);
-
-            writer.WriteEndArray();
-        }
-
-        writer.WriteEndArray();
+        throw new NotImplementedException();
     }
 }

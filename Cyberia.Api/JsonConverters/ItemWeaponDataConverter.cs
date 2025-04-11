@@ -9,16 +9,8 @@ namespace Cyberia.Api.JsonConverters;
 /// A specialized JSON converter for serializing and deserializing <see cref="ItemWeaponData"/> objects.
 /// </summary>
 /// <remarks>
-/// When reading JSON, this converter:
-/// <list type="bullet">
-///   <item>Expects a JSON array with 8 elements representing the properties of <see cref="ItemWeaponData"/></item>
-///   <item>Deserializes the array into an <see cref="ItemWeaponData"/> instance</item>
-/// </list>
-/// 
-/// When writing JSON, it:
-/// <list type="bullet">
-///   <item>Serializes the <see cref="ItemWeaponData"/> properties into a JSON array</item>
-/// </list>
+/// - Expects a JSON array with 8 elements representing the properties of <see cref="ItemWeaponData"/>.<br />
+/// - Deserializes the array into an <see cref="ItemWeaponData"/> instance.
 /// </remarks>
 public sealed class ItemWeaponDataConverter : JsonConverter<ItemWeaponData>
 {
@@ -51,17 +43,6 @@ public sealed class ItemWeaponDataConverter : JsonConverter<ItemWeaponData>
 
     public override void Write(Utf8JsonWriter writer, ItemWeaponData value, JsonSerializerOptions options)
     {
-        writer.WriteStartArray();
-
-        writer.WriteNumberValue(value.CriticalBonus);
-        writer.WriteNumberValue(value.ActionPointCost);
-        writer.WriteNumberValue(value.MinRange);
-        writer.WriteNumberValue(value.MaxRange);
-        writer.WriteNumberValue(value.CriticalHitRate);
-        writer.WriteNumberValue(value.CriticalFailureRate);
-        writer.WriteBooleanValue(value.Linear);
-        writer.WriteBooleanValue(value.LineOfSight);
-
-        writer.WriteEndArray();
+        throw new NotImplementedException();
     }
 }

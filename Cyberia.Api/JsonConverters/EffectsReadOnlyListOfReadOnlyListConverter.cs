@@ -11,18 +11,9 @@ namespace Cyberia.Api.JsonConverters;
 /// <see cref="IReadOnlyList{T}"/> of <see cref="IReadOnlyList{T}"/> containing <see cref="IEffect"/> objects.
 /// </summary>
 /// <remarks>
-/// When reading JSON, this converter:
-/// <list type="bullet">
-///   <item>Expects a JSON array of strings, where each string represents a compressed list of effects</item>
-///   <item>Uses <see cref="EffectFactory.CreateMany"/> to parse each string into a list of <see cref="IEffect"/> objects</item>
-///   <item>Aggregates these lists into a read-only list of read-only lists</item>
-/// </list>
-/// 
-/// When writing JSON, it:
-/// <list type="bullet">
-///   <item>Converts each <see cref="IReadOnlyList{IEffect}"/> into its compressed string representation</item>
-///   <item>Writes these strings as a JSON array</item>
-/// </list>
+/// - Expects a JSON array of strings, where each string represents a compressed list of effects<br />
+/// - Uses <see cref="EffectFactory.CreateMany"/> to parse each string into a list of <see cref="IEffect"/> objects<br />
+/// - Aggregates these lists into a read-only list of read-only lists.
 /// </remarks>
 public sealed class EffectsReadOnlyListOfReadOnlyListConverter : JsonConverter<IReadOnlyList<IReadOnlyList<IEffect>>>
 {
@@ -50,7 +41,6 @@ public sealed class EffectsReadOnlyListOfReadOnlyListConverter : JsonConverter<I
 
     public override void Write(Utf8JsonWriter writer, IReadOnlyList<IReadOnlyList<IEffect>> values, JsonSerializerOptions options)
     {
-        //TODO: Implement the write method to serialize IEffect to JSON.
         throw new NotImplementedException();
     }
 }
