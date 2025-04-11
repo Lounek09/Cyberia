@@ -26,13 +26,13 @@ public sealed class QuestStepRewardsDataConverter : JsonConverter<QuestStepRewar
     {
         if (reader.TokenType != JsonTokenType.StartArray)
         {
-            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}");
+            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}.");
         }
 
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
         if (elements.Length != 6)
         {
-            throw new JsonException($"Expected 6 elements but got {elements.Length}");
+            throw new JsonException($"Expected 6 elements but got {elements.Length}.");
         }
 
         Dictionary<int, int> itemsIdQuantities = [];
@@ -40,9 +40,10 @@ public sealed class QuestStepRewardsDataConverter : JsonConverter<QuestStepRewar
         {
             foreach (var item in elements[2].EnumerateArray())
             {
-                if (item.ValueKind != JsonValueKind.Array || item.GetArrayLength() != 2)
+                var length = item.GetArrayLength();
+                if (item.ValueKind != JsonValueKind.Array || length != 2)
                 {
-                    throw new JsonException($"Expected {JsonValueKind.Array} with 2 elements but got {item.ValueKind}");
+                    throw new JsonException($"Expected {JsonValueKind.Array} with 2 elements but got {item.ValueKind} with {length} elements.");
                 }
 
                 var itemId = item[0].GetInt32();

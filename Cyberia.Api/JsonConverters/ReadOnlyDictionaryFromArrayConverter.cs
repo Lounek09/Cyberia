@@ -34,16 +34,16 @@ public sealed class ReadOnlyDictionaryFromArrayConverter<TKey, TValue> : JsonCon
         {
             if (reader.TokenType != JsonTokenType.StartArray)
             {
-                throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}");
+                throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}.");
             }
 
             reader.Read();
             var key = JsonSerializer.Deserialize<TKey>(ref reader, options)
-                ?? throw new JsonException($"Failed to deserialize key of type {typeof(TKey)}");
+                ?? throw new JsonException($"Failed to deserialize key of type {typeof(TKey)}.");
 
             reader.Read();
             var value = JsonSerializer.Deserialize<TValue>(ref reader, options)
-                ?? throw new JsonException($"Failed to deserialize value of type {typeof(TValue)}");
+                ?? throw new JsonException($"Failed to deserialize value of type {typeof(TValue)}.");
 
             if (!dictionary.TryAdd(key, value))
             {
@@ -52,7 +52,7 @@ public sealed class ReadOnlyDictionaryFromArrayConverter<TKey, TValue> : JsonCon
 
             if (!reader.Read() || reader.TokenType != JsonTokenType.EndArray)
             {
-                throw new JsonException($"Expected {JsonTokenType.EndArray} but got {reader.TokenType}");
+                throw new JsonException($"Expected {JsonTokenType.EndArray} but got {reader.TokenType}.");
             }
         }
 

@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using System.Globalization;
+using System.Text.Json;
 
 namespace Cyberia;
 
@@ -106,9 +107,18 @@ public static class Program
 
             await Task.Delay(-1);
         }
+        catch (JsonException e)
+        {
+            Log.Fatal(
+                e,
+                "Fatal error while parsing JSON. Path: {Path} | LineNumber: {LineNumber} | BytePositionInLine: {BytePositionInLine}.",
+                e.Path,
+                e.LineNumber,
+                e.BytePositionInLine);
+        }
         catch (Exception e)
         {
-            Log.Fatal(e, "Fatal error");
+            Log.Fatal(e, "Fatal error.");
         }
         finally
         {

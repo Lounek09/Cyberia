@@ -33,7 +33,7 @@ public sealed class DofusDataFrozenDictionaryConverter<TKey, TValue> : JsonConve
     {
         if (reader.TokenType != JsonTokenType.StartArray)
         {
-            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}");
+            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}.");
         }
 
         var values = JsonSerializer.Deserialize<TValue[]>(ref reader, options);

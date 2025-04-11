@@ -26,14 +26,14 @@ public sealed class ItemWeaponDataConverter : JsonConverter<ItemWeaponData>
     {
         if (reader.TokenType != JsonTokenType.StartArray)
         {
-            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}");
+            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}.");
         }
 
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
         if (elements.Length != 8)
         {
-            throw new JsonException($"Expected 8 elements but got {elements.Length}");
+            throw new JsonException($"Expected 8 elements but got {elements.Length}.");
         }
 
         return new ItemWeaponData

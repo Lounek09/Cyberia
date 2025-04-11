@@ -30,7 +30,7 @@ public sealed class EffectsReadOnlyListOfReadOnlyListConverter : JsonConverter<I
     {
         if (reader.TokenType != JsonTokenType.StartArray)
         {
-            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}");
+            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}.");
         }
 
         List<IReadOnlyList<IEffect>> effects = [];
@@ -39,7 +39,7 @@ public sealed class EffectsReadOnlyListOfReadOnlyListConverter : JsonConverter<I
         {
             if (reader.TokenType != JsonTokenType.String)
             {
-                throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}");
+                throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}.");
             }
 
             effects.Add(EffectFactory.CreateMany(reader.GetString() ?? string.Empty));

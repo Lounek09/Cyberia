@@ -28,7 +28,7 @@ public sealed class EffectReadOnlyListConverter : JsonConverter<IReadOnlyList<IE
     {
         if (reader.TokenType != JsonTokenType.String)
         {
-            throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}");
+            throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}.");
         }
 
         return EffectFactory.CreateMany(reader.GetString() ?? string.Empty);

@@ -27,7 +27,7 @@ public sealed class CriteriaReadOnlyCollectionConverter : JsonConverter<Criteria
     {
         if (reader.TokenType != JsonTokenType.String)
         {
-            throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}");
+            throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}.");
         }
 
         return CriterionFactory.CreateMany(reader.GetString() ?? string.Empty);

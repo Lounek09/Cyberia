@@ -26,7 +26,7 @@ public sealed class TypeCoercingReadOnlyListConverter<T> : JsonConverter<IReadOn
     {
         if (reader.TokenType != JsonTokenType.StartArray)
         {
-            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}");
+            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}.");
         }
 
         if (typeof(T) == typeof(string))

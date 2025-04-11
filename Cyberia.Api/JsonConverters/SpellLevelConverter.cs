@@ -29,7 +29,7 @@ public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
     {
         if (reader.TokenType != JsonTokenType.StartArray)
         {
-            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}");
+            throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}.");
         }
 
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];

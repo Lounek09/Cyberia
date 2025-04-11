@@ -27,7 +27,7 @@ public sealed class EffectConverter : JsonConverter<IEffect>
     {
         if (reader.TokenType != JsonTokenType.String)
         {
-            throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}");
+            throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}.");
         }
 
         return EffectFactory.Create(reader.GetString() ?? string.Empty);
