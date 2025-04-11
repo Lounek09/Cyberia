@@ -54,10 +54,10 @@ public readonly record struct EffectArea
     {
         if (Translation.TryGet<ApiTranslations>($"EffectArea.{Id}", out var effectAreaName, culture))
         {
-            Log.Warning("Unknown {EffectArea} {EffectAreaId}", nameof(EffectArea), Id);
             return effectAreaName;
         }
 
+        Log.Warning("Unknown {EffectArea} {EffectAreaId}", nameof(EffectArea), Id);
         return Translation.UnknownData(Id, culture);
     }
 
