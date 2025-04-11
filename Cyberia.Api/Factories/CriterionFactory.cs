@@ -166,13 +166,13 @@ public static class CriterionFactory
             return Create(id, @operator);
         }
 
-        var parameterSize = compressedCriterion.Count(c_parameterSeparator) + 1;
-        if (parameterSize == 1)
+        var parametersCount = compressedCriterion.Count(c_parameterSeparator) + 1;
+        if (parametersCount == 1)
         {
             return Create(id, @operator, compressedCriterion.ToString());
         }
 
-        Span<string> parameters = new string[parameterSize];
+        Span<string> parameters = new string[parametersCount];
         var index = 0;
         foreach (var range in compressedCriterion.Split(c_parameterSeparator))
         {
@@ -228,7 +228,7 @@ public static class CriterionFactory
                     if (i > startTokenIndex)
                     {
                         var token = compressedCriteria[startTokenIndex..i];
-                        criteria.Add(Create(token.ToString()));
+                        criteria.Add(Create(token));
                     }
 
                     criteria.Add(new CriteriaLogicalOperator(currentChar));
@@ -238,7 +238,7 @@ public static class CriterionFactory
                     if (i == length - 1)
                     {
                         var token = compressedCriteria[startTokenIndex..(i + 1)];
-                        criteria.Add(Create(token.ToString()));
+                        criteria.Add(Create(token));
                     }
                     break;
             }
