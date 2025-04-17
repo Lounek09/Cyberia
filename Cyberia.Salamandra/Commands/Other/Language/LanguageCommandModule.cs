@@ -36,7 +36,7 @@ public sealed class LanguageCommandModule
         [SlashChoiceProvider<LanguageChoiceProvider>]
         string value)
     {
-        await _discordCachedUserRepository.CreateOrUpdateAsync(new DiscordCachedUser()
+        await _discordCachedUserRepository.UpsertAsync(new DiscordCachedUser
         {
             Id = ctx.User.Id,
             Locale = value

@@ -26,11 +26,13 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
     /// <returns><see langword="true"/> if the table was created; otherwise, <see langword="false"/>.</returns>
     public async Task<bool> CreateTableAsync()
     {
-        var query = @"
-            CREATE TABLE IF NOT EXISTS DiscordCachedUser (
-                Id INTEGER PRIMARY KEY,
-                Locale TEXT
-            );";
+        const string query =
+        $"""
+        CREATE TABLE IF NOT EXISTS {nameof(DiscordCachedUser)} (
+            {nameof(DiscordCachedUser.Id)} INTEGER PRIMARY KEY,
+            {nameof(DiscordCachedUser.Locale)} TEXT
+        );
+        """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.ExecuteAsync(query) > 0;
@@ -43,9 +45,11 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
     /// <returns>The user if found; otherwise, <see langword="null"/>.</returns>
     public async Task<DiscordCachedUser?> GetAsync(ulong id)
     {
-        var query = @"
-            SELECT * FROM DiscordCachedUser
-            WHERE Id = @Id";
+        const string query =
+        $"""
+        SELECT * FROM {nameof(DiscordCachedUser)}
+        WHERE {nameof(DiscordCachedUser.Id)} = @Id
+        """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.QueryFirstOrDefaultAsync<DiscordCachedUser>(query, new { Id = id });
@@ -56,12 +60,14 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
     /// </summary>
     /// <param name="user">The user to create or update.</param>
     /// <returns><see langword="true"/> if the user was created or updated; otherwise, <see langword="false"/>.</returns>
-    public async Task<bool> CreateOrUpdateAsync(DiscordCachedUser user)
+    public async Task<bool> UpsertAsync(DiscordCachedUser user)
     {
-        var query = @"
-            INSERT INTO DiscordCachedUser (Id, Locale)
-            VALUES (@Id, @Locale)
-            ON CONFLICT(Id) DO UPDATE SET Locale = @Locale";
+        const string query =
+        $"""
+        INSERT INTO {nameof(DiscordCachedUser)} ({nameof(DiscordCachedUser.Id)}, {nameof(DiscordCachedUser.Locale)})
+        VALUES (@Id, @Locale)
+        ON CONFLICT({nameof(DiscordCachedUser.Id)}) DO UPDATE SET {nameof(DiscordCachedUser.Locale)} = @Locale
+        """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.ExecuteAsync(query, user) > 0;
@@ -74,9 +80,11 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
     /// <returns><see langword="true"/> if the user was deleted; otherwise, <see langword="false"/>.</returns>
     public async Task<bool> DeleteAsync(ulong id)
     {
-        var query = @"
-            DELETE FROM DiscordCachedUser
-            WHERE Id = @Id";
+        const string query =
+        $"""
+        DELETE FROM {nameof(DiscordCachedUser)}
+        WHERE {nameof(DiscordCachedUser.Id)} = @Id
+        """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.ExecuteAsync(query, new { Id = id }) > 0;
