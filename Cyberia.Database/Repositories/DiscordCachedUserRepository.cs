@@ -65,8 +65,10 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
         const string query =
         $"""
         INSERT INTO {nameof(DiscordCachedUser)} ({nameof(DiscordCachedUser.Id)}, {nameof(DiscordCachedUser.Locale)})
-        VALUES (@Id, @Locale)
-        ON CONFLICT({nameof(DiscordCachedUser.Id)}) DO UPDATE SET {nameof(DiscordCachedUser.Locale)} = @Locale
+        VALUES (@{nameof(DiscordCachedUser.Id)}, @{nameof(DiscordCachedUser.Locale)})
+        ON CONFLICT({nameof(DiscordCachedUser.Id)})
+        DO UPDATE SET
+            {nameof(DiscordCachedUser.Locale)} = @{nameof(DiscordCachedUser.Locale)}
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
