@@ -625,13 +625,13 @@ Pour fuir à 100%, il te faudra au minimum #4 agi.</value>
     <value>Plusieurs sorts trouvés :</value>
   </data>
   <data name="Language.Set" xml:space="preserve">
-    <value>Votre langue a été modifié en #1.</value>
+    <value>Votre langue a été modifiée en #1.</value>
   </data>
   <data name="Rgpd.NoData" xml:space="preserve">
     <value>Aucune donnée personnelle n'est actuellement stockée vous concernant.</value>
   </data>
   <data name="Rgpd.Data" xml:space="preserve">
-    <value>Voici les informations personnelle actuellement stockées à votre sujet :</value>
+    <value>Voici les informations personnelles actuellement stockées à votre sujet :</value>
   </data>
   <data name="Rgpd.Deleted" xml:space="preserve">
     <value>Toutes vos données personnelles ont été supprimées.</value>
