@@ -21,7 +21,7 @@ public sealed partial class EmojisService
     private static partial Regex EmojiNameSanitizationRegex();
 
     /// <summary>
-    /// Initializes a new instance of <see cref="EmojisService"/>.
+    /// Initializes a new instance of <see cref="EmojisService"/> class.
     /// </summary>
     /// <param name="discordClient">The discord client.</param>
     public EmojisService(DiscordClient discordClient)
@@ -113,7 +113,7 @@ public sealed partial class EmojisService
         const string baseRoute = "/images/discord/emojis";
 
         HashSet<string> checkedEmojiRoutes = [];
-        var emojis = (await _discordClient.GetApplicationEmojisAsync()).ToDictionary(x => x.Name, x => x); 
+        var emojis = (await _discordClient.GetApplicationEmojisAsync()).ToDictionary(x => x.Name, x => x);
 
         // EffectAreas
         foreach (var itemTypeData in DofusApi.Datacenter.ItemsRepository.ItemTypes.Values)
@@ -271,13 +271,9 @@ public sealed partial class EmojisService
     {
         try
         {
-            using var responseStream = await _httpClient.GetStreamAsync(route);
+            var bytes = await _httpClient.GetByteArrayAsync(route);
 
-            MemoryStream memoryStream = new();
-            await responseStream.CopyToAsync(memoryStream);
-            memoryStream.Position = 0;
-
-            return memoryStream;
+            return new MemoryStream(bytes);
         }
         catch
         {
