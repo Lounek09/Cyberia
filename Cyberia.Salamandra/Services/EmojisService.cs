@@ -3,22 +3,20 @@
 using DSharpPlus;
 using DSharpPlus.Entities;
 
-using System.Text.RegularExpressions;
+using System.Buffers;
 
 namespace Cyberia.Salamandra.Services;
 
 /// <summary>
 /// Represents a service for dealing with discord emojis.
 /// </summary>
-public sealed partial class EmojisService
+public sealed class EmojisService
 {
     private static Dictionary<string, DiscordEmoji> s_cachedEmojis = [];
+    private static readonly SearchValues<char> s_authorizedChars = SearchValues.Create("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_");
 
     private readonly DiscordClient _discordClient;
     private readonly HttpClient _httpClient;
-
-    [GeneratedRegex(@"[^\w]")]
-    private static partial Regex EmojiNameSanitizationRegex();
 
     /// <summary>
     /// Initializes a new instance of <see cref="EmojisService"/> class.
@@ -36,10 +34,15 @@ public sealed partial class EmojisService
     /// <summary>
     /// Gets the emojis that contain the specified name.
     /// </summary>
-    /// <param name="name">The name to search for.</param>
+    /// <param name="name">The name to search for, if empty all emojis will be returned.</param>
     /// <returns>An enumerable of emojis that contain the specified name.</returns>
     public static IEnumerable<DiscordEmoji> GetEmojisByName(string name)
     {
+        if (string.IsNullOrEmpty(name))
+        {
+            return s_cachedEmojis.Values;
+        }
+
         return s_cachedEmojis.Values.Where(x => x.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
     }
 
@@ -47,29 +50,42 @@ public sealed partial class EmojisService
     /// Gets the string representation of the emoji with the specified name.
     /// </summary>
     /// <param name="name">The name of the emoji.</param>
-    /// <param name="displayedName">The displayed name of the emoji.</param>
+    /// <param name="displayedName">The displayed name of the emoji, if empty the default name will be used.</param>
     /// <returns>The string representation of the emoji, or an empty string if the emoji was not found.</returns>
-    public static string GetEmojiStringByName(string name, string? displayedName = null)
+    public static string GetEmojiStringByName(string name, ReadOnlySpan<char> displayedName)
     {
         if (!s_cachedEmojis.TryGetValue(name, out var emoji))
         {
             return string.Empty;
         }
 
-        if (displayedName is null)
+        if (displayedName.IsEmpty)
         {
             return emoji.ToString();
         }
 
-        displayedName = displayedName.NormalizeToAscii();
-        displayedName = displayedName.Replace(' ', '_');
-        displayedName = EmojiNameSanitizationRegex().Replace(displayedName, string.Empty);
+        var normalizedName = displayedName.NormalizeToAscii();
 
-        var displayedNameSpan = displayedName.AsSpan(..Math.Min(displayedName.Length, Constant.MaxEmojiNameSize));
+        Span<char> sanitizedNameBuffer = stackalloc char[displayedName.Length];
+        var validCharCount = 0;
+
+        foreach (var c in displayedName)
+        {
+            if (s_authorizedChars.Contains(c))
+            {
+                sanitizedNameBuffer[validCharCount++] = c;
+            }
+            else if (c == ' ')
+            {
+                sanitizedNameBuffer[validCharCount++] = '_';
+            }
+        }
+
+        ReadOnlySpan<char> sanitizedName = sanitizedNameBuffer[..validCharCount];
 
         return emoji.IsAnimated
-            ? $"<a:{displayedNameSpan}:{emoji.Id}>"
-            : $"<:{displayedNameSpan}:{emoji.Id}>";
+            ? $"<a:{sanitizedName}:{emoji.Id}>"
+            : $"<:{sanitizedName}:{emoji.Id}>";
     }
 
     /// <summary>
@@ -94,26 +110,20 @@ public sealed partial class EmojisService
             return false;
         }
 
-        try
-        {
-            await _discordClient.DeleteApplicationEmojiAsync(emoji.Id);
-            return s_cachedEmojis.Remove(name);
-        }
-        catch
-        {
-            return false;
-        }
+        await _discordClient.DeleteApplicationEmojiAsync(emoji.Id);
+        return s_cachedEmojis.Remove(name);
     }
 
     /// <summary>
-    /// Updates the emojis based on the datacenter for the discord client.
+    /// Creates the missing emojis based on the Dofus API data and the images in the CDN.
     /// </summary>
-    public async Task UpdateEmojisAsync()
+    public async Task CreateEmojisAsync()
     {
         const string baseRoute = "/images/discord/emojis";
 
+        var emojis = await _discordClient.GetApplicationEmojisAsync();
+        var emojisDictionary = emojis.ToDictionary(x => x.Name, x => x);
         HashSet<string> checkedEmojiRoutes = [];
-        var emojis = (await _discordClient.GetApplicationEmojisAsync()).ToDictionary(x => x.Name, x => x);
 
         // EffectAreas
         foreach (var itemTypeData in DofusApi.Datacenter.ItemsRepository.ItemTypes.Values)
@@ -121,7 +131,7 @@ public sealed partial class EmojisService
             var emojiName = $"effectarea_{itemTypeData.EffectArea.Id}";
             var emojiRoute = $"{baseRoute}/effectareas/{emojiName}.png";
 
-            await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+            await CreateEmojiAsync(emojiName, emojiRoute);
         }
 
         foreach (var spellData in DofusApi.Datacenter.SpellsRepository.Spells.Values)
@@ -133,7 +143,7 @@ public sealed partial class EmojisService
                     var emojiName = $"effectarea_{effect.EffectArea.Id}";
                     var emojiRoute = $"{baseRoute}/effectareas/{emojiName}.png";
 
-                    await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+                    await CreateEmojiAsync(emojiName, emojiRoute);
                 }
 
                 foreach (var effect in spellLevelData.CriticalEffects)
@@ -141,7 +151,7 @@ public sealed partial class EmojisService
                     var emojiName = $"effectarea_{effect.EffectArea.Id}";
                     var emojiRoute = $"{baseRoute}/effectareas/{emojiName}.png";
 
-                    await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+                    await CreateEmojiAsync(emojiName, emojiRoute);
                 }
             }
         }
@@ -152,7 +162,7 @@ public sealed partial class EmojisService
             var emojiName = $"effect_{effectData.GfxId}";
             var emojiRoute = $"{baseRoute}/effects/{emojiName}.png";
 
-            await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+            await CreateEmojiAsync(emojiName, emojiRoute);
         }
 
         // Emotes
@@ -161,7 +171,7 @@ public sealed partial class EmojisService
             var emojiName = $"emote_{emoteData.Id}";
             var emojiRoute = $"{baseRoute}/emotes/{emojiName}.png";
 
-            await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+            await CreateEmojiAsync(emojiName, emojiRoute);
         }
 
         // Jobs
@@ -170,7 +180,7 @@ public sealed partial class EmojisService
             var emojiName = $"job_{jobData.Id}";
             var emojiRoute = $"{baseRoute}/jobs/{emojiName}.png";
 
-            await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+            await CreateEmojiAsync(emojiName, emojiRoute);
         }
 
         // Items
@@ -182,7 +192,7 @@ public sealed partial class EmojisService
                 var emojiName = $"item_{baRuneItemData.ItemTypeId}_{baRuneItemData.GfxId}";
                 var emojiRoute = $"{baseRoute}/items/{baRuneItemData.ItemTypeId}/{emojiName}.png";
 
-                await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+                await CreateEmojiAsync(emojiName, emojiRoute);
             }
 
             var paRuneItemData = runeData.GetPaRuneItemData();
@@ -191,7 +201,7 @@ public sealed partial class EmojisService
                 var emojiName = $"item_{paRuneItemData.ItemTypeId}_{paRuneItemData.GfxId}";
                 var emojiRoute = $"{baseRoute}/items/{paRuneItemData.ItemTypeId}/{emojiName}.png";
 
-                await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+                await CreateEmojiAsync(emojiName, emojiRoute);
             }
 
             var raRuneItemData = runeData.GetRaRuneItemData();
@@ -200,7 +210,7 @@ public sealed partial class EmojisService
                 var emojiName = $"item_{raRuneItemData.ItemTypeId}_{raRuneItemData.GfxId}";
                 var emojiRoute = $"{baseRoute}/items/{raRuneItemData.ItemTypeId}/{emojiName}.png";
 
-                await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+                await CreateEmojiAsync(emojiName, emojiRoute);
             }
         }
 
@@ -210,63 +220,51 @@ public sealed partial class EmojisService
             var emojiName = $"state_{stateData.Id}";
             var emojiRoute = $"{baseRoute}/states/{emojiName}.png";
 
-            await CreateEmojiAsync(emojiName, emojiRoute, emojis, checkedEmojiRoutes);
+            await CreateEmojiAsync(emojiName, emojiRoute);
         }
 
         // Others
-        await CreateEmojiAsync("account_quest", $"{baseRoute}/others/account_quest.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("ap_resistance", $"{baseRoute}/others/ap_resistance.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("dungeon", $"{baseRoute}/others/dungeon.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("empty", $"{baseRoute}/others/empty.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("false", $"{baseRoute}/others/false.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("hand", $"{baseRoute}/others/hand.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("health", $"{baseRoute}/others/health.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("hourglass", $"{baseRoute}/others/hourglass.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("house", $"{baseRoute}/others/house.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("kamas", $"{baseRoute}/others/kamas.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("lock", $"{baseRoute}/others/lock.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("mp_resistance", $"{baseRoute}/others/mp_resistance.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("quest", $"{baseRoute}/others/quest.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("repeatable_quest", $"{baseRoute}/others/repeatable_quest.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("true", $"{baseRoute}/others/true.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("unknown", $"{baseRoute}/others/unknown.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("wand", $"{baseRoute}/others/wand.png", emojis, checkedEmojiRoutes);
-        await CreateEmojiAsync("xp", $"{baseRoute}/others/xp.png", emojis, checkedEmojiRoutes);
+        await CreateEmojiAsync("account_quest", $"{baseRoute}/others/account_quest.png");
+        await CreateEmojiAsync("ap_resistance", $"{baseRoute}/others/ap_resistance.png");
+        await CreateEmojiAsync("dungeon", $"{baseRoute}/others/dungeon.png" );
+        await CreateEmojiAsync("empty", $"{baseRoute}/others/empty.png");
+        await CreateEmojiAsync("false", $"{baseRoute}/others/false.png");
+        await CreateEmojiAsync("hand", $"{baseRoute}/others/hand.png");
+        await CreateEmojiAsync("health", $"{baseRoute}/others/health.png");
+        await CreateEmojiAsync("hourglass", $"{baseRoute}/others/hourglass.png");
+        await CreateEmojiAsync("house", $"{baseRoute}/others/house.png");
+        await CreateEmojiAsync("kamas", $"{baseRoute}/others/kamas.png");
+        await CreateEmojiAsync("lock", $"{baseRoute}/others/lock.png");
+        await CreateEmojiAsync("mp_resistance", $"{baseRoute}/others/mp_resistance.png");
+        await CreateEmojiAsync("quest", $"{baseRoute}/others/quest.png");
+        await CreateEmojiAsync("repeatable_quest", $"{baseRoute}/others/repeatable_quest.png");
+        await CreateEmojiAsync("true", $"{baseRoute}/others/true.png");
+        await CreateEmojiAsync("unknown", $"{baseRoute}/others/unknown.png");
+        await CreateEmojiAsync("wand", $"{baseRoute}/others/wand.png");
+        await CreateEmojiAsync("xp", $"{baseRoute}/others/xp.png");
 
-        s_cachedEmojis = emojis.ToDictionary();
+        s_cachedEmojis = emojisDictionary;
+
+        async Task CreateEmojiAsync(string emojiName, string emojiRoute)
+        {
+            if (emojisDictionary.ContainsKey(emojiName) || checkedEmojiRoutes.Contains(emojiRoute))
+            {
+                return;
+            }
+
+            checkedEmojiRoutes.Add(emojiRoute);
+
+            using var emojiStream = await GetImageStreamAsync(emojiRoute);
+            if (emojiStream is null)
+            {
+                return;
+            }
+
+            var emoji = await _discordClient.CreateApplicationEmojiAsync(emojiName, emojiStream);
+            emojisDictionary[emojiName] = emoji;
+        }
     }
 
-    /// <summary>
-    /// Creates an emoji with the specified name with an image from the specified route on the cdn.
-    /// </summary>
-    /// <param name="emojiName">The name of the emoji.</param>
-    /// <param name="emojiRoute">The route of the image on the cdn.</param>
-    /// <param name="emojis">The current created emojis.</param>
-    /// <param name="checkedEmojiRoutes">The checked emoji routes.</param>
-    private async Task CreateEmojiAsync(string emojiName, string emojiRoute, Dictionary<string, DiscordEmoji> emojis, HashSet<string> checkedEmojiRoutes)
-    {
-        if (emojis.ContainsKey(emojiName) || checkedEmojiRoutes.Contains(emojiRoute))
-        {
-            return;
-        }
-
-        checkedEmojiRoutes.Add(emojiRoute);
-
-        using var emojiStream = await GetImageStreamAsync(emojiRoute);
-        if (emojiStream is null)
-        {
-            return;
-        }
-
-        var emoji = await _discordClient.CreateApplicationEmojiAsync(emojiName, emojiStream);
-        emojis.Add(emojiName, emoji);
-    }
-
-    /// <summary>
-    /// Gets a stream of the image from the specified route.
-    /// </summary>
-    /// <param name="route">The route of the image on the cdn.</param>
-    /// <returns>The stream of the image, or <see langword="null"/> if the image could not be retrieved.</returns>
     private async Task<Stream?> GetImageStreamAsync(string route)
     {
         try

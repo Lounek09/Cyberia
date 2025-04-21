@@ -24,16 +24,16 @@ public sealed class EmojiCommandModule
         _emojisService = emojisService;
     }
 
-    [Command("update"), Description("[Owner] Update the emojis")]
+    [Command("create"), Description("[Owner] Create the emojis")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
     public async Task UpdateExecuteAsync(SlashCommandContext ctx)
     {
         await ctx.DeferResponseAsync();
 
-        await _emojisService.UpdateEmojisAsync();
+        await _emojisService.CreateEmojisAsync();
 
-        await ctx.RespondAsync("Emojis updated.");
+        await ctx.RespondAsync("Emojis created.");
     }
 
     [Command("delete"), Description("[Owner] Delete an emoji by its name")]

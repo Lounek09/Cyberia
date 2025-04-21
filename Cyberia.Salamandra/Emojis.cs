@@ -41,7 +41,7 @@ public static class Emojis
         {
             CharacterLearnEmoteEffect characterLearnEmoteEffect => Emote(characterLearnEmoteEffect.GetEmoteData(), culture),
             RideDetailsEffect => RideDetail(culture),
-            ICharacteristicEffect characteristicEffect => EmojisService.GetEmojiStringByName($"effect_{characteristicEffect.CharacteristicId}"),
+            ICharacteristicEffect characteristicEffect => EmojisService.GetEmojiStringByName($"effect_{characteristicEffect.CharacteristicId}", ReadOnlySpan<char>.Empty),
             IJobEffect jobEffect => Job(jobEffect.GetJobData(), culture),
             IStateEffect stateEffect => State(stateEffect.GetStateData(), culture),
             ISpellEffect or ISpellLevelEffect => Spell(culture),
@@ -56,7 +56,7 @@ public static class Emojis
                 return Empty(culture);
             }
 
-            emoji = EmojisService.GetEmojiStringByName($"effect_{effectData.GfxId}");
+            emoji = EmojisService.GetEmojiStringByName($"effect_{effectData.GfxId}", ReadOnlySpan<char>.Empty);
         }
 
         if (string.IsNullOrEmpty(emoji))
