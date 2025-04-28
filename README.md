@@ -60,7 +60,7 @@
      encode gzip
    }
    ```
-   For more information, see the [Caddiyfile documentation](https://caddyserver.com/docs/caddyfile).  
+   For more information, see the [Caddyfile documentation](https://caddyserver.com/docs/caddyfile).  
 
 4. **Restart Caddy:**  
    Restart the Caddy service to apply the new configuration[^1]:
@@ -104,7 +104,7 @@
    ```
 
 9. **First-time Launch:**  
-   If this is your first time launching the application, you will need to generate the JSON data used by the API. You can either wait for the automatic Lang check to occur or manually trigger it using the `/langs check` command in Discord. After the check is complete, use the `/langs parse` command to parse the data to JSON. Then, restart the application or use the `/reload` command to hot reload the data. Finally, use the command `/emoji update` to upload the emojis to your Discord application.
+   If this is your first time launching the application, you will need to generate the JSON data used by the API. You can either wait for the automatic Lang check to occur or manually trigger it using the `/langs check` command in Discord. After the check is complete, use the `/langs parse` command to parse the data to JSON. Then, restart the application or use the `/reload` command to hot reload the data. Finally, use the command `/emoji create` to upload the emojis to your Discord application.
 
 ## Configuration
 
