@@ -78,19 +78,19 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
         var buttons = Buttons1Builder();
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         buttons = Buttons2Builder();
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         buttons = OtherButtonsBuilder();
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         return (T)message;

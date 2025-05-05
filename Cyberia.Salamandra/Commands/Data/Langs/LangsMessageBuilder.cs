@@ -55,10 +55,10 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     {
         var message = new T()
             .AddEmbed(await EmbedBuilder())
-            .AddComponents(TypeSelectBuilder())
-            .AddComponents(LanguageSelectBuilder());
+            .AddActionRowComponent(TypeSelectBuilder())
+            .AddActionRowComponent(LanguageSelectBuilder());
 
-        return (T)message; 
+        return (T)message;
     }
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()

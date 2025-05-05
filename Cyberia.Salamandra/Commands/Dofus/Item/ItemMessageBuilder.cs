@@ -93,7 +93,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         var buttons = ButtonsBuilder();
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         return (T)message;

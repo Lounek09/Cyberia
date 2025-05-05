@@ -72,24 +72,24 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
         var buttons = ButtonsBuilder(0);
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         buttons = ButtonsBuilder(Constant.MaxButtonPerRow);
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         buttons = OtherButtonsBuilder();
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         if (_itemsData.Any())
         {
-            message.AddComponents(ItemComponentsBuilder.ItemsSelectBuilder(0, _itemsData, _culture));
+            message.AddActionRowComponent(ItemComponentsBuilder.ItemsSelectBuilder(0, _itemsData, _culture));
         }
 
         return (T)message;

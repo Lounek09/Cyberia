@@ -67,7 +67,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
         var components = ButtonsBuilder();
         if (components.Any())
         {
-            message.AddComponents(components);
+            message.AddActionRowComponent(components);
         }
 
         return (T)message;

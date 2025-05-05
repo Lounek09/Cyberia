@@ -92,13 +92,13 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
         var select = QuestStepSelectBuilder(0, 0);
         if (select.Options.Count > 1)
         {
-            message.AddComponents(select);
+            message.AddActionRowComponent(select);
         }
 
         select = QuestStepSelectBuilder(1, Constant.MaxSelectOption);
         if (select.Options.Count > 0)
         {
-            message.AddComponents(select);
+            message.AddActionRowComponent(select);
         }
 
         if (_hasQuestStepRewardsBaseLevel)
@@ -106,13 +106,13 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             select = QuestStepRewardsBaseLevelSelectBuilder(2, 0);
             if (select.Options.Count > 1)
             {
-                message.AddComponents(select);
+                message.AddActionRowComponent(select);
             }
 
             select = QuestStepRewardsBaseLevelSelectBuilder(3, Constant.MaxSelectOption);
             if (select.Options.Count > 0)
             {
-                message.AddComponents(select);
+                message.AddActionRowComponent(select);
             }
         }
 

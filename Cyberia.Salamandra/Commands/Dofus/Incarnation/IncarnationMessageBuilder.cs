@@ -73,12 +73,12 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
 
         if (_spellsData.Any())
         {
-            message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData, _culture));
+            message.AddActionRowComponent(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData, _culture));
         }
 
         if (_itemData is not null)
         {
-            message.AddComponents(ItemComponentsBuilder.ItemButtonBuilder(_itemData, 1, _culture));
+            message.AddActionRowComponent(ItemComponentsBuilder.ItemButtonBuilder(_itemData, 1, _culture));
         }
 
         return (T)message;

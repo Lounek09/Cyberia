@@ -69,13 +69,13 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
     {
         var message = new T()
             .AddEmbed(await EmbedBuilder())
-            .AddComponents(LessButtonsBuilder())
-            .AddComponents(MoreButtonsBuilder());
+            .AddActionRowComponent(LessButtonsBuilder())
+            .AddActionRowComponent(MoreButtonsBuilder());
 
         var buttons = ButtonsBuilder();
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         return (T)message;

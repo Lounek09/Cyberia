@@ -64,9 +64,9 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
     {
         var message = new T()
             .AddEmbed(await EmbedBuilder())
-            .AddComponents(LessButtonsBuilder())
-            .AddComponents(MoreButtonsBuilder())
-            .AddComponents(ButtonsBuilder());
+            .AddActionRowComponent(LessButtonsBuilder())
+            .AddActionRowComponent(MoreButtonsBuilder())
+            .AddActionRowComponent(ButtonsBuilder());
 
         return (T)message;
     }

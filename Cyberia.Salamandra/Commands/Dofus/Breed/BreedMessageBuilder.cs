@@ -71,13 +71,13 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
 
         if (_spellsData.Any())
         {
-            message.AddComponents(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData, _culture));
+            message.AddActionRowComponent(SpellComponentsBuilder.SpellsSelectBuilder(0, _spellsData, _culture));
         }
 
         var buttons = ButtonsBuilder();
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         return (T)message;

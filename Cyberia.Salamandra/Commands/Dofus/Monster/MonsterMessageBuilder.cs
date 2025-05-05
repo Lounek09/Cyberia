@@ -74,13 +74,13 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
         var buttons = GradeButtons1Builder();
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         buttons = GradeButtons2Builder();
         if (buttons.Any())
         {
-            message.AddComponents(buttons);
+            message.AddActionRowComponent(buttons);
         }
 
         return (T)message;

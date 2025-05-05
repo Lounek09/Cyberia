@@ -38,8 +38,8 @@ public abstract class PaginatedMessageBuilder<T> : ICustomMessageBuilder
     {
         var message = new T2()
             .AddEmbed(await EmbedBuilder())
-            .AddComponents(PaginationButtonsBuilder())
-            .AddComponents(SelectBuilder());
+            .AddActionRowComponent(PaginationButtonsBuilder())
+            .AddActionRowComponent(SelectBuilder());
 
         return (T2)message;
     }

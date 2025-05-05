@@ -67,7 +67,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
 
         if (_outdoorMapData is not null || _mapsData.Count > 0)
         {
-            message.AddComponents(HouseMapsSelectBuilder());
+            message.AddActionRowComponent(HouseMapsSelectBuilder());
         }
 
         return (T)message;
