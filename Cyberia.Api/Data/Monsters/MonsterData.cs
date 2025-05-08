@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Data.Alignments;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Utils;
 
 using System.Text.Json.Serialization;
 
@@ -80,17 +80,17 @@ public sealed class MonsterData : IDofusData<int>
 
     public async Task<string> GetBigImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/big", GfxId, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/big", GfxId, size);
     }
 
     public async Task<string> GetFaceImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/faces", GfxId, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/faces", GfxId, size);
     }
 
     public async Task<string> GetMiniImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/mini", GfxId, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/mini", GfxId, size);
     }
 
     public MonsterRaceData? GetMonsterRaceData()

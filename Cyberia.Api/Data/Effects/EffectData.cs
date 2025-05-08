@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Utils;
 
 using System.Text.Json.Serialization;
 
@@ -45,10 +45,10 @@ public sealed class EffectData : IDofusData<int>, IComparable<EffectData>
     {
         if (Element is null)
         {
-            return await CdnManager.GetImagePathAsync("effects", CharacteristicId, size);
+            return await ImageUrlProvider.GetImagePathAsync("effects", CharacteristicId, size);
         }
 
-        return await CdnManager.GetImagePathAsync("effects", Element.Value.ToString(), size);
+        return await ImageUrlProvider.GetImagePathAsync("effects", Element.Value.ToString(), size);
     }
 
     public int CompareTo(EffectData? other)

@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Items;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Utils;
 using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Formatters;
@@ -80,24 +80,24 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
 
         StringBuilder descriptionBuilder = new();
 
-        foreach (var runeBundle in RuneManager.GetRuneBundlesFromItem(_itemData, _quantity))
+        foreach (var runeBundle in RuneCalculator.GetRuneBundlesFromItem(_itemData, _quantity))
         {
-            descriptionBuilder.Append(Formatter.Bold(runeBundle.BaAmount.ToFormattedString(_culture)));
+            descriptionBuilder.Append(Formatter.Bold(runeBundle.BaQuantity.ToFormattedString(_culture)));
             descriptionBuilder.Append(' ');
             descriptionBuilder.Append(Emojis.BaRune(runeBundle.RuneData, _culture));
 
-            if (runeBundle.PaAmount > 0)
+            if (runeBundle.PaQuantity > 0)
             {
                 descriptionBuilder.Append(" - ");
-                descriptionBuilder.Append(Formatter.Bold(runeBundle.PaAmount.ToFormattedString(_culture)));
+                descriptionBuilder.Append(Formatter.Bold(runeBundle.PaQuantity.ToFormattedString(_culture)));
                 descriptionBuilder.Append(' ');
                 descriptionBuilder.Append(Emojis.PaRune(runeBundle.RuneData, _culture));
             }
 
-            if (runeBundle.RaAmount > 0)
+            if (runeBundle.RaQuantity > 0)
             {
                 descriptionBuilder.Append(" - ");
-                descriptionBuilder.Append(Formatter.Bold(runeBundle.RaAmount.ToFormattedString(_culture)));
+                descriptionBuilder.Append(Formatter.Bold(runeBundle.RaQuantity.ToFormattedString(_culture)));
                 descriptionBuilder.Append(' ');
                 descriptionBuilder.Append(Emojis.RaRune(runeBundle.RuneData, _culture));
             }
@@ -105,7 +105,10 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
             descriptionBuilder.Append('\n');
         }
 
-        return embed.WithDescription(descriptionBuilder.ToString());
+        embed.WithDescription(descriptionBuilder.ToString())
+            .AddField(Translation.Get<BotTranslations>("Embed.Field.Source.Title", _culture), RuneCalculator.Source);
+
+        return embed;
     }
 
     private IEnumerable<DiscordButtonComponent> LessButtonsBuilder()

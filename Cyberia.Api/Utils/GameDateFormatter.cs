@@ -3,10 +3,18 @@ using Cyberia.Langzilla.Enums;
 
 using System.Globalization;
 
-namespace Cyberia.Api.Managers;
+namespace Cyberia.Api.Utils;
 
-public static class DateTimeManager
+/// <summary>
+/// Provides utilities for game-specific DateTime operations and formatting.
+/// </summary>
+public static class GameDateFormatter
 {
+    /// <summary>
+    /// Creates a DateTime from effect parameters.
+    /// </summary>
+    /// <param name="parameters">Effect parameters containing date and time values</param>
+    /// <returns>A DateTime object constructed from the parameters</returns>
     public static DateTime CreateDateTimeFromEffectParameters(EffectParameters parameters)
     {
         if (parameters.Param1 == -1)
@@ -23,16 +31,29 @@ public static class DateTimeManager
         return new DateTime(year, month, day, hour, minute, 0);
     }
 
+    /// <summary>
+    /// Converts a real-world DateTime to an in-game DateTime.
+    /// </summary>
+    /// <param name="dateTime">The real-world DateTime to convert</param>
+    /// <returns>The equivalent in-game DateTime</returns>
     public static DateTime ToInGameDateTime(this DateTime dateTime)
     {
         return dateTime.AddYears(DofusApi.Datacenter.TimeZonesRepository.YearLess);
     }
 
+    /// <inheritdoc cref="ToInGameDateTime(DateTime)"/>/>
+    /// <param name="language">The language to use for formatting</param>
     public static string ToRolePlayString(this DateTime dateTime, Language language)
     {
         return ToRolePlayString(dateTime, language.ToCulture());
     }
 
+    /// <summary>
+    /// Converts a DateTime to a role-playing string representation in the specified culture.
+    /// </summary>
+    /// <param name="dateTime">The DateTime to format</param>
+    /// <param name="culture">The culture to use for formatting, or <see langword="null"/> for current culture</param>
+    /// <returns>A formatted string representing the date in role-playing format</returns>
     public static string ToRolePlayString(this DateTime dateTime, CultureInfo? culture = null)
     {
         dateTime = dateTime.ToInGameDateTime();

@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Enums;
 
 namespace Cyberia.Api.Data;
@@ -134,7 +134,7 @@ public sealed class DofusDatacenter
         TitlesRepository = DofusRepository.Load<Titles.TitlesRepository>(type);
         TTGRepository = DofusRepository.Load<TTG.TTGRepository>(type);
 
-        CdnManager.ClearCache();
+        ImageUrlProvider.ClearCache();
     }
 
     public static (int boost, int cost) GetNextBoostCost(IReadOnlyList<IReadOnlyList<int>> boostCost, int currentAmout)

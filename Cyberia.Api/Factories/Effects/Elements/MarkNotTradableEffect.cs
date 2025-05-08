@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Utils;
 
 using System.Globalization;
 
@@ -18,7 +18,7 @@ public sealed record MarkNotTradableEffect : Effect
 
     internal static MarkNotTradableEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, DateTimeManager.CreateDateTimeFromEffectParameters(parameters));
+        return new(effectId, duration, probability, criteria, dispellable, effectArea, GameDateFormatter.CreateDateTimeFromEffectParameters(parameters));
     }
 
     public bool IsLinkedToAccount()

@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Utils;
 
 using System.Text.Json.Serialization;
 
@@ -26,17 +26,17 @@ public sealed class NpcData : IDofusData<int>
 
     public async Task<string> GetBigImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/big", Id, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/big", Id, size);
     }
 
     public async Task<string> GetFaceImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/faces", Id, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/faces", Id, size);
     }
 
     public async Task<string> GetMiniImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/mini", Id, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/mini", Id, size);
     }
 
     public IEnumerable<NpcActionData> GetNpcActionsData()

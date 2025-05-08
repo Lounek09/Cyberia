@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Utils;
 
 using System.Text.Json.Serialization;
 
@@ -26,7 +26,7 @@ public sealed class JobData : IDofusData<int>
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("jobs", GfxId, size);
+        return await ImageUrlProvider.GetImagePathAsync("jobs", GfxId, size);
     }
 
     public JobData? GetJobDataSpecialization()

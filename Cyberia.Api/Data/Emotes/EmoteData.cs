@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Utils;
 
 using System.Text.Json.Serialization;
 
@@ -24,6 +24,6 @@ public sealed class EmoteData : IDofusData<int>
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("emotes", Id, size);
+        return await ImageUrlProvider.GetImagePathAsync("emotes", Id, size);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Data.Houses;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Enums;
 
 using System.Globalization;
@@ -63,7 +63,7 @@ public sealed class MapData : IDofusData<int>
 
     public async Task<string> GetImagePathAsync()
     {
-        return await CdnManager.GetImagePathAsync("maps", Id, "jpg");
+        return await ImageUrlProvider.GetImagePathAsync("maps", Id, "jpg");
     }
 
     public IEnumerable<MapData> GetMapsDataAtSameCoordinate()

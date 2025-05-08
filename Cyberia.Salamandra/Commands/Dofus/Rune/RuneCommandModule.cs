@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data;
 using Cyberia.Api.Enums;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Utils;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Services;
 
@@ -109,7 +109,7 @@ public sealed class RuneCommandModule
             return;
         }
 
-        var percentRuneExtractable = Math.Round(RuneManager.GetPercentStatExtractable(runeData, itemLvl, statAmount), 2);
+        var percentRuneExtractable = Math.Round(RuneCalculator.GetPercentStatExtractable(runeData, itemLvl, statAmount), 2);
 
         var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Rune.Author", culture), culture)
             .WithTitle(_dofusDatacenter.ItemsRepository.GetItemNameById(runeData.BaRuneItemId));
@@ -133,34 +133,34 @@ public sealed class RuneCommandModule
 
             if (runeData.PaRuneItemId is null && runeData.RaRuneItemId is null)
             {
-                var runeBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AverageMultiplicator);
+                var runeBundle = RuneCalculator.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneCalculator.AverageMultiplicator);
 
-                embed.AddField(Translation.Get<BotTranslations>("ShortAverage", culture), $"{Emojis.BaRune(runeData, culture)} {Formatter.Bold(runeBundle.BaAmount.ToString())}");
+                embed.AddField(Translation.Get<BotTranslations>("ShortAverage", culture), $"{Emojis.BaRune(runeData, culture)} {Formatter.Bold(runeBundle.BaQuantity.ToString())}");
             }
             else
             {
-                var minRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.MinMultiplicator);
-                var averageRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.AverageMultiplicator);
-                var maxRuneBundle = RuneManager.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneManager.MaxMultiplicator);
+                var minRuneBundle = RuneCalculator.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneCalculator.MinMultiplicator);
+                var averageRuneBundle = RuneCalculator.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneCalculator.AverageMultiplicator);
+                var maxRuneBundle = RuneCalculator.GetRuneBundleFromStat(runeData, itemLvl, statAmount, RuneCalculator.MaxMultiplicator);
 
                 embed.AddField(Translation.Get<BotTranslations>("ShortMinimum", culture), GetRuneBundleContentFieldStatCommand(minRuneBundle, culture), true);
                 embed.AddField(Translation.Get<BotTranslations>("ShortAverage", culture), GetRuneBundleContentFieldStatCommand(averageRuneBundle, culture), true);
                 embed.AddField(Translation.Get<BotTranslations>("ShortMaximum", culture), GetRuneBundleContentFieldStatCommand(maxRuneBundle, culture), true);
 
-                if (runeData.RaRuneItemId is not null && maxRuneBundle.RaAmount == 1 && minRuneBundle.RaAmount == 0)
+                if (runeData.RaRuneItemId is not null && maxRuneBundle.RaQuantity == 1 && minRuneBundle.RaQuantity == 0)
                 {
-                    var percentRaObtention = Math.Round(RuneManager.GetPercentToObtainRune(runeData, RuneType.RA, itemLvl, statAmount), 2);
+                    var percentRaObtention = Math.Round(RuneCalculator.GetPercentChanceToObtainRune(runeData, RuneType.RA, itemLvl, statAmount), 2);
                     embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RuneRaRate.Title", culture), $"{Emojis.RaRune(runeData, culture)} {Formatter.Bold(percentRaObtention.ToString())}%");
                 }
-                else if (runeData.PaRuneItemId is not null && maxRuneBundle.PaAmount == 1 && minRuneBundle.PaAmount == 0)
+                else if (runeData.PaRuneItemId is not null && maxRuneBundle.PaQuantity == 1 && minRuneBundle.PaQuantity == 0)
                 {
-                    var percentPaObtention = Math.Round(RuneManager.GetPercentToObtainRune(runeData, RuneType.PA, itemLvl, statAmount), 2);
+                    var percentPaObtention = Math.Round(RuneCalculator.GetPercentChanceToObtainRune(runeData, RuneType.PA, itemLvl, statAmount), 2);
                     embed.AddField(Translation.Get<BotTranslations>("Embed.Field.RunePaRate.Title", culture), $"{Emojis.PaRune(runeData, culture)} {Formatter.Bold(percentPaObtention.ToString())}%");
                 }
             }
         }
 
-        embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Source.Title", culture), "https://forums.jeuxonline.info/sujet/1045383/les-taux-de-brisage");
+        embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Source.Title", culture), RuneCalculator.Source);
 
         await ctx.RespondAsync(embed);
     }
@@ -171,7 +171,7 @@ public sealed class RuneCommandModule
 
         builder.Append(Emojis.BaRune(runeBundle.RuneData, culture));
         builder.Append(' ');
-        builder.Append(Formatter.Bold(runeBundle.BaAmount.ToFormattedString(culture)));
+        builder.Append(Formatter.Bold(runeBundle.BaQuantity.ToFormattedString(culture)));
 
         if (runeBundle.RemainingBaPercent > 0)
         {
@@ -180,20 +180,20 @@ public sealed class RuneCommandModule
             builder.Append('%');
         }
 
-        if (runeBundle.PaAmount > 0)
+        if (runeBundle.PaQuantity > 0)
         {
             builder.Append('\n');
             builder.Append(Emojis.PaRune(runeBundle.RuneData, culture));
             builder.Append(' ');
-            builder.Append(Formatter.Bold(runeBundle.PaAmount.ToFormattedString(culture)));
+            builder.Append(Formatter.Bold(runeBundle.PaQuantity.ToFormattedString(culture)));
         }
 
-        if (runeBundle.RaAmount > 0)
+        if (runeBundle.RaQuantity > 0)
         {
             builder.Append('\n');
             builder.Append(Emojis.RaRune(runeBundle.RuneData, culture));
             builder.Append(' ');
-            builder.Append(Formatter.Bold(runeBundle.RaAmount.ToFormattedString(culture)));
+            builder.Append(Formatter.Bold(runeBundle.RaQuantity.ToFormattedString(culture)));
         }
 
         return builder.ToString();

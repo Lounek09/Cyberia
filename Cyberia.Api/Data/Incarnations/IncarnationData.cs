@@ -2,7 +2,7 @@
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Enums;
 
 using System.Globalization;
@@ -34,17 +34,17 @@ public sealed class IncarnationData : IDofusData<int>
 
     public async Task<string> GetBigImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/big", GfxId, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/big", GfxId, size);
     }
 
     public async Task<string> GetFaceImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/faces", GfxId, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/faces", GfxId, size);
     }
 
     public async Task<string> GetMiniImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/mini", GfxId, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/mini", GfxId, size);
     }
 
     public ItemData? GetItemData()

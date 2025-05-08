@@ -2,7 +2,7 @@
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Enums;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Enums;
 
 using System.Text.Json.Serialization;
@@ -103,45 +103,45 @@ public sealed class BreedData : IDofusData<int>
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/breeds", Id, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/breeds", Id, size);
     }
 
     public async Task<string> GetBackImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/breeds/back", Id, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/breeds/back", Id, size);
     }
 
     public async Task<string> GetSlideImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/breeds/slide", Id, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/breeds/slide", Id, size);
     }
 
     public async Task<string> GetWeaponsPreferenceImagePathAsync()
     {
-        return await CdnManager.GetImagePathAsync("artworks/breeds/weapons_preference", Id);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/breeds/weapons_preference", Id);
     }
 
     public async Task<string> GetSymbolsImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("artworks/symbols", Id, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/symbols", Id, size);
     }
 
     public async Task<string> GetBigImagePathAsync(Gender gender, CdnImageSize size)
     {
         var id = int.Parse($"{Id}{(int)gender}");
-        return await CdnManager.GetImagePathAsync("artworks/big", id, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/big", id, size);
     }
 
     public async Task<string> GetFaceImagePathAsync(Gender gender, CdnImageSize size)
     {
         var id = int.Parse($"{Id}{(int)gender}");
-        return await CdnManager.GetImagePathAsync("artworks/faces", id, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/faces", id, size);
     }
 
     public async Task<string> GetMiniImagePathAsync(Gender gender, CdnImageSize size)
     {
         var id = int.Parse($"{Id}{(int)gender}");
-        return await CdnManager.GetImagePathAsync("artworks/mini", id, size);
+        return await ImageUrlProvider.GetImagePathAsync("artworks/mini", id, size);
     }
 
     public IEnumerable<SpellData> GetSpellsData()

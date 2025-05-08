@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Enums;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Utils;
 
 using System.Text.Json.Serialization;
 
@@ -67,7 +67,7 @@ public sealed class SpellData : IDofusData<int>
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("spells", Id, size, "jpg");
+        return await ImageUrlProvider.GetImagePathAsync("spells", Id, size, "jpg");
     }
 
     public BreedData? GetBreedData()

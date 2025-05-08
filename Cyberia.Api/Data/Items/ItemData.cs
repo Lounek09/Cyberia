@@ -8,7 +8,7 @@ using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Enums;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.Effects.Elements;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Enums;
 
 using System.Globalization;
@@ -101,7 +101,7 @@ public sealed class ItemData : IDofusData<int>
 
     public async Task<string> GetImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync($"items/{ItemTypeId}", GfxId, size);
+        return await ImageUrlProvider.GetImagePathAsync($"items/{ItemTypeId}", GfxId, size);
     }
 
     public ItemTypeData? GetItemTypeData()

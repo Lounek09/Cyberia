@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Managers;
+﻿using Cyberia.Api.Utils;
 
 using System.Text.Json.Serialization;
 
@@ -31,6 +31,6 @@ public sealed class StateData : IDofusData<int>
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return await CdnManager.GetImagePathAsync("states", Id, size);
+        return await ImageUrlProvider.GetImagePathAsync("states", Id, size);
     }
 }

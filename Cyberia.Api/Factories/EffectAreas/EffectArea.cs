@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data;
 using Cyberia.Api.JsonConverters;
-using Cyberia.Api.Managers;
+using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Enums;
 
 using System.Globalization;
@@ -42,7 +42,7 @@ public readonly record struct EffectArea
     /// <returns>The icon image path url.</returns>
     public Task<string> GetIconImagePathAsync(CdnImageSize size)
     {
-        return CdnManager.GetImagePathAsync("effectareas", Id, size);
+        return ImageUrlProvider.GetImagePathAsync("effectareas", Id, size);
     }
 
     public string GetName(Language language)
