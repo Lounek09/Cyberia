@@ -32,7 +32,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "I";
     public const int PacketVersion = 2;
 
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly ItemData _itemData;
     private readonly ItemTypeData? _itemTypeData;
     private readonly ItemSetData? _itemSetData;
@@ -44,7 +44,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
     private readonly int _quantity;
     private readonly CultureInfo? _culture;
 
-    public ItemMessageBuilder(EmbedBuilderService embedBuilderService, ItemData itemData, int quantity, CultureInfo? culture)
+    public ItemMessageBuilder(IEmbedBuilderService embedBuilderService, ItemData itemData, int quantity, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _itemData = itemData;
@@ -71,7 +71,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             var itemData = dofusDatacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, itemData, quantity, culture);
             }

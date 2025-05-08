@@ -22,11 +22,11 @@ namespace Cyberia.Salamandra.Commands.Dofus.Map;
 [InteractionLocalizer<MapInteractionLocalizer>]
 public sealed class MapCommandModule
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public MapCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
+    public MapCommandModule(ICultureService cultureService, DofusDatacenter dofusDatacenter, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

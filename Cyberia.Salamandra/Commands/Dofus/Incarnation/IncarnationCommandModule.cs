@@ -16,12 +16,12 @@ namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
 public sealed class IncarnationCommandModule
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusApiConfig _dofusApiConfig;
     private readonly DofusDatacenter _dofusDatacenter;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public IncarnationCommandModule(CultureService cultureService, DofusApiConfig dofusApiConfig, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
+    public IncarnationCommandModule(ICultureService cultureService, DofusApiConfig dofusApiConfig, DofusDatacenter dofusDatacenter, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _dofusApiConfig = dofusApiConfig;

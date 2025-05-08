@@ -23,11 +23,11 @@ namespace Cyberia.Salamandra.Commands.Dofus.House;
 [InteractionLocalizer<HouseInteractionLocalizer>]
 public sealed class HouseCommandModule
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public HouseCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
+    public HouseCommandModule(ICultureService cultureService, DofusDatacenter dofusDatacenter, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

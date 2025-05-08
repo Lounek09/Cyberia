@@ -9,10 +9,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.ItemSet;
 
 public sealed class ItemSetAutocompleteProvider : IAutoCompleteProvider
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
 
-    public ItemSetAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
+    public ItemSetAutocompleteProvider(ICultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

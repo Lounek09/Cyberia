@@ -23,7 +23,7 @@ public sealed class GladiatroolBreedMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "BG";
     public const int PacketVersion = 1;
 
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly BreedData _breedData;
     private readonly ItemData? _weaponItemData;
     private readonly ItemTypeData? _weaponItemTypeData;
@@ -31,7 +31,7 @@ public sealed class GladiatroolBreedMessageBuilder : ICustomMessageBuilder
     private readonly IEnumerable<SpellData> _spellsData;
     private readonly CultureInfo? _culture;
 
-    public GladiatroolBreedMessageBuilder(EmbedBuilderService embedBuilderService, BreedData breedData, CultureInfo? culture)
+    public GladiatroolBreedMessageBuilder(IEmbedBuilderService embedBuilderService, BreedData breedData, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _breedData = breedData;
@@ -53,7 +53,7 @@ public sealed class GladiatroolBreedMessageBuilder : ICustomMessageBuilder
             var breedData = dofusDatacenter.BreedsRepository.GetBreedDataById(breedId);
             if (breedData is not null)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, breedData, culture);
             }

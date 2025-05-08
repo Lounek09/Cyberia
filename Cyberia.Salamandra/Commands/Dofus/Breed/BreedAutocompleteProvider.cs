@@ -9,10 +9,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 
 public sealed class BreedAutocompleteProvider : IAutoCompleteProvider //TODO: Use a IChoiceProvider with localized names
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
 
-    public BreedAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
+    public BreedAutocompleteProvider(ICultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

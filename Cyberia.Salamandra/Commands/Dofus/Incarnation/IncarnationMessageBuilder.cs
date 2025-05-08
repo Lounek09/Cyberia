@@ -25,7 +25,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     public const int PacketVersion = 1;
 
     private readonly DofusApiConfig _dofusApiConfig;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly IncarnationData _incarnationData;
     private readonly ItemData? _itemData;
     private readonly string _itemName;
@@ -33,7 +33,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     private readonly IEnumerable<SpellData> _spellsData;
     private readonly CultureInfo? _culture;
 
-    public IncarnationMessageBuilder(DofusApiConfig dofusApiConfig, EmbedBuilderService embedBuilderService, IncarnationData incarnationData, CultureInfo? culture)
+    public IncarnationMessageBuilder(DofusApiConfig dofusApiConfig, IEmbedBuilderService embedBuilderService, IncarnationData incarnationData, CultureInfo? culture)
     {
         _dofusApiConfig = dofusApiConfig;
         _embedBuilderService = embedBuilderService;
@@ -57,7 +57,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
             if (incarnartionData is not null)
             {
                 var dofusApiConfig = provider.GetRequiredService<DofusApiConfig>();
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(dofusApiConfig, embedBuilderService, incarnartionData, culture);
             }

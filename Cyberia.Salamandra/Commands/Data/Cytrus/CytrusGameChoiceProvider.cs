@@ -8,9 +8,9 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
 public sealed class CytrusGameChoiceProvider : IChoiceProvider
 {
-    private readonly CytrusWatcher _cytrusWatcher;
+    private readonly ICytrusWatcher _cytrusWatcher;
 
-    public CytrusGameChoiceProvider(CytrusWatcher cytrusWatcher)
+    public CytrusGameChoiceProvider(ICytrusWatcher cytrusWatcher)
     {
         _cytrusWatcher = cytrusWatcher;
     }

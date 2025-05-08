@@ -24,10 +24,10 @@ public sealed class RgpdCommandModule
         WriteIndented = true
     };
 
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DiscordCachedUserRepository _discordCachedUserRepository;
 
-    public RgpdCommandModule(CultureService cultureService, DiscordCachedUserRepository discordCachedUserRepository)
+    public RgpdCommandModule(ICultureService cultureService, DiscordCachedUserRepository discordCachedUserRepository)
     {
         _cultureService = cultureService;
         _discordCachedUserRepository = discordCachedUserRepository;

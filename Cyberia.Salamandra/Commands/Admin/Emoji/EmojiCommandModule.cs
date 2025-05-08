@@ -17,9 +17,9 @@ namespace Cyberia.Salamandra.Commands.Admin.Emoji;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class EmojiCommandModule
 {
-    private readonly EmojisService _emojisService;
+    private readonly IEmojisService _emojisService;
 
-    public EmojiCommandModule(EmojisService emojisService)
+    public EmojiCommandModule(IEmojisService emojisService)
     {
         _emojisService = emojisService;
     }

@@ -11,7 +11,24 @@ namespace Cyberia.Salamandra.Services;
 /// <summary>
 /// Represents a service to handle culture-related logic for Discord users.
 /// </summary>
-public sealed class CultureService
+public interface ICultureService
+{
+    /// <summary>
+    /// Gets the locale of the user from the database or the provided interaction if not found.
+    /// </summary>
+    /// <param name="interaction">The interaction to get the locale from.</param>
+    /// <returns>The locale of the user.</returns>
+    Task<string?> GetLocaleAsync(DiscordInteraction interaction);
+
+    /// <summary>
+    /// Gets the culture of the user from the database or the provided interaction if not found.
+    /// </summary>
+    /// <param name="interaction">The interaction to get the culture from.</param>
+    /// <returns>The culture of the user.</returns>
+    Task<CultureInfo> GetCultureAsync(DiscordInteraction interaction);
+}
+
+public sealed class CultureService : ICultureService
 {
     private readonly DiscordCachedUserRepository _discordCachedUserRepository;
     private readonly DofusApiConfig _dofusApiConfig;
@@ -26,11 +43,6 @@ public sealed class CultureService
         _dofusApiConfig = dofusApiConfig;
     }
 
-    /// <summary>
-    /// Gets the locale of the user from the database or the provided interaction if not found.
-    /// </summary>
-    /// <param name="interaction">The interaction to get the locale from.</param>
-    /// <returns>The locale of the user.</returns>
     public async Task<string?> GetLocaleAsync(DiscordInteraction interaction)
     {
         var user = await _discordCachedUserRepository.GetAsync(interaction.User.Id);
@@ -38,11 +50,6 @@ public sealed class CultureService
         return user?.Locale ?? interaction.Locale ?? interaction.GuildLocale;
     }
 
-    /// <summary>
-    /// Gets the culture of the user from the database or the provided interaction if not found.
-    /// </summary>
-    /// <param name="interaction">The interaction to get the culture from.</param>
-    /// <returns>The culture of the user.</returns>
     public async Task<CultureInfo> GetCultureAsync(DiscordInteraction interaction)
     {
         var user = await _discordCachedUserRepository.GetAsync(interaction.User.Id);
@@ -52,6 +59,11 @@ public sealed class CultureService
             : CultureInfo.GetCultureInfo(user.Locale);
     }
 
+    /// <summary>
+    /// Gets the culture from the interaction.
+    /// </summary>
+    /// <param name="interaction">The interaction to get the culture from.</param>
+    /// <returns>The culture of the interaction.</returns>
     private CultureInfo GetInteractionCulture(DiscordInteraction interaction)
     {
         var locale = interaction.Locale ?? interaction.GuildLocale;

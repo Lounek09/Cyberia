@@ -10,7 +10,7 @@ namespace Cyberia.Salamandra.EventHandlers;
 /// </summary>
 public sealed class ClientEventHandler : IEventHandler<GuildDownloadCompletedEventArgs>
 {
-    private readonly CachedChannelsService _cachedChannelsService;
+    private readonly ICachedChannelsService _cachedChannelsService;
 
     private bool _isInitialized;
 
@@ -18,7 +18,7 @@ public sealed class ClientEventHandler : IEventHandler<GuildDownloadCompletedEve
     /// Initializes a new instance of the <see cref="ClientEventHandler"/> class.
     /// </summary>
     /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
-    public ClientEventHandler(CachedChannelsService cachedChannelsService)
+    public ClientEventHandler(ICachedChannelsService cachedChannelsService)
     {
         _cachedChannelsService = cachedChannelsService;
 

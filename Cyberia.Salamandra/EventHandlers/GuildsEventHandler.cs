@@ -10,13 +10,13 @@ namespace Cyberia.Salamandra.EventHandlers;
 /// </summary>
 public sealed class GuildsEventHandler : IEventHandler<GuildCreatedEventArgs>, IEventHandler<GuildDeletedEventArgs>
 {
-    private readonly CachedChannelsService _cachedChannelsService;
+    private readonly ICachedChannelsService _cachedChannelsService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GuildsEventHandler"/> class.
     /// </summary>
     /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
-    public GuildsEventHandler(CachedChannelsService cachedChannelsService)
+    public GuildsEventHandler(ICachedChannelsService cachedChannelsService)
     {
         _cachedChannelsService = cachedChannelsService;
     }

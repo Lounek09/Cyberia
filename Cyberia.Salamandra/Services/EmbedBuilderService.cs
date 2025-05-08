@@ -24,9 +24,97 @@ using System.Text;
 namespace Cyberia.Salamandra.Services;
 
 /// <summary>
-/// Represents a service to handle the base embeds creation logic.
+/// Represents a service to build Discord embeds.
 /// </summary>
-public sealed class EmbedBuilderService
+public interface IEmbedBuilderService
+{
+    /// <summary>
+    /// Creates a new embed builder with the specified category and author text.
+    /// </summary>
+    /// <param name="category">The embed category.</param>
+    /// <param name="authorText">The author text.</param>
+    /// <param name="culture">The culture to use for the date and time.</param>
+    /// <returns>The created embed builder.</returns>
+    DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture);
+
+    /// <summary>
+    /// Adds effect fields to the embed builder.
+    /// </summary>
+    /// <param name="embed">The embed builder to add the fields to.</param>
+    /// <param name="name">The name of the field.</param>
+    /// <param name="effects">The effects to display.</param>
+    /// <param name="sort">Wether to sort the effects.</param>
+    /// <param name="culture">The culture to use for the description.</param>
+    /// <param name="inline">Whether to display the fields inline.</param>
+    /// <returns>The updated embed builder.</returns>
+    DiscordEmbedBuilder AddEffectFields(DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, bool inline = false);
+
+    /// <summary>
+    /// Adds criteria fields to the embed builder.
+    /// </summary>
+    /// <param name="embed">The embed builder to add the fields to.</param>
+    /// <param name="criteria">The criteria to display.</param>
+    /// <param name="culture">The culture to use for the description.</param>
+    /// <param name="inline">Whether to display the fields inline.</param>
+    /// <returns>The updated embed builder.</returns>
+    DiscordEmbedBuilder AddCriteriaFields(DiscordEmbedBuilder embed, CriteriaReadOnlyCollection criteria, CultureInfo? culture, bool inline = false);
+
+    /// <summary>
+    /// Adds quest objectives fields to the embed builder.
+    /// </summary>
+    /// <param name="embed">The embed builder to add the fields to.</param>
+    /// <param name="questObjectives">The quest objectives to display.</param>
+    /// <param name="culture">The culture to use for the description.</param>
+    /// <param name="inline">Whether to display the fields inline.</param>
+    /// <returns>The updated embed builder.</returns>
+    DiscordEmbedBuilder AddQuestObjectivesFields(DiscordEmbedBuilder embed, IEnumerable<IQuestObjective> questObjectives, CultureInfo? culture, bool inline = false);
+
+    /// <summary>
+    /// Sets the craft description for the embed builder.
+    /// </summary>
+    /// <param name="embed">The embed builder to set the description for.</param>
+    /// <param name="craftData">The craft data to display.</param>
+    /// <param name="quantity">The quantity of the item to craft.</param>
+    /// <param name="recursive">Whether to include sub-crafts.</param>
+    /// <param name="culture">The culture to use for the description.</param>
+    /// <returns>The updated embed builder.</returns>
+    DiscordEmbedBuilder SetCraftDescription(DiscordEmbedBuilder embed, CraftData craftData, int quantity, bool recursive, CultureInfo? culture);
+
+    /// <summary>
+    /// Adds a craft field to the embed builder.
+    /// </summary>
+    /// <param name="embed">The embed builder to add the field to.</param>
+    /// <param name="craftData">The craft data to display.</param>
+    /// <param name="quantity">The quantity of the item to craft.</param>
+    /// <param name="culture">The culture to use for the description.</param>
+    /// <param name="inline">Whether to display the field inline.</param>
+    /// <returns>The updated embed builder.</returns>
+    DiscordEmbedBuilder AddCraftField(DiscordEmbedBuilder embed, CraftData craftData, int quantity, CultureInfo? culture, bool inline = false);
+
+    /// <summary>
+    /// Adds a weapon info field to the embed builder.
+    /// </summary>
+    /// <param name="embed">The embed builder to add the field to.</param>
+    /// <param name="itemWeaponData">The weapon data to display.</param>
+    /// <param name="twoHanded">Whether the weapon is two-handed.</param>
+    /// <param name="itemTypeData">The item type data of the weapon.</param>
+    /// <param name="culture">The culture to use for the description.</param>
+    /// <param name="inline"></param>
+    /// <returns>The updated embed builder.</returns>
+    DiscordEmbedBuilder AddWeaponInfosField(DiscordEmbedBuilder embed, ItemWeaponData itemWeaponData, bool twoHanded, ItemTypeData? itemTypeData, CultureInfo? culture, bool inline = false);
+
+    /// <summary>
+    /// Adds a pet field to the embed builder.
+    /// </summary>
+    /// <param name="embed">The embed builder to add the field to.</param>
+    /// <param name="petData">The pet data to display.</param>
+    /// <param name="culture">The culture to use for the description.</param>
+    /// <param name="inline">Whether to display the field inline.</param>
+    /// <returns>The updated embed builder.</returns>
+    DiscordEmbedBuilder AddPetField(DiscordEmbedBuilder embed, PetData petData, CultureInfo? culture, bool inline = false);
+}
+
+public sealed class EmbedBuilderService : IEmbedBuilderService
 {
     private readonly DofusDatacenter _dofusDatacenter;
     private readonly string _username;
@@ -48,13 +136,6 @@ public sealed class EmbedBuilderService
         _embedColor = new(config.EmbedColor);
     }
 
-    /// <summary>
-    /// Creates a new embed builder with the specified category and author text.
-    /// </summary>
-    /// <param name="category">The embed category.</param>
-    /// <param name="authorText">The author text.</param>
-    /// <param name="culture">The culture to use for the date and time.</param>
-    /// <returns>The created embed builder.</returns>
     public DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture)
     {
         var now = DateTime.Now;

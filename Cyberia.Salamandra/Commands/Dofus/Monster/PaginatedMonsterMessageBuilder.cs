@@ -19,7 +19,7 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
     public const int PacketVersion = 2;
 
     public PaginatedMonsterMessageBuilder(
-        EmbedBuilderService embedBuilderService,
+        IEmbedBuilderService embedBuilderService,
         List<MonsterData> monstersData,
         string search,
         CultureInfo? culture,
@@ -46,7 +46,7 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
             var monstersData = dofusDatacenter.MonstersRepository.GetMonstersDataByName(parameters[1], culture).ToList();
             if (monstersData.Count > 0)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new PaginatedMonsterMessageBuilder(embedBuilderService, monstersData, parameters[1], culture, selectedPageIndex);
             }

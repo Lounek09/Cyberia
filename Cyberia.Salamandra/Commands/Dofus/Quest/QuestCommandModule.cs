@@ -15,11 +15,11 @@ namespace Cyberia.Salamandra.Commands.Dofus.Quest;
 
 public sealed class QuestCommandModule
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public QuestCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
+    public QuestCommandModule(ICultureService cultureService, DofusDatacenter dofusDatacenter, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

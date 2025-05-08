@@ -21,7 +21,7 @@ public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<It
     private readonly int _quantity;
 
     public PaginatedRuneItemMessageBuilder(
-        EmbedBuilderService embedBuilderService,
+        IEmbedBuilderService embedBuilderService,
         List<ItemData> itemsData,
         string search,
         int quantity,
@@ -50,7 +50,7 @@ public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<It
             var itemsData = dofusDatacenter.ItemsRepository.GetItemsDataByName(parameters[1], culture).ToList();
             if (itemsData.Count > 0)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, itemsData, parameters[1], quantity, culture, selectedPageIndex);
             }

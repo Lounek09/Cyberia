@@ -3,61 +3,24 @@ using Cyberia.Cytrusaurus.Models;
 
 namespace Cyberia.Cytrusaurus;
 
-/// <summary>
-/// Provides methods for watching updates of Cytrus.
-/// </summary>
-public sealed class CytrusWatcher
+public interface ICytrusWatcher
 {
-    public const string OutputPath = "cytrus";
-    public const string CytrusFileName = "cytrus.json";
-    public const string BaseUrl = "https://cytrus.cdn.ankama.com";
-
-    public static readonly string CytrusPath = Path.Join(OutputPath, CytrusFileName);
-    public static readonly string OldCytrusPath = Path.Join(OutputPath, $"old_{CytrusFileName}");
-
     /// <summary>
     /// The current Cytrus data.
     /// </summary>
-    public Cytrus Cytrus { get; internal set; }
+    Cytrus Cytrus { get; }
 
     /// <summary>
     /// The old Cytrus data.
     /// </summary>
-    public Cytrus OldCytrus { get; internal set; }
-
-    internal HttpClient HttpClient { get; set; }
-    internal HttpRetryPolicy HttpRetryPolicy { get; set; }
-
-#pragma warning disable IDE0052 // Remove unread private members
-    private Timer? _timer;
-#pragma warning restore IDE0052 // Remove unread private members
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="CytrusWatcher"/> class.
-    /// </summary>
-    public CytrusWatcher()
-    {
-        Directory.CreateDirectory(OutputPath);
-
-        Cytrus = Cytrus.LoadFromFile(CytrusPath);
-        OldCytrus = Cytrus.LoadFromFile(OldCytrusPath);
-
-        HttpClient = new()
-        {
-            BaseAddress = new Uri(BaseUrl)
-        };
-        HttpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
-    }
+    Cytrus OldCytrus { get; }
 
     /// <summary>
     /// Starts watching for updates of Cytrus.
     /// </summary>
     /// <param name="dueTime">The amount of time to delay before the first check.</param>
     /// <param name="interval">The interval between checks.</param>
-    public void Watch(TimeSpan dueTime, TimeSpan interval)
-    {
-        _timer = new(async _ => await CheckAsync(), null, dueTime, interval);
-    }
+    void Watch(TimeSpan dueTime, TimeSpan interval);
 
     /// <summary>
     /// Asynchronously checks for updates of Cytrus.
@@ -75,12 +38,70 @@ public sealed class CytrusWatcher
     ///     <item>Triggers the <see cref="NewCytrusFileDetected"/> event with the difference.</item>
     /// </list>
     /// </remarks>
+    Task CheckAsync();
+
+    /// <summary>
+    /// Delegate for the NewCytrusFileDetected event.
+    /// </summary>
+    delegate ValueTask NewCytrusFileDetectedEventHandler(ICytrusWatcher sender, NewCytrusFileDetectedEventArgs eventArgs);
+
+    /// <summary>
+    /// Event that is triggered when a new Cytrus file is detected.
+    /// </summary>
+    event NewCytrusFileDetectedEventHandler? NewCytrusFileDetected;
+}
+
+/// <summary>
+/// Provides methods for watching updates of Cytrus.
+/// </summary>
+public sealed class CytrusWatcher : ICytrusWatcher
+{
+    public const string OutputPath = "cytrus";
+    public const string CytrusFileName = "cytrus.json";
+    public const string BaseUrl = "https://cytrus.cdn.ankama.com";
+
+    public static readonly string CytrusPath = Path.Join(OutputPath, CytrusFileName);
+    public static readonly string OldCytrusPath = Path.Join(OutputPath, $"old_{CytrusFileName}");
+
+    public Cytrus Cytrus { get; internal set; }
+
+    public Cytrus OldCytrus { get; internal set; }
+
+    private readonly HttpClient _httpClient;
+    private readonly HttpRetryPolicy _httpRetryPolicy;
+
+#pragma warning disable IDE0052 // Remove unread private members
+    private Timer? _timer;
+#pragma warning restore IDE0052 // Remove unread private members
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CytrusWatcher"/> class.
+    /// </summary>
+    public CytrusWatcher()
+    {
+        Directory.CreateDirectory(OutputPath);
+
+        Cytrus = Cytrus.LoadFromFile(CytrusPath);
+        OldCytrus = Cytrus.LoadFromFile(OldCytrusPath);
+
+        _httpClient = new()
+        {
+            BaseAddress = new Uri(BaseUrl)
+        };
+        _httpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
+    }
+
+    public void Watch(TimeSpan dueTime, TimeSpan interval)
+    {
+        _timer = new(async _ => await CheckAsync(), null, dueTime, interval);
+    }
+
     public async Task CheckAsync()
     {
         string json;
         try
         {
-            using var response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(CytrusFileName));
+            using var response = await _httpRetryPolicy.ExecuteAsync(() => _httpClient.GetAsync(CytrusFileName));
             response.EnsureSuccessStatusCode();
 
             json = await response.Content.ReadAsStringAsync();
@@ -114,15 +135,7 @@ public sealed class CytrusWatcher
 
     #region Events
 
-    /// <summary>
-    /// Delegate for the NewCytrusFileDetected event.
-    /// </summary>
-    public delegate ValueTask NewCytrusFileDetectedEventHandler(CytrusWatcher sender, NewCytrusFileDetectedEventArgs eventArgs);
-
-    /// <summary>
-    /// Event that is triggered when a new Cytrus file is detected.
-    /// </summary>
-    public event NewCytrusFileDetectedEventHandler? NewCytrusFileDetected;
+    public event ICytrusWatcher.NewCytrusFileDetectedEventHandler? NewCytrusFileDetected;
 
     /// <summary>
     /// Triggers the NewCytrusFileDetected event.

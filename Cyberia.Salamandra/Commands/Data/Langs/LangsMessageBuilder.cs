@@ -20,15 +20,15 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "LANG";
     public const int PacketVersion = 1;
 
-    private readonly CultureInfo? _culture;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly LangsRepository _repository;
+    private readonly CultureInfo? _culture;
 
-    public LangsMessageBuilder(CultureInfo? culture, EmbedBuilderService embedBuilderService, LangsRepository repository)
+    public LangsMessageBuilder(IEmbedBuilderService embedBuilderService, LangsRepository repository, CultureInfo? culture)
     {
-        _culture = culture;
         _embedBuilderService = embedBuilderService;
         _repository = repository;
+        _culture = culture;
     }
 
     public static LangsMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
@@ -38,8 +38,8 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
             Enum.TryParse(parameters[0], out LangType langType) &&
             Enum.TryParse(parameters[1], out Language language))
         {
-            var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
-            var langsWatcher = provider.GetRequiredService<LangsWatcher>();
+            var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
+            var langsWatcher = provider.GetRequiredService<ILangsWatcher>();
             var repository = langsWatcher.GetRepository(langType, language);
 
             return new LangsMessageBuilder(embedBuilderService, repository, culture);

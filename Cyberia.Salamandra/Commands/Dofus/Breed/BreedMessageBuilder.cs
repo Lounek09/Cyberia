@@ -23,14 +23,14 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "B";
     public const int PacketVersion = 1;
 
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly BreedData _breedData;
     private readonly IEnumerable<SpellData> _spellsData;
     private readonly SpellData? _specialSpellData;
     private readonly ItemSetData? _itemSetData;
     private readonly CultureInfo? _culture;
 
-    public BreedMessageBuilder(EmbedBuilderService embedBuilderService, BreedData breedData, CultureInfo? culture)
+    public BreedMessageBuilder(IEmbedBuilderService embedBuilderService, BreedData breedData, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _breedData = breedData;
@@ -51,7 +51,7 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
             var breedData = dofusDatacenter.BreedsRepository.GetBreedDataById(breedId);
             if (breedData is not null)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, breedData, culture);
             }

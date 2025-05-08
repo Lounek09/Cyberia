@@ -22,12 +22,12 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
     public const int PacketVersion = 1;
     public const int MaxQuantity = 9999;
 
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly ItemData _itemData;
     private readonly int _quantity;
     private readonly CultureInfo? _culture;
 
-    public RuneItemMessageBuilder(EmbedBuilderService embedBuilderService, ItemData itemData, int quantity, CultureInfo? culture)
+    public RuneItemMessageBuilder(IEmbedBuilderService embedBuilderService, ItemData itemData, int quantity, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _itemData = itemData;
@@ -47,7 +47,7 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
             var itemData = dofusDatacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, itemData, quantity, culture);
             }

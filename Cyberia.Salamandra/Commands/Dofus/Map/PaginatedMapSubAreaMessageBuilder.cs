@@ -19,7 +19,7 @@ public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<
     public const int PacketVersion = 2;
 
     public PaginatedMapSubAreaMessageBuilder(
-        EmbedBuilderService embedBuilderService,
+        IEmbedBuilderService embedBuilderService,
         List<MapSubAreaData> mapSubAreasData,
         string search,
         CultureInfo? culture,
@@ -46,7 +46,7 @@ public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<
             var mapSubAreasData = dofusDatacenter.MapsRepository.GetMapSubAreasDataByName(parameters[1], culture).ToList();
             if (mapSubAreasData.Count > 0)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, mapSubAreasData, parameters[1], culture, selectedPageIndex);
             }

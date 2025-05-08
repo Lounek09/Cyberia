@@ -19,11 +19,11 @@ namespace Cyberia.Salamandra.Commands.Admin.Search;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class SearchCommandModule
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public SearchCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
+    public SearchCommandModule(ICultureService cultureService, DofusDatacenter dofusDatacenter, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

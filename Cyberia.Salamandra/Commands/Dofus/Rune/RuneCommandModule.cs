@@ -25,11 +25,11 @@ namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 [InteractionLocalizer<RuneInteractionLocalizer>]
 public sealed class RuneCommandModule
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public RuneCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
+    public RuneCommandModule(ICultureService cultureService, DofusDatacenter dofusDatacenter, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

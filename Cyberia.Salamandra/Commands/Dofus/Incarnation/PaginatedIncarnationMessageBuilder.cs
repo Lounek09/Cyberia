@@ -19,7 +19,7 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
     public const int PacketVersion = 2;
 
     public PaginatedIncarnationMessageBuilder(
-        EmbedBuilderService embedBuilderService,
+        IEmbedBuilderService embedBuilderService,
         List<IncarnationData> incarnationsData,
         string search,
         CultureInfo? culture,
@@ -46,7 +46,7 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
             var incarnationsData = dofusDatacenter.IncarnationsRepository.GetIncarnationsDataByItemName(parameters[1], culture).ToList();
             if (incarnationsData.Count > 0)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, incarnationsData, parameters[1], culture, selectedPageIndex);
             }

@@ -10,9 +10,9 @@ namespace Cyberia.Salamandra.Commands.Data.Langs;
 
 public sealed class LangNameAutocompleteProvider : IAutoCompleteProvider
 {
-    private readonly LangsWatcher _langsWatcher;
+    private readonly ILangsWatcher _langsWatcher;
 
-    public LangNameAutocompleteProvider(LangsWatcher langsWatcher)
+    public LangNameAutocompleteProvider(ILangsWatcher langsWatcher)
     {
         _langsWatcher = langsWatcher;
     }

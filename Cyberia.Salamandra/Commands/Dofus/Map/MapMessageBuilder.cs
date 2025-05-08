@@ -19,14 +19,14 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "MA";
     public const int PacketVersion = 1;
 
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly MapData _mapData;
     private readonly MapSubAreaData? _mapSubAreaData;
     private readonly MapAreaData? _mapAreaData;
     private readonly HouseData? _houseData;
     private readonly CultureInfo? _culture;
 
-    public MapMessageBuilder(EmbedBuilderService embedBuilderService, MapData mapData, CultureInfo? culture)
+    public MapMessageBuilder(IEmbedBuilderService embedBuilderService, MapData mapData, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _mapData = mapData;
@@ -47,7 +47,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
             var mapData = dofusDatacenter.MapsRepository.GetMapDataById(mapId);
             if (mapData is not null)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, mapData, culture);
             }

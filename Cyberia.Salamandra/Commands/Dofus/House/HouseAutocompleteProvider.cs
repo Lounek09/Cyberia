@@ -9,10 +9,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.House;
 
 public sealed class HouseAutocompleteProvider : IAutoCompleteProvider
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
 
-    public HouseAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
+    public HouseAutocompleteProvider(ICultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

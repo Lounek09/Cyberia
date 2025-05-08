@@ -16,10 +16,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Escape;
 
 public sealed class EscapeCommandModule
 {
-    private readonly CultureService _cultureService;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly ICultureService _cultureService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public EscapeCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public EscapeCommandModule(ICultureService cultureService, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _embedBuilderService = embedBuilderService;

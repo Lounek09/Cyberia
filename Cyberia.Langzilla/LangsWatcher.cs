@@ -2,24 +2,79 @@
 using Cyberia.Langzilla.EventArgs;
 using Cyberia.Langzilla.Models;
 
-using System.Collections.Concurrent;
 using System.Text;
 
 namespace Cyberia.Langzilla;
 
 /// <summary>
-/// Provides methods for watching updates of langs.
+/// Represents a service that watches for updates of langs.
 /// </summary>
-public sealed class LangsWatcher
+public interface ILangsWatcher
+{
+    /// <summary>
+    /// Gets the lang repository from its type and language.
+    /// </summary>
+    /// <param name="type">The type of the langs in the repository.</param>
+    /// <param name="language">The language of the langs in the repository.</param>
+    /// <returns>The lang repository.</returns>
+    LangsRepository GetRepository(LangType type, Language language);
+
+    /// <summary>
+    /// Starts watching for update of langs by type.
+    /// </summary>
+    /// <param name="type">The type of the langs to check.</param>
+    /// <param name="dueTime">The amount of time to delay before the first check.</param>
+    /// <param name="interval">The interval between checks.</param>
+    void Watch(LangType type, TimeSpan dueTime, TimeSpan interval);
+
+    /// <summary>
+    /// Asynchronously checks for updates of langs for the specified repository.
+    /// </summary>
+    /// <param name="repository">The repository to check.</param>
+    /// <param name="force">Force the check without checking the last update time.</param>
+    /// <remarks>
+    /// This method performs the following steps:
+    /// <list type="number">
+    ///     <item>Triggers the <see cref="CheckLangStarted"/> event.</item>
+    ///     <item>Fetches the version of the langs.</item>
+    ///     <item>If the version is empty, triggers the <see cref="CheckLangsFinished"/> event and returns.</item>
+    ///     <item>Gets the updated langs from the versions.</item>
+    ///     <item>Downloads, extracts, and diffs the updated langs.</item>
+    ///     <item>Triggers the <see cref="CheckLangsFinished"/> event.</item>
+    /// </list>
+    /// </remarks>
+    Task CheckAsync(LangsRepository repository, bool force = false);
+
+    /// <summary>
+    /// Delegate for the CheckLangStarted event.
+    /// </summary>
+    delegate ValueTask CheckLangStartedEventHandler(ILangsWatcher sender, CheckLangStartedEventArgs eventArgs);
+
+    /// <summary>
+    /// Event that is triggered when a lang check is started.
+    /// </summary>
+    event CheckLangStartedEventHandler CheckLangStarted;
+
+    /// <summary>
+    /// Delegate for the CheckLangsFinished event.
+    /// </summary>
+    delegate ValueTask CheckLangsFinishedEventHandler(ILangsWatcher sender, CheckLangFinishedEventArgs eventArgs);
+
+    /// <summary>
+    /// Event that is triggered when a langs check is finished.
+    /// </summary>
+    event CheckLangsFinishedEventHandler CheckLangsFinished;
+}
+
+public sealed class LangsWatcher : ILangsWatcher
 {
     public const string OutputPath = "langs";
     public const string BaseUrl = "https://dofusretro.cdn.ankama.com/";
 
-    internal HttpClient HttpClient { get; set; } = default!;
-    internal HttpRetryPolicy HttpRetryPolicy { get; set; } = default!;
-
+    private readonly HttpClient _httpClient;
+    private readonly HttpRetryPolicy _httpRetryPolicy;
     private readonly Dictionary<(LangType, Language), LangsRepository> _langsRepositories = [];
-    private readonly ConcurrentDictionary<(LangType, Language), Timer> _timers = [];
+    private readonly Dictionary<(LangType, Language), Timer> _timers = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsWatcher"/> class.
@@ -45,58 +100,28 @@ public sealed class LangsWatcher
             }
         }
 
-        HttpClient = new()
+        _httpClient = new()
         {
             BaseAddress = new(BaseUrl)
         };
-        HttpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
+        _httpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
     }
 
-    /// <summary>
-    /// Gets the lang repository from its type and language.
-    /// </summary>
-    /// <param name="type">The type of the langs in the repository.</param>
-    /// <param name="language">The language of the langs in the repository.</param>
-    /// <returns>The lang repository.</returns>
     public LangsRepository GetRepository(LangType type, Language language)
     {
         return _langsRepositories[(type, language)];
     }
 
-
-    /// <summary>
-    /// Starts watching for update of langs by type.
-    /// </summary>
-    /// <param name="type">The type of the langs to check.</param>
-    /// <param name="dueTime">The amount of time to delay before the first check.</param>
-    /// <param name="interval">The interval between checks.</param>
     public void Watch(LangType type, TimeSpan dueTime, TimeSpan interval)
     {
         foreach (var language in Enum.GetValues<Language>())
         {
             var repository = GetRepository(type, language);
-            Timer timer = new(async _ => await CheckAsync(repository), null, dueTime, interval);
 
-            _timers.AddOrUpdate((type, language), timer, (key, oldValue) => oldValue = timer);
+            _timers[(type, language)] = new Timer(async _ => await CheckAsync(repository), null, dueTime, interval);
         }
     }
 
-    /// <summary>
-    /// Asynchronously checks for updates of langs for the specified repository.
-    /// </summary>
-    /// <param name="repository">The repository to check.</param>
-    /// <param name="force">Force the check without checking the last update time.</param>
-    /// <remarks>
-    /// This method performs the following steps:
-    /// <list type="number">
-    ///     <item>Triggers the <see cref="CheckLangStarted"/> event.</item>
-    ///     <item>Fetches the version of the langs.</item>
-    ///     <item>If the version is empty, triggers the <see cref="CheckLangsFinished"/> event and returns.</item>
-    ///     <item>Gets the updated langs from the versions.</item>
-    ///     <item>Downloads, extracts, and diffs the updated langs.</item>
-    ///     <item>Triggers the <see cref="CheckLangsFinished"/> event.</item>
-    /// </list>
-    /// </remarks>
     public async Task CheckAsync(LangsRepository repository, bool force = false)
     {
         await OnCheckLangStarted(new CheckLangStartedEventArgs(repository));
@@ -165,7 +190,7 @@ public sealed class LangsWatcher
     {
         try
         {
-            using var response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(repository.VersionFileRoute));
+            using var response = await _httpRetryPolicy.ExecuteAsync(() => _httpClient.GetAsync(repository.VersionFileRoute));
             response.EnsureSuccessStatusCode();
 
             var lastModifiedHeader = response.Content.Headers.LastModified!.Value.UtcDateTime;
@@ -239,7 +264,7 @@ public sealed class LangsWatcher
 
         try
         {
-            using var response = await HttpRetryPolicy.ExecuteAsync(() => HttpClient.GetAsync(lang.FileRoute));
+            using var response = await _httpRetryPolicy.ExecuteAsync(() => _httpClient.GetAsync(lang.FileRoute));
             response.EnsureSuccessStatusCode();
 
             using var fileStream = new FileStream(lang.FilePath, FileMode.Create);
@@ -293,15 +318,7 @@ public sealed class LangsWatcher
 
     #region Events
 
-    /// <summary>
-    /// Delegate for the CheckLangStarted event.
-    /// </summary>
-    public delegate ValueTask CheckLangStartedEventHandler(LangsWatcher sender, CheckLangStartedEventArgs eventArgs);
-
-    /// <summary>
-    /// Event that is triggered when a lang check is started.
-    /// </summary>
-    public event CheckLangStartedEventHandler? CheckLangStarted;
+    public event ILangsWatcher.CheckLangStartedEventHandler? CheckLangStarted;
 
     /// <summary>
     /// Triggers the CheckLangStarted event.
@@ -315,15 +332,7 @@ public sealed class LangsWatcher
         }
     }
 
-    /// <summary>
-    /// Delegate for the CheckLangFinished event.
-    /// </summary>
-    public delegate ValueTask CheckLangsFinishedEventHandler(LangsWatcher sender, CheckLangFinishedEventArgs eventArgs);
-
-    /// <summary>
-    /// Event that is triggered when a langs check is finished.
-    /// </summary>
-    public event CheckLangsFinishedEventHandler? CheckLangsFinished;
+    public event ILangsWatcher.CheckLangsFinishedEventHandler? CheckLangsFinished;
 
     /// <summary>
     /// Triggers the CheckLangFinished event.

@@ -14,8 +14,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddLangzilla(this IServiceCollection services)
     {
-        services.AddSingleton<LangsWatcher>();
-        services.AddSingleton<LangsParser>();
+        services.AddSingleton<ILangsWatcher, LangsWatcher>();
+        services.AddSingleton<ILangsParser, LangsParser>();
 
         return services;
     }

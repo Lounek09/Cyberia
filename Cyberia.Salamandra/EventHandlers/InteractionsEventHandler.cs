@@ -70,14 +70,14 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
     private static partial Regex SelectComponentPacketRegex();
 
     private readonly IServiceProvider _serviceProvider;
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InteractionsEventHandler"/> class.
     /// </summary>
     /// <param name="serviceProvider">The service provider to get the services from.</param>
     /// <param name="cultureService">The service to get the culture from.</param>
-    public InteractionsEventHandler(IServiceProvider serviceProvider, CultureService cultureService)
+    public InteractionsEventHandler(IServiceProvider serviceProvider, ICultureService cultureService)
     {
         _serviceProvider = serviceProvider;
         _cultureService = cultureService;

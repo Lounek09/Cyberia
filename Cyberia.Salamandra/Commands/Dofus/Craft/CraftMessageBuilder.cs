@@ -21,14 +21,14 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
     public const int PacketVersion = 1;
     public const int MaxQuantity = 99999;
 
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly CraftData _craftData;
     private readonly ItemData? _itemData;
     private readonly int _quantity;
     private readonly bool _recursive;
     private readonly CultureInfo? _culture;
 
-    public CraftMessageBuilder(EmbedBuilderService embedBuilderService, CraftData craftData, int quantity, bool recursive, CultureInfo? culture)
+    public CraftMessageBuilder(IEmbedBuilderService embedBuilderService, CraftData craftData, int quantity, bool recursive, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _craftData = craftData;
@@ -51,7 +51,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
             var craftData = dofusDatacenter.CraftsRepository.GetCraftDataById(craftId);
             if (craftData is not null)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, craftData, quantity, recursive, culture);
             }

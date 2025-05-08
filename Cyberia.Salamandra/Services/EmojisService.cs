@@ -11,7 +11,27 @@ namespace Cyberia.Salamandra.Services;
 /// <summary>
 /// Represents a service for dealing with discord emojis.
 /// </summary>
-public sealed class EmojisService
+public interface IEmojisService
+{
+    /// <summary>
+    /// Loads the emojis in memory.
+    /// </summary>
+    Task LoadEmojisAsync();
+
+    /// <summary>
+    /// Deletes the emoji with the specified name.
+    /// </summary>
+    /// <param name="name">The name of the emoji.</param>
+    /// <returns><see langword="true"/> if the emoji was deleted, <see langword="false"/> otherwise.</returns>
+    Task<bool> DeleteEmojiAsync(string name);
+
+    /// <summary>
+    /// Creates the missing emojis based on the Dofus API data and the images in the CDN.
+    /// </summary>
+    Task CreateEmojisAsync();
+}
+
+public sealed class EmojisService : IEmojisService
 {
     private static Dictionary<string, DiscordEmoji> s_cachedEmojis = [];
     private static readonly SearchValues<char> s_authorizedChars = SearchValues.Create("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_");
@@ -93,9 +113,6 @@ public sealed class EmojisService
             : $"<:{sanitizedName}:{emoji.Id}>";
     }
 
-    /// <summary>
-    /// Loads the emojis in memory.
-    /// </summary>
     public async Task LoadEmojisAsync()
     {
         var emojis = await _discordClient.GetApplicationEmojisAsync();
@@ -103,11 +120,6 @@ public sealed class EmojisService
         s_cachedEmojis = emojis.ToDictionary(x => x.Name, x => x);
     }
 
-    /// <summary>
-    /// Deletes the emoji with the specified name.
-    /// </summary>
-    /// <param name="name">The name of the emoji.</param>
-    /// <returns><see langword="true"/> if the emoji was deleted, <see langword="false"/> otherwise.</returns>
     public async Task<bool> DeleteEmojiAsync(string name)
     {
         if (!s_cachedEmojis.TryGetValue(name, out var emoji))
@@ -119,9 +131,6 @@ public sealed class EmojisService
         return s_cachedEmojis.Remove(name);
     }
 
-    /// <summary>
-    /// Creates the missing emojis based on the Dofus API data and the images in the CDN.
-    /// </summary>
     public async Task CreateEmojisAsync()
     {
         const string baseRoute = "/images/discord/emojis";
@@ -270,6 +279,11 @@ public sealed class EmojisService
         }
     }
 
+    /// <summary>
+    /// Gets the image stream from the specified route.
+    /// </summary>
+    /// <param name="route">The route of the image.</param>
+    /// <returns>The image stream, or <see langword="null"/> if the image does not exist.</returns>
     private async Task<Stream?> GetImageStreamAsync(string route)
     {
         try

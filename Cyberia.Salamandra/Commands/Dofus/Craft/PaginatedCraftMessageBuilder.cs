@@ -21,7 +21,7 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
     private readonly int _quantity;
 
     public PaginatedCraftMessageBuilder(
-        EmbedBuilderService embedBuilderService,
+        IEmbedBuilderService embedBuilderService,
         List<CraftData> craftsData,
         string search,
         int quantity,
@@ -50,7 +50,7 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
             var craftsData = dofusDatacenter.CraftsRepository.GetCraftsDataByItemName(parameters[1], culture).ToList();
             if (craftsData.Count > 0)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, craftsData, parameters[1], quantity, culture, selectedPageIndex);
             }

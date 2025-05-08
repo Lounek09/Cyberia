@@ -14,8 +14,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddCytrusaurus(this IServiceCollection services)
     {
-        services.AddSingleton<CytrusWatcher>();
-        services.AddSingleton<CytrusManifestFetcher>();
+        services.AddSingleton<ICytrusWatcher, CytrusWatcher>();
+        services.AddSingleton<ICytrusManifestFetcher, CytrusManifestFetcher>();
 
         return services;
     }

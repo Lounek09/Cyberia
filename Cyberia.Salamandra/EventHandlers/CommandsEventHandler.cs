@@ -17,15 +17,15 @@ namespace Cyberia.Salamandra.EventHandlers;
 /// </summary>
 public sealed class CommandsEventHandler : IEventHandler<CommandErroredEventArgs>
 {
-    private readonly CachedChannelsService _cachedChannelsService;
-    private readonly CultureService _cultureService;
+    private readonly ICachedChannelsService _cachedChannelsService;
+    private readonly ICultureService _cultureService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CommandsEventHandler"/> class.
     /// </summary>
     /// <param name="cachedChannelsService">The service to get the channels from.</param>
     /// <param name="cultureService">The service to get the culture from.</param>
-    public CommandsEventHandler(CachedChannelsService cachedChannelsService, CultureService cultureService)
+    public CommandsEventHandler(ICachedChannelsService cachedChannelsService, ICultureService cultureService)
     {
         _cachedChannelsService = cachedChannelsService;
         _cultureService = cultureService;

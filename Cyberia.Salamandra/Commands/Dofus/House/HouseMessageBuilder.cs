@@ -19,14 +19,14 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "H";
     public const int PacketVersion = 1;
 
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly HouseData _houseData;
     private readonly int _selectedMapIndex;
     private readonly MapData? _outdoorMapData;
     private readonly List<MapData> _mapsData;
     private readonly CultureInfo? _culture;
 
-    public HouseMessageBuilder(EmbedBuilderService embedBuilderService, HouseData houseData, CultureInfo? culture, int selectedMapIndex = -1)
+    public HouseMessageBuilder(IEmbedBuilderService embedBuilderService, HouseData houseData, CultureInfo? culture, int selectedMapIndex = -1)
     {
         _embedBuilderService = embedBuilderService;
         _houseData = houseData;
@@ -48,7 +48,7 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
             var houseData = dofusDatacenter.HousesRepository.GetHouseDataById(houseId);
             if (houseData is not null)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, houseData, culture, selectedMapIndex);
             }

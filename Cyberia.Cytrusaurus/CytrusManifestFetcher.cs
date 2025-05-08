@@ -5,19 +5,36 @@ using Google.FlatBuffers;
 namespace Cyberia.Cytrusaurus;
 
 /// <summary>
-/// Provides methods for retrieving game manifests from Cytrus.
+/// Represents a service for fetching game manifests from Cytrus.
 /// </summary>
-public sealed class CytrusManifestFetcher
+public interface ICytrusManifestFetcher
 {
-    private readonly CytrusWatcher _cytrusWatcher;
+    /// <summary>
+    /// Gets the manifest for the specified game, platform, release, and version.
+    /// </summary>
+    /// <param name="game">The name of the game.</param>
+    /// <param name="platform">The platform for which the game is released.</param>
+    /// <param name="release">The release name of the game.</param>
+    /// <param name="version">The version of the game.</param>
+    /// <returns>The fetched manifest; otherwise, <see langword="null"/>.</returns>
+    Task<Manifest?> GetAsync(string game, string platform, string release, string version);
+}
+
+public sealed class CytrusManifestFetcher : ICytrusManifestFetcher
+{
+    private readonly HttpClient _httpClient;
+    private readonly HttpRetryPolicy _httpRetryPolicy;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusManifestFetcher"/> class.
     /// </summary>
-    /// <param name="cytrusWatcher">The Cytrus watcher to get the manifests from.</param>
-    public CytrusManifestFetcher(CytrusWatcher cytrusWatcher)
+    public CytrusManifestFetcher()
     {
-        _cytrusWatcher = cytrusWatcher;
+        _httpClient = new()
+        {
+            BaseAddress = new Uri(CytrusWatcher.BaseUrl)
+        };
+        _httpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
     }
 
     /// <summary>
@@ -34,7 +51,7 @@ public sealed class CytrusManifestFetcher
 
         try
         {
-            using var response = await _cytrusWatcher.HttpRetryPolicy.ExecuteAsync(() => _cytrusWatcher.HttpClient.GetAsync(route));
+            using var response = await _httpRetryPolicy.ExecuteAsync(() => _httpClient.GetAsync(route));
             response.EnsureSuccessStatusCode();
 
             var metafile = await response.Content.ReadAsByteArrayAsync();

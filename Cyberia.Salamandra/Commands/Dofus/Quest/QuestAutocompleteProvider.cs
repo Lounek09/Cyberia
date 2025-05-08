@@ -9,10 +9,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Quest;
 
 public sealed class QuestAutocompleteProvider : IAutoCompleteProvider
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
 
-    public QuestAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
+    public QuestAutocompleteProvider(ICultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

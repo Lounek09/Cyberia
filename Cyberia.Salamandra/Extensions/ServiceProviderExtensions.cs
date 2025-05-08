@@ -21,8 +21,8 @@ public static class ServiceProviderExtensions
     /// <returns>The service provider.</returns>
     public static IServiceProvider RegisterSalamandraEvents(this IServiceProvider provider)
     {
-        provider.GetRequiredService<CytrusWatcher>().NewCytrusFileDetected += provider.GetRequiredService<CytrusService>().OnNewCytrusFileDetected;
-        provider.GetRequiredService<LangsWatcher>().CheckLangsFinished += provider.GetRequiredService<LangsService>().OnCheckLangsFinished;
+        provider.GetRequiredService<ICytrusWatcher>().NewCytrusFileDetected += provider.GetRequiredService<ICytrusService>().OnNewCytrusFileDetected;
+        provider.GetRequiredService<ILangsWatcher>().CheckLangsFinished += provider.GetRequiredService<ILangsService>().OnCheckLangsFinished;
 
         return provider;
     }
@@ -36,7 +36,7 @@ public static class ServiceProviderExtensions
     public static async Task<IServiceProvider> StartSalamandraAsync(this IServiceProvider provider)
     {
         var discordClient = provider.GetRequiredService<DiscordClient>();
-        var emojisService = provider.GetRequiredService<EmojisService>();
+        var emojisService = provider.GetRequiredService<IEmojisService>();
 
         DiscordActivity activity = new("Dofus Retro", DiscordActivityType.Playing);
         await discordClient.ConnectAsync(activity);

@@ -19,7 +19,7 @@ public sealed class PaginatedItemMessageBuilder : PaginatedMessageBuilder<ItemDa
     public const int PacketVersion = 2;
 
     public PaginatedItemMessageBuilder(
-        EmbedBuilderService embedBuilderService,
+        IEmbedBuilderService embedBuilderService,
         List<ItemData> itemsData,
         string search,
         CultureInfo? culture,
@@ -46,7 +46,7 @@ public sealed class PaginatedItemMessageBuilder : PaginatedMessageBuilder<ItemDa
             var itemsData = dofusDatacenter.ItemsRepository.GetItemsDataByName(parameters[1], culture).ToList();
             if (itemsData.Count > 0)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, itemsData, parameters[1], culture, selectedPageIndex);
             }

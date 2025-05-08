@@ -16,10 +16,10 @@ namespace Cyberia.Salamandra.Commands.Admin.Parse;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class ParseCommandModule
 {
-    private readonly CultureService _cultureService;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly ICultureService _cultureService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public ParseCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public ParseCommandModule(ICultureService cultureService, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _embedBuilderService = embedBuilderService;

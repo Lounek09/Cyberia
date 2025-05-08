@@ -23,7 +23,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "S";
     public const int PacketVersion = 1;
 
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly SpellData _spellData;
     private readonly int _selectedLevel;
     private readonly SpellLevelData? _spellLevelData;
@@ -32,7 +32,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
     private readonly IncarnationData? _incarnationData;
     private readonly CultureInfo? _culture;
 
-    public SpellMessageBuilder(EmbedBuilderService embedBuilderService, SpellData spell, int selectedLevel, CultureInfo? culture)
+    public SpellMessageBuilder(IEmbedBuilderService embedBuilderService, SpellData spell, int selectedLevel, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _spellData = spell;
@@ -56,7 +56,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             var spellData = dofusDatacenter.SpellsRepository.GetSpellDataById(spellId);
             if (spellData is not null)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new SpellMessageBuilder(embedBuilderService, spellData, selectedLevel, culture);
             }

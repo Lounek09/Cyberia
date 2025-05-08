@@ -9,9 +9,9 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
 public sealed class CytrusPlatformAutoCompleteProvider : IAutoCompleteProvider
 {
-    private readonly CytrusWatcher _cytrusWatcher;
+    private readonly ICytrusWatcher _cytrusWatcher;
 
-    public CytrusPlatformAutoCompleteProvider(CytrusWatcher cytrusWatcher)
+    public CytrusPlatformAutoCompleteProvider(ICytrusWatcher cytrusWatcher)
     {
         _cytrusWatcher = cytrusWatcher;
     }

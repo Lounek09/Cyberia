@@ -21,7 +21,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
     private readonly MapSearchCategory _searchCategory;
 
     public PaginatedMapMessageBuilder(
-        EmbedBuilderService embedBuilderService,
+        IEmbedBuilderService embedBuilderService,
         List<MapData> mapsData,
         MapSearchCategory searchCategory,
         string search,
@@ -78,7 +78,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
 
             if (mapsData.Count > 0 && !string.IsNullOrEmpty(search))
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, mapsData, searchCategory, search, culture, selectedPageIndex);
             }

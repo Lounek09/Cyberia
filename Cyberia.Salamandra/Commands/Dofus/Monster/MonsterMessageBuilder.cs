@@ -20,7 +20,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "M";
     public const int PacketVersion = 1;
 
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly MonsterData _monsterData;
     private readonly int _selectedGrade;
     private readonly MonsterGradeData? _monsterGradeData;
@@ -29,7 +29,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
     private readonly AlignmentData? _alignmentData;
     private readonly CultureInfo? _culture;
 
-    public MonsterMessageBuilder(EmbedBuilderService embedBuilderService, MonsterData monster, int selectedGrade, CultureInfo? culture)
+    public MonsterMessageBuilder(IEmbedBuilderService embedBuilderService, MonsterData monster, int selectedGrade, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _monsterData = monster;
@@ -53,7 +53,7 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             var monsterData = dofusDatacenter.MonstersRepository.GetMonsterDataById(monsterId);
             if (monsterData is not null)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new MonsterMessageBuilder(embedBuilderService, monsterData, selectedGrade, culture);
             }

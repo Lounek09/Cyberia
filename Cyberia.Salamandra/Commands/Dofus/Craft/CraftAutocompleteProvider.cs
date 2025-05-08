@@ -9,10 +9,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 
 public sealed class CraftAutocompleteProvider : IAutoCompleteProvider
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
 
-    public CraftAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
+    public CraftAutocompleteProvider(ICultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;        

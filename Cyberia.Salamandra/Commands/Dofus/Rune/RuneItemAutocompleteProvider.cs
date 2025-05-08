@@ -10,10 +10,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 
 public sealed class RuneItemAutocompleteProvider : IAutoCompleteProvider
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
 
-    public RuneItemAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
+    public RuneItemAutocompleteProvider(ICultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

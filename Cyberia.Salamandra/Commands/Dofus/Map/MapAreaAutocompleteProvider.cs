@@ -9,10 +9,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Map;
 
 public sealed class MapAreaAutocompleteProvider : IAutoCompleteProvider
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
 
-    public MapAreaAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
+    public MapAreaAutocompleteProvider(ICultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

@@ -20,21 +20,21 @@ namespace Cyberia.Salamandra.Commands.Data.Langs;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class LangsCommandModule
 {
-    private readonly CachedChannelsService _cachedChannelsService;
-    private readonly CultureService _cultureService;
-    private readonly EmbedBuilderService _embedBuilderService;
-    private readonly LangsParser _langsParser;
-    private readonly LangsWatcher _langsWatcher;
-    private readonly LangsService _langsService;
+    private readonly ICachedChannelsService _cachedChannelsService;
+    private readonly ICultureService _cultureService;
+    private readonly IEmbedBuilderService _embedBuilderService;
+    private readonly ILangsParser _langsParser;
+    private readonly ILangsService _langsService;
+    private readonly ILangsWatcher _langsWatcher;
 
-    public LangsCommandModule(CachedChannelsService cachedChannelsService, CultureService cultureService, EmbedBuilderService embedBuilderService, LangsParser langsParser, LangsWatcher langsWatcher, LangsService langsService)
+    public LangsCommandModule(ICachedChannelsService cachedChannelsService, ICultureService cultureService, IEmbedBuilderService embedBuilderService, ILangsParser langsParser, ILangsService langsService, ILangsWatcher langsWatcher)
     {
         _cachedChannelsService = cachedChannelsService;
         _cultureService = cultureService;
         _embedBuilderService = embedBuilderService;
         _langsParser = langsParser;
-        _langsWatcher = langsWatcher;
         _langsService = langsService;
+        _langsWatcher = langsWatcher;
     }
 
     [Command("check"), Description("[Owner] Launch a check to see if there is a new version of the langs")]

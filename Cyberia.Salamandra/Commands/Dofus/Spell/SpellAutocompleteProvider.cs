@@ -9,10 +9,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 
 public sealed class SpellAutocompleteProvider : IAutoCompleteProvider
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
 
-    public SpellAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
+    public SpellAutocompleteProvider(ICultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

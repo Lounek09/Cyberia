@@ -19,7 +19,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
     public const int PacketVersion = 2;
 
     public PaginatedSpellMessageBuilder(
-        EmbedBuilderService embedBuilderService,
+        IEmbedBuilderService embedBuilderService,
         List<SpellData> spellsData,
         string search,
         CultureInfo? culture,
@@ -46,7 +46,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
             var spellsData = dofusDatacenter.SpellsRepository.GetSpellsDataByName(parameters[1], culture).ToList();
             if (spellsData.Count > 0)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, spellsData, parameters[1], culture, selectedPageIndex);
             }

@@ -16,10 +16,10 @@ public sealed class HelpCommandModule
 {
     private static IEnumerable<DiscordApplicationCommand>? s_commands = null;
 
-    private readonly CultureService _cultureService;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly ICultureService _cultureService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public HelpCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public HelpCommandModule(ICultureService cultureService, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _embedBuilderService = embedBuilderService;

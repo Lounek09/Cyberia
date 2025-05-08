@@ -9,10 +9,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 
 public sealed class IncarnationAutocompleteProvider : IAutoCompleteProvider
 {
-    private readonly CultureService _cultureService;
+    private readonly ICultureService _cultureService;
     private readonly DofusDatacenter _dofusDatacenter;
 
-    public IncarnationAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
+    public IncarnationAutocompleteProvider(ICultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
         _dofusDatacenter = dofusDatacenter;

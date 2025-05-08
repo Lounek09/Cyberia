@@ -21,7 +21,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
     private readonly HouseSearchCategory _searchCategory;
 
     public PaginatedHouseMessageBuilder(
-        EmbedBuilderService embedBuilderService,
+        IEmbedBuilderService embedBuilderService,
         List<HouseData> housesData,
         HouseSearchCategory searchCategory,
         string search,
@@ -82,7 +82,7 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
 
             if (housesData.Count > 0 && !string.IsNullOrEmpty(search))
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 return new(embedBuilderService, housesData, searchCategory, search, culture, selectedPageIndex);
             }

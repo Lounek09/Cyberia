@@ -5,34 +5,63 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Services;
 
-/// <summary>
-/// Manages the caching and retrieval of specific channels.
-/// </summary>
-public sealed class CachedChannelsService
+public interface ICachedChannelsService
 {
     /// <summary>
     /// Gets the log channel.
     /// </summary>
-    public DiscordChannel? LogChannel { get; internal set; }
+    DiscordChannel? LogChannel { get; }
 
     /// <summary>
     /// Gets the error channel.
     /// </summary>
-    public DiscordChannel? ErrorChannel { get; internal set; }
+    DiscordChannel? ErrorChannel { get; }
 
     /// <summary>
     /// Gets the language forum channel.
     /// </summary>
-    public DiscordForumChannel? LangsForumChannel { get; internal set; }
+    DiscordForumChannel? LangsForumChannel { get; }
 
     /// <summary>
     /// Gets the Cytrus channel.
     /// </summary>
-    public DiscordChannel? CytrusChannel { get; internal set; }
+    DiscordChannel? CytrusChannel { get; }
 
     /// <summary>
     /// Gets the Cytrus manifest channel.
     /// </summary>
+    DiscordChannel? CytrusManifestChannel { get; }
+
+    /// <summary>
+    /// Loads and caches the channels.
+    /// </summary>
+    Task LoadChannelsAsync();
+
+    /// <summary>
+    /// Sends a message to the log channel.
+    /// </summary>
+    /// <param name="content">The content of the message.</param>
+    Task SendLogMessage(string content);
+
+    /// <summary>
+    /// Sends a message to the error channel.
+    /// </summary>
+    /// <param name="embed">The embed of the message.</param>
+    Task SendErrorMessage(DiscordEmbed embed);
+
+    
+}
+
+public sealed class CachedChannelsService : ICachedChannelsService
+{
+    public DiscordChannel? LogChannel { get; internal set; }
+
+    public DiscordChannel? ErrorChannel { get; internal set; }
+
+    public DiscordForumChannel? LangsForumChannel { get; internal set; }
+
+    public DiscordChannel? CytrusChannel { get; internal set; }
+
     public DiscordChannel? CytrusManifestChannel { get; internal set; }
 
     private readonly BotConfig _botConfig;
@@ -49,9 +78,6 @@ public sealed class CachedChannelsService
         _client = client;
     }
 
-    /// <summary>
-    /// Loads and caches the channels.
-    /// </summary>
     public async Task LoadChannelsAsync()
     {
         LogChannel = await GetChannelAsync<DiscordChannel>(_botConfig.LogChannelId);
@@ -61,10 +87,6 @@ public sealed class CachedChannelsService
         CytrusManifestChannel = await GetChannelAsync<DiscordChannel>(_botConfig.CytrusManifestChannelId);
     }
 
-    /// <summary>
-    /// Sends a message to the log channel.
-    /// </summary>
-    /// <param name="content">The content of the message.</param>
     public async Task SendLogMessage(string content)
     {
         if (LogChannel is null)
@@ -75,10 +97,6 @@ public sealed class CachedChannelsService
         await LogChannel.SendMessageSafeAsync(new DiscordMessageBuilder().WithContent(content));
     }
 
-    /// <summary>
-    /// Sends a message to the error channel.
-    /// </summary>
-    /// <param name="embed">The embed of the message.</param>
     public async Task SendErrorMessage(DiscordEmbed embed)
     {
         if (ErrorChannel is null)

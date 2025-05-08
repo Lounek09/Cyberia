@@ -14,28 +14,40 @@ namespace Cyberia.Salamandra.Services;
 /// <summary>
 /// Represents a service to handle langs events and logic.
 /// </summary>
-public sealed class LangsService
+public interface ILangsService
 {
-    private readonly CachedChannelsService _cachedChannelsService;
-    private readonly LangsWatcher _langsWatcher;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="LangsService"/> class.
-    /// </summary>
-    /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
-    /// <param name="langsWatcher">The watcher to get the langs from.</param>
-    public LangsService(CachedChannelsService cachedChannelsService, LangsWatcher langsWatcher)
-    {
-        _cachedChannelsService = cachedChannelsService;
-        _langsWatcher = langsWatcher;
-    }
-
     /// <summary>
     /// Launches a manual diff between two types of langs for the specified language, if the types are equal, it will send the last auto diff.
     /// </summary>
     /// <param name="currentType">The current type of langs.</param>
     /// <param name="modelType">The model type of langs.</param>
     /// <param name="language">The language of the langs.</param>
+    Task LaunchManualDiff(LangType currentType, LangType modelType, Language language);
+
+    /// <summary>
+    /// Handles the event when the check of langs is finished.
+    /// </summary>
+    /// <param name="_">Ignored.</param>
+    /// <param name="eventArgs">The event arguments.</param>
+    ValueTask OnCheckLangsFinished(ILangsWatcher _, CheckLangFinishedEventArgs eventArgs);
+}
+
+public sealed class LangsService : ILangsService
+{
+    private readonly ICachedChannelsService _cachedChannelsService;
+    private readonly ILangsWatcher _langsWatcher;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LangsService"/> class.
+    /// </summary>
+    /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
+    /// <param name="langsWatcher">The watcher to get the langs from.</param>
+    public LangsService(ICachedChannelsService cachedChannelsService, ILangsWatcher langsWatcher)
+    {
+        _cachedChannelsService = cachedChannelsService;
+        _langsWatcher = langsWatcher;
+    }
+
     public async Task LaunchManualDiff(LangType currentType, LangType modelType, Language language)
     {
         var forum = _cachedChannelsService.LangsForumChannel;
@@ -71,12 +83,7 @@ public sealed class LangsService
         }
     }
 
-    /// <summary>
-    /// Handles the event when the check of langs is finished.
-    /// </summary>
-    /// <param name="_">Ignored.</param>
-    /// <param name="eventArgs">The event arguments.</param>
-    internal async ValueTask OnCheckLangsFinished(LangsWatcher _, CheckLangFinishedEventArgs eventArgs)
+    public async ValueTask OnCheckLangsFinished(ILangsWatcher _, CheckLangFinishedEventArgs eventArgs)
     {
         if (eventArgs.UpdatedLangs.Count == 0)
         {
@@ -151,7 +158,7 @@ public sealed class LangsService
         var modelType = modelRepository.Type.ToStringFast();
 
         var postBuilder = new ForumPostBuilder()
-            .WithName($"Diff {currentType} ➜ {modelType} in {currentLanguage} {DateTime.Now:yyyy-MM-dd HH:mm}")
+            .WithName($"Diff of {currentType} compared to {modelType} in {currentLanguage} {DateTime.Now:yyyy-MM-dd HH:mm}")
             .WithMessage(new DiscordMessageBuilder().WithContent(
                 $"Diff of langs {Formatter.Bold(currentType)} from {currentLastChange:yyyy-MM-dd HH:mmzzz} " +
                 $"and {Formatter.Bold(modelType)} from {modelLastChange:yyyy-MM-dd HH:mmzzz} in {Formatter.Bold(currentLanguage)}"));

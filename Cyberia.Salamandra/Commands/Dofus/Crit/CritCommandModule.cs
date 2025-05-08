@@ -16,10 +16,10 @@ namespace Cyberia.Salamandra.Commands.Dofus.Crit;
 
 public sealed class CritCommandModule
 {
-    private readonly CultureService _cultureService;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly ICultureService _cultureService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public CritCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public CritCommandModule(ICultureService cultureService, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _embedBuilderService = embedBuilderService;

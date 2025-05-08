@@ -20,7 +20,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "Q";
     public const int PacketVersion = 2;
 
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly QuestData _questData;
     private readonly List<QuestStepData> _questStepsData;
     private readonly int _selectedQuestStepIndex;
@@ -30,7 +30,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
     private readonly DialogQuestionData? _dialogQuestionData;
     private readonly CultureInfo? _culture;
 
-    public QuestMessageBuilder(EmbedBuilderService embedBuilderService, QuestData questData, int selectedQuestStepIndex, int? selectedQuestStepRewardBaseLevelIndex, CultureInfo? culture)
+    public QuestMessageBuilder(IEmbedBuilderService embedBuilderService, QuestData questData, int selectedQuestStepIndex, int? selectedQuestStepRewardBaseLevelIndex, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _questData = questData;
@@ -66,7 +66,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             var questData = dofusDatacenter.QuestsRepository.GetQuestDataById(questId);
             if (questData is not null)
             {
-                var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
+                var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
 
                 if (int.TryParse(parameters[2], out var selectedQuestStepRewardBaseLevelIndex))
                 {

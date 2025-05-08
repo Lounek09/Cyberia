@@ -65,12 +65,12 @@ public static class ServiceCollectionExtensions
                 }
             );
 
-        services.AddSingleton<CachedChannelsService>();
-        services.AddSingleton<CultureService>();
-        services.AddSingleton<CytrusService>();
-        services.AddSingleton<EmojisService>();
-        services.AddSingleton<LangsService>();
-        services.AddSingleton<EmbedBuilderService>();
+        services.AddSingleton<ICachedChannelsService, CachedChannelsService>();
+        services.AddSingleton<ICultureService, CultureService>();
+        services.AddSingleton<ICytrusService, CytrusService>();
+        services.AddSingleton<IEmojisService, EmojisService>();
+        services.AddSingleton<ILangsService, LangsService>();
+        services.AddSingleton<IEmbedBuilderService, EmbedBuilderService>();
 
         return services;
     }

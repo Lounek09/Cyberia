@@ -15,25 +15,8 @@ namespace Cyberia.Salamandra.Services;
 /// <summary>
 /// Represents a service to handle Cytrus events and logic.
 /// </summary>
-public sealed class CytrusService
+public interface ICytrusService
 {
-    private readonly CachedChannelsService _cachedChannelsService;
-    private readonly CytrusManifestFetcher _cytrusManifestFetcher;
-    private readonly CytrusWatcher _cytrusWatcher;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="CytrusService"/> class.
-    /// </summary>
-    /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
-    /// <param name="cytrusManifestFetcher">The fetcher to get the manifest from.</param>
-    /// <param name="cytrusWatcher">The watcher to get the Cytrus data from.</param>
-    public CytrusService(CachedChannelsService cachedChannelsService, CytrusManifestFetcher cytrusManifestFetcher, CytrusWatcher cytrusWatcher)
-    {
-        _cachedChannelsService = cachedChannelsService;
-        _cytrusManifestFetcher = cytrusManifestFetcher;
-        _cytrusWatcher = cytrusWatcher;
-    }
-
     /// <summary>
     /// Gets the manifest diff between two versions of a game.
     /// </summary>
@@ -44,6 +27,35 @@ public sealed class CytrusService
     /// <param name="newRelease">The new release of the game.</param>
     /// <param name="newVersion">The new version of the game.</param>
     /// <returns>The differences between the two versions as a string.</returns>
+    Task<string> GetManifestDiffAsync(string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion);
+
+    /// <summary>
+    /// Handles the event when a new Cytrus is detected.
+    /// </summary>
+    /// <param name="_">Ignored.</param>
+    /// <param name="eventArgs">The event arguments.</param>
+    ValueTask OnNewCytrusFileDetected(ICytrusWatcher _, NewCytrusFileDetectedEventArgs eventArgs);
+}
+
+public sealed class CytrusService : ICytrusService
+{
+    private readonly ICachedChannelsService _cachedChannelsService;
+    private readonly ICytrusManifestFetcher _cytrusManifestFetcher;
+    private readonly ICytrusWatcher _cytrusWatcher;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CytrusService"/> class.
+    /// </summary>
+    /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
+    /// <param name="cytrusManifestFetcher">The fetcher to get the manifest from.</param>
+    /// <param name="cytrusWatcher">The watcher to get the Cytrus data from.</param>
+    public CytrusService(ICachedChannelsService cachedChannelsService, ICytrusManifestFetcher cytrusManifestFetcher, ICytrusWatcher cytrusWatcher)
+    {
+        _cachedChannelsService = cachedChannelsService;
+        _cytrusManifestFetcher = cytrusManifestFetcher;
+        _cytrusWatcher = cytrusWatcher;
+    }
+
     public async Task<string> GetManifestDiffAsync(string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
     {
         var modelManifest = await _cytrusManifestFetcher.GetAsync(game, platform, oldRelease, oldVersion);
@@ -67,12 +79,7 @@ public sealed class CytrusService
         return diff;
     }
 
-    /// <summary>
-    /// Handles the event when a new Cytrus is detected.
-    /// </summary>
-    /// <param name="_">Ignored.</param>
-    /// <param name="eventArgs">The event arguments.</param>
-    internal async ValueTask OnNewCytrusFileDetected(CytrusWatcher _, NewCytrusFileDetectedEventArgs eventArgs)
+    public async ValueTask OnNewCytrusFileDetected(ICytrusWatcher _, NewCytrusFileDetectedEventArgs eventArgs)
     {
         await SendCytrusDiffAsync(eventArgs);
         await SendManifestDiffAsync(eventArgs);

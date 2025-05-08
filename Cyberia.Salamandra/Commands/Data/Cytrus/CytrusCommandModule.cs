@@ -22,12 +22,12 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class CytrusCommandModule
 {
-    private readonly CultureService _cultureService;
-    private readonly CytrusService _cytrusService;
-    private readonly CytrusWatcher _cytrusWatcher;
-    private readonly EmbedBuilderService _embedBuilderService;
+    private readonly ICultureService _cultureService;
+    private readonly ICytrusService _cytrusService;
+    private readonly ICytrusWatcher _cytrusWatcher;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public CytrusCommandModule(CultureService cultureService, CytrusService cytrusService, CytrusWatcher cytrusWatcher, EmbedBuilderService embedBuilderService)
+    public CytrusCommandModule(ICultureService cultureService, ICytrusService cytrusService, ICytrusWatcher cytrusWatcher, IEmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
         _cytrusService = cytrusService;
