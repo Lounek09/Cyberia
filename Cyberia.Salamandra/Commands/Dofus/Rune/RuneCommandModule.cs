@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Enums;
 using Cyberia.Api.Managers;
 using Cyberia.Salamandra.Enums;
@@ -26,11 +26,13 @@ namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 public sealed class RuneCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public RuneCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public RuneCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -54,7 +56,7 @@ public sealed class RuneCommandModule
 
         if (int.TryParse(value, out var itemId))
         {
-            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
+            var itemData = _dofusDatacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
                 response = await new RuneItemMessageBuilder(_embedBuilderService, itemData, quantity, culture)
@@ -63,7 +65,7 @@ public sealed class RuneCommandModule
         }
         else
         {
-            var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(value, culture).ToList();
+            var itemsData = _dofusDatacenter.ItemsRepository.GetItemsDataByName(value, culture).ToList();
             if (itemsData.Count == 1)
             {
                 response = await new RuneItemMessageBuilder(_embedBuilderService, itemsData[0], quantity, culture)
@@ -100,7 +102,7 @@ public sealed class RuneCommandModule
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var runeData = DofusApi.Datacenter.RunesRepository.GetRuneDataById(runeId);
+        var runeData = _dofusDatacenter.RunesRepository.GetRuneDataById(runeId);
         if (runeData is null)
         {
             await ctx.RespondAsync(Translation.Get<BotTranslations>("Rune.NotFound", culture));
@@ -110,7 +112,7 @@ public sealed class RuneCommandModule
         var percentRuneExtractable = Math.Round(RuneManager.GetPercentStatExtractable(runeData, itemLvl, statAmount), 2);
 
         var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Rune.Author", culture), culture)
-            .WithTitle(DofusApi.Datacenter.ItemsRepository.GetItemNameById(runeData.BaRuneItemId));
+            .WithTitle(_dofusDatacenter.ItemsRepository.GetItemNameById(runeData.BaRuneItemId));
 
         if (statAmount == 1)
         {

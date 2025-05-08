@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -10,17 +10,19 @@ namespace Cyberia.Salamandra.Commands.Dofus.Monster;
 public sealed class MonsterAutocompleteProvider : IAutoCompleteProvider
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
 
-    public MonsterAutocompleteProvider(CultureService cultureService)
+    public MonsterAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
     }
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        return DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(ctx.UserInput ?? string.Empty, culture)
+        return _dofusDatacenter.MonstersRepository.GetMonstersDataByName(ctx.UserInput ?? string.Empty, culture)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {

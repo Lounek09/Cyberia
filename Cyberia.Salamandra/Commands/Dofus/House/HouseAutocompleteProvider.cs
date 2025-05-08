@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -10,17 +10,19 @@ namespace Cyberia.Salamandra.Commands.Dofus.House;
 public sealed class HouseAutocompleteProvider : IAutoCompleteProvider
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
 
-    public HouseAutocompleteProvider(CultureService cultureService)
+    public HouseAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
     }
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        return DofusApi.Datacenter.HousesRepository.GetHousesDataByName(ctx.UserInput ?? string.Empty, culture)
+        return _dofusDatacenter.HousesRepository.GetHousesDataByName(ctx.UserInput ?? string.Empty, culture)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {

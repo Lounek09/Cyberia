@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
@@ -16,11 +16,13 @@ namespace Cyberia.Salamandra.Commands.Dofus.ItemSet;
 public sealed class ItemSetCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public ItemSetCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public ItemSetCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -42,7 +44,7 @@ public sealed class ItemSetCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var itemSetData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(id);
+            var itemSetData = _dofusDatacenter.ItemSetsRepository.GetItemSetDataById(id);
             if (itemSetData is not null)
             {
                 response = await new ItemSetMessageBuilder(_embedBuilderService, itemSetData, itemSetData.Effects.Count, culture)
@@ -51,7 +53,7 @@ public sealed class ItemSetCommandModule
         }
         else
         {
-            var itemSetsData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetsDataByName(value, culture).ToList();
+            var itemSetsData = _dofusDatacenter.ItemSetsRepository.GetItemSetsDataByName(value, culture).ToList();
             if (itemSetsData.Count == 1)
             {
                 response = await new ItemSetMessageBuilder(_embedBuilderService, itemSetsData[0], itemSetsData[0].Effects.Count, culture)

@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Houses;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Enums;
@@ -43,7 +43,9 @@ public sealed class HouseMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var houseId) &&
             int.TryParse(parameters[1], out var selectedMapIndex))
         {
-            var houseData = DofusApi.Datacenter.HousesRepository.GetHouseDataById(houseId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var houseData = dofusDatacenter.HousesRepository.GetHouseDataById(houseId);
             if (houseData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();

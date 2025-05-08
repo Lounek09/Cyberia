@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Langzilla.Enums;
 
 using DSharpPlus.Commands;
@@ -13,18 +14,27 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
 public sealed class ReloadCommandModule
 {
+    private readonly DofusApiConfig _dofusApiConfig;
+    private readonly DofusDatacenter _dofusDatacenter;
+
+    public ReloadCommandModule(DofusApiConfig dofusApiConfig, DofusDatacenter dofusDatacenter)
+    {
+        _dofusApiConfig = dofusApiConfig;
+        _dofusDatacenter = dofusDatacenter;
+    }
+
     [Command("reload"), Description("[Owner] Reload the API data")]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
-    public static async Task ExecuteAsync(SlashCommandContext ctx,
+    public async Task ExecuteAsync(SlashCommandContext ctx,
         [Parameter("type"), Description("The type of langs to load; if empty, use the value in the config")]
         LangType? type = null)
     {
         await ctx.DeferResponseAsync();
 
-        DofusApi.Reload(type ?? DofusApi.Config.Type);
+        _dofusDatacenter.Load(type ?? _dofusApiConfig.Type);
 
         await ctx.EditResponseAsync("Api reload !");
     }

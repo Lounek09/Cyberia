@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Incarnations;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Formatters;
@@ -41,7 +41,9 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(parameters[1], culture).ToList();
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var incarnationsData = dofusDatacenter.IncarnationsRepository.GetIncarnationsDataByItemName(parameters[1], culture).ToList();
             if (incarnationsData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();

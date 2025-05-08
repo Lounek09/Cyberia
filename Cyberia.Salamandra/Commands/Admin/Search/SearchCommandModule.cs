@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Services;
 
@@ -20,11 +20,13 @@ namespace Cyberia.Salamandra.Commands.Admin.Search;
 public sealed class SearchCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public SearchCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public SearchCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -44,7 +46,7 @@ public sealed class SearchCommandModule
         switch (location)
         {
             case SearchLocation.Item:
-                foreach (var itemData in DofusApi.Datacenter.ItemsRepository.GetItemsDataWithEffectId(effectId))
+                foreach (var itemData in _dofusDatacenter.ItemsRepository.GetItemsDataWithEffectId(effectId))
                 {
                     descriptionBuilder.Append("- ");
                     descriptionBuilder.Append(itemData.Name.ToString(culture));
@@ -54,7 +56,7 @@ public sealed class SearchCommandModule
                 }
                 break;
             case SearchLocation.Spell:
-                foreach (var spellData in DofusApi.Datacenter.SpellsRepository.GetSpellsDataWithEffectId(effectId))
+                foreach (var spellData in _dofusDatacenter.SpellsRepository.GetSpellsDataWithEffectId(effectId))
                 {
                     descriptionBuilder.Append("- ");
                     descriptionBuilder.Append(spellData.Name.ToString(culture));
@@ -68,7 +70,7 @@ public sealed class SearchCommandModule
                 return;
         }
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
             .WithTitle($"Search effect {effectId} in {location}")
             .WithDescription(descriptionBuilder.ToString().WithMaxLength(4000));
 
@@ -91,7 +93,7 @@ public sealed class SearchCommandModule
         switch (location)
         {
             case SearchLocation.Item:
-                foreach (var itemData in DofusApi.Datacenter.ItemsRepository.GetItemsDataWithCriterionId(criterionId))
+                foreach (var itemData in _dofusDatacenter.ItemsRepository.GetItemsDataWithCriterionId(criterionId))
                 {
                     descriptionBuilder.Append("- ");
                     descriptionBuilder.Append(itemData.Name.ToString(culture));
@@ -101,7 +103,7 @@ public sealed class SearchCommandModule
                 }
                 break;
             case SearchLocation.Spell:
-                foreach (var spellData in DofusApi.Datacenter.SpellsRepository.GetSpellsDataWithCriterionId(criterionId))
+                foreach (var spellData in _dofusDatacenter.SpellsRepository.GetSpellsDataWithCriterionId(criterionId))
                 {
                     descriptionBuilder.Append("- ");
                     descriptionBuilder.Append(spellData.Name.ToString(culture));
@@ -115,7 +117,7 @@ public sealed class SearchCommandModule
                 return;
         }
 
-        await ctx.RespondAsync(_embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, $"Search criterion {criterionId} in {location}")
+        await ctx.RespondAsync(_embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, $"Search criterion {criterionId} in {location}", culture)
             .WithDescription(descriptionBuilder.ToString().WithMaxLength(4000)));
     }
 }

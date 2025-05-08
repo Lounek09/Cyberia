@@ -24,6 +24,7 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "INCA";
     public const int PacketVersion = 1;
 
+    private readonly DofusApiConfig _dofusApiConfig;
     private readonly EmbedBuilderService _embedBuilderService;
     private readonly IncarnationData _incarnationData;
     private readonly ItemData? _itemData;
@@ -32,8 +33,9 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
     private readonly IEnumerable<SpellData> _spellsData;
     private readonly CultureInfo? _culture;
 
-    public IncarnationMessageBuilder(EmbedBuilderService embedBuilderService, IncarnationData incarnationData, CultureInfo? culture)
+    public IncarnationMessageBuilder(DofusApiConfig dofusApiConfig, EmbedBuilderService embedBuilderService, IncarnationData incarnationData, CultureInfo? culture)
     {
+        _dofusApiConfig = dofusApiConfig;
         _embedBuilderService = embedBuilderService;
         _incarnationData = incarnationData;
         _itemData = incarnationData.GetItemData();
@@ -49,12 +51,15 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
             parameters.Length > 0 &&
             int.TryParse(parameters[0], out var incarnationId))
         {
-            var incarnartionData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(incarnationId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var incarnartionData = dofusDatacenter.IncarnationsRepository.GetIncarnationDataByItemId(incarnationId);
             if (incarnartionData is not null)
             {
+                var dofusApiConfig = provider.GetRequiredService<DofusApiConfig>();
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
 
-                return new(embedBuilderService, incarnartionData, culture);
+                return new(dofusApiConfig, embedBuilderService, incarnartionData, culture);
             }
         }
 
@@ -99,17 +104,17 @@ public sealed class IncarnationMessageBuilder : ICustomMessageBuilder
                 .AddEmptyField(true);
 
             var effects = _incarnationData.GetRealEffects();
-            embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
+            _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
 
             if (_itemData.WeaponData is not null)
             {
-                embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, _itemTypeData, _culture);
+                _embedBuilderService.AddWeaponInfosField(embed, _itemData.WeaponData, _itemData.TwoHanded, _itemTypeData, _culture);
             }
         }
         else
         {
             embed.WithDescription(Formatter.Italic(Translation.Get<BotTranslations>("Embed.Incarnation.Description.NotFound", _culture)))
-                .WithThumbnail($"{DofusApi.Config.CdnUrl}/images/items/unknown.png");
+                .WithThumbnail($"{_dofusApiConfig.CdnUrl}/images/items/unknown.png");
         }
 
         if (_spellsData.Any())

@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Items;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Formatters;
@@ -45,7 +45,9 @@ public sealed class PaginatedRuneItemMessageBuilder : PaginatedMessageBuilder<It
             int.TryParse(parameters[0], out var selectedPageIndex) &&
             int.TryParse(parameters[2], out var quantity))
         {
-            var itemsData = DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(parameters[1], culture).ToList();
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var itemsData = dofusDatacenter.ItemsRepository.GetItemsDataByName(parameters[1], culture).ToList();
             if (itemsData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();

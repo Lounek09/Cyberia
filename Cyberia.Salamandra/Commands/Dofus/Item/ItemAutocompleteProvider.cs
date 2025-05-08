@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -10,17 +10,19 @@ namespace Cyberia.Salamandra.Commands.Dofus.Item;
 public sealed class ItemAutocompleteProvider : IAutoCompleteProvider
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
 
-    public ItemAutocompleteProvider(CultureService cultureService)
+    public ItemAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
     }
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        return DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(ctx.UserInput ?? string.Empty, culture)
+        return _dofusDatacenter.ItemsRepository.GetItemsDataByName(ctx.UserInput ?? string.Empty, culture)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {

@@ -31,26 +31,26 @@ public static class Program
 
         Directory.CreateDirectory(OutputPath);
 
-        DofusApi.Initialize(new ApiConfig()
+        var dofusDatacenter = DofusApi.Initialize(new DofusApiConfig()
         {
             BaseLanguage = Language.fr,
             SupportedLanguages = [Language.en, Language.fr, Language.es],
             Type = LangType.Official
         });
 
-    Retry:
         Log.Information("Wich generator do you want to run ?");
         Log.Information("1. Dofusbook_Items");
         Log.Information("2. Dofusbook_ItemSets");
         Log.Information("3. Dofusbook_Spells");
         Log.Information("4. Dofusbook_Titles");
 
+    Retry:
         ICsvGenerator? generator = Console.ReadKey(true).Key switch
         {
-            ConsoleKey.D1 or ConsoleKey.NumPad1 => new Dofusbook_ItemsCsvGenerator(DofusApi.Datacenter.ItemsRepository.Items.Values),
-            ConsoleKey.D2 or ConsoleKey.NumPad2 => new Dofusbook_ItemSetsCsvGenerator(DofusApi.Datacenter.ItemSetsRepository.ItemSets.Values),
-            ConsoleKey.D3 or ConsoleKey.NumPad3 => new Dofusbook_SpellsCsvGenerator(DofusApi.Datacenter.SpellsRepository.Spells.Values),
-            ConsoleKey.D4 or ConsoleKey.NumPad4 => new Dofusbook_TitlesCsvGenerator(DofusApi.Datacenter.TitlesRepository.Titles.Values),
+            ConsoleKey.D1 or ConsoleKey.NumPad1 => new Dofusbook_ItemsCsvGenerator(dofusDatacenter.ItemsRepository.Items.Values),
+            ConsoleKey.D2 or ConsoleKey.NumPad2 => new Dofusbook_ItemSetsCsvGenerator(dofusDatacenter.ItemSetsRepository.ItemSets.Values),
+            ConsoleKey.D3 or ConsoleKey.NumPad3 => new Dofusbook_SpellsCsvGenerator(dofusDatacenter.SpellsRepository.Spells.Values),
+            ConsoleKey.D4 or ConsoleKey.NumPad4 => new Dofusbook_TitlesCsvGenerator(dofusDatacenter.TitlesRepository.Titles.Values),
             _ => null
         };
 

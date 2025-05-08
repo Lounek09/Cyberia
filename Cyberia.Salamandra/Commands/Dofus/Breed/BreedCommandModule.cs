@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
@@ -15,11 +15,13 @@ namespace Cyberia.Salamandra.Commands.Dofus.Breed;
 public sealed class BreedCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public BreedCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public BreedCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -39,7 +41,7 @@ public sealed class BreedCommandModule
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
+        var breedData = _dofusDatacenter.BreedsRepository.GetBreedDataById(breedId);
 
         if (breedData is null)
         {

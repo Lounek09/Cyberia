@@ -1,32 +1,39 @@
 ﻿using Cyberia.Api.Data;
-using Cyberia.Api.Managers;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Api.Extensions;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cyberia.Api;
 
+/// <summary>
+/// Represents the Dofus API that provides access to the Dofus datacenter.
+/// </summary>
 public static class DofusApi
 {
     public const string OutputPath = "api";
 
     public static readonly string CustomPath = Path.Join(OutputPath, "custom");
 
-    public static ApiConfig Config { get; internal set; } = default!;
-    public static Datacenter Datacenter { get; internal set; } = default!;
-
+    internal static DofusDatacenter Datacenter { get; set; } = default!;
+    internal static DofusApiConfig Config { get; set; } = default!;
     internal static HttpClient HttpClient { get; set; } = default!;
 
-    public static void Initialize(ApiConfig config)
+    /// <summary>
+    /// Initializes the Dofus API with the specified configuration.
+    /// </summary>
+    /// <param name="config">The configuration for the API.</param>
+    /// <returns>The initialized DofusDatacenter instance.</returns>
+    /// <remarks>
+    /// If you use dependency injection, use <see cref="ServiceCollectionExtensions.AddDofusApi(IServiceCollection, DofusApiConfig)"/> instead.
+    /// </remarks>
+    public static DofusDatacenter Initialize(DofusApiConfig config)
     {
-        Directory.CreateDirectory(CustomPath);
-
         Config = config;
+        Datacenter = new();
         HttpClient = new();
-        Datacenter = new Datacenter(config.Type);
-    }
 
-    public static void Reload(LangType type)
-    {
-        Datacenter = new Datacenter(type);
-        CdnManager.ClearCache();
+        Datacenter.Load(config.Type);
+
+        return Datacenter;
     }
 }

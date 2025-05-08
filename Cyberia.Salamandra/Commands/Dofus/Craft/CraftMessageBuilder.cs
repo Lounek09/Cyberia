@@ -1,10 +1,8 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.Items;
 using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
@@ -48,7 +46,9 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[1], out var quantity) &&
             bool.TryParse(parameters[2], out var recursive))
         {
-            var craftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(craftId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var craftData = dofusDatacenter.CraftsRepository.GetCraftDataById(craftId);
             if (craftData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
@@ -83,8 +83,9 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Jobs, Translation.Get<BotTranslations>("Embed.Craft.Author", _culture), _culture)
-            .WithCraftDescription(_craftData, _quantity, _recursive, _culture);
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Jobs, Translation.Get<BotTranslations>("Embed.Craft.Author", _culture), _culture);
+
+        _embedBuilderService.SetCraftDescription(embed, _craftData, _quantity, _recursive, _culture);
 
         if (_itemData is not null)
         {

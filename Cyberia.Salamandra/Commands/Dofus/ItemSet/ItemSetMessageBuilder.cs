@@ -1,11 +1,10 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Salamandra.Commands.Dofus.Breed;
 using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
@@ -47,7 +46,9 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var itemSetId) &&
             int.TryParse(parameters[1], out var nbItemSelected))
         {
-            var itemSetData = DofusApi.Datacenter.ItemSetsRepository.GetItemSetDataById(itemSetId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var itemSetData = dofusDatacenter.ItemSetsRepository.GetItemSetDataById(itemSetId);
             if (itemSetData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
@@ -113,7 +114,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
         }
 
         var effects = _itemSetData.GetEffects(_nbItemSelected);
-        embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
+        _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
 
         return Task.FromResult(embed);
     }

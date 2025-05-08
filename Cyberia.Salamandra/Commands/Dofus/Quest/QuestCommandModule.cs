@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
@@ -16,11 +16,13 @@ namespace Cyberia.Salamandra.Commands.Dofus.Quest;
 public sealed class QuestCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public QuestCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public QuestCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -42,7 +44,7 @@ public sealed class QuestCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var questData = DofusApi.Datacenter.QuestsRepository.GetQuestDataById(id);
+            var questData = _dofusDatacenter.QuestsRepository.GetQuestDataById(id);
             if (questData is not null)
             {
                 response = await new QuestMessageBuilder(_embedBuilderService, questData, 0, null, culture)
@@ -51,7 +53,7 @@ public sealed class QuestCommandModule
         }
         else
         {
-            var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(value, culture).ToList();
+            var questsData = _dofusDatacenter.QuestsRepository.GetQuestsDataByName(value, culture).ToList();
             if (questsData.Count == 1)
             {
                 response = await new QuestMessageBuilder(_embedBuilderService, questsData[0], 0, null, culture)

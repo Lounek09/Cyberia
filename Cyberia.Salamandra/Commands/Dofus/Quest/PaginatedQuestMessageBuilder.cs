@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Quests;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Formatters;
@@ -41,7 +41,9 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var questsData = DofusApi.Datacenter.QuestsRepository.GetQuestsDataByName(parameters[1], culture).ToList();
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var questsData = dofusDatacenter.QuestsRepository.GetQuestsDataByName(parameters[1], culture).ToList();
             if (questsData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();

@@ -26,7 +26,4 @@
   <Project Path="Cyberia.Translations/Cyberia.Translations.csproj" />
   <Project Path="Cyberia.Utils/Cyberia.Utils.csproj" />
   <Project Path="Cyberia/Cyberia.csproj" />
-  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
-    <Property Name="RESX_NeutralResourcesLanguage" Value="en-US" />
-  </Properties>
 </Solution>

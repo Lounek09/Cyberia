@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Formatters;
@@ -41,7 +41,9 @@ public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var mapSubAreasData = DofusApi.Datacenter.MapsRepository.GetMapSubAreasDataByName(parameters[1], culture).ToList();
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var mapSubAreasData = dofusDatacenter.MapsRepository.GetMapSubAreasDataByName(parameters[1], culture).ToList();
             if (mapSubAreasData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();

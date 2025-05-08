@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -10,17 +10,19 @@ namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 public sealed class SpellAutocompleteProvider : IAutoCompleteProvider
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
 
-    public SpellAutocompleteProvider(CultureService cultureService)
+    public SpellAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
     }
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction); 
 
-        return DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(ctx.UserInput ?? string.Empty, culture)
+        return _dofusDatacenter.SpellsRepository.GetSpellsDataByName(ctx.UserInput ?? string.Empty, culture)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {

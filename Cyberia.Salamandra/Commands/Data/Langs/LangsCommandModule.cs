@@ -21,14 +21,16 @@ namespace Cyberia.Salamandra.Commands.Data.Langs;
 public sealed class LangsCommandModule
 {
     private readonly CachedChannelsService _cachedChannelsService;
+    private readonly CultureService _cultureService;
     private readonly EmbedBuilderService _embedBuilderService;
     private readonly LangsParser _langsParser;
     private readonly LangsWatcher _langsWatcher;
     private readonly LangsService _langsService;
 
-    public LangsCommandModule(CachedChannelsService cachedChannelsService, EmbedBuilderService embedBuilderService, LangsParser langsParser, LangsWatcher langsWatcher, LangsService langsService)
+    public LangsCommandModule(CachedChannelsService cachedChannelsService, CultureService cultureService, EmbedBuilderService embedBuilderService, LangsParser langsParser, LangsWatcher langsWatcher, LangsService langsService)
     {
         _cachedChannelsService = cachedChannelsService;
+        _cultureService = cultureService;
         _embedBuilderService = embedBuilderService;
         _langsParser = langsParser;
         _langsWatcher = langsWatcher;
@@ -139,9 +141,12 @@ public sealed class LangsCommandModule
         [Parameter("language"), Description("The language to display")]
         Language language = Language.fr)
     {
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+
         var repository = _langsWatcher.GetRepository(type, language);
 
-        await ctx.RespondAsync(await new LangsMessageBuilder(_embedBuilderService, repository).BuildAsync<DiscordInteractionResponseBuilder>());
+        await ctx.RespondAsync(await new LangsMessageBuilder(_embedBuilderService, repository, culture)
+            .BuildAsync<DiscordInteractionResponseBuilder>());
     }
 
     [Command("get"), Description("Returns the requested decompiled lang")]

@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Houses;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Commands.Dofus.House;
@@ -42,7 +42,9 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
             parameters.Length > 0 &&
             int.TryParse(parameters[0], out var mapId))
         {
-            var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById(mapId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var mapData = dofusDatacenter.MapsRepository.GetMapDataById(mapId);
             if (mapData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
@@ -85,7 +87,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     private IEnumerable<DiscordButtonComponent> ButtonsBuilder()
     {
-        var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(_mapData.X, _mapData.Y);
+        var mapsData = _mapData.GetMapsDataAtSameCoordinate();
         if (mapsData.Skip(1).Any())
         {
             yield return MapComponentsBuilder.PaginatedMapCoordinateButtonBuilder(_mapData);

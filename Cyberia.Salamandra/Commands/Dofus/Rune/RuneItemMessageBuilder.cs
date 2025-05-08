@@ -1,5 +1,4 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Managers;
 using Cyberia.Salamandra.Commands.Dofus.Item;
@@ -43,7 +42,9 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var itemId) &&
             int.TryParse(parameters[1], out var quantity))
         {
-            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var itemData = dofusDatacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();

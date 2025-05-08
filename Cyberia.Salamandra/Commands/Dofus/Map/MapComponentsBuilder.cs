@@ -1,5 +1,4 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Data.Maps;
+﻿using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Formatters;
 
 using DSharpPlus.Entities;
@@ -75,7 +74,7 @@ public static class MapComponentsBuilder
                 return new DiscordSelectComponentOption(
                     x.Name.ToString(culture).WithMaxLength(100),
                     PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapSubArea, x.Id.ToString()),
-                    DofusApi.Datacenter.MapsRepository.GetMapAreaNameById(x.MapAreaId, culture));
+                    x.GetMapAreaName(culture));
             });
 
         return new DiscordSelectComponent(
@@ -94,7 +93,7 @@ public static class MapComponentsBuilder
                 return new DiscordSelectComponentOption(
                     x.Name.ToString(culture).WithMaxLength(100),
                     PaginatedMapMessageBuilder.GetPacket(MapSearchCategory.MapArea, x.Id.ToString()),
-                    DofusApi.Datacenter.MapsRepository.GetMapSuperAreaNameById(x.MapSuperAreaId));
+                    x.GetMapSuperAreaName(culture));
             });
 
         return new DiscordSelectComponent(

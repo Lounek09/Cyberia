@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Formatters;
@@ -41,7 +41,9 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
             parameters.Length > 1 &&
             int.TryParse(parameters[0], out var selectedPageIndex))
         {
-            var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(parameters[1], culture).ToList();
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var spellsData = dofusDatacenter.SpellsRepository.GetSpellsDataByName(parameters[1], culture).ToList();
             if (spellsData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();

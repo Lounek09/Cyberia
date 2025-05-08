@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.Data.Audios;
+using Cyberia.Langzilla.Enums;
 
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Maps;
@@ -36,6 +38,16 @@ public sealed class MapSubAreaData : IDofusData<int>
     public MapAreaData? GetMapAreaData()
     {
         return DofusApi.Datacenter.MapsRepository.GetMapAreaDataById(MapAreaId);
+    }
+
+    public string GetMapAreaName(Language language)
+    {
+        return GetMapAreaName(language.ToCulture());
+    }
+
+    public string GetMapAreaName(CultureInfo? culture = null)
+    {
+        return DofusApi.Datacenter.MapsRepository.GetMapAreaNameById(MapAreaId, culture);
     }
 
     public IEnumerable<MapSubAreaData> GetNearMapSubAreasData()

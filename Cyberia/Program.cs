@@ -1,5 +1,5 @@
 ﻿using Cyberia.Amphibian.Extensions;
-using Cyberia.Api;
+using Cyberia.Api.Extensions;
 using Cyberia.Cytrusaurus;
 using Cyberia.Cytrusaurus.Extensions;
 using Cyberia.Database.Extentsions;
@@ -48,7 +48,7 @@ public static class Program
                 throw new InvalidOperationException("Invalid configuration");
             }
 
-            var defaultCulture = cyberiaConfig.ApiConfig.SupportedLanguages[0].ToCulture();
+            var defaultCulture = cyberiaConfig.DofusApiConfig.SupportedLanguages[0].ToCulture();
             CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
             CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
 
@@ -57,17 +57,18 @@ public static class Program
             services.AddLogging(x => x.ClearProviders().AddSerilog());
 
             services.AddDatabase(connectionString);
+            services.AddDofusApi(cyberiaConfig.DofusApiConfig);
             services.AddCytrusaurus();
             services.AddLangzilla();
-            DofusApi.Initialize(cyberiaConfig.ApiConfig); //TODO: Use DI
             services.AddSalamandra(cyberiaConfig.BotConfig);
             // Add this last to ensure all dependencies are registered in its internal service collection.
             // Since it's a WebApplication, it will create a new service collection internally.
-            services.AddAmphibian(cyberiaConfig.WebConfig);
+            services.AddAmphibian(cyberiaConfig.WebConfig, cyberiaConfig.DofusApiConfig.SupportedLanguages);
 
             var provider = services.BuildServiceProvider();
 
             await provider.CreateDatabaseTablesAsync();
+            provider.LoadDofusDatacenter(cyberiaConfig.DofusApiConfig.Type);
 
             if (cyberiaConfig.EnableSalamandra)
             {

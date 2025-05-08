@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Salamandra.Services;
 
@@ -11,17 +11,19 @@ namespace Cyberia.Salamandra.Commands.Dofus.Rune;
 public sealed class RuneItemAutocompleteProvider : IAutoCompleteProvider
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
 
-    public RuneItemAutocompleteProvider(CultureService cultureService)
+    public RuneItemAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
     }
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        return DofusApi.Datacenter.ItemsRepository.GetItemsDataByName(ctx.UserInput ?? string.Empty, culture)
+        return _dofusDatacenter.ItemsRepository.GetItemsDataByName(ctx.UserInput ?? string.Empty, culture)
             .Where(x =>
             {
                 var itemStatsData = x.GetItemStatsData();

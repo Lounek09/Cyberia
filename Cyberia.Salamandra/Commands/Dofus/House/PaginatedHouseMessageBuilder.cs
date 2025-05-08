@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Houses;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Formatters;
@@ -45,12 +45,14 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
             int.TryParse(parameters[0], out var selectedPageIndex) &&
             Enum.TryParse(parameters[1], true, out HouseSearchCategory searchCategory))
         {
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
             List<HouseData> housesData = [];
             var search = string.Empty;
             switch (searchCategory)
             {
                 case HouseSearchCategory.Name:
-                    housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(parameters[2], culture).ToList();
+                    housesData = dofusDatacenter.HousesRepository.GetHousesDataByName(parameters[2], culture).ToList();
                     search = parameters[2];
                     break;
                 case HouseSearchCategory.Coordinate:
@@ -58,21 +60,21 @@ public sealed class PaginatedHouseMessageBuilder : PaginatedMessageBuilder<House
                         int.TryParse(parameters[2], out var x) &&
                         int.TryParse(parameters[3], out var y))
                     {
-                        housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(x, y).ToList();
+                        housesData = dofusDatacenter.HousesRepository.GetHousesDataByCoordinate(x, y).ToList();
                         search = $"{parameters[2]}{PacketFormatter.Separator}{parameters[3]}";
                     }
                     break;
                 case HouseSearchCategory.MapSubArea:
                     if (int.TryParse(parameters[2], out var mapSubAreaId))
                     {
-                        housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByMapSubAreaId(mapSubAreaId).ToList();
+                        housesData = dofusDatacenter.HousesRepository.GetHousesDataByMapSubAreaId(mapSubAreaId).ToList();
                         search = parameters[2];
                     }
                     break;
                 case HouseSearchCategory.MapArea:
                     if (int.TryParse(parameters[2], out var mapAreaId))
                     {
-                        housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByMapAreaId(mapAreaId).ToList();
+                        housesData = dofusDatacenter.HousesRepository.GetHousesDataByMapAreaId(mapAreaId).ToList();
                         search = parameters[2];
                     }
                     break;

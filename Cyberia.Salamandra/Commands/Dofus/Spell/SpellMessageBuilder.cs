@@ -1,5 +1,4 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Incarnations;
 using Cyberia.Api.Data.Spells;
@@ -7,7 +6,6 @@ using Cyberia.Api.Extensions;
 using Cyberia.Salamandra.Commands.Dofus.Breed;
 using Cyberia.Salamandra.Commands.Dofus.Incarnation;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
@@ -53,7 +51,9 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var spellId) &&
             int.TryParse(parameters[1], out var selectedLevel))
         {
-            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(spellId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var spellData = dofusDatacenter.SpellsRepository.GetSpellDataById(spellId);
             if (spellData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
@@ -149,24 +149,24 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             }
             else
             {
-                embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), _spellLevelData.Effects, false, _culture);
+                _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), _spellLevelData.Effects, false, _culture);
 
                 var trapEffects = _spellLevelData.GetTrapEffects();
                 if (trapEffects.Count > 0)
                 {
-                    embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.TrapEffects.Title", _culture), trapEffects, false, _culture);
+                    _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.TrapEffects.Title", _culture), trapEffects, false, _culture);
                 }
 
                 var glyphEffects = _spellLevelData.GetGlyphEffects();
                 if (glyphEffects.Count > 0)
                 {
-                    embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.GlyphEffects.Title", _culture), glyphEffects, false, _culture);
+                    _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.GlyphEffects.Title", _culture), glyphEffects, false, _culture);
                 }
 
                 var criticalEffects = _spellLevelData.CriticalEffects;
                 if (criticalEffects.Count > 0)
                 {
-                    embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.CriticalEffects.Title", _culture), criticalEffects, false, _culture);
+                    _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.CriticalEffects.Title", _culture), criticalEffects, false, _culture);
                 }
             }
 

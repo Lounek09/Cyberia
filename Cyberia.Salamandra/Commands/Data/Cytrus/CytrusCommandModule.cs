@@ -22,12 +22,14 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class CytrusCommandModule
 {
+    private readonly CultureService _cultureService;
     private readonly CytrusService _cytrusService;
     private readonly CytrusWatcher _cytrusWatcher;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public CytrusCommandModule(CytrusService cytrusService, CytrusWatcher cytrusWatcher, EmbedBuilderService embedBuilderService)
+    public CytrusCommandModule(CultureService cultureService, CytrusService cytrusService, CytrusWatcher cytrusWatcher, EmbedBuilderService embedBuilderService)
     {
+        _cultureService = cultureService;
         _cytrusService = cytrusService;
         _cytrusWatcher = cytrusWatcher;
         _embedBuilderService = embedBuilderService;
@@ -49,7 +51,9 @@ public sealed class CytrusCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task ShowExecuteAsync(SlashCommandContext ctx)
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus")
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus", culture)
             .AddField("Name", _cytrusWatcher.Cytrus.Name.Capitalize(), true)
             .AddField("Version", _cytrusWatcher.Cytrus.Version.ToString(), true)
             .AddEmptyField(true);

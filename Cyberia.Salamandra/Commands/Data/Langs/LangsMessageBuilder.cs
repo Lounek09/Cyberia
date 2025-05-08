@@ -20,16 +20,18 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     public const string PacketHeader = "LANG";
     public const int PacketVersion = 1;
 
+    private readonly CultureInfo? _culture;
     private readonly EmbedBuilderService _embedBuilderService;
     private readonly LangsRepository _repository;
 
-    public LangsMessageBuilder(EmbedBuilderService embedBuilderService, LangsRepository repository)
+    public LangsMessageBuilder(CultureInfo? culture, EmbedBuilderService embedBuilderService, LangsRepository repository)
     {
+        _culture = culture;
         _embedBuilderService = embedBuilderService;
         _repository = repository;
     }
 
-    public static LangsMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? _, params ReadOnlySpan<string> parameters)
+    public static LangsMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
@@ -40,7 +42,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
             var langsWatcher = provider.GetRequiredService<LangsWatcher>();
             var repository = langsWatcher.GetRepository(langType, language);
 
-            return new LangsMessageBuilder(embedBuilderService, repository);
+            return new LangsMessageBuilder(embedBuilderService, repository, culture);
         }
 
         return null;
@@ -66,7 +68,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         var type = _repository.Type.ToStringFast();
         var language = _repository.Language.ToStringFast();
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Langs")
+        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Langs", _culture)
             .WithTitle($"Langs {type} in {language}");
 
         if (_repository.Langs.Count > 0)

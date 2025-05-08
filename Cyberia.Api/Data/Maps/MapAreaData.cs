@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Langzilla.Enums;
+
+using System.Globalization;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Maps;
 
@@ -22,6 +25,16 @@ public sealed class MapAreaData : IDofusData<int>
     public MapSuperAreaData? GetMapSuperAreaData()
     {
         return DofusApi.Datacenter.MapsRepository.GetMapSuperAreaDataById(MapSuperAreaId);
+    }
+
+    public string GetMapSuperAreaName(Language language)
+    {
+        return GetMapSuperAreaName(language.ToCulture());
+    }
+
+    public string GetMapSuperAreaName(CultureInfo? culture = null)
+    {
+        return DofusApi.Datacenter.MapsRepository.GetMapSuperAreaNameById(MapSuperAreaId, culture);
     }
 
     public IEnumerable<MapData> GetMapsData()

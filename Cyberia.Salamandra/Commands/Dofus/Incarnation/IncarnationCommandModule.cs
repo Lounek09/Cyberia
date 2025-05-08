@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
@@ -16,11 +17,15 @@ namespace Cyberia.Salamandra.Commands.Dofus.Incarnation;
 public sealed class IncarnationCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusApiConfig _dofusApiConfig;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public IncarnationCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public IncarnationCommandModule(CultureService cultureService, DofusApiConfig dofusApiConfig, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusApiConfig = dofusApiConfig;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -42,19 +47,19 @@ public sealed class IncarnationCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var incarnationData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationDataByItemId(id);
+            var incarnationData = _dofusDatacenter.IncarnationsRepository.GetIncarnationDataByItemId(id);
             if (incarnationData is not null)
             {
-                response = await new IncarnationMessageBuilder(_embedBuilderService, incarnationData, culture)
+                response = await new IncarnationMessageBuilder(_dofusApiConfig, _embedBuilderService, incarnationData, culture)
                     .BuildAsync<DiscordInteractionResponseBuilder>();
             }
         }
         else
         {
-            var incarnationsData = DofusApi.Datacenter.IncarnationsRepository.GetIncarnationsDataByItemName(value, culture).ToList();
+            var incarnationsData = _dofusDatacenter.IncarnationsRepository.GetIncarnationsDataByItemName(value, culture).ToList();
             if (incarnationsData.Count == 1)
             {
-                response = await new IncarnationMessageBuilder(_embedBuilderService, incarnationsData[0], culture)
+                response = await new IncarnationMessageBuilder(_dofusApiConfig, _embedBuilderService, incarnationsData[0], culture)
                     .BuildAsync<DiscordInteractionResponseBuilder>();
             }
             else if (incarnationsData.Count > 1)

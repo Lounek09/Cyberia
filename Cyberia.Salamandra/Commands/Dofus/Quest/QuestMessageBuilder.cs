@@ -1,8 +1,7 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Dialogs;
 using Cyberia.Api.Data.Quests;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
@@ -62,7 +61,9 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var questId) &&
             int.TryParse(parameters[1], out var selectedQuestStepIndex))
         {
-            var questData = DofusApi.Datacenter.QuestsRepository.GetQuestDataById(questId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var questData = dofusDatacenter.QuestsRepository.GetQuestDataById(questId);
             if (questData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
@@ -149,7 +150,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
             if (_questStepData.QuestObjectives.Count > 0)
             {
-                embed.AddQuestObjectivesFields(_questStepData.QuestObjectives, _culture);
+                _embedBuilderService.AddQuestObjectivesFields(embed, _questStepData.QuestObjectives, _culture);
             }
 
             if (_questStepData.HasRewards())

@@ -62,7 +62,7 @@ public sealed class CyberiaConfig
     /// <summary>
     /// Gets the configuration related to the API.
     /// </summary>
-    public required ApiConfig ApiConfig { get; init; }
+    public required DofusApiConfig DofusApiConfig { get; init; }
 
     /// <summary>
     /// Gets the configuration related to the bot.
@@ -84,7 +84,7 @@ public sealed class CyberiaConfig
 
     public bool Validate()
     {
-        if (ApiConfig.SupportedLanguages.Count == 0)
+        if (DofusApiConfig.SupportedLanguages.Count == 0)
         {
             Log.Error("You must specify at least one supported language in the API configuration.");
             return false;

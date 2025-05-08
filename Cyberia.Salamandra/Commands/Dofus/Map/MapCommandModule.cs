@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
@@ -23,11 +23,13 @@ namespace Cyberia.Salamandra.Commands.Dofus.Map;
 public sealed class MapCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public MapCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public MapCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -42,7 +44,7 @@ public sealed class MapCommandModule
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var mapData = DofusApi.Datacenter.MapsRepository.GetMapDataById(id);
+        var mapData = _dofusDatacenter.MapsRepository.GetMapDataById(id);
         if (mapData is null)
         {
             await ctx.RespondAsync(Translation.Get<BotTranslations>("Map.NotFound", culture));
@@ -69,7 +71,7 @@ public sealed class MapCommandModule
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
+        var mapsData = _dofusDatacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
 
         if (mapsData.Count == 0)
         {
@@ -105,7 +107,7 @@ public sealed class MapCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            mapSubAreaData = DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(id);
+            mapSubAreaData = _dofusDatacenter.MapsRepository.GetMapSubAreaDataById(id);
         }
 
         if (mapSubAreaData is null)
@@ -145,7 +147,7 @@ public sealed class MapCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            mapAreaData = DofusApi.Datacenter.MapsRepository.GetMapAreaDataById(id);
+            mapAreaData = _dofusDatacenter.MapsRepository.GetMapAreaDataById(id);
         }
 
         if (mapAreaData is null)

@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
@@ -16,11 +16,13 @@ namespace Cyberia.Salamandra.Commands.Dofus.Monster;
 public sealed class MonsterCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public MonsterCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public MonsterCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -42,7 +44,7 @@ public sealed class MonsterCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var monsterData = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(id);
+            var monsterData = _dofusDatacenter.MonstersRepository.GetMonsterDataById(id);
             if (monsterData is not null)
             {
                 response = await new MonsterMessageBuilder(_embedBuilderService, monsterData, 1, culture)
@@ -51,7 +53,7 @@ public sealed class MonsterCommandModule
         }
         else
         {
-            var monstersData = DofusApi.Datacenter.MonstersRepository.GetMonstersDataByName(value, culture).ToList();
+            var monstersData = _dofusDatacenter.MonstersRepository.GetMonstersDataByName(value, culture).ToList();
             if (monstersData.Count == 1)
             {
                 response = await new MonsterMessageBuilder(_embedBuilderService, monstersData[0], 1, culture)

@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api;
+using Cyberia.Api.Data;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -16,18 +17,22 @@ public sealed class EmojisService
     private static readonly SearchValues<char> s_authorizedChars = SearchValues.Create("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_");
 
     private readonly DiscordClient _discordClient;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly HttpClient _httpClient;
 
     /// <summary>
     /// Initializes a new instance of <see cref="EmojisService"/> class.
     /// </summary>
     /// <param name="discordClient">The discord client.</param>
-    public EmojisService(DiscordClient discordClient)
+    /// <param name="dofusApiConfig">The Dofus API configuration.</param>
+    /// <param name="dofusDatacenter">The Dofus datacenter.</param>
+    public EmojisService(DiscordClient discordClient, DofusApiConfig dofusApiConfig, DofusDatacenter dofusDatacenter)
     {
+        _dofusDatacenter = dofusDatacenter;
         _discordClient = discordClient;
         _httpClient = new()
         {
-            BaseAddress = new(DofusApi.Config.CdnUrl)
+            BaseAddress = new(dofusApiConfig.CdnUrl)
         };
     }
 
@@ -126,7 +131,7 @@ public sealed class EmojisService
         HashSet<string> checkedEmojiRoutes = [];
 
         // EffectAreas
-        foreach (var itemTypeData in DofusApi.Datacenter.ItemsRepository.ItemTypes.Values)
+        foreach (var itemTypeData in _dofusDatacenter.ItemsRepository.ItemTypes.Values)
         {
             var emojiName = $"effectarea_{itemTypeData.EffectArea.Id}";
             var emojiRoute = $"{baseRoute}/effectareas/{emojiName}.png";
@@ -134,7 +139,7 @@ public sealed class EmojisService
             await CreateEmojiAsync(emojiName, emojiRoute);
         }
 
-        foreach (var spellData in DofusApi.Datacenter.SpellsRepository.Spells.Values)
+        foreach (var spellData in _dofusDatacenter.SpellsRepository.Spells.Values)
         {
             foreach (var spellLevelData in spellData.GetSpellLevelsData())
             {
@@ -157,7 +162,7 @@ public sealed class EmojisService
         }
 
         // Effects
-        foreach (var effectData in DofusApi.Datacenter.EffectsRepository.Effects.Values)
+        foreach (var effectData in _dofusDatacenter.EffectsRepository.Effects.Values)
         {
             var emojiName = $"effect_{effectData.GfxId}";
             var emojiRoute = $"{baseRoute}/effects/{emojiName}.png";
@@ -166,7 +171,7 @@ public sealed class EmojisService
         }
 
         // Emotes
-        foreach (var emoteData in DofusApi.Datacenter.EmotesRepository.Emotes.Values)
+        foreach (var emoteData in _dofusDatacenter.EmotesRepository.Emotes.Values)
         {
             var emojiName = $"emote_{emoteData.Id}";
             var emojiRoute = $"{baseRoute}/emotes/{emojiName}.png";
@@ -175,7 +180,7 @@ public sealed class EmojisService
         }
 
         // Jobs
-        foreach (var jobData in DofusApi.Datacenter.JobsRepository.Jobs.Values)
+        foreach (var jobData in _dofusDatacenter.JobsRepository.Jobs.Values)
         {
             var emojiName = $"job_{jobData.Id}";
             var emojiRoute = $"{baseRoute}/jobs/{emojiName}.png";
@@ -184,7 +189,7 @@ public sealed class EmojisService
         }
 
         // Items
-        foreach (var runeData in DofusApi.Datacenter.RunesRepository.Runes.Values)
+        foreach (var runeData in _dofusDatacenter.RunesRepository.Runes.Values)
         {
             var baRuneItemData = runeData.GetBaRuneItemData();
             if (baRuneItemData is not null)
@@ -215,7 +220,7 @@ public sealed class EmojisService
         }
 
         // States
-        foreach (var stateData in DofusApi.Datacenter.StatesRepository.States.Values)
+        foreach (var stateData in _dofusDatacenter.StatesRepository.States.Values)
         {
             var emojiName = $"state_{stateData.Id}";
             var emojiRoute = $"{baseRoute}/states/{emojiName}.png";

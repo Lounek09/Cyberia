@@ -33,7 +33,7 @@ public sealed class HelpCommandModule
     public async Task ExecuteAsync(SlashCommandContext ctx)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
-        var locale = await _cultureService.GetDiscordLocaleAsync(ctx.Interaction) ?? string.Empty;
+        var locale = await _cultureService.GetLocaleAsync(ctx.Interaction) ?? string.Empty;
 
         StringBuilder descriptionBuilder = new();
 

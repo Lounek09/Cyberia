@@ -1,6 +1,7 @@
 ﻿@page
 @using Cyberia.Api
-@model IndexModel
+@inject DofusApiConfig DofusApiConfig
+@model SalamandraModel
 @{
 	ViewData["Title"] = Translation.Get<WebTranslations>("Page.Salamandra.Title");
 	ViewData["Favicon"] = "favicon-salamandra.png";
@@ -8,7 +9,7 @@
 }
 
 <div class="logo">
-	<img src="@DofusApi.Config.CdnUrl/images/web/salamandra-left.png">
+	<img src="@DofusApiConfig.CdnUrl/images/web/salamandra-left.png">
 </div>
 
 <div class="content">

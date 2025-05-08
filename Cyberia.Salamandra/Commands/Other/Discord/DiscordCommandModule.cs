@@ -12,13 +12,20 @@ namespace Cyberia.Salamandra.Commands.Other.Discord;
 
 public sealed class DiscordCommandModule
 {
+    private readonly DofusApiConfig _dofusApiConfig;
+
+    public DiscordCommandModule(DofusApiConfig dofusApiConfig)
+    {
+        _dofusApiConfig = dofusApiConfig;
+    }
+
     [Command(DiscordInteractionLocalizer.CommandName), Description(DiscordInteractionLocalizer.CommandDescription)]
     [InteractionInstallType(DiscordApplicationIntegrationType.GuildInstall, DiscordApplicationIntegrationType.UserInstall)]
     [InteractionAllowedContexts(DiscordInteractionContextType.Guild, DiscordInteractionContextType.PrivateChannel)]
     [InteractionLocalizer<DiscordInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public static async Task ExecuteAsync(SlashCommandContext ctx)
+    public async Task ExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.RespondAsync(DofusApi.Config.DiscordInviteUrl, true);
+        await ctx.RespondAsync(_dofusApiConfig.DiscordInviteUrl, true);
     }
 }

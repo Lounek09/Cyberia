@@ -1,5 +1,4 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.ItemStats;
@@ -7,7 +6,6 @@ using Cyberia.Api.Data.Spells;
 using Cyberia.Salamandra.Commands.Dofus.Item;
 using Cyberia.Salamandra.Commands.Dofus.Spell;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
@@ -50,7 +48,9 @@ public sealed class GladiatroolBreedMessageBuilder : ICustomMessageBuilder
             parameters.Length > 0 &&
             int.TryParse(parameters[0], out var breedId))
         {
-            var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var breedData = dofusDatacenter.BreedsRepository.GetBreedDataById(breedId);
             if (breedData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
@@ -97,12 +97,13 @@ public sealed class GladiatroolBreedMessageBuilder : ICustomMessageBuilder
 
             if (_weaponItemStatsData is not null)
             {
-                embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), _weaponItemStatsData.Effects, true, _culture);
+                _embedBuilderService.AddEffectFields(
+                    embed, Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), _weaponItemStatsData.Effects, true, _culture);
             }
 
             if (_weaponItemData.WeaponData is not null)
             {
-                embed.AddWeaponInfosField(_weaponItemData.WeaponData, _weaponItemData.TwoHanded, _weaponItemTypeData, _culture);
+                _embedBuilderService.AddWeaponInfosField(embed, _weaponItemData.WeaponData, _weaponItemData.TwoHanded, _weaponItemTypeData, _culture);
             }
         }
 

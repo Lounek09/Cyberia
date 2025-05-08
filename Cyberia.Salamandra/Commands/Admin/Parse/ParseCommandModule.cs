@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api.Factories;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
@@ -35,12 +34,12 @@ public sealed class ParseCommandModule
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var effects = EffectFactory.CreateMany(value);
-
         if (effects.Count > 0)
         {
-            var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
-                .WithTitle("Item effects parser")
-                .AddEffectFields("Effects :", effects, true, culture);
+            var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
+                .WithTitle("Item effects parser");
+
+            _embedBuilderService.AddEffectFields(embed, "Effects :", effects, true, culture);
 
             await ctx.RespondAsync(embed);
             return;
@@ -58,12 +57,12 @@ public sealed class ParseCommandModule
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var criteria = CriterionFactory.CreateMany(value);
-
         if (criteria.Count > 0)
         {
-            var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools")
-                .WithTitle("Criteria parser")
-                .AddCriteriaFields(criteria, culture);
+            var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
+                .WithTitle("Criteria parser");
+
+            _embedBuilderService.AddCriteriaFields(embed, criteria, culture);
 
             await ctx.RespondAsync(embed);
             return;

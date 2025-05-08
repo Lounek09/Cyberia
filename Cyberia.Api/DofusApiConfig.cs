@@ -5,7 +5,7 @@ namespace Cyberia.Api;
 /// <summary>
 /// Represents the configuration settings for the Cyberia API.
 /// </summary>
-public sealed class ApiConfig
+public sealed class DofusApiConfig
 {
     /// <summary>
     /// Gets the URL of the <a href="https://github.com/Lounek09/Cyberia.Cdn">CDN</a>.
@@ -38,9 +38,9 @@ public sealed class ApiConfig
     public string GitRepositoryUrl { get; init; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ApiConfig"/> class.
+    /// Initializes a new instance of the <see cref="DofusApiConfig"/> class.
     /// </summary>
-    public ApiConfig()
+    public DofusApiConfig()
     {
         CdnUrl = "https://raw.githubusercontent.com/Lounek09/Cyberia.Cdn/refs/heads/main";
         DiscordInviteUrl = string.Empty;

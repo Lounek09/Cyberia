@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
@@ -16,11 +16,13 @@ namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 public sealed class CraftCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public CraftCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public CraftCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -46,7 +48,7 @@ public sealed class CraftCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var craftData = DofusApi.Datacenter.CraftsRepository.GetCraftDataById(id);
+            var craftData = _dofusDatacenter.CraftsRepository.GetCraftDataById(id);
             if (craftData is not null)
             {
                 response = await new CraftMessageBuilder(_embedBuilderService, craftData, quantity, false, culture)
@@ -55,7 +57,7 @@ public sealed class CraftCommandModule
         }
         else
         {
-            var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(value, culture).ToList();
+            var craftsData = _dofusDatacenter.CraftsRepository.GetCraftsDataByItemName(value, culture).ToList();
             if (craftsData.Count == 1)
             {
                 response = await new CraftMessageBuilder(_embedBuilderService, craftsData[0], quantity, false, culture)

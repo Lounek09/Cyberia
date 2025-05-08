@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Formatters;
@@ -45,7 +45,9 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
             int.TryParse(parameters[0], out var selectedPageIndex) &&
             int.TryParse(parameters[2], out var quantity))
         {
-            var craftsData = DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(parameters[1], culture).ToList();
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var craftsData = dofusDatacenter.CraftsRepository.GetCraftsDataByItemName(parameters[1], culture).ToList();
             if (craftsData.Count > 0)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();

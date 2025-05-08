@@ -9,9 +9,16 @@ namespace Cyberia.Salamandra.Commands.Other.Language;
 
 public sealed class LanguageChoiceProvider : IChoiceProvider
 {
+    private readonly DofusApiConfig _dofusApiConfig;
+
+    public LanguageChoiceProvider(DofusApiConfig dofusApiConfig)
+    {
+        _dofusApiConfig = dofusApiConfig;
+    }
+
     public ValueTask<IEnumerable<DiscordApplicationCommandOptionChoice>> ProvideAsync(CommandParameter parameter)
     {
-        var choices = DofusApi.Config.SupportedLanguages.Select(x =>
+        var choices = _dofusApiConfig.SupportedLanguages.Select(x =>
         {
             var language = x.ToStringFast();
             return new DiscordApplicationCommandOptionChoice(language, language);

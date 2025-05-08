@@ -1,5 +1,4 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.Spells;
@@ -47,7 +46,9 @@ public sealed class BreedMessageBuilder : ICustomMessageBuilder
             parameters.Length > 0 &&
             int.TryParse(parameters[0], out var breedId))
         {
-            var breedData = DofusApi.Datacenter.BreedsRepository.GetBreedDataById(breedId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var breedData = dofusDatacenter.BreedsRepository.GetBreedDataById(breedId);
             if (breedData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();

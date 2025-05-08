@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands.Processors.SlashCommands;
@@ -10,21 +10,23 @@ namespace Cyberia.Salamandra.Commands.Dofus.Craft;
 public sealed class CraftAutocompleteProvider : IAutoCompleteProvider
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
 
-    public CraftAutocompleteProvider(CultureService cultureService)
+    public CraftAutocompleteProvider(CultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;        
     }
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        return DofusApi.Datacenter.CraftsRepository.GetCraftsDataByItemName(ctx.UserInput ?? string.Empty, culture)
+        return _dofusDatacenter.CraftsRepository.GetCraftsDataByItemName(ctx.UserInput ?? string.Empty, culture)
            .Take(Constant.MaxChoice)
            .Select(x =>
            {
-               var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id, culture);
+               var itemName = _dofusDatacenter.ItemsRepository.GetItemNameById(x.Id, culture);
                return new DiscordAutoCompleteChoice($"{itemName.WithMaxLength(90)} ({x.Id})", x.Id.ToString());
            });
     }

@@ -1,5 +1,4 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Breeds;
 using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Data.Incarnations;
@@ -15,7 +14,6 @@ using Cyberia.Salamandra.Commands.Dofus.Incarnation;
 using Cyberia.Salamandra.Commands.Dofus.ItemSet;
 using Cyberia.Salamandra.Commands.Dofus.Rune;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
 
@@ -68,7 +66,9 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var itemId) &&
             int.TryParse(parameters[1], out var quantity))
         {
-            var itemData = DofusApi.Datacenter.ItemsRepository.GetItemDataById(itemId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var itemData = dofusDatacenter.ItemsRepository.GetItemDataById(itemId);
             if (itemData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();
@@ -107,7 +107,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
             .AddField(Translation.Get<BotTranslations>("Embed.Field.Level.Title", _culture), _itemData.Level.ToString(), true)
             .AddField(
                 Translation.Get<BotTranslations>("Embed.Field.ItemType.Title", _culture),
-                DofusApi.Datacenter.ItemsRepository.GetItemTypeNameById(_itemData.ItemTypeId, _culture),
+                _itemData.GetItemTypeName(_culture),
                 true);
 
         var description = _itemData.Description.ToString(_culture);
@@ -122,26 +122,26 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
         }
 
         var effects = _itemStatsData?.Effects ?? Enumerable.Empty<IEffect>();
-        embed.AddEffectFields(Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
+        _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), effects, true, _culture);
 
         if (_itemData.Criteria.Count > 0)
         {
-            embed.AddCriteriaFields(_itemData.Criteria, _culture);
+            _embedBuilderService.AddCriteriaFields(embed,_itemData.Criteria, _culture);
         }
 
         if (_itemData.WeaponData is not null)
         {
-            embed.AddWeaponInfosField(_itemData.WeaponData, _itemData.TwoHanded, _itemTypeData, _culture);
+            _embedBuilderService.AddWeaponInfosField(embed, _itemData.WeaponData, _itemData.TwoHanded, _itemTypeData, _culture);
         }
 
         if (_petData is not null)
         {
-            embed.AddPetField(_petData, _culture);
+            _embedBuilderService.AddPetField(embed, _petData, _culture);
         }
 
         if (_craftData is not null)
         {
-            embed.AddCraftField(_craftData, 1, _culture);
+            _embedBuilderService.AddCraftField(embed, _craftData, 1, _culture);
         }
 
         StringBuilder miscellaneousBuilder = new();

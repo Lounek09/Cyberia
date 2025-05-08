@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus.Commands;
@@ -16,11 +16,13 @@ namespace Cyberia.Salamandra.Commands.Dofus.Spell;
 public sealed class SpellCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public SpellCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public SpellCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -42,7 +44,7 @@ public sealed class SpellCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var spellData = DofusApi.Datacenter.SpellsRepository.GetSpellDataById(id);
+            var spellData = _dofusDatacenter.SpellsRepository.GetSpellDataById(id);
             if (spellData is not null)
             {
                 response = await new SpellMessageBuilder(_embedBuilderService, spellData, spellData.GetMaxLevelNumber(), culture)
@@ -51,7 +53,7 @@ public sealed class SpellCommandModule
         }
         else
         {
-            var spellsData = DofusApi.Datacenter.SpellsRepository.GetSpellsDataByName(value, culture).ToList();
+            var spellsData = _dofusDatacenter.SpellsRepository.GetSpellsDataByName(value, culture).ToList();
             if (spellsData.Count == 1)
             {
                 response = await new SpellMessageBuilder(_embedBuilderService, spellsData[0], spellsData[0].GetMaxLevelNumber(), culture)

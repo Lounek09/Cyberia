@@ -66,6 +66,11 @@ public sealed class MapData : IDofusData<int>
         return await CdnManager.GetImagePathAsync("maps", Id, "jpg");
     }
 
+    public IEnumerable<MapData> GetMapsDataAtSameCoordinate()
+    {
+        return DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(X, Y);
+    }
+
     public MapSubAreaData? GetMapSubAreaData()
     {
         return DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(MapSubAreaId);

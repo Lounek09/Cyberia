@@ -124,11 +124,11 @@ Below are the detailed descriptions of each variable of the [configuration](/Cyb
 | `CheckBetaLangInterval`     | Interval between each Beta Lang check             | Timespan |
 | `EnableCheckTemporisLang`   | Activate the automatic check of the Temporis Lang | Boolean  |
 | `CheckTemporisLangInterval` | Interval between each Temporis Lang check         | Timespan |
-| `ApiConfig`                 | The configuration related to the API              | [ApiConfig](#api-configuration) |
+| `DofusApiConfig`                 | The configuration related to the API         | [DofusApiConfig](#dofus-api-configuration) |
 | `BotConfig`                 | The configuration related to the bot              | [BotConfig](#bot-configuration) |
 | `WebConfig`                 | The configuration related to the website          | [WebConfig](#web-configuration) |
 
-### API Configuration
+### Dofus API Configuration
 
 | Variable            | Description                                                                                                    | Type   |
 | :------------------- | :------------------------------------------------------------------------------------------------------------ | :----- |

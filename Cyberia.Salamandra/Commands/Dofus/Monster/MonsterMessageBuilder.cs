@@ -1,5 +1,4 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Data;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Alignments;
 using Cyberia.Api.Data.Monsters;
 using Cyberia.Salamandra.Enums;
@@ -49,7 +48,9 @@ public sealed class MonsterMessageBuilder : ICustomMessageBuilder
             int.TryParse(parameters[0], out var monsterId) &&
             int.TryParse(parameters[1], out var selectedGrade))
         {
-            var monsterData = DofusApi.Datacenter.MonstersRepository.GetMonsterDataById(monsterId);
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
+            var monsterData = dofusDatacenter.MonstersRepository.GetMonsterDataById(monsterId);
             if (monsterData is not null)
             {
                 var embedBuilderService = provider.GetRequiredService<EmbedBuilderService>();

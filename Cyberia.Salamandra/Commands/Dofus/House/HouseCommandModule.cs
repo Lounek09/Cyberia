@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Commands.Dofus.Map;
 using Cyberia.Salamandra.Formatters;
@@ -24,11 +24,13 @@ namespace Cyberia.Salamandra.Commands.Dofus.House;
 public sealed class HouseCommandModule
 {
     private readonly CultureService _cultureService;
+    private readonly DofusDatacenter _dofusDatacenter;
     private readonly EmbedBuilderService _embedBuilderService;
 
-    public HouseCommandModule(CultureService cultureService, EmbedBuilderService embedBuilderService)
+    public HouseCommandModule(CultureService cultureService, DofusDatacenter dofusDatacenter, EmbedBuilderService embedBuilderService)
     {
         _cultureService = cultureService;
+        _dofusDatacenter = dofusDatacenter;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -48,7 +50,7 @@ public sealed class HouseCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            var houseData = DofusApi.Datacenter.HousesRepository.GetHouseDataById(id);
+            var houseData = _dofusDatacenter.HousesRepository.GetHouseDataById(id);
             if (houseData is not null)
             {
                 response = await new HouseMessageBuilder(_embedBuilderService, houseData, culture)
@@ -57,7 +59,7 @@ public sealed class HouseCommandModule
         }
         else
         {
-            var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByName(value, culture).ToList();
+            var housesData = _dofusDatacenter.HousesRepository.GetHousesDataByName(value, culture).ToList();
             if (housesData.Count == 1)
             {
                 response = await new HouseMessageBuilder(_embedBuilderService, housesData[0], culture)
@@ -90,7 +92,7 @@ public sealed class HouseCommandModule
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByCoordinate(x, y).ToList();
+        var housesData = _dofusDatacenter.HousesRepository.GetHousesDataByCoordinate(x, y).ToList();
 
         if (housesData.Count == 0)
         {
@@ -125,7 +127,7 @@ public sealed class HouseCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            mapSubAreaData = DofusApi.Datacenter.MapsRepository.GetMapSubAreaDataById(id);
+            mapSubAreaData = _dofusDatacenter.MapsRepository.GetMapSubAreaDataById(id);
         }
 
         if (mapSubAreaData is null)
@@ -134,7 +136,7 @@ public sealed class HouseCommandModule
         }
         else
         {
-            var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByMapSubAreaId(id).ToList();
+            var housesData = _dofusDatacenter.HousesRepository.GetHousesDataByMapSubAreaId(id).ToList();
 
             if (housesData.Count == 0)
             {
@@ -170,7 +172,7 @@ public sealed class HouseCommandModule
 
         if (int.TryParse(value, out var id))
         {
-            mapAreaData = DofusApi.Datacenter.MapsRepository.GetMapAreaDataById(id);
+            mapAreaData = _dofusDatacenter.MapsRepository.GetMapAreaDataById(id);
         }
 
         if (mapAreaData is null)
@@ -179,7 +181,7 @@ public sealed class HouseCommandModule
         }
         else
         {
-            var housesData = DofusApi.Datacenter.HousesRepository.GetHousesDataByMapAreaId(id).ToList();
+            var housesData = _dofusDatacenter.HousesRepository.GetHousesDataByMapAreaId(id).ToList();
 
             if (housesData.Count == 0)
             {

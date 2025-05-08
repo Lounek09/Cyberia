@@ -1,4 +1,5 @@
 ﻿@using Cyberia.Api
+@inject DofusApiConfig DofusApiConfig
 
 <!DOCTYPE html>
 
@@ -43,16 +44,16 @@
 	<footer>
 		<div class="left">
 			<p><span class="icon-code"></span>&nbsp;@(Translation.Get<WebTranslations>("Layout.DevelopedBy")) Lounek</p>
-			<p><a href="@($"{Context.Request.Scheme}://{Context.Request.Host}")">@Context.Request.Host</a>&nbsp;@(Translation.Get<WebTranslations>("Layout.NotAffiliated"))&nbsp;<a href="https://www.ankama.com">Ankama Games</a></p>
+			<p><a href="@($"{Context.Request.Scheme}://{Context.Request.Host}")">@Context.Request.Host</a>&nbsp;@(Translation.Get<WebTranslations>("Layout.NotAffiliated"))&nbsp;<a href="https://www.ankama.com">Ankama</a></p>
 		</div>
 		<div class="right">
-			@if (!string.IsNullOrEmpty(DofusApi.Config.DiscordInviteUrl))
+			@if (!string.IsNullOrEmpty(DofusApiConfig.DiscordInviteUrl))
 			{
-				<a href="@DofusApi.Config.DiscordInviteUrl"><span class="icon-discord"></span></a>
+				<a href="@DofusApiConfig.DiscordInviteUrl"><span class="icon-discord"></span></a>
 			}
-			@if (!string.IsNullOrEmpty(DofusApi.Config.GitRepositoryUrl))
+			@if (!string.IsNullOrEmpty(DofusApiConfig.GitRepositoryUrl))
 			{
-				<a href="@DofusApi.Config.GitRepositoryUrl"><span class="icon-git"></span></a>
+				<a href="@DofusApiConfig.GitRepositoryUrl"><span class="icon-git"></span></a>
 			}
 		</div>
 	</footer>

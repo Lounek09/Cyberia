@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Data;
 using Cyberia.Api.Data.Maps;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Formatters;
@@ -45,6 +45,8 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
             int.TryParse(parameters[0], out var selectedPageIndex) &&
             Enum.TryParse(parameters[1], true, out MapSearchCategory searchCategory))
         {
+            var dofusDatacenter = provider.GetRequiredService<DofusDatacenter>();
+
             List<MapData> mapsData = [];
             var search = string.Empty;
             switch (searchCategory)
@@ -54,21 +56,21 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
                         int.TryParse(parameters[2], out var x) &&
                         int.TryParse(parameters[3], out var y))
                     {
-                        mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
+                        mapsData = dofusDatacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
                         search = $"{parameters[2]}{PacketFormatter.Separator}{parameters[3]}";
                     }
                     break;
                 case MapSearchCategory.MapSubArea:
                     if (int.TryParse(parameters[2], out var mapSubAreaId))
                     {
-                        mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByMapSubAreaId(mapSubAreaId).ToList();
+                        mapsData = dofusDatacenter.MapsRepository.GetMapsDataByMapSubAreaId(mapSubAreaId).ToList();
                         search = parameters[2];
                     }
                     break;
                 case MapSearchCategory.MapArea:
                     if (int.TryParse(parameters[2], out var mapAreaId))
                     {
-                        mapsData = DofusApi.Datacenter.MapsRepository.GetMapsDataByMapAreaId(mapAreaId).ToList();
+                        mapsData = dofusDatacenter.MapsRepository.GetMapsDataByMapAreaId(mapAreaId).ToList();
                         search = parameters[2];
                     }
                     break;

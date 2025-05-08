@@ -1,5 +1,4 @@
-﻿using Cyberia.Api;
-using Cyberia.Api.Data.Crafts;
+﻿using Cyberia.Api.Data.Crafts;
 using Cyberia.Salamandra.Formatters;
 
 using DSharpPlus.Entities;
@@ -25,9 +24,8 @@ public static class CraftComponentsBuilder
             .Take(Constant.MaxSelectOption)
             .Select(x =>
             {
-                var itemName = DofusApi.Datacenter.ItemsRepository.GetItemNameById(x.Id, culture);
                 return new DiscordSelectComponentOption(
-                    itemName.WithMaxLength(100),
+                    x.GetItemName(culture).WithMaxLength(100),
                     CraftMessageBuilder.GetPacket(x.Id, quantity),
                     x.Id.ToString());
             });

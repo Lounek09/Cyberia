@@ -1,6 +1,5 @@
 ﻿using Cyberia.Amphibian.Conventions;
 using Cyberia.Amphibian.Middlewares;
-using Cyberia.Api;
 using Cyberia.Langzilla.Enums;
 
 using Microsoft.AspNetCore.Localization;
@@ -18,8 +17,9 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="config">The web configuration.</param>
+    /// <param name="supportedLanguages">The supported languages.</param>
     /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddAmphibian(this IServiceCollection services, WebConfig config)
+    public static IServiceCollection AddAmphibian(this IServiceCollection services, WebConfig config, IReadOnlyList<Language> supportedLanguages)
     {
         Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", config.Environment);
 
@@ -46,7 +46,7 @@ public static class ServiceCollectionExtensions
 
             builder.Services.Configure<RequestLocalizationOptions>(options =>
             {
-                var supportedCultures = DofusApi.Config.SupportedLanguages.Select(lang => lang.ToStringFast()).ToArray();
+                var supportedCultures = supportedLanguages.Select(lang => lang.ToStringFast()).ToArray();
 
                 options.SetDefaultCulture(supportedCultures[0]);
                 options.AddSupportedCultures(supportedCultures);
