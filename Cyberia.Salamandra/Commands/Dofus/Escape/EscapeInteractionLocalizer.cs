@@ -13,7 +13,7 @@ public sealed class EscapeInteractionLocalizer : InteractionLocalizer
     public const string Agility_ParameterDescription = "Your agility.";
 
     public const string EnemyAgility_ParameterName = "enemy_agility";
-    public const string EnemyAgility_ParameterDescription = "Enemy agility at your contact.";
+    public const string EnemyAgility_ParameterDescription = "Enemy's agility at your contact.";
 
     protected override IReadOnlyDictionary<DiscordLocale, string> InternalTranslate(string fullSymbolName)
     {
@@ -73,7 +73,7 @@ public sealed class EscapeInteractionLocalizer : InteractionLocalizer
             {
                 { DiscordLocale.en_US, EnemyAgility_ParameterDescription },
                 { DiscordLocale.en_GB, EnemyAgility_ParameterDescription },
-                { DiscordLocale.fr, "Agilité de l'ennemi à votre contact." }
+                { DiscordLocale.fr, "L'agilité de l'ennemi à votre contact." }
             };
         }
 

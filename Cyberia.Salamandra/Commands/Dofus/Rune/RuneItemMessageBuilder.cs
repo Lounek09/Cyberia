@@ -61,7 +61,8 @@ public sealed class RuneItemMessageBuilder : ICustomMessageBuilder
         return PacketFormatter.Action(PacketHeader, PacketVersion, itemId, quantity);
     }
 
-    public async Task<T> BuildAsync<T>() where T : IDiscordMessageBuilder, new()
+    public async Task<T> BuildAsync<T>()
+        where T : IDiscordMessageBuilder, new()
     {
         var message = new T()
             .AddEmbed(await EmbedBuilder())

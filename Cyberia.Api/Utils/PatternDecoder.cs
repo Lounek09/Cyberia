@@ -1,4 +1,4 @@
-﻿namespace Cyberia.Api;
+﻿namespace Cyberia.Api.Utils;
 
 /// <summary>
 /// Provides methods for encoding and decoding strings.

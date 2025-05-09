@@ -275,7 +275,7 @@
     <value>Critical hit calculator</value>
   </data>
   <data name="Embed.Crit.Description" xml:space="preserve">
-    <value>You will be #1 at #2 with #3 crit and #4 agi.
+    <value>You will be 1/#1 at 1/#2 with #3 crit and #4 agi.
 To reach 1/2, you will need at least #5 agi.</value>
   </data>
   <data name="Embed.Escape.Author" xml:space="preserve">

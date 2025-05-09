@@ -9,11 +9,11 @@ public sealed class CritInteractionLocalizer : InteractionLocalizer
     public const string CommandName = "crit";
     public const string CommandDescription = "Allows you to calculate your critical rate.";
 
-    public const string Number_ParameterName = "number";
-    public const string Number_ParameterDescription = "Your number of critical hit.";
+    public const string BaseRate_ParameterName = "base_rate";
+    public const string BaseRate_ParameterDescription = "Base critical hit rate of the spell or weapon.";
 
-    public const string TargetRate_ParameterName = "rate";
-    public const string TargetRate_ParameterDescription = "Target critical rate.";
+    public const string CriticalHitBonus_ParameterName = "critical_hit";
+    public const string CriticalHitBonus_ParameterDescription = "Your number of critical hits.";
 
     public const string Agility_ParameterName = "agility";
     public const string Agility_ParameterDescription = "Your agility.";
@@ -40,43 +40,43 @@ public sealed class CritInteractionLocalizer : InteractionLocalizer
             };
         }
 
-        if (fullSymbolName.Equals(CommandName + c_parameters + Number_ParameterName + c_name))
+        if (fullSymbolName.Equals(CommandName + c_parameters + BaseRate_ParameterName + c_name))
         {
             return new Dictionary<DiscordLocale, string>
             {
-                { DiscordLocale.en_US, Number_ParameterName },
-                { DiscordLocale.en_GB, Number_ParameterName },
-                { DiscordLocale.fr, "nombre" }
+                { DiscordLocale.en_US, BaseRate_ParameterName },
+                { DiscordLocale.en_GB, BaseRate_ParameterName },
+                { DiscordLocale.fr, "taux_de_base" }
             };
         }
 
-        if (fullSymbolName.Equals(CommandName + c_parameters + Number_ParameterName + c_description))
+        if (fullSymbolName.Equals(CommandName + c_parameters + BaseRate_ParameterName + c_description))
         {
             return new Dictionary<DiscordLocale, string>
             {
-                { DiscordLocale.en_US, Number_ParameterDescription },
-                { DiscordLocale.en_GB, Number_ParameterDescription },
-                { DiscordLocale.fr, "Votre nombre de coup critique." }
+                { DiscordLocale.en_US, BaseRate_ParameterDescription },
+                { DiscordLocale.en_GB, BaseRate_ParameterDescription },
+                { DiscordLocale.fr, "Taux de coup critique de base du sort ou de l'arme." }
             };
         }
 
-        if (fullSymbolName.Equals(CommandName + c_parameters + TargetRate_ParameterName + c_name))
+        if (fullSymbolName.Equals(CommandName + c_parameters + CriticalHitBonus_ParameterName + c_name))
         {
             return new Dictionary<DiscordLocale, string>
             {
-                { DiscordLocale.en_US, TargetRate_ParameterName },
-                { DiscordLocale.en_GB, TargetRate_ParameterName },
-                { DiscordLocale.fr, "taux" }
+                { DiscordLocale.en_US, CriticalHitBonus_ParameterName },
+                { DiscordLocale.en_GB, CriticalHitBonus_ParameterName },
+                { DiscordLocale.fr, "coup_critique" }
             };
         }
 
-        if (fullSymbolName.Equals(CommandName + c_parameters + TargetRate_ParameterName + c_description))
+        if (fullSymbolName.Equals(CommandName + c_parameters + CriticalHitBonus_ParameterName + c_description))
         {
             return new Dictionary<DiscordLocale, string>
             {
-                { DiscordLocale.en_US, TargetRate_ParameterDescription },
-                { DiscordLocale.en_GB, TargetRate_ParameterDescription },
-                { DiscordLocale.fr, "Taux de coup critique cible." }
+                { DiscordLocale.en_US, CriticalHitBonus_ParameterDescription },
+                { DiscordLocale.en_GB, CriticalHitBonus_ParameterDescription },
+                { DiscordLocale.fr, "Votre nombre de coups critiques." }
             };
         }
 

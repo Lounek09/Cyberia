@@ -15,11 +15,11 @@ public static class ImageUrlProvider
     /// <summary>
     /// Gets the verified image path for a resource by its directory and ID.
     /// </summary>
-    /// <param name="directory">The directory of the resource</param>
-    /// <param name="id">The ID of the resource</param>
-    /// <param name="size">The image size</param>
-    /// <param name="ext">The image file extension (default: png)</param>
-    /// <returns>A valid image URL, or the fallback URL if not found</returns>
+    /// <param name="directory">The directory of the resource.</param>
+    /// <param name="id">The ID of the resource.</param>
+    /// <param name="size">The image size.</param>
+    /// <param name="ext">The image file extension (default: png).</param>
+    /// <returns>A valid image URL, or the fallback URL if not found.</returns>
     public static async Task<string> GetImagePathAsync(string directory, int id, CdnImageSize size, string ext = "png")
     {
         return await GetImagePathAsync(directory, id.ToString(), size, ext);
@@ -28,11 +28,11 @@ public static class ImageUrlProvider
     /// <summary>
     /// Gets the verified image path for a resource by its directory and name.
     /// </summary>
-    /// <param name="directory">The directory of the resource</param>
-    /// <param name="name">The name of the resource</param>
-    /// <param name="size">The image size</param>
-    /// <param name="ext">The image file extension (default: png)</param>
-    /// <returns>A valid image URL, or the fallback URL if not found</returns>
+    /// <param name="directory">The directory of the resource.</param>
+    /// <param name="name">The name of the resource.</param>
+    /// <param name="size">The image size.</param>
+    /// <param name="ext">The image file extension (default: png).</param>
+    /// <returns>A valid image URL, or the fallback URL if not found.</returns>
     public static async Task<string> GetImagePathAsync(string directory, string name, CdnImageSize size, string ext = "png")
     {
         var url = $"{DofusApi.Config.CdnUrl}/images/dofus/{directory}/{(int)size}/{name}.{ext}";
@@ -67,8 +67,8 @@ public static class ImageUrlProvider
     /// <summary>
     /// Checks if a URL exists with caching.
     /// </summary>
-    /// <param name="url">The URL to check</param>
-    /// <returns><see langword="true"/> if the URL exists; otherwise, <see langword="false"/></returns>
+    /// <param name="url">The URL to check.</param>
+    /// <returns><see langword="true"/> if the URL exists; otherwise, <see langword="false"/>.</returns>
     private static async Task<bool> ExistsAsync(string url)
     {
         var now = DateTime.Now;

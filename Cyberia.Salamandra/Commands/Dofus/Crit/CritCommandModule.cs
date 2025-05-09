@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Utils;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Services;
 
@@ -31,14 +31,14 @@ public sealed class CritCommandModule
     [InteractionLocalizer<CritInteractionLocalizer>]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task ExecuteAsync(SlashCommandContext ctx,
-        [Parameter(CritInteractionLocalizer.Number_ParameterName), Description(CritInteractionLocalizer.Number_ParameterDescription)]
+        [Parameter(CritInteractionLocalizer.BaseRate_ParameterName), Description(CritInteractionLocalizer.BaseRate_ParameterDescription)]
         [InteractionLocalizer<CritInteractionLocalizer>]
         [MinMaxValue(1, 999)]
-        int number,
-        [Parameter(CritInteractionLocalizer.TargetRate_ParameterName), Description(CritInteractionLocalizer.TargetRate_ParameterDescription)]
+        int baseRate,
+        [Parameter(CritInteractionLocalizer.CriticalHitBonus_ParameterName), Description(CritInteractionLocalizer.CriticalHitBonus_ParameterDescription)]
         [InteractionLocalizer<CritInteractionLocalizer>]
         [MinMaxValue(1, 999)]
-        int targetRate,
+        int criticalHitBonus,
         [Parameter(CritInteractionLocalizer.Agility_ParameterName) , Description(CritInteractionLocalizer.Agility_ParameterDescription)]
         [InteractionLocalizer<CritInteractionLocalizer>]
         [MinMaxValue(1, 99999)]
@@ -46,15 +46,15 @@ public sealed class CritCommandModule
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var rate = Formulas.GetCriticalRate(number, targetRate, agility);
-        var agilityNeeded = Formulas.GetAgilityForHalfCriticalRate(number, targetRate);
+        var rate = Formulas.GetCriticalHitRate(baseRate, criticalHitBonus, agility);
+        var agilityNeeded = Formulas.GetAgilityForOptimalCriticalHitRate(baseRate, criticalHitBonus);
 
         var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Crit.Author", culture), culture)
             .WithDescription(Translation.Format(
                 Translation.Get<BotTranslations>("Embed.Crit.Description", culture),
-                Formatter.Bold($"1/{rate}"),
-                Formatter.Bold($"1/{targetRate}"),
-                Formatter.Bold(number.ToString()),
+                Formatter.Bold(rate.ToString()),
+                Formatter.Bold(baseRate.ToString()),
+                Formatter.Bold(criticalHitBonus.ToString()),
                 Formatter.Bold(agility.ToFormattedString(culture)),
                 Formatter.Bold(agilityNeeded.ToFormattedString(culture))));
 

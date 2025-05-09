@@ -38,10 +38,10 @@ public static class RuneCalculator
     /// <summary>
     /// Calculates the percentage of a stat that can be extracted from an item.
     /// </summary>
-    /// <param name="runeData">The rune data for the stat</param>
-    /// <param name="itemLevel">The item's level</param>
-    /// <param name="statAmount">The amount of the stat on the item</param>
-    /// <returns>The percentage of the stat that can be extracted</returns>
+    /// <param name="runeData">The rune data for the stat.</param>
+    /// <param name="itemLevel">The item's level.</param>
+    /// <param name="statAmount">The amount of the stat on the item.</param>
+    /// <returns>The percentage of the stat that can be extracted.</returns>
     public static double GetPercentStatExtractable(RuneData runeData, int itemLevel, int statAmount)
     {
         var a = Math.Pow(itemLevel, 2);
@@ -55,11 +55,11 @@ public static class RuneCalculator
     /// <summary>
     /// Calculates the percentage chance to obtain a specific rune type.
     /// </summary>
-    /// <param name="runeData">The rune data to obtain</param>
-    /// <param name="type">The type of rune (BA, PA, RA)</param>
-    /// <param name="itemLevel">The item's level</param>
-    /// <param name="statAmount">The amount of the stat on the item</param>
-    /// <returns>The percentage chance to obtain the rune</returns>
+    /// <param name="runeData">The rune data to obtain.</param>
+    /// <param name="type">The type of rune (BA, PA, RA).</param>
+    /// <param name="itemLevel">The item's level.</param>
+    /// <param name="statAmount">The amount of the stat on the item.</param>
+    /// <returns>The percentage chance to obtain the rune.</returns>
     public static double GetPercentChanceToObtainRune(RuneData runeData, RuneType type, int itemLevel, int statAmount)
     {
         var requiredAmount = GetRequiredStatAmountExtractableToObtainRune(runeData, type);
@@ -82,11 +82,11 @@ public static class RuneCalculator
     /// <summary>
     /// Calculates the runes obtainable from a specific stat on an item.
     /// </summary>
-    /// <param name="runeData">The rune data to obtain</param>
-    /// <param name="itemLevel">The item's level</param>
-    /// <param name="statAmount">The amount of the stat on the item</param>
-    /// <param name="multiplicator">Optional custom multiplier (random if not provided)</param>
-    /// <returns>A <see cref="RuneBundle"/> containing the quantity of each rune type</returns>
+    /// <param name="runeData">The rune data to obtain.</param>
+    /// <param name="itemLevel">The item's level.</param>
+    /// <param name="statAmount">The amount of the stat on the item.</param>
+    /// <param name="multiplicator">Optional custom multiplier (random if not provided).</param>
+    /// <returns>A <see cref="RuneBundle"/> containing the quantity of each rune type.</returns>
     public static RuneBundle GetRuneBundleFromStat(RuneData runeData, int itemLevel, int statAmount, double? multiplicator = null)
     {
         RuneBundle bundle = new(runeData, 0, 0, 0, 0);
@@ -136,10 +136,10 @@ public static class RuneCalculator
     /// <summary>
     /// Calculates all possible runes obtainable from an item from the specified quantity.
     /// </summary>
-    /// <param name="itemData">The item data</param>
-    /// <param name="quantity">The quantity of items</param>
-    /// <param name="multiplicator">Optional custom multiplier (random if not provided)</param>
-    /// <returns>A list of <see cref="RuneBundle"/> containing the quantity of each rune type</returns>
+    /// <param name="itemData">The item data.</param>
+    /// <param name="quantity">The quantity of items.</param>
+    /// <param name="multiplicator">Optional custom multiplier (random if not provided).</param>
+    /// <returns>A list of <see cref="RuneBundle"/> containing the quantity of each rune type.</returns>
     public static IReadOnlyCollection<RuneBundle> GetRuneBundlesFromItem(ItemData itemData, int quantity, double? multiplicator = null)
     {
         var itemstatsData = itemData.GetItemStatsData();
@@ -196,9 +196,9 @@ public static class RuneCalculator
     /// <summary>
     /// Calculates the required amount of a stat to obtain a specific type of rune.
     /// </summary>
-    /// <param name="runeData">The rune data to obtain</param>
-    /// <param name="type">The rune type wanted</param>
-    /// <returns>The amount required for that rune type</returns>
+    /// <param name="runeData">The rune data to obtain.</param>
+    /// <param name="type">The rune type wanted.</param>
+    /// <returns>The amount required for that rune type.</returns>
     private static int GetRequiredStatAmountExtractableToObtainRune(RuneData runeData, RuneType type)
     {
         return type switch
@@ -213,7 +213,7 @@ public static class RuneCalculator
     /// <summary>
     /// Generates a random multiplier between the minimum and maximum values.
     /// </summary>
-    /// <returns>A random multiplier value</returns>
+    /// <returns>A random multiplier value.</returns>
     private static double GetRandomMultiplicator()
     {
         return Random.Shared.NextDouble() * (MaxMultiplicator - MinMultiplicator) + MinMultiplicator;

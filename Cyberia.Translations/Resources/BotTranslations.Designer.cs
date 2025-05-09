@@ -304,7 +304,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You will be #1 at #2 with #3 crit and #4 agi.
+        ///   Looks up a localized string similar to You will be 1/#1 at 1/#2 with #3 crit and #4 agi.
         ///To reach 1/2, you will need at least #5 agi..
         /// </summary>
         internal static string Embed_Crit_Description {

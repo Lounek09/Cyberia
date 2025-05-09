@@ -13,8 +13,8 @@ public static class GameDateFormatter
     /// <summary>
     /// Creates a DateTime from effect parameters.
     /// </summary>
-    /// <param name="parameters">Effect parameters containing date and time values</param>
-    /// <returns>A DateTime object constructed from the parameters</returns>
+    /// <param name="parameters">Effect parameters containing date and time values.</param>
+    /// <returns>A DateTime object constructed from the parameters.</returns>
     public static DateTime CreateDateTimeFromEffectParameters(EffectParameters parameters)
     {
         if (parameters.Param1 == -1)
@@ -34,7 +34,7 @@ public static class GameDateFormatter
     /// <summary>
     /// Converts a real-world DateTime to an in-game DateTime.
     /// </summary>
-    /// <param name="dateTime">The real-world DateTime to convert</param>
+    /// <param name="dateTime">The real-world DateTime to convert.</param>
     /// <returns>The equivalent in-game DateTime</returns>
     public static DateTime ToInGameDateTime(this DateTime dateTime)
     {
@@ -42,7 +42,7 @@ public static class GameDateFormatter
     }
 
     /// <inheritdoc cref="ToLongRolePlayString(DateTime, CultureInfo?)"/>
-    /// <param name="language">The language to use for formatting</param>
+    /// <param name="language">The language to use for formatting.</param>
     public static string ToLongRolePlayString(this DateTime dateTime, Language language)
     {
         return ToLongRolePlayString(dateTime, language.ToCulture());
@@ -51,9 +51,9 @@ public static class GameDateFormatter
     /// <summary>
     /// Converts a DateTime to a role-playing string representation in the specified culture.
     /// </summary>
-    /// <param name="dateTime">The DateTime to format</param>
-    /// <param name="culture">The culture to use for formatting, or <see langword="null"/> for current culture</param>
-    /// <returns>A formatted string representing the date in role-playing format</returns>
+    /// <param name="dateTime">The DateTime to format.</param>
+    /// <param name="culture">The culture to use for formatting, or <see langword="null"/> for current culture.</param>
+    /// <returns>A formatted string representing the date in role-playing format.</returns>
     public static string ToLongRolePlayString(this DateTime dateTime, CultureInfo? culture = null)
     {
         var month = DofusApi.Datacenter.TimeZonesRepository.GetMonthNameByDayOfYear(dateTime.DayOfYear, culture);

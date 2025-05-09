@@ -1,4 +1,4 @@
-﻿using Cyberia.Api;
+﻿using Cyberia.Api.Utils;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Services;
 
@@ -42,16 +42,16 @@ public sealed class EscapeCommandModule
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var escapePercent = Formulas.GetEscapePercent(agility, enemyAgility);
-        var agilityToEscapeForSure = Formulas.GetAgilityToEscapeForSure(enemyAgility);
+        var escapePercentProbability = Formulas.GetEscapePercentProbability(agility, enemyAgility);
+        var agilityForGuarenteedEscape = Formulas.GetAgilityForGuaranteedEscape(enemyAgility);
 
         var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Escape.Author", culture), culture)
             .WithDescription(Translation.Format(
                 Translation.Get<BotTranslations>("Embed.Escape.Description", culture),
                 Formatter.Bold(agility.ToFormattedString(culture)),
-                Formatter.Bold(escapePercent.ToString()),
+                Formatter.Bold(escapePercentProbability.ToString()),
                 Formatter.Bold(enemyAgility.ToFormattedString(culture)),
-                Formatter.Bold(agilityToEscapeForSure.ToFormattedString(culture))));
+                Formatter.Bold(agilityForGuarenteedEscape.ToFormattedString(culture))));
 
         await ctx.RespondAsync(embed);
     }

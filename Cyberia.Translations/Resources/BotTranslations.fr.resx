@@ -275,7 +275,7 @@
     <value>Calculateur de coups critiques</value>
   </data>
   <data name="Embed.Crit.Description" xml:space="preserve">
-    <value>Tu seras #1 au #2 avec #3 crit et #4 agi.
+    <value>Tu seras 1/#1 au 1/#2 avec #3 crit et #4 agi.
 Pour atteindre le 1/2, il te faudra au minimum #5 agi.</value>
   </data>
   <data name="Embed.Escape.Author" xml:space="preserve">
