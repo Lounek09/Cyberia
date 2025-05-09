@@ -41,7 +41,7 @@ public sealed class JsonLangParser : IDisposable
     /// Creates a new <see cref="JsonLangParser"/> instance and parses the lang data.
     /// </summary>
     /// <param name="lang">The lang to parse.</param>
-    /// <returns>A new instance of <see cref="JsonLangParser"/></returns>
+    /// <returns>A new instance of <see cref="JsonLangParser"/>.</returns>
     /// <exception cref="FileNotFoundException">Thrown when the lang file has never been decompiled.</exception>
     public static JsonLangParser Create(Lang lang)
     {

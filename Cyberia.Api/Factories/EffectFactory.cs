@@ -472,7 +472,7 @@ public static class EffectFactory
     /// <param name="parameters">The parameters of the effect.</param>
     /// <param name="duration">The duration of the effect.</param>
     /// <param name="probability">The probability (as a percentage) that the effect will occur.</param>
-    /// <param name="criteria">The criteria where the effect is applicable</param>
+    /// <param name="criteria">The criteria where the effect is applicable.</param>
     /// <param name="dispellable">Whether the effect is dispellable.</param>
     /// <param name="effectArea">The area of the effect.</param>
     /// <returns>The created <see cref="IEffect"/> if the effect is known; otherwise, an <see cref="UntranslatedEffect"/> instance.</returns>

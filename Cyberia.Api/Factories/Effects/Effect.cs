@@ -26,7 +26,7 @@ public abstract record Effect : IEffect
     /// <param name="id">The unique identifier of the effect.</param>
     /// <param name="duration">The duration of the effect.</param>
     /// <param name="probability">The probability (as a percentage) that the effect will occur.</param>
-    /// <param name="criteria">The criteria where the effect is applicable</param>
+    /// <param name="criteria">The criteria where the effect is applicable.</param>
     /// <param name="effectArea">The area of the effect.</param>
     protected Effect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {

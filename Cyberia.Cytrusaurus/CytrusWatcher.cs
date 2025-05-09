@@ -140,8 +140,6 @@ public sealed class CytrusWatcher : ICytrusWatcher
     /// <summary>
     /// Triggers the NewCytrusFileDetected event.
     /// </summary>
-    /// <param name="eventArgs"></param>
-    /// <returns></returns>
     internal async ValueTask OnNewCytrusFileDetected(NewCytrusFileDetectedEventArgs eventArgs)
     {
         var handler = NewCytrusFileDetected;

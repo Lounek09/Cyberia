@@ -81,7 +81,7 @@ public static class Translation
     /// <typeparam name="T">The type of the data identifier.</typeparam>
     /// <param name="id">The identifier of the data.</param>
     /// <param name="language">The language of the localized string.</param>
-    /// <returns>The string localized for the specified language</returns>
+    /// <returns>The string localized for the specified language.</returns>
     public static string UnknownData<T>(T id, Language language)
     {
         return UnknownData(id, language.ToCulture());
@@ -93,7 +93,7 @@ public static class Translation
     /// <typeparam name="T">The type of the data identifier.</typeparam>
     /// <param name="id">The identifier of the data.</param>
     /// <param name="culture">The culture of the localized string, if not specified, the current UI culture is used.</param>
-    /// <returns>The string localized for the specified culture</returns>
+    /// <returns>The string localized for the specified culture.</returns>
     public static string UnknownData<T>(T id, CultureInfo? culture = null)
     {
         var template = Get<ApiTranslations>("Unknown.Data", culture);

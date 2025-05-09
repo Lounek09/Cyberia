@@ -99,7 +99,7 @@ public interface IEmbedBuilderService
     /// <param name="twoHanded">Whether the weapon is two-handed.</param>
     /// <param name="itemTypeData">The item type data of the weapon.</param>
     /// <param name="culture">The culture to use for the description.</param>
-    /// <param name="inline"></param>
+    /// <param name="inline">Whether to display the field inline.</param>
     /// <returns>The updated embed builder.</returns>
     DiscordEmbedBuilder AddWeaponInfosField(DiscordEmbedBuilder embed, ItemWeaponData itemWeaponData, bool twoHanded, ItemTypeData? itemTypeData, CultureInfo? culture, bool inline = false);
 

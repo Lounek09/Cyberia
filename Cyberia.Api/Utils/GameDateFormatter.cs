@@ -35,7 +35,7 @@ public static class GameDateFormatter
     /// Converts a real-world DateTime to an in-game DateTime.
     /// </summary>
     /// <param name="dateTime">The real-world DateTime to convert.</param>
-    /// <returns>The equivalent in-game DateTime</returns>
+    /// <returns>The equivalent in-game DateTime.</returns>
     public static DateTime ToInGameDateTime(this DateTime dateTime)
     {
         return dateTime.AddYears(DofusApi.Datacenter.TimeZonesRepository.YearLess);
