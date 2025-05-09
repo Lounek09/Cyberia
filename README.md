@@ -167,7 +167,7 @@ If you encounter any issues or have questions, please:
 
 ## License
 
-Copyright (C) 2020-2024 Lounek
+Copyright (C) 2020-2025 Lounek
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
