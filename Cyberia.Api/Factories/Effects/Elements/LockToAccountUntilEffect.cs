@@ -23,6 +23,6 @@ public sealed record LockToAccountUntilEffect : Effect
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(culture, DateTime.ToString(culture?.DateTimeFormat ?? CultureInfo.CurrentCulture.DateTimeFormat));
+        return GetDescription(culture, DateTime.ToShortRolePlayString(culture));
     }
 }

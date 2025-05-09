@@ -138,14 +138,12 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
 
     public DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture)
     {
-        var now = DateTime.Now;
-        var date = now.ToRolePlayString(culture);
-        var time = now.ToString(culture?.DateTimeFormat.ShortTimePattern ?? CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
+        var formattedDate = DateTime.Now.ToInGameDateTime().ToLongRolePlayString(culture);
 
         return new DiscordEmbedBuilder()
             .WithColor(_embedColor)
             .WithAuthor(authorText, iconUrl: GetIconUrl(category))
-            .WithFooter($"{_username} • {date} - {time}", _footerIconUrl);
+            .WithFooter($"{_username} • {formattedDate}", _footerIconUrl);
     }
 
     public DiscordEmbedBuilder AddEffectFields(DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, bool inline = false)

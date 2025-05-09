@@ -33,6 +33,6 @@ public sealed record MarkNotTradableEffect : Effect
             return GetDescription(culture, Translation.Get<ApiTranslations>("Effect.LinkedToAccount", culture));
         }
 
-        return GetDescription(culture, DateTime.ToString(culture?.DateTimeFormat ?? CultureInfo.CurrentCulture.DateTimeFormat));
+        return GetDescription(culture, DateTime.ToShortRolePlayString(culture));
     }
 }
