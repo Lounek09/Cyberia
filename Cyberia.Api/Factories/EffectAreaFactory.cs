@@ -26,7 +26,7 @@ public static class EffectAreaFactory
             return Default;
         }
 
-        return new EffectArea(compressedEffectArea[0], PatternDecoder.CharToBase64Index(compressedEffectArea[1]));
+        return new EffectArea(compressedEffectArea[0], PatternDecoder.Decode64(compressedEffectArea[1]));
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public static class EffectAreaFactory
         var length = compressedEffectAreas.Length - 1;
         for (var i = 0; i < length; i += 2)
         {
-            var effectArea = new EffectArea(compressedEffectAreas[i], PatternDecoder.CharToBase64Index(compressedEffectAreas[i + 1]));
+            var effectArea = new EffectArea(compressedEffectAreas[i], PatternDecoder.Decode64(compressedEffectAreas[i + 1]));
             effectAreas.Add(effectArea);
         }
 

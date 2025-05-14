@@ -23,7 +23,7 @@ public sealed class IpCommandModule
     {
         try
         {
-            await ctx.RespondAsync(PatternDecoder.Ip(value));
+            await ctx.RespondAsync(PatternDecoder.DecodeIp(value));
         }
         catch (ArgumentException e)
         {
