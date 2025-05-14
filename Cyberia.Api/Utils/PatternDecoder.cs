@@ -21,36 +21,35 @@ public static class PatternDecoder
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the last 3 digits in the encoded string contains invalid Base64 characters.</exception>
     public static string Ip(ReadOnlySpan<char> value)
     {
-        if (value.Length != 11)
+        const int length = 11;
+        const int ipLength = 8;
+        const int portLength = length - ipLength;
+
+        if (value.Length != length)
         {
             throw new ArgumentException("The encoded IP must be 11 characters long");
         }
 
-        var ipCrypt = value[..8];
-        var portCrypt = value[8..];
+        var ipCrypt = value[..ipLength];
+        var portCrypt = value[ipLength..];
 
-        var ip = string.Empty;
-        var port = 0D;
-
-        var length = ipCrypt.Length - 1;
-        for (var i = 0; i < length; i++)
+        Span<byte> ipParts = stackalloc byte[4];
+        var ipIndex = 0;
+        for (var i = 0; i < ipLength - 1; i++)
         {
             var d1 = ipCrypt[i++] - 48;
             var d2 = ipCrypt[i] - 48;
 
-            ip += (d1 & 15) << 4 | d2 & 15;
-            if (i < length)
-            {
-                ip += '.';
-            }
+            ipParts[ipIndex++] = (byte)((d1 & 15) << 4 | d2 & 15);
         }
 
-        for (var i = 0; i < portCrypt.Length; i++)
+        var port = 0;
+        for (var i = 0; i < portLength; i++)
         {
-            port += Math.Pow(64, 2 - i) * CharToBase64Index(portCrypt[i]);
+            port += (int)Math.Pow(s_hash.Length, 2 - i) * CharToBase64Index(portCrypt[i]);
         }
 
-        return $"{ip}:{port}";
+        return $"{ipParts[0]}.{ipParts[1]}.{ipParts[2]}.{ipParts[3]}:{port}";
     }
 
     /// <summary>
