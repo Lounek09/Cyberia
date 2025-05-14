@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Utils;
 
+using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -21,7 +22,16 @@ public sealed class MapPlacementConverter : JsonConverter<IReadOnlyList<int>>
             throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}.");
         }
 
-        return PatternDecoder.DecodeMapPlacement(reader.GetString() ?? string.Empty);
+        try
+        {
+            return PatternDecoder.DecodeMapPlacement(reader.GetString() ?? string.Empty);
+        }
+        catch (ArgumentException ex)
+        {
+            Log.Error(ex, "Failed to decode map placement.");
+        }
+
+        return ReadOnlyCollection<int>.Empty;
     }
 
     public override void Write(Utf8JsonWriter writer, IReadOnlyList<int> values, JsonSerializerOptions options)

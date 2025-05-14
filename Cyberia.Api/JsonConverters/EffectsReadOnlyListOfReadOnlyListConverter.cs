@@ -33,7 +33,7 @@ public sealed class EffectsReadOnlyListOfReadOnlyListConverter : JsonConverter<I
                 throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}.");
             }
 
-            effects.Add(EffectFactory.CreateMany(reader.GetString() ?? string.Empty));
+            effects.Add(EffectFactory.CreateMany(reader.GetString() ?? string.Empty).AsReadOnly());
         }
 
         return effects.AsReadOnly();

@@ -23,7 +23,7 @@ public sealed class EffectReadOnlyListConverter : JsonConverter<IReadOnlyList<IE
             throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}.");
         }
 
-        return EffectFactory.CreateMany(reader.GetString() ?? string.Empty);
+        return EffectFactory.CreateMany(reader.GetString() ?? string.Empty).AsReadOnly();
     }
 
     public override void Write(Utf8JsonWriter writer, IReadOnlyList<IEffect> values, JsonSerializerOptions options)

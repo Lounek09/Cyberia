@@ -90,7 +90,7 @@ public static class PatternDecoder
 
         if (!IsBase64(value))
         {
-            throw new ArgumentException("The encoded IP contains invalid base64 characters.", nameof(value));
+            throw new ArgumentException($"The encoded IP '{value}' contains invalid base64 characters.", nameof(value));
         }
 
         var ipCrypt = value[..ipLength];
@@ -128,7 +128,7 @@ public static class PatternDecoder
 
         if (!IsBase64(value))
         {
-            throw new ArgumentException("The encoded placement cells contain invalid base64 characters.", nameof(value));
+            throw new ArgumentException($"The encoded placement '{value}' contain invalid base64 characters.", nameof(value));
         }
 
         List<int> cells = new(value.Length / 2);
