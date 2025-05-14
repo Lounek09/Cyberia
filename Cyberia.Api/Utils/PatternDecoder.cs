@@ -1,4 +1,5 @@
 ﻿using System.Buffers;
+using System.Collections.ObjectModel;
 
 namespace Cyberia.Api.Utils;
 
@@ -110,5 +111,33 @@ public static class PatternDecoder
         port += Decode64(portCrypt[2]);
 
         return $"{ip[0]}.{ip[1]}.{ip[2]}.{ip[3]}:{port}";
+    }
+
+    /// <summary>
+    /// Decodes a Base64 encoded string representing placement cells.
+    /// </summary>
+    /// <param name="value">The encoded string representing placement cells.</param>
+    /// <returns>The list of decoded placement cells.</returns>
+    /// <exception cref="ArgumentException">Thrown if the encoded string is not valid.</exception>"
+    public static ReadOnlyCollection<int> DecodeMapPlacement(ReadOnlySpan<char> value)
+    {
+        if (value.IsEmpty)
+        {
+            return ReadOnlyCollection<int>.Empty;
+        }
+
+        if (!IsBase64(value))
+        {
+            throw new ArgumentException("The encoded placement cells contain invalid base64 characters.", nameof(value));
+        }
+
+        List<int> cells = new(value.Length / 2);
+
+        for (var i = 0; i < value.Length - 1; i++)
+        {
+            cells.Add(Decode64(value[i++]) << 6 | Decode64(value[i]));
+        }
+
+        return cells.AsReadOnly();
     }
 }

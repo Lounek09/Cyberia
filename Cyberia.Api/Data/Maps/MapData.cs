@@ -1,4 +1,5 @@
 ﻿using Cyberia.Api.Data.Houses;
+using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Enums;
 
@@ -22,10 +23,12 @@ public sealed class MapData : IDofusData<int>
     public int MapSubAreaId { get; init; }
 
     [JsonPropertyName("p1")]
-    public string Placement1 { get; init; }
+    [JsonConverter(typeof(MapPlacementConverter))]
+    public IReadOnlyList<int> Placement1 { get; init; }
 
     [JsonPropertyName("p2")]
-    public string Placement2 { get; init; }
+    [JsonConverter(typeof(MapPlacementConverter))]
+    public IReadOnlyList<int> Placement2 { get; init; }
 
     [JsonPropertyName("p")]
     [JsonInclude]
@@ -49,8 +52,8 @@ public sealed class MapData : IDofusData<int>
     [JsonConstructor]
     internal MapData()
     {
-        Placement1 = string.Empty;
-        Placement2 = string.Empty;
+        Placement1 = [];
+        Placement2 = [];
         Parameters = [];
         MaxPlayerPerFight = 16;
         MaxPlayerPerTeam = 8;
