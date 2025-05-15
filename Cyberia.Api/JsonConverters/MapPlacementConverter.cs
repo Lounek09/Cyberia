@@ -24,7 +24,7 @@ public sealed class MapPlacementConverter : JsonConverter<IReadOnlyList<int>>
 
         try
         {
-            return PatternDecoder.DecodeMapPlacement(reader.GetString() ?? string.Empty);
+            return PatternDecoder.DecodeMapPlacement(reader.GetString() ?? string.Empty).ToList().AsReadOnly();
         }
         catch (ArgumentException ex)
         {
