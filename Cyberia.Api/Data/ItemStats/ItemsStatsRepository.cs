@@ -48,7 +48,11 @@ public sealed class ItemsStatsRepository : DofusRepository, IDofusRepository
                 continue;
             }
 
-            ((List<IEffect>)itemStatsData.Effects).AddRange(itemStatsCustomData.Effects);
+            List<IEffect> combinedEffects = new(itemStatsData.Effects.Count + itemStatsCustomData.Effects.Count);
+            combinedEffects.AddRange(itemStatsData.Effects);
+            combinedEffects.AddRange(itemStatsCustomData.Effects);
+
+            itemStatsData.Effects = combinedEffects;
         }
 
         ItemsStats = ItemsStatsCore.GroupBy(x => x.Id).ToFrozenDictionary(x => x.Key, x => x.First());

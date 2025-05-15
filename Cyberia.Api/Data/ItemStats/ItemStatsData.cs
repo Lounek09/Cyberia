@@ -13,7 +13,7 @@ public sealed class ItemStatsData : IDofusData<int>
 
     [JsonPropertyName("v")]
     [JsonConverter(typeof(EffectReadOnlyListConverter))]
-    public IReadOnlyList<IEffect> Effects { get; init; }
+    public IReadOnlyList<IEffect> Effects { get; internal set; }
 
     [JsonConstructor]
     internal ItemStatsData()
