@@ -58,7 +58,7 @@ public sealed class ColorConverter : JsonConverter<Color?>
             throw new JsonException($"Expected a string representing a color but got null or empty.");
         }
 
-        ReadOnlySpan<char> valueSpan = valueString.AsSpan();
+        var valueSpan = valueString.AsSpan();
         if (valueSpan[0] == '#')
         {
             valueSpan = valueSpan[1..];
