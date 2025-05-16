@@ -63,7 +63,7 @@ public sealed class ColorConverter : JsonConverter<Color?>
         {
             valueSpan = valueSpan[1..];
         }
-        else if (valueSpan.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+        else if (valueSpan.StartsWith("0x", StringComparison.Ordinal))
         {
             valueSpan = valueSpan[2..];
         }
