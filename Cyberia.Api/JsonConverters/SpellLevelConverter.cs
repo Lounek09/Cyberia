@@ -16,6 +16,8 @@ namespace Cyberia.Api.JsonConverters;
 /// </remarks>
 public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
 {
+    private const int c_arrayLength = 21;
+
     public override SpellLevelData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.StartArray)
@@ -24,9 +26,9 @@ public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
         }
 
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
-        if (elements.Length != 21)
+        if (elements.Length != c_arrayLength)
         {
-            throw new JsonException($"Expected 21 elements but got {elements.Length}");
+            throw new JsonException($"Expected {c_arrayLength} elements but got {elements.Length}");
         }
 
         var effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0], options) ?? [];

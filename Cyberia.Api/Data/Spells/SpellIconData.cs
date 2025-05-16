@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Spells;
 
@@ -6,23 +9,26 @@ public sealed class SpellIconData : IDofusData
 {
     public const int IndexRemastered = 0;
     public const int IndexContrast = 1;
-    public const int IndexClassicfAngelic = 2;
+    public const int IndexClassicAngelic = 2;
     public const int IndexClassicDiabolic = 3;
 
     [JsonPropertyName("up")]
     public int UpGfxId { get; init; }
 
     [JsonPropertyName("pc")]
-    public IReadOnlyList<int> PrintColors { get; init; }
+    [JsonConverter(typeof(ColorReadOnlyListConverter))]
+    public IReadOnlyList<Color?> PrintColors { get; init; }
 
     [JsonPropertyName("b")]
     public int BackgroundGfxId { get; init; }
 
     [JsonPropertyName("fc")]
-    public IReadOnlyList<int> FrameColors { get; init; }
+    [JsonConverter(typeof(ColorReadOnlyListConverter))]
+    public IReadOnlyList<Color?> FrameColors { get; init; }
 
     [JsonPropertyName("bc")]
-    public IReadOnlyList<int> BackgroundColors { get; init; }
+    [JsonConverter(typeof(ColorReadOnlyListConverter))]
+    public IReadOnlyList<Color?> BackgroundColors { get; init; }
 
     [JsonConstructor]
     internal SpellIconData()

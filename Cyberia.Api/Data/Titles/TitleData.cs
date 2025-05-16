@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cyberia.Api.JsonConverters;
+
+using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Titles;
 
@@ -11,7 +14,8 @@ public sealed class TitleData : IDofusData<int>
     public LocalizedString Name { get; init; }
 
     [JsonPropertyName("c")]
-    public int Color { get; init; }
+    [JsonConverter(typeof(JsonConverters.ColorConverter))]
+    public Color? Color { get; init; }
 
     [JsonPropertyName("pt")]
     public int ParametersType { get; init; }

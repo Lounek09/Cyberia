@@ -15,8 +15,10 @@ namespace Cyberia.Api.JsonConverters;
 /// - Uses <see cref="EffectFactory.CreateMany"/> to parse each string into a list of <see cref="IEffect"/> objects<br />
 /// - Aggregates these lists into a read-only list of read-only lists.
 /// </remarks>
-public sealed class EffectsReadOnlyListOfReadOnlyListConverter : JsonConverter<IReadOnlyList<IReadOnlyList<IEffect>>>
+public sealed class EffectReadOnlyListOfReadOnlyListConverter : JsonConverter<IReadOnlyList<IReadOnlyList<IEffect>>>
 {
+    private readonly EffectReadOnlyListConverter _effectReadOnlyListConverter = new();
+
     public override IReadOnlyList<IReadOnlyList<IEffect>> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.StartArray)
@@ -28,12 +30,7 @@ public sealed class EffectsReadOnlyListOfReadOnlyListConverter : JsonConverter<I
 
         while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
         {
-            if (reader.TokenType != JsonTokenType.String)
-            {
-                throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}.");
-            }
-
-            effects.Add(EffectFactory.CreateMany(reader.GetString() ?? string.Empty).AsReadOnly());
+            effects.Add(_effectReadOnlyListConverter.Read(ref reader, typeof(IReadOnlyList<IEffect>), options));
         }
 
         return effects.AsReadOnly();

@@ -14,6 +14,8 @@ namespace Cyberia.Api.JsonConverters;
 /// </remarks>
 public sealed class ItemWeaponDataConverter : JsonConverter<ItemWeaponData>
 {
+    private const int c_arrayLength = 8;
+
     public override ItemWeaponData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.StartArray)
@@ -23,9 +25,9 @@ public sealed class ItemWeaponDataConverter : JsonConverter<ItemWeaponData>
 
         var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
 
-        if (elements.Length != 8)
+        if (elements.Length != c_arrayLength)
         {
-            throw new JsonException($"Expected 8 elements but got {elements.Length}.");
+            throw new JsonException($"Expected {c_arrayLength} elements but got {elements.Length}.");
         }
 
         return new ItemWeaponData

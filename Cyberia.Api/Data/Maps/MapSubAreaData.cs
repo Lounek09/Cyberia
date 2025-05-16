@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.Data.Audios;
+using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
+using System.Drawing;
 using System.Globalization;
 using System.Text.Json.Serialization;
 
@@ -24,7 +26,8 @@ public sealed class MapSubAreaData : IDofusData<int>
     public IReadOnlyList<int> NearMapSubAreasId { get; init; }
 
     [JsonPropertyName("tc")]
-    public IReadOnlyList<string> TacticalColors { get; init; }
+    [JsonConverter(typeof(ColorReadOnlyListConverter))]
+    public IReadOnlyList<Color?> TacticalColors { get; init; }
 
     [JsonConstructor]
     internal MapSubAreaData()

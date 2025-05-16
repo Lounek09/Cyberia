@@ -11,7 +11,7 @@ internal sealed class ItemSetCustomData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("e")]
-    [JsonConverter(typeof(EffectsReadOnlyListOfReadOnlyListConverter))]
+    [JsonConverter(typeof(EffectReadOnlyListOfReadOnlyListConverter))]
     public IReadOnlyList<IReadOnlyList<IEffect>> Effects { get; init; }
 
     [JsonConstructor]
