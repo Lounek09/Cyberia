@@ -29,6 +29,9 @@ public sealed class MapSubAreaData : IDofusData<int>
     [JsonConverter(typeof(ColorReadOnlyListConverter))]
     public IReadOnlyList<Color?> TacticalColors { get; init; }
 
+    [JsonPropertyName("tt")]
+    public string TacticalType { get; init; }
+
     [JsonConstructor]
     internal MapSubAreaData()
     {
@@ -36,6 +39,7 @@ public sealed class MapSubAreaData : IDofusData<int>
         FightAudioMusicId = [];
         NearMapSubAreasId = [];
         TacticalColors = [];
+        TacticalType = string.Empty;
     }
 
     public MapAreaData? GetMapAreaData()
