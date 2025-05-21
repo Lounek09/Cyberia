@@ -182,11 +182,11 @@ public static class RuneCalculator
                         PaQuantity = existingBundle.PaQuantity + bundle.PaQuantity,
                         RaQuantity = existingBundle.RaQuantity + bundle.RaQuantity,
                     };
+
+                    continue;
                 }
-                else
-                {
-                    bundles.Add(runeData.Id, bundle);
-                }
+
+                bundles.Add(runeData.Id, bundle);
             }
         }
 
