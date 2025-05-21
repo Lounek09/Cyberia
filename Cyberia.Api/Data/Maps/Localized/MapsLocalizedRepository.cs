@@ -6,6 +6,9 @@ internal sealed class MapsLocalizedRepository : DofusLocalizedRepository, IDofus
 {
     public static string FileName => MapsRepository.FileName;
 
+    [JsonPropertyName("MA.m")]
+    public IReadOnlyList<MapLocalizedData> Maps { get; init; }
+
     [JsonPropertyName("MA.sua")]
     public IReadOnlyList<MapSuperAreaLocalizedData> MapSuperAreas { get; init; }
 
@@ -18,6 +21,7 @@ internal sealed class MapsLocalizedRepository : DofusLocalizedRepository, IDofus
     [JsonConstructor]
     internal MapsLocalizedRepository()
     {
+        Maps = [];
         MapSuperAreas = [];
         MapAreas = [];
         MapSubAreas = [];

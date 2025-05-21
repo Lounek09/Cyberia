@@ -39,7 +39,7 @@ public sealed record MapPlayerCriterion : Criterion
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
         var map = GetMapData();
-        var mapAreaSubAreaName = map is null ? Translation.UnknownData(MapId, culture) : map.GetMapAreaName(culture);
+        var mapAreaSubAreaName = map is null ? Translation.UnknownData(MapId, culture) : map.GetFullName(culture);
         var coordinate = map is null ? "[x, x]" : map.GetCoordinate();
 
         return GetDescription(culture, coordinate, mapAreaSubAreaName, MaxPlayers);

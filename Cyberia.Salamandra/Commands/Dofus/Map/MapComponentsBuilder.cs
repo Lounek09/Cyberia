@@ -55,7 +55,7 @@ public static class MapComponentsBuilder
                 return new DiscordSelectComponentOption(
                     $"{x.GetCoordinate()} ({x.Id})",
                     MapMessageBuilder.GetPacket(x.Id),
-                    x.GetMapAreaName(culture).WithMaxLength(50));
+                    x.GetFullName(culture).WithMaxLength(50));
             });
 
         return new DiscordSelectComponent(

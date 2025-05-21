@@ -88,9 +88,9 @@ public readonly record struct LocalizedString
     /// <param name="culture">The culture to get the translation for.</param>
     public string ToString(CultureInfo? culture)
     {
-       return culture is null
-           ? ToString()
-           : ToString(culture.TwoLetterISOLanguageName);
+        return culture is null
+            ? ToString()
+            : ToString(culture.TwoLetterISOLanguageName);
     }
 
     /// <summary>

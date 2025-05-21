@@ -94,7 +94,7 @@ public sealed class PaginatedMapMessageBuilder : PaginatedMessageBuilder<MapData
 
     protected override IEnumerable<string> GetContent()
     {
-        return _data.Select(x => $"- {Formatter.Bold(x.GetCoordinate())} {x.GetMapAreaName(_culture)} ({x.Id}) {(x.IsHouse() ? Emojis.House(_culture) : string.Empty)}");
+        return _data.Select(x => $"- {Formatter.Bold(x.GetCoordinate())} {x.GetFullName(_culture)} ({x.Id}) {(x.IsHouse() ? Emojis.House(_culture) : string.Empty)}");
     }
 
     protected override DiscordSelectComponent SelectBuilder()

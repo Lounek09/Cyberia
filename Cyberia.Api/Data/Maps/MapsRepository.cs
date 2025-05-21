@@ -159,6 +159,15 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         var twoLetterISOLanguageName = language.ToStringFast();
         var localizedRepository = DofusLocalizedRepository.Load<MapsLocalizedRepository>(type, language);
 
+        foreach (var mapLocalizedData in localizedRepository.Maps)
+        {
+            var mapData = GetMapDataById(mapLocalizedData.Id);
+            if (mapData?.Name is not null)
+            {
+                mapData.Name.Value.TryAdd(twoLetterISOLanguageName, mapLocalizedData.Name);
+            }
+        }
+
         foreach (var mapSuperAreaLocalizedData in localizedRepository.MapSuperAreas)
         {
             var mapSuperAreaData = GetMapSuperAreaDataById(mapSuperAreaLocalizedData.Id);
@@ -174,7 +183,7 @@ public sealed class MapsRepository : DofusRepository, IDofusRepository
         foreach (var mapSubAreaLocalizedData in localizedRepository.MapSubAreas)
         {
             var mapSubAreaData = GetMapSubAreaDataById(mapSubAreaLocalizedData.Id);
-            mapSubAreaData?.Name.TryAdd(twoLetterISOLanguageName, mapSubAreaLocalizedData.Name);
+            mapSubAreaData?.Name.TryAdd(twoLetterISOLanguageName, mapSubAreaLocalizedData.Name.TrimStart('/'));
         }
     }
 }

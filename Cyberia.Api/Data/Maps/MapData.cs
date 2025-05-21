@@ -37,6 +37,9 @@ public sealed class MapData : IDofusData<int>
     [JsonPropertyName("d")]
     public int DungeonId { get; init; }
 
+    [JsonPropertyName("n")]
+    public LocalizedString? Name { get; init; }
+
     [JsonPropertyName("c")]
     public int MaxPlayerPerFight { get; init; }
 
@@ -87,16 +90,33 @@ public sealed class MapData : IDofusData<int>
     public string GetMapAreaName(CultureInfo? culture = null)
     {
         var mapSubAreaData = GetMapSubAreaData();
-        var mapSubAreaName = mapSubAreaData is null
-            ? $"{nameof(MapSubAreaData)} {Translation.UnknownData(MapSubAreaId, culture)}"
-            : mapSubAreaData.Name.ToString(culture).TrimStart('/');
+        var mapSubAreaName = mapSubAreaData?.Name.ToString(culture).TrimStart('/')
+            ?? $"{nameof(MapSubAreaData)} {Translation.UnknownData(MapSubAreaId, culture)}";
 
         var mapAreaData = mapSubAreaData?.GetMapAreaData();
-        var mapAreaName = mapAreaData is null
-            ? $"{nameof(MapAreaData)} {Translation.UnknownData(mapSubAreaData?.MapAreaId ?? 0, culture)}"
-            : mapAreaData.Name.ToString(culture);
+        var mapAreaName = mapAreaData?.Name.ToString(culture)
+            ?? $"{nameof(MapAreaData)} {Translation.UnknownData(mapSubAreaData?.MapAreaId ?? 0, culture)}";
 
-        return mapAreaName + (mapAreaName.Equals(mapSubAreaName) ? string.Empty : $" ({mapSubAreaName})");
+        return mapAreaName.Equals(mapSubAreaName, StringComparison.OrdinalIgnoreCase)
+            ? mapAreaName
+            : $"{mapAreaName} ({mapSubAreaName})";
+    }
+
+    public string GetFullName(Language language)
+    {
+        return GetFullName(language.ToCulture());
+    }
+
+    public string GetFullName(CultureInfo? culture = null)
+    {
+        var name = GetMapAreaName(culture);
+
+        if (Name.HasValue)
+        {
+            name += $" - {Name.Value.ToString(culture)}";
+        }
+
+        return name;
     }
 
     public HouseData? GetHouseData()
