@@ -544,10 +544,10 @@
     <value>Apparence = #1</value>
   </data>
   <data name="Criterion.Map.Different" xml:space="preserve">
-    <value>Ne pas être sur la map #1 (#2, 3#)</value>
+    <value>Ne pas être sur la map #1 en (#2, 3#)</value>
   </data>
   <data name="Criterion.Map.Equal" xml:space="preserve">
-    <value>Etre sur la map #1 (#2, #3)</value>
+    <value>Etre sur la map #1 en (#2, #3)</value>
   </data>
   <data name="Criterion.MapArea.Different" xml:space="preserve">
     <value>Ne pas être dans la zone #1</value>
@@ -556,16 +556,16 @@
     <value>Etre dans la zone #1</value>
   </data>
   <data name="Criterion.MapPlayer.Different" xml:space="preserve">
-    <value>Nombre de joueurs sur la map #1 (#2, #3) ≠ #4</value>
+    <value>Nombre de joueurs sur la map #1 en (#2, #3) ≠ #4</value>
   </data>
   <data name="Criterion.MapPlayer.Equal" xml:space="preserve">
-    <value>Nombre de joueurs sur la map #1 (#2, #3) = #4</value>
+    <value>Nombre de joueurs sur la map #1 en (#2, #3) = #4</value>
   </data>
   <data name="Criterion.MapPlayer.Inferior" xml:space="preserve">
-    <value>Nombre de joueurs sur la map #1 (#2, #3) &lt; #4</value>
+    <value>Nombre de joueurs sur la map #1 en (#2, #3) &lt; #4</value>
   </data>
   <data name="Criterion.MapPlayer.Superior" xml:space="preserve">
-    <value>Nombre de joueurs sur la map #1 (#2, #3) &gt; #4</value>
+    <value>Nombre de joueurs sur la map #1 en (#2, #3) &gt; #4</value>
   </data>
   <data name="Criterion.MapSubArea.Different" xml:space="preserve">
     <value>Ne pas être dans la sous-zone #1</value>

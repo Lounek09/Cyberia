@@ -1429,7 +1429,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do not be on the map #1 (#2, #3).
+        ///   Looks up a localized string similar to Do not be on the map #1 en (#2, #3).
         /// </summary>
         internal static string Criterion_Map_Different {
             get {
@@ -1438,7 +1438,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Be on the map #1 (#2, #3).
+        ///   Looks up a localized string similar to Be on the map #1 en (#2, #3).
         /// </summary>
         internal static string Criterion_Map_Equal {
             get {
@@ -1465,7 +1465,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number of players on the map #1 (#2, #3) ≠ #4.
+        ///   Looks up a localized string similar to Number of players on the map #1 to (#2, #3) ≠ #4.
         /// </summary>
         internal static string Criterion_MapPlayer_Different {
             get {
@@ -1474,7 +1474,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number of players on the map #1 (#2, #3) = #4.
+        ///   Looks up a localized string similar to Number of players on the map #1 to (#2, #3) = #4.
         /// </summary>
         internal static string Criterion_MapPlayer_Equal {
             get {
@@ -1483,7 +1483,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number of players on the map #1 (#2, #3) &lt; #4.
+        ///   Looks up a localized string similar to Number of players on the map #1 to (#2, #3) &lt; #4.
         /// </summary>
         internal static string Criterion_MapPlayer_Inferior {
             get {
@@ -1492,7 +1492,7 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number of players on the map #1 (#2, #3) &gt; #4.
+        ///   Looks up a localized string similar to Number of players on the map #1 to (#2, #3) &gt; #4.
         /// </summary>
         internal static string Criterion_MapPlayer_Superior {
             get {
