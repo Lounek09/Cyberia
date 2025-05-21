@@ -240,10 +240,6 @@
       "d": "Indestructible"
     },
     {
-      "id": 601,
-      "d": "Téléporte en #2 (#1)"
-    },
-    {
       "id": 604,
       "d": "Apprend le sort #3 au rang #2"
     },
@@ -322,7 +318,7 @@
     {
       "id": 826,
       "d": "Téléporte",
-      "p": -100,
+      "p": 0,
       "o": "+",
       "t": true
     },
@@ -392,7 +388,7 @@
     },
     {
       "id": 999,
-      "d": "Téléporte en #2 (#1)"
+      "d": "Téléporte : '#1' en (#2, #3)"
     },
     {
       "id": 2101,

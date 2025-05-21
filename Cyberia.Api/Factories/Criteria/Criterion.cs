@@ -67,6 +67,16 @@ public abstract record Criterion : ICriterion
     }
 
     /// <inheritdoc cref="ICriterion.GetDescription(CultureInfo)"/>
+    protected DescriptionString GetDescription<T0, T1, T2, T3>(CultureInfo? culture, T0 parameter0, T1 parameter1, T2 parameter2, T3 parameter3)
+    {
+        return GetDescription(culture,
+            parameter0?.ToString() ?? string.Empty,
+            parameter1?.ToString() ?? string.Empty,
+            parameter2?.ToString() ?? string.Empty,
+            parameter3?.ToString() ?? string.Empty);
+    }
+
+    /// <inheritdoc cref="ICriterion.GetDescription(CultureInfo)"/>
     [OverloadResolutionPriority(1)]
     protected DescriptionString GetDescription(CultureInfo? culture, params IReadOnlyList<string> parameters)
     {

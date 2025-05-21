@@ -38,9 +38,11 @@ public sealed record ItemTeleportEffect : Effect
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
         var map = GetMapData();
-        var mapAreaSubAreaName = map is null ? Translation.UnknownData(MapId, culture) : map.GetFullName(culture);
-        var coordinate = map is null ? "[x, x]" : map.GetCoordinate();
+        if (map is null)
+        {
+            return GetDescription(culture, Translation.UnknownData(MapId, culture), 666, 666);
+        }
 
-        return GetDescription(culture, mapAreaSubAreaName, coordinate);
+        return GetDescription(culture, map.GetFullName(culture), map.X, map.Y);
     }
 }
