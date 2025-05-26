@@ -91,10 +91,10 @@ public sealed class EmojisService : IEmojisService
 
         var normalizedName = displayedName.NormalizeToAscii();
 
-        Span<char> sanitizedNameBuffer = stackalloc char[displayedName.Length];
+        Span<char> sanitizedNameBuffer = stackalloc char[normalizedName.Length];
         var validCharCount = 0;
 
-        foreach (var c in displayedName)
+        foreach (var c in normalizedName)
         {
             if (s_authorizedChars.Contains(c))
             {
