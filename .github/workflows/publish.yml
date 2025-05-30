@@ -42,4 +42,4 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          script: chmod -R 755 /var/www/cyberia/App/flare
+          script: chmod -R a+x /var/www/cyberia/App/flare
