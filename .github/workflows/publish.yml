@@ -10,15 +10,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-  
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9
 
-      - name: Build
-        run: dotnet build Cyberia/Cyberia.csproj -c Release -r linux-x64 -o ./App -p:PublishReadyToRun=true
-    
+      - name: Publish
+        run: |
+          publish Cyberia/Cyberia.csproj -c Release -r linux-x64 -o ./App --self-contained false \
+            -p:PublishReadyToRun=true \
+            -p:PublishSingleFile=true \
+            -p:IncludeNativeLibrariesForSelfExtract=true \
+            -p:IncludeAllContentForSelfExtract=false \
+            -p:DebugType=Embedded
+
       - name: Deploy
         uses: appleboy/scp-action@master
         with:

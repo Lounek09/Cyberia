@@ -31,6 +31,7 @@
   <ItemGroup>
     <None Update="flare\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </None>
   </ItemGroup>
 
