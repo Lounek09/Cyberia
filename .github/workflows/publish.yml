@@ -21,7 +21,6 @@ jobs:
           dotnet publish Cyberia/Cyberia.csproj -c Release -r linux-x64 -o ./App --self-contained false \
             -p:PublishReadyToRun=true \
             -p:PublishSingleFile=true \
-            -p:IncludeNativeLibrariesForSelfExtract=true \
             -p:IncludeAllContentForSelfExtract=false \
             -p:DebugType=Embedded
 
