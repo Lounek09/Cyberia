@@ -23,6 +23,7 @@ jobs:
             -p:DebugType=Embedded \
             -p:PublishSingleFile=true \
             -p:IncludeNativeLibrariesForSelfExtract=true \
+            -p:IncludeAllContentForSelfExtract=true \
             --no-self-contained
 
       - name: Deploy
