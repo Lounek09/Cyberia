@@ -20,7 +20,7 @@ public sealed class CultureFormViewComponent : ViewComponent
     {
         List<CultureOption> items = [];
 
-        foreach (var cultureInfo in _requestLocalizationOptions.SupportedCultures!)
+        foreach (var cultureInfo in _requestLocalizationOptions.SupportedUICultures!)
         {
             CultureOption option = new(cultureInfo, cultureInfo.TwoLetterISOLanguageName.Equals(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName) ? "selected" : null);
             items.Add(option);

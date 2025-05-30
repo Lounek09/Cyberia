@@ -16,7 +16,7 @@ public sealed class CultureController : Controller
     public IActionResult SetCookie(string culture, string returnPath)
     {
         if (string.IsNullOrWhiteSpace(culture) ||
-            !_requestLocalizationOptions.SupportedCultures!.Any(x => x.TwoLetterISOLanguageName.Equals(culture)))
+            !_requestLocalizationOptions.SupportedUICultures!.Any(x => x.TwoLetterISOLanguageName.Equals(culture)))
         {
             return BadRequest();
         }
