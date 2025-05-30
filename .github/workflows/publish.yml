@@ -20,11 +20,7 @@ jobs:
         run: |
           dotnet publish Cyberia/Cyberia.csproj -c Release -r linux-x64 -o ./App \
             -p:PublishReadyToRun=true \
-            -p:DebugType=Embedded \
-            -p:PublishSingleFile=true \
-            -p:IncludeNativeLibrariesForSelfExtract=true \
-            -p:IncludeAllContentForSelfExtract=true \
-            --no-self-contained
+            -p:DebugType=Embedded
 
       - name: Deploy
         uses: appleboy/scp-action@master
