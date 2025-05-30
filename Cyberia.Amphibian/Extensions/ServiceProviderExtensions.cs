@@ -18,7 +18,7 @@ public static class ServiceProviderExtensions
     {
         var webApp = provider.GetRequiredService<WebApplication>();
 
-        _webAppTask = Task.Factory.StartNew(() => webApp.RunAsync(), TaskCreationOptions.LongRunning);
+        _webAppTask ??= webApp.RunAsync();
 
         return provider;
     }
@@ -32,7 +32,11 @@ public static class ServiceProviderExtensions
     {
         var webApp = provider.GetRequiredService<WebApplication>();
 
-        await webApp.StopAsync();
+        if (_webAppTask is not null)
+        {
+            await webApp.StopAsync();
+            _webAppTask = null;
+        }
 
         return provider;
     }
