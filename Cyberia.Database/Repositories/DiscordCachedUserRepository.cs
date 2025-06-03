@@ -21,24 +21,6 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
     }
 
     /// <summary>
-    /// Creates the table for the repository.
-    /// </summary>
-    /// <returns><see langword="true"/> if the table was created; otherwise, <see langword="false"/>.</returns>
-    public async Task<bool> CreateTableAsync()
-    {
-        const string query =
-        $"""
-        CREATE TABLE IF NOT EXISTS {nameof(DiscordCachedUser)} (
-            {nameof(DiscordCachedUser.Id)} INTEGER PRIMARY KEY,
-            {nameof(DiscordCachedUser.Locale)} TEXT
-        );
-        """;
-
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query) > 0;
-    }
-
-    /// <summary>
     /// Gets a Discord user by their id.
     /// </summary>
     /// <param name="id">The id of the user.</param>

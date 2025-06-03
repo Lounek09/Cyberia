@@ -1,4 +1,4 @@
-﻿using Cyberia.Database.Repositories;
+﻿using Cyberia.Database.Migrations;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,18 +10,15 @@ namespace Cyberia.Database.Extentsions;
 public static class ServiceProviderExtensions
 {
     /// <summary>
-    /// Creates the tables of the database.
+    /// Applies all pending database migrations.
     /// </summary>
-    /// <param name="provider">The service provider.</param>
+    /// <param name="serviceProvider">The service provider.</param>
     /// <returns>The service provider.</returns>
-    public static async Task<IServiceProvider> CreateDatabaseTablesAsync(this IServiceProvider provider)
+    public static async Task ApplyDatabaseMigrationsAsync(this IServiceProvider serviceProvider)
     {
-        var repositories = provider.GetServices<IDatabaseRepository>();
-        foreach (var repository in repositories)
-        {
-            await repository.CreateTableAsync();
-        }
+        var migrationManager = serviceProvider.GetRequiredService<IMigrationManager>();
 
-        return provider;
+        await migrationManager.EnsureMigrationTableExistsAsync();
+        await migrationManager.ApplyMigrationsAsync();
     }
 }

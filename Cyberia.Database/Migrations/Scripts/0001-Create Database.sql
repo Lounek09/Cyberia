@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS DiscordCachedUser(
+    Id INTEGER PRIMARY KEY,
+    Locale TEXT
+);

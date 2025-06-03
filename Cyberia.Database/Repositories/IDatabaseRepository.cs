@@ -2,5 +2,5 @@
 
 public interface IDatabaseRepository
 {
-    Task<bool> CreateTableAsync();
+
 }

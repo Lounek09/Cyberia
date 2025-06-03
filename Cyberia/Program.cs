@@ -67,7 +67,7 @@ public static class Program
 
             var provider = services.BuildServiceProvider();
 
-            await provider.CreateDatabaseTablesAsync();
+            await provider.ApplyDatabaseMigrationsAsync();
             provider.LoadDofusDatacenter(cyberiaConfig.DofusApiConfig.Type);
 
             if (cyberiaConfig.EnableSalamandra)
