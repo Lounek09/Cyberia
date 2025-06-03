@@ -18,6 +18,7 @@ public sealed record CharacterSummonMonsterGroupEffect : Effect
 
     internal static CharacterSummonMonsterGroupEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
+        //TODO: Use Span
         var monstersId = parameters.Param4.Split(':', StringSplitOptions.RemoveEmptyEntries)
             .Select(x => int.Parse(x, NumberStyles.HexNumber))
             .ToList();

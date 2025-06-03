@@ -34,23 +34,23 @@ public interface ILangsService
 
 public sealed class LangsService : ILangsService
 {
-    private readonly ICachedChannelsService _cachedChannelsService;
+    private readonly ICachedChannelsManager _cachedChannelsManager;
     private readonly ILangsWatcher _langsWatcher;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsService"/> class.
     /// </summary>
-    /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
+    /// <param name="cachedChannelsManager">The service to get the cached channels from.</param>
     /// <param name="langsWatcher">The watcher to get the langs from.</param>
-    public LangsService(ICachedChannelsService cachedChannelsService, ILangsWatcher langsWatcher)
+    public LangsService(ICachedChannelsManager cachedChannelsManager, ILangsWatcher langsWatcher)
     {
-        _cachedChannelsService = cachedChannelsService;
+        _cachedChannelsManager = cachedChannelsManager;
         _langsWatcher = langsWatcher;
     }
 
     public async Task LaunchManualDiff(LangType currentType, LangType modelType, Language language)
     {
-        var forum = _cachedChannelsService.LangsForumChannel;
+        var forum = _cachedChannelsManager.LangsForumChannel;
         if (forum is null)
         {
             return;
@@ -90,7 +90,7 @@ public sealed class LangsService : ILangsService
             return;
         }
 
-        var forum = _cachedChannelsService.LangsForumChannel;
+        var forum = _cachedChannelsManager.LangsForumChannel;
         if (forum is null)
         {
             return;

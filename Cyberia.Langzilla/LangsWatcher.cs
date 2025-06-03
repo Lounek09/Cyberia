@@ -234,6 +234,7 @@ public sealed class LangsWatcher : ILangsWatcher
 
         foreach (var langInfo in langInfos)
         {
+            //TODO: Use Span
             var langParameters = langInfo.Split(',', StringSplitOptions.RemoveEmptyEntries);
             if (langParameters.Length < 3 ||
                 !int.TryParse(langParameters[2], out var langVersion))

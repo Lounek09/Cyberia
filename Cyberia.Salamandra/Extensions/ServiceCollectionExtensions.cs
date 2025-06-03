@@ -65,7 +65,7 @@ public static class ServiceCollectionExtensions
                 }
             );
 
-        services.AddSingleton<ICachedChannelsService, CachedChannelsService>();
+        services.AddSingleton<ICachedChannelsManager, CachedChannelsManager>();
         services.AddSingleton<ICultureService, CultureService>();
         services.AddSingleton<ICytrusService, CytrusService>();
         services.AddSingleton<IEmojisService, EmojisService>();

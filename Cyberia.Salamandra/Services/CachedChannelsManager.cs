@@ -5,7 +5,10 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Services;
 
-public interface ICachedChannelsService
+/// <summary>
+/// Represents a service to manage cached Discord channels.
+/// </summary>
+public interface ICachedChannelsManager
 {
     /// <summary>
     /// Gets the log channel.
@@ -52,7 +55,7 @@ public interface ICachedChannelsService
     
 }
 
-public sealed class CachedChannelsService : ICachedChannelsService
+public sealed class CachedChannelsManager : ICachedChannelsManager
 {
     public DiscordChannel? LogChannel { get; internal set; }
 
@@ -68,11 +71,11 @@ public sealed class CachedChannelsService : ICachedChannelsService
     private readonly DiscordClient _client;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CachedChannelsService"/> class.
+    /// Initializes a new instance of the <see cref="CachedChannelsManager"/> class.
     /// </summary>
     /// <param name="botConfig">The bot configuration.</param>
     /// <param name="client">The Discord client.</param>
-    public CachedChannelsService(BotConfig botConfig, DiscordClient client)
+    public CachedChannelsManager(BotConfig botConfig, DiscordClient client)
     {
         _botConfig = botConfig;
         _client = client;

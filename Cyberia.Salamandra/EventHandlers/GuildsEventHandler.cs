@@ -10,15 +10,15 @@ namespace Cyberia.Salamandra.EventHandlers;
 /// </summary>
 public sealed class GuildsEventHandler : IEventHandler<GuildCreatedEventArgs>, IEventHandler<GuildDeletedEventArgs>
 {
-    private readonly ICachedChannelsService _cachedChannelsService;
+    private readonly ICachedChannelsManager _cachedChannelsManager;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GuildsEventHandler"/> class.
     /// </summary>
-    /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
-    public GuildsEventHandler(ICachedChannelsService cachedChannelsService)
+    /// <param name="cachedChannelsManager">The service to get the cached channels from.</param>
+    public GuildsEventHandler(ICachedChannelsManager cachedChannelsManager)
     {
-        _cachedChannelsService = cachedChannelsService;
+        _cachedChannelsManager = cachedChannelsManager;
     }
 
     public async Task HandleEventAsync(DiscordClient _, GuildCreatedEventArgs eventArgs)
@@ -26,7 +26,7 @@ public sealed class GuildsEventHandler : IEventHandler<GuildCreatedEventArgs>, I
         var guild = eventArgs.Guild;
         var owner = await guild.GetGuildOwnerAsync();
 
-        await _cachedChannelsService.SendLogMessage($"""
+        await _cachedChannelsManager.SendLogMessage($"""
             [NEW] {Formatter.Bold(Formatter.Sanitize(guild.Name))} ({guild.Id})
             created on : {guild.CreationTimestamp}
             Owner : {Formatter.Sanitize(owner.Username)} ({owner.Mention})
@@ -37,6 +37,6 @@ public sealed class GuildsEventHandler : IEventHandler<GuildCreatedEventArgs>, I
     {
         var guild = eventArgs.Guild;
 
-        await _cachedChannelsService.SendLogMessage($"[LOSE] {Formatter.Bold(Formatter.Sanitize(guild.Name))} ({guild.Id})");
+        await _cachedChannelsManager.SendLogMessage($"[LOSE] {Formatter.Bold(Formatter.Sanitize(guild.Name))} ({guild.Id})");
     }
 }

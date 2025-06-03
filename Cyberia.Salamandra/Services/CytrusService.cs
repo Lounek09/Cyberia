@@ -39,19 +39,19 @@ public interface ICytrusService
 
 public sealed class CytrusService : ICytrusService
 {
-    private readonly ICachedChannelsService _cachedChannelsService;
+    private readonly ICachedChannelsManager _cachedChannelsManager;
     private readonly ICytrusManifestFetcher _cytrusManifestFetcher;
     private readonly ICytrusWatcher _cytrusWatcher;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusService"/> class.
     /// </summary>
-    /// <param name="cachedChannelsService">The service to get the cached channels from.</param>
+    /// <param name="cachedChannelsManager">The service to get the cached channels from.</param>
     /// <param name="cytrusManifestFetcher">The fetcher to get the manifest from.</param>
     /// <param name="cytrusWatcher">The watcher to get the Cytrus data from.</param>
-    public CytrusService(ICachedChannelsService cachedChannelsService, ICytrusManifestFetcher cytrusManifestFetcher, ICytrusWatcher cytrusWatcher)
+    public CytrusService(ICachedChannelsManager cachedChannelsManager, ICytrusManifestFetcher cytrusManifestFetcher, ICytrusWatcher cytrusWatcher)
     {
-        _cachedChannelsService = cachedChannelsService;
+        _cachedChannelsManager = cachedChannelsManager;
         _cytrusManifestFetcher = cytrusManifestFetcher;
         _cytrusWatcher = cytrusWatcher;
     }
@@ -91,7 +91,7 @@ public sealed class CytrusService : ICytrusService
     /// <param name="eventArgs">The event arguments containing the diff.</param>
     private async Task SendCytrusDiffAsync(NewCytrusFileDetectedEventArgs eventArgs)
     {
-        var channel = _cachedChannelsService.CytrusChannel;
+        var channel = _cachedChannelsManager.CytrusChannel;
         if (channel is null)
         {
             return;
@@ -115,7 +115,7 @@ public sealed class CytrusService : ICytrusService
     /// <param name="eventArgs">The event arguments containing the diff.</param>
     private async Task SendManifestDiffAsync(NewCytrusFileDetectedEventArgs eventArgs)
     {
-        var channel = _cachedChannelsService.CytrusManifestChannel;
+        var channel = _cachedChannelsManager.CytrusManifestChannel;
         if (channel is null)
         {
             return;
