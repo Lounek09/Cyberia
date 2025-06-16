@@ -52,7 +52,7 @@ public static class Program
             CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
             CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
 
-            var services = new ServiceCollection();
+            ServiceCollection services = new();
 
             services.AddLogging(x => x.ClearProviders().AddSerilog());
 
