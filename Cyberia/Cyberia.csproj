@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <StartupObject>Cyberia.Program</StartupObject>
-    <ApplicationIcon>salamandra.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\salamandra.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
