@@ -23,6 +23,7 @@ public static class EffectAreaFactory
         if (compressedEffectArea.Length != 2)
         {
             Log.Warning("Failed to create EffectArea from {CompressedEffectArea}", compressedEffectArea.ToString());
+
             return Default;
         }
 

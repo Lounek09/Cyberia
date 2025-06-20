@@ -45,20 +45,22 @@ public static class QuestObjectiveFactory
     /// <returns>The created <see cref="IQuestObjective"/> if successful; otherwise, an <see cref="ErroredQuestObjective"/> or <see cref="UntranslatedQuestObjective"/> instance.</returns>
     public static IQuestObjective Create(QuestObjectiveData questObjectiveData)
     {
-        if (s_factories.TryGetValue(questObjectiveData.QuestObjectiveTypeId, out var builder))
+        if (!s_factories.TryGetValue(questObjectiveData.QuestObjectiveTypeId, out var builder))
         {
-            var questObjective = builder(questObjectiveData);
-            if (questObjective is not null)
-            {
-                return questObjective;
-            }
+            Log.Warning("Unknown QuestObjectiveType from {@QuestObjectiveData}", questObjectiveData);
 
+            return new UntranslatedQuestObjective(questObjectiveData);
+        }
+
+        var questObjective = builder(questObjectiveData);
+        if (questObjective is null)
+        {
             Log.Error("Failed to create QuestObjective from {@QuestObjectiveData}", questObjectiveData);
+
             return new ErroredQuestObjective(questObjectiveData);
         }
 
-        Log.Warning("Unknown QuestObjectiveType from {@QuestObjectiveData}", questObjectiveData);
-        return new UntranslatedQuestObjective(questObjectiveData);
+        return questObjective;
     }
 
     /// <summary>

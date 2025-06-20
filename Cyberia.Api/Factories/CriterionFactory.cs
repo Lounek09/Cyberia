@@ -120,14 +120,18 @@ public static class CriterionFactory
         string compressedCriterion;
         string[] arrayParameters;
 
-        if (s_factories.TryGetValue(id, out var builder))
+        if (!s_factories.TryGetValue(id, out var builder))
         {
-            var criterion = builder(id, @operator, parameters);
-            if (criterion is not null)
-            {
-                return criterion;
-            }
+            arrayParameters = parameters.ToArray();
+            compressedCriterion = $"{id}{@operator}{string.Join(',', arrayParameters)}";
+            Log.Warning("Unknown Criterion {CompressedCriterion}", compressedCriterion);
 
+            return new UntranslatedCriterion(id, @operator, arrayParameters, compressedCriterion);
+        }
+
+        var criterion = builder(id, @operator, parameters);
+        if (criterion is null)
+        {
             arrayParameters = parameters.ToArray();
             compressedCriterion = $"{id}{@operator}{string.Join(',', arrayParameters)}";
             Log.Error("Failed to create Criterion from {CompressedCriterion}", compressedCriterion);
@@ -135,11 +139,7 @@ public static class CriterionFactory
             return new ErroredCriterion(id, @operator, arrayParameters, compressedCriterion);
         }
 
-        arrayParameters = parameters.ToArray();
-        compressedCriterion = $"{id}{@operator}{string.Join(',', arrayParameters)}";
-        Log.Warning("Unknown Criterion {CompressedCriterion}", compressedCriterion);
-
-        return new UntranslatedCriterion(id, @operator, arrayParameters, compressedCriterion);
+        return criterion;
     }
 
     /// <summary>

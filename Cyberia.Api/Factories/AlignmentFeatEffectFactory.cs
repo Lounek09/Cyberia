@@ -67,23 +67,23 @@ public static class AlignmentFeatEffectFactory
     {
         int[] arrayParameters;
 
-        if (s_factories.TryGetValue(id, out var builder))
+        if (!s_factories.TryGetValue(id, out var builder))
         {
-            var alignmentFeatEffect = builder(id, parameters);
-            if (alignmentFeatEffect is not null)
-            {
-                return alignmentFeatEffect;
-            }
+            arrayParameters = parameters.ToArray();
+            Log.Warning("Unknown AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}", id, arrayParameters);
 
+            return new UntranslatedAlignmentFeatEffect(id, arrayParameters);
+        }
+
+        var alignmentFeatEffect = builder(id, parameters);
+        if (alignmentFeatEffect is null)
+        {
             arrayParameters = parameters.ToArray();
             Log.Error("Failed to create AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}", id, arrayParameters);
 
             return new ErroredAlignmentFeatEffect(id, arrayParameters);
         }
 
-        arrayParameters = parameters.ToArray();
-        Log.Warning("Unknown AlignmentFeatEffect {AlignmentFeatEffectId} from {@AlignmentFeatEffectParameters}", id, arrayParameters);
-
-        return new UntranslatedAlignmentFeatEffect(id, arrayParameters);
+        return alignmentFeatEffect;
     }
 }

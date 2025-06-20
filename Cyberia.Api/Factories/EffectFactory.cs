@@ -497,6 +497,7 @@ public static class EffectFactory
         if (compressedEffect.IsEmpty)
         {
             Log.Error("Failed to create Effect from an empty string");
+
             return new ErroredEffect(string.Empty);
         }
 
@@ -505,6 +506,7 @@ public static class EffectFactory
         {
             var compressedEffectStr = compressedEffect.ToString();
             Log.Error("Failed to create Effect from {CompressedEffect}", compressedEffectStr);
+
             return new ErroredEffect(compressedEffectStr);
         }
 
