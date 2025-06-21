@@ -21,11 +21,7 @@ public sealed class QuestStepRewardsDataConverter : JsonConverter<QuestStepRewar
             throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}.");
         }
 
-        var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
-        if (elements.Length != 6)
-        {
-            throw new JsonException($"Expected 6 elements but got {elements.Length}.");
-        }
+        var elements = JsonElement.ParseValue(ref reader);
 
         Dictionary<int, int> itemsIdQuantities = [];
         if (elements[2].ValueKind == JsonValueKind.Array)

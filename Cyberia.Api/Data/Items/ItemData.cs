@@ -96,7 +96,7 @@ public sealed class ItemData : IDofusData<int>
         Name = LocalizedString.Empty;
         NormalizedName = LocalizedString.Empty;
         Description = LocalizedString.Empty;
-        Criteria = [];
+        Criteria = CriteriaReadOnlyCollection.Empty;
     }
 
     public async Task<string> GetImagePathAsync(CdnImageSize size)

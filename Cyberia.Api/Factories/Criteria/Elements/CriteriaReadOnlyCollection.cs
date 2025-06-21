@@ -13,6 +13,11 @@ namespace Cyberia.Api.Factories.Criteria.Elements;
 public sealed record CriteriaReadOnlyCollection : ICriteriaElement, IReadOnlyList<ICriteriaElement>
 {
     /// <summary>
+    /// Gets an empty <see cref="CriteriaReadOnlyCollection"/>.
+    /// </summary>
+    public static CriteriaReadOnlyCollection Empty => new(Array.Empty<ICriteriaElement>());
+
+    /// <summary>
     /// Gets the items in the collection.
     /// </summary>
     public ReadOnlyCollection<ICriteriaElement> Items => _items.AsReadOnly();
@@ -27,20 +32,12 @@ public sealed record CriteriaReadOnlyCollection : ICriteriaElement, IReadOnlyLis
     private readonly IList<ICriteriaElement> _items;
 
     /// <summary>
-    /// Initializes a new empty instance of the <see cref="CriteriaReadOnlyCollection"/> record.
-    /// </summary>
-    public CriteriaReadOnlyCollection()
-    {
-        _items = [];
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="CriteriaReadOnlyCollection"/> record with the specified items.
+    /// Initializes a new instance of the <see cref="CriteriaReadOnlyCollection"/> class.
     /// </summary>
     /// <param name="items">The items to add to the collection.</param>
-    public CriteriaReadOnlyCollection(IEnumerable<ICriteriaElement> items)
+    public CriteriaReadOnlyCollection(IList<ICriteriaElement> items)
     {
-        _items = items as IList<ICriteriaElement> ?? new List<ICriteriaElement>(items);
+        _items = items;
     }
 
     public IEnumerator<ICriteriaElement> GetEnumerator()

@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Factories;
+﻿using Cyberia.Api.Factories.Effects;
 using Cyberia.Langzilla.Enums;
 
 using System.Globalization;

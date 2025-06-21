@@ -119,34 +119,34 @@ public class StringExtensionsTests
 
     #endregion
 
-    #region ToInt64OrDefaultFromHex
+    #region ToNumberOrZeroFromHex
 
     [TestMethod]
-    public void ToInt64OrDefaultFromHex_WithValidHex_ReturnsNumber()
+    public void ToNumberOrZeroFromHex_WithValidHex_ReturnsNumber()
     {
         var value = "1A";
 
-        var result = value.ToInt64OrDefaultFromHex();
+        var result = value.ToNumberOrZeroFromHex<int>();
 
         Assert.AreEqual(26, result);
     }
 
     [TestMethod]
-    public void ToInt64OrDefaultFromHex_WithValidNegativeHex_ReturnsNumber()
+    public void ToNumberOrZeroFromHex_WithValidNegativeHex_ReturnsNumber()
     {
         var value = "-1A";
 
-        var result = value.ToInt64OrDefaultFromHex();
+        var result = value.ToNumberOrZeroFromHex<int>();
 
         Assert.AreEqual(-26, result);
     }
 
     [TestMethod]
-    public void ToInt64OrDefaultFromHex_WithInvalidHex_ReturnsDefault()
+    public void ToNumberOrZeroFromHex_WithInvalidHex_ReturnsDefault()
     {
         var value = "XYZ";
 
-        var result = value.ToInt64OrDefaultFromHex();
+        var result = value.ToNumberOrZeroFromHex<int>();
 
         Assert.AreEqual(default, result);
     }

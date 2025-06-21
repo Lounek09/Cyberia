@@ -5,19 +5,21 @@ namespace Cyberia.Tests.Utils;
 [TestClass]
 public class JsonTests
 {
-    private const string c_currentJson = """
-        {
-            "name": "Fallanster",
-            "age": 40
-        }
-        """;
+    private const string c_currentJson =
+    """
+    {
+        "name": "Fallanster",
+        "age": 40
+    }
+    """;
 
-    private const string c_modelJson = """
-        {
-            "name": "Allisteria",
-            "age": 18
-        }
-        """;
+    private const string c_modelJson =
+    """
+    {
+        "name": "Allisteria",
+        "age": 18
+    }
+    """;
 
 
     #region Diff JsonNode

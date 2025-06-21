@@ -32,9 +32,6 @@ public static class RuneCalculator
     /// </summary>
     public const double MaxMultiplicator = 1.1;
 
-    // Maximum percentage of a stat that can be extracted (2/3 * 100 = 66.67%)
-    private const double MaxExtractablePercent = 2D / 3D * 100;
-
     /// <summary>
     /// Calculates the percentage of a stat that can be extracted from an item.
     /// </summary>
@@ -44,12 +41,14 @@ public static class RuneCalculator
     /// <returns>The percentage of the stat that can be extracted.</returns>
     public static double GetPercentStatExtractable(RuneData runeData, int itemLevel, int statAmount)
     {
+        const double maxExtactablePercent = 2D / 3 * 100;
+
         var a = Math.Pow(itemLevel, 2);
         var b = Math.Pow(runeData.Weight, 1.25);
         var c = 1.5 * (a / b);
-        var d = c + (statAmount - 1) / runeData.Weight * Math.Max(0, MaxExtractablePercent - c);
+        var d = c + (statAmount - 1) / runeData.Weight * Math.Max(0, maxExtactablePercent - c);
 
-        return Math.Min(MaxExtractablePercent, d);
+        return Math.Min(maxExtactablePercent, d);
     }
 
     /// <summary>

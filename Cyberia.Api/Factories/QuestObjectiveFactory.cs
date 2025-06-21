@@ -62,23 +62,4 @@ public static class QuestObjectiveFactory
 
         return questObjective;
     }
-
-    /// <summary>
-    /// Creates a list of <see cref="IQuestObjective"/> from the given list of <see cref="QuestObjectiveData"/>.
-    /// </summary>
-    /// <param name="questObjectivesData">The list of quest objectives data to create.</param>
-    /// <returns>The list of created <see cref="IQuestObjective"/>.</returns>
-    public static List<IQuestObjective> CreateMany(IReadOnlyList<QuestObjectiveData> questObjectivesData)
-    {
-        var count = questObjectivesData.Count;
-        List<IQuestObjective> questObjectives = new(count);
-
-        for (var i = 0; i < count; i++)
-        {
-            var questObjective = Create(questObjectivesData[i]);
-            questObjectives.Add(questObjective);
-        }
-
-        return questObjectives;
-    }
 }

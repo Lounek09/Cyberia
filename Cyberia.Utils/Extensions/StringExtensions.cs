@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Numerics;
 
 namespace Cyberia.Utils;
 
@@ -120,31 +121,37 @@ public static partial class StringExtensions
     }
 
     /// <summary>
-    /// Converts an hexadecimal string to a long integer.
+    /// Converts an hexadecimal string to a <typeparamref name="T"/>.
     /// </summary>
-    /// <param name="value">The hexadecimal string to convert.</param>
-    /// <returns>The converted long integer, or <see langword="default"/> if the conversion fails.</returns>
-    public static long ToInt64OrDefaultFromHex(this string value)
+    /// <typeparam name="T">The targeted number type.</typeparam>
+    /// <param name="value">The hexadecimal string to convert. An optional leading '-' indicates a negative number.</param>
+    /// <returns>The parsed <typeparamref name="T"/>, or <c>0</c> if the conversion fails.</returns>
+    public static T ToNumberOrZeroFromHex<T>(this string value)
+        where T : INumber<T>
     {
-        return ToInt64OrDefaultFromHex(value.AsSpan());
+        return ToNumberOrZeroFromHex<T>(value.AsSpan());
     }
 
-    /// <inheritdoc cref="ToInt64OrDefaultFromHex(string)" />
-    public static long ToInt64OrDefaultFromHex(this ReadOnlySpan<char> value)
+    /// <inheritdoc cref="ToNumberOrZeroFromHex(string)" />
+    public static T ToNumberOrZeroFromHex<T>(this ReadOnlySpan<char> value)
+        where T : INumber<T>
     {
         if (value.IsEmpty)
         {
-            return default;
+            return T.Zero;
         }
 
         var isNegative = value[0] == '-';
-        value = isNegative ? value[1..] : value;
-
-        if (long.TryParse(value, NumberStyles.HexNumber, null, out var result))
+        if (isNegative)
         {
-            return isNegative ? -result : result;
+            value = value[1..];
         }
 
-        return default;
+        if (!T.TryParse(value, NumberStyles.HexNumber, null, out var result))
+        {
+            return T.Zero;
+        }
+
+        return isNegative ? -result : result;
     }
 }

@@ -10,10 +10,6 @@ namespace CsvGenerator.Extensions;
 
 public static class StringBuilderExtensions
 {
-    private const string c_effectSeparator = " | ";
-    private const string c_craftSeparator = " | ";
-    private const string c_craftQuantitySeparator = " x ";
-
     private static readonly SearchValues<char> s_csvChars = SearchValues.Create(",\n\"");
 
     public static StringBuilder AppendCsvString(this StringBuilder builder, string value)
@@ -46,6 +42,9 @@ public static class StringBuilderExtensions
 
     public static StringBuilder AppendEffects(this StringBuilder builder, IReadOnlyList<IEffect> effects)
     {
+        const string separator = " | ";
+        const int separatorLength = 3;
+
         if (effects.Count == 0)
         {
             return builder;
@@ -56,10 +55,10 @@ public static class StringBuilderExtensions
         foreach (var effect in effects)
         {
             effectsBuilder.Append(effect.GetDescription());
-            effectsBuilder.Append(c_effectSeparator);
+            effectsBuilder.Append(separator);
         }
 
-        effectsBuilder.Remove(effectsBuilder.Length - c_effectSeparator.Length, c_effectSeparator.Length);
+        effectsBuilder.Remove(effectsBuilder.Length - separatorLength, separatorLength);
 
         return builder.AppendCsvString(effectsBuilder.ToString());
     }
@@ -100,6 +99,10 @@ public static class StringBuilderExtensions
 
     public static StringBuilder AppendCraft(this StringBuilder builder, CraftData craftData)
     {
+        const string separator = " | ";
+        const int separatorLength = 3;
+        const string quantitySeparator = " x ";
+
         var ingredients = craftData.GetIngredients(1);
         if (ingredients.Count == 0)
         {
@@ -111,12 +114,12 @@ public static class StringBuilderExtensions
         foreach (var ingredient in ingredients)
         {
             craftBuilder.Append(ingredient.Value);
-            craftBuilder.Append(c_craftQuantitySeparator);
+            craftBuilder.Append(quantitySeparator);
             craftBuilder.Append(ingredient.Key.Name);
-            craftBuilder.Append(c_craftSeparator);
+            craftBuilder.Append(separator);
         }
 
-        craftBuilder.Remove(craftBuilder.Length - c_craftSeparator.Length, c_craftSeparator.Length);
+        craftBuilder.Remove(craftBuilder.Length - separatorLength, separatorLength);
 
         return builder.AppendCsvString(craftBuilder.ToString());
     }

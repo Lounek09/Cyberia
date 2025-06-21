@@ -2,6 +2,7 @@
 using Cyberia.Api.Enums;
 using Cyberia.Api.Factories;
 
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -16,8 +17,6 @@ namespace Cyberia.Api.JsonConverters;
 /// </remarks>
 public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
 {
-    private const int c_arrayLength = 21;
-
     public override SpellLevelData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.StartArray)
@@ -25,19 +24,12 @@ public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
             throw new JsonException($"Expected {JsonTokenType.StartArray} but got {reader.TokenType}.");
         }
 
-        var elements = JsonSerializer.Deserialize<JsonElement[]>(ref reader, options) ?? [];
-        if (elements.Length != c_arrayLength)
-        {
-            throw new JsonException($"Expected {c_arrayLength} elements but got {elements.Length}");
-        }
+        var elements = JsonElement.ParseValue(ref reader);
 
-        var effects = JsonSerializer.Deserialize<JsonElement[]>(elements[0], options) ?? [];
-        var criticalEffects = JsonSerializer.Deserialize<JsonElement[]>(elements[1], options) ?? [];
-        var effectAreas = EffectAreaFactory.CreateMany(elements[15].GetString());
+        var effectAreas = CollectionsMarshal.AsSpan(EffectAreaFactory.CreateMany(elements[15].GetString()));
 
-        var parsedEffects = EffectFactory.CreateMany(effects, effectAreas);
-        effectAreas.RemoveRange(0, parsedEffects.Count);
-        var parsedCriticalEffects = EffectFactory.CreateMany(criticalEffects, effectAreas);
+        var parsedEffects = EffectFactory.CreateMany(elements[0], effectAreas);
+        var parsedCriticalEffects = EffectFactory.CreateMany(elements[1], effectAreas[parsedEffects.Count..]);
 
         return new SpellLevelData
         {

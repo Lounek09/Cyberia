@@ -213,14 +213,14 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
         {
             List<AlignmentFeatParametersData> alignmentFeatsParametersData = [];
 
-            foreach (var compressedAlignmentFeatsParameters in alignmentSpecializationData.Value.CompressedAlignmentFeatsParameters)
+            foreach (var compressedAlignmentFeatParameters in alignmentSpecializationData.Value.CompressedAlignmentFeatsParameters)
             {
-                var length = compressedAlignmentFeatsParameters.GetArrayLength();
+                var length = compressedAlignmentFeatParameters.GetArrayLength();
 
-                var alignmentFeatId = compressedAlignmentFeatsParameters[0].GetInt32OrDefault();
-                var level = compressedAlignmentFeatsParameters[1].GetInt32OrDefault();
+                var alignmentFeatId = compressedAlignmentFeatParameters[0].GetInt32OrDefault();
+                var level = compressedAlignmentFeatParameters[1].GetInt32OrDefault();
                 var parameters = length > 2
-                ? JsonSerializer.Deserialize<int[]>(compressedAlignmentFeatsParameters[2]) ?? []
+                    ? JsonSerializer.Deserialize<int[]>(compressedAlignmentFeatParameters[2]) ?? []
                     : [];
 
                 var alignmentFeatData = GetAlignmentFeatDataById(alignmentFeatId);
@@ -236,7 +236,7 @@ public sealed class AlignmentsRepository : DofusRepository, IDofusRepository
                 });
             }
 
-            alignmentSpecializationData.Value.AlignmentFeatsParametersData = alignmentFeatsParametersData;
+            alignmentSpecializationData.Value.AlignmentFeatsParametersData = alignmentFeatsParametersData.AsReadOnly();
         }
     }
 }

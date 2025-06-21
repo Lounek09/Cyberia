@@ -17,8 +17,6 @@ namespace Cyberia.Api.Factories;
 /// </summary>
 public static class CriterionFactory
 {
-    private const char c_parameterSeparator = ',';
-
     /// <summary>
     /// A dictionary mapping criterion identifiers to their factory methods.
     /// </summary>
@@ -149,6 +147,8 @@ public static class CriterionFactory
     /// <returns>The created <see cref="ICriterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
     public static ICriterion Create(ReadOnlySpan<char> compressedCriterion)
     {
+        const char separator = ',';
+
         if (compressedCriterion.Length < 4)
         {
             var compressedCriterionStr = compressedCriterion.ToString();
@@ -166,7 +166,7 @@ public static class CriterionFactory
             return Create(id, @operator);
         }
 
-        var parametersCount = compressedCriterion.Count(c_parameterSeparator) + 1;
+        var parametersCount = compressedCriterion.Count(separator) + 1;
         if (parametersCount == 1)
         {
             return Create(id, @operator, compressedCriterion.ToString());
@@ -174,7 +174,7 @@ public static class CriterionFactory
 
         Span<string> parameters = new string[parametersCount];
         var index = 0;
-        foreach (var range in compressedCriterion.Split(c_parameterSeparator))
+        foreach (var range in compressedCriterion.Split(separator))
         {
             parameters[index++] = compressedCriterion[range].ToString();
         }
@@ -191,7 +191,7 @@ public static class CriterionFactory
     {
         if (compressedCriteria.IsEmpty)
         {
-            return [];
+            return CriteriaReadOnlyCollection.Empty;
         }
 
         List<ICriteriaElement> criteria = [];

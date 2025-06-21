@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api.Data.Quests.Custom;
 using Cyberia.Api.Data.Quests.Localized;
 using Cyberia.Api.Factories;
+using Cyberia.Api.Factories.QuestObjectives;
 using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
@@ -194,18 +195,19 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
     {
         foreach (var questStepData in QuestSteps.Values)
         {
-            List<QuestObjectiveData> questObjectivesData = [];
+            List<IQuestObjective> questObjectives = [];
 
             foreach (var questObjectiveId in questStepData.QuestObjectivesId)
             {
                 var questObjectiveData = GetQuestObjectiveDataById(questObjectiveId);
                 if (questObjectiveData is not null)
                 {
-                    questObjectivesData.Add(questObjectiveData);
+                    var questObjective = QuestObjectiveFactory.Create(questObjectiveData);
+                    questObjectives.Add(questObjective);
                 }
             }
 
-            questStepData.QuestObjectives = QuestObjectiveFactory.CreateMany(questObjectivesData);
+            questStepData.QuestObjectives = questObjectives.AsReadOnly();
         }
     }
 }

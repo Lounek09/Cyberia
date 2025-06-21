@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using Cyberia.Api.Factories.Criteria.Elements;
+
+using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
@@ -7,7 +9,7 @@ public sealed record ErroredEffect : Effect
     public string CompressedEffect { get; init; }
 
     internal ErroredEffect(string compressedEffect)
-        : base(0, 0, 0, [], false, EffectAreaFactory.Default)
+        : base(0, 0, 0, CriteriaReadOnlyCollection.Empty, false, EffectAreaFactory.Default)
     {
         CompressedEffect = compressedEffect;
     }

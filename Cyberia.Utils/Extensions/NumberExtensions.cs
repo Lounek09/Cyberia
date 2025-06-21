@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Numerics;
 
 namespace Cyberia.Utils.Extensions;
 
@@ -8,23 +9,14 @@ namespace Cyberia.Utils.Extensions;
 public static class NumberExtensions
 {
     /// <summary>
-    /// Converts the value of this instance to its equivalent string representation using thousand separators.
+    /// Converts a number to a formatted string with thousands separators.
     /// </summary>
-    /// <param name="value">The integer value.</param>
-    /// <param name="culture">The culture to use for formatting.</param>
-    /// <returns>A string formatted as the value with thousand separators.</returns>
-    public static string ToFormattedString(this int value, CultureInfo? culture = null)
-    {
-        return value.ToString("#,0", culture?.NumberFormat);
-    }
-
-    /// <summary>
-    /// Converts the value of this instance to its equivalent string representation using thousand separators.
-    /// </summary>
-    /// <param name="value">The long value.</param>
-    /// <param name="culture">The culture to use for formatting.</param>
-    /// <returns>A string formatted as the value with thousand separators.</returns>
-    public static string ToFormattedString(this long value, CultureInfo? culture = null)
+    /// <typeparam name="T">The type of the number.</typeparam>
+    /// <param name="value">The number to format.</param>
+    /// <param name="culture">The culture to use for formatting, or <see langword="null"/> to use the current culture.</param>
+    /// <returns>The formatted string representation of the number.</returns>
+    public static string ToFormattedString<T>(this T value, CultureInfo? culture = null)
+        where T : struct, INumber<T>
     {
         return value.ToString("#,0", culture?.NumberFormat);
     }
