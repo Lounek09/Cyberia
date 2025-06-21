@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.Effects;
 
+using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -23,7 +24,13 @@ public sealed class EffectReadOnlyListConverter : JsonConverter<IReadOnlyList<IE
             throw new JsonException($"Expected {JsonTokenType.String} but got {reader.TokenType}.");
         }
 
-        return EffectFactory.CreateMany(reader.GetString() ?? string.Empty).AsReadOnly();
+        var compressedEffects = reader.GetString();
+        if (string.IsNullOrEmpty(compressedEffects))
+        {
+            return ReadOnlyCollection<IEffect>.Empty;
+        }
+
+        return EffectFactory.CreateMany(compressedEffects).AsReadOnly();
     }
 
     public override void Write(Utf8JsonWriter writer, IReadOnlyList<IEffect> values, JsonSerializerOptions options)

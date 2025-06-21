@@ -153,8 +153,8 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
 
         if (!packet.IsEmpty)
         {
-            var parameterSize = packet.Count(PacketFormatter.Separator) + 1;
-            parameters = new string[parameterSize];
+            var parameterCount = packet.Count(PacketFormatter.Separator) + 1;
+            parameters = new string[parameterCount];
 
             var index = 0;
             foreach (var range in packet.Split(PacketFormatter.Separator))

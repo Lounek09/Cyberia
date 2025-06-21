@@ -478,7 +478,7 @@ public static class EffectFactory
 
         if (compressedEffect.IsEmpty)
         {
-            Log.Error("Failed to create Effect from an empty string");
+            Log.Error("Failed to create Effect from empty string");
 
             return new ErroredEffect(string.Empty);
         }
@@ -509,28 +509,28 @@ public static class EffectFactory
 
         if (compressedEffects.IsEmpty)
         {
+            Log.Error("Failed to create Effects from empty string");
+
             return [];
         }
 
-        var effectCount = compressedEffects.Count(separator) + 1;
+        var separatorCount = compressedEffects.Count(separator) + 1;
+        Span<Range> ranges = stackalloc Range[separatorCount];
+
+        var effectCount = compressedEffects.Split(ranges, separator, StringSplitOptions.RemoveEmptyEntries);
+        if (effectCount == 0)
+        {
+            Log.Error("Failed to create Effects from {CompressedEffects}", compressedEffects.ToString());
+
+            return [];
+        }
+
         List<IEffect> effects = new(effectCount);
 
-        var indexOfSeparator = compressedEffects.IndexOf(separator);
-        while (indexOfSeparator != -1)
+        for (var i = 0; i < effectCount; i++)
         {
-            if (indexOfSeparator == 0)
-            {
-                compressedEffects = compressedEffects[1..];
-                indexOfSeparator = compressedEffects.IndexOf(separator);
-
-                continue;
-            }
-
-            var effect = Create(compressedEffects[..indexOfSeparator]);
-            effects.Add(effect);
-
-            compressedEffects = compressedEffects[(indexOfSeparator + 1)..];
-            indexOfSeparator = compressedEffects.IndexOf(separator);
+            var compressedEffect = compressedEffects[ranges[i]];
+            effects.Add(Create(compressedEffect));
         }
 
         return effects;

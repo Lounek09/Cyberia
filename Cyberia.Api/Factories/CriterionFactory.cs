@@ -166,13 +166,13 @@ public static class CriterionFactory
             return Create(id, @operator);
         }
 
-        var parametersCount = compressedCriterion.Count(separator) + 1;
-        if (parametersCount == 1)
+        var parameterCount = compressedCriterion.Count(separator) + 1;
+        if (parameterCount == 1)
         {
             return Create(id, @operator, compressedCriterion.ToString());
         }
 
-        Span<string> parameters = new string[parametersCount];
+        Span<string> parameters = new string[parameterCount];
         var index = 0;
         foreach (var range in compressedCriterion.Split(separator))
         {

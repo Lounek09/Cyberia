@@ -89,8 +89,8 @@ public static class RuneCalculator
     public static RuneBundle GetRuneBundleFromStat(RuneData runeData, int itemLevel, int statAmount, double? multiplicator = null)
     {
         RuneBundle bundle = new(runeData, 0, 0, 0, 0);
-        var actualMultiplier = multiplicator ?? GetRandomMultiplicator();
-        var amountExtractable = statAmount * GetPercentStatExtractable(runeData, itemLevel, statAmount) * actualMultiplier / 100;
+        var actualMultiplicator = multiplicator ?? GetRandomMultiplicator();
+        var amountExtractable = statAmount * GetPercentStatExtractable(runeData, itemLevel, statAmount) * actualMultiplicator / 100;
 
         if (runeData.RaRuneItemId is not null)
         {
