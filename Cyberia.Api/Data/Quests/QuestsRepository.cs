@@ -46,7 +46,7 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
         return questData;
     }
 
-    public QuestData? GetQuestDataByQuestStepId(int questStepId, out int index)
+    public QuestData? GetQuestDataByQuestStepId(int questStepId, out int questStepIndex)
     {
         foreach (var quest in Quests.Values)
         {
@@ -56,13 +56,13 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
             {
                 if (questStepsId[i] == questStepId)
                 {
-                    index = i;
+                    questStepIndex = i;
                     return quest;
                 }
             }
         }
 
-        index = -1;
+        questStepIndex = -1;
         return null;
     }
 

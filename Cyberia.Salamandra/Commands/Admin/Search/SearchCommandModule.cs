@@ -162,7 +162,7 @@ public sealed class SearchCommandModule
     [Command("quest"), Description("Search the quest where the quest step ID is used")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task QuestExecuteAsync(SlashCommandContext ctx,
-        [Parameter("id"), Description("Quest step ID")]
+        [Parameter("quest_step_id"), Description("Quest step ID")]
         [MinMaxValue(0, 999_999)]
         int questStepId)
     {
