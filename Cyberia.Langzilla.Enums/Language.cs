@@ -54,11 +54,6 @@ public static class LanguageExtensions
         { Language.pt, CultureInfo.GetCultureInfo("pt") }
     }.ToFrozenDictionary();
 
-    public static string ToStringFast(this Language language)
-    {
-        return Enum.GetName(language) ?? language.ToString();
-    }
-
     /// <summary>
     /// Converts a <see cref="Language"/> to its corresponding <see cref="CultureInfo"/>.
     /// </summary>

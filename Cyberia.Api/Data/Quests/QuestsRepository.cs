@@ -46,6 +46,26 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
         return questData;
     }
 
+    public QuestData? GetQuestDataByQuestStepId(int questStepId, out int index)
+    {
+        foreach (var quest in Quests.Values)
+        {
+            var questStepsId = quest.QuestStepsId;
+
+            for (var i = 0; i < questStepsId.Count; i++)
+            {
+                if (questStepsId[i] == questStepId)
+                {
+                    index = i;
+                    return quest;
+                }
+            }
+        }
+
+        index = -1;
+        return null;
+    }
+
     public IEnumerable<QuestData> GetQuestDataByName(string name, Language language)
     {
         return GetQuestsDataByName(name, language.ToCulture());
