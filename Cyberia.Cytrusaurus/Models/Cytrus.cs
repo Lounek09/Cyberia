@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Cytrusaurus.Models;
@@ -33,7 +34,7 @@ public sealed class Cytrus
     internal Cytrus()
     {
         Name = string.Empty;
-        Games = new Dictionary<string, CytrusGame>();
+        Games = ReadOnlyDictionary<string, CytrusGame>.Empty;
     }
 
     /// <summary>

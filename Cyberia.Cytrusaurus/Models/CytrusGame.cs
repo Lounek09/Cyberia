@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Cytrusaurus.Models;
 
@@ -53,8 +54,8 @@ public sealed class CytrusGame : IComparable<CytrusGame>
     internal CytrusGame()
     {
         Name = string.Empty;
-        Assets = new Dictionary<string, IReadOnlyDictionary<string, string>>();
-        Platforms = new Dictionary<string, IReadOnlyDictionary<string, string>>();
+        Assets = ReadOnlyDictionary<string, IReadOnlyDictionary<string, string>>.Empty;
+        Platforms = ReadOnlyDictionary<string, IReadOnlyDictionary<string, string>>.Empty;
     }
 
     /// <summary>
@@ -65,7 +66,7 @@ public sealed class CytrusGame : IComparable<CytrusGame>
     public IReadOnlyDictionary<string, string> GetAssetsByName(string assetName)
     {
         Assets.TryGetValue(assetName, out var asset);
-        return asset ?? new Dictionary<string, string>();
+        return asset ?? ReadOnlyDictionary<string, string>.Empty;
     }
 
     /// <summary>
@@ -97,7 +98,7 @@ public sealed class CytrusGame : IComparable<CytrusGame>
     public IReadOnlyDictionary<string, string> GetReleasesByPlatformName(string platformName)
     {
         Platforms.TryGetValue(platformName, out var releases);
-        return releases ?? new Dictionary<string, string>();
+        return releases ?? ReadOnlyDictionary<string, string>.Empty;
     }
 
     /// <summary>
