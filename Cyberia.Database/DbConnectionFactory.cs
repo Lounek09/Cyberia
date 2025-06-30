@@ -1,4 +1,8 @@
-﻿using System.Data;
+﻿using Cyberia.Database.TypeHandlers;
+
+using Dapper;
+
+using System.Data;
 using System.Data.SQLite;
 
 namespace Cyberia.Database;
@@ -11,6 +15,11 @@ public interface IDbConnectionFactory
 public sealed class SQLiteDbConnectionFactory : IDbConnectionFactory
 {
     private readonly string _connectionString;
+
+    static SQLiteDbConnectionFactory()
+    {
+        SqlMapper.AddTypeHandler(new DateTimeHandler());
+    }
 
     public SQLiteDbConnectionFactory(string connectionString)
     {

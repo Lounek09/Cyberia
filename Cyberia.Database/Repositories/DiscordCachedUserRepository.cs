@@ -5,9 +5,9 @@ using Dapper;
 namespace Cyberia.Database.Repositories;
 
 /// <summary>
-/// Represents a repository for Discord users.
+/// Represents a repository for <see cref="DiscordCachedUser"/>.
 /// </summary>
-public sealed class DiscordCachedUserRepository : IDatabaseRepository
+public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCachedUser, ulong>
 {
     private readonly IDbConnectionFactory _connectionFactory;
 
@@ -20,11 +20,6 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
         _connectionFactory = connectionFactory;
     }
 
-    /// <summary>
-    /// Gets a Discord user by their id.
-    /// </summary>
-    /// <param name="id">The id of the user.</param>
-    /// <returns>The user if found; otherwise, <see langword="null"/>.</returns>
     public async Task<DiscordCachedUser?> GetAsync(ulong id)
     {
         const string query =
@@ -37,11 +32,6 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
         return await connection.QueryFirstOrDefaultAsync<DiscordCachedUser>(query, new { Id = id });
     }
 
-    /// <summary>
-    /// Creates or updates a Discord user.
-    /// </summary>
-    /// <param name="user">The user to create or update.</param>
-    /// <returns><see langword="true"/> if the user was created or updated; otherwise, <see langword="false"/>.</returns>
     public async Task<bool> UpsertAsync(DiscordCachedUser user)
     {
         const string query =
@@ -50,18 +40,13 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository
         VALUES (@{nameof(DiscordCachedUser.Id)}, @{nameof(DiscordCachedUser.Locale)})
         ON CONFLICT({nameof(DiscordCachedUser.Id)})
         DO UPDATE SET
-            {nameof(DiscordCachedUser.Locale)} = @{nameof(DiscordCachedUser.Locale)}
+            {nameof(DiscordCachedUser.Locale)} = excluded.{nameof(DiscordCachedUser.Locale)}
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.ExecuteAsync(query, user) > 0;
     }
 
-    /// <summary>
-    /// Deletes a Discord user by their id.
-    /// </summary>
-    /// <param name="id">The id of the user.</param>
-    /// <returns><see langword="true"/> if the user was deleted; otherwise, <see langword="false"/>.</returns>
     public async Task<bool> DeleteAsync(ulong id)
     {
         const string query =

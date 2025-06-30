@@ -18,7 +18,7 @@ internal sealed class Migration : IDatabaseEntity
     public required string Name { get; init; }
 
     /// <summary>
-    /// Gets the date and time when the migration was applied.
+    /// Gets when the migration was applied.
     /// </summary>
     public DateTime AppliedAt { get; init; }
 }

@@ -3,7 +3,7 @@
 public sealed class DiscordCachedUser : IDatabaseEntity
 {
     /// <summary>
-    /// Gets the id of the user.
+    /// Gets the ID of the user.
     /// </summary>
     public required ulong Id { get; init; }
 

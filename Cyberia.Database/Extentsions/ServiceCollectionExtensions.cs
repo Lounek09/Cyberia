@@ -21,16 +21,8 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDbConnectionFactory>(_ => new SQLiteDbConnectionFactory(connectionString));
         services.AddSingleton<IMigrationManager, MigrationManager>();
 
-        var assembly = typeof(IDatabaseRepository).Assembly;
-        var repositoryTypes = assembly.GetTypes().Where(x =>
-        {
-            return x.IsClass && !x.IsAbstract && typeof(IDatabaseRepository).IsAssignableFrom(x);
-        });
-
-        foreach (var repositoryType in repositoryTypes)
-        {
-            services.AddSingleton(repositoryType);
-        }
+        services.AddSingleton<DiscordCachedUserRepository>();
+        services.AddSingleton<OnlineMonitoredFileRepository>();
 
         return services;
     }

@@ -1,17 +1,22 @@
 ﻿using Cyberia.Cytrusaurus.EventArgs;
 using Cyberia.Cytrusaurus.Models;
+using Cyberia.Database.Models;
+using Cyberia.Database.Repositories;
 
 namespace Cyberia.Cytrusaurus;
 
+/// <summary>
+/// Provides methods for watching updates of Cytrus.
+/// </summary>
 public interface ICytrusWatcher
 {
     /// <summary>
-    /// The current Cytrus data.
+    /// Gets the current Cytrus data.
     /// </summary>
     Cytrus Cytrus { get; }
 
     /// <summary>
-    /// The old Cytrus data.
+    /// Gets the old Cytrus data.
     /// </summary>
     Cytrus OldCytrus { get; }
 
@@ -51,11 +56,10 @@ public interface ICytrusWatcher
     event NewCytrusFileDetectedEventHandler? NewCytrusFileDetected;
 }
 
-/// <summary>
-/// Provides methods for watching updates of Cytrus.
-/// </summary>
 public sealed class CytrusWatcher : ICytrusWatcher
 {
+    private const string c_onlineMonitoredFileId = "cytrus";
+
     public const string OutputPath = "cytrus";
     public const string CytrusFileName = "cytrus.json";
     public const string BaseUrl = "https://cytrus.cdn.ankama.com";
@@ -63,27 +67,27 @@ public sealed class CytrusWatcher : ICytrusWatcher
     public static readonly string CytrusPath = Path.Join(OutputPath, CytrusFileName);
     public static readonly string OldCytrusPath = Path.Join(OutputPath, $"old_{CytrusFileName}");
 
-    public Cytrus Cytrus { get; internal set; }
+    public Cytrus Cytrus { get; private set; }
 
-    public Cytrus OldCytrus { get; internal set; }
+    public Cytrus OldCytrus { get; private set; }
 
+    private readonly OnlineMonitoredFileRepository _onlineMonitoredFileRepository;
     private readonly HttpClient _httpClient;
     private readonly HttpRetryPolicy _httpRetryPolicy;
 
-#pragma warning disable IDE0052 // Remove unread private members
     private Timer? _timer;
-#pragma warning restore IDE0052 // Remove unread private members
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusWatcher"/> class.
     /// </summary>
-    public CytrusWatcher()
+    public CytrusWatcher(OnlineMonitoredFileRepository onlineMonitoredFileRepository)
     {
         Directory.CreateDirectory(OutputPath);
 
         Cytrus = Cytrus.LoadFromFile(CytrusPath);
         OldCytrus = Cytrus.LoadFromFile(OldCytrusPath);
 
+        _onlineMonitoredFileRepository = onlineMonitoredFileRepository;
         _httpClient = new()
         {
             BaseAddress = new Uri(BaseUrl)
@@ -98,11 +102,26 @@ public sealed class CytrusWatcher : ICytrusWatcher
 
     public async Task CheckAsync()
     {
+        var onlineMonitoredFile = await _onlineMonitoredFileRepository.GetAsync(c_onlineMonitoredFileId) ?? new OnlineMonitoredFile
+        {
+            Id = c_onlineMonitoredFileId,
+            LastModified = DateTime.MinValue
+        };
+
         string json;
         try
         {
             using var response = await _httpRetryPolicy.ExecuteAsync(() => _httpClient.GetAsync(CytrusFileName));
             response.EnsureSuccessStatusCode();
+
+            var lastModified = response.Content.Headers.LastModified?.UtcDateTime;
+            if (lastModified is null || lastModified.Value <= onlineMonitoredFile.LastModified)
+            {
+                return;
+            }
+
+            onlineMonitoredFile.LastModified = lastModified.Value;
+            await _onlineMonitoredFileRepository.UpsertAsync(onlineMonitoredFile);
 
             json = await response.Content.ReadAsStringAsync();
         }
