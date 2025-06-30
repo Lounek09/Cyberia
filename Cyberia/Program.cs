@@ -81,10 +81,13 @@ public static class Program
                 provider.StartAmphibian();
             }
 
+            var cytrusWatcher = provider.GetRequiredService<ICytrusWatcher>();
+            await cytrusWatcher.InitializeAsync();
+
             if (cyberiaConfig.EnableCheckCytrus)
             {
                 Log.Information("Watching Cytrus each {CytrusInterval}", cyberiaConfig.CheckCytrusInterval);
-                provider.GetRequiredService<ICytrusWatcher>().Watch(TimeSpan.FromSeconds(20), cyberiaConfig.CheckCytrusInterval);
+                cytrusWatcher.Watch(TimeSpan.FromSeconds(20), cyberiaConfig.CheckCytrusInterval);
             }
 
             if (cyberiaConfig.EnableCheckLang)

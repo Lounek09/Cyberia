@@ -1,6 +1,5 @@
 ﻿using Cyberia.Cytrusaurus;
 using Cyberia.Salamandra.Enums;
-using Cyberia.Salamandra.Extensions.DSharpPlus;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -54,9 +53,10 @@ public sealed class CytrusCommandModule
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus", culture)
+            .WithDescription(CytrusWatcher.CytrusUrl)
             .AddField("Name", _cytrusWatcher.Cytrus.Name.Capitalize(), true)
             .AddField("Version", _cytrusWatcher.Cytrus.Version.ToString(), true)
-            .AddEmptyField(true);
+            .AddField("Last Modified", _cytrusWatcher.LastModified.ToLocalTime().ToString("g", culture), true);
 
         foreach (var game in _cytrusWatcher.Cytrus.Games.OrderBy(x => x.Value.Order))
         {
@@ -87,7 +87,7 @@ public sealed class CytrusCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task DiffExecuteAsync(SlashCommandContext ctx,
         [Parameter("game"), Description("Name of the game")]
-        [SlashChoiceProvider<CytrusGameChoiceProvider>]
+        [SlashAutoCompleteProvider<CytrusGameAutoCompleteProvider>]
         string game,
         [Parameter("platform"), Description("Platform")]
         [SlashAutoCompleteProvider<CytrusPlatformAutoCompleteProvider>]
@@ -114,7 +114,7 @@ public sealed class CytrusCommandModule
 
         var diff = await _cytrusService.GetManifestDiffAsync(game, platform, oldRelease, oldVersion, newRelease, newVersion);
 
-        if (mainContent.Length + diff.Length > Constant.MaxMessageSize)
+        if (mainContent.Length + diff.Length + 10 > Constant.MaxMessageSize) // 10 for the block code formatting
         {
             using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Cytrusaurus.Models;
@@ -35,39 +34,6 @@ public sealed class Cytrus
     {
         Name = string.Empty;
         Games = ReadOnlyDictionary<string, CytrusGame>.Empty;
-    }
-
-    /// <summary>
-    /// Loads the <see cref="Cytrus"/> data from a file.
-    /// </summary>
-    /// <param name="path">The path to the file.</param>
-    /// <returns>A new instance of the <see cref="Cytrus"/> class if the file does not exist; otherwise, the data loaded from the file.</returns>
-    internal static Cytrus LoadFromFile(string path)
-    {
-        if (!File.Exists(path))
-        {
-            return new();
-        }
-
-        var json = File.ReadAllText(path);
-        return Load(json);
-    }
-
-    /// <summary>
-    /// Loads the <see cref="Cytrus"/> data from a JSON string.
-    /// </summary>
-    /// <param name="json">The JSON string to load the data from.</param>
-    /// <returns>A new instance of the <see cref="Cytrus"/> class if the data could not be deserialized; otherwise, the deserialized data.</returns>
-    internal static Cytrus Load(string json)
-    {
-        var cytrus = JsonSerializer.Deserialize<Cytrus>(json);
-        if (cytrus is null)
-        {
-            Log.Error("Failed to deserialize the JSON to initialize {TypeName}", typeof(Cytrus).Name);
-            return new();
-        }
-
-        return cytrus;
     }
 
     /// <summary>

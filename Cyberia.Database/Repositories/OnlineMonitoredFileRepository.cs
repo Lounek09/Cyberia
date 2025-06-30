@@ -58,4 +58,22 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.ExecuteAsync(query, new { Id = id }) > 0;
     }
+
+    /// <summary>
+    /// Gets the last modified date of an online monitored file by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the online monitored file.</param>
+    /// <returns>The last modified date of the file, or <see cref="DateTime.MinValue"/> if not found.</returns>
+    public async Task<DateTime> GetLastModifiedByIdAsync(string id)
+    {
+        const string query =
+        $"""
+        SELECT {nameof(OnlineMonitoredFile.LastModified)}
+        FROM {nameof(OnlineMonitoredFile)}
+        WHERE {nameof(OnlineMonitoredFile.Id)} = @Id
+        """;
+
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.QueryFirstOrDefaultAsync<DateTime>(query, new { Id = id });
+    }
 }

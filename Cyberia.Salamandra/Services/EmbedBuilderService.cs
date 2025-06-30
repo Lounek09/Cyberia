@@ -28,14 +28,18 @@ namespace Cyberia.Salamandra.Services;
 /// </summary>
 public interface IEmbedBuilderService
 {
+    /// <inheritdoc cref="CreateEmbedBuilder(EmbedCategory, string, string?, CultureInfo?)"/>"
+    DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture);
+
     /// <summary>
     /// Creates a new embed builder with the specified category and author text.
     /// </summary>
     /// <param name="category">The embed category.</param>
     /// <param name="authorText">The author text.</param>
+    /// <param name="authorUrl">The author URL, if any.</param>
     /// <param name="culture">The culture to use for the date and time.</param>
     /// <returns>The created embed builder.</returns>
-    DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture);
+    DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, string? authorUrl, CultureInfo? culture);
 
     /// <summary>
     /// Adds effect fields to the embed builder.
@@ -138,11 +142,16 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
 
     public DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture)
     {
+        return CreateEmbedBuilder(category, authorText, null, culture);
+    }
+
+    public DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, string? authorUrl, CultureInfo? culture)
+    {
         var formattedDate = DateTime.Now.ToInGameDateTime().ToLongRolePlayString(culture);
 
         return new DiscordEmbedBuilder()
             .WithColor(_embedColor)
-            .WithAuthor(authorText, iconUrl: GetIconUrl(category))
+            .WithAuthor(authorText, authorUrl, GetIconUrl(category))
             .WithFooter($"{_username} • {formattedDate}", _footerIconUrl);
     }
 

@@ -3,6 +3,9 @@ using Cyberia.Cytrusaurus.Models;
 using Cyberia.Database.Models;
 using Cyberia.Database.Repositories;
 
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+
 namespace Cyberia.Cytrusaurus;
 
 /// <summary>
@@ -19,6 +22,19 @@ public interface ICytrusWatcher
     /// Gets the old Cytrus data.
     /// </summary>
     Cytrus OldCytrus { get; }
+
+    /// <summary>
+    /// Gets when the Cytrus data was last modified.
+    /// </summary>
+    DateTime LastModified { get; }
+
+    /// <summary>
+    /// Initializes the data of the <see cref="ICytrusWatcher"/> instance.
+    /// </summary>
+    /// <remarks>
+    /// This need to be called before everything else.
+    /// </remarks>
+    Task InitializeAsync();
 
     /// <summary>
     /// Starts watching for updates of Cytrus.
@@ -66,10 +82,13 @@ public sealed class CytrusWatcher : ICytrusWatcher
 
     public static readonly string CytrusPath = Path.Join(OutputPath, CytrusFileName);
     public static readonly string OldCytrusPath = Path.Join(OutputPath, $"old_{CytrusFileName}");
+    public static readonly string CytrusUrl = $"{BaseUrl}/{CytrusFileName}";
 
-    public Cytrus Cytrus { get; private set; }
+    public Cytrus Cytrus { get; private set; } = default!;
 
-    public Cytrus OldCytrus { get; private set; }
+    public Cytrus OldCytrus { get; private set; } = default!;
+
+    public DateTime LastModified { get; private set; }
 
     private readonly OnlineMonitoredFileRepository _onlineMonitoredFileRepository;
     private readonly HttpClient _httpClient;
@@ -80,12 +99,10 @@ public sealed class CytrusWatcher : ICytrusWatcher
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusWatcher"/> class.
     /// </summary>
+    /// <param name="onlineMonitoredFileRepository">The repository for online monitored files.</param>
     public CytrusWatcher(OnlineMonitoredFileRepository onlineMonitoredFileRepository)
     {
         Directory.CreateDirectory(OutputPath);
-
-        Cytrus = Cytrus.LoadFromFile(CytrusPath);
-        OldCytrus = Cytrus.LoadFromFile(OldCytrusPath);
 
         _onlineMonitoredFileRepository = onlineMonitoredFileRepository;
         _httpClient = new()
@@ -95,6 +112,13 @@ public sealed class CytrusWatcher : ICytrusWatcher
         _httpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
     }
 
+    public async Task InitializeAsync()
+    {
+        Cytrus = await LoadCytrusAsync(CytrusPath) ?? new();
+        OldCytrus = await LoadCytrusAsync(OldCytrusPath) ?? new();
+        LastModified = await _onlineMonitoredFileRepository.GetLastModifiedByIdAsync(c_onlineMonitoredFileId);
+    }
+
     public void Watch(TimeSpan dueTime, TimeSpan interval)
     {
         _timer = new(async _ => await CheckAsync(), null, dueTime, interval);
@@ -102,12 +126,6 @@ public sealed class CytrusWatcher : ICytrusWatcher
 
     public async Task CheckAsync()
     {
-        var onlineMonitoredFile = await _onlineMonitoredFileRepository.GetAsync(c_onlineMonitoredFileId) ?? new OnlineMonitoredFile
-        {
-            Id = c_onlineMonitoredFileId,
-            LastModified = DateTime.MinValue
-        };
-
         string json;
         try
         {
@@ -115,13 +133,17 @@ public sealed class CytrusWatcher : ICytrusWatcher
             response.EnsureSuccessStatusCode();
 
             var lastModified = response.Content.Headers.LastModified?.UtcDateTime;
-            if (lastModified is null || lastModified.Value <= onlineMonitoredFile.LastModified)
+            if (lastModified is null || lastModified.Value <= LastModified)
             {
                 return;
             }
 
-            onlineMonitoredFile.LastModified = lastModified.Value;
-            await _onlineMonitoredFileRepository.UpsertAsync(onlineMonitoredFile);
+            LastModified = lastModified.Value;
+            await _onlineMonitoredFileRepository.UpsertAsync(new OnlineMonitoredFile
+            {
+                Id = c_onlineMonitoredFileId,
+                LastModified = LastModified
+            });
 
             json = await response.Content.ReadAsStringAsync();
         }
@@ -139,8 +161,14 @@ public sealed class CytrusWatcher : ICytrusWatcher
             return;
         }
 
+        var cytrus = DeserializeCytrus(json);
+        if (cytrus is null)
+        {
+            return;
+        }
+
         OldCytrus = Cytrus;
-        Cytrus = Cytrus.Load(json);
+        Cytrus = cytrus;
 
         if (File.Exists(CytrusPath))
         {
@@ -152,6 +180,59 @@ public sealed class CytrusWatcher : ICytrusWatcher
         await OnNewCytrusFileDetected(new NewCytrusFileDetectedEventArgs(Cytrus, OldCytrus, diff));
     }
 
+    /// <summary>
+    /// Loads the Cytrus data from the specified path.
+    /// </summary>
+    /// <param name="path">The path to the Cytrus file.</param>
+    /// <returns>The loaded Cytrus data, or <see langword="null"/> if the file does not exist.</returns>
+    private static async Task<Cytrus?> LoadCytrusAsync(string path)
+    {
+        if (!File.Exists(path))
+        {
+            return null;
+        }
+
+        using var stream = File.OpenRead(path);
+        return await DeserializeCytrusAsync(stream);
+    }
+
+    /// <summary>
+    /// Deserializes the Cytrus data from the specified stream.
+    /// </summary>
+    /// <param name="stream">The stream containing the Cytrus data.</param>
+    /// <returns>The deserialized Cytrus data, or <see langword="null"/> if the deserialization fails.</returns>
+    private static async Task<Cytrus?> DeserializeCytrusAsync(Stream stream)
+    {
+        try
+        {
+            return await JsonSerializer.DeserializeAsync<Cytrus>(stream);
+        }
+        catch (JsonException e)
+        {
+            Log.Error(e, "Failed to deserialize Cytrus from stream");
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Deserializes the Cytrus data from the specified JSON string.
+    /// </summary>
+    /// <param name="json">The JSON string containing the Cytrus data.</param>
+    /// <returns>The deserialized Cytrus data, or <see langword="null"/> if the deserialization fails.</returns>
+    private static Cytrus? DeserializeCytrus([StringSyntax(StringSyntaxAttribute.Json)] string json)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<Cytrus>(json);
+        }
+        catch (JsonException e)
+        {
+            Log.Error(e, "Failed to deserialize Cytrus from JSON string");
+        }
+
+        return null;
+    }
     #region Events
 
     public event ICytrusWatcher.NewCytrusFileDetectedEventHandler? NewCytrusFileDetected;
