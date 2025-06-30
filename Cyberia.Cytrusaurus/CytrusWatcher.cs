@@ -161,6 +161,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
         {
             await OnCytrusErroredAsync(new CytrusErroredEventArgs(e, "An error occurred while sending a GET request to the Cytrus URL, see the logs for more details."));
             Log.Error(e, "An error occurred while sending a GET request to {CytrusUrl}", $"{BaseUrl}/{CytrusFileName}");
+
             return;
         }
 
@@ -176,7 +177,6 @@ public sealed class CytrusWatcher : ICytrusWatcher
         if (cytrus is null)
         {
             await OnCytrusErroredAsync(new CytrusErroredEventArgs("Failed to deserialize the Cytrus data from the response content, see the logs for more details."));
-            Log.Error("Failed to deserialize the Cytrus data from the response content:\n{CytrusJson}", json);
 
             return;
         }
@@ -247,6 +247,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
 
         return null;
     }
+
     #region Events
 
     public event ICytrusWatcher.NewCytrusFileDetectedEventHandler? NewCytrusFileDetected;

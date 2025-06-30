@@ -45,18 +45,18 @@ public sealed class CultureService : ICultureService
 
     public async Task<string?> GetLocaleAsync(DiscordInteraction interaction)
     {
-        var user = await _discordCachedUserRepository.GetAsync(interaction.User.Id);
+        var locale = await _discordCachedUserRepository.GetLocaleById(interaction.User.Id);
 
-        return user?.Locale ?? interaction.Locale ?? interaction.GuildLocale;
+        return locale ?? interaction.Locale ?? interaction.GuildLocale;
     }
 
     public async Task<CultureInfo> GetCultureAsync(DiscordInteraction interaction)
     {
-        var user = await _discordCachedUserRepository.GetAsync(interaction.User.Id);
+        var locale = await _discordCachedUserRepository.GetLocaleById(interaction.User.Id);
 
-        return string.IsNullOrEmpty(user?.Locale)
+        return locale is null
             ? GetInteractionCulture(interaction)
-            : CultureInfo.GetCultureInfo(user.Locale);
+            : CultureInfo.GetCultureInfo(locale);
     }
 
     /// <summary>

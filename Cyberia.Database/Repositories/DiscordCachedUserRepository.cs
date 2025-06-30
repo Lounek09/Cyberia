@@ -58,4 +58,22 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.ExecuteAsync(query, new { Id = id }) > 0;
     }
+
+    /// <summary>
+    /// Gets the locale of a user by their ID.
+    /// </summary>
+    /// <param name="id">The ID of the user.</param>
+    /// <returns>The locale of the user if found; otherwise, <see langword="null"/>.</returns>
+    public async Task<string?> GetLocaleById(ulong id)
+    {
+        const string query =
+        $"""
+        SELECT {nameof(DiscordCachedUser.Locale)}
+        FROM {nameof(DiscordCachedUser)}
+        WHERE {nameof(DiscordCachedUser.Id)} = @Id
+        """;
+
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.QueryFirstOrDefaultAsync<string>(query, new { Id = id });
+    }
 }
