@@ -162,7 +162,7 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
         return new DiscordEmbedBuilder()
             .WithColor(_embedColor)
             .WithAuthor(authorText, authorUrl, GetIconUrl(category))
-            .WithFooter($"{_discordClient.CurrentUser.Username}　•　{formattedDate}", _footerIconUrl);
+            .WithFooter($"{_discordClient.CurrentUser.Username}  •  {formattedDate}", _footerIconUrl);
     }
 
     public DiscordEmbedBuilder CreateErrorEmbedBuilder(string title, string description, Exception? exception)
