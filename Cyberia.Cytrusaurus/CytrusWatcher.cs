@@ -159,8 +159,8 @@ public sealed class CytrusWatcher : ICytrusWatcher
         }
         catch (HttpRequestException e)
         {
-            await OnCytrusErroredAsync(new CytrusErroredEventArgs(e, "An error occurred while sending a GET request to the Cytrus URL, see the logs for more details."));
             Log.Error(e, "An error occurred while sending a GET request to {CytrusUrl}", $"{BaseUrl}/{CytrusFileName}");
+            await OnCytrusErroredAsync(new CytrusErroredEventArgs(e, "An error occurred while sending a GET request to the Cytrus URL, see the logs for more details."));
 
             return;
         }
