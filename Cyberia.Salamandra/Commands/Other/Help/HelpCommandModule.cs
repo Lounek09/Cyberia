@@ -78,7 +78,7 @@ public sealed class HelpCommandModule
             descriptionBuilder.Append('\n');
         }
 
-        await ctx.RespondAsync(_embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Help", culture)
+        await ctx.RespondAsync(_embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, "Help", culture)
             .WithDescription(descriptionBuilder.ToString()));
     }
 }

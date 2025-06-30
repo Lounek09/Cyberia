@@ -1,5 +1,7 @@
 ﻿using Cyberia.Langzilla.Models;
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Cyberia.Langzilla.EventArgs;
 
 /// <summary>
@@ -10,18 +12,19 @@ public sealed class CheckLangFinishedEventArgs : System.EventArgs
     /// <summary>
     /// The checked lang repository.
     /// </summary>
-    public LangsRepository Repository { get; init; }
+    public required LangsRepository Repository { get; init; }
 
     /// <summary>
     /// The list of the updated langs.
     /// </summary>
-    public IReadOnlyList<Lang> UpdatedLangs { get; init; }
+    public required IReadOnlyList<Lang> UpdatedLangs { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CheckLangFinishedEventArgs"/> class.
     /// </summary>
     /// <param name="repository">The checked lang repository.</param>
     /// <param name="updatedLangs">The list of updated langs.</param>
+    [SetsRequiredMembers]
     internal CheckLangFinishedEventArgs(LangsRepository repository, IReadOnlyList<Lang> updatedLangs)
     {
         Repository = repository;

@@ -83,7 +83,7 @@ public sealed class CraftMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Jobs, Translation.Get<BotTranslations>("Embed.Craft.Author", _culture), _culture);
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Jobs, Translation.Get<BotTranslations>("Embed.Craft.Author", _culture), _culture);
 
         _embedBuilderService.SetCraftDescription(embed, _craftData, _quantity, _recursive, _culture);
 

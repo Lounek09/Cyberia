@@ -72,7 +72,7 @@ public sealed class SearchCommandModule
                 return;
         }
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
             .WithTitle($"Search criterion {criterionId} in {location}")
             .WithDescription(descriptionBuilder.ToString().WithMaxLength(Constant.MaxEmbedDescriptionSize));
 
@@ -119,7 +119,7 @@ public sealed class SearchCommandModule
                 return;
         }
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
             .WithTitle($"Search effect {effectId} in {location}")
             .WithDescription(descriptionBuilder.ToString().WithMaxLength(Constant.MaxEmbedDescriptionSize));
 
@@ -151,7 +151,7 @@ public sealed class SearchCommandModule
             }
         }
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
             .WithTitle($"Search gfx {gfxId} in {_dofusDatacenter.ItemsRepository.GetItemTypeNameById(itemTypeId, culture)} ({itemTypeId})")
             .WithThumbnail(await ImageUrlProvider.GetImagePathAsync($"items/{itemTypeId}", gfxId, CdnImageSize.Size128))
             .WithDescription(descriptionBuilder.ToString().WithMaxLength(Constant.MaxEmbedDescriptionSize));

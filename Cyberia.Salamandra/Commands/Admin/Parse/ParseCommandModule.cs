@@ -36,7 +36,7 @@ public sealed class ParseCommandModule
         var effects = EffectFactory.CreateMany(value);
         if (effects.Count > 0)
         {
-            var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
+            var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
                 .WithTitle("Item effects parser");
 
             _embedBuilderService.AddEffectFields(embed, "Effects :", effects, true, culture);
@@ -59,7 +59,7 @@ public sealed class ParseCommandModule
         var criteria = CriterionFactory.CreateMany(value);
         if (criteria.Count > 0)
         {
-            var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
+            var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, "Tools", culture)
                 .WithTitle("Criteria parser");
 
             _embedBuilderService.AddCriteriaFields(embed, criteria, culture);

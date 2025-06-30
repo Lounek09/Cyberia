@@ -101,7 +101,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.Item.Author", _culture), _culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.Item.Author", _culture), _culture)
             .WithTitle($"{Formatter.Sanitize(_itemData.Name.ToString(_culture))} ({_itemData.Id})")
             .WithThumbnail(await _itemData.GetImagePathAsync(CdnImageSize.Size128))
             .AddField(Translation.Get<BotTranslations>("Embed.Field.Level.Title", _culture), _itemData.Level.ToString(), true)

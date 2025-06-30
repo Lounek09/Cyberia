@@ -98,7 +98,7 @@ public sealed class ItemSetMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.ItemSet.Author", _culture), _culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.ItemSet.Author", _culture), _culture)
             .WithTitle($"{_itemSetData.Name.ToString(_culture)} ({_itemSetData.Id})")
             .AddField(Translation.Get<BotTranslations>("Embed.Field.Level.Title", _culture), _itemSetData.GetLevel().ToString());
 

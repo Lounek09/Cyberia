@@ -19,16 +19,19 @@ public sealed class CommandsEventHandler : IEventHandler<CommandErroredEventArgs
 {
     private readonly ICachedChannelsManager _cachedChannelsManager;
     private readonly ICultureService _cultureService;
+    private readonly IEmbedBuilderService _embedBuilderService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CommandsEventHandler"/> class.
     /// </summary>
     /// <param name="cachedChannelsManager">The service to get the channels from.</param>
     /// <param name="cultureService">The service to get the culture from.</param>
-    public CommandsEventHandler(ICachedChannelsManager cachedChannelsManager, ICultureService cultureService)
+    /// <param name="embedBuilderService">The service to build embeds.</param>
+    public CommandsEventHandler(ICachedChannelsManager cachedChannelsManager, ICultureService cultureService, IEmbedBuilderService embedBuilderService)
     {
         _cachedChannelsManager = cachedChannelsManager;
         _cultureService = cultureService;
+        _embedBuilderService = embedBuilderService;
     }
 
     public async Task HandleEventAsync(CommandsExtension sender, CommandErroredEventArgs eventArgs)
@@ -61,33 +64,21 @@ public sealed class CommandsEventHandler : IEventHandler<CommandErroredEventArgs
         var commandName = ctx.Command?.FullName ?? "NotFound";
 
         // If the exception is a discord exception, we get the json message.
-        string exceptionBlock;
         if (exception is DiscordException discordException && !string.IsNullOrEmpty(discordException.JsonMessage))
         {
             Log.Error(exception, "A discord error occurred when {UserName} ({UserId}) used the {CommandName} command.\n{JsonMessage}",
                 interaction.User.Username, interaction.User.Id, commandName, discordException.JsonMessage);
-
-            exceptionBlock = $"{exception.Message}\n{discordException.JsonMessage}\n{exception.StackTrace}";
         }
         else
         {
             Log.Error(exception, "An error occurred when {UserName} ({UserId}) used the {CommandName} command",
                 interaction.User.Username, interaction.User.Id, commandName);
-
-            exceptionBlock = $"{exception.Message}\n{exception.StackTrace}";
         }
 
-        DiscordEmbedBuilder embed = new()
-        {
-            Title = "An error occurred when executing a slash command",
-            Description = $"""
-                An error occurred when {Formatter.Sanitize(interaction.User.Username)} ({interaction.User.Mention}) used the {Formatter.Bold(commandName)} command.
-
-                {Formatter.Bold($"{exception.GetType().Name} :")}
-                {Formatter.BlockCode(exceptionBlock.WithMaxLength(Constant.MaxEmbedDescriptionSize - 500))}
-                """,
-            Color = DiscordColor.Red
-        };
+        var embed = _embedBuilderService.CreateErrorEmbedBuilder(
+            "An error occurred when executing a slash command",
+            $"An error occurred when {Formatter.Sanitize(interaction.User.Username)} ({interaction.User.Mention}) used the {Formatter.Bold(commandName)} command.",
+            exception);
 
 #if DEBUG
         await ctx.Channel.SendMessageSafeAsync(embed);

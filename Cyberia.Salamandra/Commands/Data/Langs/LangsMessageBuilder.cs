@@ -68,7 +68,7 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         var type = _repository.Type.ToStringFast();
         var language = _repository.Language.ToStringFast();
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Langs", _culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, "Langs", _culture)
             .WithTitle($"Langs {type} in {language}");
 
         if (_repository.Langs.Count > 0)

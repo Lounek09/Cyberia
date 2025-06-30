@@ -28,7 +28,7 @@ public sealed class PaginatedCraftMessageBuilder : PaginatedMessageBuilder<Craft
         CultureInfo? culture,
         int selectedPageIndex = 0)
     : base(
-        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Jobs, Translation.Get<BotTranslations>("Embed.Craft.Author", culture), culture),
+        embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Jobs, Translation.Get<BotTranslations>("Embed.Craft.Author", culture), culture),
         Translation.Get<BotTranslations>("Embed.PaginatedCraft.Title", culture),
         craftsData,
         search,

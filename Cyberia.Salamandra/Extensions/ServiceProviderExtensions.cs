@@ -21,8 +21,16 @@ public static class ServiceProviderExtensions
     /// <returns>The service provider.</returns>
     public static IServiceProvider RegisterSalamandraEvents(this IServiceProvider provider)
     {
-        provider.GetRequiredService<ICytrusWatcher>().NewCytrusFileDetected += provider.GetRequiredService<ICytrusService>().OnNewCytrusFileDetected;
-        provider.GetRequiredService<ILangsWatcher>().CheckLangsFinished += provider.GetRequiredService<ILangsService>().OnCheckLangsFinished;
+        var cytrusWatcher = provider.GetRequiredService<ICytrusWatcher>();
+        var cytrusService = provider.GetRequiredService<ICytrusService>();
+
+        cytrusWatcher.NewCytrusFileDetected += cytrusService.OnNewCytrusFileDetected;
+        cytrusWatcher.CytrusErrored += cytrusService.OnCytrusErrored;
+
+        var langsWatcher = provider.GetRequiredService<ILangsWatcher>();
+        var langsService = provider.GetRequiredService<ILangsService>();
+
+        langsWatcher.CheckLangsFinished += langsService.OnCheckLangsFinished;
 
         return provider;
     }

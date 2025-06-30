@@ -49,7 +49,7 @@ public sealed class CritCommandModule
         var rate = Formulas.GetCriticalHitRate(baseRate, criticalHitBonus, agility);
         var agilityNeeded = Formulas.GetAgilityForOptimalCriticalHitRate(baseRate, criticalHitBonus);
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Crit.Author", culture), culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, Translation.Get<BotTranslations>("Embed.Crit.Author", culture), culture)
             .WithDescription(Translation.Format(
                 Translation.Get<BotTranslations>("Embed.Crit.Description", culture),
                 Formatter.Bold(rate.ToString()),

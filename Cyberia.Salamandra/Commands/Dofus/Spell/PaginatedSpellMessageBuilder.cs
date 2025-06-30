@@ -25,7 +25,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
         CultureInfo? culture,
         int selectedPageIndex = 0)
     : base(
-        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Spells, Translation.Get<BotTranslations>("Embed.Spell.Author", culture), culture),
+        embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Spells, Translation.Get<BotTranslations>("Embed.Spell.Author", culture), culture),
         Translation.Get<BotTranslations>("Embed.PaginatedSpell.Title", culture),
         spellsData,
         search,

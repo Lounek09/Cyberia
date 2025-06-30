@@ -52,7 +52,7 @@ public sealed class CytrusCommandModule
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Tools, "Cytrus", culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, "Cytrus", culture)
             .WithDescription(CytrusWatcher.CytrusUrl)
             .AddField("Name", _cytrusWatcher.Cytrus.Name.Capitalize(), true)
             .AddField("Version", _cytrusWatcher.Cytrus.Version.ToString(), true)

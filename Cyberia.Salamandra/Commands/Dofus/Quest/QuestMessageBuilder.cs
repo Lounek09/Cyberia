@@ -122,7 +122,7 @@ public sealed class QuestMessageBuilder : ICustomMessageBuilder
 
     private Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Quests, Translation.Get<BotTranslations>("Embed.Quest.Author", _culture), _culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Quests, Translation.Get<BotTranslations>("Embed.Quest.Author", _culture), _culture)
             .WithTitle($"{_questData.Name.ToString(_culture)} ({_questData.Id}) {Emojis.Quest(_questData, _culture)}{(_questData.HasDungeon ? Emojis.Dungeon(_culture) : string.Empty)}");
 
         if (_questStepData is not null)

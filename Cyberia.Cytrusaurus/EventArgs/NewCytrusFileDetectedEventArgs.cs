@@ -1,5 +1,7 @@
 ﻿using Cyberia.Cytrusaurus.Models;
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Cyberia.Cytrusaurus.EventArgs;
 
 /// <summary>
@@ -10,17 +12,17 @@ public sealed class NewCytrusFileDetectedEventArgs : System.EventArgs
     /// <summary>
     /// Gets the current Cytrus data.
     /// </summary>
-    public Cytrus Cytrus { get; init; }
+    public required Cytrus Cytrus { get; init; }
 
     /// <summary>
     /// Gets the old Cytrus data.
     /// </summary>
-    public Cytrus OldCytrus { get; init; }
+    public required Cytrus OldCytrus { get; init; }
 
     /// <summary>
     /// Gets the difference between the current and old Cytrus data.
     /// </summary>
-    public string Diff { get; init; }
+    public required string Diff { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NewCytrusFileDetectedEventArgs"/> class.
@@ -28,6 +30,7 @@ public sealed class NewCytrusFileDetectedEventArgs : System.EventArgs
     /// <param name="cytrus">The current Cytrus data.</param>
     /// <param name="oldCytrus">The old Cytrus data.</param>
     /// <param name="diff">The difference between the current and old Cytrus data.</param>
+    [SetsRequiredMembers]
     internal NewCytrusFileDetectedEventArgs(Cytrus cytrus, Cytrus oldCytrus, string diff)
     {
         Cytrus = cytrus;

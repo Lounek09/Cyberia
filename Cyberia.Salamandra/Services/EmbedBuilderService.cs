@@ -16,6 +16,7 @@ using Cyberia.Salamandra.Extensions.DSharpPlus;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
+using DSharpPlus.Exceptions;
 
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -28,18 +29,27 @@ namespace Cyberia.Salamandra.Services;
 /// </summary>
 public interface IEmbedBuilderService
 {
-    /// <inheritdoc cref="CreateEmbedBuilder(EmbedCategory, string, string?, CultureInfo?)"/>"
-    DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture);
+    /// <inheritdoc cref="CreateBaseEmbedBuilder(EmbedCategory, string, string?, CultureInfo?)"/>"
+    DiscordEmbedBuilder CreateBaseEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture);
 
     /// <summary>
-    /// Creates a new embed builder with the specified category and author text.
+    /// Creates a base embed builder.
     /// </summary>
     /// <param name="category">The embed category.</param>
     /// <param name="authorText">The author text.</param>
     /// <param name="authorUrl">The author URL, if any.</param>
     /// <param name="culture">The culture to use for the date and time.</param>
     /// <returns>The created embed builder.</returns>
-    DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, string? authorUrl, CultureInfo? culture);
+    DiscordEmbedBuilder CreateBaseEmbedBuilder(EmbedCategory category, string authorText, string? authorUrl, CultureInfo? culture);
+
+    /// <summary>
+    /// Creates an error embed builder.
+    /// </summary>
+    /// <param name="title">The title of the embed.</param>
+    /// <param name="description">The description of the embed.</param>
+    /// <param name="exception">The exception, if any.</param>
+    /// <returns>The created embed builder.</returns>
+    DiscordEmbedBuilder CreateErrorEmbedBuilder(string title, string description, Exception? exception);
 
     /// <summary>
     /// Adds effect fields to the embed builder.
@@ -120,8 +130,8 @@ public interface IEmbedBuilderService
 
 public sealed class EmbedBuilderService : IEmbedBuilderService
 {
+    private readonly DiscordClient _discordClient;
     private readonly DofusDatacenter _dofusDatacenter;
-    private readonly string _username;
     private readonly string _baseIconUrl;
     private readonly string _footerIconUrl;
     private readonly DiscordColor _embedColor;
@@ -130,29 +140,64 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
     /// Initializes a new instance of the <see cref="EmbedBuilderService"/> class.
     /// </summary>
     /// <param name="config">The bot configuration.</param>
-    /// <param name="client">The Discord client.</param>
-    public EmbedBuilderService(BotConfig config, DiscordClient client, DofusApiConfig dofusApiConfig, DofusDatacenter dofusDatacenter)
+    /// <param name="discordClient">The Discord client.</param>
+    public EmbedBuilderService(BotConfig config, DiscordClient discordClient, DofusApiConfig dofusApiConfig, DofusDatacenter dofusDatacenter)
     {
+        _discordClient = discordClient;
         _dofusDatacenter = dofusDatacenter;
-        _username = client.CurrentUser.Username;
         _baseIconUrl = $"{dofusApiConfig.CdnUrl}/images/discord/embed_categories";
         _footerIconUrl = $"{dofusApiConfig.CdnUrl}/images/discord/mini-salamandra.png";
         _embedColor = new(config.EmbedColor);
     }
 
-    public DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture)
+    public DiscordEmbedBuilder CreateBaseEmbedBuilder(EmbedCategory category, string authorText, CultureInfo? culture)
     {
-        return CreateEmbedBuilder(category, authorText, null, culture);
+        return CreateBaseEmbedBuilder(category, authorText, null, culture);
     }
 
-    public DiscordEmbedBuilder CreateEmbedBuilder(EmbedCategory category, string authorText, string? authorUrl, CultureInfo? culture)
+    public DiscordEmbedBuilder CreateBaseEmbedBuilder(EmbedCategory category, string authorText, string? authorUrl, CultureInfo? culture)
     {
         var formattedDate = DateTime.Now.ToInGameDateTime().ToLongRolePlayString(culture);
 
         return new DiscordEmbedBuilder()
             .WithColor(_embedColor)
             .WithAuthor(authorText, authorUrl, GetIconUrl(category))
-            .WithFooter($"{_username} • {formattedDate}", _footerIconUrl);
+            .WithFooter($"{_discordClient.CurrentUser.Username}　•　{formattedDate}", _footerIconUrl);
+    }
+
+    public DiscordEmbedBuilder CreateErrorEmbedBuilder(string title, string description, Exception? exception)
+    {
+        var embed = new DiscordEmbedBuilder()
+            .WithColor(DiscordColor.Red)
+            .WithTitle(title)
+            .WithDescription(description);
+
+        if (exception is null)
+        {
+            return embed.WithDescription(description);
+        }
+
+        StringBuilder descriptionBuilder = new(description);
+
+        descriptionBuilder.Append("\n\n");
+        descriptionBuilder.Append("**").Append(exception.GetType().Name).Append(" :**\n");
+        descriptionBuilder.Append("```").Append(exception.Message).Append('\n');
+
+        if (exception is DiscordException discordException && !string.IsNullOrEmpty(discordException.JsonMessage))
+        {
+            descriptionBuilder.Append(discordException.JsonMessage).Append('\n');
+        }
+
+        descriptionBuilder.Append(exception.StackTrace);
+
+        if (descriptionBuilder.Length > Constant.MaxEmbedDescriptionSize)
+        {
+            descriptionBuilder.Length = Constant.MaxEmbedDescriptionSize - 3;
+        }
+
+        descriptionBuilder.Append("```");
+
+        return embed.WithDescription(descriptionBuilder.ToString());
     }
 
     public DiscordEmbedBuilder AddEffectFields(DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, bool inline = false)

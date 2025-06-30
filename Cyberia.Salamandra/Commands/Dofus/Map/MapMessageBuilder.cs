@@ -77,7 +77,7 @@ public sealed class MapMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Map, Translation.Get<BotTranslations>("Embed.Map.Author", _culture), _culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Map, Translation.Get<BotTranslations>("Embed.Map.Author", _culture), _culture)
             .WithTitle($"{_mapData.GetCoordinate()} ({_mapData.Id})")
             .WithDescription(_mapData.GetFullName(_culture))
             .WithImageUrl(await _mapData.GetImagePathAsync());

@@ -25,7 +25,7 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
         CultureInfo? culture,
         int selectedPageIndex = 0)
     : base(
-        embedBuilderService.CreateEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.Incarnation.Author", culture), culture),
+        embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Inventory, Translation.Get<BotTranslations>("Embed.Incarnation.Author", culture), culture),
         Translation.Get<BotTranslations>("Embed.PaginatedIncarnation.Title", culture),
         incarnationsData,
         search,

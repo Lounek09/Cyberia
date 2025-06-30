@@ -98,7 +98,7 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
 
     private async Task<DiscordEmbedBuilder> EmbedBuilder()
     {
-        var embed = _embedBuilderService.CreateEmbedBuilder(EmbedCategory.Spells, Translation.Get<BotTranslations>("Embed.Spell.Author", _culture), _culture)
+        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Spells, Translation.Get<BotTranslations>("Embed.Spell.Author", _culture), _culture)
             .WithTitle($"{_spellData.Name.ToString(_culture)} ({_spellData.Id}) - {Translation.Get<BotTranslations>("ShortLevel", _culture)} {_selectedLevel}")
             .WithThumbnail(await _spellData.GetIconImagePathAsync(CdnImageSize.Size128));
 
