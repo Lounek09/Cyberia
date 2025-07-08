@@ -8,12 +8,12 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record LockToAccountUntilEffect : Effect
 {
-    public DateTime DateTime { get; init; }
+    public DateTime Until { get; init; }
 
-    private LockToAccountUntilEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, DateTime dateTime)
+    private LockToAccountUntilEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, DateTime until)
         : base(id, duration, probability, criteria, dispellable, effectArea)
     {
-        DateTime = dateTime;
+        Until = until;
     }
 
     internal static LockToAccountUntilEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
@@ -21,8 +21,18 @@ public sealed record LockToAccountUntilEffect : Effect
         return new(effectId, duration, probability, criteria, dispellable, effectArea, GameDateFormatter.CreateDateTimeFromEffectParameters(parameters));
     }
 
+    public bool IsInfinite()
+    {
+        return Until == DateTime.MaxValue;
+    }
+
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(culture, DateTime.ToShortRolePlayString(culture));
+        if (IsInfinite())
+        {
+            return GetDescription(culture, string.Empty);
+        }
+
+        return GetDescription(culture, Until.ToShortRolePlayString(culture));
     }
 }
