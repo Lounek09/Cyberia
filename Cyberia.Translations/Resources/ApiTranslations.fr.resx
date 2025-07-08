@@ -795,9 +795,6 @@
   <data name="Effect.Errored" xml:space="preserve">
     <value>Effect erroné (#1)</value>
   </data>
-  <data name="Effect.LinkedToAccount" xml:space="preserve">
-    <value>Lié au compte</value>
-  </data>
   <data name="Effect.Probability" xml:space="preserve">
     <value>Dans #1% des cas</value>
   </data>

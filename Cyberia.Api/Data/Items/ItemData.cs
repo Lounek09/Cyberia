@@ -176,8 +176,8 @@ public sealed class ItemData : IDofusData<int>
     public bool Tradeable()
     {
         var hasEffectPreventingTrade = GetItemStatsData()?.Effects.Any(x =>
-            (x is MarkNotTradableEffect markNotTradableEffect && markNotTradableEffect.IsLinkedToAccount()) ||
-            x is MarkNeverTradableStrongEffect ||
+            (x is MarkNotTradableEffect markNotTradableEffect && markNotTradableEffect.IsInfinite()) ||
+            (x is MarkNotTradableStrongEffect markNotTradableStrongEffect && markNotTradableStrongEffect.IsInfinite()) ||
             x is LockToAccountEffect ||
             (x is LockToAccountUntilEffect lockToAccountUntilEffect && lockToAccountUntilEffect.DateTime > DateTime.Now) ||
             x is ItemUnbreakableEffect) ?? false;

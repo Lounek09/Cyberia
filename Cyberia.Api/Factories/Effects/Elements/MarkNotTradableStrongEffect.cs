@@ -1,22 +1,23 @@
 ﻿using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.Utils;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record MarkNotTradableEffect : Effect
+public sealed record MarkNotTradableStrongEffect : ParameterlessEffect
 {
     public DateTime Until { get; init; }
 
-    private MarkNotTradableEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, DateTime until)
+    private MarkNotTradableStrongEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, DateTime until)
         : base(id, duration, probability, criteria, dispellable, effectArea)
     {
         Until = until;
     }
 
-    internal static MarkNotTradableEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static MarkNotTradableStrongEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, dispellable, effectArea, GameDateFormatter.CreateDateTimeFromEffectParameters(parameters));
     }

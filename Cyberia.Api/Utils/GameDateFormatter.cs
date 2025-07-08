@@ -13,8 +13,8 @@ public static class GameDateFormatter
     /// <summary>
     /// Creates a DateTime from effect parameters.
     /// </summary>
-    /// <param name="parameters">Effect parameters containing date and time values.</param>
-    /// <returns>A DateTime object constructed from the parameters.</returns>
+    /// <param name="parameters">The effect parameters containing the compressed date information.</param>
+    /// <returns>The corresponding DateTime, or <see cref="DateTime.MaxValue"/> if the parameters indicate an infinite date.</returns>
     public static DateTime CreateDateTimeFromEffectParameters(EffectParameters parameters)
     {
         if (parameters.Param1 == -1)
@@ -27,6 +27,21 @@ public static class GameDateFormatter
         var day = (int)parameters.Param2 - (month - 1) * 100;
         var hour = (int)Math.Floor(parameters.Param3 / 100D);
         var minute = (int)parameters.Param3 - hour * 100;
+
+        if (year == 0)
+        {
+            year = 1;
+        }
+
+        if (month == 0)
+        {
+            month = 1;
+        }
+
+        if (day == 0)
+        {
+            day = 1;
+        }
 
         return new DateTime(year, month, day, hour, minute, 0);
     }

@@ -2221,15 +2221,6 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Linked to account.
-        /// </summary>
-        internal static string Effect_LinkedToAccount {
-            get {
-                return ResourceManager.GetString("Effect.LinkedToAccount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to In #1% of cases.
         /// </summary>
         internal static string Effect_Probability {
