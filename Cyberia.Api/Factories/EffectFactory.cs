@@ -140,6 +140,7 @@ public static class EffectFactory
             { 202, DecorsRevealUnvisibleEffect.Create },
             { 206, CharacterResurrectionEffect.Create },
             { 208, CharacterDisplaySpellAnimationEffect.Create },
+            { 209, CharacterInventoryAddItemEffect.Create },
             { 210, CharacterBoostEarthElementPercentEffect.Create },
             { 211, CharacterBoostWaterElementPercentEffect.Create },
             { 212, CharacterBoostAirElementPercentEffect.Create },
