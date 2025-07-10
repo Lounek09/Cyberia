@@ -19,7 +19,7 @@ public sealed record ItemPetsShapeEffect : Effect
 
     internal static ItemPetsShapeEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        var corpulence = parameters.Param2 <= 6 ? parameters.Param3 <= 6 ? Corpulence.Satisfied : Corpulence.Skinny : Corpulence.Obese;
+        var corpulence = parameters.Param2 <= 6 ? parameters.Param3 <= 6 ? Corpulence.Satiated : Corpulence.Skinny : Corpulence.Obese;
 
         return new(effectId, duration, probability, criteria, dispellable, effectArea, corpulence);
     }

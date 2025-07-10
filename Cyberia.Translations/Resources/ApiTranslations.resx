@@ -141,8 +141,8 @@
   <data name="Corpulence.Obese" xml:space="preserve">
     <value>Obese</value>
   </data>
-  <data name="Corpulence.Satisfied" xml:space="preserve">
-    <value>Satisfied</value>
+  <data name="Corpulence.Satiated" xml:space="preserve">
+    <value>Satiated</value>
   </data>
   <data name="Corpulence.Skinny" xml:space="preserve">
     <value>Skinny</value>

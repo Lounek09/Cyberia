@@ -8,12 +8,12 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record PetsLastMealEffect : Effect
 {
-    public DateTime DateTime { get; init; }
+    public DateTime LastFedAt { get; init; }
 
-    private PetsLastMealEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, DateTime dateTime)
+    private PetsLastMealEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, DateTime lastFedAt)
         : base(id, duration, probability, criteria, dispellable, effectArea)
     {
-        DateTime = dateTime;
+        LastFedAt = lastFedAt;
     }
 
     internal static PetsLastMealEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
@@ -23,6 +23,6 @@ public sealed record PetsLastMealEffect : Effect
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(culture, DateTime.ToShortRolePlayString(culture));
+        return GetDescription(culture, LastFedAt.ToShortRolePlayString(culture));
     }
 }

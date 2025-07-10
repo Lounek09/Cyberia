@@ -133,11 +133,11 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satisfied.
+        ///   Looks up a localized string similar to Satiated.
         /// </summary>
-        internal static string Corpulence_Satisfied {
+        internal static string Corpulence_Satiated {
             get {
-                return ResourceManager.GetString("Corpulence.Satisfied", resourceCulture);
+                return ResourceManager.GetString("Corpulence.Satiated", resourceCulture);
             }
         }
         

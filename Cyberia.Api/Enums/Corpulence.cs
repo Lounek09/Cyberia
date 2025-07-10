@@ -3,6 +3,6 @@
 public enum Corpulence
 {
     Skinny,
-    Satisfied,
+    Satiated,
     Obese
 }
