@@ -1215,4 +1215,16 @@
   <data name="Criterion.DayOfMonth.Superior" xml:space="preserve">
     <value>Day of the month &gt; #1</value>
   </data>
+  <data name="Criterion.RemainingVitality.Different" xml:space="preserve">
+    <value>Remaining vitality ≠ #1</value>
+  </data>
+  <data name="Criterion.RemainingVitality.Equal" xml:space="preserve">
+    <value>Remaining vitality = #1</value>
+  </data>
+  <data name="Criterion.RemainingVitality.Inferior" xml:space="preserve">
+    <value>Remaining vitality &lt; #1</value>
+  </data>
+  <data name="Criterion.RemainingVitality.Superior" xml:space="preserve">
+    <value>Remaining vitality &gt; #1</value>
+  </data>
 </root>

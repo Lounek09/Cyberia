@@ -1942,6 +1942,42 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remaining vitality ≠ #1.
+        /// </summary>
+        internal static string Criterion_RemainingVitality_Different {
+            get {
+                return ResourceManager.GetString("Criterion.RemainingVitality.Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remaining vitality = #1.
+        /// </summary>
+        internal static string Criterion_RemainingVitality_Equal {
+            get {
+                return ResourceManager.GetString("Criterion.RemainingVitality.Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remaining vitality &lt; #1.
+        /// </summary>
+        internal static string Criterion_RemainingVitality_Inferior {
+            get {
+                return ResourceManager.GetString("Criterion.RemainingVitality.Inferior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remaining vitality &gt; #1.
+        /// </summary>
+        internal static string Criterion_RemainingVitality_Superior {
+            get {
+                return ResourceManager.GetString("Criterion.RemainingVitality.Superior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do not be on the server #1.
         /// </summary>
         internal static string Criterion_Server_Different {

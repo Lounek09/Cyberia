@@ -36,6 +36,7 @@ public static class CriterionFactory
             { "CI", IntelligenceCriterion.Create },
             { "Ci", BaseIntelligenceCriterion.Create },
             { "Cl", PercentVitalityCriterion.Create },
+            { "CL", RemainingVitalityCriterion.Create },
             { "CM", MovementPointCriterion.Create },
             { "Cm", CurrentMovementPointCriterion.Create },
             { "CO", HomeownerCriterion.Create },
