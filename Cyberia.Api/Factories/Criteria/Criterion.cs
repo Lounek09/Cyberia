@@ -78,7 +78,7 @@ public abstract record Criterion : ICriterion
 
     /// <inheritdoc cref="ICriterion.GetDescription(CultureInfo)"/>
     [OverloadResolutionPriority(1)]
-    protected DescriptionString GetDescription(CultureInfo? culture, params IReadOnlyList<string> parameters)
+    protected DescriptionString GetDescription(CultureInfo? culture, params string[] parameters)
     {
         var descriptionKey = GetDescriptionKey();
 

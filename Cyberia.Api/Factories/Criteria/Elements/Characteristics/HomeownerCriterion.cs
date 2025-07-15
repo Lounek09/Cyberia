@@ -29,6 +29,6 @@ public sealed record HomeownerCriterion : Criterion
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(culture, []);
+        return GetDescription(culture, Array.Empty<string>());
     }
 }

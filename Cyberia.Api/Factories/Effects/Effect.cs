@@ -86,7 +86,7 @@ public abstract record Effect : IEffect
 
     /// <inheritdoc cref="IEffect.GetDescription(CultureInfo)"/>
     [OverloadResolutionPriority(1)]
-    protected DescriptionString GetDescription(CultureInfo? culture, params IReadOnlyList<string> parameters)
+    protected DescriptionString GetDescription(CultureInfo? culture, params string[] parameters)
     {
         var effectData = GetEffectData();
         if (effectData is null)
