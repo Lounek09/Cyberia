@@ -161,7 +161,7 @@ public static class Translation
 
         if (parameters is string[] array)
         {
-            return Format(template, array.AsSpan());
+            return Format(template, array);
         }
 
         return Format(template, parameters.ToArray());

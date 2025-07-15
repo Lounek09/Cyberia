@@ -1,4 +1,6 @@
-﻿namespace Cyberia.Api;
+﻿using System.Collections.ObjectModel;
+
+namespace Cyberia.Api;
 
 /// <summary>
 /// Represents a string template with parameters.
@@ -18,7 +20,9 @@ public readonly record struct DescriptionString
     /// <summary>
     /// Gets the parameters.
     /// </summary>
-    public IReadOnlyList<string> Parameters { get; init; }
+    public ReadOnlyCollection<string> Parameters => _parameters.AsReadOnly();
+
+    private readonly string[] _parameters;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DescriptionString"/> struct.
@@ -26,7 +30,7 @@ public readonly record struct DescriptionString
     public DescriptionString()
     {
         Template = string.Empty;
-        Parameters = [];
+        _parameters = Array.Empty<string>();
     }
 
     /// <summary>
@@ -34,10 +38,10 @@ public readonly record struct DescriptionString
     /// </summary>
     /// <param name="template">The template.</param>
     /// <param name="parameters">The parameters.</param>
-    public DescriptionString(string template, params IReadOnlyList<string> parameters)
+    public DescriptionString(string template, params string[] parameters)
     {
         Template = template;
-        Parameters = parameters;
+        _parameters = parameters;
     }
 
     /// <summary>
@@ -46,19 +50,19 @@ public readonly record struct DescriptionString
     /// <returns>The formatted string.</returns>
     public override string ToString()
     {
-        if (Parameters.Count == 0)
+        if (_parameters.Length == 0)
         {
             return Template;
         }
 
-        return Translation.Format(Template, Parameters);
+        return Translation.Format(Template, _parameters);
     }
 
     /// <inheritdoc cref="ToString()"/>
     /// <param name="decorator">The decorator function to apply to each parameter.</param>
     public string ToString(Func<string, string> decorator)
     {
-        var length = Parameters.Count;
+        var length = _parameters.Length;
         if (length == 0)
         {
             return Template;
@@ -67,7 +71,7 @@ public readonly record struct DescriptionString
         var formattedParameters = new string[length];
         for (var i = 0; i < length; i++)
         {
-            var parameter = Parameters[i];
+            var parameter = _parameters[i];
             formattedParameters[i] = string.IsNullOrEmpty(parameter) ? parameter : decorator(parameter);
         }
 

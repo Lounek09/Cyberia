@@ -350,7 +350,7 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
             builder.Append(' ');
             builder.Append(Emojis.EffectArea(itemTypeData.EffectArea, culture));
             builder.Append(' ');
-            builder.Append(itemTypeData.EffectArea.GetDescription(culture).ToString(Formatter.Bold));
+            builder.Append(itemTypeData.EffectArea.GetDescription(culture).ToString(x => Formatter.Bold(Formatter.Sanitize(x))));
         }
 
         return embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Weapon.Title", culture), builder.ToString(), inline);
