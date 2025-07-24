@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Cyberia.Utils.Extensions;
 
@@ -19,5 +20,35 @@ public static class NumberExtensions
         where T : struct, INumber<T>
     {
         return value.ToString("#,0", culture?.NumberFormat);
+    }
+
+    /// <summary>
+    /// Gets the number of digits in an integer.
+    /// </summary>
+    /// <param name="number">The integer to evaluate.</param>
+    /// <returns>The number of digits in the integer.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int Length(this int number)
+    {
+        if (number == int.MinValue)
+        {
+            return 11;
+        }
+
+        var length = Math.Abs(number) switch
+        {
+            < 10 => 1,
+            < 100 => 2,
+            < 1_000 => 3,
+            < 10_000 => 4,
+            < 100_000 => 5,
+            < 1_000_000 => 6,
+            < 10_000_000 => 7,
+            < 100_000_000 => 8,
+            < 1_000_000_000 => 9,
+            _ => 10
+        };
+
+        return number < 0 ? length + 1 : length;
     }
 }
