@@ -163,7 +163,7 @@ public sealed class LangsWatcher : ILangsWatcher
     {
         return type switch
         {
-            LangType.Beta => "betaenv/lang",
+            LangType.Beta => "static-data/638/lang",
             LangType.Temporis => "t3mporis-release/lang",
             _ => "lang",
         };
