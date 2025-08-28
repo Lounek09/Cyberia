@@ -24,6 +24,13 @@ public interface IDatabaseRepository<T, TId> : IDatabaseRepository
     Task<T?> GetAsync(TId id);
 
     /// <summary>
+    /// Gets many <typeparamref name="T"/> by their IDs.
+    /// </summary>
+    /// <param name="ids">The IDs of the <typeparamref name="T"/>.</param>
+    /// <returns>The <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> found; otherwise, an empty collection.</returns>
+    Task<IEnumerable<T>> GetManyAsync(params IReadOnlyCollection<TId> ids);
+
+    /// <summary>
     /// Creates or updates a <typeparamref name="T"/>.
     /// </summary>
     /// <param name="user">The <typeparamref name="T"/> to create or update.</param>

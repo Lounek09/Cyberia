@@ -32,6 +32,24 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         return await connection.QueryFirstOrDefaultAsync<DiscordCachedUser>(query, new { Id = id });
     }
 
+    public async Task<IEnumerable<DiscordCachedUser>> GetManyAsync(params IReadOnlyCollection<ulong> ids)
+    {
+        const string query =
+        $"""
+        SELECT * 
+        FROM {nameof(DiscordCachedUser)}
+        WHERE {nameof(DiscordCachedUser.Id)} IN @Ids
+        """;
+
+        if (ids.Count == 0)
+        {
+            return Enumerable.Empty<DiscordCachedUser>();
+        }
+
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.QueryAsync<DiscordCachedUser>(query, new { Ids = ids });
+    }
+
     public async Task<bool> UpsertAsync(DiscordCachedUser user)
     {
         const string query =

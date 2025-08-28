@@ -32,6 +32,24 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
         return await connection.QueryFirstOrDefaultAsync<OnlineMonitoredFile>(query, new { Id = id });
     }
 
+    public async Task<IEnumerable<OnlineMonitoredFile>> GetManyAsync(params IReadOnlyCollection<string> ids)
+    {
+        const string query =
+        $"""
+        SELECT * 
+        FROM {nameof(OnlineMonitoredFile)}
+        WHERE {nameof(OnlineMonitoredFile.Id)} IN @Ids
+        """;
+
+        if (ids.Count == 0)
+        {
+            return Enumerable.Empty<OnlineMonitoredFile>();
+        }
+
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.QueryAsync<OnlineMonitoredFile>(query, new { Ids = ids });
+    }
+
     public async Task<bool> UpsertAsync(OnlineMonitoredFile file)
     {
         const string query =
