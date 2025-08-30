@@ -22,7 +22,7 @@ public sealed class RuneAutocompleteProvider : IAutoCompleteProvider
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        return _dofusDatacenter.RunesRepository.GetRunesDataByItemName(ctx.UserInput ?? string.Empty)
+        return _dofusDatacenter.RunesRepository.GetRunesDataByItemName(ctx.UserInput ?? string.Empty, culture)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {
