@@ -65,6 +65,26 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
         return await connection.ExecuteAsync(query, file) > 0;
     }
 
+    public async Task<int> UpsertManyAsync(params IReadOnlyCollection<OnlineMonitoredFile> files)
+    {
+        const string query =
+        $"""
+        INSERT INTO {nameof(OnlineMonitoredFile)} ({nameof(OnlineMonitoredFile.Id)}, {nameof(OnlineMonitoredFile.LastModified)})
+        VALUES (@{nameof(OnlineMonitoredFile.Id)}, @{nameof(OnlineMonitoredFile.LastModified)})
+        ON CONFLICT({nameof(OnlineMonitoredFile.Id)})
+        DO UPDATE SET
+            {nameof(OnlineMonitoredFile.LastModified)} = excluded.{nameof(OnlineMonitoredFile.LastModified)}
+        """;
+
+        if (files.Count == 0)
+        {
+            return 0;
+        }
+
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.ExecuteAsync(query, files);
+    }
+
     public async Task<bool> DeleteAsync(string id)
     {
         const string query =

@@ -50,7 +50,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         return await connection.QueryAsync<DiscordCachedUser>(query, new { Ids = ids });
     }
 
-    public async Task<bool> UpsertAsync(DiscordCachedUser user)
+    public async Task<bool> UpsertAsync(DiscordCachedUser entity)
     {
         const string query =
         $"""
@@ -62,7 +62,27 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, user) > 0;
+        return await connection.ExecuteAsync(query, entity) > 0;
+    }
+
+    public async Task<int> UpsertManyAsync(params IReadOnlyCollection<DiscordCachedUser> entities)
+    {
+        const string query =
+        $"""
+        INSERT INTO {nameof(DiscordCachedUser)} ({nameof(DiscordCachedUser.Id)}, {nameof(DiscordCachedUser.Locale)})
+        VALUES (@{nameof(DiscordCachedUser.Id)}, @{nameof(DiscordCachedUser.Locale)})
+        ON CONFLICT({nameof(DiscordCachedUser.Id)})
+        DO UPDATE SET
+            {nameof(DiscordCachedUser.Locale)} = excluded.{nameof(DiscordCachedUser.Locale)}
+        """;
+
+        if (entities.Count == 0)
+        {
+            return 0;
+        }
+
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.ExecuteAsync(query, entities);
     }
 
     public async Task<bool> DeleteAsync(ulong id)

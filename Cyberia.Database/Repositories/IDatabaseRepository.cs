@@ -33,9 +33,16 @@ public interface IDatabaseRepository<T, TId> : IDatabaseRepository
     /// <summary>
     /// Creates or updates a <typeparamref name="T"/>.
     /// </summary>
-    /// <param name="user">The <typeparamref name="T"/> to create or update.</param>
+    /// <param name="entity">The <typeparamref name="T"/> to create or update.</param>
     /// <returns><see langword="true"/> if the <typeparamref name="T"/> was created or updated; otherwise, <see langword="false"/>.</returns>
-    Task<bool> UpsertAsync(T user);
+    Task<bool> UpsertAsync(T entity);
+
+    /// <summary>
+    /// Creates or updates many <typeparamref name="T"/>.
+    /// </summary>
+    /// <param name="entities">The <typeparamref name="T"/> to create or update.</param>
+    /// <returns>The number of <typeparamref name="T"/> that were created or updated.</returns>
+    Task<int> UpsertManyAsync(params IReadOnlyCollection<T> entities);
 
     /// <summary>
     /// Deletes a <typeparamref name="T"/> by their ID.
