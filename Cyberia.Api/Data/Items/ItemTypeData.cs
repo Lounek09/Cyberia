@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Enums;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.JsonConverters;
 
 using System.Text.Json.Serialization;
 
@@ -21,6 +22,10 @@ public sealed class ItemTypeData : IDofusData<int>
 
     [JsonPropertyName("t")]
     public ItemSuperType ItemSuperType { get; init; }
+
+    [JsonPropertyName("a")]
+    [JsonConverter(typeof(BoolFromIntConverter))]
+    public bool IsTypeCeremonial { get; init; }
 
     [JsonPropertyName("z")]
     public EffectArea EffectArea { get; init; }
