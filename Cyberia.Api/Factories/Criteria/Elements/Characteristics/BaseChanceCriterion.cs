@@ -6,17 +6,25 @@ public sealed record BaseChanceCriterion : Criterion
 {
     public int Value { get; init; }
 
-    private BaseChanceCriterion(string id, char @operator, int value)
+    public bool IsScroll { get; init; }
+
+    private BaseChanceCriterion(string id, char @operator, int value, bool isScroll)
         : base(id, @operator)
     {
         Value = value;
+        IsScroll = isScroll;
     }
 
     internal static BaseChanceCriterion? Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
-        if (parameters.Length > 0 && int.TryParse(parameters[0], out var value))
+        if (parameters.Length > 1 && int.TryParse(parameters[0], out var value))
         {
-            return new(id, @operator, value);
+            return new(id, @operator, value, parameters[1].Equals("scroll", StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (parameters.Length > 0 && int.TryParse(parameters[0], out value))
+        {
+            return new(id, @operator, value, false);
         }
 
         return null;
