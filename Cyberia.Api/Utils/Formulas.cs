@@ -102,7 +102,10 @@ public static class Formulas
     /// <returns>The time required to craft the items.</returns>
     public static TimeSpan GetTimePerCraft(int quantity, int ingredientCount)
     {
+        const double baseTime = 1.0;
         var additionalTime = 0.15 * (ingredientCount - 1);
-        return TimeSpan.FromSeconds((1 + additionalTime) * quantity);
+        var iterations = Math.Ceiling(quantity / 10D);
+
+        return TimeSpan.FromSeconds((baseTime + additionalTime) * iterations);
     }
 }
