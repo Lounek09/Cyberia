@@ -19,7 +19,7 @@ public sealed record BaseChanceCriterion : Criterion
     {
         if (parameters.Length > 1 && int.TryParse(parameters[0], out var value))
         {
-            return new(id, @operator, value, parameters[1].Equals("scroll", StringComparison.OrdinalIgnoreCase));
+            return new(id, @operator, value, parameters[1].Equals("scroll", StringComparison.Ordinal));
         }
 
         if (parameters.Length > 0 && int.TryParse(parameters[0], out value))
