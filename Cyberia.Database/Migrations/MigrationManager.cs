@@ -20,13 +20,13 @@ internal interface IMigrationManager
     /// Gets the list of migrations that have already been applied to the database.
     /// </summary>
     /// <returns>The list of applied migrations.</returns>
-    Task<IEnumerable<Migration>> GetAppliedMigrationsAsync(IDbConnection? dbConnection = null);
+    Task<IEnumerable<Migration>> GetAppliedMigrationsAsync(IDbConnection? connection = null);
 
     /// <summary>
     /// Gets the list of available migrations that can be applied to the database.
     /// </summary>
     /// <returns>The list of pending migrations.</returns>
-    Task<ReadOnlyCollection<PendingMigration>> GetAvailableMigrationsAsync(IDbConnection? dbConnection = null);
+    Task<ReadOnlyCollection<PendingMigration>> GetAvailableMigrationsAsync(IDbConnection? connection = null);
 
     /// <summary>
     /// Applies all pending migrations to the database.
