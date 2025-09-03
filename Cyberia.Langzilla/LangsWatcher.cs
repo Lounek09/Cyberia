@@ -165,7 +165,7 @@ public sealed class LangsWatcher : ILangsWatcher
         {
             LangType.Beta => "static-data/638/lang",
             LangType.Temporis => "t3mporis-release/lang",
-            _ => "lang",
+            _ => "/static-data/612/lang",
         };
     }
 
