@@ -9,10 +9,6 @@
       "d": "Termine la quête #3"
     },
     {
-      "id": 90,
-      "d": "Donne #1{~1~2 à }#2% de sa vie"
-    },
-    {
       "id": 143,
       "d": "PDV rendus : #1{~1~2 à }#2 (fixe)"
     },
@@ -49,6 +45,10 @@
       "d": "Invoque une créature statique : #1 (grade #2)"
     },
     {
+      "id": 188,
+      "d": "Change l'alignement vers #1, spécialisation #2 au niveau #3"
+    },
+    {
       "id": 192,
       "d": "Supprime l'objet #1"
     },
@@ -61,56 +61,12 @@
       "d": "Pose un objet au sol (#3)"
     },
     {
-      "id": 205,
-      "d": "Effet 205 inconnu (#1, #2, #3, #4)"
-    },
-    {
       "id": 206,
       "d": "Ressuscite la cible avec #3 points d'énergie"
     },
     {
       "id": 208,
       "d": "Lance l'animation de sort #3"
-    },
-    {
-      "id": 210,
-      "d": "#1{~1~2 à }#2% de résistance à la terre"
-    },
-    {
-      "id": 211,
-      "d": "#1{~1~2 à }#2% de résistance à l'eau"
-    },
-    {
-      "id": 212,
-      "d": "#1{~1~2 à }#2% de résistance à l'air"
-    },
-    {
-      "id": 213,
-      "d": "#1{~1~2 à }#2% de résistance au feu"
-    },
-    {
-      "id": 214,
-      "d": "#1{~1~2 à }#2% de résistance neutre"
-    },
-    {
-      "id": 215,
-      "d": "#1{~1~2 à }#2% de faiblesse face à la terre"
-    },
-    {
-      "id": 216,
-      "d": "#1{~1~2 à }#2% de faiblesse face à l'eau"
-    },
-    {
-      "id": 217,
-      "d": "#1{~1~2 à }#2% de faiblesse face à l'air"
-    },
-    {
-      "id": 218,
-      "d": "#1{~1~2 à }#2% de faiblesse face au feu"
-    },
-    {
-      "id": 219,
-      "d": "#1{~1~2 à }#2% de faiblesse neutre"
     },
     {
       "id": 221,
@@ -133,87 +89,8 @@
       "d": "Retire #2x #3 aux personnages autour de vous"
     },
     {
-      "id": 250,
-      "d": "#1{~1~2 à }#2% de res. terre face aux combattants"
-    },
-    {
-      "id": 251,
-      "d": "#1{~1~2 à }#2% de res. eau face aux combattants"
-    },
-    {
-      "id": 252,
-      "d": "#1{~1~2 à }#2% de res. air face aux combattants"
-    },
-    {
-      "id": 253,
-      "d": "#1{~1~2 à }#2% de res. feu face aux combattants"
-    },
-    {
-      "id": 254,
-      "d": "#1{~1~2 à }#2% de res. neutre face aux combattants"
-    },
-    {
-      "id": 255,
-      "d": "#1{~1~2 à }#2% de faiblesse terre face aux combattants"
-    },
-    {
-      "id": 256,
-      "d": "#1{~1~2 à }#2% de faiblesse eau face aux combattants"
-    },
-    {
-      "id": 257,
-      "d": "#1{~1~2 à }#2% de faiblesse air face aux combattants"
-    },
-    {
-      "id": 258,
-      "d": "#1{~1~2 à }#2% de faiblesse feu face aux combattants"
-    },
-    {
-      "id": 259,
-      "d": "#1{~1~2 à }#2% de faiblesse neutre face aux combattants"
-    },
-    {
-      "id": 280,
-      "d": "Diminue la portée minimale du sort #1 de #3",
-      "o": "+",
-      "t": true
-    },
-    {
-      "id": 295,
-      "d": "Augmente la portée minimale du sort #1 de #3",
-      "o": "-",
-      "t": true
-    },
-    {
-      "id": 296,
-      "d": "Augmente le coût en PA du sort #1 de #3",
-      "o": "-",
-      "t": true
-    },
-    {
-      "id": 297,
-      "d": "Désactive le lancer du sort #1 sur une case occupée",
-      "o": "-",
-      "t": true
-    },
-    {
-      "id": 298,
-      "d": "Désactive le lancer du sort #1 sur une case libre",
-      "o": "-",
-      "t": true
-    },
-    {
-      "id": 299,
-      "d": "Active le lancer du sort #1 sur une case libre",
-      "o": "+",
-      "t": true
-    },
-    {
       "id": 300,
-      "d": "Lance le sort #3 au rang #1",
-      "c": 29,
-      "p": -100,
-      "o": "/"
+      "d": "Lance le sort #3 au rang #1"
     },
     {
       "id": 333,
@@ -253,7 +130,7 @@
     },
     {
       "id": 629,
-      "d": "Apprend le sort #3"
+      "d": "Apprend le sort « #3 »"
     },
     {
       "id": 645,
@@ -290,14 +167,6 @@
     {
       "id": 742,
       "d": "Fragment d'âme de Shushu"
-    },
-    {
-      "id": 777,
-      "d": "-#1{~1~2 à }#2% de dégâts subis permanents",
-      "c": 75,
-      "p": -100,
-      "o": "+",
-      "j": true 
     },
     {
       "id": 780,
@@ -379,6 +248,10 @@
       "d": "Niveau maximum : #3"
     },
     {
+      "id": 983,
+      "d": "Lié au compte{~1 : }#1"
+    },
+    {
       "id": 984,
       "d": "Propriétaire légitime : #4"
     },
@@ -391,6 +264,14 @@
       "d": "Téléporte : '#1' en (#2, #3)"
     },
     {
+      "id": 2051,
+      "d": "+#1{~1~2 à }#2 niveau",
+      "c": 0,
+      "p": 0,
+      "o": "/",
+      "t": true
+    }
+    {
       "id": 2101,
       "d": "Contient une carte Tragic The Gardening (#3)"
     },
@@ -401,10 +282,6 @@
     {
       "id": 2107,
       "d": "Contient une carte Tragic The Gardening (#3)"
-    },
-    {
-      "id": 2135,
-      "d": "#1{~1~2 à }#2 vol dans toutes les caractéristiques"
     },
     {
       "id": 2143,
@@ -419,17 +296,8 @@
       "d": "Affiche les effets de #3"
     },
     {
-      "id": 2153,
-      "d": "Téléporte les membres du groupe",
-      "p": -100,
-      "t": true
-    },
-    {
-      "id": 2154,
-      "d": "Verrouillé au compte #1",
-      "p": -100,
-      "o": "/",
-      "t": true
+      "id": 2151,
+      "d": "Lié au personnage{~1 : }#1"
     }
   ]
 }
