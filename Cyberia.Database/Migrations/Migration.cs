@@ -10,7 +10,7 @@ internal sealed class Migration : IDatabaseEntity
     /// <summary>
     /// Gets the ID of the migration.
     /// </summary>
-    public long Id { get; init; }
+    public required int Id { get; init; }
 
     /// <summary>
     /// Gets the name of the migration.
@@ -20,5 +20,5 @@ internal sealed class Migration : IDatabaseEntity
     /// <summary>
     /// Gets when the migration was applied.
     /// </summary>
-    public DateTime AppliedAt { get; init; }
+    public required DateTime AppliedAt { get; init; }
 }

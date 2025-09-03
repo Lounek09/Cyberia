@@ -1,14 +1,10 @@
 ﻿using Dapper;
 
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Reflection;
 
 namespace Cyberia.Database.Migrations;
-
-/// <summary>
-/// Represents a pending migration that has not yet been applied to the database.
-/// </summary>
-internal readonly record struct PendingMigration(string Name, int Order, string Script);
 
 /// <summary>
 /// Represents a service that manages database migrations.
@@ -24,13 +20,13 @@ internal interface IMigrationManager
     /// Gets the list of migrations that have already been applied to the database.
     /// </summary>
     /// <returns>The list of applied migrations.</returns>
-    Task<IEnumerable<Migration>> GetAppliedMigrationsAsync();
+    Task<IEnumerable<Migration>> GetAppliedMigrationsAsync(IDbConnection? dbConnection = null);
 
     /// <summary>
     /// Gets the list of available migrations that can be applied to the database.
     /// </summary>
     /// <returns>The list of pending migrations.</returns>
-    Task<ReadOnlyCollection<PendingMigration>> GetAvailableMigrationsAsync();
+    Task<ReadOnlyCollection<PendingMigration>> GetAvailableMigrationsAsync(IDbConnection? dbConnection = null);
 
     /// <summary>
     /// Applies all pending migrations to the database.
@@ -66,28 +62,35 @@ internal sealed class MigrationManager : IMigrationManager
         await connection.ExecuteAsync(query);
     }
 
-    public async Task<IEnumerable<Migration>> GetAppliedMigrationsAsync()
+    public async Task<IEnumerable<Migration>> GetAppliedMigrationsAsync(IDbConnection? connection = null)
     {
         const string query =
         $"""
-        SELECT * FROM {nameof(Migration)};
+        SELECT *
+        FROM {nameof(Migration)};
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryAsync<Migration>(query);
+        if (connection is not null)
+        {
+            return await connection.QueryAsync<Migration>(query);
+        }
+
+        using var connection2 = await _connectionFactory.CreateConnectionAsync();
+        return await connection2.QueryAsync<Migration>(query);
     }
 
-    public async Task<ReadOnlyCollection<PendingMigration>> GetAvailableMigrationsAsync()
+    public async Task<ReadOnlyCollection<PendingMigration>> GetAvailableMigrationsAsync(IDbConnection? connection = null)
     {
         const string sqlExtension = ".sql";
-        const string expectedFormat = "Expected format is '{order}-{name}.sql' where '{order}' is the migration sequence number.";
+        const string expectedFormat = "Expected format is '{order}-{name}.sql' where '{order}' is the date in format 'yyyyMMddHHmm'.";
 
-        var appliedMigrations = await GetAppliedMigrationsAsync();
+        var appliedMigrations = await GetAppliedMigrationsAsync(connection);
         var appliedMigrationsLookup = appliedMigrations
-            .ToDictionary(x => x.Name, x => x)
+            .Select(x => x.Name)
+            .ToHashSet(StringComparer.Ordinal)
             .GetAlternateLookup<ReadOnlySpan<char>>();
 
-        var assembly = typeof(MigrationManager).Assembly;
+        var assembly = typeof(IMigrationManager).Assembly;
         var resourceNames = assembly.GetManifestResourceNames();
 
         if (resourceNames.Length == 0)
@@ -106,16 +109,17 @@ internal sealed class MigrationManager : IMigrationManager
 
             var resourceNameWithoutExtension = resourceName.AsSpan(..^sqlExtension.Length);
 
+            // Embedded resource name includes namespace that we don't want
             var lastDotIndex = resourceNameWithoutExtension.LastIndexOf('.');
-            if (lastDotIndex == -1)
+            if (lastDotIndex <= 0)
             {
-                throw new InvalidOperationException($"Invalid resource name format: {resourceName}. {expectedFormat}.");
+                throw new InvalidOperationException($"Invalid resource name format: {resourceName}. {expectedFormat}");
             }
 
             var name = resourceNameWithoutExtension[(lastDotIndex + 1)..];
-            if (name.IsEmpty || name.IsWhiteSpace())
+            if (name.IsWhiteSpace())
             {
-                throw new InvalidOperationException($"Invalid migration name extracted from resource: {resourceName}.");
+                throw new InvalidOperationException($"Invalid migration name extracted from resource: {resourceName}. {expectedFormat}");
             }
 
             var dashIndex = name.IndexOf('-');
@@ -124,12 +128,12 @@ internal sealed class MigrationManager : IMigrationManager
                 throw new InvalidOperationException($"Invalid resource name format: {resourceName}. {expectedFormat}");
             }
 
-            if (!int.TryParse(name[..dashIndex], out var order))
+            if (!long.TryParse(name[..dashIndex], out var order))
             {
-                throw new InvalidOperationException($"Invalid migration order extracted from resource: {resourceName}.");
+                throw new InvalidOperationException($"Invalid migration order extracted from resource: {resourceName}. {expectedFormat}");
             }
 
-            if (appliedMigrationsLookup.ContainsKey(name))
+            if (appliedMigrationsLookup.Contains(name))
             {
                 Log.Debug("Migration {Name} already applied. Skipping.", name.ToString());
                 continue;
@@ -138,7 +142,7 @@ internal sealed class MigrationManager : IMigrationManager
             var script = GetResourceContent(assembly, resourceName);
             if (string.IsNullOrWhiteSpace(script))
             {
-                throw new InvalidOperationException($"Migration script for '{name}' is empty.");
+                throw new InvalidOperationException($"Migration script '{name}' is empty.");
             }
 
             pendingMigrations.Add(new PendingMigration(name.ToString(), order, script));
@@ -159,7 +163,7 @@ internal sealed class MigrationManager : IMigrationManager
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
 
-        var availableMigrations = await GetAvailableMigrationsAsync();
+        var availableMigrations = await GetAvailableMigrationsAsync(connection);
         foreach (var pendingMigration in availableMigrations)
         {
             using var transaction = connection.BeginTransaction();
