@@ -5,6 +5,9 @@ using System.Globalization;
 
 namespace Cyberia.Database.TypeHandlers;
 
+/// <summary>
+/// Handles the conversion between <see cref="DateTime"/> and its database representation.
+/// </summary>
 public sealed class DateTimeHandler : SqlMapper.TypeHandler<DateTime>
 {
     public override DateTime Parse(object value)
