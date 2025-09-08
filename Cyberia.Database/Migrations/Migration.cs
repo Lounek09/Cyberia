@@ -5,11 +5,8 @@ namespace Cyberia.Database.Migrations;
 /// <summary>
 /// Represents a database migration.
 /// </summary>
-internal sealed class Migration : IDatabaseEntity
+internal sealed class Migration : IDatabaseEntity<int>
 {
-    /// <summary>
-    /// Gets the ID of the migration.
-    /// </summary>
     public required int Id { get; init; }
 
     /// <summary>

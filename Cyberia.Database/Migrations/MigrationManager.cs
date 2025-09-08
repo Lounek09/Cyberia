@@ -2,6 +2,7 @@
 
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Reflection;
 
 namespace Cyberia.Database.Migrations;
@@ -36,13 +37,13 @@ internal interface IMigrationManager
 
 internal sealed class MigrationManager : IMigrationManager
 {
-    private readonly IDbConnectionFactory _connectionFactory;
+    private readonly IDbConnectionFactory<SQLiteConnection> _connectionFactory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MigrationManager"/> class.
     /// </summary>
     /// <param name="connectionFactory">The connection factory.</param>
-    public MigrationManager(IDbConnectionFactory connectionFactory)
+    public MigrationManager(IDbConnectionFactory<SQLiteConnection> connectionFactory)
     {
         _connectionFactory = connectionFactory;
     }
@@ -166,7 +167,7 @@ internal sealed class MigrationManager : IMigrationManager
         var availableMigrations = await GetAvailableMigrationsAsync(connection);
         foreach (var pendingMigration in availableMigrations)
         {
-            using var transaction = connection.BeginTransaction();
+            using var transaction = await connection.BeginTransactionAsync();
 
             try
             {

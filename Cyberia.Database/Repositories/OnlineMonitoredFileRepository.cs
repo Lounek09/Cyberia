@@ -2,6 +2,8 @@
 
 using Dapper;
 
+using System.Data.SQLite;
+
 namespace Cyberia.Database.Repositories;
 
 /// <summary>
@@ -9,13 +11,13 @@ namespace Cyberia.Database.Repositories;
 /// </summary>
 public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMonitoredFile, string>
 {
-    private readonly IDbConnectionFactory _connectionFactory;
+    private readonly IDbConnectionFactory<SQLiteConnection> _connectionFactory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="OnlineMonitoredFileRepository"/> class.
     /// </summary>
     /// <param name="connectionFactory">The connection factory.</param>
-    public OnlineMonitoredFileRepository(IDbConnectionFactory connectionFactory)
+    public OnlineMonitoredFileRepository(IDbConnectionFactory<SQLiteConnection> connectionFactory)
     {
         _connectionFactory = connectionFactory;
     }

@@ -19,7 +19,7 @@ public sealed class DateTimeHandler : SqlMapper.TypeHandler<DateTime>
             return DateTime.SpecifyKind(dateTimeValue, DateTimeKind.Utc);
         }
 
-        throw new ArgumentException("Invalid value type for DateTimeHandler", nameof(value));
+        throw new ArgumentException($"Invalid value type for {typeof(DateTimeHandler).Name}", nameof(value));
     }
 
     public override void SetValue(IDbDataParameter parameter, DateTime value)

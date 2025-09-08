@@ -1,7 +1,12 @@
 ﻿using Cyberia.Database.Migrations;
 using Cyberia.Database.Repositories;
+using Cyberia.Database.TypeHandlers;
+
+using Dapper;
 
 using Microsoft.Extensions.DependencyInjection;
+
+using System.Data.SQLite;
 
 namespace Cyberia.Database.Extentsions;
 
@@ -18,7 +23,10 @@ public static class ServiceCollectionExtensions
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
     {
-        services.AddSingleton<IDbConnectionFactory>(_ => new SQLiteDbConnectionFactory(connectionString));
+        SqlMapper.AddTypeHandler(new DateTimeHandler());
+
+        services.AddSingleton<IDbConnectionFactory<SQLiteConnection>, SQLiteDbConnectionFactory>(
+            _ => new SQLiteDbConnectionFactory(connectionString));
         services.AddSingleton<IMigrationManager, MigrationManager>();
 
         services.AddSingleton<DiscordCachedUserRepository>();

@@ -2,6 +2,8 @@
 
 using Dapper;
 
+using System.Data.SQLite;
+
 namespace Cyberia.Database.Repositories;
 
 /// <summary>
@@ -9,13 +11,13 @@ namespace Cyberia.Database.Repositories;
 /// </summary>
 public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCachedUser, ulong>
 {
-    private readonly IDbConnectionFactory _connectionFactory;
+    private readonly IDbConnectionFactory<SQLiteConnection> _connectionFactory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordCachedUserRepository"/> class.
     /// </summary>
     /// <param name="connectionFactory">The connection factory.</param>
-    public DiscordCachedUserRepository(IDbConnectionFactory connectionFactory)
+    public DiscordCachedUserRepository(IDbConnectionFactory<SQLiteConnection> connectionFactory)
     {
         _connectionFactory = connectionFactory;
     }

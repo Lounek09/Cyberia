@@ -1,10 +1,10 @@
 ﻿namespace Cyberia.Database.Models;
 
-public sealed class DiscordCachedUser : IDatabaseEntity
+/// <summary>
+/// Represents a cached Discord user.
+/// </summary>
+public sealed class DiscordCachedUser : IDatabaseEntity<ulong>
 {
-    /// <summary>
-    /// Gets the ID of the user.
-    /// </summary>
     public required ulong Id { get; init; }
 
     /// <summary>
@@ -15,8 +15,5 @@ public sealed class DiscordCachedUser : IDatabaseEntity
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordCachedUser"/> class.
     /// </summary>
-    public DiscordCachedUser()
-    {
-        
-    }
+    public DiscordCachedUser() { }
 }

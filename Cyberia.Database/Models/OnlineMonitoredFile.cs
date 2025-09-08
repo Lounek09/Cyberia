@@ -3,11 +3,8 @@
 /// <summary>
 /// Represents an online file that is being monitored for changes.
 /// </summary>
-public sealed class OnlineMonitoredFile : IDatabaseEntity
+public sealed class OnlineMonitoredFile : IDatabaseEntity<string>
 {
-    /// <summary>
-    /// Gets the ID of the file.
-    /// </summary>
     public required string Id { get; init; }
 
     /// <summary>
@@ -18,8 +15,5 @@ public sealed class OnlineMonitoredFile : IDatabaseEntity
     /// <summary>
     /// Initializes a new instance of the <see cref="MonitoredFile"/> class.
     /// </summary>
-    public OnlineMonitoredFile()
-    {
-        
-    }
+    public OnlineMonitoredFile() { }
 }

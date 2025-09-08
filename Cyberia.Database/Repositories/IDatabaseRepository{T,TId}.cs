@@ -2,18 +2,13 @@
 
 namespace Cyberia.Database.Repositories;
 
-public interface IDatabaseRepository
-{
-
-}
-
 /// <summary>
 /// Represents a generic repository for database entities.
 /// </summary>
 /// <typeparam name="T">The type of the entity.</typeparam>
 /// <typeparam name="TId">The type of the entity's ID.</typeparam>
-public interface IDatabaseRepository<T, TId> : IDatabaseRepository
-    where T : IDatabaseEntity
+public interface IDatabaseRepository<T, TId>
+    where T : IDatabaseEntity<TId>
     where TId : notnull
 {
     /// <summary>
