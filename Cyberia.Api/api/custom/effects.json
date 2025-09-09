@@ -264,14 +264,6 @@
       "d": "Téléporte : '#1' en (#2, #3)"
     },
     {
-      "id": 2051,
-      "d": "+#1{~1~2 à }#2 niveau",
-      "c": 0,
-      "p": 0,
-      "o": "/",
-      "t": true
-    }
-    {
       "id": 2101,
       "d": "Contient une carte Tragic The Gardening (#3)"
     },
