@@ -1,12 +1,12 @@
 # Cyberia
 
-**Salamandra** a Discord Bot made with [DSharpPlus](https://dsharpplus.github.io/DSharpPlus/) and **Amphibian** a Website made with [ASP.NET Core](https://learn.microsoft.com/fr-fr/aspnet/core/) and [htmx](https://htmx.org/) for the MMORPG [Dofus Retro](https://www.dofus-retro.com/).
+**Salamandra** a Discord Bot made with [DSharpPlus](https://dsharpplus.github.io/DSharpPlus/) and **Amphibian** a website made with [ASP.NET Core](https://learn.microsoft.com/fr-fr/aspnet/core/) and [htmx](https://htmx.org/) for the MMORPG [Dofus Retro](https://www.dofus-retro.com/).
 
 [![Build](https://github.com/Lounek09/Cyberia/actions/workflows/build-validation.yml/badge.svg)](https://github.com/Lounek09/Cyberia/actions/workflows/build-validation.yml)
 
-![Logo salamandra](images/logo-salamandra.png) **Salamandra** : <https://discord.com/application-directory/687745374294638594>  
-![Logo amphibian](images/logo-amphibian.png) **Amphibian** : <https://amphibian.fr>  
-![Logo discord](images/logo-discord.png) **Discord** : <https://discord.gg/gfsPNqGXdD>  
+![Logo salamandra](images/logo-salamandra.png) **Salamandra**: <https://discord.com/application-directory/687745374294638594>  
+![Logo amphibian](images/logo-amphibian.png) **Amphibian**: <https://amphibian.fr>  
+![Logo discord](images/logo-discord.png) **Discord**: <https://discord.gg/gfsPNqGXdD>  
 
 ## Setup
 
@@ -69,7 +69,7 @@
    ```
 
 5. **Create a systemd service:**  
-   To launch the app in the background, a systemd service is a good approach. Go to `/etc/systemd/system` and create a new file called `cyberia.service` with this content. Replace *salamandra* with your user:
+   Go to `/etc/systemd/system` and create a new file called `cyberia.service` with this content. Replace *salamandra* with your user:
    ```service
    [Unit]
    Description=Cyberia Service
@@ -124,13 +124,13 @@ Below are the detailed descriptions of each variable of the [configuration](/Cyb
 | `CheckBetaLangInterval`     | Interval between each Beta Lang check             | Timespan |
 | `EnableCheckTemporisLang`   | Activate the automatic check of the Temporis Lang | Boolean  |
 | `CheckTemporisLangInterval` | Interval between each Temporis Lang check         | Timespan |
-| `DofusApiConfig`                 | The configuration related to the API         | [DofusApiConfig](#dofus-api-configuration) |
+| `DofusApiConfig`            | The configuration related to the API              | [DofusApiConfig](#dofus-api-configuration) |
 | `BotConfig`                 | The configuration related to the bot              | [BotConfig](#bot-configuration) |
 | `WebConfig`                 | The configuration related to the website          | [WebConfig](#web-configuration) |
 
 ### Dofus API Configuration
 
-| Variable            | Description                                                                                                    | Type   |
+| Variable             | Description                                                                                                   | Type   |
 | :------------------- | :------------------------------------------------------------------------------------------------------------ | :----- |
 | `CdnUrl`             | The URL of the [CDN](https://github.com/Lounek09/Cyberia.Cdn)                                                 | String |
 | `Type`               | The type of lang loaded at startup                                                                            | [LangType](/Cyberia.Langzilla.Enums/LangType.cs) |
@@ -141,17 +141,17 @@ Below are the detailed descriptions of each variable of the [configuration](/Cyb
 
 ### Bot Configuration
 
-| Variable                  | Description                                                                        | Type   |
-| :------------------------ | :--------------------------------------------------------------------------------- | :----- |
-| `Token`                   | The Discord bot token                                                              | String |
-| `EmbedColor`              | The color of the embed (e.g. `#CD853F`)                                            | String |
-| `AdminGuildId`            | The guild ID where the admin commands will be registered                           | UInt64 |
-| `BotInviteUrl`            | The invitation URL of the bot                                                      | String |
-| `LogChannelId`            | The channel where logs from certain events (e.g. guild added/removed) will be sent | UInt64 |
-| `ErrorChannelId`          | The channel ID where errors related to command execution will be sent              | UInt64 |
-| `LangForumChannelId`      | The forum channel ID where the automatic lang diff will be sent                    | UInt64 |
-| `CytrusChannelId`         | The channel ID where the Cytrus diff will be sent                                  | UInt64 |
-| `CytrusManifestChannelId` | The channel ID where the game manifest diff from Cytrus will be sent               | UInt64 |
+| Variable                  | Description                                                                           | Type   |
+| :------------------------ | :------------------------------------------------------------------------------------ | :----- |
+| `Token`                   | The Discord bot token                                                                 | String |
+| `EmbedColor`              | The color of the embed (e.g. `#CD853F`)                                               | String |
+| `AdminGuildId`            | The guild ID where the admin commands will be registered                              | UInt64 |
+| `BotInviteUrl`            | The invitation URL of the bot                                                         | String |
+| `LogChannelId`            | The channel ID where logs from certain events (e.g. guild added/removed) will be sent | UInt64 |
+| `ErrorChannelId`          | The channel ID where errors related to command execution will be sent                 | UInt64 |
+| `LangForumChannelId`      | The forum channel ID where the automatic lang diff will be sent                       | UInt64 |
+| `CytrusChannelId`         | The channel ID where the Cytrus diff will be sent                                     | UInt64 |
+| `CytrusManifestChannelId` | The channel ID where the game manifest diff from Cytrus will be sent                  | UInt64 |
 
 ### Web Configuration
 
