@@ -84,7 +84,13 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, files);
+        using var transaction = await connection.BeginTransactionAsync();
+
+        var affectedRows = await connection.ExecuteAsync(query, files, transaction);
+
+        await transaction.CommitAsync();
+
+        return affectedRows;
     }
 
     public async Task<bool> DeleteAsync(string id)

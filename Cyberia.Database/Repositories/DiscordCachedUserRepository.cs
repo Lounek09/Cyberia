@@ -84,7 +84,13 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, entities);
+        using var transaction = await connection.BeginTransactionAsync();
+
+        var affectedRows = await connection.ExecuteAsync(query, entities, transaction);
+
+        await transaction.CommitAsync();
+
+        return affectedRows;
     }
 
     public async Task<bool> DeleteAsync(ulong id)
