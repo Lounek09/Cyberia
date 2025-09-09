@@ -45,4 +45,11 @@ public interface IDatabaseRepository<T, TId>
     /// <param name="id">The ID of the <typeparamref name="T"/>.</param>
     /// <returns><see langword="true"/> if the <typeparamref name="T"/> was deleted; otherwise, <see langword="false"/>.</returns>
     Task<bool> DeleteAsync(TId id);
+
+    /// <summary>
+    /// Deletes many <typeparamref name="T"/> by their IDs.
+    /// </summary>
+    /// <param name="ids">The IDs of the <typeparamref name="T"/>.</param>
+    /// <returns>The number of <typeparamref name="T"/> that were deleted.</returns>
+    Task<int> DeleteManyAsync(params IReadOnlyCollection<TId> ids);
 }

@@ -99,6 +99,23 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
         return await connection.ExecuteAsync(query, new { Id = id }) > 0;
     }
 
+    public async Task<int> DeleteManyAsync(params IReadOnlyCollection<string> ids)
+    {
+        const string query =
+        $"""
+        DELETE FROM {nameof(OnlineMonitoredFile)}
+        WHERE {nameof(OnlineMonitoredFile.Id)} IN @Ids
+        """;
+
+        if (ids.Count == 0)
+        {
+            return 0;
+        }
+
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.ExecuteAsync(query, new { Ids = ids });
+    }
+
     /// <summary>
     /// Gets the last modified date of an online monitored file by its ID.
     /// </summary>

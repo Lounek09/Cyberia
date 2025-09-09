@@ -99,6 +99,23 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         return await connection.ExecuteAsync(query, new { Id = id }) > 0;
     }
 
+    public async Task<int> DeleteManyAsync(params IReadOnlyCollection<ulong> ids)
+    {
+        const string query =
+        $"""
+        DELETE FROM {nameof(DiscordCachedUser)}
+        WHERE {nameof(DiscordCachedUser.Id)} IN @Ids
+        """;
+
+        if (ids.Count == 0)
+        {
+            return 0;
+        }
+
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.ExecuteAsync(query, new { Ids = ids });
+    }
+
     /// <summary>
     /// Gets the locale of a user by their ID.
     /// </summary>
