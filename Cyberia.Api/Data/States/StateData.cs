@@ -17,7 +17,7 @@ public sealed class StateData : IDofusData<int>
     internal int P { get; init; }
 
     [JsonPropertyName("d")]
-    public bool Display { get; init; }
+    public bool IsDisplayedBanner { get; init; }
 
     [JsonPropertyName("s")]
     public LocalizedString ShortName { get; init; }
