@@ -176,7 +176,7 @@ internal sealed class MigrationManager : IMigrationManager
 
                 transaction.Commit();
 
-                Log.Information("Applied migration {Name}.", pendingMigration.Name, pendingMigration.Order);
+                Log.Information("Applied migration {Name}.", pendingMigration.Name);
             }
             catch
             {
