@@ -3,7 +3,7 @@
 namespace Cyberia.Cytrusaurus.EventArgs;
 
 /// <summary>
-/// Represents the event arguments for when an error occurs in the Cytrus watcher.
+/// Represents the event arguments for when an error occurs in the <see cref="ICytrusWatcher"/>.
 /// </summary>
 public sealed class CytrusErroredEventArgs : System.EventArgs
 {

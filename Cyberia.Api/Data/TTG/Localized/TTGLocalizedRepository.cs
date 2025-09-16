@@ -7,10 +7,10 @@ internal sealed class TTGLocalizedRepository : DofusLocalizedRepository, IDofusR
     public static string FileName => TTGRepository.FileName;
 
     [JsonPropertyName("TTG.e")]
-    public IReadOnlyList<TTGEntityLocalizedData> TTGEntities { get; set; }
+    public IReadOnlyList<TTGEntityLocalizedData> TTGEntities { get; init; }
 
     [JsonPropertyName("TTG.f")]
-    public IReadOnlyList<TTGFamilyLocalizedData> TTGFamilies { get; set; }
+    public IReadOnlyList<TTGFamilyLocalizedData> TTGFamilies { get; init; }
 
     [JsonConstructor]
     internal TTGLocalizedRepository()

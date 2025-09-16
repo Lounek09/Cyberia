@@ -14,15 +14,15 @@ public sealed class TTGRepository : DofusRepository, IDofusRepository
 
     [JsonPropertyName("TTG.c")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGCardData>))]
-    public FrozenDictionary<int, TTGCardData> TTGCards { get; set; }
+    public FrozenDictionary<int, TTGCardData> TTGCards { get; init; }
 
     [JsonPropertyName("TTG.e")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGEntityData>))]
-    public FrozenDictionary<int, TTGEntityData> TTGEntities { get; set; }
+    public FrozenDictionary<int, TTGEntityData> TTGEntities { get; init; }
 
     [JsonPropertyName("TTG.f")]
     [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, TTGFamilyData>))]
-    public FrozenDictionary<int, TTGFamilyData> TTGFamilies { get; set; }
+    public FrozenDictionary<int, TTGFamilyData> TTGFamilies { get; init; }
 
     [JsonConstructor]
     internal TTGRepository()

@@ -12,6 +12,7 @@ public sealed class DofusDatacenter
     public Audios.AudiosRepository AudiosRepository { get; private set; }
     public Breeds.BreedsRepository BreedsRepository { get; private set; }
     public Crafts.CraftsRepository CraftsRepository { get; private set; }
+    public DailyQuest.DailyQuestRepository DailyQuestRepository { get; private set; }
     public Dialogs.DialogsRepository DialogsRepository { get; private set; }
     public Effects.EffectsRepository EffectsRepository { get; private set; }
     public Emotes.EmotesRepository EmotesRepository { get; private set; }
@@ -45,6 +46,7 @@ public sealed class DofusDatacenter
     public TimeZone.TimeZoneRepository TimeZonesRepository { get; private set; }
     public Titles.TitlesRepository TitlesRepository { get; private set; }
     public TTG.TTGRepository TTGRepository { get; private set; }
+    public WantedDocument.WantedDocumentRepository WantedDocumentRepository { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DofusDatacenter"/> class.
@@ -55,6 +57,7 @@ public sealed class DofusDatacenter
         AudiosRepository = new();
         BreedsRepository = new();
         CraftsRepository = new();
+        DailyQuestRepository = new();
         DialogsRepository = new();
         EffectsRepository = new();
         EmotesRepository = new();
@@ -88,6 +91,7 @@ public sealed class DofusDatacenter
         TimeZonesRepository = new();
         TitlesRepository = new();
         TTGRepository = new();
+        WantedDocumentRepository = new();
     }
 
     /// <summary>
@@ -100,6 +104,7 @@ public sealed class DofusDatacenter
         AudiosRepository = DofusRepository.Load<Audios.AudiosRepository>(type);
         BreedsRepository = DofusRepository.Load<Breeds.BreedsRepository>(type);
         CraftsRepository = DofusRepository.Load<Crafts.CraftsRepository>(type);
+        DailyQuestRepository = DofusRepository.Load<DailyQuest.DailyQuestRepository>(type);
         DialogsRepository = DofusRepository.Load<Dialogs.DialogsRepository>(type);
         EffectsRepository = DofusRepository.Load<Effects.EffectsRepository>(type);
         EmotesRepository = DofusRepository.Load<Emotes.EmotesRepository>(type);
@@ -133,6 +138,7 @@ public sealed class DofusDatacenter
         TimeZonesRepository = DofusRepository.Load<TimeZone.TimeZoneRepository>(type);
         TitlesRepository = DofusRepository.Load<Titles.TitlesRepository>(type);
         TTGRepository = DofusRepository.Load<TTG.TTGRepository>(type);
+        WantedDocumentRepository = DofusRepository.Load<WantedDocument.WantedDocumentRepository>(type);
 
         ImageUrlProvider.ClearCache();
     }

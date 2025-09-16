@@ -90,22 +90,25 @@ public static class Program
                 cytrusWatcher.Watch(TimeSpan.FromSeconds(20), cyberiaConfig.CheckCytrusInterval);
             }
 
+            var langsWatcher = provider.GetRequiredService<ILangsWatcher>();
+            //await langsWatcher.InitializeAsync();
+
             if (cyberiaConfig.EnableCheckLang)
             {
                 Log.Information("Watching {LangType} Langs each {OfficialLangInterval}", LangType.Official, cyberiaConfig.CheckLangInterval);
-                provider.GetRequiredService<ILangsWatcher>().Watch(LangType.Official, TimeSpan.FromSeconds(20), cyberiaConfig.CheckLangInterval);
+                langsWatcher.Watch(LangType.Official, TimeSpan.FromSeconds(20), cyberiaConfig.CheckLangInterval);
             }
 
             if (cyberiaConfig.EnableCheckBetaLang)
             {
                 Log.Information("Watching {LangType} Langs each {BetaLangInterval}", LangType.Beta, cyberiaConfig.CheckBetaLangInterval);
-                provider.GetRequiredService<ILangsWatcher>().Watch(LangType.Beta, TimeSpan.FromSeconds(140), cyberiaConfig.CheckBetaLangInterval);
+                langsWatcher.Watch(LangType.Beta, TimeSpan.FromSeconds(140), cyberiaConfig.CheckBetaLangInterval);
             }
 
             if (cyberiaConfig.EnableCheckTemporisLang)
             {
                 Log.Information("Watching {LangType} Langs each {TemporisLangInterval}", LangType.Temporis, cyberiaConfig.CheckTemporisLangInterval);
-                provider.GetRequiredService<ILangsWatcher>().Watch(LangType.Temporis, TimeSpan.FromSeconds(260), cyberiaConfig.CheckCytrusInterval);
+                langsWatcher.Watch(LangType.Temporis, TimeSpan.FromSeconds(260), cyberiaConfig.CheckCytrusInterval);
             }
 
             await Task.Delay(-1);
