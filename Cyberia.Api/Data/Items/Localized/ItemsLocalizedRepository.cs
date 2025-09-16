@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Items.Localized;
 
@@ -18,8 +19,8 @@ internal sealed class ItemsLocalizedRepository : DofusLocalizedRepository, IDofu
     [JsonConstructor]
     internal ItemsLocalizedRepository()
     {
-        ItemUnicStrings = [];
-        ItemTypes = [];
-        Items = [];
+        ItemUnicStrings = ReadOnlyCollection<ItemUnicStringLocalizedData>.Empty;
+        ItemTypes = ReadOnlyCollection<ItemTypeLocalizedData>.Empty;
+        Items = ReadOnlyCollection<ItemLocalizedData>.Empty;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Rides.Localized;
 
@@ -15,7 +16,7 @@ internal sealed class RidesLocalizedRepository : DofusLocalizedRepository, IDofu
     [JsonConstructor]
     internal RidesLocalizedRepository()
     {
-        Rides = [];
-        RideAbilities = [];
+        Rides = ReadOnlyCollection<RideLocalizedData>.Empty;
+        RideAbilities = ReadOnlyCollection<RideAbilityLocalizedData>.Empty;
     }
 }

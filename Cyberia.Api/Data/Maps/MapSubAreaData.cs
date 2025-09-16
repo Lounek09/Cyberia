@@ -2,6 +2,7 @@
 using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Globalization;
 using System.Text.Json.Serialization;
@@ -36,9 +37,9 @@ public sealed class MapSubAreaData : IDofusData<int>
     internal MapSubAreaData()
     {
         Name = LocalizedString.Empty;
-        FightAudioMusicId = [];
-        NearMapSubAreasId = [];
-        TacticColors = [];
+        FightAudioMusicId = ReadOnlyCollection<int?>.Empty;
+        NearMapSubAreasId = ReadOnlyCollection<int>.Empty;
+        TacticColors = ReadOnlyCollection<Color?>.Empty;
         TacticTheme = string.Empty;
     }
 

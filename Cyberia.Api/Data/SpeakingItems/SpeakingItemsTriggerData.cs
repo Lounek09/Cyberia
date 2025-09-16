@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Enums;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.SpeakingItems;
@@ -18,7 +19,7 @@ public sealed class SpeakingItemsTriggerData : IDofusData
     [JsonConstructor]
     internal SpeakingItemsTriggerData()
     {
-        SpeakingItemsMessageIds = [];
+        SpeakingItemsMessageIds = ReadOnlyCollection<int>.Empty;
     }
 
     public SpeakingItemsMessageData? GetRandomSpeakingItemMessageData()

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Scripts.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class ScriptsLocalizedRepository : DofusLocalizedRepository, IDo
     [JsonConstructor]
     internal ScriptsLocalizedRepository()
     {
-        ScriptDialogs = [];
+        ScriptDialogs = ReadOnlyCollection<ScriptDialogLocalizedData>.Empty;
     }
 }

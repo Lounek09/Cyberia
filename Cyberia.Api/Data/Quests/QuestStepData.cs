@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api.Data.Dialogs;
 using Cyberia.Api.Factories.QuestObjectives;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests;
@@ -40,9 +41,9 @@ public sealed class QuestStepData : IDofusData<int>
         Name = LocalizedString.Empty;
         Description = LocalizedString.Empty;
         RewardsData = new();
-        RewardsBaseLevelsData = [];
-        QuestObjectivesId = [];
-        QuestObjectives = [];
+        RewardsBaseLevelsData = ReadOnlyCollection<QuestStepRewardsBaseLevelData>.Empty;
+        QuestObjectivesId = ReadOnlyCollection<int>.Empty;
+        QuestObjectives = ReadOnlyCollection<IQuestObjective>.Empty;
     }
 
     public bool HasRewards()

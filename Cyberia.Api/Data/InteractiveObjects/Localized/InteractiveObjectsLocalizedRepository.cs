@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.InteractiveObjects.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class InteractiveObjectsLocalizedRepository : DofusLocalizedRepo
     [JsonConstructor]
     internal InteractiveObjectsLocalizedRepository()
     {
-        InteractiveObjects = [];
+        InteractiveObjects = ReadOnlyCollection<InteractiveObjectLocalizedData>.Empty;
     }
 }

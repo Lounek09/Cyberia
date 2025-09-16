@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Monsters.Localized;
 
@@ -18,8 +20,8 @@ internal sealed class MonstersLocalizedRepository : DofusLocalizedRepository, ID
     [JsonConstructor]
     internal MonstersLocalizedRepository()
     {
-        MonsterSuperRaces = [];
-        MonsterRaces = [];
-        Monsters = [];
+        MonsterSuperRaces = ReadOnlyCollection<MonsterSuperRaceLocalizedData>.Empty;
+        MonsterRaces = ReadOnlyCollection<MonsterRaceLocalizedData>.Empty;
+        Monsters = ReadOnlyCollection<MonsterLocalizedData>.Empty;
     }
 }

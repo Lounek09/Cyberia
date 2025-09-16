@@ -5,6 +5,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Enums;
 
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text.Json.Serialization;
 
@@ -28,8 +29,8 @@ public sealed class IncarnationData : IDofusData<int>
     [JsonConstructor]
     internal IncarnationData()
     {
-        SpellsId = [];
-        Effects = [];
+        SpellsId = ReadOnlyCollection<int>.Empty;
+        Effects = ReadOnlyCollection<IEffect>.Empty;
     }
 
     public async Task<string> GetBigImagePathAsync(CdnImageSize size)

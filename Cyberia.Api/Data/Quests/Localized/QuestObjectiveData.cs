@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.JsonConverters;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests.Localized;
@@ -16,6 +17,6 @@ internal sealed class QuestObjectiveLocalizedData : IDofusData<int>
     [JsonConstructor]
     internal QuestObjectiveLocalizedData()
     {
-        Parameters = [];
+        Parameters = ReadOnlyCollection<string>.Empty;
     }
 }

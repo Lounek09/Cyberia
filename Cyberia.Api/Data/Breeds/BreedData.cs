@@ -5,6 +5,7 @@ using Cyberia.Api.Enums;
 using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Enums;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Breeds;
@@ -88,17 +89,17 @@ public sealed class BreedData : IDofusData<int>
         LongName = LocalizedString.Empty;
         Description = LocalizedString.Empty;
         ShortDescription = LocalizedString.Empty;
-        SpellsId = [];
+        SpellsId = ReadOnlyCollection<int>.Empty;
         TemporisPassiveName = LocalizedString.Empty;
         TemporisPassiveDescription = LocalizedString.Empty;
         CloseCombatInfos = new();
-        StrengthBoostCost = [];
-        VitalityBoostCost = [];
-        WisdomBoostCost = [];
-        ChanceBoostCost = [];
-        AgilityBoostCost = [];
-        IntelligenceBoostCost = [];
-        GladiatroolSpellsId = [];
+        StrengthBoostCost = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
+        VitalityBoostCost = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
+        WisdomBoostCost = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
+        ChanceBoostCost = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
+        AgilityBoostCost = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
+        IntelligenceBoostCost = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
+        GladiatroolSpellsId = ReadOnlyCollection<int>.Empty;
     }
 
     public async Task<string> GetIconImagePathAsync(CdnImageSize size)

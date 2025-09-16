@@ -4,6 +4,7 @@ using Cyberia.Api.Data.Jobs;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.JsonConverters;
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
@@ -27,9 +28,9 @@ public sealed class QuestStepRewardsData : IDofusData
     internal QuestStepRewardsData()
     {
         ItemsIdQuantities = ReadOnlyDictionary<int, int>.Empty;
-        EmotesId = [];
-        JobsId = [];
-        SpellsId = [];
+        EmotesId = ReadOnlyCollection<int>.Empty;
+        JobsId = ReadOnlyCollection<int>.Empty;
+        SpellsId = ReadOnlyCollection<int>.Empty;
     }
 
     public IEnumerable<ItemData> GetItemsData()
@@ -57,7 +58,7 @@ public sealed class QuestStepRewardsData : IDofusData
             }
         }
 
-        return itemsDataQuantities;
+        return itemsDataQuantities.AsReadOnly();
     }
 
     public IEnumerable<EmoteData> GetEmotesData()

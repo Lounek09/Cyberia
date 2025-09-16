@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Monsters;
 
@@ -28,7 +29,7 @@ public sealed class MonsterGradeData : IDofusData
     [JsonConstructor]
     internal MonsterGradeData()
     {
-        Resistances = [];
+        Resistances = ReadOnlyCollection<int>.Empty;
         MonsterData = new();
     }
 

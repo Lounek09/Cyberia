@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests;
 
@@ -26,7 +27,7 @@ public sealed class QuestData : IDofusData<int>
     internal QuestData()
     {
         Name = LocalizedString.Empty;
-        QuestStepsId = [];
+        QuestStepsId = ReadOnlyCollection<int>.Empty;
     }
 
     public IEnumerable<QuestStepData> GetQuestStepsData()

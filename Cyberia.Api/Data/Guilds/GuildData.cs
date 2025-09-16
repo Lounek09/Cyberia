@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Guilds;
 
@@ -37,10 +38,10 @@ public sealed class GuildData : IDofusData
     [JsonConstructor]
     internal GuildData()
     {
-        BoostCostWeight = [];
-        BoostCostProspecting = [];
-        BoostCostTaxCollector = [];
-        BoostCostWisdom = [];
-        BoostCostSpell = [];
+        BoostCostWeight = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
+        BoostCostProspecting = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
+        BoostCostTaxCollector = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
+        BoostCostWisdom = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
+        BoostCostSpell = ReadOnlyCollection<IReadOnlyList<int>>.Empty;
     }
 }

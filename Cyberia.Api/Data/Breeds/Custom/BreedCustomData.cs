@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Breeds.Custom;
 
@@ -22,7 +23,7 @@ internal sealed class BreedCustomData : IDofusData<int>
     [JsonConstructor]
     internal BreedCustomData()
     {
-        GladiatroolSpellsId = [];
+        GladiatroolSpellsId = ReadOnlyCollection<int>.Empty;
     }
 }
 

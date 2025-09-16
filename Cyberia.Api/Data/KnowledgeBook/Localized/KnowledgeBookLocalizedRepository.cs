@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.KnowledgeBook.Localized;
 
@@ -18,8 +19,8 @@ internal sealed class KnowledgeBookLocalizedRepository : DofusLocalizedRepositor
     [JsonConstructor]
     internal KnowledgeBookLocalizedRepository()
     {
-        KnowledgeBookCatagories = [];
-        KnowledgeBookArticles = [];
-        KnowledgeBookTips = [];
+        KnowledgeBookCatagories = ReadOnlyCollection<KnowledgeBookCatagoryLocalizedData>.Empty;
+        KnowledgeBookArticles = ReadOnlyCollection<KnowledgeBookArticleLocalizedData>.Empty;
+        KnowledgeBookTips = ReadOnlyCollection<KnowledgeBookTipLocalizedData>.Empty;
     }
 }

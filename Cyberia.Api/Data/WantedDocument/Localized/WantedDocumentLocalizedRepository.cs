@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.WantedDocument.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class WantedDocumentLocalizedRepository : DofusLocalizedReposito
     [JsonConstructor]
     internal WantedDocumentLocalizedRepository()
     {
-        WantedDocuments = [];
+        WantedDocuments = ReadOnlyCollection<WantedDocumentLocalizedData>.Empty;
     }
 }

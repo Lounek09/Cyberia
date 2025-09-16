@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Skills.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class SkillsLocalizedRepository : DofusLocalizedRepository, IDof
     [JsonConstructor]
     internal SkillsLocalizedRepository()
     {
-        Skills = [];
+        Skills = ReadOnlyCollection<SkillLocalizedData>.Empty;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Emotes.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class EmotesLocalizedRepository : DofusLocalizedRepository, IDof
     [JsonConstructor]
     internal EmotesLocalizedRepository()
     {
-        Emotes = [];
+        Emotes = ReadOnlyCollection<EmoteLocalizedData>.Empty;
     }
 }

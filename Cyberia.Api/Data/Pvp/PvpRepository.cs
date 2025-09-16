@@ -1,6 +1,8 @@
 ﻿using Cyberia.Api.Data.Pvp.Localized;
 using Cyberia.Langzilla.Enums;
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Pvp;
@@ -21,8 +23,8 @@ public sealed class PvpRepository : DofusRepository, IDofusRepository
     [JsonConstructor]
     internal PvpRepository()
     {
-        HonnorPointThresholds = [];
-        PvpGrades = [];
+        HonnorPointThresholds = ReadOnlyCollection<int>.Empty;
+        PvpGrades = ReadOnlyCollection<IReadOnlyList<PvpGradeData>>.Empty;
     }
 
     protected override void LoadLocalizedData(LangType type, Language language)

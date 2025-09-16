@@ -4,6 +4,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text.Json.Serialization;
 
@@ -38,7 +39,7 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
     {
         ItemUnicStrings = FrozenDictionary<int, ItemUnicStringData>.Empty;
         ItemSuperTypes = FrozenDictionary<int, ItemSuperTypeData>.Empty;
-        ItemSuperTypeSlots = [];
+        ItemSuperTypeSlots = ReadOnlyCollection<ItemSuperTypeSlotData>.Empty;
         ItemTypes = FrozenDictionary<int, ItemTypeData>.Empty;
         Items = FrozenDictionary<int, ItemData>.Empty;
     }

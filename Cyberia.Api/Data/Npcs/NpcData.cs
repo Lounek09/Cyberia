@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Utils;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Npcs;
@@ -21,7 +22,7 @@ public sealed class NpcData : IDofusData<int>
     internal NpcData()
     {
         Name = LocalizedString.Empty;
-        NpcActionsId = [];
+        NpcActionsId = ReadOnlyCollection<int>.Empty;
     }
 
     public async Task<string> GetBigImagePathAsync(CdnImageSize size)

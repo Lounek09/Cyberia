@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Effects.Custom;
 
@@ -12,6 +13,6 @@ internal sealed class EffectsCustomRepository : DofusCustomRepository, IDofusRep
     [JsonConstructor]
     internal EffectsCustomRepository()
     {
-        Effects = [];
+        Effects = ReadOnlyCollection<EffectCustomData>.Empty;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Servers;
 
@@ -40,7 +41,7 @@ public sealed class ServerData : IDofusData<int>
         Name = LocalizedString.Empty;
         Description = LocalizedString.Empty;
         Language = string.Empty;
-        RealLanguages = [];
+        RealLanguages = ReadOnlyCollection<string>.Empty;
     }
 
     public ServerPopulationData? GetServerPopulationData()

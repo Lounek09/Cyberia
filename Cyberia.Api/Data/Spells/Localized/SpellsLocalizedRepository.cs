@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Spells.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class SpellsLocalizedRepository : DofusLocalizedRepository, IDof
     [JsonConstructor]
     internal SpellsLocalizedRepository()
     {
-        Spells = [];
+        Spells = ReadOnlyCollection<SpellLocalizedData>.Empty;
     }
 }

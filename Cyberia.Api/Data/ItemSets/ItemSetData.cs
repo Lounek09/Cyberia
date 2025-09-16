@@ -2,6 +2,8 @@
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Factories.Effects;
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.ItemSets;
@@ -24,8 +26,8 @@ public sealed class ItemSetData : IDofusData<int>
     internal ItemSetData()
     {
         Name = LocalizedString.Empty;
-        ItemsId = [];
-        Effects = [];
+        ItemsId = ReadOnlyCollection<int>.Empty;
+        Effects = ReadOnlyCollection<IReadOnlyList<IEffect>>.Empty;
     }
 
     public IEnumerable<ItemData> GetItemsData()

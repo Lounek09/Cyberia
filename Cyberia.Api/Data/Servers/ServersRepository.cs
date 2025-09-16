@@ -3,6 +3,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text.Json.Serialization;
@@ -41,7 +42,7 @@ public sealed class ServersRepository : DofusRepository, IDofusRepository
     {
         Servers = FrozenDictionary<int, ServerData>.Empty;
         ServerPopulations = FrozenDictionary<int, ServerPopulationData>.Empty;
-        ServerPopulationsWeight = [];
+        ServerPopulationsWeight = ReadOnlyCollection<ServerPopulationWeightData>.Empty;
         ServerCommunities = FrozenDictionary<int, ServerCommunityData>.Empty;
         DefaultServerSpecificTexts = FrozenDictionary<int, DefaultServerSpecificTextData>.Empty;
         ServerSpecificTexts = ReadOnlyDictionary<string, string>.Empty;

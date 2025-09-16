@@ -4,6 +4,8 @@ using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.JsonConverters;
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Spells;
@@ -57,10 +59,10 @@ public sealed class SpellLevelData : IDofusData<int>
 
     internal SpellLevelData()
     {
-        Effects = [];
-        CriticalEffects = [];
-        RequiredStatesId = [];
-        ForbiddenStatesId = [];
+        Effects = ReadOnlyCollection<IEffect>.Empty;
+        CriticalEffects = ReadOnlyCollection<IEffect>.Empty;
+        RequiredStatesId = ReadOnlyCollection<int>.Empty;
+        ForbiddenStatesId = ReadOnlyCollection<int>.Empty;
         SpellData = new();
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Names.Localized;
 
@@ -15,7 +16,7 @@ internal sealed class NamesLocalizedRepository : DofusLocalizedRepository, IDofu
     [JsonConstructor]
     internal NamesLocalizedRepository()
     {
-        TaxCollectorLastNames = [];
-        TaxCollectorFirstNames = [];
+        TaxCollectorLastNames = ReadOnlyCollection<TaxCollectorLastNameLocalizedData>.Empty;
+        TaxCollectorFirstNames = ReadOnlyCollection<TaxCollectorFirstNameLocalizedData>.Empty;
     }
 }

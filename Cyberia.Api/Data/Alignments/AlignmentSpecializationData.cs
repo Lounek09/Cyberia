@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Alignments;
@@ -32,8 +33,8 @@ public sealed class AlignmentSpecializationData : IDofusData<int>
     {
         Name = LocalizedString.Empty;
         Description = LocalizedString.Empty;
-        CompressedAlignmentFeatsParameters = [];
-        AlignmentFeatsParametersData = [];
+        CompressedAlignmentFeatsParameters = ReadOnlyCollection<JsonElement>.Empty;
+        AlignmentFeatsParametersData = ReadOnlyCollection<AlignmentFeatParametersData>.Empty;
     }
 
     public AlignmentOrderData? GetAlignementOrderData()

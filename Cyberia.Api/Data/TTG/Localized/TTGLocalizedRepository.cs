@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.TTG.Localized;
 
@@ -15,7 +16,7 @@ internal sealed class TTGLocalizedRepository : DofusLocalizedRepository, IDofusR
     [JsonConstructor]
     internal TTGLocalizedRepository()
     {
-        TTGEntities = [];
-        TTGFamilies = [];
+        TTGEntities = ReadOnlyCollection<TTGEntityLocalizedData>.Empty;
+        TTGFamilies = ReadOnlyCollection<TTGFamilyLocalizedData>.Empty;
     }
 }

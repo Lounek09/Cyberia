@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests.Custom;
 
@@ -15,7 +16,7 @@ internal sealed class QuestsCustomRepository : DofusCustomRepository, IDofusRepo
     [JsonConstructor]
     internal QuestsCustomRepository()
     {
-        QuestsCustom = [];
-        QuestStepsCustom = [];
+        QuestsCustom = ReadOnlyCollection<QuestCustomData>.Empty;
+        QuestStepsCustom = ReadOnlyCollection<QuestStepCustomData>.Empty;
     }
 }

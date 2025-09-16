@@ -5,6 +5,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text.Json.Serialization;
 
@@ -30,7 +31,7 @@ public sealed class HousesRepository : DofusRepository, IDofusRepository
     {
         Houses = FrozenDictionary<int, HouseData>.Empty;
         HouseMaps = FrozenDictionary<int, HouseMapData>.Empty;
-        HousesIndoorSkillsId = [];
+        HousesIndoorSkillsId = ReadOnlyCollection<int>.Empty;
     }
 
     public HouseData? GetHouseDataById(int id)

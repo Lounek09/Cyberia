@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Houses.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class HousesLocalizedRepository : DofusLocalizedRepository, IDof
     [JsonConstructor]
     internal HousesLocalizedRepository()
     {
-        Houses = [];
+        Houses = ReadOnlyCollection<HouseLocalizedData>.Empty;
     }
 }

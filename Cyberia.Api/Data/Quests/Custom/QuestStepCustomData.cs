@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests.Custom;
 
@@ -19,6 +20,6 @@ internal sealed class QuestStepCustomData : IDofusData<int>
     [JsonConstructor]
     internal QuestStepCustomData()
     {
-        QuestObjectivesId = [];
+        QuestObjectivesId = ReadOnlyCollection<int>.Empty;
     }
 }

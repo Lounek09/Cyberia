@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Pvp.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class PvpLocalizedRepository : DofusLocalizedRepository, IDofusR
     [JsonConstructor]
     internal PvpLocalizedRepository()
     {
-        PvpGrades = [];
+        PvpGrades = ReadOnlyCollection<IReadOnlyList<PvpGradeData>>.Empty;
     }
 }

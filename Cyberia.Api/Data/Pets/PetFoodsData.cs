@@ -4,6 +4,8 @@ using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.JsonConverters;
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Pets;
@@ -36,11 +38,11 @@ public sealed class PetFoodsData : IDofusData
     internal PetFoodsData()
     {
         Effect = new ErroredEffect(string.Empty);
-        ItemsId = [];
-        ItemTypesId = [];
-        MonstersIdQuantities = new Dictionary<int, int>();
-        MonsterRacesIdQuantities = new Dictionary<int, int>();
-        MonsterSuperRacesIdQuantities = new Dictionary<int, int>();
+        ItemsId = ReadOnlyCollection<int>.Empty;
+        ItemTypesId = ReadOnlyCollection<int>.Empty;
+        MonstersIdQuantities = ReadOnlyDictionary<int, int>.Empty;
+        MonsterRacesIdQuantities = ReadOnlyDictionary<int, int>.Empty;
+        MonsterSuperRacesIdQuantities = ReadOnlyDictionary<int, int>.Empty;
     }
 
     public IEnumerable<ItemData> GetItemsData()

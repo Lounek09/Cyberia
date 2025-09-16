@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Maps.Localized;
 
@@ -21,9 +22,9 @@ internal sealed class MapsLocalizedRepository : DofusLocalizedRepository, IDofus
     [JsonConstructor]
     internal MapsLocalizedRepository()
     {
-        Maps = [];
-        MapSuperAreas = [];
-        MapAreas = [];
-        MapSubAreas = [];
+        Maps = ReadOnlyCollection<MapLocalizedData>.Empty;
+        MapSuperAreas = ReadOnlyCollection<MapSuperAreaLocalizedData>.Empty;
+        MapAreas = ReadOnlyCollection<MapAreaLocalizedData>.Empty;
+        MapSubAreas = ReadOnlyCollection<MapSubAreaLocalizedData>.Empty;
     }
 }

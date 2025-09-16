@@ -3,6 +3,8 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Enums;
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text.Json.Serialization;
 
@@ -32,7 +34,7 @@ public sealed class MapData : IDofusData<int>
 
     [JsonPropertyName("p")]
     [JsonInclude]
-    internal List<List<object>> Parameters { get; init; }
+    internal IReadOnlyCollection<IReadOnlyCollection<object>> Parameters { get; init; }
 
     [JsonPropertyName("d")]
     public int DungeonId { get; init; }
@@ -55,9 +57,9 @@ public sealed class MapData : IDofusData<int>
     [JsonConstructor]
     internal MapData()
     {
-        Placement1 = [];
-        Placement2 = [];
-        Parameters = [];
+        Placement1 = ReadOnlyCollection<int>.Empty;
+        Placement2 = ReadOnlyCollection<int>.Empty;
+        Parameters = ReadOnlyCollection<IReadOnlyCollection<object>>.Empty;
         MaxPlayerPerFight = 16;
         MaxPlayerPerTeam = 8;
     }

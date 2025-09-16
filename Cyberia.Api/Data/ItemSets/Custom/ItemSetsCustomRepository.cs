@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.ItemSets.Custom;
 
@@ -12,6 +13,6 @@ internal sealed class ItemSetsCustomRepository : DofusCustomRepository, IDofusRe
     [JsonConstructor]
     internal ItemSetsCustomRepository()
     {
-        ItemSetsCustom = [];
+        ItemSetsCustom = ReadOnlyCollection<ItemSetCustomData>.Empty;
     }
 }

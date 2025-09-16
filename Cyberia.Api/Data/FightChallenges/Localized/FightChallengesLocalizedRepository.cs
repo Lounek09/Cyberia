@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.FightChallenges.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class FightChallengesLocalizedRepository : DofusLocalizedReposit
     [JsonConstructor]
     internal FightChallengesLocalizedRepository()
     {
-        FightChallenges = [];
+        FightChallenges = ReadOnlyCollection<FightChallengeLocalizedData>.Empty;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Npcs.Localized;
 
@@ -15,7 +16,7 @@ internal sealed class NpcsLocalizedRepository : DofusLocalizedRepository, IDofus
     [JsonConstructor]
     internal NpcsLocalizedRepository()
     {
-        NpcActions = [];
-        Npcs = [];
+        NpcActions = ReadOnlyCollection<NpcActionLocalizedData>.Empty;
+        Npcs = ReadOnlyCollection<NpcLocalizedData>.Empty;
     }
 }

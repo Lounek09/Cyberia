@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Monsters.Custom;
 
@@ -12,6 +13,6 @@ internal sealed class MonstersCustomRepository : DofusCustomRepository, IDofusRe
     [JsonConstructor]
     internal MonstersCustomRepository()
     {
-        MonstersCustom = [];
+        MonstersCustom = ReadOnlyCollection<MonsterCustomData>.Empty;
     }
 }

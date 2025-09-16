@@ -1,5 +1,7 @@
 ﻿using Cyberia.Api.JsonConverters;
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 
@@ -33,8 +35,8 @@ public sealed class SpellIconData : IDofusData
     [JsonConstructor]
     internal SpellIconData()
     {
-        PrintColors = [];
-        FrameColors = [];
-        BackgroundColors = [];
+        PrintColors = ReadOnlyCollection<Color?>.Empty;
+        FrameColors = ReadOnlyCollection<Color?>.Empty;
+        BackgroundColors = ReadOnlyCollection<Color?>.Empty;
     }
 }

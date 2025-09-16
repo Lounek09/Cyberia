@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.Items;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Pets;
@@ -21,7 +22,7 @@ public sealed class PetData : IDofusData<int>
     [JsonConstructor]
     internal PetData()
     {
-        Foods = [];
+        Foods = ReadOnlyCollection<PetFoodsData>.Empty;
     }
 
     public ItemData? GetItemData()

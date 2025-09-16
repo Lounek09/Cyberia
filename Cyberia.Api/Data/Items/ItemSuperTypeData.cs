@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Enums;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Items;
@@ -30,6 +31,6 @@ public sealed class ItemSuperTypeData : IDofusData<int>
     [JsonConstructor]
     internal ItemSuperTypeData()
     {
-        SlotsId = [];
+        SlotsId = ReadOnlyCollection<int>.Empty;
     }
 }

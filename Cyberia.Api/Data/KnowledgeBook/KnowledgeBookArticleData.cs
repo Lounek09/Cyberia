@@ -20,7 +20,11 @@ public sealed class KnowledgeBookArticleData : IDofusData<int>, IComparable<Know
     public LocalizedString Description { get; init; }
 
     [JsonPropertyName("k")]
-    public List<LocalizedString> KeyWords { get; init; }
+    [JsonInclude]
+    internal List<LocalizedString> KeyWordsCore { get; init; }
+
+    [JsonIgnore]
+    public IReadOnlyList<LocalizedString> KeyWords => KeyWordsCore.AsReadOnly();
 
     [JsonPropertyName("i")]
     public int Index { get; init; }
@@ -33,7 +37,7 @@ public sealed class KnowledgeBookArticleData : IDofusData<int>, IComparable<Know
     {
         Name = LocalizedString.Empty;
         Description = LocalizedString.Empty;
-        KeyWords = [];
+        KeyWordsCore = [];
     }
 
     public KnowledgeBookCatagoryData? GetKnowledgeBookCatagoryData()

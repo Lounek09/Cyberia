@@ -1,5 +1,6 @@
 ﻿using Cyberia.Api.Data.Skills;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.InteractiveObjects;
@@ -25,7 +26,7 @@ public sealed class InteractiveObjectData : IDofusData<int>
     internal InteractiveObjectData()
     {
         Name = LocalizedString.Empty;
-        SkillsId = [];
+        SkillsId = ReadOnlyCollection<int>.Empty;
     }
 
     public IEnumerable<SkillData> GetSkillsData()

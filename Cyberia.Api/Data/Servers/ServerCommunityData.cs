@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Servers;
 
@@ -24,6 +25,6 @@ public sealed class ServerCommunityData : IDofusData<int>
     internal ServerCommunityData()
     {
         Name = LocalizedString.Empty;
-        Countries = [];
+        Countries = ReadOnlyCollection<string>.Empty;
     }
 }

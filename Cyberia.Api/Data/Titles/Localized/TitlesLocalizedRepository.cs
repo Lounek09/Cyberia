@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Titles.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class TitlesLocalizedRepository : DofusLocalizedRepository, IDof
     [JsonConstructor]
     internal TitlesLocalizedRepository()
     {
-        Titles = [];
+        Titles = ReadOnlyCollection<TitleLocalizedData>.Empty;
     }
 }

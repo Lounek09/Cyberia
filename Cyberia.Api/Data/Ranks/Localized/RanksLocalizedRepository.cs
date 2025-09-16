@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Ranks.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class RanksLocalizedRepository : DofusLocalizedRepository, IDofu
     [JsonConstructor]
     internal RanksLocalizedRepository()
     {
-        GuildRanks = [];
+        GuildRanks = ReadOnlyCollection<GuildRankLocalizedData>.Empty;
     }
 }

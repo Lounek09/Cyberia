@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Dialogs.Localized;
 
@@ -15,7 +16,7 @@ internal sealed class DialogsLocalizedRepository : DofusLocalizedRepository, IDo
     [JsonConstructor]
     internal DialogsLocalizedRepository()
     {
-        DialogQuestions = [];
-        DialogAnswers = [];
+        DialogQuestions = ReadOnlyCollection<DialogQuestionLocalizedData>.Empty;
+        DialogAnswers = ReadOnlyCollection<DialogAnswerLocalizedData>.Empty;
     }
 }

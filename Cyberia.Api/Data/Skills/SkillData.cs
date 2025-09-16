@@ -3,6 +3,7 @@ using Cyberia.Api.Data.InteractiveObjects;
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Jobs;
 
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Skills;
@@ -38,7 +39,7 @@ public sealed class SkillData : IDofusData<int>
     {
         Description = LocalizedString.Empty;
         Criterion = string.Empty;
-        CraftsId = [];
+        CraftsId = ReadOnlyCollection<int>.Empty;
     }
 
     public JobData? GetJobData()

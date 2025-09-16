@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Houses.Custom;
 
@@ -12,6 +13,6 @@ internal sealed class HousesCustomRepository : DofusCustomRepository, IDofusRepo
     [JsonConstructor]
     internal HousesCustomRepository()
     {
-        HousesCustom = [];
+        HousesCustom = ReadOnlyCollection<HouseCustomData>.Empty;
     }
 }

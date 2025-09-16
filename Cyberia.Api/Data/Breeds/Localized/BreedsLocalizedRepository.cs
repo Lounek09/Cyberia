@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Breeds.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class BreedsLocalizedRepository : DofusLocalizedRepository, IDof
     [JsonConstructor]
     internal BreedsLocalizedRepository()
     {
-        Breeds = [];
+        Breeds = ReadOnlyCollection<BreedLocalizedData>.Empty;
     }
 }

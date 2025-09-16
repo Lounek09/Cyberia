@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Effects.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class EffectsLocalizedRepository : DofusLocalizedRepository, IDo
     [JsonConstructor]
     internal EffectsLocalizedRepository()
     {
-        Effects = [];
+        Effects = ReadOnlyCollection<EffectLocalizedData>.Empty;
     }
 }

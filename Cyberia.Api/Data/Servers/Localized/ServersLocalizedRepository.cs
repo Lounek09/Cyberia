@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Servers.Localized;
 
@@ -21,9 +22,9 @@ internal sealed class ServersLocalizedRepository : DofusLocalizedRepository, IDo
     [JsonConstructor]
     internal ServersLocalizedRepository()
     {
-        Servers = [];
-        ServerPopulations = [];
-        ServerCommunities = [];
-        DefaultServerSpecificTexts = [];
+        Servers = ReadOnlyCollection<ServerLocalizedData>.Empty;
+        ServerPopulations = ReadOnlyCollection<ServerPopulationLocalizedData>.Empty;
+        ServerCommunities = ReadOnlyCollection<ServerCommunityLocalizedData>.Empty;
+        DefaultServerSpecificTexts = ReadOnlyCollection<DefaultServerSpecificTextLocalizedData>.Empty;
     }
 }

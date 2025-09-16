@@ -3,6 +3,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Hints;
@@ -22,7 +23,7 @@ public sealed class HintsRepository : DofusRepository, IDofusRepository
     internal HintsRepository()
     {
         HintCategories = FrozenDictionary<int, HintCategoryData>.Empty;
-        Hints = [];
+        Hints = ReadOnlyCollection<HintData>.Empty;
     }
 
     public HintCategoryData? GetHintCategoryDataById(int id)

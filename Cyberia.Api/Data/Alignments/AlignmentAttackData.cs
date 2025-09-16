@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Alignments;
 
@@ -13,7 +14,7 @@ internal sealed class AlignmentAttackData : IDofusData<int>
     [JsonConstructor]
     internal AlignmentAttackData()
     {
-        Values = [];
+        Values = ReadOnlyCollection<bool>.Empty;
     }
 
     public bool CanAttack(int targetAlignmentId)

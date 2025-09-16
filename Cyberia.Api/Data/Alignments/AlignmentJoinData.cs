@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Alignments;
 
@@ -13,7 +14,7 @@ internal sealed class AlignmentJoinData : IDofusData<int>
     [JsonConstructor]
     internal AlignmentJoinData()
     {
-        Values = [];
+        Values = ReadOnlyCollection<bool>.Empty;
     }
 
     public bool CanJoin(int targetAlignmentId)

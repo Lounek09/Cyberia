@@ -4,6 +4,7 @@ using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.SpeakingItems;
@@ -24,7 +25,7 @@ public sealed class SpeakingItemsRepository : DofusRepository, IDofusRepository
     internal SpeakingItemsRepository()
     {
         SpeakingItemsMessages = FrozenDictionary<int, SpeakingItemsMessageData>.Empty;
-        SpeakingItemsTriggers = [];
+        SpeakingItemsTriggers = ReadOnlyCollection<SpeakingItemsTriggerData>.Empty;
     }
 
     public SpeakingItemsMessageData? GetSpeakingItemsMessageData(int id)

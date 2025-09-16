@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Audios;
 
@@ -25,8 +26,8 @@ public sealed class AudioEnvironmentData : IDofusData<int>
     [JsonConstructor]
     internal AudioEnvironmentData()
     {
-        BackgroundAudioEffectIds = [];
-        NoiseAudioEffectIds = [];
+        BackgroundAudioEffectIds = ReadOnlyCollection<int>.Empty;
+        NoiseAudioEffectIds = ReadOnlyCollection<int>.Empty;
         Name = string.Empty;
     }
 

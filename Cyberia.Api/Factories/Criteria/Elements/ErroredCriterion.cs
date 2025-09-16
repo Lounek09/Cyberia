@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace Cyberia.Api.Factories.Criteria.Elements;
 
@@ -10,7 +11,7 @@ public sealed record ErroredCriterion : Criterion
     internal ErroredCriterion(string compressedCriterion)
         : base(string.Empty, char.MinValue)
     {
-        Parameters = [];
+        Parameters = ReadOnlyCollection<string>.Empty;
         CompressedCriterion = compressedCriterion;
     }
 

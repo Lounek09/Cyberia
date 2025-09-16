@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Breeds.Custom;
 
@@ -12,6 +13,6 @@ internal sealed class BreedsCustomRepository : DofusCustomRepository, IDofusRepo
     [JsonConstructor]
     internal BreedsCustomRepository()
     {
-        Breeds = [];
+        Breeds = ReadOnlyCollection<BreedCustomData>.Empty;
     }
 }

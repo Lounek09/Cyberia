@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Alignments.Localized;
 
@@ -27,11 +28,11 @@ internal sealed class AlignmentsLocalizedRepository : DofusLocalizedRepository, 
     [JsonConstructor]
     internal AlignmentsLocalizedRepository()
     {
-        Alignments = [];
-        AlignmentOrders = [];
-        AlignmentFeats = [];
-        AlignmentFeatEffects = [];
-        AlignmentBalances = [];
-        AlignmentSpecializations = [];
+        Alignments = ReadOnlyCollection<AlignmentLocalizedData>.Empty;
+        AlignmentOrders = ReadOnlyCollection<AlignmentOrderLocalizedData>.Empty;
+        AlignmentFeats = ReadOnlyCollection<AlignmentFeatLocalizedData>.Empty;
+        AlignmentFeatEffects = ReadOnlyCollection<AlignmentFeatEffectLocalizedData>.Empty;
+        AlignmentBalances = ReadOnlyCollection<AlignmentBalanceLocalizedData>.Empty;
+        AlignmentSpecializations = ReadOnlyCollection<AlignmentSpecializationLocalizedData>.Empty;
     }
 }

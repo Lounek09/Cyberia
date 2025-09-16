@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Quests.Localized;
 
@@ -21,9 +22,9 @@ internal sealed class QuestsLocalizedRepository : DofusLocalizedRepository, IDof
     [JsonConstructor]
     internal QuestsLocalizedRepository()
     {
-        Quests = [];
-        QuestSteps = [];
-        QuestObjectives = [];
-        QuestObjectiveTypes = [];
+        Quests = ReadOnlyCollection<QuestLocalizedData>.Empty;
+        QuestSteps = ReadOnlyCollection<QuestStepLocalizedData>.Empty;
+        QuestObjectives = ReadOnlyCollection<QuestObjectiveLocalizedData>.Empty;
+        QuestObjectiveTypes = ReadOnlyCollection<QuestObjectiveTypeLocalizedData>.Empty;
     }
 }

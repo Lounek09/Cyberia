@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.SpeakingItems.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class SpeakingItemsLocalizedRepository : DofusLocalizedRepositor
     [JsonConstructor]
     internal SpeakingItemsLocalizedRepository()
     {
-        SpeakingItemsMessages = [];
+        SpeakingItemsMessages = ReadOnlyCollection<SpeakingItemsMessageLocalizedData>.Empty;
     }
 }

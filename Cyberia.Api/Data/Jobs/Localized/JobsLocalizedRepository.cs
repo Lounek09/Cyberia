@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Jobs.Localized;
 
@@ -12,6 +13,6 @@ internal sealed class JobsLocalizedRepository : DofusLocalizedRepository, IDofus
     [JsonConstructor]
     internal JobsLocalizedRepository()
     {
-        Jobs = [];
+        Jobs = ReadOnlyCollection<JobLocalizedData>.Empty;
     }
 }
