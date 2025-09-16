@@ -176,6 +176,12 @@ public sealed class LangsCommandModule
             return;
         }
 
+        if (!File.Exists(currentDecompiledFilePath))
+        {
+            await ctx.RespondAsync("The decompiled file of this lang is missing.");
+            return;
+        }
+
         using var fileStream = File.OpenRead(currentDecompiledFilePath);
         await ctx.RespondAsync(new DiscordInteractionResponseBuilder()
             .AddFile($"{lang.FileName}.as", fileStream));
