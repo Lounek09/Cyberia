@@ -32,7 +32,6 @@ public static class ServiceCollectionExtensions
         services.AddDiscordClient(config.Token, DiscordIntents.Guilds)
             .ConfigureEventHandlers(eventHandler =>
             {
-                eventHandler.AddEventHandlers<ClientEventHandler>(ServiceLifetime.Singleton);
                 eventHandler.AddEventHandlers<CommandsEventHandler>(ServiceLifetime.Singleton);
                 eventHandler.AddEventHandlers<GuildsEventHandler>(ServiceLifetime.Singleton);
                 eventHandler.AddEventHandlers<InteractionsEventHandler>(ServiceLifetime.Singleton);
@@ -53,6 +52,7 @@ public static class ServiceCollectionExtensions
 #endif
                         NamingPolicy = new SnakeCaseNamingFixer()
                     }));
+
                     extention.RegisterCommands(config.AdminGuildId);
 
                     //TODO: Remove this when the extension supports the IEventHandler interface.

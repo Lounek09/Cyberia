@@ -13,8 +13,8 @@ public static class CommandsExtensionExtensions
     /// Registers the commands from the assembly.
     /// </summary>
     /// <param name="extension">The extension to register the commands to.</param>
-    /// <param name="guildIds">The IDs of the guilds to register the admin commands to.</param>
-    public static void RegisterCommands(this CommandsExtension extension, params ulong[] guildIds)
+    /// <param name="adminGuildIds">The guild IDs to register the admin commands to.</param>
+    public static void RegisterCommands(this CommandsExtension extension, params ulong[] adminGuildIds)
     {
         Dictionary<string, bool> commandGroups = new()
         {
@@ -27,13 +27,13 @@ public static class CommandsExtensionExtensions
         var types = Assembly.GetExecutingAssembly().GetTypes()
             .Where(x => !string.IsNullOrEmpty(x.Namespace) && x.Name.EndsWith("CommandModule"));
 
-        foreach (var (startNamespace, requiresGuildId) in commandGroups)
+        foreach (var (startNamespace, isAdminCommands) in commandGroups)
         {
             var commandModules = types.Where(x => x.Namespace!.StartsWith(startNamespace));
 
-            if (requiresGuildId)
+            if (isAdminCommands)
             {
-                extension.AddCommands(commandModules, guildIds);
+                extension.AddCommands(commandModules, adminGuildIds);
             }
             else
             {

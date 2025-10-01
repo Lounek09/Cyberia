@@ -8,9 +8,11 @@ namespace Cyberia.Salamandra.EventHandlers;
 /// <summary>
 /// Represents the handler for events related to guilds.
 /// </summary>
-public sealed class GuildsEventHandler : IEventHandler<GuildCreatedEventArgs>, IEventHandler<GuildDeletedEventArgs>
+public sealed class GuildsEventHandler : IEventHandler<GuildDownloadCompletedEventArgs>
 {
     private readonly ICachedChannelsManager _cachedChannelsManager;
+
+    private bool _isInitialized;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GuildsEventHandler"/> class.
@@ -21,22 +23,17 @@ public sealed class GuildsEventHandler : IEventHandler<GuildCreatedEventArgs>, I
         _cachedChannelsManager = cachedChannelsManager;
     }
 
-    public async Task HandleEventAsync(DiscordClient _, GuildCreatedEventArgs eventArgs)
+    public async Task HandleEventAsync(DiscordClient sender, GuildDownloadCompletedEventArgs _)
     {
-        var guild = eventArgs.Guild;
-        var owner = await guild.GetGuildOwnerAsync();
+        if (!_isInitialized)
+        {
+            await _cachedChannelsManager.LoadChannelsAsync();
 
-        await _cachedChannelsManager.SendLogMessage($"""
-            [NEW] {Formatter.Bold(Formatter.Sanitize(guild.Name))} ({guild.Id})
-            created on : {guild.CreationTimestamp}
-            Owner : {Formatter.Sanitize(owner.Username)} ({owner.Mention})
-            """);
-    }
+#if !DEBUG
+        await _cachedChannelsManager.SendLogMessage($"{Formatter.Bold(sender.CurrentUser.Username)} started successfully !");
+#endif
 
-    public async Task HandleEventAsync(DiscordClient _, GuildDeletedEventArgs eventArgs)
-    {
-        var guild = eventArgs.Guild;
-
-        await _cachedChannelsManager.SendLogMessage($"[LOSE] {Formatter.Bold(Formatter.Sanitize(guild.Name))} ({guild.Id})");
+            _isInitialized = true;
+        }
     }
 }
