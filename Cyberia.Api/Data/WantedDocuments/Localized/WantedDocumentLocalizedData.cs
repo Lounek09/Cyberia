@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data.WantedDocument.Localized;
+namespace Cyberia.Api.Data.WantedDocuments.Localized;
 
 public sealed class WantedDocumentLocalizedData : IDofusData<int>
 {

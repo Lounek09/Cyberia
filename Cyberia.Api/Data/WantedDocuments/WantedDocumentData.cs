@@ -3,7 +3,7 @@ using Cyberia.Api.Data.Quests;
 
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data.WantedDocument;
+namespace Cyberia.Api.Data.WantedDocuments;
 
 public sealed class WantedDocumentData : IDofusData<int>
 {

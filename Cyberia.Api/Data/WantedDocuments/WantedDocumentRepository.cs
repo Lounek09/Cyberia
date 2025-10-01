@@ -1,14 +1,14 @@
 ﻿using Cyberia.Api.Data.TTG.Localized;
-using Cyberia.Api.Data.WantedDocument.Localized;
+using Cyberia.Api.Data.WantedDocuments.Localized;
 using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data.WantedDocument;
+namespace Cyberia.Api.Data.WantedDocuments;
 
-public sealed class WantedDocumentRepository : DofusRepository, IDofusRepository
+public sealed class WantedDocumentsRepository : DofusRepository, IDofusRepository
 {
     public static string FileName => "wanteddocument.json";
 
@@ -17,7 +17,7 @@ public sealed class WantedDocumentRepository : DofusRepository, IDofusRepository
     public FrozenDictionary<int, WantedDocumentData> WantedDocuments { get; init; }
 
     [JsonConstructor]
-    internal WantedDocumentRepository()
+    internal WantedDocumentsRepository()
     {
         WantedDocuments = FrozenDictionary<int, WantedDocumentData>.Empty;
     }
@@ -31,7 +31,7 @@ public sealed class WantedDocumentRepository : DofusRepository, IDofusRepository
     protected override void LoadLocalizedData(LangType type, Language language)
     {
         var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<WantedDocumentLocalizedRepository>(type, language);
+        var localizedRepository = DofusLocalizedRepository.Load<WantedDocumentsLocalizedRepository>(type, language);
 
         foreach (var wantedDocumentLocalizedData in localizedRepository.WantedDocuments)
         {

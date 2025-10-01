@@ -1,17 +1,17 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Data.WantedDocument.Localized;
+namespace Cyberia.Api.Data.WantedDocuments.Localized;
 
-internal sealed class WantedDocumentLocalizedRepository : DofusLocalizedRepository, IDofusRepository
+internal sealed class WantedDocumentsLocalizedRepository : DofusLocalizedRepository, IDofusRepository
 {
-    public static string FileName => WantedDocumentRepository.FileName;
+    public static string FileName => WantedDocumentsRepository.FileName;
 
     [JsonPropertyName("DW")]
     public IReadOnlyList<WantedDocumentLocalizedData> WantedDocuments { get; init; }
 
     [JsonConstructor]
-    internal WantedDocumentLocalizedRepository()
+    internal WantedDocumentsLocalizedRepository()
     {
         WantedDocuments = ReadOnlyCollection<WantedDocumentLocalizedData>.Empty;
     }

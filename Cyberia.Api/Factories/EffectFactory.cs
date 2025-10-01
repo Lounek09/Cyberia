@@ -449,7 +449,8 @@ public static class EffectFactory
             { 2179, BoostCharacterXpBonusCoupleFightEffect.Create },
             { 2182, CharacterBoostResistPercent.Create },
             { 2183, CharacterDeboostResistPercent.Create },
-            { 2184, ItemEvolutiveSkinEffect.Create }
+            { 2184, ItemEvolutiveSkinEffect.Create },
+            { 2185, CharacterReadWantedDocumentEffect.Create }
         }.ToFrozenDictionary();
 
     /// <summary>

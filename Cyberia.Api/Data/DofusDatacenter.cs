@@ -46,7 +46,7 @@ public sealed class DofusDatacenter
     public TimeZone.TimeZoneRepository TimeZonesRepository { get; private set; }
     public Titles.TitlesRepository TitlesRepository { get; private set; }
     public TTG.TTGRepository TTGRepository { get; private set; }
-    public WantedDocument.WantedDocumentRepository WantedDocumentRepository { get; private set; }
+    public WantedDocuments.WantedDocumentsRepository WantedDocumentsRepository { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DofusDatacenter"/> class.
@@ -91,7 +91,7 @@ public sealed class DofusDatacenter
         TimeZonesRepository = new();
         TitlesRepository = new();
         TTGRepository = new();
-        WantedDocumentRepository = new();
+        WantedDocumentsRepository = new();
     }
 
     /// <summary>
@@ -138,7 +138,7 @@ public sealed class DofusDatacenter
         TimeZonesRepository = DofusRepository.Load<TimeZone.TimeZoneRepository>(type);
         TitlesRepository = DofusRepository.Load<Titles.TitlesRepository>(type);
         TTGRepository = DofusRepository.Load<TTG.TTGRepository>(type);
-        WantedDocumentRepository = DofusRepository.Load<WantedDocument.WantedDocumentRepository>(type);
+        WantedDocumentsRepository = DofusRepository.Load<WantedDocuments.WantedDocumentsRepository>(type);
 
         ImageUrlProvider.ClearCache();
     }
