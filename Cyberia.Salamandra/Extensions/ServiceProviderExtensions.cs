@@ -30,11 +30,10 @@ public static class ServiceProviderExtensions
         var langsService = provider.GetRequiredService<ILangsService>();
         var langsWatcher = provider.GetRequiredService<ILangsWatcher>();
 
-        langsWatcher.CheckLangsFinished += langsService.OnCheckLangsFinished;
+        langsWatcher.NewLangFilesDetected += langsService.OnNewLangFilesDetected;
 
         return provider;
     }
-
 
     /// <summary>
     /// Starts the Salamandra discord client from the service provider.

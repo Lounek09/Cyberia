@@ -29,7 +29,7 @@ public interface ILangsService
     /// </summary>
     /// <param name="_">Ignored.</param>
     /// <param name="eventArgs">The event arguments.</param>
-    ValueTask OnCheckLangsFinished(ILangsWatcher _, CheckLangFinishedEventArgs eventArgs);
+    ValueTask OnNewLangFilesDetected(ILangsWatcher _, NewLangFilesDetectedEventArgs eventArgs);
 }
 
 public sealed class LangsService : ILangsService
@@ -83,13 +83,8 @@ public sealed class LangsService : ILangsService
         }
     }
 
-    public async ValueTask OnCheckLangsFinished(ILangsWatcher _, CheckLangFinishedEventArgs eventArgs)
+    public async ValueTask OnNewLangFilesDetected(ILangsWatcher _, NewLangFilesDetectedEventArgs eventArgs)
     {
-        if (eventArgs.UpdatedLangs.Count == 0)
-        {
-            return;
-        }
-
         var forum = _cachedChannelsManager.LangsForumChannel;
         if (forum is null)
         {

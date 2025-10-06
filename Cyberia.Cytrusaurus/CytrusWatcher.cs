@@ -77,7 +77,7 @@ public interface ICytrusWatcher
     delegate ValueTask CytrusErroredEventHandler(ICytrusWatcher sender, CytrusErroredEventArgs eventArgs);
 
     /// <summary>
-    /// Event that is triggered when an error occurs while processing Cytrus data.
+    /// Event that is triggered when an error occurs while checking for Cytrus updates.
     /// </summary>
     event CytrusErroredEventHandler? CytrusErrored;
 }

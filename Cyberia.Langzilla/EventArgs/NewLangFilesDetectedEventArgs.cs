@@ -7,7 +7,7 @@ namespace Cyberia.Langzilla.EventArgs;
 /// <summary>
 /// Represents the event arguments for when a check of the langs is finished.
 /// </summary>
-public sealed class CheckLangFinishedEventArgs : System.EventArgs
+public sealed class NewLangFilesDetectedEventArgs : System.EventArgs
 {
     /// <summary>
     /// The checked lang repository.
@@ -20,12 +20,12 @@ public sealed class CheckLangFinishedEventArgs : System.EventArgs
     public required IReadOnlyList<Lang> UpdatedLangs { get; init; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CheckLangFinishedEventArgs"/> class.
+    /// Initializes a new instance of the <see cref="NewLangFilesDetectedEventArgs"/> class.
     /// </summary>
     /// <param name="repository">The checked lang repository.</param>
     /// <param name="updatedLangs">The list of updated langs.</param>
     [SetsRequiredMembers]
-    internal CheckLangFinishedEventArgs(LangsRepository repository, IReadOnlyList<Lang> updatedLangs)
+    internal NewLangFilesDetectedEventArgs(LangsRepository repository, IReadOnlyList<Lang> updatedLangs)
     {
         Repository = repository;
         UpdatedLangs = updatedLangs;

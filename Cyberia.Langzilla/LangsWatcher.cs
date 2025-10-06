@@ -37,33 +37,33 @@ public interface ILangsWatcher
     /// <list type="number">
     ///     <item>Triggers the <see cref="CheckLangStarted"/> event.</item>
     ///     <item>Fetches the version of the langs.</item>
-    ///     <item>If the version is empty, triggers the <see cref="CheckLangsFinished"/> event and returns.</item>
+    ///     <item>If the version is empty, triggers the <see cref="NewLangFilesDetected"/> event and returns.</item>
     ///     <item>Gets the updated langs from the versions.</item>
     ///     <item>Downloads, extracts, and diffs the updated langs.</item>
-    ///     <item>Triggers the <see cref="CheckLangsFinished"/> event.</item>
+    ///     <item>Triggers the <see cref="NewLangFilesDetected"/> event.</item>
     /// </list>
     /// </remarks>
     Task CheckAsync(LangsRepository repository, bool force = false);
 
     /// <summary>
-    /// Delegate for the CheckLangStarted event.
+    /// Delegate for the <see cref="NewLangFilesDetected"/> event.
     /// </summary>
-    delegate ValueTask CheckLangStartedEventHandler(ILangsWatcher sender, CheckLangStartedEventArgs eventArgs);
+    delegate ValueTask NewLangFilesDetectedEventHandler(ILangsWatcher sender, NewLangFilesDetectedEventArgs eventArgs);
 
     /// <summary>
-    /// Event that is triggered when a lang check is started.
+    /// Event that is triggered when new lang files are detected.
     /// </summary>
-    event CheckLangStartedEventHandler CheckLangStarted;
+    event NewLangFilesDetectedEventHandler NewLangFilesDetected;
 
     /// <summary>
-    /// Delegate for the CheckLangsFinished event.
+    /// Delegate for the <see cref="LangsErrored"/> event.
     /// </summary>
-    delegate ValueTask CheckLangsFinishedEventHandler(ILangsWatcher sender, CheckLangFinishedEventArgs eventArgs);
+    delegate ValueTask LangsErroredEventHandler(ILangsWatcher sender, LangsErroredEventArgs eventArgs);
 
     /// <summary>
-    /// Event that is triggered when a langs check is finished.
+    /// Event that is triggered when an error occurs while checking for updates of langs.
     /// </summary>
-    event CheckLangsFinishedEventHandler CheckLangsFinished;
+    event LangsErroredEventHandler LangsErrored;
 }
 
 public sealed class LangsWatcher : ILangsWatcher
@@ -124,12 +124,10 @@ public sealed class LangsWatcher : ILangsWatcher
 
     public async Task CheckAsync(LangsRepository repository, bool force = false)
     {
-        await OnCheckLangStarted(new CheckLangStartedEventArgs(repository));
-
         var versions = await FetchVersionsAsync(repository, force);
         if (string.IsNullOrEmpty(versions))
         {
-            await OnCheckLangFinished(new CheckLangFinishedEventArgs(repository, []));
+            await OnNewLangFilesDetected(new NewLangFilesDetectedEventArgs(repository, []));
             return;
         }
 
@@ -151,7 +149,10 @@ public sealed class LangsWatcher : ILangsWatcher
             updatedLang.SelfDiff();
         }
 
-        await OnCheckLangFinished(new CheckLangFinishedEventArgs(repository, updatedLangs));
+        if (updatedLangs.Count > 0)
+        {
+            await OnNewLangFilesDetected(new NewLangFilesDetectedEventArgs(repository, updatedLangs));
+        }
     }
 
     /// <summary>
@@ -319,28 +320,25 @@ public sealed class LangsWatcher : ILangsWatcher
 
     #region Events
 
-    public event ILangsWatcher.CheckLangStartedEventHandler? CheckLangStarted;
+    public event ILangsWatcher.NewLangFilesDetectedEventHandler? NewLangFilesDetected;
 
     /// <summary>
-    /// Triggers the CheckLangStarted event.
+    /// Triggers the <see cref="NewLangFilesDetected"/> event.
     /// </summary>
-    internal async ValueTask OnCheckLangStarted(CheckLangStartedEventArgs eventArgs)
+    internal async ValueTask OnNewLangFilesDetected(NewLangFilesDetectedEventArgs eventArgs)
     {
-        var handler = CheckLangStarted;
+        var handler = NewLangFilesDetected;
         if (handler is not null)
         {
             await handler.Invoke(this, eventArgs);
         }
     }
 
-    public event ILangsWatcher.CheckLangsFinishedEventHandler? CheckLangsFinished;
+    public event ILangsWatcher.LangsErroredEventHandler? LangsErrored;
 
-    /// <summary>
-    /// Triggers the CheckLangFinished event.
-    /// </summary>
-    internal async ValueTask OnCheckLangFinished(CheckLangFinishedEventArgs eventArgs)
+    internal async ValueTask OnLangsErroredAsync(LangsErroredEventArgs eventArgs)
     {
-        var handler = CheckLangsFinished;
+        var handler = LangsErrored;
         if (handler is not null)
         {
             await handler.Invoke(this, eventArgs);
