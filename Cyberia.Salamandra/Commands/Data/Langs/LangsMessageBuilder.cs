@@ -71,24 +71,25 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
         var language = _repository.Language.ToStringFast();
 
         var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, "Langs", _culture)
-            .WithTitle($"Langs {type} in {language}");
+            .WithTitle($"{type} langs in {language}");
 
         if (_repository.Langs.Count > 0)
         {
-            StringBuilder descriptionBuilder = new();
+            //TODO: One other lang will exceed the max description size
+            StringBuilder descriptionBuilder = new(Constant.MaxEmbedDescriptionSize);
 
-            descriptionBuilder.Append("Last modification : ");
+            descriptionBuilder.Append("Last modification: ");
             descriptionBuilder.Append(_repository.LastChange.ToLocalTime().ToString("yyyy-MM-dd HH:mmzzz"));
             descriptionBuilder.Append('\n');
             descriptionBuilder.Append(Formatter.MaskedUrl(Formatter.Bold(_repository.VersionFileName), new Uri(LangsWatcher.BaseUrl + _repository.VersionFileRoute)));
-            descriptionBuilder.Append('\n');
+            descriptionBuilder.Append('\n').Append('\n');
 
             foreach (var langData in _repository.Langs)
             {
                 descriptionBuilder.Append("- ");
                 descriptionBuilder.Append(Formatter.MaskedUrl(langData.Name, new Uri(LangsWatcher.BaseUrl + langData.FileRoute)));
                 descriptionBuilder.Append(' ');
-                descriptionBuilder.Append(Formatter.InlineCode(langData.Version.ToString()));
+                descriptionBuilder.Append(langData.Version);
                 descriptionBuilder.Append('\n');
             }
 
