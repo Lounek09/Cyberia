@@ -3,7 +3,7 @@
 namespace Cyberia.Utils.Extensions;
 
 /// <summary>
-/// Provides extension methods for JsonElement.
+/// Provides extension methods for <see cref="JsonElement"/>.
 /// </summary>
 public static class JsonElementExtensions
 {

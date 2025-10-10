@@ -5,9 +5,9 @@ using System.Runtime.CompilerServices;
 namespace Cyberia.Utils.Extensions;
 
 /// <summary>
-/// Provides extension methods for numbers.
+/// Provides extension methods for <see cref="INumber{TSelf}"/>.
 /// </summary>
-public static class NumberExtensions
+public static class INumberExtensions
 {
     /// <summary>
     /// Converts a number to a formatted string with thousands separators.

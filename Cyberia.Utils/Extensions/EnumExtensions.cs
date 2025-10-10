@@ -1,7 +1,7 @@
 ﻿namespace Cyberia.Utils.Extensions;
 
 /// <summary>
-/// Provides extension methods for Enum.
+/// Provides extension methods for <see cref="Enum"/>.
 /// </summary>
 public static class EnumExtensions
 {

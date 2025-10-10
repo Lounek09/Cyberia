@@ -3,9 +3,9 @@
 namespace Cyberia.Utils.Extensions;
 
 /// <summary>
-/// Provides extension methods for Set.
+/// Provides extension methods for <see cref="ISet{T}"/>.
 /// </summary>
-public static class SetExtensions
+public static class ISetExtensions
 {
     /// <summary>
     /// Returns a read-only <see cref="ReadOnlySet{T}"/> wrapper for the current collection.

@@ -22,9 +22,6 @@ using System.Text;
 
 namespace Cyberia.Utils;
 
-/// <summary>
-/// Provides extension methods for String.
-/// </summary>
 public static partial class StringExtensions
 {
     private static readonly StringBuilder s_builder = new();

@@ -1,9 +1,9 @@
 ﻿namespace Cyberia.Utils.Extensions;
 
 /// <summary>
-/// Provides extension methods for IDictionary.
+/// Provides extension methods for <see cref="IDictionary{TKey, TValue}"/>.
 /// </summary>
-public static class DictionaryExtensions
+public static class IDictionaryExtensions
 {
     /// <summary>
     /// Removes the first key-value pair in the source dictionary that has the specified value.

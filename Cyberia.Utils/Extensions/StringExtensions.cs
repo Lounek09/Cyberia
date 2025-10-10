@@ -4,7 +4,7 @@ using System.Numerics;
 namespace Cyberia.Utils;
 
 /// <summary>
-/// Provides extension methods for String, Span{char} and ReadOnlySpan{char}.
+/// Provides extension methods for <see cref="string"/>, <see cref="Span{T}"/> of <see cref="char"/> and <see cref="ReadOnlySpan{T}"/> of <see cref="char"/>.
 /// </summary>
 public static partial class StringExtensions
 {

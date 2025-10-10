@@ -7,6 +7,7 @@ namespace Cyberia.Utils;
 /// <summary>
 /// Provides utility methods for working with JSON.
 /// </summary>
+// TODO: Rework, output not consistent between the two diff methods
 public static class Json
 {
     private static readonly JsonSerializerOptions s_indentOptions = new()

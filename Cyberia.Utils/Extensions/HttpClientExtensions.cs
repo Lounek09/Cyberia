@@ -1,7 +1,7 @@
 ﻿namespace Cyberia.Utils.Extensions;
 
 /// <summary>
-/// Provides extension methods for HttpClient.
+/// Provides extension methods for <see cref="HttpClient"/>.
 /// </summary>
 public static class HttpClientExtensions
 {
