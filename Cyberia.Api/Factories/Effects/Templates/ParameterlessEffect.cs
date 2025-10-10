@@ -8,10 +8,7 @@ namespace Cyberia.Api.Factories.Effects.Templates;
 public abstract record ParameterlessEffect : Effect
 {
     protected ParameterlessEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
-    {
-
-    }
+        : base(id, duration, probability, criteria, dispellable, effectArea) { }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {

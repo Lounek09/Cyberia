@@ -20,10 +20,7 @@ public sealed class CytrusErroredEventArgs : System.EventArgs
     /// <inheritdoc cref="CytrusErroredEventArgs(Exception?, string)"/>
     [SetsRequiredMembers]
     public CytrusErroredEventArgs(string errorMessage)
-        : this(null, errorMessage)
-    {
-
-    }
+        : this(null, errorMessage) { }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusErroredEventArgs"/> class.

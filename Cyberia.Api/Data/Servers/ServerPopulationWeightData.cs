@@ -11,8 +11,5 @@ internal sealed class ServerPopulationWeightData : IDofusData<int>
     public int Weight { get; init; }
 
     [JsonConstructor]
-    internal ServerPopulationWeightData()
-    {
-
-    }
+    internal ServerPopulationWeightData() { }
 }

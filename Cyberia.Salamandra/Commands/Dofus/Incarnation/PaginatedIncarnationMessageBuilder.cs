@@ -31,9 +31,7 @@ public sealed class PaginatedIncarnationMessageBuilder : PaginatedMessageBuilder
         search,
         culture,
         selectedPageIndex)
-    {
-
-    }
+    { }
 
     public static PaginatedIncarnationMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {

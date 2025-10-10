@@ -10,10 +10,7 @@ public sealed class CultureAnchorTagHelper : AnchorTagHelper
     private const string c_culturePageAttributeName = "asp-culture-page";
 
     public CultureAnchorTagHelper(IHtmlGenerator generator)
-        : base(generator)
-    {
-
-    }
+        : base(generator) { }
 
     [HtmlAttributeName(c_culturePageAttributeName)]
     public required string CulturePage { get; set; }

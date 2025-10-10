@@ -13,10 +13,7 @@ public sealed class HouseMapData : IDofusData<int>
     public int HouseId { get; init; }
 
     [JsonConstructor]
-    internal HouseMapData()
-    {
-
-    }
+    internal HouseMapData() { }
 
     public MapData? GetMapData()
     {

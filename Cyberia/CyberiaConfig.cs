@@ -77,10 +77,7 @@ public sealed class CyberiaConfig
     /// <summary>
     /// Initializes a new instance of the <see cref="CyberiaConfig"/> class.
     /// </summary>
-    public CyberiaConfig()
-    {
-
-    }
+    public CyberiaConfig() { }
 
     public bool Validate()
     {

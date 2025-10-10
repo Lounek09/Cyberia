@@ -7,10 +7,7 @@ namespace Cyberia.Api.Factories.QuestObjectives.Elements;
 public sealed record UntranslatedQuestObjective : QuestObjective
 {
     internal UntranslatedQuestObjective(QuestObjectiveData questObjectiveData)
-        : base(questObjectiveData)
-    {
-
-    }
+        : base(questObjectiveData) { }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {

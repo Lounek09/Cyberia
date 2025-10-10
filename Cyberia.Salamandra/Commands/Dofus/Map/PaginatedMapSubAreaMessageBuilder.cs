@@ -31,9 +31,7 @@ public sealed class PaginatedMapSubAreaMessageBuilder : PaginatedMessageBuilder<
         search,
         culture,
         selectedPageIndex)
-    {
-
-    }
+    { }
 
     public static PaginatedMapSubAreaMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {

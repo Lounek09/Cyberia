@@ -31,9 +31,7 @@ public sealed class PaginatedMonsterMessageBuilder : PaginatedMessageBuilder<Mon
         search,
         culture,
         selectedPageIndex)
-    {
-
-    }
+    { }
 
     public static PaginatedMonsterMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {

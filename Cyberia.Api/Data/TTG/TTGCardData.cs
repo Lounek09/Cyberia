@@ -22,10 +22,7 @@ public sealed class TTGCardData : IDofusData<int>
     public int Variant { get; init; }
 
     [JsonConstructor]
-    internal TTGCardData()
-    {
-
-    }
+    internal TTGCardData() { }
 
     public ItemData? GetItemData()
     {

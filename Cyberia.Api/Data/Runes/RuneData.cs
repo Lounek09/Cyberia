@@ -24,10 +24,7 @@ public sealed class RuneData : IDofusData<int>
     public int? RaRuneItemId { get; init; }
 
     [JsonConstructor]
-    internal RuneData()
-    {
-
-    }
+    internal RuneData() { }
 
     public ItemData? GetBaRuneItemData()
     {

@@ -17,8 +17,5 @@ internal sealed class QuestCustomData : IDofusData<int>
     public bool HasDungeon { get; init; }
 
     [JsonConstructor]
-    internal QuestCustomData()
-    {
-
-    }
+    internal QuestCustomData() { }
 }

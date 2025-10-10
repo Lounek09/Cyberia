@@ -31,9 +31,7 @@ public sealed class PaginatedQuestMessageBuilder : PaginatedMessageBuilder<Quest
         search,
         culture,
         selectedPageIndex)
-    {
-
-    }
+    { }
 
     public static PaginatedQuestMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {

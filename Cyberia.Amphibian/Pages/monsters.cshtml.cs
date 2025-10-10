@@ -4,8 +4,5 @@ namespace Cyberia.Amphibian.Pages;
 
 public class MonstersModel : PageModel
 {
-    public virtual void OnGet()
-    {
-
-    }
+    public virtual void OnGet() { }
 }

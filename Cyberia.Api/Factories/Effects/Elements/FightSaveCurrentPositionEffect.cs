@@ -7,10 +7,7 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 public sealed record FightSaveCurrentPositionEffect : ParameterlessEffect
 {
     private FightSaveCurrentPositionEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
-    {
-
-    }
+        : base(id, duration, probability, criteria, dispellable, effectArea) { }
 
     internal static FightSaveCurrentPositionEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {

@@ -7,10 +7,7 @@ namespace Cyberia.Api.Factories.QuestObjectives.Elements;
 public sealed record MakeHuntFightQuestObjective : QuestObjective
 {
     private MakeHuntFightQuestObjective(QuestObjectiveData questObjectiveData)
-        : base(questObjectiveData)
-    {
-
-    }
+        : base(questObjectiveData) { }
 
     internal static MakeHuntFightQuestObjective? Create(QuestObjectiveData questObjectiveData)
     {

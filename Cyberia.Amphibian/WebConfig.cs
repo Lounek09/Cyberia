@@ -18,8 +18,5 @@ public sealed class WebConfig
     /// <summary>
     /// Initializes a new instance of the <see cref="WebConfig"/> class.
     /// </summary>
-    public WebConfig()
-    {
-
-    }
+    public WebConfig() { }
 }

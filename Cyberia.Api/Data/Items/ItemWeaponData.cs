@@ -23,8 +23,5 @@ public sealed class ItemWeaponData : IDofusData
 
     public bool LineOfSight { get; init; }
 
-    internal ItemWeaponData()
-    {
-
-    }
+    internal ItemWeaponData() { }
 }

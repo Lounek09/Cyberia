@@ -64,10 +64,7 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
     public override string Name => "dofusbook_items";
 
     public Dofusbook_ItemsCsvGenerator(IEnumerable<ItemData> items)
-        : base(s_columns, items)
-    {
-
-    }
+        : base(s_columns, items) { }
 
     protected override IEnumerable<ItemData> FilteredItems()
     {

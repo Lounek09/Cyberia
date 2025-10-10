@@ -7,10 +7,7 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 public sealed record CharacterInventoryLoseKamasEffect : MinMaxEffect
 {
     private CharacterInventoryLoseKamasEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int min, int max)
-        : base(id, duration, probability, criteria, dispellable, effectArea, min, max)
-    {
-
-    }
+        : base(id, duration, probability, criteria, dispellable, effectArea, min, max) { }
 
     internal static CharacterInventoryLoseKamasEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {

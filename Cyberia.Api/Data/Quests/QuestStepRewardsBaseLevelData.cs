@@ -17,8 +17,5 @@ public sealed class QuestStepRewardsBaseLevelData : IDofusData
     public int MinLevel { get; init; }
 
     [JsonConstructor]
-    internal QuestStepRewardsBaseLevelData()
-    {
-
-    }
+    internal QuestStepRewardsBaseLevelData() { }
 }

@@ -7,10 +7,7 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 public sealed record BoostSpellBaseDamageEffect : SpellModifierEffect
 {
     private BoostSpellBaseDamageEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int spellId, int value)
-        : base(id, duration, probability, criteria, dispellable, effectArea, spellId, value)
-    {
-
-    }
+        : base(id, duration, probability, criteria, dispellable, effectArea, spellId, value) { }
 
     internal static BoostSpellBaseDamageEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {

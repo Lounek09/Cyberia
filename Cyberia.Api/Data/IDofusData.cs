@@ -1,6 +1,6 @@
 ﻿namespace Cyberia.Api.Data;
 
-public interface IDofusData
-{
-
-}
+/// <summary>
+/// Represents a Dofus data extracted from the langs.
+/// </summary>
+public interface IDofusData;

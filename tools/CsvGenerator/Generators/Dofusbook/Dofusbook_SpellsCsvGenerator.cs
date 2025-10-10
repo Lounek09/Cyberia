@@ -30,10 +30,7 @@ public sealed class Dofusbook_SpellsCsvGenerator : DofusCsvGenerator<SpellData>
     public override string Name => "dofusbook_spells";
 
     public Dofusbook_SpellsCsvGenerator(IEnumerable<SpellData> items)
-        : base(s_columns, items)
-    {
-
-    }
+        : base(s_columns, items) { }
 
     protected override IEnumerable<SpellData> FilteredItems()
     {

@@ -31,9 +31,7 @@ public sealed class PaginatedSpellMessageBuilder : PaginatedMessageBuilder<Spell
         search,
         culture,
         selectedPageIndex)
-    {
-
-    }
+    { }
 
     public static PaginatedSpellMessageBuilder? Create(IServiceProvider provider, int version, CultureInfo? culture, params ReadOnlySpan<string> parameters)
     {

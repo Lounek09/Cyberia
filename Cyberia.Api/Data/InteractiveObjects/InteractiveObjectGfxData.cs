@@ -11,8 +11,5 @@ internal sealed class InteractiveObjectGfxData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonConstructor]
-    internal InteractiveObjectGfxData()
-    {
-
-    }
+    internal InteractiveObjectGfxData() { }
 }

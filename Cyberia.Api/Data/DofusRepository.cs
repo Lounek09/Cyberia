@@ -62,28 +62,19 @@ public abstract class DofusRepository
     }
 
     /// <summary>
-    /// Load custom data from manually generated JSON files.
+    /// Load custom data from manually build JSON files.
     /// </summary>
-    protected virtual void LoadCustomData()
-    {
-
-    }
+    protected virtual void LoadCustomData() { }
 
     /// <summary>
     /// Load localized data from another language.
     /// </summary>
     /// <param name="type">The type of the lang to load.</param>
     /// <param name="language">The language of the lang to load.</param>
-    protected virtual void LoadLocalizedData(LangType type, Language language)
-    {
-
-    }
+    protected virtual void LoadLocalizedData(LangType type, Language language) { }
 
     /// <summary>
     /// Finalize the loading process of the repository.
     /// </summary>
-    protected virtual void FinalizeLoading()
-    {
-
-    }
+    protected virtual void FinalizeLoading() { }
 }

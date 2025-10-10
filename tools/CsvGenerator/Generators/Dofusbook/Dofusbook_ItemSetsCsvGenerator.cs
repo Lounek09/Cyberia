@@ -23,10 +23,7 @@ public sealed class Dofusbook_ItemSetsCsvGenerator : DofusCsvGenerator<ItemSetDa
     public override string Name => "dofusbook_itemsets";
 
     public Dofusbook_ItemSetsCsvGenerator(IEnumerable<ItemSetData> items)
-        : base(s_columns, items)
-    {
-
-    }
+        : base(s_columns, items) { }
 
     protected override void AppendItem(ItemSetData item)
     {

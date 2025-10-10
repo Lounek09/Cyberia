@@ -19,10 +19,7 @@ public sealed class Dofusbook_TitlesCsvGenerator : DofusCsvGenerator<TitleData>
     public override string Name => "dofusbook_titles";
 
     public Dofusbook_TitlesCsvGenerator(IEnumerable<TitleData> items)
-        : base(s_columns, items)
-    {
-
-    }
+        : base(s_columns, items) { }
 
     protected override void AppendItem(TitleData item)
     {

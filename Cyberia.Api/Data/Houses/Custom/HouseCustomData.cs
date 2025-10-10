@@ -20,8 +20,5 @@ internal sealed class HouseCustomData : IDofusData<int>
     public int Price { get; init; }
 
     [JsonConstructor]
-    internal HouseCustomData()
-    {
-
-    }
+    internal HouseCustomData() { }
 }

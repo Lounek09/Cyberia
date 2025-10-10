@@ -53,8 +53,5 @@ public sealed class BotConfig
     /// <summary>
     /// Initializes a new instance of the <see cref="BotConfig"/> class.
     /// </summary>
-    public BotConfig()
-    {
-
-    }
+    public BotConfig() { }
 }

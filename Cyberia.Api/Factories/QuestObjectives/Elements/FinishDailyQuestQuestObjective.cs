@@ -7,10 +7,7 @@ namespace Cyberia.Api.Factories.QuestObjectives.Elements;
 public sealed record FinishDailyQuestQuestObjective : QuestObjective
 {
     private FinishDailyQuestQuestObjective(QuestObjectiveData questObjectiveData)
-        : base(questObjectiveData)
-    {
-
-    }
+        : base(questObjectiveData) { }
 
     internal static FinishDailyQuestQuestObjective? Create(QuestObjectiveData questObjectiveData)
     {

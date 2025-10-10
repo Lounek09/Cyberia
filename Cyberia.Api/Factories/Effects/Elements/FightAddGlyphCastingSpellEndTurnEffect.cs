@@ -7,10 +7,7 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 public sealed record FightAddGlyphCastingSpellEndTurnEffect : GlyphEffect
 {
     private FightAddGlyphCastingSpellEndTurnEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int spellId, int level)
-        : base(id, duration, probability, criteria, dispellable, effectArea, spellId, level)
-    {
-
-    }
+        : base(id, duration, probability, criteria, dispellable, effectArea, spellId, level) { }
 
     internal static FightAddGlyphCastingSpellEndTurnEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {

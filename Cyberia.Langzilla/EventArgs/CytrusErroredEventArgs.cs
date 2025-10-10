@@ -20,10 +20,7 @@ public sealed class LangsErroredEventArgs : System.EventArgs
     /// <inheritdoc cref="LangsErroredEventArgs(Exception?, string)"/>
     [SetsRequiredMembers]
     public LangsErroredEventArgs(string errorMessage)
-        : this(null, errorMessage)
-    {
-
-    }
+        : this(null, errorMessage) { }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsErroredEventArgs"/> class.

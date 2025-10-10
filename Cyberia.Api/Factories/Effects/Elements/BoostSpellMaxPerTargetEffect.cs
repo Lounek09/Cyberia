@@ -7,10 +7,7 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 public sealed record BoostSpellMaxPerTargetEffect : SpellModifierEffect
 {
     private BoostSpellMaxPerTargetEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int spellId, int value)
-        : base(id, duration, probability, criteria, dispellable, effectArea, spellId, value)
-    {
-
-    }
+        : base(id, duration, probability, criteria, dispellable, effectArea, spellId, value) { }
 
     internal static BoostSpellMaxPerTargetEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {

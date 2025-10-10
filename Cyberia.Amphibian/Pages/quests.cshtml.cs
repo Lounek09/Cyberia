@@ -4,8 +4,5 @@ namespace Cyberia.Amphibian.Pages;
 
 public class QuestsModel : PageModel
 {
-    public virtual void OnGet()
-    {
-
-    }
+    public virtual void OnGet() { }
 }

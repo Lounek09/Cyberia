@@ -7,10 +7,7 @@ namespace Cyberia.Api.Factories.QuestObjectives.Elements;
 public sealed record SeekHuntTargetQuestObjective : QuestObjective
 {
     private SeekHuntTargetQuestObjective(QuestObjectiveData questObjectiveData)
-        : base(questObjectiveData)
-    {
-
-    }
+        : base(questObjectiveData) { }
 
     internal static SeekHuntTargetQuestObjective? Create(QuestObjectiveData questObjectiveData)
     {

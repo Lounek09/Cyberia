@@ -19,10 +19,7 @@ public sealed class AccessoriesData : IDofusData
     public int ShieldItemId { get; init; }
 
     [JsonConstructor]
-    internal AccessoriesData()
-    {
-
-    }
+    internal AccessoriesData() { }
 
     public ItemData? GetWeaponItemData()
     {

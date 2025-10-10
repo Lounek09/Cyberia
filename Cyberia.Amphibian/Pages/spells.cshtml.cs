@@ -4,8 +4,5 @@ namespace Cyberia.Amphibian.Pages;
 
 public class SpellsModel : PageModel
 {
-    public virtual void OnGet()
-    {
-
-    }
+    public virtual void OnGet() { }
 }
