@@ -104,10 +104,10 @@ public sealed class SpellsRepository : DofusRepository, IDofusRepository
         return null;
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<SpellsLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<SpellsLocalizedRepository>(identifier);
 
         foreach (var spellLocalizedData in localizedRepository.Spells)
         {

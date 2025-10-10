@@ -27,10 +27,10 @@ public sealed class FightChallengesRepository : DofusRepository, IDofusRepositor
         return fightChallengeData;
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<FightChallengesLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<FightChallengesLocalizedRepository>(identifier);
 
         foreach (var fightChallengeLocalizedData in localizedRepository.FightChallenges)
         {

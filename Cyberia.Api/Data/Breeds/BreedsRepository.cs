@@ -105,10 +105,10 @@ public sealed class BreedsRepository : DofusRepository, IDofusRepository
         }
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<BreedsLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<BreedsLocalizedRepository>(identifier);
 
         foreach (var breedLocalizedData in localizedRepository.Breeds)
         {

@@ -38,10 +38,10 @@ public sealed class DialogsRepository : DofusRepository, IDofusRepository
         return dialogAnswerData;
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<DialogsLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<DialogsLocalizedRepository>(identifier);
 
         foreach (var dialogQuestionLocalizedData in localizedRepository.DialogQuestions)
         {

@@ -42,10 +42,10 @@ public sealed class TitlesRepository : DofusRepository, IDofusRepository
             : titleData.Name.ToString(culture);
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<TitlesLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<TitlesLocalizedRepository>(identifier);
 
         foreach (var titleLocalizedData in localizedRepository.Titles)
         {

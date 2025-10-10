@@ -134,10 +134,10 @@ public sealed class HousesRepository : DofusRepository, IDofusRepository
         }
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<HousesLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<HousesLocalizedRepository>(identifier);
 
         foreach (var houseLocalizedData in localizedRepository.Houses)
         {

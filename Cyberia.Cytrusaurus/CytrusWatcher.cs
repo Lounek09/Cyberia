@@ -84,11 +84,23 @@ public interface ICytrusWatcher
 
 public sealed class CytrusWatcher : ICytrusWatcher
 {
-    private const string c_onlineMonitoredFileId = "cytrus";
-
+    /// <summary>
+    /// The root output directory.
+    /// </summary>
     public const string OutputPath = "cytrus";
+
+    /// <summary>
+    /// The name of the Cytrus file.
+    /// </summary>
     public const string CytrusFileName = "cytrus.json";
+
+    /// <summary>
+    /// The base URL of Cytrus.
+    /// </summary>
+    // TODO: Make it configurable
     public const string BaseUrl = "https://cytrus.cdn.ankama.com";
+
+    private const string c_onlineMonitoredFileId = "cytrus";
 
     public static readonly string CytrusPath = Path.Join(OutputPath, CytrusFileName);
     public static readonly string OldCytrusPath = Path.Join(OutputPath, $"old_{CytrusFileName}");

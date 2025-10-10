@@ -22,7 +22,9 @@ public sealed class LangNameAutocompleteProvider : IAutoCompleteProvider
         var type = ctx.GetArgument<LangType>("type");
         var language = ctx.GetArgument<Language>("language");
 
-        var choices = _langsWatcher.GetRepository(type, language)
+        LangsIdentifier identifier = new(type, language);
+
+        var choices = _langsWatcher.GetRepository(identifier)
            .GetAllByName(ctx.UserInput ?? string.Empty)
            .Take(Constant.MaxChoice)
            .Select(x => new DiscordAutoCompleteChoice(x.Name, x.Name));

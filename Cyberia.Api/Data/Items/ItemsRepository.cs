@@ -134,10 +134,10 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
             : itemData.Name.ToString(culture);
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<ItemsLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<ItemsLocalizedRepository>(identifier);
 
         foreach (var itemUnicStringLocalizedData in localizedRepository.ItemUnicStrings)
         {

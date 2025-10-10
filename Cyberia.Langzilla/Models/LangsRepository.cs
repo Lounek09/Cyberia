@@ -39,7 +39,7 @@ public sealed class LangsRepository
     /// Gets the name of the version file.
     /// </summary>
     [JsonIgnore]
-    public string OutputPath => LangsWatcher.GetOutputPath(Type, Language);
+    public string OutputPath => LangsWatcher.GetOutputPath(new LangsIdentifier(Type, Language));
 
     /// <summary>
     /// Gets the route to the version file.

@@ -42,10 +42,10 @@ public sealed class EmotesRepository : DofusRepository, IDofusRepository
             : emoteData.Name.ToString(culture);
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<EmotesLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<EmotesLocalizedRepository>(identifier);
 
         foreach (var emoteLocalizedData in localizedRepository.Emotes)
         {

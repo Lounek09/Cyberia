@@ -27,10 +27,10 @@ public sealed class RanksRepository : DofusRepository, IDofusRepository
         return rank;
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<RanksLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<RanksLocalizedRepository>(identifier);
 
         foreach (var guildRankLocalizedData in localizedRepository.GuildRanks)
         {

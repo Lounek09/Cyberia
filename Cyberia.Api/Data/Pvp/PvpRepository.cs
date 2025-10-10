@@ -27,10 +27,10 @@ public sealed class PvpRepository : DofusRepository, IDofusRepository
         PvpGrades = ReadOnlyCollection<IReadOnlyList<PvpGradeData>>.Empty;
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<PvpLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<PvpLocalizedRepository>(identifier);
 
         if (localizedRepository.PvpGrades.Count == PvpGrades.Count)
         {

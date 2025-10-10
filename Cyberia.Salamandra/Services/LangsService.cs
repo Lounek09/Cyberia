@@ -58,8 +58,11 @@ public sealed class LangsService : ILangsService
 
         var isSameType = currentType == modelType;
 
-        var currentRepository = _langsWatcher.GetRepository(currentType, language);
-        var modelRepository = _langsWatcher.GetRepository(modelType, language);
+        LangsIdentifier currentIdentifier = new(currentType, language);
+        var currentRepository = _langsWatcher.GetRepository(currentIdentifier);
+
+        LangsIdentifier modelIdentifier = new(modelType, language);
+        var modelRepository = _langsWatcher.GetRepository(modelIdentifier);
 
         var thread = isSameType
             ? await CreateAutoDiffPostAsync(forum, currentRepository)

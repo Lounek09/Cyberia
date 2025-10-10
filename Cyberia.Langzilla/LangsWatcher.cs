@@ -14,10 +14,9 @@ public interface ILangsWatcher
     /// <summary>
     /// Gets the lang repository from its type and language.
     /// </summary>
-    /// <param name="type">The type of the langs in the repository.</param>
-    /// <param name="language">The language of the langs in the repository.</param>
+    /// <param name="identifier">The identifier of the repository.</param>
     /// <returns>The lang repository.</returns>
-    LangsRepository GetRepository(LangType type, Language language);
+    LangsRepository GetRepository(LangsIdentifier identifier);
 
     /// <summary>
     /// Starts watching for update of langs by type.
@@ -68,13 +67,21 @@ public interface ILangsWatcher
 
 public sealed class LangsWatcher : ILangsWatcher
 {
+    /// <summary>
+    /// The root output directory.
+    /// </summary>
     public const string OutputPath = "langs";
+
+    /// <summary>
+    /// The base URL of the langs.
+    /// </summary>
+    // TODO: Make it configurable
     public const string BaseUrl = "https://dofusretro.cdn.ankama.com/";
 
     private readonly HttpClient _httpClient;
     private readonly HttpRetryPolicy _httpRetryPolicy;
-    private readonly Dictionary<(LangType, Language), LangsRepository> _langsRepositories = [];
-    private readonly Dictionary<(LangType, Language), Timer> _timers = [];
+    private readonly Dictionary<LangsIdentifier, LangsRepository> _langsRepositories = [];
+    private readonly Dictionary<LangsIdentifier, Timer> _timers = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsWatcher"/> class.
@@ -90,13 +97,15 @@ public sealed class LangsWatcher : ILangsWatcher
         {
             foreach (var language in Enum.GetValues<Language>())
             {
-                var outputPath = GetOutputPath(type, language);
+                LangsIdentifier identifier = new(type, language);
+
+                var outputPath = GetOutputPath(identifier);
                 Directory.CreateDirectory(outputPath);
 
                 var filePath = Path.Join(outputPath, LangsRepository.FileName);
                 var repository = LangsRepository.LoadFromFile(filePath);
 
-                _langsRepositories.Add((type, language), repository);
+                _langsRepositories.Add(identifier, repository);
             }
         }
 
@@ -107,18 +116,19 @@ public sealed class LangsWatcher : ILangsWatcher
         _httpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
     }
 
-    public LangsRepository GetRepository(LangType type, Language language)
+    public LangsRepository GetRepository(LangsIdentifier identifier)
     {
-        return _langsRepositories[(type, language)];
+        return _langsRepositories[identifier];
     }
 
     public void Watch(LangType type, TimeSpan dueTime, TimeSpan interval)
     {
         foreach (var language in Enum.GetValues<Language>())
         {
-            var repository = GetRepository(type, language);
+            LangsIdentifier identifier = new(type, language);
+            var repository = GetRepository(identifier);
 
-            _timers[(type, language)] = new Timer(async _ => await CheckAsync(repository), null, dueTime, interval);
+            _timers[identifier] = new Timer(async _ => await CheckAsync(repository), null, dueTime, interval);
         }
     }
 
@@ -160,6 +170,7 @@ public sealed class LangsWatcher : ILangsWatcher
     /// </summary>
     /// <param name="type">The type of the langs.</param>
     /// <returns>The route of the langs.</returns>
+    // TODO: Make it configurable
     internal static string GetRoute(LangType type)
     {
         return type switch
@@ -173,12 +184,11 @@ public sealed class LangsWatcher : ILangsWatcher
     /// <summary>
     /// Gets the output path of the langs.
     /// </summary>
-    /// <param name="type">The type of the langs.</param>
-    /// <param name="language">The language of the langs.</param>
+    /// <param name="identifier">The identifier of the langs.</param>
     /// <returns>The output path of the langs.</returns>
-    internal static string GetOutputPath(LangType type, Language language)
+    internal static string GetOutputPath(LangsIdentifier identifier)
     {
-        return Path.Join(OutputPath, type.ToStringFast().ToLower(), language.ToStringFast());
+        return Path.Join(OutputPath, identifier.Type.ToStringFast().ToLower(), identifier.Language.ToStringFast());
     }
 
     /// <summary>
@@ -233,6 +243,8 @@ public sealed class LangsWatcher : ILangsWatcher
             yield break;
         }
 
+        LangsIdentifier identifier = new(repository.Type, repository.Language);
+
         foreach (var langInfo in langInfos)
         {
             //TODO: Use Span
@@ -243,7 +255,7 @@ public sealed class LangsWatcher : ILangsWatcher
                 continue;
             }
 
-            var lang = new Lang(langParameters[0], langVersion, repository.Type, repository.Language);
+            var lang = new Lang(langParameters[0], langVersion, identifier);
             if (!File.Exists(lang.FilePath))
             {
                 repository.AddOrUpdate(lang);

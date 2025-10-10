@@ -35,12 +35,14 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     {
         if (version == PacketVersion &&
             parameters.Length > 1 &&
-            Enum.TryParse(parameters[0], out LangType langType) &&
+            Enum.TryParse(parameters[0], out LangType type) &&
             Enum.TryParse(parameters[1], out Language language))
         {
             var embedBuilderService = provider.GetRequiredService<IEmbedBuilderService>();
             var langsWatcher = provider.GetRequiredService<ILangsWatcher>();
-            var repository = langsWatcher.GetRepository(langType, language);
+
+            LangsIdentifier identifier = new(type, language);
+            var repository = langsWatcher.GetRepository(identifier);
 
             return new LangsMessageBuilder(embedBuilderService, repository, culture);
         }

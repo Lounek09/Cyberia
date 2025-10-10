@@ -32,10 +32,10 @@ public sealed class HintsRepository : DofusRepository, IDofusRepository
         return hintsCategory;
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<HintsLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<HintsLocalizedRepository>(identifier);
 
         foreach (var hintCategoryLocalizedData in localizedRepository.HintCategories)
         {

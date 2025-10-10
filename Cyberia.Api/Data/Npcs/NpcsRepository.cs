@@ -53,10 +53,10 @@ public sealed class NpcsRepository : DofusRepository, IDofusRepository
             : npc.Name.ToString(culture);
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<NpcsLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<NpcsLocalizedRepository>(identifier);
 
         foreach (var npcActionLocalizedData in localizedRepository.NpcActions)
         {

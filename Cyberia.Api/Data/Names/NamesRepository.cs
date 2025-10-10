@@ -51,10 +51,10 @@ public sealed class NamesRepository : DofusRepository, IDofusRepository
         return string.Empty;
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<NamesLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<NamesLocalizedRepository>(identifier);
 
         foreach (var taxCollectorLastNameLocalizedData in localizedRepository.TaxCollectorLastNames)
         {

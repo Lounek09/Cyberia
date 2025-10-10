@@ -58,7 +58,9 @@ public sealed class LangsCommandModule
                 Enum.GetValues<Language>()
                     .Select(x =>
                     {
-                        var repository = _langsWatcher.GetRepository(type, x);
+                        LangsIdentifier identifier = new(type, x);
+                        var repository = _langsWatcher.GetRepository(identifier);
+
                         return _langsWatcher.CheckAsync(repository, force);
                     }));
 
@@ -70,7 +72,9 @@ public sealed class LangsCommandModule
 
         await ctx.RespondAsync($"Starting the check of {Formatter.Bold(typeStr)} langs in {Formatter.Bold(languageStr)}...");
 
-        var repository = _langsWatcher.GetRepository(type, language.Value);
+        LangsIdentifier identifier = new(type, language.Value);
+        var repository = _langsWatcher.GetRepository(identifier);
+
         await _langsWatcher.CheckAsync(repository, force);
 
         await ctx.EditResponseAsync($"Check of {Formatter.Bold(typeStr)} langs in {Formatter.Bold(languageStr)} completed.");
@@ -122,7 +126,7 @@ public sealed class LangsCommandModule
 
         var success = language is null
             ? await _langsParser.ParseAllAsync(type)
-            : await _langsParser.ParseAsync(type, language.Value);
+            : await _langsParser.ParseAsync(new LangsIdentifier(type, language.Value));
 
         var elapsedTime = Stopwatch.GetElapsedTime(startTime);
 
@@ -143,7 +147,8 @@ public sealed class LangsCommandModule
     {
         var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
-        var repository = _langsWatcher.GetRepository(type, language);
+        LangsIdentifier identifier = new(type, language);
+        var repository = _langsWatcher.GetRepository(identifier);
 
         await ctx.RespondAsync(await new LangsMessageBuilder(_embedBuilderService, repository, culture)
             .BuildAsync<DiscordInteractionResponseBuilder>());
@@ -160,7 +165,8 @@ public sealed class LangsCommandModule
         [SlashAutoCompleteProvider<LangNameAutocompleteProvider>]
         string name)
     {
-        var langRepository = _langsWatcher.GetRepository(type, language);
+        LangsIdentifier identifier = new(type, language);
+        var langRepository = _langsWatcher.GetRepository(identifier);
 
         var lang = langRepository.GetByName(name);
         if (lang is null)

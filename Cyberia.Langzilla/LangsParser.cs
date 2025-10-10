@@ -1,6 +1,8 @@
 ﻿using Cyberia.Langzilla.Enums;
 using Cyberia.Langzilla.Parser;
 
+using System.Collections.ObjectModel;
+
 namespace Cyberia.Langzilla;
 
 /// <summary>
@@ -11,11 +13,9 @@ public interface ILangsParser
     /// <summary>
     /// Parses the langs of the specified type and language.
     /// </summary>
-    /// <param name="type">The type of langs to parse.</param>
-    /// <param name="language">The language of langs to parse.</param>
+    /// <param name="identifier">The identifier of the langs to parse.</param>
     /// <returns><see langword="true"/> if the langs were parsed successfully; otherwise, <see langword="false"/>.</returns>
-    /// 
-    Task<bool> ParseAsync(LangType type, Language language);
+    Task<bool> ParseAsync(LangsIdentifier identifier);
 
     /// <summary>
     /// Parses the langs for all languages of the specified type.
@@ -27,8 +27,19 @@ public interface ILangsParser
 
 public sealed class LangsParser : ILangsParser
 {
+    /// <summary>
+    /// The root output directory.
+    /// </summary>
     public static readonly string OutputPath = "api";
-    public static readonly IReadOnlyList<string> IgnoredLangs = ["dungeons", "lang"];
+
+    /// <summary>
+    /// The list of langs that are ignored during parsing.
+    /// </summary>
+    public static readonly ReadOnlySet<string> IgnoredLangs = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "dungeons",
+        "lang"
+    }.AsReadOnly();
 
     private readonly ILangsWatcher _langsWatcher;
 
@@ -41,36 +52,42 @@ public sealed class LangsParser : ILangsParser
         _langsWatcher = langsWatcher;
     }
 
-    public async Task<bool> ParseAsync(LangType type, Language language)
+    public async Task<bool> ParseAsync(LangsIdentifier identifier)
     {
-        var repository = _langsWatcher.GetRepository(type, language);
+        var repository = _langsWatcher.GetRepository(identifier);
+        var outputPath = Path.Join(OutputPath, identifier.Type.ToStringFast().ToLower(), identifier.Language.ToStringFast());
 
-        var outputPath = Path.Join(OutputPath, type.ToStringFast().ToLower(), language.ToStringFast());
         Directory.CreateDirectory(outputPath);
 
-        List<Task> tasks = [];
+        using CancellationTokenSource cts = new();
 
         try
         {
-            foreach (var lang in repository.Langs)
+            await Parallel.ForEachAsync(repository.Langs, new ParallelOptions { CancellationToken = cts.Token }, async (lang, token) =>
             {
-                if (!IgnoredLangs.Contains(lang.Name))
+                if (IgnoredLangs.Contains(lang.Name))
                 {
-                    tasks.Add(Task.Run(() =>
-                    {
-                        using var parser = JsonLangParser.Create(lang);
-                        parser.Parse();
-
-                        File.WriteAllText(Path.Join(outputPath, $"{lang.Name}.json"), parser.ToString());
-                    }));
+                    return;
                 }
-            }
 
-            await Task.WhenAll(tasks);
+                try
+                {
+                    using var parser = JsonLangParser.Create(lang);
+                    parser.Parse();
+
+                    var filePath = Path.Join(outputPath, $"{lang.Name}.json");
+                    await File.WriteAllTextAsync(filePath, parser.ToString(), token);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e, "An error occurred while parsing {LangType} {LangName} lang in {Language}", identifier.Type, lang.Name, identifier.Language);
+
+                    cts.Cancel();
+                }
+            });
         }
-        catch (Exception e)
+        catch (OperationCanceledException)
         {
-            Log.Error(e, "An error occurred while parsing langs {LangType} in {LangLanguage}", type, language);
             return false;
         }
 
@@ -79,8 +96,11 @@ public sealed class LangsParser : ILangsParser
 
     public async Task<bool> ParseAllAsync(LangType type)
     {
-        var tasks = Enum.GetValues<Language>().Select(language => ParseAsync(type, language));
+        var tasks = Enum.GetValues<Language>()
+            .Select(language => ParseAsync(new LangsIdentifier(type, language)));
+
         var results = await Task.WhenAll(tasks);
+
         return results.All(x => x);
     }
 }

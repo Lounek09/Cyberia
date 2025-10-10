@@ -28,10 +28,10 @@ public sealed class WantedDocumentsRepository : DofusRepository, IDofusRepositor
         return wantedDocumentData;
     }
 
-    protected override void LoadLocalizedData(LangType type, Language language)
+    protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
-        var twoLetterISOLanguageName = language.ToStringFast();
-        var localizedRepository = DofusLocalizedRepository.Load<WantedDocumentsLocalizedRepository>(type, language);
+        var twoLetterISOLanguageName = identifier.Language.ToStringFast();
+        var localizedRepository = DofusLocalizedRepository.Load<WantedDocumentsLocalizedRepository>(identifier);
 
         foreach (var wantedDocumentLocalizedData in localizedRepository.WantedDocuments)
         {

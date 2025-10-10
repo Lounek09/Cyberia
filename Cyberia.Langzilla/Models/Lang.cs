@@ -44,7 +44,7 @@ public sealed class Lang
     /// Gets the output path of the lang file.
     /// </summary>
     [JsonIgnore]
-    public string OutputPath => Path.Join(LangsWatcher.GetOutputPath(Type, Language), Name);
+    public string OutputPath => Path.Join(LangsWatcher.GetOutputPath(new LangsIdentifier(Type, Language)), Name);
 
     /// <summary>
     /// Gets the file name of the lang file.
@@ -98,12 +98,12 @@ public sealed class Lang
     /// <param name="version">The version of the lang.</param>
     /// <param name="type">The type of the lange.</param>
     /// <param name="language">The language of the lang.</param>
-    internal Lang(string name, int version, LangType type, Language language)
+    internal Lang(string name, int version, LangsIdentifier identifier)
     {
         Name = name;
         Version = version;
-        Type = type;
-        Language = language;
+        Type = identifier.Type;
+        Language = identifier.Language;
 
         var outputPath = OutputPath;
         New = !Directory.Exists(outputPath);

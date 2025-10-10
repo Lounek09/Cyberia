@@ -11,17 +11,16 @@ public abstract class DofusLocalizedRepository
     /// Load a localized repository from a JSON file.
     /// </summary>
     /// <typeparam name="T">The type of the localized repository.</typeparam>
-    /// <param name="type">The type of the lang to load.</param>
-    /// <param name="language">The language of the lang to load.</param>
+    /// <param name="identifier">The identifier of the langs.</param>
     /// <returns>The loaded localized repository.</returns>
     /// <exception cref="EntryPointNotFoundException">Thrown when the internal constructor of the repository is not found.</exception>
-    internal static T Load<T>(LangType type, Language language)
+    internal static T Load<T>(LangsIdentifier identifier)
         where T : DofusLocalizedRepository, IDofusRepository
     {
         var constructor = typeof(T).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.EmptyTypes) ??
             throw new EntryPointNotFoundException($"Non public parameter-less constructor for {typeof(T).Name} not found");
 
-        var filePath = Path.Join(DofusApi.OutputPath, type.ToStringFast().ToLower(), language.ToStringFast(), T.FileName);
+        var filePath = Path.Join(DofusApi.OutputPath, identifier.Type.ToStringFast().ToLower(), identifier.Language.ToStringFast(), T.FileName);
         if (!File.Exists(filePath))
         {
             Log.Warning("File {FilePath} not found to initialize {TypeName}", filePath, typeof(T).Name);

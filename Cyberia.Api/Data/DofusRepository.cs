@@ -11,7 +11,7 @@ public abstract class DofusRepository
     /// Load a repository from a JSON file.
     /// </summary>
     /// <typeparam name="T">The type of the repository.</typeparam>
-    /// <param name="type">The type of the lang to load.</param>
+    /// <param name="type">The type of the langs to load.</param>
     /// <returns>The loaded repository.</returns>
     /// <exception cref="EntryPointNotFoundException">Thrown when the internal constructor of the repository is not found.</exception>
     internal static T Load<T>(LangType type)
@@ -53,7 +53,7 @@ public abstract class DofusRepository
                 continue;
             }
 
-            repository.LoadLocalizedData(type, language);
+            repository.LoadLocalizedData(new LangsIdentifier(type, language));
         }
 
         repository.FinalizeLoading();
@@ -69,9 +69,8 @@ public abstract class DofusRepository
     /// <summary>
     /// Load localized data from another language.
     /// </summary>
-    /// <param name="type">The type of the lang to load.</param>
-    /// <param name="language">The language of the lang to load.</param>
-    protected virtual void LoadLocalizedData(LangType type, Language language) { }
+    /// <param name="identifier">The identifier of the langs.</param>
+    protected virtual void LoadLocalizedData(LangsIdentifier identifier) { }
 
     /// <summary>
     /// Finalize the loading process of the repository.
