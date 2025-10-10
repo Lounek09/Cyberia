@@ -5,7 +5,7 @@ namespace Cyberia.Tests.Utils;
 [TestClass]
 public class HttpRetryPolicyTests
 {
-    #region ShouldRetry
+    #region ExecuteAsync
 
     [TestMethod]
     public async Task ExecuteAsync_RetriesOn503ServiceUnavailable_UntilSuccess()
@@ -44,7 +44,7 @@ public class HttpRetryPolicyTests
             throw new TaskCanceledException("The operation has timed out.", new TimeoutException());
         }
 
-        await Assert.ThrowsExceptionAsync<TaskCanceledException>(() => policy.ExecuteAsync(operation));
+        await Assert.ThrowsAsync<TaskCanceledException>(() => policy.ExecuteAsync(operation));
         Assert.AreEqual(maxRetries + 1, callCount);
     }
 
