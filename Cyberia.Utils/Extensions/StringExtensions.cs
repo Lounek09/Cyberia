@@ -15,23 +15,41 @@ public static partial class StringExtensions
     /// <returns>The capitalized string.</returns>
     public static string Capitalize(this string value)
     {
-        return Capitalize(value.AsSpan());
+        if (string.IsNullOrEmpty(value))
+        {
+            return value;
+        }
+
+        if (value.Length == 1)
+        {
+            return char.ToUpper(value[0]).ToString();
+        }
+
+        return char.ToUpper(value[0]) + value[1..];
     }
 
     /// <inheritdoc cref="Capitalize(string)" />
-    public static string Capitalize(this ReadOnlySpan<char> value)
+    /// <param name="destination">The destination span.</param>
+    /// <returns>The number of characters copied to the destination span.</returns>
+    /// <exception cref="ArgumentException">Thorown when the destination span length is less than the source span length.</exception>
+    public static int Capitalize(this ReadOnlySpan<char> value, Span<char> destination)
     {
         if (value.IsEmpty)
         {
-            return string.Empty;
+            return 0;
         }
 
-        if (value.Length > 1)
+        if (destination.Length < value.Length)
         {
-            return char.ToUpper(value[0]) + value[1..].ToString();
+            throw new ArgumentException(
+                $"The destination span length ({destination.Length}) must be greater than or equal to the source span length ({value.Length}).",
+                nameof(destination));
         }
 
-        return value.ToString().ToUpper();
+        destination[0] = char.ToUpper(value[0]);
+        value[1..].CopyTo(destination[1..]);
+
+        return value.Length;
     }
 
     /// <summary>
@@ -42,18 +60,18 @@ public static partial class StringExtensions
     /// <returns>The truncated string.</returns>
     public static string WithMaxLength(this string value, int maxLength)
     {
-        return WithMaxLength(value.AsSpan(), maxLength);
+        return WithMaxLength(value.AsSpan(), maxLength).ToString();
     }
 
     /// <inheritdoc cref="WithMaxLength(string, int)" />
-    public static string WithMaxLength(this ReadOnlySpan<char> value, int maxLength)
+    public static ReadOnlySpan<char> WithMaxLength(this ReadOnlySpan<char> value, int maxLength)
     {
         if (value.Length <= maxLength)
         {
-            return value.ToString();
+            return value;
         }
 
-        return value[..maxLength].ToString();
+        return value[..maxLength];
     }
 
     /// <summary>
@@ -64,20 +82,20 @@ public static partial class StringExtensions
     /// <returns>The trimmed string.</returns>
     public static string TrimStart(this string value, ReadOnlySpan<char> trimString)
     {
-        return TrimStart(value.AsSpan(), trimString);
+        return TrimStart(value.AsSpan(), trimString).ToString();
     }
 
     /// <inheritdoc cref="TrimStart(string, ReadOnlySpan{char})" />
-    public static string TrimStart(this ReadOnlySpan<char> value, ReadOnlySpan<char> trimString)
+    public static ReadOnlySpan<char> TrimStart(this ReadOnlySpan<char> value, ReadOnlySpan<char> trimString)
     {
         if (value.IsEmpty)
         {
-            return string.Empty;
+            return ReadOnlySpan<char>.Empty;
         }
 
         if (trimString.Length == 0)
         {
-            return value.ToString();
+            return value;
         }
 
         while (value.StartsWith(trimString))
@@ -85,7 +103,7 @@ public static partial class StringExtensions
             value = value[trimString.Length..];
         }
 
-        return value.ToString();
+        return value;
     }
 
     /// <summary>
@@ -96,20 +114,20 @@ public static partial class StringExtensions
     /// <returns>The trimmed string.</returns>
     public static string TrimEnd(this string value, ReadOnlySpan<char> trimString)
     {
-        return TrimEnd(value.AsSpan(), trimString);
+        return TrimEnd(value.AsSpan(), trimString).ToString();
     }
 
     /// <inheritdoc cref="TrimEnd(string, ReadOnlySpan{char})" />
-    public static string TrimEnd(this ReadOnlySpan<char> value, ReadOnlySpan<char> trimString)
+    public static ReadOnlySpan<char> TrimEnd(this ReadOnlySpan<char> value, ReadOnlySpan<char> trimString)
     {
         if (value.IsEmpty)
         {
-            return string.Empty;
+            return ReadOnlySpan<char>.Empty;
         }
 
         if (trimString.Length == 0)
         {
-            return value.ToString();
+            return value;
         }
 
         while (value.EndsWith(trimString))
@@ -117,14 +135,14 @@ public static partial class StringExtensions
             value = value[..^trimString.Length];
         }
 
-        return value.ToString();
+        return value;
     }
 
     /// <summary>
     /// Converts an hexadecimal string to a <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The targeted number type.</typeparam>
-    /// <param name="value">The hexadecimal string to convert. An optional leading '-' indicates a negative number.</param>
+    /// <param name="value">The hexadecimal string to convert. A leading '-' indicates a negative number.</param>
     /// <returns>The parsed <typeparamref name="T"/>, or <c>0</c> if the conversion fails.</returns>
     public static T ToNumberOrZeroFromHex<T>(this string value)
         where T : INumber<T>

@@ -22,6 +22,7 @@ using System.Text;
 
 namespace Cyberia.Utils;
 
+// TODO: Optimize this when I redo the GetByName method of DofusApi
 public static partial class StringExtensions
 {
     private static readonly StringBuilder s_builder = new();

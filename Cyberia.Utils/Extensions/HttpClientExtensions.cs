@@ -15,7 +15,7 @@ public static class HttpClientExtensions
     {
         try
         {
-            using var request = new HttpRequestMessage(HttpMethod.Head, url);
+            using HttpRequestMessage request = new(HttpMethod.Head, url);
             using var response = await httpClient.SendAsync(request);
 
             return response.IsSuccessStatusCode;

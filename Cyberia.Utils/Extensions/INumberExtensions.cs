@@ -23,10 +23,10 @@ public static class INumberExtensions
     }
 
     /// <summary>
-    /// Gets the number of digits in an integer.
+    /// Gets the number of digits including the sign.
     /// </summary>
     /// <param name="number">The integer to evaluate.</param>
-    /// <returns>The number of digits in the integer.</returns>
+    /// <returns>The number of digits in the integer including the sign.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int Length(this int number)
     {
