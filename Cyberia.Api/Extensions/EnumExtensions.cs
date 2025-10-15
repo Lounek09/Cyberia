@@ -12,8 +12,8 @@ public static class EnumExtensions
     /// </summary>
     /// <typeparam name="T">The type of the enum.</typeparam>
     /// <param name="value">The value of the enum.</param>
-    /// <param name="culture">The culture to use
-    /// <returns></returns>
+    /// <param name="culture">The culture to use</param>
+    /// <returns>The translated description of the enum.</returns>
     public static string GetDescription<T>(this T value, CultureInfo? culture = null)
         where T : struct, Enum
     {

@@ -10,9 +10,13 @@ internal sealed class HintsLocalizedRepository : DofusLocalizedRepository, IDofu
     [JsonPropertyName("HIC")]
     public IReadOnlyList<HintCategoryLocalizedData> HintCategories { get; init; }
 
+    [JsonPropertyName("HI")]
+    public IReadOnlyList<HintLocalizedData> Hints { get; init; }
+
     [JsonConstructor]
     internal HintsLocalizedRepository()
     {
         HintCategories = ReadOnlyCollection<HintCategoryLocalizedData>.Empty;
+        Hints = ReadOnlyCollection<HintLocalizedData>.Empty;
     }
 }
