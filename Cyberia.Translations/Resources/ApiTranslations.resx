@@ -1227,4 +1227,7 @@
   <data name="Criterion.RemainingVitality.Superior" xml:space="preserve">
     <value>Remaining vitality &gt; #1</value>
   </data>
+  <data name="SpellCategory.AlHowin" xml:space="preserve">
+    <value>Al Howin</value>
+  </data>
 </root>

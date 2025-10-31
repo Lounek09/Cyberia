@@ -952,7 +952,7 @@
     <value>Elémentaire</value>
   </data>
   <data name="SpellCategory.Event" xml:space="preserve">
-    <value>Evenement</value>
+    <value>Evénement</value>
   </data>
   <data name="SpellCategory.Fairywork" xml:space="preserve">
     <value>Fée d'artifice</value>
@@ -1226,5 +1226,8 @@
   </data>
   <data name="Criterion.RemainingVitality.Superior" xml:space="preserve">
     <value>Vitalité restante &gt; #1</value>
+  </data>
+  <data name="SpellCategory.AlHowin" xml:space="preserve">
+    <value>Halouine</value>
   </data>
 </root>

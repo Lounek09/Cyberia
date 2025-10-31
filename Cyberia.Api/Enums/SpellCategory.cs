@@ -11,7 +11,7 @@ public enum SpellCategory
     Perceptor,
     Fairywork,
     Unknown_8,
-    Unknown_9, //Spell Peki Garou in TR3 langs
+    AlHowin,
     Temporis2Breed,
     Temporis2Common,
     Temporis2Rare,
