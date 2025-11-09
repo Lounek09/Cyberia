@@ -15,7 +15,7 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         "official",
         "cloth_id",
         "picture",
-        "category",
+        "category_id",
         "level",
         "name_fr",
         "name_en",
@@ -107,12 +107,8 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         _builder.Append(item.GfxId);
         _builder.Append(c_csvSeparator);
 
-        // category
-        var itemTypeData = item.GetItemTypeData();
-        if (itemTypeData is not null)
-        {
-            _builder.AppendCsvString(itemTypeData.Name);
-        }
+        // category_id
+        _builder.Append(item.ItemTypeId);
         _builder.Append(c_csvSeparator);
 
         // level
