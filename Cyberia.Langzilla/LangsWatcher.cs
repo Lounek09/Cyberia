@@ -137,7 +137,6 @@ public sealed class LangsWatcher : ILangsWatcher
         var versions = await FetchVersionsAsync(repository, force);
         if (string.IsNullOrEmpty(versions))
         {
-            await OnNewLangFilesDetected(new NewLangFilesDetectedEventArgs(repository, []));
             return;
         }
 
