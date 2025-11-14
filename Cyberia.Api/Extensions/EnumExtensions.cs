@@ -7,23 +7,23 @@ namespace Cyberia.Api.Extensions;
 /// </summary>
 public static class EnumExtensions
 {
-    /// <summary>
-    /// Gets the description from the translations.
-    /// </summary>
-    /// <typeparam name="T">The type of the enum.</typeparam>
-    /// <param name="value">The value of the enum.</param>
-    /// <param name="culture">The culture to use</param>
-    /// <returns>The translated description of the enum.</returns>
-    public static string GetDescription<T>(this T value, CultureInfo? culture = null)
-        where T : struct, Enum
+    extension<T>(T value) where T : struct, Enum
     {
-        var strValue = value.ToStringFast();
-
-        if (Translation.TryGet<ApiTranslations>($"{typeof(T).Name}.{strValue}", out var description, culture))
+        /// <summary>
+        /// Gets the description of the enum from the translations for the specified culture.
+        /// </summary>
+        /// <param name="culture">The culture to use</param>
+        /// <returns>The translated description of the enum.</returns>
+        public string GetDescription(CultureInfo? culture = null)
         {
-            return description;
-        }
+            var strValue = value.ToStringFast();
 
-        return Translation.UnknownData(strValue, culture);
+            if (Translation.TryGet<ApiTranslations>($"{typeof(T).Name}.{strValue}", out var description, culture))
+            {
+                return description;
+            }
+
+            return Translation.UnknownData(strValue, culture);
+        }
     }
 }

@@ -5,39 +5,38 @@
 /// </summary>
 public static class ServiceProviderExtensions
 {
-#pragma warning disable IDE0052 // Remove unread private members
-    private static Task? _webAppTask = null;
-#pragma warning restore IDE0052 // Remove unread private members
+    private static Task? s_webAppTask = null;
 
-    /// <summary>
-    /// Starts the Amphibian web application from the services.
-    /// </summary>
-    /// <param name="provider">The service provider to get the web application from.</param>
-    /// <returns>The service provider.</returns>
-    public static IServiceProvider StartAmphibian(this IServiceProvider provider)
+    extension(IServiceProvider provider)
     {
-        var webApp = provider.GetRequiredService<WebApplication>();
-
-        _webAppTask ??= webApp.RunAsync();
-
-        return provider;
-    }
-
-    /// <summary>
-    /// Stops the Amphibian web application from the services.
-    /// </summary>
-    /// <param name="provider">The service provider to get the web application from.</param>
-    /// <returns>The service provider.</returns>
-    public static async Task<IServiceProvider> StopAmphibianAsync(this IServiceProvider provider)
-    {
-        var webApp = provider.GetRequiredService<WebApplication>();
-
-        if (_webAppTask is not null)
+        /// <summary>
+        /// Starts the Amphibian web application from the services.
+        /// </summary>
+        /// <returns>The service provider.</returns>
+        public IServiceProvider StartAmphibian()
         {
-            await webApp.StopAsync();
-            _webAppTask = null;
+            var webApp = provider.GetRequiredService<WebApplication>();
+
+            s_webAppTask ??= webApp.RunAsync();
+
+            return provider;
         }
 
-        return provider;
+        /// <summary>
+        /// Stops the Amphibian web application from the services.
+        /// </summary>
+        /// <returns>The service provider.</returns>
+        public async Task<IServiceProvider> StopAmphibianAsync()
+        {
+            var webApp = provider.GetRequiredService<WebApplication>();
+
+            if (s_webAppTask is not null)
+            {
+                await webApp.StopAsync();
+                s_webAppTask = null;
+            }
+
+            return provider;
+        }
     }
 }

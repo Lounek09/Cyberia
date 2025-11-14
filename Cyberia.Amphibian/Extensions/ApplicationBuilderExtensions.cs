@@ -5,22 +5,24 @@
 /// </summary>
 public static class ApplicationBuilderExtensions
 {
-    /// <summary>
-    /// Adds the HTTPS redirection middleware to the application pipeline if needed.
-    /// </summary>
-    /// <param name="builder">The application builder.</param>
-    /// <param name="urls">The URLs to check for HTTPS.</param>
-    /// <returns>The updated application builder.</returns>
-    public static IApplicationBuilder UseHttpsRedirectionIfNeeded(this IApplicationBuilder builder, params IReadOnlyList<string> urls)
+    extension(IApplicationBuilder builder)
     {
-        var hasHttps = urls.Any(url => url.StartsWith("https://"));
-        var hasHttp = urls.Any(url => url.StartsWith("http://"));
-
-        if (hasHttps && hasHttp)
+        /// <summary>
+        /// Adds the HTTPS redirection middleware to the application pipeline if needed.
+        /// </summary>
+        /// <param name="urls">The URLs to check for HTTPS.</param>
+        /// <returns>The updated application builder.</returns>
+        public IApplicationBuilder UseHttpsRedirectionIfNeeded(params IReadOnlyList<string> urls)
         {
-            builder.UseHttpsRedirection();
-        }
+            var hasHttps = urls.Any(url => url.StartsWith("https://"));
+            var hasHttp = urls.Any(url => url.StartsWith("http://"));
 
-        return builder;
+            if (hasHttps && hasHttp)
+            {
+                builder.UseHttpsRedirection();
+            }
+
+            return builder;
+        }
     }
 }

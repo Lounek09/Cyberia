@@ -5,15 +5,15 @@
 /// </summary>
 public static class EnumExtensions
 {
-    /// <summary>
-    /// Converts an enum value to its string representation using a fast method.
-    /// </summary>
-    /// <typeparam name="T">The type of the enum.</typeparam>
-    /// <param name="value">The enum value to convert.</param>
-    /// <returns>The string representation of the enum value.</returns>
-    public static string ToStringFast<T>(this T value)
-        where T : struct, Enum
+    extension<T>(T value) where T : struct, Enum
     {
-        return Enum.GetName(value) ?? value.ToString();
+        /// <summary>
+        /// Converts an enum value to its string representation using a fast method.
+        /// </summary>
+        /// <returns>The string representation of the enum value.</returns>
+        public string ToStringFast()
+        {
+            return Enum.GetName(value) ?? value.ToString();
+        }
     }
 }

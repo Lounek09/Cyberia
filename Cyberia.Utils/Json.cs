@@ -47,7 +47,7 @@ public static class Json
             return string.Empty;
         }
 
-        var resultNode = currentNode.Diff(modelNode);
+        var resultNode = Diff(currentNode, modelNode);
         var result = resultNode.ToJsonString(s_indentOptions);
 
         if (result.Equals("{}"))
@@ -64,9 +64,29 @@ public static class Json
     /// <param name="current">The current JSON node.</param>
     /// <param name="model">The model JSON node to compare with.</param>
     /// <returns>A JSON node representing the difference between the current and model nodes.</returns>
-    public static JsonNode Diff(this JsonNode current, JsonNode model)
+    public static JsonNode Diff(JsonNode? current, JsonNode? model)
     {
         JsonObject result = [];
+
+        var isCurrentNull = current is null;
+        var isModelNull = model is null;
+
+        if (isCurrentNull && isModelNull)
+        {
+            return result;
+        }
+
+        if (isCurrentNull && !isModelNull)
+        {
+            result["-"] = model!.DeepClone();
+            return result;
+        }
+
+        if (!isCurrentNull && isModelNull)
+        {
+            result["+"] = current!.DeepClone();
+            return result;
+        }
 
         if (JsonNode.DeepEquals(current, model))
         {
@@ -97,7 +117,7 @@ public static class Json
             var potentiallyModifiedKeys = currentObject.Select(x => x.Key).Except(addedKeys).Except(unchangedKeys);
             foreach (var key in potentiallyModifiedKeys)
             {
-                var resultChild = current[key]!.Diff(model[key]!);
+                var resultChild = Diff(current[key], model[key]);
 
                 if (resultChild.AsObject().Count > 0)
                 {
@@ -132,8 +152,8 @@ public static class Json
         }
         else
         {
-            result["-"] = model.DeepClone();
-            result["+"] = current.DeepClone();
+            result["-"] = model!.DeepClone();
+            result["+"] = current!.DeepClone();
         }
 
         return result;

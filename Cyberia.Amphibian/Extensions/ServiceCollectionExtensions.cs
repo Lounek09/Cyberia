@@ -12,72 +12,74 @@ namespace Cyberia.Amphibian.Extensions;
 /// </summary>
 public static class ServiceCollectionExtensions
 {
-    /// <summary>
-    /// Adds the Amphibian dependencies to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <param name="config">The web configuration.</param>
-    /// <param name="supportedLanguages">The supported languages.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddAmphibian(this IServiceCollection services, WebConfig config, IReadOnlyList<Language> supportedLanguages)
+    extension(IServiceCollection services)
     {
-        Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", config.Environment);
-
-        services.AddSingleton(config);
-
-        services.AddSingleton(_ =>
+        /// <summary>
+        /// Adds the Amphibian dependencies to the service collection.
+        /// </summary>
+        /// <param name="config">The web configuration.</param>
+        /// <param name="supportedLanguages">The supported languages.</param>
+        /// <returns>The updated service collection.</returns>
+        public IServiceCollection AddAmphibian(WebConfig config, IReadOnlyList<Language> supportedLanguages)
         {
-            var builder = WebApplication.CreateBuilder(new WebApplicationOptions()
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", config.Environment);
+
+            services.AddSingleton(config);
+
+            services.AddSingleton(_ =>
             {
-                ApplicationName = "Cyberia.Amphibian",
-                EnvironmentName = config.Environment,
-                ContentRootPath = AppContext.BaseDirectory,
-                WebRootPath = "wwwroot"
-            });
+                var builder = WebApplication.CreateBuilder(new WebApplicationOptions()
+                {
+                    ApplicationName = "Cyberia.Amphibian",
+                    EnvironmentName = config.Environment,
+                    ContentRootPath = AppContext.BaseDirectory,
+                    WebRootPath = "wwwroot"
+                });
 
-            foreach (var serviceDescriptor in services)
-            {
-                builder.Services.Add(serviceDescriptor);
-            }
+                foreach (var serviceDescriptor in services)
+                {
+                    builder.Services.Add(serviceDescriptor);
+                }
 
-            builder.Logging.ClearProviders().AddSerilog();
+                builder.Logging.ClearProviders().AddSerilog();
 
-            builder.WebHost.UseUrls(config.Urls.ToArray());
+                builder.WebHost.UseUrls(config.Urls.ToArray());
 
-            builder.Services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = supportedLanguages.Select(lang => lang.ToStringFast()).ToArray();
+                builder.Services.Configure<RequestLocalizationOptions>(options =>
+                {
+                    var supportedCultures = supportedLanguages.Select(lang => lang.ToStringFast()).ToArray();
 
-                options.SetDefaultCulture(supportedCultures[0]);
-                options.AddSupportedCultures(supportedCultures);
-                options.AddSupportedUICultures(supportedCultures);
-                options.RequestCultureProviders =
-                [
-                    new RouteDataRequestCultureProvider(),
+                    options.SetDefaultCulture(supportedCultures[0]);
+                    options.AddSupportedCultures(supportedCultures);
+                    options.AddSupportedUICultures(supportedCultures);
+                    options.RequestCultureProviders =
+                    [
+                        new RouteDataRequestCultureProvider(),
                     new CookieRequestCultureProvider(),
                     new AcceptLanguageHeaderRequestCultureProvider()
-                ];
+                    ];
+                });
+
+                builder.Services.AddRouting(options => options.LowercaseUrls = true);
+                builder.Services.AddAuthorization();
+                builder.Services.AddRazorPages(options => options.Conventions.Add(new CulturePageRouteModelConvention()));
+
+                var application = builder.Build();
+
+                application.UseHttpsRedirectionIfNeeded();
+                application.UseStaticFiles();
+                application.UseRouting();
+                application.UseAuthorization();
+                application.UseRequestLocalization();
+                application.UseMiddleware<CultureRedirectMiddleware>();
+
+                application.MapDefaultControllerRoute();
+                application.MapRazorPages();
+
+                return application;
             });
 
-            builder.Services.AddRouting(options => options.LowercaseUrls = true);
-            builder.Services.AddAuthorization();
-            builder.Services.AddRazorPages(options => options.Conventions.Add(new CulturePageRouteModelConvention()));
-
-            var application = builder.Build();
-
-            application.UseHttpsRedirectionIfNeeded();
-            application.UseStaticFiles();
-            application.UseRouting();
-            application.UseAuthorization();
-            application.UseRequestLocalization();
-            application.UseMiddleware<CultureRedirectMiddleware>();
-
-            application.MapDefaultControllerRoute();
-            application.MapRazorPages();
-
-            return application;
-        });
-
-        return services;
+            return services;
+        }
     }
 }

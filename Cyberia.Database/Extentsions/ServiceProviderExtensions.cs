@@ -9,16 +9,18 @@ namespace Cyberia.Database.Extentsions;
 /// </summary>
 public static class ServiceProviderExtensions
 {
-    /// <summary>
-    /// Applies all pending database migrations.
-    /// </summary>
-    /// <param name="serviceProvider">The service provider.</param>
-    /// <returns>The service provider.</returns>
-    public static async Task ApplyDatabaseMigrationsAsync(this IServiceProvider serviceProvider)
+    extension(IServiceProvider provider)
     {
-        var migrationManager = serviceProvider.GetRequiredService<IMigrationManager>();
+        /// <summary>
+        /// Applies all pending database migrations.
+        /// </summary>
+        /// <returns>The service provider.</returns>
+        public async Task ApplyDatabaseMigrationsAsync()
+        {
+            var migrationManager = provider.GetRequiredService<IMigrationManager>();
 
-        await migrationManager.EnsureMigrationTableExistsAsync();
-        await migrationManager.ApplyMigrationsAsync();
+            await migrationManager.EnsureMigrationTableExistsAsync();
+            await migrationManager.ApplyMigrationsAsync();
+        }
     }
 }

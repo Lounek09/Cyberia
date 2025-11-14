@@ -7,16 +7,18 @@ namespace Cyberia.Cytrusaurus.Extensions;
 /// </summary>
 public static class ServiceCollectionExtensions
 {
-    /// <summary>
-    /// Adds the Cytrusaurus dependencies to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddCytrusaurus(this IServiceCollection services)
+    extension(IServiceCollection services)
     {
-        services.AddSingleton<ICytrusWatcher, CytrusWatcher>();
-        services.AddSingleton<ICytrusManifestFetcher, CytrusManifestFetcher>();
+        /// <summary>
+        /// Adds the Cytrusaurus dependencies to the service collection.
+        /// </summary>
+        /// <returns>The updated service collection.</returns>
+        public IServiceCollection AddCytrusaurus()
+        {
+            services.AddSingleton<ICytrusWatcher, CytrusWatcher>();
+            services.AddSingleton<ICytrusManifestFetcher, CytrusManifestFetcher>();
 
-        return services;
+            return services;
+        }
     }
 }

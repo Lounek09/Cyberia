@@ -7,21 +7,23 @@ namespace Cyberia.Salamandra.Extensions.DSharpPlus;
 /// </summary>
 public static class AutocompleteContextExtensions
 {
-    /// <summary>
-    /// Gets the value of the argument with the specified name.
-    /// </summary>
-    /// <typeparam name="T">The type of the argument.</typeparam>
-    /// <param name="ctx">The context.</param>
-    /// <param name="name">The name of the argument.</param>
-    /// <returns>The value of the argument with the specified name; otherwise, the <see langword="default"/> value of <typeparamref name="T"/>.</returns>
-    public static T? GetArgument<T>(this AutoCompleteContext ctx, string name)
+    extension(AutoCompleteContext ctx)
     {
-        var argument = ctx.Arguments.FirstOrDefault(x => x.Key.Name.Equals(name));
-        if (argument.Value is T value)
+        /// <summary>
+        /// Gets the value of the argument with the specified name.
+        /// </summary>
+        /// <typeparam name="T">The type of the argument.</typeparam>
+        /// <param name="name">The name of the argument.</param>
+        /// <returns>The value of the argument with the specified name; otherwise, the <see langword="default"/> value of <typeparamref name="T"/>.</returns>
+        public T? GetArgument<T>(string name)
         {
-            return value;
-        }
+            var argument = ctx.Arguments.FirstOrDefault(x => x.Key.Name.Equals(name));
+            if (argument.Value is T value)
+            {
+                return value;
+            }
 
-        return default;
+            return default;
+        }
     }
 }

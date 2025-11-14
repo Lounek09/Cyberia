@@ -17,61 +17,63 @@ namespace Cyberia.Salamandra.Extensions;
 /// </summary>
 public static class ServiceCollectionExtensions
 {
-    /// <summary>
-    /// Adds the Salamandra dependencies to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <param name="config">The bot configuration.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddSalamandra(this IServiceCollection services, BotConfig config)
+    extension(IServiceCollection services)
     {
-        Directory.CreateDirectory(Constant.OutputPath);
+        /// <summary>
+        /// Adds the Salamandra dependencies to the service collection.
+        /// </summary>
+        /// <param name="config">The bot configuration.</param>
+        /// <returns>The updated service collection.</returns>
+        public IServiceCollection AddSalamandra(BotConfig config)
+        {
+            Directory.CreateDirectory(Constant.OutputPath);
 
-        services.AddSingleton(config);
+            services.AddSingleton(config);
 
-        services.AddDiscordClient(config.Token, DiscordIntents.Guilds)
-            .ConfigureEventHandlers(eventHandler =>
-            {
-                eventHandler.AddEventHandlers<CommandsEventHandler>(ServiceLifetime.Singleton);
-                eventHandler.AddEventHandlers<GuildsEventHandler>(ServiceLifetime.Singleton);
-                eventHandler.AddEventHandlers<InteractionsEventHandler>(ServiceLifetime.Singleton);
-            })
-            .Configure<DiscordConfiguration>(discordConfig =>
-            {
-                discordConfig.LogUnknownAuditlogs = false;
-                discordConfig.LogUnknownEvents = false;
-            })
-            .AddCommandsExtension
-            (
-                (provider, extention) =>
+            services.AddDiscordClient(config.Token, DiscordIntents.Guilds)
+                .ConfigureEventHandlers(eventHandler =>
                 {
-                    extention.AddProcessor(new SlashCommandProcessor(new SlashCommandConfiguration()
+                    eventHandler.AddEventHandlers<CommandsEventHandler>(ServiceLifetime.Singleton);
+                    eventHandler.AddEventHandlers<GuildsEventHandler>(ServiceLifetime.Singleton);
+                    eventHandler.AddEventHandlers<InteractionsEventHandler>(ServiceLifetime.Singleton);
+                })
+                .Configure<DiscordConfiguration>(discordConfig =>
+                {
+                    discordConfig.LogUnknownAuditlogs = false;
+                    discordConfig.LogUnknownEvents = false;
+                })
+                .AddCommandsExtension
+                (
+                    (provider, extention) =>
                     {
+                        extention.AddProcessor(new SlashCommandProcessor(new SlashCommandConfiguration()
+                        {
 #if DEBUG
-                        UnconditionallyOverwriteCommands = true,
+                            UnconditionallyOverwriteCommands = true,
 #endif
-                        NamingPolicy = new SnakeCaseNamingFixer()
-                    }));
+                            NamingPolicy = new SnakeCaseNamingFixer()
+                        }));
 
-                    extention.RegisterCommands(config.AdminGuildId);
+                        extention.RegisterCommands(config.AdminGuildId!);
 
-                    //TODO: Remove this when the extension supports the IEventHandler interface.
-                    extention.CommandErrored += provider.GetRequiredService<CommandsEventHandler>().HandleEventAsync;
-                },
-                new CommandsConfiguration()
-                {
-                    UseDefaultCommandErrorHandler = false,
-                    RegisterDefaultCommandProcessors = false
-                }
-            );
+                        //TODO: Remove this when the extension supports the IEventHandler interface.
+                        extention.CommandErrored += provider.GetRequiredService<CommandsEventHandler>().HandleEventAsync;
+                    },
+                    new CommandsConfiguration()
+                    {
+                        UseDefaultCommandErrorHandler = false,
+                        RegisterDefaultCommandProcessors = false
+                    }
+                );
 
-        services.AddSingleton<ICachedChannelsManager, CachedChannelsManager>();
-        services.AddSingleton<ICultureService, CultureService>();
-        services.AddSingleton<ICytrusService, CytrusService>();
-        services.AddSingleton<IEmojisService, EmojisService>();
-        services.AddSingleton<ILangsService, LangsService>();
-        services.AddSingleton<IEmbedBuilderService, EmbedBuilderService>();
+            services.AddSingleton<ICachedChannelsManager, CachedChannelsManager>();
+            services.AddSingleton<ICultureService, CultureService>();
+            services.AddSingleton<ICytrusService, CytrusService>();
+            services.AddSingleton<IEmojisService, EmojisService>();
+            services.AddSingleton<ILangsService, LangsService>();
+            services.AddSingleton<IEmbedBuilderService, EmbedBuilderService>();
 
-        return services;
+            return services;
+        }
     }
 }

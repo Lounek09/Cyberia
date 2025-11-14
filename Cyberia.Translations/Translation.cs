@@ -58,7 +58,7 @@ public static class Translation
     /// <typeparam name="T">The type of the translations wrapper.</typeparam>
     /// <param name="key">The key of the localized string.</param>
     /// <param name="value">The value of the string localized for the specified culture, or the key if the resource is not found.</param>
-    /// <param name="culture">The culture of the localized string, if not specified, the current UI culture is used.</param
+    /// <param name="culture">The culture of the localized string, if not specified, the current UI culture is used.</param>
     /// <returns><see langword="true"/> if the string was found; otherwise, <see langword="false"/>.</returns>
     public static bool TryGet<T>(string key, out string value, CultureInfo? culture = null)
         where T : ITranslationsWrapper

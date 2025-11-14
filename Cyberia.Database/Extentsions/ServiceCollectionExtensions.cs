@@ -15,23 +15,25 @@ namespace Cyberia.Database.Extentsions;
 /// </summary>
 public static class ServiceCollectionExtensions
 {
-    /// <summary>
-    /// Adds the database dependencies to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <param name="connectionString">The connection string to the SQLite database.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
+    extension(IServiceCollection services)
     {
-        SqlMapper.AddTypeHandler(new DateTimeHandler());
+        /// <summary>
+        /// Adds the database dependencies to the service collection.
+        /// </summary>
+        /// <param name="connectionString">The connection string to the SQLite database.</param>
+        /// <returns>The updated service collection.</returns>
+        public IServiceCollection AddDatabase(string connectionString)
+        {
+            SqlMapper.AddTypeHandler(new DateTimeHandler());
 
-        services.AddSingleton<IDbConnectionFactory<SQLiteConnection>, SQLiteDbConnectionFactory>(
-            _ => new SQLiteDbConnectionFactory(connectionString));
-        services.AddSingleton<IMigrationManager, MigrationManager>();
+            services.AddSingleton<IDbConnectionFactory<SQLiteConnection>, SQLiteDbConnectionFactory>(
+                _ => new SQLiteDbConnectionFactory(connectionString));
+            services.AddSingleton<IMigrationManager, MigrationManager>();
 
-        services.AddSingleton<DiscordCachedUserRepository>();
-        services.AddSingleton<OnlineMonitoredFileRepository>();
+            services.AddSingleton<DiscordCachedUserRepository>();
+            services.AddSingleton<OnlineMonitoredFileRepository>();
 
-        return services;
+            return services;
+        }
     }
 }

@@ -14,56 +14,57 @@ namespace Cyberia.Salamandra.Extensions;
 /// </summary>
 public static class ServiceProviderExtensions
 {
-    /// <summary>
-    /// Registers Salamandra specific events from the service provider.
-    /// </summary>
-    /// <param name="provider">The service provider to register the events from.</param>
-    /// <returns>The service provider.</returns>
-    public static IServiceProvider RegisterSalamandraEvents(this IServiceProvider provider)
+    extension(IServiceProvider provider)
     {
-        var cytrusService = provider.GetRequiredService<ICytrusService>();
-        var cytrusWatcher = provider.GetRequiredService<ICytrusWatcher>();
+        /// <summary>
+        /// Registers Salamandra specific events from the service provider.
+        /// </summary>
+        /// <returns>The service provider.</returns>
+        public IServiceProvider RegisterSalamandraEvents()
+        {
+            var cytrusService = provider.GetRequiredService<ICytrusService>();
+            var cytrusWatcher = provider.GetRequiredService<ICytrusWatcher>();
 
-        cytrusWatcher.NewCytrusFileDetected += cytrusService.OnNewCytrusFileDetected;
-        cytrusWatcher.CytrusErrored += cytrusService.OnCytrusErrored;
+            cytrusWatcher.NewCytrusFileDetected += cytrusService.OnNewCytrusFileDetected;
+            cytrusWatcher.CytrusErrored += cytrusService.OnCytrusErrored;
 
-        var langsService = provider.GetRequiredService<ILangsService>();
-        var langsWatcher = provider.GetRequiredService<ILangsWatcher>();
+            var langsService = provider.GetRequiredService<ILangsService>();
+            var langsWatcher = provider.GetRequiredService<ILangsWatcher>();
 
-        langsWatcher.NewLangFilesDetected += langsService.OnNewLangFilesDetected;
+            langsWatcher.NewLangFilesDetected += langsService.OnNewLangFilesDetected;
 
-        return provider;
-    }
+            return provider;
+        }
 
-    /// <summary>
-    /// Starts the Salamandra discord client from the service provider.
-    /// </summary>
-    /// <param name="provider">The service provider to get the discord client from.</param>
-    /// <returns>The service provider.</returns>
-    public static async Task<IServiceProvider> StartSalamandraAsync(this IServiceProvider provider)
-    {
-        var discordClient = provider.GetRequiredService<DiscordClient>();
-        var emojisService = provider.GetRequiredService<IEmojisService>();
+        /// <summary>
+        /// Starts the Salamandra discord client from the service provider.
+        /// </summary>
+        /// <returns>The service provider.</returns>
+        public async Task<IServiceProvider> StartSalamandraAsync()
+        {
+            var discordClient = provider.GetRequiredService<DiscordClient>();
+            var emojisService = provider.GetRequiredService<IEmojisService>();
 
-        DiscordActivity activity = new("Dofus Retro", DiscordActivityType.Playing);
-        await discordClient.ConnectAsync(activity);
+            DiscordActivity activity = new("Dofus Retro", DiscordActivityType.Playing);
+            await discordClient.ConnectAsync(activity);
 
-        await emojisService.LoadEmojisAsync();
+            await emojisService.LoadEmojisAsync();
 
-        return provider;
-    }
+            return provider;
+        }
 
-    /// <summary>
-    /// Stops the Salamandra discord client from the service provider.
-    /// </summary>
-    /// <param name="provider">The service provider to get the discord client from.</param>
-    /// <returns>The service provider.</returns>
-    public static async Task<IServiceProvider> StopSalamandraAsync(this IServiceProvider provider)
-    {
-        var discordClient = provider.GetRequiredService<DiscordClient>();
+        /// <summary>
+        /// Stops the Salamandra discord client from the service provider.
+        /// </summary>
+        /// <param name="provider">The service provider to get the discord client from.</param>
+        /// <returns>The service provider.</returns>
+        public async Task<IServiceProvider> StopSalamandraAsync()
+        {
+            var discordClient = provider.GetRequiredService<DiscordClient>();
 
-        await discordClient.DisconnectAsync();
+            await discordClient.DisconnectAsync();
 
-        return provider;
+            return provider;
+        }
     }
 }

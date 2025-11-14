@@ -7,20 +7,22 @@ namespace Cyberia.Api.Extensions;
 /// </summary>
 public static class ServiceCollectionExtensions
 {
-    /// <summary>
-    /// Adds the Dofus API dependencies to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddDofusApi(this IServiceCollection services, DofusApiConfig config)
+    extension(IServiceCollection services)
     {
-        DofusApi.Config = config;
-        DofusApi.Datacenter = new();
-        DofusApi.HttpClient = new();
+        /// <summary>
+        /// Adds the Dofus API dependencies to the service collection.
+        /// </summary>
+        /// <returns>The updated service collection.</returns>
+        public IServiceCollection AddDofusApi(DofusApiConfig config)
+        {
+            DofusApi.Config = config;
+            DofusApi.Datacenter = new();
+            DofusApi.HttpClient = new();
 
-        services.AddSingleton(config);
-        services.AddSingleton(DofusApi.Datacenter);
+            services.AddSingleton(config);
+            services.AddSingleton(DofusApi.Datacenter);
 
-        return services;
+            return services;
+        }
     }
 }

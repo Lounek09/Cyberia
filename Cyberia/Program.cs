@@ -19,7 +19,7 @@ namespace Cyberia;
 
 public static class Program
 {
-    public static async Task Main()
+    public static async Task<int> Main()
     {
         Directory.SetCurrentDirectory(AppContext.BaseDirectory);
 
@@ -121,14 +121,20 @@ public static class Program
                 e.Path,
                 e.LineNumber,
                 e.BytePositionInLine);
+
+            return 1;
         }
         catch (Exception e)
         {
             Log.Fatal(e, "Fatal error.");
+
+            return 1;
         }
         finally
         {
             Log.CloseAndFlush();
         }
+
+        return 0;
     }
 }

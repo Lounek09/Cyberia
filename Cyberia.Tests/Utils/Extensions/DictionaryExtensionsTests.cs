@@ -18,7 +18,7 @@ public sealed class DictionaryExtensionsTests
         var result = value.RemoveByValue("Ebene");
 
         Assert.IsTrue(result);
-        Assert.AreEqual(2, value.Count);
+        Assert.HasCount(2, value);
         Assert.IsFalse(value.ContainsValue("Ebene"));
     }
 
@@ -35,7 +35,7 @@ public sealed class DictionaryExtensionsTests
         var result = value.RemoveByValue("Pourpre");
 
         Assert.IsTrue(result);
-        Assert.AreEqual(2, value.Count);
+        Assert.HasCount(2, value);
         Assert.IsTrue(value.ContainsValue("Pourpre"));
     }
 
@@ -52,7 +52,7 @@ public sealed class DictionaryExtensionsTests
         var result = value.RemoveByValue("Ebene");
 
         Assert.IsFalse(result);
-        Assert.AreEqual(3, value.Count);
+        Assert.HasCount(3, value);
     }
 
     [TestMethod]
@@ -68,7 +68,7 @@ public sealed class DictionaryExtensionsTests
         var result = value.RemoveByValue(null);
 
         Assert.IsTrue(result);
-        Assert.AreEqual(2, value.Count);
+        Assert.HasCount(2, value);
         Assert.IsFalse(value.ContainsValue(null));
     }
 
@@ -89,7 +89,7 @@ public sealed class DictionaryExtensionsTests
         var result = value.RemoveAllByValue("Ebene");
 
         Assert.IsTrue(result);
-        Assert.AreEqual(2, value.Count);
+        Assert.HasCount(2, value);
         Assert.IsFalse(value.ContainsValue("Ebene"));
     }
 
@@ -106,7 +106,7 @@ public sealed class DictionaryExtensionsTests
         var result = value.RemoveAllByValue("Pourpre");
 
         Assert.IsTrue(result);
-        Assert.AreEqual(1, value.Count);
+        Assert.HasCount(1, value);
         Assert.IsFalse(value.ContainsValue("Pourpre"));
     }
 
@@ -123,7 +123,7 @@ public sealed class DictionaryExtensionsTests
         var result = value.RemoveAllByValue("Ebene");
 
         Assert.IsFalse(result);
-        Assert.AreEqual(3, value.Count);
+        Assert.HasCount(3, value);
     }
 
     [TestMethod]
@@ -139,7 +139,7 @@ public sealed class DictionaryExtensionsTests
         var result = value.RemoveAllByValue(null);
 
         Assert.IsTrue(result);
-        Assert.AreEqual(1, value.Count);
+        Assert.HasCount(1, value);
         Assert.IsFalse(value.ContainsValue(null));
     }
 

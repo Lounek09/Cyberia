@@ -21,33 +21,6 @@ public class JsonTests
     }
     """;
 
-
-    #region Diff JsonNode
-
-    [TestMethod]
-    public void Diff_WithEqualJsonNodes_ReturnsEmptyJsonObject()
-    {
-        var value = JsonNode.Parse(c_currentJson)!;
-
-        var result = value.Diff(value);
-
-        Assert.AreEqual(0, result.AsObject().Count);
-    }
-
-    [TestMethod]
-    public void Diff_WithDifferentJsonNodes_ReturnsDifferences()
-    {
-        var current = JsonNode.Parse(c_currentJson)!;
-        var model = JsonNode.Parse(c_modelJson)!;
-
-        var result = current.Diff(model);
-
-        Assert.IsTrue(result.AsObject().ContainsKey("name"));
-        Assert.IsTrue(result.AsObject().ContainsKey("age"));
-    }
-
-    #endregion
-
     #region Diff string
 
     [TestMethod]
@@ -64,8 +37,8 @@ public class JsonTests
         var result = Json.Diff(c_currentJson, c_modelJson);
 
         Assert.IsFalse(string.IsNullOrEmpty(result));
-        Assert.IsTrue(result.Contains("name"));
-        Assert.IsTrue(result.Contains("age"));
+        Assert.Contains(result, "name");
+        Assert.Contains(result, "age");
     }
 
     [TestMethod]
@@ -78,6 +51,32 @@ public class JsonTests
 
         Assert.AreEqual(string.Empty, resultFromInvalidCurrent);
         Assert.AreEqual(string.Empty, resultFromInvalidModel);
+    }
+
+    #endregion
+
+    #region Diff JsonNode
+
+    [TestMethod]
+    public void Diff_WithEqualJsonNodes_ReturnsEmptyJsonObject()
+    {
+        var value = JsonNode.Parse(c_currentJson)!;
+
+        var result = Json.Diff(value, value);
+
+        Assert.AreEqual(0, result.AsObject().Count);
+    }
+
+    [TestMethod]
+    public void Diff_WithDifferentJsonNodes_ReturnsDifferences()
+    {
+        var current = JsonNode.Parse(c_currentJson)!;
+        var model = JsonNode.Parse(c_modelJson)!;
+
+        var result = Json.Diff(current, model);
+
+        Assert.IsTrue(result.AsObject().ContainsKey("name"));
+        Assert.IsTrue(result.AsObject().ContainsKey("age"));
     }
 
     #endregion

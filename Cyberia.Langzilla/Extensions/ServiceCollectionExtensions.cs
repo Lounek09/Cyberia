@@ -7,16 +7,18 @@ namespace Cyberia.Langzilla.Extensions;
 /// </summary>
 public static class ServiceCollectionExtensions
 {
-    /// <summary>
-    /// Adds the Langzilla dependencies to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddLangzilla(this IServiceCollection services)
+    extension(IServiceCollection services)
     {
-        services.AddSingleton<ILangsWatcher, LangsWatcher>();
-        services.AddSingleton<ILangsParser, LangsParser>();
+        /// <summary>
+        /// Adds the Langzilla dependencies to the service collection.
+        /// </summary>
+        /// <returns>The updated service collection.</returns>
+        public IServiceCollection AddLangzilla()
+        {
+            services.AddSingleton<ILangsWatcher, LangsWatcher>();
+            services.AddSingleton<ILangsParser, LangsParser>();
 
-        return services;
+            return services;
+        }
     }
 }
