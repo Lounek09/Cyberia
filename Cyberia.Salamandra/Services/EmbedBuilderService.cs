@@ -307,22 +307,29 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
             builder.Append('\n');
         }
 
-        if (itemWeaponData.CriticalHitRate != 0)
+        var hasCriticalHitRate = itemWeaponData.CriticalHitRate != 0;
+        var hasCriticalFailureRate = itemWeaponData.CriticalFailureRate != 0;
+
+        if (hasCriticalHitRate)
         {
             builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.CriticalHit", culture));
             builder.Append(" 1/");
             builder.Append(Formatter.Bold(itemWeaponData.CriticalHitRate.ToString()));
         }
 
-        if (itemWeaponData.CriticalFailureRate != 0)
+        if (hasCriticalHitRate && hasCriticalFailureRate)
         {
             builder.Append(" - ");
+        }
+
+        if (hasCriticalFailureRate)
+        {
             builder.Append(Translation.Get<BotTranslations>("Embed.Field.Weapon.Content.CriticalFailure", culture));
             builder.Append(" 1/");
             builder.Append(Formatter.Bold(itemWeaponData.CriticalFailureRate.ToString()));
-            builder.Append('\n');
         }
-        else
+
+        if (hasCriticalHitRate || hasCriticalFailureRate)
         {
             builder.Append('\n');
         }
