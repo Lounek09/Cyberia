@@ -37,8 +37,8 @@ public class JsonTests
         var result = Json.Diff(c_currentJson, c_modelJson);
 
         Assert.IsFalse(string.IsNullOrEmpty(result));
-        Assert.Contains(result, "name");
-        Assert.Contains(result, "age");
+        Assert.Contains("name", result);
+        Assert.Contains("age", result);
     }
 
     [TestMethod]
