@@ -54,24 +54,28 @@ public static class LanguageExtensions
         { Language.pt, CultureInfo.GetCultureInfo("pt") }
     }.ToFrozenDictionary();
 
-    /// <summary>
-    /// Converts a <see cref="Language"/> to its corresponding <see cref="CultureInfo"/>.
-    /// </summary>
-    /// <param name="language">The language to convert.</param>
-    /// <returns>The corresponding <see cref="CultureInfo"/>; if not found, the <see cref="CultureInfo"/> for <see cref="Language.en"/>.</returns>
-    public static CultureInfo ToCulture(this Language language)
+    extension(Language language)
     {
-        s_cachedCultureByLanguage.TryGetValue(language, out var result);
-        return result ?? s_cachedCultureByLanguage[Language.en];
+        /// <summary>
+        /// Converts a <see cref="Language"/> to its corresponding <see cref="CultureInfo"/>.
+        /// </summary>
+        /// <returns>The corresponding <see cref="CultureInfo"/>; if not found, the <see cref="CultureInfo"/> for <see cref="Language.en"/>.</returns>
+        public CultureInfo ToCulture()
+        {
+            s_cachedCultureByLanguage.TryGetValue(language, out var result);
+            return result ?? s_cachedCultureByLanguage[Language.en];
+        }
     }
 
-    /// <summary>
-    /// Converts a <see cref="CultureInfo"/> to its corresponding <see cref="Language"/>.
-    /// </summary>
-    /// <param name="culture">The culture to convert.</param>
-    /// <returns>The corresponding <see cref="Language"/>; if not found, <see cref="Language.en"/>.</returns>
-    public static Language ToLangLanguage(this CultureInfo culture)
+    extension(CultureInfo culture)
     {
-        return Enum.TryParse<Language>(culture.TwoLetterISOLanguageName, out var result) ? result : Language.en;
+        /// <summary>
+        /// Converts a <see cref="CultureInfo"/> to its corresponding <see cref="Language"/>.
+        /// </summary>
+        /// <returns>The corresponding <see cref="Language"/>; if not found, <see cref="Language.en"/>.</returns>
+        public Language ToLangLanguage()
+        {
+            return Enum.TryParse<Language>(culture.TwoLetterISOLanguageName, out var result) ? result : Language.en;
+        }
     }
 }

@@ -46,50 +46,51 @@ public static class GameDateFormatter
         return new DateTime(year, month, day, hour, minute, 0);
     }
 
-    /// <summary>
-    /// Converts a real-world DateTime to an in-game DateTime.
-    /// </summary>
-    /// <param name="dateTime">The real-world DateTime to convert.</param>
-    /// <returns>The equivalent in-game DateTime.</returns>
-    public static DateTime ToInGameDateTime(this DateTime dateTime)
+    extension(DateTime dateTime)
     {
-        return dateTime.AddYears(DofusApi.Datacenter.TimeZonesRepository.YearLess);
-    }
+        /// <summary>
+        /// Converts a real-world DateTime to an in-game DateTime.
+        /// </summary>
+        /// <returns>The equivalent in-game DateTime.</returns>
+        public DateTime ToInGameDateTime()
+        {
+            return dateTime.AddYears(DofusApi.Datacenter.TimeZonesRepository.YearLess);
+        }
 
-    /// <inheritdoc cref="ToLongRolePlayString(DateTime, CultureInfo?)"/>
-    /// <param name="language">The language to use for formatting.</param>
-    public static string ToLongRolePlayString(this DateTime dateTime, Language language)
-    {
-        return ToLongRolePlayString(dateTime, language.ToCulture());
-    }
+        /// <inheritdoc cref="ToLongRolePlayString(DateTime, CultureInfo?)"/>
+        /// <param name="language">The language to use for formatting.</param>
+        public string ToLongRolePlayString(Language language)
+        {
+            return ToLongRolePlayString(dateTime, language.ToCulture());
+        }
 
-    /// <summary>
-    /// Converts a DateTime to a role-playing string representation in the specified culture.
-    /// </summary>
-    /// <param name="dateTime">The DateTime to format.</param>
-    /// <param name="culture">The culture to use for formatting, or <see langword="null"/> for current culture.</param>
-    /// <returns>A formatted string representing the date in role-playing format.</returns>
-    public static string ToLongRolePlayString(this DateTime dateTime, CultureInfo? culture = null)
-    {
-        var month = DofusApi.Datacenter.TimeZonesRepository.GetMonthNameByDayOfYear(dateTime.DayOfYear, culture);
-        var time = dateTime.ToString(
-            culture?.DateTimeFormat.ShortTimePattern ?? CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
+        /// <summary>
+        /// Converts a DateTime to a role-playing string representation in the specified culture.
+        /// </summary>
+        /// <param name="culture">The culture to use for formatting, or <see langword="null"/> for current culture.</param>
+        /// <returns>A formatted string representing the date in role-playing format.</returns>
+        public string ToLongRolePlayString(CultureInfo? culture = null)
+        {
+            var month = DofusApi.Datacenter.TimeZonesRepository.GetMonthNameByDayOfYear(dateTime.DayOfYear, culture);
+            var time = dateTime.ToString(
+                culture?.DateTimeFormat.ShortTimePattern ?? CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
 
-        return $"{dateTime.Day} {month} {dateTime.Year} - {time}";
-    }
+            return $"{dateTime.Day} {month} {dateTime.Year} - {time}";
+        }
 
-    /// <inheritdoc cref="ToLongRolePlayString(DateTime, Language)"/>
-    public static string ToShortRolePlayString(this DateTime dateTime, Language language)
-    {
-        return ToShortRolePlayString(dateTime, language.ToCulture());
-    }
+        /// <inheritdoc cref="ToLongRolePlayString(DateTime, CultureInfo)"/>
+        public string ToShortRolePlayString(Language language)
+        {
+            return ToShortRolePlayString(dateTime, language.ToCulture());
+        }
 
-    /// <inheritdoc cref="ToLongRolePlayString(DateTime, CultureInfo)"/>
-    public static string ToShortRolePlayString(this DateTime dateTime, CultureInfo? culture = null)
-    {
-        var time = dateTime.ToString(
-            culture?.DateTimeFormat.ShortTimePattern ?? CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
+        /// <inheritdoc cref="ToLongRolePlayString(DateTime, CultureInfo)"/>
+        public string ToShortRolePlayString(CultureInfo? culture = null)
+        {
+            var time = dateTime.ToString(
+                culture?.DateTimeFormat.ShortTimePattern ?? CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
 
-        return $"{dateTime:dd/MM/yyy} {time}";
+            return $"{dateTime:dd/MM/yyy} {time}";
+        }
     }
 }
