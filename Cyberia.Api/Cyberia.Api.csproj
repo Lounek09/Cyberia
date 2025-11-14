@@ -21,6 +21,7 @@
     <Using Include="Cyberia.Translations" />
     <Using Include="Cyberia.Utils" />
     <Using Include="Cyberia.Utils.Extensions" />
+    <Using Include="Cyberia.Utils.EventArgs"/>
     <Using Include="Serilog" />
   </ItemGroup>
 

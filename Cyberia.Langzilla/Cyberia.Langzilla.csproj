@@ -19,6 +19,7 @@
   <ItemGroup>
     <Using Include="Cyberia.Utils" />
     <Using Include="Cyberia.Utils.Extensions" />
+    <Using Include="Cyberia.Utils.EventArgs"/>
     <Using Include="Serilog" />
   </ItemGroup>
 

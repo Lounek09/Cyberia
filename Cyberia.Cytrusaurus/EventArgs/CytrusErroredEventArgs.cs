@@ -5,32 +5,15 @@ namespace Cyberia.Cytrusaurus.EventArgs;
 /// <summary>
 /// Represents the event arguments for when an error occurs in the <see cref="ICytrusWatcher"/>.
 /// </summary>
-public sealed class CytrusErroredEventArgs : System.EventArgs
+public sealed class CytrusErroredEventArgs : ErroredEventArgs
 {
-    /// <summary>
-    /// Gets the exception that occurred, if any.
-    /// </summary>
-    public Exception? Exception { get; init; }
-
-    /// <summary>
-    /// Gets the error message.
-    /// </summary>
-    public required string ErrorMessage { get; init; }
-
-    /// <inheritdoc cref="CytrusErroredEventArgs(Exception?, string)"/>
+    /// <inheritdoc/>
     [SetsRequiredMembers]
     public CytrusErroredEventArgs(string errorMessage)
-        : this(null, errorMessage) { }
+        : base(null, errorMessage) { }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="CytrusErroredEventArgs"/> class.
-    /// </summary>
-    /// <param name="errorMessage">The error message.</param>
-    /// <param name="exception">The exception that occurred, if any.</param>
+    /// <inheritdoc/>
     [SetsRequiredMembers]
     public CytrusErroredEventArgs(Exception? exception, string errorMessage)
-    {
-        Exception = exception;
-        ErrorMessage = errorMessage;
-    }
+        : base(exception, errorMessage) { }
 }

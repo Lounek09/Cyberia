@@ -1,11 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Cyberia.Langzilla.EventArgs;
+namespace Cyberia.Utils.EventArgs;
 
-/// <summary>
-/// Represents the event arguments for when an error occurs in the <see cref="ILangsWatcher"/>.
-/// </summary>
-public sealed class LangsErroredEventArgs : System.EventArgs
+public abstract class ErroredEventArgs : System.EventArgs
 {
     /// <summary>
     /// Gets the exception that occurred, if any.
@@ -17,18 +14,18 @@ public sealed class LangsErroredEventArgs : System.EventArgs
     /// </summary>
     public required string ErrorMessage { get; init; }
 
-    /// <inheritdoc cref="LangsErroredEventArgs(Exception?, string)"/>
+    /// <inheritdoc cref="ErroredEventArgs(Exception?, string)"/>
     [SetsRequiredMembers]
-    public LangsErroredEventArgs(string errorMessage)
+    public ErroredEventArgs(string errorMessage)
         : this(null, errorMessage) { }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="LangsErroredEventArgs"/> class.
+    /// Initializes a new instance of the <see cref="ErroredEventArgs"/> class.
     /// </summary>
     /// <param name="errorMessage">The error message.</param>
     /// <param name="exception">The exception that occurred, if any.</param>
     [SetsRequiredMembers]
-    public LangsErroredEventArgs(Exception? exception, string errorMessage)
+    public ErroredEventArgs(Exception? exception, string errorMessage)
     {
         Exception = exception;
         ErrorMessage = errorMessage;
