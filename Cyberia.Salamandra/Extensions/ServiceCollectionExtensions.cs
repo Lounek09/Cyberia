@@ -26,8 +26,6 @@ public static class ServiceCollectionExtensions
         /// <returns>The updated service collection.</returns>
         public IServiceCollection AddSalamandra(BotConfig config)
         {
-            Directory.CreateDirectory(Constant.OutputPath);
-
             services.AddSingleton(config);
 
             services.AddDiscordClient(config.Token, DiscordIntents.Guilds)
