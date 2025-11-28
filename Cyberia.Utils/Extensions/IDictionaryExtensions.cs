@@ -14,25 +14,15 @@ public static class IDictionaryExtensions
         /// <returns><see langword="true"/> if at least one element was removed; otherwise, <see langword="false"/>.</returns>
         public bool RemoveByValue(TValue value)
         {
-            var keyToRemove = default(TKey);
-            var found = false;
-
             foreach (var pair in source)
             {
                 if (Equals(value, pair.Value))
                 {
-                    keyToRemove = pair.Key;
-                    found = true;
-                    break;
+                    return source.Remove(pair.Key);
                 }
             }
 
-            if (found && keyToRemove is not null)
-            {
-                source.Remove(keyToRemove);
-            }
-
-            return found;
+            return false;
         }
 
         /// <summary>
