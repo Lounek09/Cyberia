@@ -34,7 +34,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         return await connection.QueryFirstOrDefaultAsync<DiscordCachedUser>(query, new { Id = id });
     }
 
-    public async Task<IEnumerable<DiscordCachedUser>> GetManyAsync(params IReadOnlyCollection<ulong> ids)
+    public async Task<IEnumerable<DiscordCachedUser>> GetManyAsync(params IEnumerable<ulong> ids)
     {
         const string query =
         $"""
@@ -43,7 +43,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         WHERE {nameof(DiscordCachedUser.Id)} IN @Ids
         """;
 
-        if (ids.Count == 0)
+        if (!ids.Any())
         {
             return Enumerable.Empty<DiscordCachedUser>();
         }
@@ -67,7 +67,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         return await connection.ExecuteAsync(query, entity) > 0;
     }
 
-    public async Task<int> UpsertManyAsync(params IReadOnlyCollection<DiscordCachedUser> entities)
+    public async Task<int> UpsertManyAsync(params IEnumerable<DiscordCachedUser> entities)
     {
         const string query =
         $"""
@@ -78,7 +78,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
             {nameof(DiscordCachedUser.Locale)} = excluded.{nameof(DiscordCachedUser.Locale)}
         """;
 
-        if (entities.Count == 0)
+        if (!entities.Any())
         {
             return 0;
         }
@@ -105,7 +105,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         return await connection.ExecuteAsync(query, new { Id = id }) > 0;
     }
 
-    public async Task<int> DeleteManyAsync(params IReadOnlyCollection<ulong> ids)
+    public async Task<int> DeleteManyAsync(params IEnumerable<ulong> ids)
     {
         const string query =
         $"""
@@ -113,7 +113,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         WHERE {nameof(DiscordCachedUser.Id)} IN @Ids
         """;
 
-        if (ids.Count == 0)
+        if (!ids.Any())
         {
             return 0;
         }

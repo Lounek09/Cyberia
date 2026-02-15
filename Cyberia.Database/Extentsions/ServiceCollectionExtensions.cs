@@ -30,8 +30,13 @@ public static class ServiceCollectionExtensions
                 _ => new SQLiteDbConnectionFactory(connectionString));
             services.AddSingleton<IMigrationManager, MigrationManager>();
 
-            services.AddSingleton<DiscordCachedUserRepository>();
-            services.AddSingleton<OnlineMonitoredFileRepository>();
+            var repositories = typeof(IDatabaseRepository).Assembly.GetTypes()
+                .Where(x => x.IsAssignableTo(typeof(IDatabaseRepository)) && !x.IsAbstract);
+
+            foreach (var repository in repositories)
+            {
+                services.AddSingleton(repository);
+            }
 
             return services;
         }

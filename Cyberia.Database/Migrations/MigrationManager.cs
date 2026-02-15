@@ -27,11 +27,13 @@ internal interface IMigrationManager
     /// Gets the list of available migrations that can be applied to the database.
     /// </summary>
     /// <returns>The list of pending migrations.</returns>
+    /// <exception cref="InvalidOperationException"></exception>
     Task<ReadOnlyCollection<PendingMigration>> GetAvailableMigrationsAsync(IDbConnection? connection = null);
 
     /// <summary>
     /// Applies all pending migrations to the database.
     /// </summary>
+    /// <exception cref="InvalidOperationException"></exception>
     Task ApplyMigrationsAsync();
 }
 

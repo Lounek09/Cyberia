@@ -34,7 +34,7 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
         return await connection.QueryFirstOrDefaultAsync<OnlineMonitoredFile>(query, new { Id = id });
     }
 
-    public async Task<IEnumerable<OnlineMonitoredFile>> GetManyAsync(params IReadOnlyCollection<string> ids)
+    public async Task<IEnumerable<OnlineMonitoredFile>> GetManyAsync(params IEnumerable<string> ids)
     {
         const string query =
         $"""
@@ -43,7 +43,7 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
         WHERE {nameof(OnlineMonitoredFile.Id)} IN @Ids
         """;
 
-        if (ids.Count == 0)
+        if (!ids.Any())
         {
             return Enumerable.Empty<OnlineMonitoredFile>();
         }
@@ -67,7 +67,7 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
         return await connection.ExecuteAsync(query, file) > 0;
     }
 
-    public async Task<int> UpsertManyAsync(params IReadOnlyCollection<OnlineMonitoredFile> files)
+    public async Task<int> UpsertManyAsync(params IEnumerable<OnlineMonitoredFile> files)
     {
         const string query =
         $"""
@@ -78,7 +78,7 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
             {nameof(OnlineMonitoredFile.LastModified)} = excluded.{nameof(OnlineMonitoredFile.LastModified)}
         """;
 
-        if (files.Count == 0)
+        if (!files.Any())
         {
             return 0;
         }
@@ -105,7 +105,7 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
         return await connection.ExecuteAsync(query, new { Id = id }) > 0;
     }
 
-    public async Task<int> DeleteManyAsync(params IReadOnlyCollection<string> ids)
+    public async Task<int> DeleteManyAsync(params IEnumerable<string> ids)
     {
         const string query =
         $"""
@@ -113,7 +113,7 @@ public sealed class OnlineMonitoredFileRepository : IDatabaseRepository<OnlineMo
         WHERE {nameof(OnlineMonitoredFile.Id)} IN @Ids
         """;
 
-        if (ids.Count == 0)
+        if (!ids.Any())
         {
             return 0;
         }

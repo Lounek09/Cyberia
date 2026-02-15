@@ -23,7 +23,7 @@ public interface IDatabaseRepository<T, TId>
     /// </summary>
     /// <param name="ids">The IDs of the <typeparamref name="T"/>.</param>
     /// <returns>The <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> found; otherwise, an empty collection.</returns>
-    Task<IEnumerable<T>> GetManyAsync(params IReadOnlyCollection<TId> ids);
+    Task<IEnumerable<T>> GetManyAsync(params IEnumerable<TId> ids);
 
     /// <summary>
     /// Creates or updates a <typeparamref name="T"/>.
@@ -37,7 +37,7 @@ public interface IDatabaseRepository<T, TId>
     /// </summary>
     /// <param name="entities">The <typeparamref name="T"/> to create or update.</param>
     /// <returns>The number of <typeparamref name="T"/> that were created or updated.</returns>
-    Task<int> UpsertManyAsync(params IReadOnlyCollection<T> entities);
+    Task<int> UpsertManyAsync(params IEnumerable<T> entities);
 
     /// <summary>
     /// Deletes a <typeparamref name="T"/> by their ID.
@@ -51,5 +51,5 @@ public interface IDatabaseRepository<T, TId>
     /// </summary>
     /// <param name="ids">The IDs of the <typeparamref name="T"/>.</param>
     /// <returns>The number of <typeparamref name="T"/> that were deleted.</returns>
-    Task<int> DeleteManyAsync(params IReadOnlyCollection<TId> ids);
+    Task<int> DeleteManyAsync(params IEnumerable<TId> ids);
 }
