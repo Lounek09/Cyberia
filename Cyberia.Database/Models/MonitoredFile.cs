@@ -1,9 +1,9 @@
 ﻿namespace Cyberia.Database.Models;
 
 /// <summary>
-/// Represents an online file that is being monitored for changes.
+/// Represents a file that is being monitored for changes.
 /// </summary>
-public sealed class OnlineMonitoredFile : IDatabaseEntity<string>
+public sealed class MonitoredFile : IDatabaseEntity<string>
 {
     public required string Id { get; init; }
 
@@ -15,5 +15,5 @@ public sealed class OnlineMonitoredFile : IDatabaseEntity<string>
     /// <summary>
     /// Initializes a new instance of the <see cref="MonitoredFile"/> class.
     /// </summary>
-    public OnlineMonitoredFile() { }
+    public MonitoredFile() { }
 }

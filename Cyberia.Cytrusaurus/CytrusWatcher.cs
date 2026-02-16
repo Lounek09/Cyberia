@@ -100,7 +100,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
     // TODO: Make it configurable
     public const string BaseUrl = "https://cytrus.cdn.ankama.com";
 
-    private const string c_onlineMonitoredFileId = "cytrus";
+    private const string c_monitoredFileId = "cytrus";
 
     public static readonly string CytrusPath = Path.Join(OutputPath, CytrusFileName);
     public static readonly string OldCytrusPath = Path.Join(OutputPath, $"old_{CytrusFileName}");
@@ -112,7 +112,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
 
     public DateTime LastModified { get; private set; }
 
-    private readonly OnlineMonitoredFileRepository _onlineMonitoredFileRepository;
+    private readonly MonitoredFileRepository _monitoredFileRepository;
     private readonly HttpClient _httpClient;
     private readonly HttpRetryPolicy _httpRetryPolicy;
 
@@ -121,12 +121,12 @@ public sealed class CytrusWatcher : ICytrusWatcher
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusWatcher"/> class.
     /// </summary>
-    /// <param name="onlineMonitoredFileRepository">The repository for online monitored files.</param>
-    public CytrusWatcher(OnlineMonitoredFileRepository onlineMonitoredFileRepository)
+    /// <param name="monitoredFileRepository">The repository for monitored files.</param>
+    public CytrusWatcher(MonitoredFileRepository monitoredFileRepository)
     {
         Directory.CreateDirectory(OutputPath);
 
-        _onlineMonitoredFileRepository = onlineMonitoredFileRepository;
+        _monitoredFileRepository = monitoredFileRepository;
         _httpClient = new()
         {
             BaseAddress = new Uri(BaseUrl)
@@ -138,7 +138,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
     {
         Cytrus = await LoadCytrusAsync(CytrusPath) ?? new();
         OldCytrus = await LoadCytrusAsync(OldCytrusPath) ?? new();
-        LastModified = await _onlineMonitoredFileRepository.GetLastModifiedByIdAsync(c_onlineMonitoredFileId);
+        LastModified = await _monitoredFileRepository.GetLastModifiedByIdAsync(c_monitoredFileId);
     }
 
     public void Watch(TimeSpan dueTime, TimeSpan interval)
@@ -161,9 +161,9 @@ public sealed class CytrusWatcher : ICytrusWatcher
             }
 
             LastModified = lastModified.Value;
-            await _onlineMonitoredFileRepository.UpsertAsync(new OnlineMonitoredFile
+            await _monitoredFileRepository.UpsertAsync(new MonitoredFile
             {
-                Id = c_onlineMonitoredFileId,
+                Id = c_monitoredFileId,
                 LastModified = LastModified
             });
 
