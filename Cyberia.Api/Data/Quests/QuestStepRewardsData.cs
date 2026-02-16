@@ -4,7 +4,6 @@ using Cyberia.Api.Data.Jobs;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.JsonConverters;
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 

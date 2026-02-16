@@ -1,6 +1,6 @@
 ﻿using Cyberia.Amphibian.Conventions;
 using Cyberia.Amphibian.Middlewares;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Localization.Routing;

@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cyberia.Api\Cyberia.Api.csproj" />
-    <ProjectReference Include="..\..\Cyberia.Langzilla.Enums\Cyberia.Langzilla.Enums.csproj" />
+    <ProjectReference Include="..\..\Cyberia.Langzilla.Enums\Cyberia.Langzilla.Primitives.csproj" />
     <ProjectReference Include="..\..\Cyberia.Utils\Cyberia.Utils.csproj" />
   </ItemGroup>
 

@@ -1,7 +1,7 @@
 ﻿using Cyberia.Langzilla;
-using Cyberia.Langzilla.Enums;
 using Cyberia.Langzilla.EventArgs;
 using Cyberia.Langzilla.Models;
+using Cyberia.Langzilla.Primitives;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 
 using DSharpPlus;
@@ -112,7 +112,7 @@ public sealed class LangsService : ILangsService
     /// <param name="forum">The forum channel where to create the post.</param>
     /// <param name="repository">The repository of langs diff.</param>
     /// <returns>The created thread channel.</returns>
-    private static async Task<DiscordThreadChannel> CreateAutoDiffPostAsync(DiscordForumChannel forum, LangsRepository repository)
+    private static async Task<DiscordThreadChannel> CreateAutoDiffPostAsync(DiscordForumChannel forum, LangsRepositoryOld repository)
     {
         var lastChange = repository.LastChange.ToLocalTime();
         var type = repository.Type.ToStringFast();
@@ -146,7 +146,7 @@ public sealed class LangsService : ILangsService
     /// <param name="currentRepository">The current repository of the langs diff.</param>
     /// <param name="modelRepository">The model repository of the langs diff.</param>
     /// <returns>The created thread channel.</returns>
-    private static async Task<DiscordThreadChannel> CreateManualDiffPostAsync(DiscordForumChannel forum, LangsRepository currentRepository, LangsRepository modelRepository)
+    private static async Task<DiscordThreadChannel> CreateManualDiffPostAsync(DiscordForumChannel forum, LangsRepositoryOld currentRepository, LangsRepositoryOld modelRepository)
     {
         var currentLastChange = currentRepository.LastChange.ToLocalTime();
         var currentType = currentRepository.Type.ToStringFast();
@@ -182,7 +182,7 @@ public sealed class LangsService : ILangsService
     /// </summary>
     /// <param name="thread">The thread channel where to send the message.</param>
     /// <param name="lang">The updated lang.</param>
-    private static async Task SendAutoDiffLangMessageAsync(DiscordThreadChannel thread, Lang lang)
+    private static async Task SendAutoDiffLangMessageAsync(DiscordThreadChannel thread, LangOld lang)
     {
         var message = new DiscordMessageBuilder()
             .WithContent(
@@ -206,7 +206,7 @@ public sealed class LangsService : ILangsService
     /// <param name="thread">The thread channel where to send the message.</param>
     /// <param name="currentLang">The updated lang.</param>
     /// <param name="modelLang">The model lang.</param>
-    private static async Task SendManualDiffLangMessageAsync(DiscordThreadChannel thread, Lang currentLang, Lang? modelLang)
+    private static async Task SendManualDiffLangMessageAsync(DiscordThreadChannel thread, LangOld currentLang, LangOld? modelLang)
     {
         var message = new DiscordMessageBuilder()
             .WithContent(

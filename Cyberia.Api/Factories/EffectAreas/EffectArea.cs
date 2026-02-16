@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data;
 using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Utils;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Globalization;
 using System.Text.Json.Serialization;

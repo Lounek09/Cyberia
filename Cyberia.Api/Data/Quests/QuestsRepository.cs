@@ -3,7 +3,7 @@ using Cyberia.Api.Data.Quests.Localized;
 using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.QuestObjectives;
 using Cyberia.Api.JsonConverters;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Collections.Frozen;
 using System.Globalization;

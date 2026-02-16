@@ -4,7 +4,6 @@ using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Templates;
 using Cyberia.Api.JsonConverters;
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 

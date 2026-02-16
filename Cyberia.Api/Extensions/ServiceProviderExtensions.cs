@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Data;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using Microsoft.Extensions.DependencyInjection;
 

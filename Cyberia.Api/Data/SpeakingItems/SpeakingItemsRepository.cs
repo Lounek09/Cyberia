@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data.SpeakingItems.Localized;
 using Cyberia.Api.Enums;
 using Cyberia.Api.JsonConverters;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Collections.Frozen;
 using System.Collections.ObjectModel;

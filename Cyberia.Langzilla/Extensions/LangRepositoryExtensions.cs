@@ -1,5 +1,5 @@
 ﻿using Cyberia.Database.Repositories;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 namespace Cyberia.Langzilla.Extensions;
 

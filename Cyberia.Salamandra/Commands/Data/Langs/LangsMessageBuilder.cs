@@ -1,6 +1,6 @@
 ﻿using Cyberia.Langzilla;
-using Cyberia.Langzilla.Enums;
 using Cyberia.Langzilla.Models;
+using Cyberia.Langzilla.Primitives;
 using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Formatters;
 using Cyberia.Salamandra.Services;
@@ -21,10 +21,10 @@ public sealed class LangsMessageBuilder : ICustomMessageBuilder
     public const int PacketVersion = 1;
 
     private readonly IEmbedBuilderService _embedBuilderService;
-    private readonly LangsRepository _repository;
+    private readonly LangsRepositoryOld _repository;
     private readonly CultureInfo? _culture;
 
-    public LangsMessageBuilder(IEmbedBuilderService embedBuilderService, LangsRepository repository, CultureInfo? culture)
+    public LangsMessageBuilder(IEmbedBuilderService embedBuilderService, LangsRepositoryOld repository, CultureInfo? culture)
     {
         _embedBuilderService = embedBuilderService;
         _repository = repository;

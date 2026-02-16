@@ -1,4 +1,4 @@
-﻿namespace Cyberia.Langzilla.Enums;
+﻿namespace Cyberia.Langzilla.Primitives;
 
 /// <summary>
 /// Represents the identifier used to retrieve langs.

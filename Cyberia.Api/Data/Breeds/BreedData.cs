@@ -3,7 +3,7 @@ using Cyberia.Api.Data.ItemSets;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Enums;
 using Cyberia.Api.Utils;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;

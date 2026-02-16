@@ -126,7 +126,7 @@ public sealed class ItemMessageBuilder : ICustomMessageBuilder
 
         if (_itemData.Criteria.Count > 0)
         {
-            _embedBuilderService.AddCriteriaFields(embed,_itemData.Criteria, _culture);
+            _embedBuilderService.AddCriteriaFields(embed, _itemData.Criteria, _culture);
         }
 
         if (_itemData.WeaponData is not null)

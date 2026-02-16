@@ -1,7 +1,7 @@
 ﻿using System.Collections.Frozen;
 using System.Globalization;
 
-namespace Cyberia.Langzilla.Enums;
+namespace Cyberia.Langzilla.Primitives;
 
 /// <summary>
 /// Language of the lang.

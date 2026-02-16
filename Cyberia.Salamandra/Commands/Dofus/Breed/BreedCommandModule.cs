@@ -52,7 +52,7 @@ public sealed class BreedCommandModule
         var message = gladiatrool
             ? await new GladiatroolBreedMessageBuilder(_embedBuilderService, breedData, culture).BuildAsync<DiscordInteractionResponseBuilder>()
             : await new BreedMessageBuilder(_embedBuilderService, breedData, culture).BuildAsync<DiscordInteractionResponseBuilder>();
-        
+
         await ctx.RespondAsync(message);
     }
 }

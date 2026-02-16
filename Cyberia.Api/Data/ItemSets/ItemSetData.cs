@@ -2,7 +2,6 @@
 using Cyberia.Api.Data.Items;
 using Cyberia.Api.Factories.Effects;
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 

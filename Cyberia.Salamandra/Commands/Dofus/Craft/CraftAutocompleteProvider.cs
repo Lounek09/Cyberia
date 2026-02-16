@@ -15,7 +15,7 @@ public sealed class CraftAutocompleteProvider : IAutoCompleteProvider
     public CraftAutocompleteProvider(ICultureService cultureService, DofusDatacenter dofusDatacenter)
     {
         _cultureService = cultureService;
-        _dofusDatacenter = dofusDatacenter;        
+        _dofusDatacenter = dofusDatacenter;
     }
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)

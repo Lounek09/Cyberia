@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Data.Alignments;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Globalization;
 

@@ -240,7 +240,7 @@ public sealed class EmojisService : IEmojisService
         // Others
         await CreateEmojiAsync("account_quest", $"{baseRoute}/others/account_quest.png");
         await CreateEmojiAsync("ap_resistance", $"{baseRoute}/others/ap_resistance.png");
-        await CreateEmojiAsync("dungeon", $"{baseRoute}/others/dungeon.png" );
+        await CreateEmojiAsync("dungeon", $"{baseRoute}/others/dungeon.png");
         await CreateEmojiAsync("empty", $"{baseRoute}/others/empty.png");
         await CreateEmojiAsync("false", $"{baseRoute}/others/false.png");
         await CreateEmojiAsync("hand", $"{baseRoute}/others/hand.png");

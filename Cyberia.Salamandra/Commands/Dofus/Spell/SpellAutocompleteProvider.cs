@@ -20,7 +20,7 @@ public sealed class SpellAutocompleteProvider : IAutoCompleteProvider
 
     public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction); 
+        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
 
         return _dofusDatacenter.SpellsRepository.GetSpellsDataByName(ctx.UserInput ?? string.Empty, culture)
             .Take(Constant.MaxChoice)

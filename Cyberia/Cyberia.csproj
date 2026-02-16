@@ -25,7 +25,7 @@
     <ProjectReference Include="..\Cyberia.Cytrusaurus\Cyberia.Cytrusaurus.csproj" />
     <ProjectReference Include="..\Cyberia.Database\Cyberia.Database.csproj" />
     <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
-    <ProjectReference Include="..\Cyberia.Langzilla.Enums\Cyberia.Langzilla.Enums.csproj" />
+    <ProjectReference Include="..\Cyberia.Langzilla.Primitives\Cyberia.Langzilla.Primitives.csproj" />
     <ProjectReference Include="..\Cyberia.Salamandra\Cyberia.Salamandra.csproj" />
     <ProjectReference Include="..\Cyberia.Translations\Cyberia.Translations.csproj" />
     <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />

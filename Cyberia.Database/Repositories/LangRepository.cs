@@ -1,5 +1,5 @@
 ﻿using Cyberia.Database.Models;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using Dapper;
 

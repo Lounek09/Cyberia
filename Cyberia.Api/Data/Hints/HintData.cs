@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.Maps;
 using Cyberia.Api.Utils;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Globalization;
 using System.Text.Json.Serialization;

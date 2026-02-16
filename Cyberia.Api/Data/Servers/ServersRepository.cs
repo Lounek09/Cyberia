@@ -1,9 +1,8 @@
 ﻿using Cyberia.Api.Data.Servers.Localized;
 using Cyberia.Api.JsonConverters;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Collections.Frozen;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text.Json.Serialization;

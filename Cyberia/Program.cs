@@ -4,8 +4,8 @@ using Cyberia.Cytrusaurus;
 using Cyberia.Cytrusaurus.Extensions;
 using Cyberia.Database.Extentsions;
 using Cyberia.Langzilla;
-using Cyberia.Langzilla.Enums;
 using Cyberia.Langzilla.Extensions;
+using Cyberia.Langzilla.Primitives;
 using Cyberia.Salamandra.Extensions;
 
 using Microsoft.Extensions.Configuration;

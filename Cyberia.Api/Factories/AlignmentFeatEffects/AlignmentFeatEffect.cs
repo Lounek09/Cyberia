@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.Alignments;
 using Cyberia.Api.Factories.AlignmentFeatEffects.Elements;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Globalization;
 using System.Runtime.CompilerServices;

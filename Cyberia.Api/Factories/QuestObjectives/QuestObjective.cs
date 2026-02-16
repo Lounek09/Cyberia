@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.Quests;
 using Cyberia.Api.Factories.QuestObjectives.Elements;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Globalization;
 using System.Runtime.CompilerServices;

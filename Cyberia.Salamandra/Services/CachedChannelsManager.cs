@@ -52,7 +52,7 @@ public interface ICachedChannelsManager
     /// <param name="embed">The embed of the message.</param>
     Task SendErrorMessage(DiscordEmbed embed);
 
-    
+
 }
 
 public sealed class CachedChannelsManager : ICachedChannelsManager

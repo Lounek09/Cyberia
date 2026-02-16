@@ -3,7 +3,7 @@ using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Utils;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Collections.ObjectModel;
 using System.Globalization;

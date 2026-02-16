@@ -1,10 +1,8 @@
 ﻿using Cyberia.Api.Data.Common;
-using Cyberia.Api.Data.Items;
 
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.Unicode;
 
 namespace Cyberia.Api.JsonConverters;
 

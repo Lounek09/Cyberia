@@ -1,5 +1,4 @@
 ﻿using Cyberia.Api.JsonConverters;
-using Cyberia.Langzilla.Enums;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;

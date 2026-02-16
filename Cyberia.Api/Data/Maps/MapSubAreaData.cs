@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.Audios;
 using Cyberia.Api.JsonConverters;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Collections.ObjectModel;
 using System.Drawing;

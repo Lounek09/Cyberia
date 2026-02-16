@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data.Effects;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Globalization;
 

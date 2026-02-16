@@ -19,7 +19,7 @@
   <Project Path="Cyberia.Api/Cyberia.Api.csproj" />
   <Project Path="Cyberia.Cytrusaurus/Cyberia.Cytrusaurus.csproj" />
   <Project Path="Cyberia.Database/Cyberia.Database.csproj" />
-  <Project Path="Cyberia.Langzilla.Enums/Cyberia.Langzilla.Enums.csproj" />
+  <Project Path="Cyberia.Langzilla.Primitives/Cyberia.Langzilla.Primitives.csproj" />
   <Project Path="Cyberia.Langzilla/Cyberia.Langzilla.csproj" />
   <Project Path="Cyberia.Salamandra/Cyberia.Salamandra.csproj" />
   <Project Path="Cyberia.Tests/Cyberia.Tests.csproj" />

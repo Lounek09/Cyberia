@@ -85,7 +85,7 @@ public sealed class MapCommandModule
                 .BuildAsync<DiscordInteractionResponseBuilder>());
             return;
         }
-        
+
         await ctx.RespondAsync(await new PaginatedMapMessageBuilder(_embedBuilderService, mapsData, MapSearchCategory.Coordinate, $"{x}{PacketFormatter.Separator}{y}", culture)
             .BuildAsync<DiscordInteractionResponseBuilder>());
     }

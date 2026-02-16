@@ -1,5 +1,4 @@
 ﻿using Cyberia.Api;
-using Cyberia.Langzilla.Enums;
 
 using DSharpPlus.Commands.Processors.SlashCommands.ArgumentModifiers;
 using DSharpPlus.Commands.Trees;

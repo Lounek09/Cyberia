@@ -1,7 +1,6 @@
 ﻿using CsvGenerator.Extensions;
 
 using Cyberia.Api.Data.Items;
-using Cyberia.Langzilla.Enums;
 
 namespace CsvGenerator.Generators.Dofusbook;
 

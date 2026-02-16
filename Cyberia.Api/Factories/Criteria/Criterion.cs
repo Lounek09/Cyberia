@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Factories.Criteria.Elements;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Globalization;
 using System.Runtime.CompilerServices;

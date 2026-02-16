@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.Data.Pvp.Localized;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 

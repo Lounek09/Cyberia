@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.TTG.Localized;
 using Cyberia.Api.JsonConverters;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Collections.Frozen;
 using System.Globalization;

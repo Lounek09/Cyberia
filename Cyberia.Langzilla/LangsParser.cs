@@ -1,5 +1,5 @@
-﻿using Cyberia.Langzilla.Enums;
-using Cyberia.Langzilla.Parser;
+﻿using Cyberia.Langzilla.Parser;
+using Cyberia.Langzilla.Primitives;
 
 using System.Collections.ObjectModel;
 

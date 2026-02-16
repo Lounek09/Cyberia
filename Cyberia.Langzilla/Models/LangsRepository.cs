@@ -1,4 +1,4 @@
-﻿using Cyberia.Langzilla.Enums;
+﻿using Cyberia.Langzilla.Primitives;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;

@@ -1,6 +1,4 @@
-﻿using Cyberia.Api.JsonConverters;
-
-using System.Drawing;
+﻿using System.Drawing;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.Titles;

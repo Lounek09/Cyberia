@@ -1,4 +1,4 @@
-﻿namespace Cyberia.Langzilla.Enums;
+﻿namespace Cyberia.Langzilla.Primitives;
 
 /// <summary>
 /// Type of the lang.

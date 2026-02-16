@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Utils;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 namespace Cyberia.Api.Data;
 

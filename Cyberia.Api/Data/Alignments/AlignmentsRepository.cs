@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data.Alignments.Localized;
 using Cyberia.Api.Factories;
 using Cyberia.Api.JsonConverters;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Collections.Frozen;
 using System.Globalization;

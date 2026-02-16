@@ -2,7 +2,6 @@
 using CsvGenerator.Generators.Dofusbook;
 
 using Cyberia.Api;
-using Cyberia.Langzilla.Enums;
 
 using System.Globalization;
 

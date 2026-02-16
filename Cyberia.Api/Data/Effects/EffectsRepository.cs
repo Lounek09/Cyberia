@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.Effects.Custom;
 using Cyberia.Api.Data.Effects.Localized;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Collections.Frozen;
 using System.Text.Json.Serialization;

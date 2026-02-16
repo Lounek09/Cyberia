@@ -9,7 +9,7 @@ using Cyberia.Api.Enums;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.Utils;
-using Cyberia.Langzilla.Enums;
+using Cyberia.Langzilla.Primitives;
 
 using System.Globalization;
 using System.Text.Json.Serialization;
