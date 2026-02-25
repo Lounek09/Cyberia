@@ -50,6 +50,9 @@ public sealed class MapData : IDofusData<int>
     [JsonPropertyName("tournament")]
     public bool Tournament { get; init; }
 
+    [JsonPropertyName("o")]
+    public bool Outdoor { get; init; }
+
     [JsonPropertyName("ep")]
     public int Episode { get; init; }
 
