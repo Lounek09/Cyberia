@@ -139,9 +139,9 @@ public sealed class LangsService : ILangsService
         var language = identifier.Language.ToStringFast();
 
         var postBuilder = new ForumPostBuilder()
-            .WithName($"Diff of {type} in {language} - {DateTime.Now:yyyy-MM-dd HH:mm}")
+            .WithName($"Diff of {type} langs in {language} - {DateTime.Now:yyyy-MM-dd HH:mm}")
             .WithMessage(new DiscordMessageBuilder().WithContent(
-                $"Diff of langs {Formatter.Bold(type)} from {lastModified:yyyy-MM-dd HH:mmzzz} in {Formatter.Bold(language)}"));
+                $"Diff of {Formatter.Bold(type)} langs from {lastModified:yyyy-MM-dd HH:mmzzz} in {Formatter.Bold(language)}"));
 
         var typeTag = forum.GetDiscordForumTagByName(type);
         if (typeTag is not null)
@@ -177,9 +177,9 @@ public sealed class LangsService : ILangsService
         var language = currentIdentifier.Language.ToStringFast();
 
         var postBuilder = new ForumPostBuilder()
-            .WithName($"Diff of {currentType} compared to {modelType} in {language} - {DateTime.Now:yyyy-MM-dd HH:mm}")
+            .WithName($"Diff of {currentType} langs compared to {modelType} in {language} - {DateTime.Now:yyyy-MM-dd HH:mm}")
             .WithMessage(new DiscordMessageBuilder().WithContent(
-                $"Diff of langs {Formatter.Bold(currentType)} from {currentLastModified:yyyy-MM-dd HH:mmzzz} " +
+                $"Diff of {Formatter.Bold(currentType)} langs from {currentLastModified:yyyy-MM-dd HH:mmzzz} " +
                 $"compared to {Formatter.Bold(modelType)} from {modelLastModified:yyyy-MM-dd HH:mmzzz} in {Formatter.Bold(language)}"));
 
         var tag = forum.GetDiscordForumTagByName(DiscordForumChannelExtensions.ManualDiffTagName);
