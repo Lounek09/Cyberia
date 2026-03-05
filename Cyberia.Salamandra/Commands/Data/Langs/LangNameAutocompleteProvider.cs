@@ -1,4 +1,4 @@
-﻿using Cyberia.Langzilla;
+﻿using Cyberia.Database.Repositories;
 using Cyberia.Langzilla.Primitives;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 
@@ -10,25 +10,23 @@ namespace Cyberia.Salamandra.Commands.Data.Langs;
 
 public sealed class LangNameAutocompleteProvider : IAutoCompleteProvider
 {
-    private readonly ILangsWatcher _langsWatcher;
+    private readonly LangRepository _langRepository;
 
-    public LangNameAutocompleteProvider(ILangsWatcher langsWatcher)
+    public LangNameAutocompleteProvider(LangRepository langRepository)
     {
-        _langsWatcher = langsWatcher;
+        _langRepository = langRepository;
     }
 
-    public ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
+    public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         var type = ctx.GetArgument<LangType>("type");
         var language = ctx.GetArgument<Language>("language");
+        var input = ctx.UserInput ?? string.Empty;
 
         LangsIdentifier identifier = new(type, language);
 
-        var choices = _langsWatcher.GetRepository(identifier)
-           .GetAllByName(ctx.UserInput ?? string.Empty)
-           .Take(Constant.MaxChoice)
-           .Select(x => new DiscordAutoCompleteChoice(x.Name, x.Name));
+        var langs = await _langRepository.SearchByIdentifierAndNameAsync(identifier, input, Constant.MaxChoice);
 
-        return ValueTask.FromResult(choices);
+        return langs.Select(x => new DiscordAutoCompleteChoice(x.Name, x.Id));
     }
 }

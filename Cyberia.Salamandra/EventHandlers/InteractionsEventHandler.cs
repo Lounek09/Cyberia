@@ -1,5 +1,4 @@
 ﻿using Cyberia.Salamandra.Commands;
-using Cyberia.Salamandra.Commands.Data.Langs;
 using Cyberia.Salamandra.Commands.Dofus.Breed;
 using Cyberia.Salamandra.Commands.Dofus.Craft;
 using Cyberia.Salamandra.Commands.Dofus.House;
@@ -48,7 +47,6 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
         { PaginatedItemMessageBuilder.PacketHeader, PaginatedItemMessageBuilder.Create },
         { ItemSetMessageBuilder.PacketHeader, ItemSetMessageBuilder.Create },
         { PaginatedItemSetMessageBuilder.PacketHeader, PaginatedItemSetMessageBuilder.Create },
-        { LangsMessageBuilder.PacketHeader, LangsMessageBuilder.Create },
         { MapMessageBuilder.PacketHeader, MapMessageBuilder.Create },
         { PaginatedMapMessageBuilder.PacketHeader, PaginatedMapMessageBuilder.Create },
         { PaginatedMapSubAreaMessageBuilder.PacketHeader, PaginatedMapSubAreaMessageBuilder.Create },

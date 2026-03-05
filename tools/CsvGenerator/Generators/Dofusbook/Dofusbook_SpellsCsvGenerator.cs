@@ -3,6 +3,7 @@
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Enums;
 using Cyberia.Api.Factories.Effects.Elements;
+using Cyberia.Langzilla.Primitives;
 
 namespace CsvGenerator.Generators.Dofusbook;
 

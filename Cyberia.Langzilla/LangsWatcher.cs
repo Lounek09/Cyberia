@@ -1,9 +1,10 @@
-﻿using Cyberia.Database.Repositories;
+﻿using Cyberia.Database.Models;
+using Cyberia.Database.Repositories;
 using Cyberia.Langzilla.EventArgs;
 using Cyberia.Langzilla.Extensions;
-using Cyberia.Langzilla.Models;
 using Cyberia.Langzilla.Primitives;
 
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Cyberia.Langzilla;
@@ -14,11 +15,17 @@ namespace Cyberia.Langzilla;
 public interface ILangsWatcher
 {
     /// <summary>
-    /// Gets the lang repository from its type and language.
+    /// Gets when the langs were last modified.
     /// </summary>
-    /// <param name="identifier">The identifier of the repository.</param>
-    /// <returns>The lang repository.</returns>
-    LangsRepository GetRepository(LangsIdentifier identifier);
+    public ReadOnlyDictionary<LangsIdentifier, DateTime> LastModifieds { get; }
+
+    /// <summary>
+    /// Initializes the data of the <see cref="ILangsWatcher"/> instance.
+    /// </summary>
+    /// <remarks>
+    /// This need to be called before everything else.
+    /// </remarks>
+    Task InitializeAsync();
 
     /// <summary>
     /// Starts watching for update of langs by type.
@@ -29,32 +36,21 @@ public interface ILangsWatcher
     void Watch(LangType type, TimeSpan dueTime, TimeSpan interval);
 
     /// <summary>
-    /// Asynchronously checks for updates of langs for the specified repository.
+    /// Checks for updates of langs.
     /// </summary>
-    /// <param name="repository">The repository to check.</param>
-    /// <param name="force">Force the check without checking the last update time.</param>
-    /// <remarks>
-    /// This method performs the following steps:
-    /// <list type="number">
-    ///     <item>Triggers the <see cref="CheckLangStarted"/> event.</item>
-    ///     <item>Fetches the version of the langs.</item>
-    ///     <item>If the version is empty, triggers the <see cref="NewLangFilesDetected"/> event and returns.</item>
-    ///     <item>Gets the updated langs from the versions.</item>
-    ///     <item>Downloads, extracts, and diffs the updated langs.</item>
-    ///     <item>Triggers the <see cref="NewLangFilesDetected"/> event.</item>
-    /// </list>
-    /// </remarks>
-    Task CheckAsync(LangsRepository repository, bool force = false);
+    /// <param name="identifier">The identifier of the langs to check.</param>
+    /// <param name="force">Force the check without checking the last modified time.</param>
+    Task CheckAsync(LangsIdentifier identifier, bool force = false);
 
     /// <summary>
-    /// Delegate for the <see cref="NewLangFilesDetected"/> event.
+    /// Delegate for the <see cref="NewLangsDetected"/> event.
     /// </summary>
-    delegate ValueTask NewLangFilesDetectedEventHandler(ILangsWatcher sender, NewLangFilesDetectedEventArgs eventArgs);
+    delegate ValueTask NewLangsDetectedEventHandler(ILangsWatcher sender, NewLangsDetectedEventArgs eventArgs);
 
     /// <summary>
-    /// Event that is triggered when new lang files are detected.
+    /// Event that is triggered when new lang are detected.
     /// </summary>
-    event NewLangFilesDetectedEventHandler NewLangFilesDetected;
+    event NewLangsDetectedEventHandler NewLangsDetected;
 
     /// <summary>
     /// Delegate for the <see cref="LangsErrored"/> event.
@@ -80,20 +76,34 @@ public sealed class LangsWatcher : ILangsWatcher
     // TODO: Make it configurable
     public const string BaseUrl = "https://dofusretro.cdn.ankama.com/";
 
+    public ReadOnlyDictionary<LangsIdentifier, DateTime> LastModifieds => _lastModifieds.AsReadOnly();
+
+    private readonly LangRepository _langRepository;
+    private readonly MonitoredFileRepository _monitoredFileRepository;
     private readonly HttpClient _httpClient;
     private readonly HttpRetryPolicy _httpRetryPolicy;
-    private readonly Dictionary<LangsIdentifier, LangsRepository> _langsRepositories = [];
+    private readonly Dictionary<LangsIdentifier, DateTime> _lastModifieds;
     private readonly Dictionary<LangsIdentifier, Timer> _timers = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsWatcher"/> class.
     /// </summary>
-    public LangsWatcher()
+    public LangsWatcher(LangRepository langRepository, MonitoredFileRepository monitoredFileRepository)
+    {
+        _langRepository = langRepository;
+        _monitoredFileRepository = monitoredFileRepository;
+        _httpClient = new()
+        {
+            BaseAddress = new(BaseUrl)
+        };
+        _httpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
+        _lastModifieds = [];
+        _timers = [];
+    }
+
+    public async Task InitializeAsync()
     {
         Directory.CreateDirectory(OutputPath);
-
-        _langsRepositories = [];
-        _timers = [];
 
         foreach (var type in Enum.GetValues<LangType>())
         {
@@ -101,26 +111,13 @@ public sealed class LangsWatcher : ILangsWatcher
             {
                 LangsIdentifier identifier = new(type, language);
 
-                var outputPath = GetOutputPath(identifier);
+                var outputPath = LangRepository.GetOutputPath(identifier);
                 Directory.CreateDirectory(outputPath);
 
-                var filePath = Path.Join(outputPath, LangsRepository.FileName);
-                var repository = LangsRepository.LoadFromFile(filePath);
-
-                _langsRepositories.Add(identifier, repository);
+                var lastModified = await _monitoredFileRepository.GetLastModifiedByIdAsync(identifier.ToString());
+                _lastModifieds[identifier] = lastModified;
             }
         }
-
-        _httpClient = new()
-        {
-            BaseAddress = new(BaseUrl)
-        };
-        _httpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
-    }
-
-    public LangsRepository GetRepository(LangsIdentifier identifier)
-    {
-        return _langsRepositories[identifier];
     }
 
     public void Watch(LangType type, TimeSpan dueTime, TimeSpan interval)
@@ -128,42 +125,48 @@ public sealed class LangsWatcher : ILangsWatcher
         foreach (var language in Enum.GetValues<Language>())
         {
             LangsIdentifier identifier = new(type, language);
-            var repository = GetRepository(identifier);
 
-            _timers[identifier] = new Timer(async _ => await CheckAsync(repository), null, dueTime, interval);
+            _timers[identifier] = new Timer(async _ => await CheckAsync(identifier), null, dueTime, interval);
         }
     }
 
-    public async Task CheckAsync(LangsRepository repository, bool force = false)
+    public async Task CheckAsync(LangsIdentifier identifier, bool force = false)
     {
-        var versions = await FetchVersionsAsync(repository, force);
-        if (string.IsNullOrEmpty(versions))
+        var versionsFileContent = await FetchVersionsAsync(identifier, force);
+        if (versionsFileContent is null)
         {
             return;
         }
 
-        var updatedLangs = GetUpdatedLangs(repository, versions).ToList();
+        var updatedLangs = await GetUpdatedLangsAsync(identifier, versionsFileContent);
+        if (updatedLangs.Count == 0)
+        {
+            return;
+        }
+
         foreach (var updatedLang in updatedLangs)
         {
             if (!await DownloadLangAsync(updatedLang))
             {
-                Log.Error("Failed to download {LangType} {LangName} lang in {LangLanguage}", repository.Type, updatedLang.Name, repository.Language);
-                continue;
+                return;
             }
 
-            if (!ExtractLang(updatedLang))
+            if (!await ExtractLangAsync(updatedLang))
             {
-                Log.Error("Failed to extract {LangType} {LangName} lang in {LangLanguage}", repository.Type, updatedLang.Name, repository.Language);
+                return;
+            }
+
+            var diff = Lang.Diff(updatedLang, updatedLang);
+            if (string.IsNullOrEmpty(diff))
+            {
+                File.Delete(updatedLang.GetDiffFilePath());
                 continue;
             }
 
-            updatedLang.SelfDiff();
+            File.WriteAllText(updatedLang.GetDiffFilePath(), diff, Encoding.UTF8);
         }
 
-        if (updatedLangs.Count > 0)
-        {
-            await OnNewLangFilesDetected(new NewLangFilesDetectedEventArgs(repository, updatedLangs));
-        }
+        await OnNewLangsDetected(new NewLangsDetectedEventArgs(identifier, updatedLangs));
     }
 
     /// <summary>
@@ -195,77 +198,120 @@ public sealed class LangsWatcher : ILangsWatcher
     /// <summary>
     /// Fetches the versions of the langs.
     /// </summary>
-    /// <param name="repository">The repository to fetch the versions from.</param>
-    /// <param name="force">Force the fetch without checking the last update time.</param>
+    /// <param name="identifier">The identifier of the langs.</param>
+    /// <param name="force">Force the fetch without checking the last modified time.</param>
     /// <returns>A string that contains the versions of the langs.</returns>
-    internal async Task<string> FetchVersionsAsync(LangsRepository repository, bool force = false)
+    internal async Task<string?> FetchVersionsAsync(LangsIdentifier identifier, bool force)
     {
+        var route = LangRepository.GetVersionsFileRoute(identifier);
+
         try
         {
-            using var response = await _httpRetryPolicy.ExecuteAsync(() => _httpClient.GetAsync(repository.VersionFileRoute));
+            using var response = await _httpRetryPolicy.ExecuteAsync(() => _httpClient.GetAsync(route));
             response.EnsureSuccessStatusCode();
 
-            var lastModifiedHeader = response.Content.Headers.LastModified!.Value.UtcDateTime;
-            if (lastModifiedHeader > repository.LastChange || force)
+            var lastModified = response.Content.Headers.LastModified?.UtcDateTime;
+            if (lastModified is null || lastModified.Value <= _lastModifieds[identifier] && !force)
             {
-                repository.LastChange = lastModifiedHeader;
-
-                var versions = await response.Content.ReadAsStringAsync();
-
-                Log.Information("New {LangType} langs detected in {LangLanguage} :\n{Versions}", repository.Type, repository.Language, versions);
-                File.WriteAllText(repository.VersionFilePath, versions);
-
-                return versions;
+                return null;
             }
+
+            _lastModifieds[identifier] = lastModified.Value;
+            await _monitoredFileRepository.UpsertAsync(new MonitoredFile
+            {
+                Id = identifier.ToString(),
+                LastModified = lastModified.Value
+            });
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            Log.Information("New {Type} langs detected in {Language} :\n{Content}", identifier.Type, identifier.Language, content);
+            File.WriteAllText(LangRepository.GetVersionsFilePath(identifier), content);
+
+            return content;
         }
         catch (HttpRequestException e)
         {
-            Log.Error(e, "An error occurred while sending Get request to {VersionFileUrl}", Path.Join(BaseUrl, repository.VersionFileRoute));
+            var url = $"{BaseUrl}/{route}";
+
+            Log.Error(e, "An error occurred while sending Get request to {Url}", url);
+            await OnLangsErroredAsync(new LangsErroredEventArgs(e, $"An error occurred while sending a GET request to '{url}', see the logs for more details."));
         }
 
-        return string.Empty;
+        return null;
     }
 
     /// <summary>
-    /// Gets the updated langs from the fetched versions of the langs.
+    /// Gets the updated langs from the fetched versions file.
     /// </summary>
-    /// <param name="versions">The versions of the langs.</param>
-    /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="Lang"/> that contains the updated langs.</returns>
-    internal static IEnumerable<Lang> GetUpdatedLangs(LangsRepository repository, string versions)
+    /// <param name="versionsFileContent">The content of the versions file.</param>
+    /// <returns>A <see cref="ReadOnlyCollection{T}"/> of <see cref="Lang"/> that contains the updated langs.</returns>
+    internal async Task<ReadOnlyCollection<Lang>> GetUpdatedLangsAsync(LangsIdentifier identifier, string versionsFileContent)
     {
-        if (versions.Length < 4)
+        if (!versionsFileContent.StartsWith("&f="))
         {
-            yield break;
+            return ReadOnlyCollection<Lang>.Empty;
         }
 
-        var langInfos = versions[3..].Split("|", StringSplitOptions.RemoveEmptyEntries);
-        if (langInfos.Length == 0)
-        {
-            yield break;
-        }
+        var content = versionsFileContent.AsSpan(3);
+        List<(string Name, int Version)> parsedLangs = [];
+        Span<Range> fieldRanges = stackalloc Range[3];
 
-        LangsIdentifier identifier = new(repository.Type, repository.Language);
-
-        foreach (var langInfo in langInfos)
+        foreach (var contentRange in content.Split('|'))
         {
-            //TODO: Use Span
-            var langParameters = langInfo.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            if (langParameters.Length < 3 ||
-                !int.TryParse(langParameters[2], out var langVersion))
+            var fields = content[contentRange];
+            if (fields.IsEmpty)
             {
                 continue;
             }
 
-            var lang = new Lang(langParameters[0], langVersion, identifier);
-            if (!File.Exists(lang.FilePath))
+            var fieldCount = fields.Split(fieldRanges, ',', StringSplitOptions.RemoveEmptyEntries);
+            if (fieldCount != 3)
             {
-                repository.AddOrUpdate(lang);
-
-                yield return lang;
+                continue;
             }
+
+            if (!int.TryParse(fields[fieldRanges[2]], out var version))
+            {
+                continue;
+            }
+
+            var name = fields[fieldRanges[0]].ToString();
+
+            parsedLangs.Add(new(name, version));
         }
 
-        repository.Save();
+        List<Lang> updatedLangs = new(parsedLangs.Count);
+
+        foreach (var (name, version) in parsedLangs)
+        {
+            var lang = await _langRepository.GetByIdentifierAndNameAsync(identifier, name);
+
+            if (lang?.Version == version)
+            {
+                continue;
+            }
+
+            lang ??= new()
+            {
+                Type = identifier.Type,
+                Language = identifier.Language,
+                Name = name,
+                Version = version,
+                IsNew = true
+            };
+
+            if (lang.Version != version)
+            {
+                lang.Version = version;
+            }
+
+            updatedLangs.Add(lang);
+        }
+
+        await _langRepository.UpsertManyAsync(updatedLangs);
+
+        return updatedLangs.AsReadOnly();
     }
 
     /// <summary>
@@ -275,57 +321,99 @@ public sealed class LangsWatcher : ILangsWatcher
     /// <returns><see langword="true"/> if the download was successful; otherwise, <see langword="false"/>.</returns>
     internal async Task<bool> DownloadLangAsync(Lang lang)
     {
-        Array.ForEach(Directory.GetFiles(lang.OutputPath, "*.swf"), File.Delete);
+        var outputPath = lang.GetOutputPath();
+        Directory.CreateDirectory(outputPath);
+
+        foreach (var filePath in Directory.EnumerateFiles(lang.GetOutputPath(), "*.swf"))
+        {
+            File.Delete(filePath);
+        }
+
+        var route = lang.GetRoute();
 
         try
         {
-            using var response = await _httpRetryPolicy.ExecuteAsync(() => _httpClient.GetAsync(lang.FileRoute));
+            using var response = await _httpRetryPolicy.ExecuteAsync(() => _httpClient.GetAsync(route));
             response.EnsureSuccessStatusCode();
 
-            using var fileStream = new FileStream(lang.FilePath, FileMode.Create);
+            using var fileStream = new FileStream(lang.GetFilePath(), FileMode.Create);
             await response.Content.CopyToAsync(fileStream);
 
             return true;
         }
         catch (HttpRequestException e)
         {
-            Log.Error(e, "An error occurred while sending Get request to {Url}", Path.Join(BaseUrl, lang.FileRoute));
+            var url = $"{BaseUrl}/{route}";
+
+            Log.Error(e, "An error occurred while sending Get request to {Url}", url);
+            await OnLangsErroredAsync(new LangsErroredEventArgs(e, $"An error occurred while sending a GET request to '{url}', see the logs for more details."));
         }
 
         return false;
     }
 
     /// <summary>
-    /// Extracts the lang file.
+    /// Extracts the lang file using flare.
     /// </summary>
     /// <param name="lang">The lang to extract.</param>
     /// <returns><see langword="true"/> if the extraction was successful; otherwise, <see langword="false"/>.</returns>
-    internal static bool ExtractLang(Lang lang)
+    internal async Task<bool> ExtractLangAsync(Lang lang)
     {
-        if (!File.Exists(lang.FilePath))
+        var filePath = lang.GetFilePath();
+
+        if (!File.Exists(filePath))
         {
+            Log.Error("Trying to extract a missing lang on disk: {FilePath}", filePath);
+            await OnLangsErroredAsync(new LangsErroredEventArgs($"Trying to extract a missing lang on disk: '{filePath}'"));
+
             return false;
         }
 
-        if (!Flare.TryExtract(lang.FilePath, out var flareOutputFilePath))
+        if (!Flare.TryExtract(filePath, out var flareOutputFilePath))
         {
-            Log.Error("An error occured while decompiling {FilePath}", lang.FilePath);
+            Log.Error("An error occurred while trying to extract {FilePath}", filePath);
+            await OnLangsErroredAsync(new LangsErroredEventArgs($"An error occurred while trying to extract '{filePath}'"));
+
             return false;
         }
 
-        var lines = File.ReadLines(flareOutputFilePath, Encoding.UTF8).Skip(7).SkipLast(3);
-        var content = lines
-            .Select(x => x.Trim())
-            .Where(x => x.Length > 0 && !x.Equals("}") && !x.Equals("frame 1 {"));
+        var decompiledFilePath = lang.GetDecompiledFilePath();
+        var oldDecompiledFilePath = lang.GetOldDecompiledFilePath();
 
-        var currentDecompiledFilePath = lang.CurrentDecompiledFilePath;
-        var oldDecompiledFilePath = lang.OldDecompiledFilePath;
-
-        if (File.Exists(currentDecompiledFilePath))
+        if (File.Exists(decompiledFilePath))
         {
-            File.Move(currentDecompiledFilePath, oldDecompiledFilePath, true);
+            File.Move(decompiledFilePath, oldDecompiledFilePath, true);
         }
-        File.WriteAllLines(currentDecompiledFilePath, content, Encoding.UTF8);
+
+        using (StreamReader reader = new(flareOutputFilePath, Encoding.UTF8))
+        {
+            using StreamWriter writer = new(decompiledFilePath, false, Encoding.UTF8);
+
+            for (var i = 0; i < 7; i++)
+            {
+                reader.ReadLine();
+            }
+
+            string? raw;
+            while ((raw = reader.ReadLine()) is not null)
+            {
+                var line = raw.AsSpan().TrimStart();
+
+                if (line.IsEmpty || line[0] == '}' || line.StartsWith("frame"))
+                {
+                    continue;
+                }
+
+                if (line.StartsWith("FILE_END"))
+                {
+                    break;
+                }
+
+                writer.Write(line);
+                writer.Write('\n');
+            }
+        }
+
         File.Delete(flareOutputFilePath);
 
         return true;
@@ -333,14 +421,14 @@ public sealed class LangsWatcher : ILangsWatcher
 
     #region Events
 
-    public event ILangsWatcher.NewLangFilesDetectedEventHandler? NewLangFilesDetected;
+    public event ILangsWatcher.NewLangsDetectedEventHandler? NewLangsDetected;
 
     /// <summary>
-    /// Triggers the <see cref="NewLangFilesDetected"/> event.
+    /// Triggers the <see cref="NewLangsDetected"/> event.
     /// </summary>
-    internal async ValueTask OnNewLangFilesDetected(NewLangFilesDetectedEventArgs eventArgs)
+    internal async ValueTask OnNewLangsDetected(NewLangsDetectedEventArgs eventArgs)
     {
-        var handler = NewLangFilesDetected;
+        var handler = NewLangsDetected;
         if (handler is not null)
         {
             await handler.Invoke(this, eventArgs);
@@ -349,6 +437,9 @@ public sealed class LangsWatcher : ILangsWatcher
 
     public event ILangsWatcher.LangsErroredEventHandler? LangsErrored;
 
+    /// <summary>
+    /// Triggers the <see cref="LangsErrored"/> event.
+    /// </summary>
     internal async ValueTask OnLangsErroredAsync(LangsErroredEventArgs eventArgs)
     {
         var handler = LangsErrored;

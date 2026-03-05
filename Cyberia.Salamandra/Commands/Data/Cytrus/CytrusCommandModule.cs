@@ -1,5 +1,4 @@
 ﻿using Cyberia.Cytrusaurus;
-using Cyberia.Salamandra.Enums;
 using Cyberia.Salamandra.Services;
 
 using DSharpPlus;
@@ -21,17 +20,13 @@ namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 [InteractionAllowedContexts(DiscordInteractionContextType.Guild)]
 public sealed class CytrusCommandModule
 {
-    private readonly ICultureService _cultureService;
     private readonly ICytrusService _cytrusService;
     private readonly ICytrusWatcher _cytrusWatcher;
-    private readonly IEmbedBuilderService _embedBuilderService;
 
-    public CytrusCommandModule(ICultureService cultureService, ICytrusService cytrusService, ICytrusWatcher cytrusWatcher, IEmbedBuilderService embedBuilderService)
+    public CytrusCommandModule(ICytrusService cytrusService, ICytrusWatcher cytrusWatcher)
     {
-        _cultureService = cultureService;
         _cytrusService = cytrusService;
         _cytrusWatcher = cytrusWatcher;
-        _embedBuilderService = embedBuilderService;
     }
 
     [Command("check"), Description("[Owner] Launch a check to see if there is a new version of Cytrus")]
@@ -39,51 +34,14 @@ public sealed class CytrusCommandModule
     [RequireApplicationOwner]
     public async Task CheckExecuteAsync(SlashCommandContext ctx)
     {
-        await ctx.RespondAsync("Starting the check of Cytrus...");
+        await ctx.DeferResponseAsync();
 
         await _cytrusWatcher.CheckAsync();
 
-        await ctx.EditResponseAsync("Cytrus check completed");
+        await ctx.EditResponseAsync("Cytrus check completed.");
     }
 
-    [Command("show"), Description("Display the information of the currently online Cytrus")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public async Task ShowExecuteAsync(SlashCommandContext ctx)
-    {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
-
-        var embed = _embedBuilderService.CreateBaseEmbedBuilder(EmbedCategory.Tools, "Cytrus", culture)
-            .WithDescription(CytrusWatcher.CytrusUrl)
-            .AddField("Name", _cytrusWatcher.Cytrus.Name.Capitalize(), true)
-            .AddField("Version", _cytrusWatcher.Cytrus.Version.ToString(), true)
-            .AddField("Last Modified", _cytrusWatcher.LastModified.ToLocalTime().ToString("g", culture), true);
-
-        foreach (var game in _cytrusWatcher.Cytrus.Games.OrderBy(x => x.Value.Order))
-        {
-            StringBuilder fieldContentBuilder = new();
-
-            foreach (var platform in game.Value.Platforms)
-            {
-                fieldContentBuilder.Append(Formatter.Underline($"{platform.Key.Capitalize()} :"));
-                fieldContentBuilder.Append('\n');
-
-                foreach (var release in game.Value.GetReleasesByPlatformName(platform.Key))
-                {
-                    fieldContentBuilder.Append("- ");
-                    fieldContentBuilder.Append(release.Key.Capitalize());
-                    fieldContentBuilder.Append(" : ");
-                    fieldContentBuilder.Append(Formatter.InlineCode(release.Value));
-                    fieldContentBuilder.Append('\n');
-                }
-            }
-
-            embed.AddField($"{game.Value.Name.Capitalize()} ({game.Value.GameId})", fieldContentBuilder.ToString());
-        }
-
-        await ctx.RespondAsync(embed);
-    }
-
-    [Command("diff"), Description("List the differences between the files of two versions of a game on Cytrus")]
+    [Command("diff"), Description("List the differences between two versions of a game on Cytrus")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task DiffExecuteAsync(SlashCommandContext ctx,
         [Parameter("game"), Description("Name of the game")]
@@ -107,10 +65,11 @@ public sealed class CytrusCommandModule
     {
         await ctx.DeferResponseAsync();
 
-        var mainContent = $"""
-                     Diff of {Formatter.Bold(game.Capitalize())} on {Formatter.Bold(platform)}
-                     {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
-                     """;
+        var mainContent =
+        $"""
+        Diff of {Formatter.Bold(game.Capitalize())} on {Formatter.Bold(platform)}
+        {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
+        """;
 
         var diff = await _cytrusService.GetManifestDiffAsync(game, platform, oldRelease, oldVersion, newRelease, newVersion);
 

@@ -1,4 +1,5 @@
-﻿using Cyberia.Langzilla.Models;
+﻿using Cyberia.Database.Models;
+using Cyberia.Langzilla.Extensions;
 
 using System.Buffers;
 using System.Text;
@@ -45,13 +46,13 @@ public sealed class JsonLangParser : IDisposable
     /// <exception cref="FileNotFoundException">Thrown when the lang file has never been decompiled.</exception>
     public static JsonLangParser Create(Lang lang)
     {
-        var filePath = lang.CurrentDecompiledFilePath;
-        if (!File.Exists(filePath))
+        var decompiledFilePath = lang.GetDecompiledFilePath();
+        if (!File.Exists(decompiledFilePath))
         {
             throw new FileNotFoundException($"The {lang.Name} lang has never been decompiled.");
         }
 
-        return new JsonLangParser(filePath);
+        return new JsonLangParser(decompiledFilePath);
     }
 
     /// <summary>

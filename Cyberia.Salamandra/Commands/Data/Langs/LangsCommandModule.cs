@@ -1,4 +1,6 @@
-﻿using Cyberia.Langzilla;
+﻿using Cyberia.Database.Repositories;
+using Cyberia.Langzilla;
+using Cyberia.Langzilla.Extensions;
 using Cyberia.Langzilla.Primitives;
 using Cyberia.Salamandra.Services;
 
@@ -21,23 +23,26 @@ namespace Cyberia.Salamandra.Commands.Data.Langs;
 public sealed class LangsCommandModule
 {
     private readonly ICachedChannelsManager _cachedChannelsManager;
-    private readonly ICultureService _cultureService;
-    private readonly IEmbedBuilderService _embedBuilderService;
     private readonly ILangsParser _langsParser;
+    private readonly LangRepository _langRepository;
     private readonly ILangsService _langsService;
     private readonly ILangsWatcher _langsWatcher;
 
-    public LangsCommandModule(ICachedChannelsManager cachedChannelsManager, ICultureService cultureService, IEmbedBuilderService embedBuilderService, ILangsParser langsParser, ILangsService langsService, ILangsWatcher langsWatcher)
+    public LangsCommandModule(
+        ICachedChannelsManager cachedChannelsManager,
+        ILangsParser langsParser,
+        LangRepository langRepository,
+        ILangsService langsService,
+        ILangsWatcher langsWatcher)
     {
         _cachedChannelsManager = cachedChannelsManager;
-        _cultureService = cultureService;
-        _embedBuilderService = embedBuilderService;
         _langsParser = langsParser;
+        _langRepository = langRepository;
         _langsService = langsService;
         _langsWatcher = langsWatcher;
     }
 
-    [Command("check"), Description("[Owner] Launch a check to see if there is a new version of the langs")]
+    [Command("check"), Description("[Owner] Launch a check to see if there is a new version of Langs")]
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
     public async Task CheckExecuteAsync(SlashCommandContext ctx,
@@ -48,36 +53,19 @@ public sealed class LangsCommandModule
         [Parameter("force"), Description("Force the check")]
         bool force = false)
     {
-        var typeStr = type.ToStringFast();
+        await ctx.DeferResponseAsync();
 
         if (language is null)
         {
-            await ctx.RespondAsync($"Starting the check of {Formatter.Bold(typeStr)} langs in all languages...");
+            await Task.WhenAll(Enum.GetValues<Language>().Select(x => _langsWatcher.CheckAsync(new LangsIdentifier(type, x), force)));
 
-            await Task.WhenAll(
-                Enum.GetValues<Language>()
-                    .Select(x =>
-                    {
-                        LangsIdentifier identifier = new(type, x);
-                        var repository = _langsWatcher.GetRepository(identifier);
-
-                        return _langsWatcher.CheckAsync(repository, force);
-                    }));
-
-            await ctx.EditResponseAsync($"Check of {Formatter.Bold(typeStr)} langs in all language completed.");
+            await ctx.EditResponseAsync($"Check of {type.ToStringFast()} langs in all language completed.");
             return;
         }
 
-        var languageStr = language.Value.ToStringFast();
+        await _langsWatcher.CheckAsync(new(type, language.Value), force);
 
-        await ctx.RespondAsync($"Starting the check of {Formatter.Bold(typeStr)} langs in {Formatter.Bold(languageStr)}...");
-
-        LangsIdentifier identifier = new(type, language.Value);
-        var repository = _langsWatcher.GetRepository(identifier);
-
-        await _langsWatcher.CheckAsync(repository, force);
-
-        await ctx.EditResponseAsync($"Check of {Formatter.Bold(typeStr)} langs in {Formatter.Bold(languageStr)} completed.");
+        await ctx.EditResponseAsync($"Check of {Formatter.Bold(type.ToStringFast())} langs in {Formatter.Bold(language.Value.ToStringFast())} completed.");
     }
 
     [Command("diff"), Description("[Owner] List the differences between to type of langs")]
@@ -93,7 +81,7 @@ public sealed class LangsCommandModule
     {
         if (_cachedChannelsManager.LangsForumChannel is null)
         {
-            await ctx.RespondAsync("The lang forum channel is not defined.");
+            await ctx.RespondAsync("The lang forum channel is not define or does not exist.");
             return;
         }
 
@@ -102,13 +90,16 @@ public sealed class LangsCommandModule
         if (language is null)
         {
             await Task.WhenAll(Enum.GetValues<Language>().Select(x => _langsService.LaunchManualDiff(type, modelType, x)));
-        }
-        else
-        {
-            await _langsService.LaunchManualDiff(type, modelType, language.Value);
+
+            await ctx.EditResponseAsync($"Diff of {Formatter.Bold(type.ToStringFast())} compared to {Formatter.Bold(modelType.ToStringFast())}" +
+                $" in all language completed.");
+            return;
         }
 
-        await ctx.EditResponseAsync("Diff completed");
+        await _langsService.LaunchManualDiff(type, modelType, language.Value);
+
+        await ctx.EditResponseAsync($"Diff of {Formatter.Bold(type.ToStringFast())} compared to {Formatter.Bold(modelType.ToStringFast())}" +
+            $" in {Formatter.Bold(language.Value.ToStringFast())} completed.");
     }
 
     [Command("parse"), Description("[Owner] Launch the parsing of the langs into JSON")]
@@ -130,28 +121,9 @@ public sealed class LangsCommandModule
 
         var elapsedTime = Stopwatch.GetElapsedTime(startTime);
 
-        var response = success
-            ? $"Langs successfully parsed in {elapsedTime:s\\,ffff}s."
-            : "An error occurred, please check the logs.";
-
-        await ctx.EditResponseAsync(response);
-    }
-
-    [Command("show"), Description("Display the information of the currently online langs")]
-    [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
-    public async Task ShowExecuteAsync(SlashCommandContext ctx,
-        [Parameter("type"), Description("The type to display")]
-        LangType type = LangType.Official,
-        [Parameter("language"), Description("The language to display")]
-        Language language = Language.fr)
-    {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
-
-        LangsIdentifier identifier = new(type, language);
-        var repository = _langsWatcher.GetRepository(identifier);
-
-        await ctx.RespondAsync(await new LangsMessageBuilder(_embedBuilderService, repository, culture)
-            .BuildAsync<DiscordInteractionResponseBuilder>());
+        await ctx.EditResponseAsync(success
+            ? $"Langs successfully parsed in {Formatter.Bold(elapsedTime.ToString("s\\,ffff"))}s."
+            : "An error occurred, check the logs for more information.");
     }
 
     [Command("get"), Description("Returns the requested decompiled lang")]
@@ -163,33 +135,25 @@ public sealed class LangsCommandModule
         Language language,
         [Parameter("name"), Description("The name of the requested lang")]
         [SlashAutoCompleteProvider<LangNameAutocompleteProvider>]
-        string name)
+        int id)
     {
-        LangsIdentifier identifier = new(type, language);
-        var langRepository = _langsWatcher.GetRepository(identifier);
+        await ctx.DeferResponseAsync();
 
-        var lang = langRepository.GetByName(name);
-        if (lang is null)
+        var lang = await _langRepository.GetAsync(id);
+        if (lang is null || (lang.Type != type && lang.Language != language))
         {
-            await ctx.RespondAsync("This lang does not exist.");
+            await ctx.EditResponseAsync($"This {Formatter.Bold(type.ToStringFast())} lang in {Formatter.Bold(language.ToStringFast())} does not exist.");
             return;
         }
 
-        var currentDecompiledFilePath = lang.CurrentDecompiledFilePath;
-        if (string.IsNullOrEmpty(currentDecompiledFilePath))
+        var decompiledFilePath = lang.GetDecompiledFilePath();
+        if (!File.Exists(decompiledFilePath))
         {
-            await ctx.RespondAsync("This lang has never been decompiled.");
+            await ctx.EditResponseAsync($"This {Formatter.Bold(type.ToStringFast())} lang in {Formatter.Bold(language.ToStringFast())} has never been decompiled.");
             return;
         }
 
-        if (!File.Exists(currentDecompiledFilePath))
-        {
-            await ctx.RespondAsync("The decompiled file of this lang is missing.");
-            return;
-        }
-
-        using var fileStream = File.OpenRead(currentDecompiledFilePath);
-        await ctx.RespondAsync(new DiscordInteractionResponseBuilder()
-            .AddFile($"{lang.FileName}.as", fileStream));
+        using var fileStream = File.OpenRead(decompiledFilePath);
+        await ctx.EditResponseAsync(new DiscordInteractionResponseBuilder().AddFile($"{lang.GetFileName}.as", fileStream));
     }
 }

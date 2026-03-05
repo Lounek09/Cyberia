@@ -1,4 +1,5 @@
-﻿using Cyberia.Langzilla.Parser;
+﻿using Cyberia.Database.Repositories;
+using Cyberia.Langzilla.Parser;
 using Cyberia.Langzilla.Primitives;
 
 using System.Collections.ObjectModel;
@@ -41,20 +42,19 @@ public sealed class LangsParser : ILangsParser
         "lang"
     }.AsReadOnly();
 
-    private readonly ILangsWatcher _langsWatcher;
+    private readonly LangRepository _langRepository;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsParser"/> class.
     /// </summary>
-    /// <param name="langsWatcher">The langs watcher to get the langs from.</param>
-    public LangsParser(ILangsWatcher langsWatcher)
+    public LangsParser(LangRepository langRepository)
     {
-        _langsWatcher = langsWatcher;
+        _langRepository = langRepository;
     }
 
     public async Task<bool> ParseAsync(LangsIdentifier identifier)
     {
-        var repository = _langsWatcher.GetRepository(identifier);
+        var langs = await _langRepository.GetManyByIdentifierAsync(identifier);
         var outputPath = Path.Join(OutputPath, identifier.Type.ToStringFast().ToLower(), identifier.Language.ToStringFast());
 
         Directory.CreateDirectory(outputPath);
@@ -63,7 +63,7 @@ public sealed class LangsParser : ILangsParser
 
         try
         {
-            await Parallel.ForEachAsync(repository.Langs, new ParallelOptions { CancellationToken = cts.Token }, async (lang, token) =>
+            await Parallel.ForEachAsync(langs, new ParallelOptions { CancellationToken = cts.Token }, async (lang, token) =>
             {
                 if (IgnoredLangs.Contains(lang.Name))
                 {
@@ -80,7 +80,7 @@ public sealed class LangsParser : ILangsParser
                 }
                 catch (Exception e)
                 {
-                    Log.Error(e, "An error occurred while parsing {LangType} {LangName} lang in {Language}", identifier.Type, lang.Name, identifier.Language);
+                    Log.Error(e, "An error occurred while parsing {Type} {Name} lang in {Language}", identifier.Type, lang.Name, identifier.Language);
 
                     cts.Cancel();
                 }
@@ -96,8 +96,7 @@ public sealed class LangsParser : ILangsParser
 
     public async Task<bool> ParseAllAsync(LangType type)
     {
-        var tasks = Enum.GetValues<Language>()
-            .Select(language => ParseAsync(new LangsIdentifier(type, language)));
+        var tasks = Enum.GetValues<Language>().Select(language => ParseAsync(new LangsIdentifier(type, language)));
 
         var results = await Task.WhenAll(tasks);
 

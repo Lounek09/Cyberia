@@ -27,11 +27,11 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         const string query =
         $"""
         SELECT * FROM {nameof(DiscordCachedUser)}
-        WHERE {nameof(DiscordCachedUser.Id)} = @Id
+        WHERE {nameof(DiscordCachedUser.Id)} = @id
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<DiscordCachedUser>(query, new { Id = id });
+        return await connection.QueryFirstOrDefaultAsync<DiscordCachedUser>(query, new { id });
     }
 
     public async Task<IEnumerable<DiscordCachedUser>> GetManyAsync(params IEnumerable<ulong> ids)
@@ -40,7 +40,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         $"""
         SELECT * 
         FROM {nameof(DiscordCachedUser)}
-        WHERE {nameof(DiscordCachedUser.Id)} IN @Ids
+        WHERE {nameof(DiscordCachedUser.Id)} IN @ids
         """;
 
         if (!ids.Any())
@@ -49,7 +49,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryAsync<DiscordCachedUser>(query, new { Ids = ids });
+        return await connection.QueryAsync<DiscordCachedUser>(query, new { ids });
     }
 
     public async Task<bool> UpsertAsync(DiscordCachedUser entity)
@@ -98,11 +98,11 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         const string query =
         $"""
         DELETE FROM {nameof(DiscordCachedUser)}
-        WHERE {nameof(DiscordCachedUser.Id)} = @Id
+        WHERE {nameof(DiscordCachedUser.Id)} = @id
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { Id = id }) > 0;
+        return await connection.ExecuteAsync(query, new { id }) > 0;
     }
 
     public async Task<int> DeleteManyAsync(params IEnumerable<ulong> ids)
@@ -110,7 +110,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         const string query =
         $"""
         DELETE FROM {nameof(DiscordCachedUser)}
-        WHERE {nameof(DiscordCachedUser.Id)} IN @Ids
+        WHERE {nameof(DiscordCachedUser.Id)} IN @ids
         """;
 
         if (!ids.Any())
@@ -119,7 +119,7 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { Ids = ids });
+        return await connection.ExecuteAsync(query, new { ids });
     }
 
     /// <summary>
@@ -133,10 +133,10 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         $"""
         SELECT {nameof(DiscordCachedUser.Locale)}
         FROM {nameof(DiscordCachedUser)}
-        WHERE {nameof(DiscordCachedUser.Id)} = @Id
+        WHERE {nameof(DiscordCachedUser.Id)} = @id
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<string>(query, new { Id = id });
+        return await connection.QueryFirstOrDefaultAsync<string>(query, new { id });
     }
 }

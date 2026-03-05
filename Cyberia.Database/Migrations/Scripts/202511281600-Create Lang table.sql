@@ -4,6 +4,8 @@
     Language INTEGER NOT NULL,
     Name TEXT NOT NULL,
     Version INTEGER NOT NULL,
-    IsNew INTEGER NOT NULL CHECK(IsNew IN (0, 1)) DEFAULT 0, -- BOOLEAN
-    UNIQUE(Type, Language, Name)
+    IsNew INTEGER NOT NULL CHECK(IsNew IN (0, 1)) DEFAULT 0 -- BOOLEAN
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS uindex_Lang_Type_Language_Name
+ON Lang(Type, Language, Name);

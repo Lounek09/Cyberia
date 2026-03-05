@@ -1,6 +1,8 @@
-﻿using Cyberia.Langzilla;
+﻿using Cyberia.Database.Models;
+using Cyberia.Database.Repositories;
+using Cyberia.Langzilla;
 using Cyberia.Langzilla.EventArgs;
-using Cyberia.Langzilla.Models;
+using Cyberia.Langzilla.Extensions;
 using Cyberia.Langzilla.Primitives;
 using Cyberia.Salamandra.Extensions.DSharpPlus;
 
@@ -29,22 +31,31 @@ public interface ILangsService
     /// </summary>
     /// <param name="_">Ignored.</param>
     /// <param name="eventArgs">The event arguments.</param>
-    ValueTask OnNewLangFilesDetected(ILangsWatcher _, NewLangFilesDetectedEventArgs eventArgs);
+    ValueTask OnNewLangsDetected(ILangsWatcher _, NewLangsDetectedEventArgs eventArgs);
+
+    /// <summary>
+    /// Handles the event when an error occurs in the Langs watcher.
+    /// </summary>
+    /// <param name="_">Ignored.</param>
+    /// <param name="eventArgs">The event arguments.</param>
+    ValueTask OnLangsErrored(ILangsWatcher _, LangsErroredEventArgs eventArgs);
 }
 
 public sealed class LangsService : ILangsService
 {
     private readonly ICachedChannelsManager _cachedChannelsManager;
+    private readonly IEmbedBuilderService _embedBuilderService;
+    private readonly LangRepository _langRepository;
     private readonly ILangsWatcher _langsWatcher;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsService"/> class.
     /// </summary>
-    /// <param name="cachedChannelsManager">The service to get the cached channels from.</param>
-    /// <param name="langsWatcher">The watcher to get the langs from.</param>
-    public LangsService(ICachedChannelsManager cachedChannelsManager, ILangsWatcher langsWatcher)
+    public LangsService(ICachedChannelsManager cachedChannelsManager, IEmbedBuilderService embedBuilderService, LangRepository langRepository, ILangsWatcher langsWatcher)
     {
         _cachedChannelsManager = cachedChannelsManager;
+        _embedBuilderService = embedBuilderService;
+        _langRepository = langRepository;
         _langsWatcher = langsWatcher;
     }
 
@@ -57,36 +68,35 @@ public sealed class LangsService : ILangsService
         }
 
         var isSameType = currentType == modelType;
-
         LangsIdentifier currentIdentifier = new(currentType, language);
-        var currentRepository = _langsWatcher.GetRepository(currentIdentifier);
-
         LangsIdentifier modelIdentifier = new(modelType, language);
-        var modelRepository = _langsWatcher.GetRepository(modelIdentifier);
+
+        var currentLangs = await _langRepository.GetManyByIdentifierAsync(currentIdentifier);
+        var modelLangs = await _langRepository.GetManyByIdentifierAsync(modelIdentifier);
 
         var thread = isSameType
-            ? await CreateAutoDiffPostAsync(forum, currentRepository)
-            : await CreateManualDiffPostAsync(forum, currentRepository, modelRepository);
+            ? await CreateAutoDiffPostAsync(forum, currentIdentifier)
+            : await CreateManualDiffPostAsync(forum, currentIdentifier, modelIdentifier);
 
-        foreach (var lang in currentRepository.Langs)
+        foreach (var currentLang in currentLangs)
         {
             var rateLimit = Task.Delay(1000);
 
             if (isSameType)
             {
-                await SendAutoDiffLangMessageAsync(thread, lang);
+                await SendAutoDiffLangMessageAsync(thread, currentLang);
             }
             else
             {
-                var langModel = modelRepository.GetByName(lang.Name);
-                await SendManualDiffLangMessageAsync(thread, lang, langModel);
+                var modelLang = modelLangs.FirstOrDefault(x => x.Name.Equals(currentLang.Name, StringComparison.OrdinalIgnoreCase));
+                await SendManualDiffLangMessageAsync(thread, currentLang, modelLang);
             }
 
             await rateLimit;
         }
     }
 
-    public async ValueTask OnNewLangFilesDetected(ILangsWatcher _, NewLangFilesDetectedEventArgs eventArgs)
+    public async ValueTask OnNewLangsDetected(ILangsWatcher _, NewLangsDetectedEventArgs eventArgs)
     {
         var forum = _cachedChannelsManager.LangsForumChannel;
         if (forum is null)
@@ -94,7 +104,7 @@ public sealed class LangsService : ILangsService
             return;
         }
 
-        var thread = await CreateAutoDiffPostAsync(forum, eventArgs.Repository);
+        var thread = await CreateAutoDiffPostAsync(forum, eventArgs.Identifier);
 
         foreach (var updatedLang in eventArgs.UpdatedLangs)
         {
@@ -106,22 +116,32 @@ public sealed class LangsService : ILangsService
         }
     }
 
+    public async ValueTask OnLangsErrored(ILangsWatcher _, LangsErroredEventArgs eventArgs)
+    {
+        var embed = _embedBuilderService.CreateErrorEmbedBuilder(
+            "An error occurred while checking for new Langs version",
+            eventArgs.ErrorMessage,
+            eventArgs.Exception);
+
+        await _cachedChannelsManager.SendErrorMessage(embed);
+    }
+
     /// <summary>
     /// Creates a forum post for the auto diff of langs.
     /// </summary>
     /// <param name="forum">The forum channel where to create the post.</param>
-    /// <param name="repository">The repository of langs diff.</param>
+    /// <param name="identifier">The identifier of the langs diff.</param>
     /// <returns>The created thread channel.</returns>
-    private static async Task<DiscordThreadChannel> CreateAutoDiffPostAsync(DiscordForumChannel forum, LangsRepositoryOld repository)
+    private async Task<DiscordThreadChannel> CreateAutoDiffPostAsync(DiscordForumChannel forum, LangsIdentifier identifier)
     {
-        var lastChange = repository.LastChange.ToLocalTime();
-        var type = repository.Type.ToStringFast();
-        var language = repository.Language.ToStringFast();
+        var lastModified = _langsWatcher.LastModifieds[identifier].ToLocalTime();
+        var type = identifier.Type.ToStringFast();
+        var language = identifier.Language.ToStringFast();
 
         var postBuilder = new ForumPostBuilder()
-            .WithName($"{type} {language} {DateTime.Now:yyyy-MM-dd HH:mm}")
+            .WithName($"Diff of {type} in {language} - {DateTime.Now:yyyy-MM-dd HH:mm}")
             .WithMessage(new DiscordMessageBuilder().WithContent(
-                $"Diff of langs {Formatter.Bold(type)} from {lastChange:yyyy-MM-dd HH:mmzzz} in {Formatter.Bold(language)}"));
+                $"Diff of langs {Formatter.Bold(type)} from {lastModified:yyyy-MM-dd HH:mmzzz} in {Formatter.Bold(language)}"));
 
         var typeTag = forum.GetDiscordForumTagByName(type);
         if (typeTag is not null)
@@ -143,23 +163,24 @@ public sealed class LangsService : ILangsService
     /// Creates a forum post for the manual diff of langs.
     /// </summary>
     /// <param name="forum">The forum channel where to create the post.</param>
-    /// <param name="currentRepository">The current repository of the langs diff.</param>
-    /// <param name="modelRepository">The model repository of the langs diff.</param>
+    /// <param name="currentIdentifier">The identifier of the current langs diff.</param>
+    /// <param name="modelIdentifier">The identifier of the model langs diff.</param>
     /// <returns>The created thread channel.</returns>
-    private static async Task<DiscordThreadChannel> CreateManualDiffPostAsync(DiscordForumChannel forum, LangsRepositoryOld currentRepository, LangsRepositoryOld modelRepository)
+    private async Task<DiscordThreadChannel> CreateManualDiffPostAsync(DiscordForumChannel forum, LangsIdentifier currentIdentifier, LangsIdentifier modelIdentifier)
     {
-        var currentLastChange = currentRepository.LastChange.ToLocalTime();
-        var currentType = currentRepository.Type.ToStringFast();
-        var currentLanguage = currentRepository.Language.ToStringFast();
+        var currentLastModified = _langsWatcher.LastModifieds[currentIdentifier].ToLocalTime();
+        var currentType = currentIdentifier.Type.ToStringFast();
 
-        var modelLastChange = modelRepository.LastChange.ToLocalTime();
-        var modelType = modelRepository.Type.ToStringFast();
+        var modelLastModified = _langsWatcher.LastModifieds[modelIdentifier].ToLocalTime();
+        var modelType = modelIdentifier.Type.ToStringFast();
+
+        var language = currentIdentifier.Language.ToStringFast();
 
         var postBuilder = new ForumPostBuilder()
-            .WithName($"Diff of {currentType} compared to {modelType} in {currentLanguage} {DateTime.Now:yyyy-MM-dd HH:mm}")
+            .WithName($"Diff of {currentType} compared to {modelType} in {language} - {DateTime.Now:yyyy-MM-dd HH:mm}")
             .WithMessage(new DiscordMessageBuilder().WithContent(
-                $"Diff of langs {Formatter.Bold(currentType)} from {currentLastChange:yyyy-MM-dd HH:mmzzz} " +
-                $"and {Formatter.Bold(modelType)} from {modelLastChange:yyyy-MM-dd HH:mmzzz} in {Formatter.Bold(currentLanguage)}"));
+                $"Diff of langs {Formatter.Bold(currentType)} from {currentLastModified:yyyy-MM-dd HH:mmzzz} " +
+                $"compared to {Formatter.Bold(modelType)} from {modelLastModified:yyyy-MM-dd HH:mmzzz} in {Formatter.Bold(language)}"));
 
         var tag = forum.GetDiscordForumTagByName(DiscordForumChannelExtensions.ManualDiffTagName);
         if (tag is not null)
@@ -167,7 +188,7 @@ public sealed class LangsService : ILangsService
             postBuilder.AddTag(tag);
         }
 
-        var languageTag = forum.GetDiscordForumTagByName(currentLanguage);
+        var languageTag = forum.GetDiscordForumTagByName(language);
         if (languageTag is not null)
         {
             postBuilder.AddTag(languageTag);
@@ -182,14 +203,14 @@ public sealed class LangsService : ILangsService
     /// </summary>
     /// <param name="thread">The thread channel where to send the message.</param>
     /// <param name="lang">The updated lang.</param>
-    private static async Task SendAutoDiffLangMessageAsync(DiscordThreadChannel thread, LangOld lang)
+    private static async Task SendAutoDiffLangMessageAsync(DiscordThreadChannel thread, Lang lang)
     {
         var message = new DiscordMessageBuilder()
             .WithContent(
-                $"{(lang.New ? $"{Formatter.Bold("New")} lang" : "Lang")} " +
+                $"{(lang.IsNew ? $"{Formatter.Bold("New")} lang" : "Lang")} " +
                 $"{Formatter.Bold(lang.Name)} version {Formatter.Bold(lang.Version.ToString())}");
 
-        var diffFilePath = lang.DiffFilePath;
+        var diffFilePath = lang.GetDiffFilePath();
         if (!File.Exists(diffFilePath))
         {
             await thread.SendMessageSafeAsync(message);
@@ -204,17 +225,23 @@ public sealed class LangsService : ILangsService
     /// Sends a manual diff message to the specified thread channel.
     /// </summary>
     /// <param name="thread">The thread channel where to send the message.</param>
-    /// <param name="currentLang">The updated lang.</param>
+    /// <param name="lang">The updated lang.</param>
     /// <param name="modelLang">The model lang.</param>
-    private static async Task SendManualDiffLangMessageAsync(DiscordThreadChannel thread, LangOld currentLang, LangOld? modelLang)
+    private static async Task SendManualDiffLangMessageAsync(DiscordThreadChannel thread, Lang lang, Lang? modelLang)
     {
         var message = new DiscordMessageBuilder()
             .WithContent(
-                $"{(currentLang.New ? $"{Formatter.Bold("New")} lang" : "Lang")} " +
-                $"{Formatter.Bold(currentLang.Name)} version {Formatter.Bold(currentLang.Version.ToString())}" +
+                $"{(lang.IsNew ? $"{Formatter.Bold("New")} lang" : "Lang")} " +
+                $"{Formatter.Bold(lang.Name)} version {Formatter.Bold(lang.Version.ToString())}" +
                 (modelLang is null ? $", not present in langs {modelLang}" : string.Empty));
 
-        var diff = currentLang.Diff(modelLang);
+        if (modelLang is null)
+        {
+            await thread.SendMessageSafeAsync(message);
+            return;
+        }
+
+        var diff = Lang.Diff(lang, modelLang);
         if (string.IsNullOrEmpty(diff))
         {
             await thread.SendMessageSafeAsync(message);
@@ -222,6 +249,6 @@ public sealed class LangsService : ILangsService
         }
 
         using MemoryStream memoryStream = new(Encoding.UTF8.GetBytes(diff));
-        await thread.SendMessageSafeAsync(message.AddFile($"{currentLang.Name}.as", memoryStream));
+        await thread.SendMessageSafeAsync(message.AddFile($"{lang.Name}.as", memoryStream));
     }
 }

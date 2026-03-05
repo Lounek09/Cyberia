@@ -12,7 +12,7 @@ public sealed class SQLiteDbConnectionFactory : IDbConnectionFactory<SQLiteConne
     /// <summary>
     /// Initializes a new instance of the <see cref="SQLiteDbConnectionFactory"/> class.
     /// </summary>
-    /// <param name="connectionString"></param>
+    /// <param name="connectionString">The connection string to the SQLite database.</param>
     public SQLiteDbConnectionFactory(string connectionString)
     {
         _connectionString = connectionString;

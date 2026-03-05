@@ -44,32 +44,19 @@ public interface ICytrusWatcher
     void Watch(TimeSpan dueTime, TimeSpan interval);
 
     /// <summary>
-    /// Asynchronously checks for updates of Cytrus.
+    /// Checks for updates of Cytrus.
     /// </summary>
-    /// <remarks>
-    /// This method performs the following steps:
-    /// <list type="number">
-    ///     <item>Sends a GET request to the Cytrus file URL.</item>
-    ///     <item>If the request is successful, it reads the response content as a string.</item>
-    ///     <item>If a previous Cytrus file exists, it reads the file content as a string, otherwise it uses an empty JSON object string.</item>
-    ///     <item>Calculates the difference between the new and old Cytrus data.</item>
-    ///     <item>If there is no difference, it returns.</item>
-    ///     <item>Replaces the old Cytrus data by the new Cytrus data.</item>
-    ///     <item>Loads the new Cytrus data from the response content.</item>
-    ///     <item>Triggers the <see cref="NewCytrusFileDetected"/> event with the difference.</item>
-    /// </list>
-    /// </remarks>
     Task CheckAsync();
 
     /// <summary>
-    /// Delegate for the <see cref="NewCytrusFileDetected"/> event.
+    /// Delegate for the <see cref="NewCytrusDetected"/> event.
     /// </summary>
-    delegate ValueTask NewCytrusFileDetectedEventHandler(ICytrusWatcher sender, NewCytrusFileDetectedEventArgs eventArgs);
+    delegate ValueTask NewCytrusDetectedEventHandler(ICytrusWatcher sender, NewCytrusDetectedEventArgs eventArgs);
 
     /// <summary>
     /// Event that is triggered when a new Cytrus file is detected.
     /// </summary>
-    event NewCytrusFileDetectedEventHandler? NewCytrusFileDetected;
+    event NewCytrusDetectedEventHandler? NewCytrusDetected;
 
     /// <summary>
     /// Delegate for the <see cref="CytrusErrored"/> event.
@@ -121,11 +108,8 @@ public sealed class CytrusWatcher : ICytrusWatcher
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusWatcher"/> class.
     /// </summary>
-    /// <param name="monitoredFileRepository">The repository for monitored files.</param>
     public CytrusWatcher(MonitoredFileRepository monitoredFileRepository)
     {
-        Directory.CreateDirectory(OutputPath);
-
         _monitoredFileRepository = monitoredFileRepository;
         _httpClient = new()
         {
@@ -136,6 +120,8 @@ public sealed class CytrusWatcher : ICytrusWatcher
 
     public async Task InitializeAsync()
     {
+        Directory.CreateDirectory(OutputPath);
+
         Cytrus = await LoadCytrusAsync(CytrusPath) ?? new();
         OldCytrus = await LoadCytrusAsync(OldCytrusPath) ?? new();
         LastModified = await _monitoredFileRepository.GetLastModifiedByIdAsync(c_monitoredFileId);
@@ -164,14 +150,14 @@ public sealed class CytrusWatcher : ICytrusWatcher
             await _monitoredFileRepository.UpsertAsync(new MonitoredFile
             {
                 Id = c_monitoredFileId,
-                LastModified = LastModified
+                LastModified = lastModified.Value
             });
 
             json = await response.Content.ReadAsStringAsync();
         }
         catch (HttpRequestException e)
         {
-            Log.Error(e, "An error occurred while sending a GET request to {CytrusUrl}", $"{BaseUrl}/{CytrusFileName}");
+            Log.Error(e, "An error occurred while sending a GET request to {Url}", $"{BaseUrl}/{CytrusFileName}");
             await OnCytrusErroredAsync(new CytrusErroredEventArgs(e, "An error occurred while sending a GET request to the Cytrus URL, see the logs for more details."));
 
             return;
@@ -203,7 +189,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
         File.WriteAllText(CytrusPath, json);
 
         Log.Information("Cytrus update detected :\n{CytrusDiff}", diff);
-        await OnNewCytrusFileDetectedAsync(new NewCytrusFileDetectedEventArgs(Cytrus, OldCytrus, diff));
+        await OnNewCytrusDetectedAsync(new NewCytrusDetectedEventArgs(Cytrus, OldCytrus, diff));
     }
 
     /// <summary>
@@ -211,7 +197,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
     /// </summary>
     /// <param name="path">The path to the Cytrus file.</param>
     /// <returns>The loaded Cytrus data, or <see langword="null"/> if the file does not exist.</returns>
-    private static async Task<Cytrus?> LoadCytrusAsync(string path)
+    internal static async Task<Cytrus?> LoadCytrusAsync(string path)
     {
         if (!File.Exists(path))
         {
@@ -227,7 +213,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
     /// </summary>
     /// <param name="stream">The stream containing the Cytrus data.</param>
     /// <returns>The deserialized Cytrus data, or <see langword="null"/> if the deserialization fails.</returns>
-    private static async Task<Cytrus?> DeserializeCytrusAsync(Stream stream)
+    internal static async Task<Cytrus?> DeserializeCytrusAsync(Stream stream)
     {
         try
         {
@@ -246,7 +232,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
     /// </summary>
     /// <param name="json">The JSON string containing the Cytrus data.</param>
     /// <returns>The deserialized Cytrus data, or <see langword="null"/> if the deserialization fails.</returns>
-    private static Cytrus? DeserializeCytrus([StringSyntax(StringSyntaxAttribute.Json)] string json)
+    internal static Cytrus? DeserializeCytrus([StringSyntax(StringSyntaxAttribute.Json)] string json)
     {
         try
         {
@@ -262,14 +248,14 @@ public sealed class CytrusWatcher : ICytrusWatcher
 
     #region Events
 
-    public event ICytrusWatcher.NewCytrusFileDetectedEventHandler? NewCytrusFileDetected;
+    public event ICytrusWatcher.NewCytrusDetectedEventHandler? NewCytrusDetected;
 
     /// <summary>
-    /// Triggers the <see cref="NewCytrusFileDetected"/> event.
+    /// Triggers the <see cref="NewCytrusDetected"/> event.
     /// </summary>
-    internal async ValueTask OnNewCytrusFileDetectedAsync(NewCytrusFileDetectedEventArgs eventArgs)
+    internal async ValueTask OnNewCytrusDetectedAsync(NewCytrusDetectedEventArgs eventArgs)
     {
-        var handler = NewCytrusFileDetected;
+        var handler = NewCytrusDetected;
         if (handler is not null)
         {
             await handler.Invoke(this, eventArgs);

@@ -91,7 +91,7 @@ public static class Program
             }
 
             var langsWatcher = provider.GetRequiredService<ILangsWatcher>();
-            //await langsWatcher.InitializeAsync();
+            await langsWatcher.InitializeAsync();
 
             if (cyberiaConfig.EnableCheckLang)
             {

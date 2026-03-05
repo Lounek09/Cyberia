@@ -34,7 +34,7 @@ public interface ICytrusService
     /// </summary>
     /// <param name="_">Ignored.</param>
     /// <param name="eventArgs">The event arguments.</param>
-    ValueTask OnNewCytrusFileDetected(ICytrusWatcher _, NewCytrusFileDetectedEventArgs eventArgs);
+    ValueTask OnNewCytrusDetected(ICytrusWatcher _, NewCytrusDetectedEventArgs eventArgs);
 
     /// <summary>
     /// Handles the event when an error occurs in the Cytrus watcher.
@@ -48,21 +48,15 @@ public sealed class CytrusService : ICytrusService
 {
     private readonly ICachedChannelsManager _cachedChannelsManager;
     private readonly ICytrusManifestFetcher _cytrusManifestFetcher;
-    private readonly ICytrusWatcher _cytrusWatcher;
     private readonly IEmbedBuilderService _embedBuilderService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusService"/> class.
     /// </summary>
-    /// <param name="cachedChannelsManager">The service to get the cached channels from.</param>
-    /// <param name="cytrusManifestFetcher">The fetcher to get the manifest from.</param>
-    /// <param name="cytrusWatcher">The watcher to get the Cytrus data from.</param>
-    /// <param name="embedBuilderService">The service to build embeds.</param>"
-    public CytrusService(ICachedChannelsManager cachedChannelsManager, ICytrusManifestFetcher cytrusManifestFetcher, ICytrusWatcher cytrusWatcher, IEmbedBuilderService embedBuilderService)
+    public CytrusService(ICachedChannelsManager cachedChannelsManager, ICytrusManifestFetcher cytrusManifestFetcher, IEmbedBuilderService embedBuilderService)
     {
         _cachedChannelsManager = cachedChannelsManager;
         _cytrusManifestFetcher = cytrusManifestFetcher;
-        _cytrusWatcher = cytrusWatcher;
         _embedBuilderService = embedBuilderService;
     }
 
@@ -89,7 +83,7 @@ public sealed class CytrusService : ICytrusService
         return diff;
     }
 
-    public async ValueTask OnNewCytrusFileDetected(ICytrusWatcher _, NewCytrusFileDetectedEventArgs eventArgs)
+    public async ValueTask OnNewCytrusDetected(ICytrusWatcher _, NewCytrusDetectedEventArgs eventArgs)
     {
         await SendCytrusDiffAsync(eventArgs);
         await SendManifestDiffAsync(eventArgs);
@@ -98,7 +92,7 @@ public sealed class CytrusService : ICytrusService
     public async ValueTask OnCytrusErrored(ICytrusWatcher _, CytrusErroredEventArgs eventArgs)
     {
         var embed = _embedBuilderService.CreateErrorEmbedBuilder(
-            "An error occurred while processing Cytrus data",
+            "An error occurred while checking for a new Cytrus version",
             eventArgs.ErrorMessage,
             eventArgs.Exception);
 
@@ -109,7 +103,7 @@ public sealed class CytrusService : ICytrusService
     /// Sends the Cytrus diff to the Cytrus channel.
     /// </summary>
     /// <param name="eventArgs">The event arguments containing the diff.</param>
-    private async Task SendCytrusDiffAsync(NewCytrusFileDetectedEventArgs eventArgs)
+    private async Task SendCytrusDiffAsync(NewCytrusDetectedEventArgs eventArgs)
     {
         var channel = _cachedChannelsManager.CytrusChannel;
         if (channel is null)
@@ -133,7 +127,7 @@ public sealed class CytrusService : ICytrusService
     /// Sends the manifest diff of the windows platform if it exists to the Cytrus manifest channel.
     /// </summary>
     /// <param name="eventArgs">The event arguments containing the diff.</param>
-    private async Task SendManifestDiffAsync(NewCytrusFileDetectedEventArgs eventArgs)
+    private async Task SendManifestDiffAsync(NewCytrusDetectedEventArgs eventArgs)
     {
         var channel = _cachedChannelsManager.CytrusManifestChannel;
         if (channel is null)

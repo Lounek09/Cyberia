@@ -28,11 +28,11 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         const string query =
         $"""
         SELECT * FROM {nameof(Lang)}
-        WHERE {nameof(Lang.Id)} = @Id
+        WHERE {nameof(Lang.Id)} = @id
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<Lang>(query, new { Id = id });
+        return await connection.QueryFirstOrDefaultAsync<Lang>(query, new { id });
     }
 
     public async Task<IEnumerable<Lang>> GetManyAsync(params IEnumerable<int> ids)
@@ -41,7 +41,7 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         $"""
         SELECT * 
         FROM {nameof(Lang)}
-        WHERE {nameof(Lang.Id)} IN @Ids
+        WHERE {nameof(Lang.Id)} IN @ids
         """;
 
         if (!ids.Any())
@@ -50,7 +50,7 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryAsync<Lang>(query, new { Ids = ids });
+        return await connection.QueryAsync<Lang>(query, new { ids });
     }
 
     public async Task<bool> UpsertAsync(Lang entity)
@@ -101,11 +101,11 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         const string query =
         $"""
         DELETE FROM {nameof(Lang)}
-        WHERE {nameof(Lang.Id)} = @Id
+        WHERE {nameof(Lang.Id)} = @id
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { Id = id }) > 0;
+        return await connection.ExecuteAsync(query, new { id }) > 0;
     }
 
     public async Task<int> DeleteManyAsync(params IEnumerable<int> ids)
@@ -125,7 +125,7 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         return await connection.ExecuteAsync(query, new { Ids = ids });
     }
 
-    public async Task<IEnumerable<Lang>> GetManyByLangsIdentifierAsync(LangsIdentifier identifier)
+    public async Task<IEnumerable<Lang>> GetManyByIdentifierAsync(LangsIdentifier identifier)
     {
         const string query =
         $"""
@@ -139,7 +139,7 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         return await connection.QueryAsync<Lang>(query, new { identifier.Type, identifier.Language });
     }
 
-    public async Task<IEnumerable<Lang>> GetManyByIdentifierAndNameAsync(LangsIdentifier identifier, string name)
+    public async Task<Lang?> GetByIdentifierAndNameAsync(LangsIdentifier identifier, string name)
     {
         const string query =
         $"""
@@ -147,10 +147,27 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         FROM {nameof(Lang)}
         WHERE {nameof(Lang.Type)} = @{nameof(LangsIdentifier.Type)}
         AND {nameof(Lang.Language)} = @{nameof(LangsIdentifier.Language)}
-        AND {nameof(Lang.Name)} LIKE %@Name%
+        AND {nameof(Lang.Name)} = @name
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryAsync<Lang>(query, new { identifier.Type, identifier.Language, Name = name });
+        return await connection.QueryFirstOrDefaultAsync<Lang>(query, new { identifier.Type, identifier.Language, name });
+    }
+
+    public async Task<IEnumerable<Lang>> SearchByIdentifierAndNameAsync(LangsIdentifier identifier, string name, int limit = -1, int offset = 0)
+    {
+        const string query =
+        $"""
+        SELECT * 
+        FROM {nameof(Lang)}
+        WHERE {nameof(Lang.Type)} = @{nameof(LangsIdentifier.Type)}
+        AND {nameof(Lang.Language)} = @{nameof(LangsIdentifier.Language)}
+        AND (@name = '' OR {nameof(Lang.Name)} LIKE '%' || @name || '%')
+        ORDER BY {nameof(Lang.Name)}
+        LIMIT @limit OFFSET @offset
+        """;
+
+        using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.QueryAsync<Lang>(query, new { identifier.Type, identifier.Language, name, limit, offset });
     }
 }

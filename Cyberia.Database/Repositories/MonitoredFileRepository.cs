@@ -27,11 +27,11 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         const string query =
         $"""
         SELECT * FROM {nameof(MonitoredFile)}
-        WHERE {nameof(MonitoredFile.Id)} = @Id
+        WHERE {nameof(MonitoredFile.Id)} = @id
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<MonitoredFile>(query, new { Id = id });
+        return await connection.QueryFirstOrDefaultAsync<MonitoredFile>(query, new { id });
     }
 
     public async Task<IEnumerable<MonitoredFile>> GetManyAsync(params IEnumerable<string> ids)
@@ -40,7 +40,7 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         $"""
         SELECT * 
         FROM {nameof(MonitoredFile)}
-        WHERE {nameof(MonitoredFile.Id)} IN @Ids
+        WHERE {nameof(MonitoredFile.Id)} IN @ids
         """;
 
         if (!ids.Any())
@@ -49,7 +49,7 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryAsync<MonitoredFile>(query, new { Ids = ids });
+        return await connection.QueryAsync<MonitoredFile>(query, new { ids });
     }
 
     public async Task<bool> UpsertAsync(MonitoredFile file)
@@ -98,11 +98,11 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         const string query =
         $"""
         DELETE FROM {nameof(MonitoredFile)}
-        WHERE {nameof(MonitoredFile.Id)} = @Id
+        WHERE {nameof(MonitoredFile.Id)} = @id
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { Id = id }) > 0;
+        return await connection.ExecuteAsync(query, new { id }) > 0;
     }
 
     public async Task<int> DeleteManyAsync(params IEnumerable<string> ids)
@@ -110,7 +110,7 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         const string query =
         $"""
         DELETE FROM {nameof(MonitoredFile)}
-        WHERE {nameof(MonitoredFile.Id)} IN @Ids
+        WHERE {nameof(MonitoredFile.Id)} IN @ids
         """;
 
         if (!ids.Any())
@@ -119,7 +119,7 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { Ids = ids });
+        return await connection.ExecuteAsync(query, new { ids });
     }
 
     /// <summary>
@@ -133,10 +133,10 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         $"""
         SELECT {nameof(MonitoredFile.LastModified)}
         FROM {nameof(MonitoredFile)}
-        WHERE {nameof(MonitoredFile.Id)} = @Id
+        WHERE {nameof(MonitoredFile.Id)} = @id
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<DateTime>(query, new { Id = id });
+        return await connection.QueryFirstOrDefaultAsync<DateTime>(query, new { id });
     }
 }

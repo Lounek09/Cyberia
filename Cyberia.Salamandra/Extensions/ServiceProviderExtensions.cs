@@ -25,13 +25,14 @@ public static class ServiceProviderExtensions
             var cytrusService = provider.GetRequiredService<ICytrusService>();
             var cytrusWatcher = provider.GetRequiredService<ICytrusWatcher>();
 
-            cytrusWatcher.NewCytrusFileDetected += cytrusService.OnNewCytrusFileDetected;
+            cytrusWatcher.NewCytrusDetected += cytrusService.OnNewCytrusDetected;
             cytrusWatcher.CytrusErrored += cytrusService.OnCytrusErrored;
 
             var langsService = provider.GetRequiredService<ILangsService>();
             var langsWatcher = provider.GetRequiredService<ILangsWatcher>();
 
-            langsWatcher.NewLangFilesDetected += langsService.OnNewLangFilesDetected;
+            langsWatcher.NewLangsDetected += langsService.OnNewLangsDetected;
+            langsWatcher.LangsErrored += langsService.OnLangsErrored;
 
             return provider;
         }

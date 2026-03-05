@@ -5,4 +5,10 @@
 /// </summary>
 /// <param name="Type">The type of the langs.</param>
 /// <param name="Language">The language of the langs.</param>
-public readonly record struct LangsIdentifier(LangType Type, Language Language);
+public readonly record struct LangsIdentifier(LangType Type, Language Language)
+{
+    public override string ToString()
+    {
+        return $"{Type.ToStringFast()}-{Language.ToStringFast()}";
+    }
+}
