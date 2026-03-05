@@ -7,11 +7,11 @@ using DSharpPlus.Entities;
 
 namespace Cyberia.Salamandra.Commands.Data.Cytrus;
 
-public sealed class CytrusOldVersionAutocompleteProvider : IAutoCompleteProvider
+public sealed class CytrusModelVersionAutocompleteProvider : IAutoCompleteProvider
 {
     private readonly ICytrusWatcher _cytrusWatcher;
 
-    public CytrusOldVersionAutocompleteProvider(ICytrusWatcher cytrusWatcher)
+    public CytrusModelVersionAutocompleteProvider(ICytrusWatcher cytrusWatcher)
     {
         _cytrusWatcher = cytrusWatcher;
     }

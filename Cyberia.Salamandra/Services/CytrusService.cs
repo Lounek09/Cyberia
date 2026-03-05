@@ -22,12 +22,12 @@ public interface ICytrusService
     /// </summary>
     /// <param name="game">The name of the game.</param>
     /// <param name="platform">The platform of the game.</param>
-    /// <param name="oldRelease">The old release of the game.</param>
-    /// <param name="oldVersion">The old version of the game.</param>
-    /// <param name="newRelease">The new release of the game.</param>
-    /// <param name="newVersion">The new version of the game.</param>
-    /// <returns>The differences between the two versions as a string.</returns>
-    Task<string> GetManifestDiffAsync(string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion);
+    /// <param name="currentRelease">The current release of the game to diff.</param>
+    /// <param name="currentVersion">The current version of the game to diff.</param>
+    /// <param name="modelRelease">The model release of the game.</param>
+    /// <param name="modelVersion">The model version of the game.</param>
+    /// <returns>A string representing the difference between the versions.</returns>
+    Task<string> GetManifestDiffAsync(string game, string platform, string currentRelease, string currentVersion, string modelRelease, string modelVersion);
 
     /// <summary>
     /// Handles the event when a new Cytrus is detected.
@@ -60,18 +60,18 @@ public sealed class CytrusService : ICytrusService
         _embedBuilderService = embedBuilderService;
     }
 
-    public async Task<string> GetManifestDiffAsync(string game, string platform, string oldRelease, string oldVersion, string newRelease, string newVersion)
+    public async Task<string> GetManifestDiffAsync(string game, string platform, string currentRelease, string currentVersion, string modelRelease, string modelVersion)
     {
-        var modelManifest = await _cytrusManifestFetcher.GetAsync(game, platform, oldRelease, oldVersion);
-        if (modelManifest is null)
-        {
-            return "Old client not found.";
-        }
-
-        var currentManifest = await _cytrusManifestFetcher.GetAsync(game, platform, newRelease, newVersion);
+        var currentManifest = await _cytrusManifestFetcher.GetAsync(game, platform, currentRelease, currentVersion);
         if (currentManifest is null)
         {
-            return "New client not found.";
+            return "Current client not found.";
+        }
+
+        var modelManifest = await _cytrusManifestFetcher.GetAsync(game, platform, modelRelease, modelVersion);
+        if (modelManifest is null)
+        {
+            return "Model client not found.";
         }
 
         var diff = currentManifest.Value.Diff(modelManifest.Value);
@@ -179,20 +179,21 @@ public sealed class CytrusService : ICytrusService
                     return;
                 }
 
-                var mainContent = $"""
-                     Diff of {Formatter.Bold(game.Name.Capitalize())} on {Formatter.Bold(CytrusGame.WindowsPlatform)}
-                     {Formatter.InlineCode(oldVersion)} ({release.Name}) ➜ {Formatter.InlineCode(newVersion)} ({release.Name})
-                     """;
+                var mainContent =
+                $"""
+                Diff of {Formatter.Bold(game.Name.Capitalize())} on {Formatter.Bold(CytrusGame.WindowsPlatform)}
+                {Formatter.InlineCode(newVersion)} ({release.Name}) compared to {Formatter.InlineCode(oldVersion)} ({release.Name})
+                """;
 
-                var diff = await GetManifestDiffAsync(game.Name, CytrusGame.WindowsPlatform, release.Name, oldVersion, release.Name, newVersion);
+                var diff = await GetManifestDiffAsync(game.Name, CytrusGame.WindowsPlatform, release.Name, newVersion, release.Name, oldVersion);
 
-                if (mainContent.Length + diff.Length > Constant.MaxMessageSize)
+                if (mainContent.Length + diff.Length + 10 > Constant.MaxMessageSize) // 10 for the block code formatting
                 {
                     using MemoryStream stream = new(Encoding.UTF8.GetBytes(diff));
 
                     var message = new DiscordMessageBuilder()
                         .WithContent(mainContent)
-                        .AddFile($"{game.Name}_{CytrusGame.WindowsPlatform}_{release.Name}_{oldVersion}_{release.Name}_{newVersion}.diff", stream);
+                        .AddFile($"{game.Name}_{CytrusGame.WindowsPlatform}_{release.Name}_{newVersion}_{oldVersion}.diff", stream);
 
                     await channel.SendMessageSafeAsync(message);
                     return;

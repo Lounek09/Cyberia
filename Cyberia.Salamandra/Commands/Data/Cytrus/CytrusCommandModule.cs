@@ -50,28 +50,28 @@ public sealed class CytrusCommandModule
         [Parameter("platform"), Description("Platform")]
         [SlashAutoCompleteProvider<CytrusPlatformAutoCompleteProvider>]
         string platform,
-        [Parameter("old_release"), Description("Release of the old client")]
+        [Parameter("current_release"), Description("Release of the current client to diff")]
         [SlashAutoCompleteProvider<CytrusReleaseAutoCompleteProvider>]
-        string oldRelease,
-        [Parameter("old_version"), Description("Version of the old client")]
-        [SlashAutoCompleteProvider<CytrusOldVersionAutocompleteProvider>]
-        string oldVersion,
-        [Parameter("new_release"), Description("Release of the new client")]
+        string currentRelease,
+        [Parameter("current_version"), Description("Version of the current client to diff")]
+        [SlashAutoCompleteProvider<CytrusCurrentVersionAutocompleteProvider>]
+        string currentVersion,
+        [Parameter("model_release"), Description("Release of the model client")]
         [SlashAutoCompleteProvider<CytrusReleaseAutoCompleteProvider>]
-        string newRelease,
-        [Parameter("new_version"), Description("Version of the new client")]
-        [SlashAutoCompleteProvider<CytrusNewVersionAutocompleteProvider>]
-        string newVersion)
+        string modelRelease,
+        [Parameter("model_version"), Description("Version of the model client")]
+        [SlashAutoCompleteProvider<CytrusModelVersionAutocompleteProvider>]
+        string modelVersion)
     {
         await ctx.DeferResponseAsync();
 
         var mainContent =
         $"""
         Diff of {Formatter.Bold(game.Capitalize())} on {Formatter.Bold(platform)}
-        {Formatter.InlineCode(oldVersion)} ({oldRelease}) ➜ {Formatter.InlineCode(newVersion)} ({newRelease})
+        {Formatter.InlineCode(currentVersion)} ({currentRelease}) compared to {Formatter.InlineCode(modelVersion)} ({modelRelease})
         """;
 
-        var diff = await _cytrusService.GetManifestDiffAsync(game, platform, oldRelease, oldVersion, newRelease, newVersion);
+        var diff = await _cytrusService.GetManifestDiffAsync(game, platform, currentRelease, currentVersion, modelRelease, modelVersion);
 
         if (mainContent.Length + diff.Length + 10 > Constant.MaxMessageSize) // 10 for the block code formatting
         {
@@ -79,7 +79,7 @@ public sealed class CytrusCommandModule
 
             var message = new DiscordInteractionResponseBuilder()
                 .WithContent(mainContent)
-                .AddFile($"{game}_{platform}_{oldRelease}_{oldVersion}_{newRelease}_{newVersion}.diff", stream);
+                .AddFile($"{game}_{platform}_{currentRelease}_{currentVersion}_{modelRelease}_{modelVersion}.diff", stream);
 
             await ctx.EditResponseAsync(message);
             return;

@@ -72,11 +72,11 @@ public static class LangExtensions
         }
 
         /// <summary>
-        /// Computes the difference between two Langs.
+        /// Computes the difference between two langs.
         /// </summary>
         /// <param name="current">The current Lang.</param>
         /// <param name="model">The model Lang.</param>
-        /// <returns>A string representing the difference between the current and model Langs.</returns>
+        /// <returns>A string representing the difference between the langs.</returns>
         public static string Diff(Lang current, Lang model)
         {
             var currentDecompiledFilePath = current.GetDecompiledFilePath();

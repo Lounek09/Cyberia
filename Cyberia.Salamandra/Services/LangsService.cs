@@ -21,8 +21,8 @@ public interface ILangsService
     /// <summary>
     /// Launches a manual diff between two types of langs for the specified language, if the types are equal, it will send the last auto diff.
     /// </summary>
-    /// <param name="currentType">The current type of langs.</param>
-    /// <param name="modelType">The model type of langs.</param>
+    /// <param name="currentType">The type of the current langs diff.</param>
+    /// <param name="modelType">The type of the model langs.</param>
     /// <param name="language">The language of the langs.</param>
     Task LaunchManualDiff(LangType currentType, LangType modelType, Language language);
 
@@ -164,7 +164,7 @@ public sealed class LangsService : ILangsService
     /// </summary>
     /// <param name="forum">The forum channel where to create the post.</param>
     /// <param name="currentIdentifier">The identifier of the current langs diff.</param>
-    /// <param name="modelIdentifier">The identifier of the model langs diff.</param>
+    /// <param name="modelIdentifier">The identifier of the model langs.</param>
     /// <returns>The created thread channel.</returns>
     private async Task<DiscordThreadChannel> CreateManualDiffPostAsync(DiscordForumChannel forum, LangsIdentifier currentIdentifier, LangsIdentifier modelIdentifier)
     {
@@ -202,7 +202,7 @@ public sealed class LangsService : ILangsService
     /// Sends an auto diff message to the specified thread channel.
     /// </summary>
     /// <param name="thread">The thread channel where to send the message.</param>
-    /// <param name="lang">The updated lang.</param>
+    /// <param name="lang">The lang diff.</param>
     private static async Task SendAutoDiffLangMessageAsync(DiscordThreadChannel thread, Lang lang)
     {
         var message = new DiscordMessageBuilder()
@@ -225,7 +225,7 @@ public sealed class LangsService : ILangsService
     /// Sends a manual diff message to the specified thread channel.
     /// </summary>
     /// <param name="thread">The thread channel where to send the message.</param>
-    /// <param name="lang">The updated lang.</param>
+    /// <param name="lang">The current lang diff.</param>
     /// <param name="modelLang">The model lang.</param>
     private static async Task SendManualDiffLangMessageAsync(DiscordThreadChannel thread, Lang lang, Lang? modelLang)
     {

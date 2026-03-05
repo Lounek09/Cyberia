@@ -72,7 +72,7 @@ public sealed class LangsCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     [RequireApplicationOwner]
     public async Task DiffExecuteAsync(SlashCommandContext ctx,
-        [Parameter("type"), Description("The type to diff")]
+        [Parameter("type"), Description("The type of the langs to diff")]
         LangType type,
         [Parameter("model_type"), Description("The type of the model langs")]
         LangType modelType,
