@@ -5,6 +5,8 @@ using Dapper;
 
 using System.Data.SQLite;
 
+using static Dapper.SqlMapper;
+
 namespace Cyberia.Database.Repositories;
 
 /// <summary>
@@ -66,7 +68,16 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, entity) > 0;
+
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            return await connection.ExecuteAsync(query, entity) > 0;
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
     }
 
     public async Task<int> UpsertManyAsync(params IEnumerable<Lang> entities)
@@ -87,13 +98,22 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        using var transaction = await connection.BeginTransactionAsync();
 
-        var affectedRows = await connection.ExecuteAsync(query, entities, transaction);
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            using var transaction = await connection.BeginTransactionAsync();
 
-        await transaction.CommitAsync();
+            var affectedRows = await connection.ExecuteAsync(query, entities, transaction);
 
-        return affectedRows;
+            await transaction.CommitAsync();
+
+            return affectedRows;
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
     }
 
     public async Task<bool> DeleteAsync(int id)
@@ -105,7 +125,16 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { id }) > 0;
+
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            return await connection.ExecuteAsync(query, new { id }) > 0;
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
     }
 
     public async Task<int> DeleteManyAsync(params IEnumerable<int> ids)
@@ -122,7 +151,16 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { Ids = ids });
+
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            return await connection.ExecuteAsync(query, new { Ids = ids });
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
     }
 
     public async Task<IEnumerable<Lang>> GetManyByIdentifierAsync(LangsIdentifier identifier)

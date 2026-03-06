@@ -4,6 +4,8 @@ using Dapper;
 
 using System.Data.SQLite;
 
+using static Dapper.SqlMapper;
+
 namespace Cyberia.Database.Repositories;
 
 /// <summary>
@@ -64,7 +66,16 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, entity) > 0;
+
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            return await connection.ExecuteAsync(query, entity) > 0;
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
     }
 
     public async Task<int> UpsertManyAsync(params IEnumerable<DiscordCachedUser> entities)
@@ -84,13 +95,23 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        using var transaction = await connection.BeginTransactionAsync();
 
-        var affectedRows = await connection.ExecuteAsync(query, entities, transaction);
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            using var transaction = await connection.BeginTransactionAsync();
 
-        await transaction.CommitAsync();
+            var affectedRows = await connection.ExecuteAsync(query, entities, transaction);
 
-        return affectedRows;
+            await transaction.CommitAsync();
+
+            return affectedRows;
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
+
     }
 
     public async Task<bool> DeleteAsync(ulong id)
@@ -102,7 +123,17 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { id }) > 0;
+
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            return await connection.ExecuteAsync(query, new { id }) > 0;
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
+
     }
 
     public async Task<int> DeleteManyAsync(params IEnumerable<ulong> ids)
@@ -119,7 +150,16 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { ids });
+
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            return await connection.ExecuteAsync(query, new { ids });
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
     }
 
     /// <summary>

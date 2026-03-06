@@ -4,6 +4,8 @@ using Dapper;
 
 using System.Data.SQLite;
 
+using static Dapper.SqlMapper;
+
 namespace Cyberia.Database.Repositories;
 
 /// <summary>
@@ -64,7 +66,16 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, file) > 0;
+
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            return await connection.ExecuteAsync(query, file) > 0;
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
     }
 
     public async Task<int> UpsertManyAsync(params IEnumerable<MonitoredFile> files)
@@ -84,13 +95,22 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        using var transaction = await connection.BeginTransactionAsync();
 
-        var affectedRows = await connection.ExecuteAsync(query, files, transaction);
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            using var transaction = await connection.BeginTransactionAsync();
 
-        await transaction.CommitAsync();
+            var affectedRows = await connection.ExecuteAsync(query, files, transaction);
 
-        return affectedRows;
+            await transaction.CommitAsync();
+
+            return affectedRows;
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
     }
 
     public async Task<bool> DeleteAsync(string id)
@@ -102,7 +122,17 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { id }) > 0;
+
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            return await connection.ExecuteAsync(query, new { id }) > 0;
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
+
     }
 
     public async Task<int> DeleteManyAsync(params IEnumerable<string> ids)
@@ -119,7 +149,16 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         }
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.ExecuteAsync(query, new { ids });
+
+        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
+        try
+        {
+            return await connection.ExecuteAsync(query, new { ids });
+        }
+        finally
+        {
+            SQLiteDbConnectionFactory.WriteLock.Release();
+        }
     }
 
     /// <summary>
