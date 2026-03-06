@@ -65,11 +65,10 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
             {nameof(MonitoredFile.LastModified)} = excluded.{nameof(MonitoredFile.LastModified)}
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             return await connection.ExecuteAsync(query, file) > 0;
         }
         finally
@@ -94,11 +93,10 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
             return 0;
         }
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             using var transaction = await connection.BeginTransactionAsync();
 
             var affectedRows = await connection.ExecuteAsync(query, files, transaction);
@@ -121,11 +119,10 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         WHERE {nameof(MonitoredFile.Id)} = @id
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             return await connection.ExecuteAsync(query, new { id }) > 0;
         }
         finally
@@ -148,11 +145,10 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
             return 0;
         }
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             return await connection.ExecuteAsync(query, new { ids });
         }
         finally

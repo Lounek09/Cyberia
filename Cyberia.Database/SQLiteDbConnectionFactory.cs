@@ -7,7 +7,7 @@ namespace Cyberia.Database;
 /// </summary>
 public sealed class SQLiteDbConnectionFactory : IDbConnectionFactory<SQLiteConnection>
 {
-    internal static readonly SemaphoreSlim WriteLock = new(1, 1);
+    public static readonly SemaphoreSlim WriteLock = new(1, 1);
 
     private readonly string _connectionString;
 

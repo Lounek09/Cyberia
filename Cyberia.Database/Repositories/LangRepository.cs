@@ -67,11 +67,10 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
             {nameof(Lang.IsNew)} = excluded.{nameof(Lang.IsNew)}
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             return await connection.ExecuteAsync(query, entity) > 0;
         }
         finally
@@ -97,11 +96,10 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
             return 0;
         }
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             using var transaction = await connection.BeginTransactionAsync();
 
             var affectedRows = await connection.ExecuteAsync(query, entities, transaction);
@@ -124,11 +122,10 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
         WHERE {nameof(Lang.Id)} = @id
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             return await connection.ExecuteAsync(query, new { id }) > 0;
         }
         finally
@@ -150,11 +147,10 @@ public sealed class LangRepository : IDatabaseRepository<Lang, int>
             return 0;
         }
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             return await connection.ExecuteAsync(query, new { Ids = ids });
         }
         finally

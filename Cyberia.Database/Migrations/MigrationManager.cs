@@ -15,7 +15,7 @@ internal interface IMigrationManager
     /// <summary>
     /// Ensures that the migration table exists in the database.
     /// </summary>
-    Task EnsureMigrationTableExistsAsync();
+    Task EnsureDatabaseInitializedAsync();
 
     /// <summary>
     /// Gets the list of migrations that have already been applied to the database.
@@ -50,8 +50,14 @@ internal sealed class MigrationManager : IMigrationManager
         _connectionFactory = connectionFactory;
     }
 
-    public async Task EnsureMigrationTableExistsAsync()
+    public async Task EnsureDatabaseInitializedAsync()
     {
+        const string pragma =
+        $"""
+        PRAGMA journal_mode=WAL;
+        PRAGMA busy_timeout=5000;
+        """;
+
         const string query =
         $"""
         CREATE TABLE IF NOT EXISTS {nameof(Migration)} (
@@ -62,7 +68,7 @@ internal sealed class MigrationManager : IMigrationManager
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        await connection.ExecuteAsync("PRAGMA journal_mode=WAL;");
+        await connection.ExecuteAsync(pragma);
         await connection.ExecuteAsync(query);
     }
 

@@ -65,11 +65,10 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
             {nameof(DiscordCachedUser.Locale)} = excluded.{nameof(DiscordCachedUser.Locale)}
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             return await connection.ExecuteAsync(query, entity) > 0;
         }
         finally
@@ -94,11 +93,10 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
             return 0;
         }
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             using var transaction = await connection.BeginTransactionAsync();
 
             var affectedRows = await connection.ExecuteAsync(query, entities, transaction);
@@ -122,11 +120,10 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         WHERE {nameof(DiscordCachedUser.Id)} = @id
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             return await connection.ExecuteAsync(query, new { id }) > 0;
         }
         finally
@@ -149,11 +146,10 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
             return 0;
         }
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-
         await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
         try
         {
+            using var connection = await _connectionFactory.CreateConnectionAsync();
             return await connection.ExecuteAsync(query, new { ids });
         }
         finally

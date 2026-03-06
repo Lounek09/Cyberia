@@ -19,7 +19,7 @@ public static class ServiceProviderExtensions
         {
             var migrationManager = provider.GetRequiredService<IMigrationManager>();
 
-            await migrationManager.EnsureMigrationTableExistsAsync();
+            await migrationManager.EnsureDatabaseInitializedAsync();
             await migrationManager.ApplyMigrationsAsync();
         }
     }
