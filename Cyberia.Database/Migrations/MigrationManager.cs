@@ -62,6 +62,7 @@ internal sealed class MigrationManager : IMigrationManager
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
+        await connection.ExecuteAsync("PRAGMA journal_mode=WAL;");
         await connection.ExecuteAsync(query);
     }
 
