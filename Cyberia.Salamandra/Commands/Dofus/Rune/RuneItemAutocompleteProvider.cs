@@ -19,11 +19,11 @@ public sealed class RuneItemAutocompleteProvider : IAutoCompleteProvider
         _dofusDatacenter = dofusDatacenter;
     }
 
-    public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
+    public ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
-        return _dofusDatacenter.ItemsRepository.GetItemsDataByName(ctx.UserInput ?? string.Empty, culture)
+        var choices = _dofusDatacenter.ItemsRepository.GetItemsDataByName(ctx.UserInput ?? string.Empty, culture)
             .Where(x =>
             {
                 var itemStatsData = x.GetItemStatsData();
@@ -34,5 +34,7 @@ public sealed class RuneItemAutocompleteProvider : IAutoCompleteProvider
             {
                 return new DiscordAutoCompleteChoice($"{x.Name.ToString(culture).WithMaxLength(90)} ({x.Id})", x.Id.ToString());
             });
+
+        return ValueTask.FromResult(choices);
     }
 }

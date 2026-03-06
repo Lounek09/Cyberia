@@ -44,7 +44,7 @@ public sealed class CritCommandModule
         [MinMaxValue(1, 99999)]
         int agility)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         var rate = Formulas.GetCriticalHitRate(baseRate, criticalHitBonus, agility);
         var agilityNeeded = Formulas.GetAgilityForOptimalCriticalHitRate(baseRate, criticalHitBonus);

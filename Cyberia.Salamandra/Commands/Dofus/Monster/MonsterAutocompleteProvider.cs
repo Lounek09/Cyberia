@@ -18,16 +18,18 @@ public sealed class MonsterAutocompleteProvider : IAutoCompleteProvider
         _dofusDatacenter = dofusDatacenter;
     }
 
-    public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
+    public ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
-        return _dofusDatacenter.MonstersRepository.GetMonstersDataByName(ctx.UserInput ?? string.Empty, culture)
+        var choices = _dofusDatacenter.MonstersRepository.GetMonstersDataByName(ctx.UserInput ?? string.Empty, culture)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {
                 var name = $"{$"{x.Name.ToString(culture)}{(x.BreedSummon ? $" ({Translation.Get<BotTranslations>("Summon", culture)})" : string.Empty)}".WithMaxLength(90)} ({x.Id})";
                 return new DiscordAutoCompleteChoice(name, x.Id.ToString());
             });
+
+        return ValueTask.FromResult(choices);
     }
 }

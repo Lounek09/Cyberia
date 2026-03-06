@@ -42,7 +42,7 @@ public sealed class CraftCommandModule
         [MinMaxValue(1, CraftMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 

@@ -4,8 +4,6 @@ using Dapper;
 
 using System.Data.SQLite;
 
-using static Dapper.SqlMapper;
-
 namespace Cyberia.Database.Repositories;
 
 /// <summary>
@@ -24,25 +22,25 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         _connectionFactory = connectionFactory;
     }
 
-    public async Task<DiscordCachedUser?> GetAsync(ulong id)
+    public DiscordCachedUser? Get(ulong id)
     {
         const string query =
         $"""
         SELECT * FROM {nameof(DiscordCachedUser)}
-        WHERE {nameof(DiscordCachedUser.Id)} = @id
+        WHERE {nameof(DiscordCachedUser.Id)} = @{nameof(id)}
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<DiscordCachedUser>(query, new { id });
+        using var connection = _connectionFactory.CreateConnection();
+        return connection.QueryFirstOrDefault<DiscordCachedUser>(query, new { id });
     }
 
-    public async Task<IEnumerable<DiscordCachedUser>> GetManyAsync(params IEnumerable<ulong> ids)
+    public IEnumerable<DiscordCachedUser> GetMany(params IEnumerable<ulong> ids)
     {
         const string query =
         $"""
         SELECT * 
         FROM {nameof(DiscordCachedUser)}
-        WHERE {nameof(DiscordCachedUser.Id)} IN @ids
+        WHERE {nameof(DiscordCachedUser.Id)} IN @{nameof(ids)}
         """;
 
         if (!ids.Any())
@@ -50,11 +48,11 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
             return Enumerable.Empty<DiscordCachedUser>();
         }
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryAsync<DiscordCachedUser>(query, new { ids });
+        using var connection = _connectionFactory.CreateConnection();
+        return connection.Query<DiscordCachedUser>(query, new { ids });
     }
 
-    public async Task<bool> UpsertAsync(DiscordCachedUser entity)
+    public bool Upsert(DiscordCachedUser entity)
     {
         const string query =
         $"""
@@ -65,19 +63,14 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
             {nameof(DiscordCachedUser.Locale)} = excluded.{nameof(DiscordCachedUser.Locale)}
         """;
 
-        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
-        try
+        lock (SQLiteDbConnectionFactory.WriteLock)
         {
-            using var connection = await _connectionFactory.CreateConnectionAsync();
-            return await connection.ExecuteAsync(query, entity) > 0;
-        }
-        finally
-        {
-            SQLiteDbConnectionFactory.WriteLock.Release();
+            using var connection = _connectionFactory.CreateConnection();
+            return connection.Execute(query, entity) > 0;
         }
     }
 
-    public async Task<int> UpsertManyAsync(params IEnumerable<DiscordCachedUser> entities)
+    public int UpsertMany(params IEnumerable<DiscordCachedUser> entities)
     {
         const string query =
         $"""
@@ -93,52 +86,40 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
             return 0;
         }
 
-        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
-        try
+        lock (SQLiteDbConnectionFactory.WriteLock)
         {
-            using var connection = await _connectionFactory.CreateConnectionAsync();
-            using var transaction = await connection.BeginTransactionAsync();
+            using var connection = _connectionFactory.CreateConnection();
+            using var transaction = connection.BeginTransaction();
 
-            var affectedRows = await connection.ExecuteAsync(query, entities, transaction);
+            var affectedRows = connection.Execute(query, entities, transaction);
 
-            await transaction.CommitAsync();
+            transaction.Commit();
 
             return affectedRows;
         }
-        finally
-        {
-            SQLiteDbConnectionFactory.WriteLock.Release();
-        }
-
     }
 
-    public async Task<bool> DeleteAsync(ulong id)
+    public bool Delete(ulong id)
     {
         const string query =
         $"""
         DELETE FROM {nameof(DiscordCachedUser)}
-        WHERE {nameof(DiscordCachedUser.Id)} = @id
+        WHERE {nameof(DiscordCachedUser.Id)} = @{nameof(id)}
         """;
 
-        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
-        try
+        lock (SQLiteDbConnectionFactory.WriteLock)
         {
-            using var connection = await _connectionFactory.CreateConnectionAsync();
-            return await connection.ExecuteAsync(query, new { id }) > 0;
+            using var connection = _connectionFactory.CreateConnection();
+            return connection.Execute(query, new { id }) > 0;
         }
-        finally
-        {
-            SQLiteDbConnectionFactory.WriteLock.Release();
-        }
-
     }
 
-    public async Task<int> DeleteManyAsync(params IEnumerable<ulong> ids)
+    public int DeleteMany(params IEnumerable<ulong> ids)
     {
         const string query =
         $"""
         DELETE FROM {nameof(DiscordCachedUser)}
-        WHERE {nameof(DiscordCachedUser.Id)} IN @ids
+        WHERE {nameof(DiscordCachedUser.Id)} IN @{nameof(ids)}
         """;
 
         if (!ids.Any())
@@ -146,15 +127,10 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
             return 0;
         }
 
-        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
-        try
+        lock (SQLiteDbConnectionFactory.WriteLock)
         {
-            using var connection = await _connectionFactory.CreateConnectionAsync();
-            return await connection.ExecuteAsync(query, new { ids });
-        }
-        finally
-        {
-            SQLiteDbConnectionFactory.WriteLock.Release();
+            using var connection = _connectionFactory.CreateConnection();
+            return connection.Execute(query, new { ids });
         }
     }
 
@@ -163,16 +139,16 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
     /// </summary>
     /// <param name="id">The ID of the user.</param>
     /// <returns>The locale of the user if found; otherwise, <see langword="null"/>.</returns>
-    public async Task<string?> GetLocaleById(ulong id)
+    public string? GetLocaleById(ulong id)
     {
         const string query =
         $"""
         SELECT {nameof(DiscordCachedUser.Locale)}
         FROM {nameof(DiscordCachedUser)}
-        WHERE {nameof(DiscordCachedUser.Id)} = @id
+        WHERE {nameof(DiscordCachedUser.Id)} = @{nameof(id)}
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<string>(query, new { id });
+        using var connection = _connectionFactory.CreateConnection();
+        return connection.QueryFirstOrDefault<string>(query, new { id });
     }
 }

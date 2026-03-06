@@ -39,7 +39,7 @@ public sealed class BreedCommandModule
         [InteractionLocalizer<BreedInteractionLocalizer>]
         bool gladiatrool = false)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         var breedData = _dofusDatacenter.BreedsRepository.GetBreedDataById(breedId);
 

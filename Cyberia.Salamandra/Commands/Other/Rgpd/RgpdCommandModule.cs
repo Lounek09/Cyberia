@@ -38,9 +38,9 @@ public sealed class RgpdCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task GetExecuteAsync(SlashCommandContext ctx)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
-        var user = await _discordCachedUserRepository.GetAsync(ctx.Interaction.User.Id);
+        var user = _discordCachedUserRepository.Get(ctx.Interaction.User.Id);
         if (user is null)
         {
             await ctx.RespondAsync(Translation.Get<BotTranslations>("Rgpd.NoData", culture), true);
@@ -63,9 +63,9 @@ public sealed class RgpdCommandModule
     [SlashCommandTypes(DiscordApplicationCommandType.SlashCommand)]
     public async Task DeleteExecuteAsync(SlashCommandContext ctx)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
-        var success = await _discordCachedUserRepository.DeleteAsync(ctx.Interaction.User.Id);
+        var success = _discordCachedUserRepository.Delete(ctx.Interaction.User.Id);
         if (success)
         {
             await ctx.RespondAsync(Translation.Get<BotTranslations>("Rgpd.Deleted", culture), true);

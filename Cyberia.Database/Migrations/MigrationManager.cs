@@ -15,26 +15,26 @@ internal interface IMigrationManager
     /// <summary>
     /// Ensures that the migration table exists in the database.
     /// </summary>
-    Task EnsureDatabaseInitializedAsync();
+    void EnsureDatabaseInitialized();
 
     /// <summary>
     /// Gets the list of migrations that have already been applied to the database.
     /// </summary>
     /// <returns>The list of applied migrations.</returns>
-    Task<IEnumerable<Migration>> GetAppliedMigrationsAsync(IDbConnection? connection = null);
+    IEnumerable<Migration> GetAppliedMigrations();
 
     /// <summary>
     /// Gets the list of available migrations that can be applied to the database.
     /// </summary>
     /// <returns>The list of pending migrations.</returns>
     /// <exception cref="InvalidOperationException"></exception>
-    Task<ReadOnlyCollection<PendingMigration>> GetAvailableMigrationsAsync(IDbConnection? connection = null);
+    ReadOnlyCollection<PendingMigration> GetAvailableMigrations();
 
     /// <summary>
     /// Applies all pending migrations to the database.
     /// </summary>
     /// <exception cref="InvalidOperationException"></exception>
-    Task ApplyMigrationsAsync();
+    void ApplyMigrations();
 }
 
 internal sealed class MigrationManager : IMigrationManager
@@ -50,7 +50,7 @@ internal sealed class MigrationManager : IMigrationManager
         _connectionFactory = connectionFactory;
     }
 
-    public async Task EnsureDatabaseInitializedAsync()
+    public void EnsureDatabaseInitialized()
     {
         const string query =
         $"""
@@ -61,11 +61,11 @@ internal sealed class MigrationManager : IMigrationManager
         );
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-        await connection.ExecuteAsync(query);
+        using var connection = _connectionFactory.CreateConnection();
+        connection.Execute(query);
     }
 
-    public async Task<IEnumerable<Migration>> GetAppliedMigrationsAsync(IDbConnection? connection = null)
+    public IEnumerable<Migration> GetAppliedMigrations()
     {
         const string query =
         $"""
@@ -73,21 +73,16 @@ internal sealed class MigrationManager : IMigrationManager
         FROM {nameof(Migration)};
         """;
 
-        if (connection is not null)
-        {
-            return await connection.QueryAsync<Migration>(query);
-        }
-
-        using var connection2 = await _connectionFactory.CreateConnectionAsync();
-        return await connection2.QueryAsync<Migration>(query);
+        using var connection = _connectionFactory.CreateConnection();
+        return connection.Query<Migration>(query);
     }
 
-    public async Task<ReadOnlyCollection<PendingMigration>> GetAvailableMigrationsAsync(IDbConnection? connection = null)
+    public ReadOnlyCollection<PendingMigration> GetAvailableMigrations()
     {
         const string sqlExtension = ".sql";
         const string expectedFormat = "Expected format is '{order}-{name}.sql' where '{order}' is the date in format 'yyyyMMddHHmm'.";
 
-        var appliedMigrations = await GetAppliedMigrationsAsync(connection);
+        var appliedMigrations = GetAppliedMigrations();
         var appliedMigrationsLookup = appliedMigrations
             .Select(x => x.Name)
             .ToHashSet(StringComparer.Ordinal)
@@ -156,25 +151,25 @@ internal sealed class MigrationManager : IMigrationManager
         return pendingMigrations.AsReadOnly();
     }
 
-    public async Task ApplyMigrationsAsync()
+    public void ApplyMigrations()
     {
-        const string insertQuery =
+        const string query =
         $"""
         INSERT INTO {nameof(Migration)} ({nameof(Migration.Name)})
         VALUES (@Name);
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
+        using var connection = _connectionFactory.CreateConnection();
 
-        var availableMigrations = await GetAvailableMigrationsAsync(connection);
+        var availableMigrations = GetAvailableMigrations();
         foreach (var pendingMigration in availableMigrations)
         {
-            using var transaction = await connection.BeginTransactionAsync();
+            using var transaction = connection.BeginTransaction();
 
             try
             {
-                await connection.ExecuteAsync(pendingMigration.Script);
-                await connection.ExecuteAsync(insertQuery, new { pendingMigration.Name });
+                connection.Execute(pendingMigration.Script);
+                connection.Execute(query, new { pendingMigration.Name });
 
                 transaction.Commit();
 

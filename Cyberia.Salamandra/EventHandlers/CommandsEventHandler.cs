@@ -39,7 +39,7 @@ public sealed class CommandsEventHandler : IEventHandler<CommandErroredEventArgs
         var ctx = eventArgs.Context.As<SlashCommandContext>();
         var interaction = ctx.Interaction;
         var exception = eventArgs.Exception;
-        var culture = await _cultureService.GetCultureAsync(interaction);
+        var culture = _cultureService.GetCulture(interaction);
 
         // If the exception is a checks failed exception, we just need to respond to the user.
         if (exception is ChecksFailedException checkFailedException)

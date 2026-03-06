@@ -38,7 +38,7 @@ public sealed class ItemCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 

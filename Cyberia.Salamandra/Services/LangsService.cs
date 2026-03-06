@@ -71,8 +71,8 @@ public sealed class LangsService : ILangsService
         LangsIdentifier currentIdentifier = new(currentType, language);
         LangsIdentifier modelIdentifier = new(modelType, language);
 
-        var currentLangs = await _langRepository.GetManyByIdentifierAsync(currentIdentifier);
-        var modelLangs = await _langRepository.GetManyByIdentifierAsync(modelIdentifier);
+        var currentLangs = _langRepository.GetManyByIdentifier(currentIdentifier);
+        var modelLangs = _langRepository.GetManyByIdentifier(modelIdentifier);
 
         var thread = isSameType
             ? await CreateAutoDiffPostAsync(forum, currentIdentifier)

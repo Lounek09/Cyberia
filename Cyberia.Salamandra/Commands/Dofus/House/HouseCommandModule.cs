@@ -44,7 +44,7 @@ public sealed class HouseCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -90,7 +90,7 @@ public sealed class HouseCommandModule
         [MinMaxValue(-666, 666)]
         int y)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         var housesData = _dofusDatacenter.HousesRepository.GetHousesDataByCoordinate(x, y).ToList();
 
@@ -121,7 +121,7 @@ public sealed class HouseCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         MapSubAreaData? mapSubAreaData = null;
 
@@ -166,7 +166,7 @@ public sealed class HouseCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         MapAreaData? mapAreaData = null;
 

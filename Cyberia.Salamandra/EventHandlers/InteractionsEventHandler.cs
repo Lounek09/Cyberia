@@ -89,19 +89,19 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
         }
 
         var interaction = eventArgs.Interaction;
-        var culture = await _cultureService.GetCultureAsync(interaction);
+        var culture = _cultureService.GetCulture(interaction);
 
         ReadOnlySpan<char> packet = SelectComponentPacketRegex().IsMatch(eventArgs.Id) ? eventArgs.Values[0] : eventArgs.Id;
         if (!TryParsePacket(packet, out var builder, out var version, out var parameters))
         {
-            await SendErrorResponse(interaction, culture);
+            await SendErrorResponseAsync(interaction, culture);
             return;
         }
 
         var message = builder(_serviceProvider, version, culture, parameters);
         if (message is null)
         {
-            await SendErrorResponse(interaction, culture);
+            await SendErrorResponseAsync(interaction, culture);
             return;
         }
 
@@ -169,7 +169,7 @@ public sealed partial class InteractionsEventHandler : IEventHandler<ComponentIn
     /// </summary>
     /// <param name="interaction">The interaction to respond to.</param>
     /// <param name="culture">The culture to use for the response.</param>
-    private static async Task SendErrorResponse(DiscordInteraction interaction, CultureInfo culture)
+    private static async Task SendErrorResponseAsync(DiscordInteraction interaction, CultureInfo culture)
     {
         var response = new DiscordInteractionResponseBuilder()
             .WithContent(Translation.Get<BotTranslations>("Command.Error.Component", culture))

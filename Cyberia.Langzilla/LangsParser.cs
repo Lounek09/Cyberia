@@ -54,7 +54,7 @@ public sealed class LangsParser : ILangsParser
 
     public async Task<bool> ParseAsync(LangsIdentifier identifier)
     {
-        var langs = await _langRepository.GetManyByIdentifierAsync(identifier);
+        var langs = _langRepository.GetManyByIdentifier(identifier);
         var outputPath = Path.Join(OutputPath, identifier.Type.ToStringFast().ToLower(), identifier.Language.ToStringFast());
 
         Directory.CreateDirectory(outputPath);

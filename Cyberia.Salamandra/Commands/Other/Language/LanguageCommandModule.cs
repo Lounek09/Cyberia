@@ -36,13 +36,13 @@ public sealed class LanguageCommandModule
         [SlashChoiceProvider<LanguageChoiceProvider>]
         string value)
     {
-        await _discordCachedUserRepository.UpsertAsync(new DiscordCachedUser
+        _discordCachedUserRepository.Upsert(new DiscordCachedUser
         {
             Id = ctx.User.Id,
             Locale = value
         });
 
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         await ctx.RespondAsync(Translation.Format(Translation.Get<BotTranslations>("Language.Set", culture), Formatter.Bold(value)), true);
     }

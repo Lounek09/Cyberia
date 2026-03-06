@@ -18,15 +18,17 @@ public sealed class MapSubAreaAutocompleteProvider : IAutoCompleteProvider
         _dofusDatacenter = dofusDatacenter;
     }
 
-    public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
+    public ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
-        return _dofusDatacenter.MapsRepository.GetMapSubAreasDataByName(ctx.UserInput ?? string.Empty, culture)
+        var choices = _dofusDatacenter.MapsRepository.GetMapSubAreasDataByName(ctx.UserInput ?? string.Empty, culture)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {
                 return new DiscordAutoCompleteChoice($"{x.Name.ToString(culture).WithMaxLength(90)} ({x.Id})", x.Id.ToString());
             });
+
+        return ValueTask.FromResult(choices);
     }
 }

@@ -41,7 +41,7 @@ public sealed class SearchCommandModule
         [MinMaxLength(2, 2)]
         string criterionId)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         StringBuilder descriptionBuilder = new();
 
@@ -88,7 +88,7 @@ public sealed class SearchCommandModule
         [MinMaxValue(-1, 999_999)]
         int effectId)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         StringBuilder descriptionBuilder = new();
 
@@ -136,7 +136,7 @@ public sealed class SearchCommandModule
         [MinMaxValue(-1, 999_999)]
         int gfxId)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         StringBuilder descriptionBuilder = new();
         foreach (var itemData in _dofusDatacenter.ItemsRepository.Items.Values)
@@ -166,7 +166,7 @@ public sealed class SearchCommandModule
         [MinMaxValue(0, 999_999)]
         int questStepId)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         var questData = _dofusDatacenter.QuestsRepository.GetQuestDataByQuestStepId(questStepId, out var questStepIndex);
         if (questData is null)

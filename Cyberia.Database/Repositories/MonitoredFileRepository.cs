@@ -4,8 +4,6 @@ using Dapper;
 
 using System.Data.SQLite;
 
-using static Dapper.SqlMapper;
-
 namespace Cyberia.Database.Repositories;
 
 /// <summary>
@@ -24,25 +22,25 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         _connectionFactory = connectionFactory;
     }
 
-    public async Task<MonitoredFile?> GetAsync(string id)
+    public MonitoredFile? Get(string id)
     {
         const string query =
         $"""
         SELECT * FROM {nameof(MonitoredFile)}
-        WHERE {nameof(MonitoredFile.Id)} = @id
+        WHERE {nameof(MonitoredFile.Id)} = @{nameof(id)}
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<MonitoredFile>(query, new { id });
+        using var connection = _connectionFactory.CreateConnection();
+        return connection.QueryFirstOrDefault<MonitoredFile>(query, new { id });
     }
 
-    public async Task<IEnumerable<MonitoredFile>> GetManyAsync(params IEnumerable<string> ids)
+    public IEnumerable<MonitoredFile> GetMany(params IEnumerable<string> ids)
     {
         const string query =
         $"""
         SELECT * 
         FROM {nameof(MonitoredFile)}
-        WHERE {nameof(MonitoredFile.Id)} IN @ids
+        WHERE {nameof(MonitoredFile.Id)} IN @{nameof(ids)}
         """;
 
         if (!ids.Any())
@@ -50,11 +48,11 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
             return Enumerable.Empty<MonitoredFile>();
         }
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryAsync<MonitoredFile>(query, new { ids });
+        using var connection = _connectionFactory.CreateConnection();
+        return connection.Query<MonitoredFile>(query, new { ids });
     }
 
-    public async Task<bool> UpsertAsync(MonitoredFile file)
+    public bool Upsert(MonitoredFile entity)
     {
         const string query =
         $"""
@@ -65,19 +63,14 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
             {nameof(MonitoredFile.LastModified)} = excluded.{nameof(MonitoredFile.LastModified)}
         """;
 
-        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
-        try
+        lock (SQLiteDbConnectionFactory.WriteLock)
         {
-            using var connection = await _connectionFactory.CreateConnectionAsync();
-            return await connection.ExecuteAsync(query, file) > 0;
-        }
-        finally
-        {
-            SQLiteDbConnectionFactory.WriteLock.Release();
+            using var connection = _connectionFactory.CreateConnection();
+            return connection.Execute(query, entity) > 0;
         }
     }
 
-    public async Task<int> UpsertManyAsync(params IEnumerable<MonitoredFile> files)
+    public int UpsertMany(params IEnumerable<MonitoredFile> entities)
     {
         const string query =
         $"""
@@ -88,56 +81,45 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
             {nameof(MonitoredFile.LastModified)} = excluded.{nameof(MonitoredFile.LastModified)}
         """;
 
-        if (!files.Any())
+        if (!entities.Any())
         {
             return 0;
         }
 
-        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
-        try
+        lock (SQLiteDbConnectionFactory.WriteLock)
         {
-            using var connection = await _connectionFactory.CreateConnectionAsync();
-            using var transaction = await connection.BeginTransactionAsync();
+            using var connection = _connectionFactory.CreateConnection();
+            using var transaction = connection.BeginTransaction();
 
-            var affectedRows = await connection.ExecuteAsync(query, files, transaction);
+            var affectedRows = connection.Execute(query, entities, transaction);
 
-            await transaction.CommitAsync();
+            transaction.Commit();
 
             return affectedRows;
         }
-        finally
-        {
-            SQLiteDbConnectionFactory.WriteLock.Release();
-        }
     }
 
-    public async Task<bool> DeleteAsync(string id)
+    public bool Delete(string id)
     {
         const string query =
         $"""
         DELETE FROM {nameof(MonitoredFile)}
-        WHERE {nameof(MonitoredFile.Id)} = @id
+        WHERE {nameof(MonitoredFile.Id)} = @{nameof(id)}
         """;
 
-        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
-        try
+        lock (SQLiteDbConnectionFactory.WriteLock)
         {
-            using var connection = await _connectionFactory.CreateConnectionAsync();
-            return await connection.ExecuteAsync(query, new { id }) > 0;
+            using var connection = _connectionFactory.CreateConnection();
+            return connection.Execute(query, new { id }) > 0;
         }
-        finally
-        {
-            SQLiteDbConnectionFactory.WriteLock.Release();
-        }
-
     }
 
-    public async Task<int> DeleteManyAsync(params IEnumerable<string> ids)
+    public int DeleteMany(params IEnumerable<string> ids)
     {
         const string query =
         $"""
         DELETE FROM {nameof(MonitoredFile)}
-        WHERE {nameof(MonitoredFile.Id)} IN @ids
+        WHERE {nameof(MonitoredFile.Id)} IN @{nameof(ids)}
         """;
 
         if (!ids.Any())
@@ -145,15 +127,10 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
             return 0;
         }
 
-        await SQLiteDbConnectionFactory.WriteLock.WaitAsync();
-        try
+        lock (SQLiteDbConnectionFactory.WriteLock)
         {
-            using var connection = await _connectionFactory.CreateConnectionAsync();
-            return await connection.ExecuteAsync(query, new { ids });
-        }
-        finally
-        {
-            SQLiteDbConnectionFactory.WriteLock.Release();
+            using var connection = _connectionFactory.CreateConnection();
+            return connection.Execute(query, new { ids });
         }
     }
 
@@ -162,16 +139,16 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
     /// </summary>
     /// <param name="id">The ID of the <see cref="MonitoredFile"/>.</param>
     /// <returns>The last modified date of the <see cref="MonitoredFile"/>, or <see cref="DateTime.MinValue"/> if not found.</returns>
-    public async Task<DateTime> GetLastModifiedByIdAsync(string id)
+    public DateTime GetLastModifiedById(string id)
     {
         const string query =
         $"""
         SELECT {nameof(MonitoredFile.LastModified)}
         FROM {nameof(MonitoredFile)}
-        WHERE {nameof(MonitoredFile.Id)} = @id
+        WHERE {nameof(MonitoredFile.Id)} = @{nameof(id)}
         """;
 
-        using var connection = await _connectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<DateTime>(query, new { id });
+        using var connection = _connectionFactory.CreateConnection();
+        return connection.QueryFirstOrDefault<DateTime>(query, new { id });
     }
 }

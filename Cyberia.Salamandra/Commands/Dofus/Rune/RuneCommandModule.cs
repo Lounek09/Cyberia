@@ -50,7 +50,7 @@ public sealed class RuneCommandModule
         [MinMaxValue(1, RuneItemMessageBuilder.MaxQuantity)]
         int quantity = 1)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         DiscordInteractionResponseBuilder? response = null;
 
@@ -100,7 +100,7 @@ public sealed class RuneCommandModule
         [MinMaxLength(1, 70)]
         int runeId)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         var runeData = _dofusDatacenter.RunesRepository.GetRuneDataById(runeId);
         if (runeData is null)

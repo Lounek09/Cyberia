@@ -67,7 +67,7 @@ public static class Program
 
             var provider = services.BuildServiceProvider();
 
-            await provider.ApplyDatabaseMigrationsAsync();
+            provider.ApplyDatabaseMigrations();
             provider.LoadDofusDatacenter(cyberiaConfig.DofusApiConfig.Type);
 
             if (cyberiaConfig.EnableSalamandra)
@@ -82,7 +82,6 @@ public static class Program
             }
 
             var cytrusWatcher = provider.GetRequiredService<ICytrusWatcher>();
-            await cytrusWatcher.InitializeAsync();
 
             if (cyberiaConfig.EnableCheckCytrus)
             {
@@ -91,7 +90,6 @@ public static class Program
             }
 
             var langsWatcher = provider.GetRequiredService<ILangsWatcher>();
-            await langsWatcher.InitializeAsync();
 
             if (cyberiaConfig.EnableCheckLang)
             {

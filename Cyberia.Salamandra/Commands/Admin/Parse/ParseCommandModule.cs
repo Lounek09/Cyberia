@@ -34,7 +34,7 @@ public sealed class ParseCommandModule
         [Parameter("value"), Description("The criteria to parse")]
         string value)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         var criteria = CriterionFactory.CreateMany(value);
         if (criteria.Count > 0)
@@ -57,7 +57,7 @@ public sealed class ParseCommandModule
         [Parameter("value"), Description("The effects to parse")]
         string value)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         var effects = EffectFactory.CreateMany(value);
         if (effects.Count > 0)
@@ -82,7 +82,7 @@ public sealed class ParseCommandModule
         [Parameter("parameters"), Description("The parameters to add to the description, put an '_' for an empty value")]
         params string[] parameters)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         DescriptionString description = new(
             template,

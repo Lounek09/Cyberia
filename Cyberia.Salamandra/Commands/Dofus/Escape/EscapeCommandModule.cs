@@ -40,7 +40,7 @@ public sealed class EscapeCommandModule
         [MinMaxValue(1, 99999)]
         int enemyAgility)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         var escapePercentProbability = Formulas.GetEscapePercentProbability(agility, enemyAgility);
         var agilityForGuarenteedEscape = Formulas.GetAgilityForGuaranteedEscape(enemyAgility);

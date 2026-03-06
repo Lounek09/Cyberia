@@ -18,14 +18,14 @@ public interface ICultureService
     /// </summary>
     /// <param name="interaction">The interaction to get the locale from.</param>
     /// <returns>The locale of the user.</returns>
-    Task<string?> GetLocaleAsync(DiscordInteraction interaction);
+    string? GetLocale(DiscordInteraction interaction);
 
     /// <summary>
     /// Gets the culture of the user from the database or the provided interaction if not found.
     /// </summary>
     /// <param name="interaction">The interaction to get the culture from.</param>
     /// <returns>The culture of the user.</returns>
-    Task<CultureInfo> GetCultureAsync(DiscordInteraction interaction);
+    CultureInfo GetCulture(DiscordInteraction interaction);
 }
 
 public sealed class CultureService : ICultureService
@@ -43,16 +43,16 @@ public sealed class CultureService : ICultureService
         _dofusApiConfig = dofusApiConfig;
     }
 
-    public async Task<string?> GetLocaleAsync(DiscordInteraction interaction)
+    public string? GetLocale(DiscordInteraction interaction)
     {
-        var locale = await _discordCachedUserRepository.GetLocaleById(interaction.User.Id);
+        var locale = _discordCachedUserRepository.GetLocaleById(interaction.User.Id);
 
         return locale ?? interaction.Locale ?? interaction.GuildLocale;
     }
 
-    public async Task<CultureInfo> GetCultureAsync(DiscordInteraction interaction)
+    public CultureInfo GetCulture(DiscordInteraction interaction)
     {
-        var locale = await _discordCachedUserRepository.GetLocaleById(interaction.User.Id);
+        var locale = _discordCachedUserRepository.GetLocaleById(interaction.User.Id);
 
         return locale is null
             ? GetInteractionCulture(interaction)

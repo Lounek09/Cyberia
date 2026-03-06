@@ -13,5 +13,5 @@ public interface IDbConnectionFactory<T>
     /// Creates and opens a new database connection asynchronously.
     /// </summary>
     /// <returns>The opened database connection.</returns>
-    Task<T> CreateConnectionAsync();
+    T CreateConnection();
 }

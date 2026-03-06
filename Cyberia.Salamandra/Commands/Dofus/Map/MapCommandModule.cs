@@ -42,7 +42,7 @@ public sealed class MapCommandModule
         [MinMaxValue(1, 99999)]
         int id)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         var mapData = _dofusDatacenter.MapsRepository.GetMapDataById(id);
         if (mapData is null)
@@ -69,7 +69,7 @@ public sealed class MapCommandModule
         [MinMaxValue(-666, 666)]
         int y)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         var mapsData = _dofusDatacenter.MapsRepository.GetMapsDataByCoordinate(x, y).ToList();
 
@@ -101,7 +101,7 @@ public sealed class MapCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         MapSubAreaData? mapSubAreaData = null;
 
@@ -141,7 +141,7 @@ public sealed class MapCommandModule
         [MinMaxLength(1, 70)]
         string value)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
         MapAreaData? mapAreaData = null;
 

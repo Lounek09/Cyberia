@@ -15,12 +15,14 @@ public static class ServiceProviderExtensions
         /// Applies all pending database migrations.
         /// </summary>
         /// <returns>The service provider.</returns>
-        public async Task ApplyDatabaseMigrationsAsync()
+        public IServiceProvider ApplyDatabaseMigrations()
         {
             var migrationManager = provider.GetRequiredService<IMigrationManager>();
 
-            await migrationManager.EnsureDatabaseInitializedAsync();
-            await migrationManager.ApplyMigrationsAsync();
+            migrationManager.EnsureDatabaseInitialized();
+            migrationManager.ApplyMigrations();
+
+            return provider;
         }
     }
 }

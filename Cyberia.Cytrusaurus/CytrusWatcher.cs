@@ -29,14 +29,6 @@ public interface ICytrusWatcher
     DateTime LastModified { get; }
 
     /// <summary>
-    /// Initializes the data of the <see cref="ICytrusWatcher"/> instance.
-    /// </summary>
-    /// <remarks>
-    /// This need to be called before everything else.
-    /// </remarks>
-    Task InitializeAsync();
-
-    /// <summary>
     /// Starts watching for updates of Cytrus.
     /// </summary>
     /// <param name="dueTime">The amount of time to delay before the first check.</param>
@@ -116,15 +108,12 @@ public sealed class CytrusWatcher : ICytrusWatcher
             BaseAddress = new Uri(BaseUrl)
         };
         _httpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
-    }
 
-    public async Task InitializeAsync()
-    {
         Directory.CreateDirectory(OutputPath);
 
-        Cytrus = await LoadCytrusAsync(CytrusPath) ?? new();
-        OldCytrus = await LoadCytrusAsync(OldCytrusPath) ?? new();
-        LastModified = await _monitoredFileRepository.GetLastModifiedByIdAsync(c_monitoredFileId);
+        Cytrus = LoadCytrus(CytrusPath) ?? new();
+        OldCytrus = LoadCytrus(OldCytrusPath) ?? new();
+        LastModified = _monitoredFileRepository.GetLastModifiedById(c_monitoredFileId);
     }
 
     public void Watch(TimeSpan dueTime, TimeSpan interval)
@@ -147,7 +136,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
             }
 
             LastModified = lastModified.Value;
-            await _monitoredFileRepository.UpsertAsync(new MonitoredFile
+            _monitoredFileRepository.Upsert(new MonitoredFile
             {
                 Id = c_monitoredFileId,
                 LastModified = lastModified.Value
@@ -197,34 +186,15 @@ public sealed class CytrusWatcher : ICytrusWatcher
     /// </summary>
     /// <param name="path">The path to the Cytrus file.</param>
     /// <returns>The loaded Cytrus data, or <see langword="null"/> if the file does not exist.</returns>
-    internal static async Task<Cytrus?> LoadCytrusAsync(string path)
+    internal static Cytrus? LoadCytrus(string path)
     {
         if (!File.Exists(path))
         {
             return null;
         }
 
-        using var stream = File.OpenRead(path);
-        return await DeserializeCytrusAsync(stream);
-    }
-
-    /// <summary>
-    /// Deserializes the Cytrus data from the specified stream.
-    /// </summary>
-    /// <param name="stream">The stream containing the Cytrus data.</param>
-    /// <returns>The deserialized Cytrus data, or <see langword="null"/> if the deserialization fails.</returns>
-    internal static async Task<Cytrus?> DeserializeCytrusAsync(Stream stream)
-    {
-        try
-        {
-            return await JsonSerializer.DeserializeAsync<Cytrus>(stream);
-        }
-        catch (JsonException e)
-        {
-            Log.Error(e, "Failed to deserialize Cytrus from stream");
-        }
-
-        return null;
+        var json = File.ReadAllText(path);
+        return DeserializeCytrus(json);
     }
 
     /// <summary>

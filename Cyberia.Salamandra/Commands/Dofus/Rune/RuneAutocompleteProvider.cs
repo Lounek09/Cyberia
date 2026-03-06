@@ -18,16 +18,18 @@ public sealed class RuneAutocompleteProvider : IAutoCompleteProvider
         _dofusDatacenter = dofusDatacenter;
     }
 
-    public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
+    public ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
-        var culture = await _cultureService.GetCultureAsync(ctx.Interaction);
+        var culture = _cultureService.GetCulture(ctx.Interaction);
 
-        return _dofusDatacenter.RunesRepository.GetRunesDataByItemName(ctx.UserInput ?? string.Empty, culture)
+        var choices = _dofusDatacenter.RunesRepository.GetRunesDataByItemName(ctx.UserInput ?? string.Empty, culture)
             .Take(Constant.MaxChoice)
             .Select(x =>
             {
                 var itemName = _dofusDatacenter.ItemsRepository.GetItemNameById(x.BaRuneItemId, culture);
                 return new DiscordAutoCompleteChoice(itemName.WithMaxLength(100), x.Id);
             });
+
+        return ValueTask.FromResult(choices);
     }
 }

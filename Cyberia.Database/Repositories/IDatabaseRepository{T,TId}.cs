@@ -16,40 +16,40 @@ public interface IDatabaseRepository<T, TId> : IDatabaseRepository
     /// </summary>
     /// <param name="id">The ID of the <typeparamref name="T"/>.</param>
     /// <returns>The <typeparamref name="T"/> if found; otherwise, <see langword="null"/>.</returns>
-    Task<T?> GetAsync(TId id);
+    T? Get(TId id);
 
     /// <summary>
     /// Gets many <typeparamref name="T"/> by their IDs.
     /// </summary>
     /// <param name="ids">The IDs of the <typeparamref name="T"/>.</param>
     /// <returns>The <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> found; otherwise, an empty collection.</returns>
-    Task<IEnumerable<T>> GetManyAsync(params IEnumerable<TId> ids);
+    IEnumerable<T> GetMany(params IEnumerable<TId> ids);
 
     /// <summary>
     /// Creates or updates a <typeparamref name="T"/>.
     /// </summary>
     /// <param name="entity">The <typeparamref name="T"/> to create or update.</param>
     /// <returns><see langword="true"/> if the <typeparamref name="T"/> was created or updated; otherwise, <see langword="false"/>.</returns>
-    Task<bool> UpsertAsync(T entity);
+    bool Upsert(T entity);
 
     /// <summary>
     /// Creates or updates many <typeparamref name="T"/>.
     /// </summary>
     /// <param name="entities">The <typeparamref name="T"/> to create or update.</param>
     /// <returns>The number of <typeparamref name="T"/> that were created or updated.</returns>
-    Task<int> UpsertManyAsync(params IEnumerable<T> entities);
+    int UpsertMany(params IEnumerable<T> entities);
 
     /// <summary>
     /// Deletes a <typeparamref name="T"/> by their ID.
     /// </summary>
     /// <param name="id">The ID of the <typeparamref name="T"/>.</param>
     /// <returns><see langword="true"/> if the <typeparamref name="T"/> was deleted; otherwise, <see langword="false"/>.</returns>
-    Task<bool> DeleteAsync(TId id);
+    bool Delete(TId id);
 
     /// <summary>
     /// Deletes many <typeparamref name="T"/> by their IDs.
     /// </summary>
     /// <param name="ids">The IDs of the <typeparamref name="T"/>.</param>
     /// <returns>The number of <typeparamref name="T"/> that were deleted.</returns>
-    Task<int> DeleteManyAsync(params IEnumerable<TId> ids);
+    int DeleteMany(params IEnumerable<TId> ids);
 }

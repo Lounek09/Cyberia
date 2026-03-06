@@ -17,7 +17,7 @@ public sealed class LangNameAutocompleteProvider : IAutoCompleteProvider
         _langRepository = langRepository;
     }
 
-    public async ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
+    public ValueTask<IEnumerable<DiscordAutoCompleteChoice>> AutoCompleteAsync(AutoCompleteContext ctx)
     {
         var type = ctx.GetArgument<LangType>("type");
         var language = ctx.GetArgument<Language>("language");
@@ -25,8 +25,9 @@ public sealed class LangNameAutocompleteProvider : IAutoCompleteProvider
 
         LangsIdentifier identifier = new(type, language);
 
-        var langs = await _langRepository.SearchByIdentifierAndNameAsync(identifier, input, Constant.MaxChoice);
+        var choices = _langRepository.SearchByIdentifierAndName(identifier, input, Constant.MaxChoice)
+            .Select(x => new DiscordAutoCompleteChoice(x.Name, x.Id));
 
-        return langs.Select(x => new DiscordAutoCompleteChoice(x.Name, x.Id));
+        return ValueTask.FromResult(choices);
     }
 }

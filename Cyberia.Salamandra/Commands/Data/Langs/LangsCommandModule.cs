@@ -139,7 +139,7 @@ public sealed class LangsCommandModule
     {
         await ctx.DeferResponseAsync();
 
-        var lang = await _langRepository.GetAsync(id);
+        var lang = _langRepository.Get(id);
         if (lang is null || (lang.Type != type && lang.Language != language))
         {
             await ctx.EditResponseAsync($"This {Formatter.Bold(type.ToStringFast())} lang in {Formatter.Bold(language.ToStringFast())} does not exist.");

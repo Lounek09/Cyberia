@@ -20,14 +20,6 @@ public interface ILangsWatcher
     public ReadOnlyDictionary<LangsIdentifier, DateTime> LastModifieds { get; }
 
     /// <summary>
-    /// Initializes the data of the <see cref="ILangsWatcher"/> instance.
-    /// </summary>
-    /// <remarks>
-    /// This need to be called before everything else.
-    /// </remarks>
-    Task InitializeAsync();
-
-    /// <summary>
     /// Starts watching for update of langs by type.
     /// </summary>
     /// <param name="type">The type of the langs to check.</param>
@@ -99,10 +91,7 @@ public sealed class LangsWatcher : ILangsWatcher
         _httpRetryPolicy = new(5, TimeSpan.FromSeconds(1));
         _lastModifieds = [];
         _timers = [];
-    }
 
-    public async Task InitializeAsync()
-    {
         Directory.CreateDirectory(OutputPath);
 
         foreach (var type in Enum.GetValues<LangType>())
@@ -114,7 +103,7 @@ public sealed class LangsWatcher : ILangsWatcher
                 var outputPath = LangRepository.GetOutputPath(identifier);
                 Directory.CreateDirectory(outputPath);
 
-                var lastModified = await _monitoredFileRepository.GetLastModifiedByIdAsync(identifier.ToString());
+                var lastModified = _monitoredFileRepository.GetLastModifiedById(identifier.ToString());
                 _lastModifieds[identifier] = lastModified;
             }
         }
@@ -217,7 +206,7 @@ public sealed class LangsWatcher : ILangsWatcher
             }
 
             _lastModifieds[identifier] = lastModified.Value;
-            await _monitoredFileRepository.UpsertAsync(new MonitoredFile
+            _monitoredFileRepository.Upsert(new MonitoredFile
             {
                 Id = identifier.ToString(),
                 LastModified = lastModified.Value
@@ -254,8 +243,9 @@ public sealed class LangsWatcher : ILangsWatcher
         }
 
         var content = versionsFileContent.AsSpan(3);
-        List<(string Name, int Version)> parsedLangs = [];
         Span<Range> fieldRanges = stackalloc Range[3];
+
+        List<Lang> updatedLangs = new();
 
         foreach (var contentRange in content.Split('|'))
         {
@@ -278,14 +268,7 @@ public sealed class LangsWatcher : ILangsWatcher
 
             var name = fields[fieldRanges[0]].ToString();
 
-            parsedLangs.Add(new(name, version));
-        }
-
-        List<Lang> updatedLangs = new(parsedLangs.Count);
-
-        foreach (var (name, version) in parsedLangs)
-        {
-            var lang = await _langRepository.GetByIdentifierAndNameAsync(identifier, name);
+            var lang = _langRepository.GetByIdentifierAndName(identifier, name);
 
             if (lang?.Version == version)
             {
@@ -309,7 +292,7 @@ public sealed class LangsWatcher : ILangsWatcher
             updatedLangs.Add(lang);
         }
 
-        await _langRepository.UpsertManyAsync(updatedLangs);
+        _langRepository.UpsertMany(updatedLangs);
 
         return updatedLangs.AsReadOnly();
     }

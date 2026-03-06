@@ -7,7 +7,10 @@ namespace Cyberia.Database;
 /// </summary>
 public sealed class SQLiteDbConnectionFactory : IDbConnectionFactory<SQLiteConnection>
 {
-    public static readonly SemaphoreSlim WriteLock = new(1, 1);
+    /// <summary>
+    /// A lock used to avoid concurrent write on the SQLite Db.
+    /// </summary>
+    public static readonly Lock WriteLock = new();
 
     private readonly string _connectionString;
 
@@ -26,10 +29,10 @@ public sealed class SQLiteDbConnectionFactory : IDbConnectionFactory<SQLiteConne
         _connectionString = builder.ToString();
     }
 
-    public async Task<SQLiteConnection> CreateConnectionAsync()
+    public SQLiteConnection CreateConnection()
     {
         SQLiteConnection connection = new(_connectionString);
-        await connection.OpenAsync();
+        connection.Open();
 
         return connection;
     }
