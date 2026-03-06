@@ -52,12 +52,6 @@ internal sealed class MigrationManager : IMigrationManager
 
     public async Task EnsureDatabaseInitializedAsync()
     {
-        const string pragma =
-        $"""
-        PRAGMA journal_mode=WAL;
-        PRAGMA busy_timeout=5000;
-        """;
-
         const string query =
         $"""
         CREATE TABLE IF NOT EXISTS {nameof(Migration)} (
@@ -68,7 +62,6 @@ internal sealed class MigrationManager : IMigrationManager
         """;
 
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        await connection.ExecuteAsync(pragma);
         await connection.ExecuteAsync(query);
     }
 

@@ -17,7 +17,13 @@ public sealed class SQLiteDbConnectionFactory : IDbConnectionFactory<SQLiteConne
     /// <param name="connectionString">The connection string to the SQLite database.</param>
     public SQLiteDbConnectionFactory(string connectionString)
     {
-        _connectionString = connectionString;
+        SQLiteConnectionStringBuilder builder = new(connectionString)
+        {
+            JournalMode = SQLiteJournalModeEnum.Wal,
+            BusyTimeout = 5000
+        };
+
+        _connectionString = builder.ToString();
     }
 
     public async Task<SQLiteConnection> CreateConnectionAsync()
