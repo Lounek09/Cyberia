@@ -42,12 +42,12 @@ public sealed class LangsParser : ILangsParser
         "lang"
     }.AsReadOnly();
 
-    private readonly LangRepository _langRepository;
+    private readonly ILangRepository _langRepository;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsParser"/> class.
     /// </summary>
-    public LangsParser(LangRepository langRepository)
+    public LangsParser(ILangRepository langRepository)
     {
         _langRepository = langRepository;
     }

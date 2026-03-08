@@ -70,8 +70,8 @@ public sealed class LangsWatcher : ILangsWatcher
 
     public ReadOnlyDictionary<LangsIdentifier, DateTime> LastModifieds => _lastModifieds.AsReadOnly();
 
-    private readonly LangRepository _langRepository;
-    private readonly MonitoredFileRepository _monitoredFileRepository;
+    private readonly ILangRepository _langRepository;
+    private readonly IMonitoredFileRepository _monitoredFileRepository;
     private readonly HttpClient _httpClient;
     private readonly HttpRetryPolicy _httpRetryPolicy;
     private readonly Dictionary<LangsIdentifier, DateTime> _lastModifieds;
@@ -80,7 +80,7 @@ public sealed class LangsWatcher : ILangsWatcher
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsWatcher"/> class.
     /// </summary>
-    public LangsWatcher(LangRepository langRepository, MonitoredFileRepository monitoredFileRepository)
+    public LangsWatcher(ILangRepository langRepository, IMonitoredFileRepository monitoredFileRepository)
     {
         _langRepository = langRepository;
         _monitoredFileRepository = monitoredFileRepository;

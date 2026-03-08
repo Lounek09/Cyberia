@@ -45,13 +45,13 @@ public sealed class LangsService : ILangsService
 {
     private readonly ICachedChannelsManager _cachedChannelsManager;
     private readonly IEmbedBuilderService _embedBuilderService;
-    private readonly LangRepository _langRepository;
+    private readonly ILangRepository _langRepository;
     private readonly ILangsWatcher _langsWatcher;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LangsService"/> class.
     /// </summary>
-    public LangsService(ICachedChannelsManager cachedChannelsManager, IEmbedBuilderService embedBuilderService, LangRepository langRepository, ILangsWatcher langsWatcher)
+    public LangsService(ICachedChannelsManager cachedChannelsManager, IEmbedBuilderService embedBuilderService, ILangRepository langRepository, ILangsWatcher langsWatcher)
     {
         _cachedChannelsManager = cachedChannelsManager;
         _embedBuilderService = embedBuilderService;

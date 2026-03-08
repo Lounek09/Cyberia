@@ -9,14 +9,24 @@ namespace Cyberia.Database.Repositories;
 /// <summary>
 /// Represents a repository for <see cref="MonitoredFile"/>.
 /// </summary>
-public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile, string>
+public interface IMonitoredFileRepository : IDatabaseRepository<MonitoredFile, string>
+{
+    /// <summary>
+    /// Gets the last modified date of a <see cref="MonitoredFile"/> by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the <see cref="MonitoredFile"/>.</param>
+    /// <returns>The last modified date of the <see cref="MonitoredFile"/>, or <see cref="DateTime.MinValue"/> if not found.</returns>
+    DateTime GetLastModifiedById(string id);
+}
+
+/// <inheritdoc cref="IMonitoredFileRepository"/>
+public sealed class MonitoredFileRepository : IMonitoredFileRepository
 {
     private readonly IDbConnectionFactory<SQLiteConnection> _connectionFactory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MonitoredFileRepository"/> class.
     /// </summary>
-    /// <param name="connectionFactory">The connection factory.</param>
     public MonitoredFileRepository(IDbConnectionFactory<SQLiteConnection> connectionFactory)
     {
         _connectionFactory = connectionFactory;
@@ -134,11 +144,6 @@ public sealed class MonitoredFileRepository : IDatabaseRepository<MonitoredFile,
         }
     }
 
-    /// <summary>
-    /// Gets the last modified date of a <see cref="MonitoredFile"/> by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the <see cref="MonitoredFile"/>.</param>
-    /// <returns>The last modified date of the <see cref="MonitoredFile"/>, or <see cref="DateTime.MinValue"/> if not found.</returns>
     public DateTime GetLastModifiedById(string id)
     {
         const string query =

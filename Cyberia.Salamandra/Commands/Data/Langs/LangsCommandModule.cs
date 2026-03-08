@@ -24,14 +24,14 @@ public sealed class LangsCommandModule
 {
     private readonly ICachedChannelsManager _cachedChannelsManager;
     private readonly ILangsParser _langsParser;
-    private readonly LangRepository _langRepository;
+    private readonly ILangRepository _langRepository;
     private readonly ILangsService _langsService;
     private readonly ILangsWatcher _langsWatcher;
 
     public LangsCommandModule(
         ICachedChannelsManager cachedChannelsManager,
         ILangsParser langsParser,
-        LangRepository langRepository,
+        ILangRepository langRepository,
         ILangsService langsService,
         ILangsWatcher langsWatcher)
     {

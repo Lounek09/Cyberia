@@ -7,12 +7,12 @@ namespace Cyberia.Database.Repositories;
 /// </summary>
 /// <typeparam name="T">The type of the entity.</typeparam>
 /// <typeparam name="TId">The type of the entity's ID.</typeparam>
-public interface IDatabaseRepository<T, TId> : IDatabaseRepository
+public interface IDatabaseRepository<T, TId>
     where T : IDatabaseEntity<TId>
     where TId : notnull
 {
     /// <summary>
-    /// Gets a <typeparamref name="T"/> by their ID.
+    /// Gets a <typeparamref name="T"/> by its ID.
     /// </summary>
     /// <param name="id">The ID of the <typeparamref name="T"/>.</param>
     /// <returns>The <typeparamref name="T"/> if found; otherwise, <see langword="null"/>.</returns>

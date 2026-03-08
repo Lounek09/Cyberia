@@ -43,9 +43,6 @@ public sealed class EmojisService : IEmojisService
     /// <summary>
     /// Initializes a new instance of <see cref="EmojisService"/> class.
     /// </summary>
-    /// <param name="discordClient">The discord client.</param>
-    /// <param name="dofusApiConfig">The Dofus API configuration.</param>
-    /// <param name="dofusDatacenter">The Dofus datacenter.</param>
     public EmojisService(DiscordClient discordClient, DofusApiConfig dofusApiConfig, DofusDatacenter dofusDatacenter)
     {
         _dofusDatacenter = dofusDatacenter;

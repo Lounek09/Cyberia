@@ -73,8 +73,6 @@ public sealed class CachedChannelsManager : ICachedChannelsManager
     /// <summary>
     /// Initializes a new instance of the <see cref="CachedChannelsManager"/> class.
     /// </summary>
-    /// <param name="botConfig">The bot configuration.</param>
-    /// <param name="client">The Discord client.</param>
     public CachedChannelsManager(BotConfig botConfig, DiscordClient client)
     {
         _botConfig = botConfig;

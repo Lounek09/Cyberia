@@ -30,14 +30,13 @@ public interface ICultureService
 
 public sealed class CultureService : ICultureService
 {
-    private readonly DiscordCachedUserRepository _discordCachedUserRepository;
+    private readonly IDiscordCachedUserRepository _discordCachedUserRepository;
     private readonly DofusApiConfig _dofusApiConfig;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CultureService"/> class.
     /// </summary>
-    /// <param name="discordCachedUserRepository">The repository to get the cached user from.</param>
-    public CultureService(DiscordCachedUserRepository discordCachedUserRepository, DofusApiConfig dofusApiConfig)
+    public CultureService(IDiscordCachedUserRepository discordCachedUserRepository, DofusApiConfig dofusApiConfig)
     {
         _discordCachedUserRepository = discordCachedUserRepository;
         _dofusApiConfig = dofusApiConfig;

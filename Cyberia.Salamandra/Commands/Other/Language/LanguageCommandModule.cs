@@ -17,9 +17,9 @@ namespace Cyberia.Salamandra.Commands.Other.Language;
 public sealed class LanguageCommandModule
 {
     private readonly ICultureService _cultureService;
-    private readonly DiscordCachedUserRepository _discordCachedUserRepository;
+    private readonly IDiscordCachedUserRepository _discordCachedUserRepository;
 
-    public LanguageCommandModule(ICultureService cultureService, DiscordCachedUserRepository discordCachedUserRepository)
+    public LanguageCommandModule(ICultureService cultureService, IDiscordCachedUserRepository discordCachedUserRepository)
     {
         _cultureService = cultureService;
         _discordCachedUserRepository = discordCachedUserRepository;

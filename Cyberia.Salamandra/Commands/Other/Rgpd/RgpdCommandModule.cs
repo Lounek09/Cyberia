@@ -25,9 +25,9 @@ public sealed class RgpdCommandModule
     };
 
     private readonly ICultureService _cultureService;
-    private readonly DiscordCachedUserRepository _discordCachedUserRepository;
+    private readonly IDiscordCachedUserRepository _discordCachedUserRepository;
 
-    public RgpdCommandModule(ICultureService cultureService, DiscordCachedUserRepository discordCachedUserRepository)
+    public RgpdCommandModule(ICultureService cultureService, IDiscordCachedUserRepository discordCachedUserRepository)
     {
         _cultureService = cultureService;
         _discordCachedUserRepository = discordCachedUserRepository;

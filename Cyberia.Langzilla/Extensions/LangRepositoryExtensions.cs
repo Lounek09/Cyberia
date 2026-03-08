@@ -3,9 +3,12 @@ using Cyberia.Langzilla.Primitives;
 
 namespace Cyberia.Langzilla.Extensions;
 
+/// <summary>
+/// Provides extension methods for <see cref="ILangRepository"/>.
+/// </summary>
 public static class LangRepositoryExtensions
 {
-    extension(LangRepository repository)
+    extension(ILangRepository repository)
     {
         /// <summary>
         /// Gets the name of the versions file.

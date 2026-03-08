@@ -9,7 +9,7 @@ using System.Text;
 namespace Cyberia.Langzilla.Extensions;
 
 /// <summary>
-/// Provides extension methods for the <see cref="Lang"/> class.
+/// Provides extension methods for <see cref="Lang"/>.
 /// </summary>
 public static class LangExtensions
 {
@@ -36,7 +36,7 @@ public static class LangExtensions
         /// </summary>
         public string GetOutputPath()
         {
-            return Path.Join(LangRepository.GetOutputPath(new LangsIdentifier(lang.Type, lang.Language)), lang.Name);
+            return Path.Join(ILangRepository.GetOutputPath(new LangsIdentifier(lang.Type, lang.Language)), lang.Name);
         }
 
         /// <summary>

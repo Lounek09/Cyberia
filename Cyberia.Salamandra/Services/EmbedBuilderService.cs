@@ -139,8 +139,6 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
     /// <summary>
     /// Initializes a new instance of the <see cref="EmbedBuilderService"/> class.
     /// </summary>
-    /// <param name="config">The bot configuration.</param>
-    /// <param name="discordClient">The Discord client.</param>
     public EmbedBuilderService(BotConfig config, DiscordClient discordClient, DofusApiConfig dofusApiConfig, DofusDatacenter dofusDatacenter)
     {
         _discordClient = discordClient;

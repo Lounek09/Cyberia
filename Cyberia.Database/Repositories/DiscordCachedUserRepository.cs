@@ -9,14 +9,24 @@ namespace Cyberia.Database.Repositories;
 /// <summary>
 /// Represents a repository for <see cref="DiscordCachedUser"/>.
 /// </summary>
-public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCachedUser, ulong>
+public interface IDiscordCachedUserRepository : IDatabaseRepository<DiscordCachedUser, ulong>
+{
+    /// <summary>
+    /// Gets the locale of a user by their ID.
+    /// </summary>
+    /// <param name="id">The ID of the user.</param>
+    /// <returns>The locale of the user if found; otherwise, <see langword="null"/>.</returns>
+    string? GetLocaleById(ulong id);
+}
+
+/// <inheritdoc cref="IDiscordCachedUserRepository"/>
+public sealed class DiscordCachedUserRepository : IDiscordCachedUserRepository
 {
     private readonly IDbConnectionFactory<SQLiteConnection> _connectionFactory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordCachedUserRepository"/> class.
     /// </summary>
-    /// <param name="connectionFactory">The connection factory.</param>
     public DiscordCachedUserRepository(IDbConnectionFactory<SQLiteConnection> connectionFactory)
     {
         _connectionFactory = connectionFactory;
@@ -134,11 +144,6 @@ public sealed class DiscordCachedUserRepository : IDatabaseRepository<DiscordCac
         }
     }
 
-    /// <summary>
-    /// Gets the locale of a user by their ID.
-    /// </summary>
-    /// <param name="id">The ID of the user.</param>
-    /// <returns>The locale of the user if found; otherwise, <see langword="null"/>.</returns>
     public string? GetLocaleById(ulong id)
     {
         const string query =
