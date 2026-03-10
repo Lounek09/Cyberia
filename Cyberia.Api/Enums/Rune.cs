@@ -1,0 +1,37 @@
+﻿namespace Cyberia.Api.Enums;
+
+public enum Rune
+{
+    None,
+    Fo,
+    Sa,
+    Ine,
+    Vi,
+    Age,
+    Cha,
+    GaPa,
+    GaPme,
+    Cri,
+    So,
+    Do,
+    DoPer,
+    DoRen,
+    Po,
+    Summo,
+    Pod,
+    Pi,
+    PiPer,
+    Ini,
+    Prospe,
+    FireRe,
+    AirRe,
+    WaterRe,
+    EarthRe,
+    NeutralRe,
+    FireRePer,
+    AirRePer,
+    EarthRePer,
+    NeutralRePer,
+    WaterRePer,
+    Hunt
+}

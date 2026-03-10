@@ -1,10 +1,11 @@
 ﻿using Cyberia.Api.Data.Runes;
+using Cyberia.Api.Enums;
 
 namespace Cyberia.Api.Factories.Effects.Interfaces;
 
 public interface IRuneGeneratorEffect
 {
-    int RuneId { get; }
+    Rune Rune { get; }
 
     RuneData? GetRuneData();
 
