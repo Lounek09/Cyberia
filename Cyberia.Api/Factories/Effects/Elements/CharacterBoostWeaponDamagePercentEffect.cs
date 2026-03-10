@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Items;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record CharacterBoostWeaponDamagePercentEffect : Effect
+public sealed record CharacterBoostWeaponDamagePercentEffect : Effect, IItemTypeEffect
 {
     public int ItemTypeId { get; init; }
     public int PercentDamage { get; init; }

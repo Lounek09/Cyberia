@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Rides;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record CharacterGainRideEffect : Effect
+public sealed record CharacterGainRideEffect : Effect, IRideEffect, IRideAbilityEffect
 {
     public int RideId { get; init; }
     public int RideAbilityId { get; init; }

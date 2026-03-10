@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Alignments;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record CharacterAlignmentSideSetEffect : Effect
+public sealed record CharacterAlignmentSideSetEffect : Effect, IAlignmentEffect, IAlignmentSpecializationEffect
 {
     public int AlignmentId { get; init; }
 

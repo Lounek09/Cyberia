@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record LaunchSpellLevelEffect : Effect
+public sealed record LaunchSpellLevelEffect : Effect, ISpellLevelEffect
 {
     public int SpellLevelId { get; init; }
 

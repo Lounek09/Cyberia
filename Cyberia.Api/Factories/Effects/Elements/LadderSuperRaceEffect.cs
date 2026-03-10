@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Monsters;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record LadderSuperRaceEffect : Effect
+public sealed record LadderSuperRaceEffect : Effect, IMonsterSuperRaceEffect
 {
     public int MonsterSuperRaceId { get; init; }
     public int Count { get; init; }

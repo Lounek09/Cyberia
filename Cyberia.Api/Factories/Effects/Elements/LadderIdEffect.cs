@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Monsters;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record LadderIdEffect : Effect
+public sealed record LadderIdEffect : Effect, IMonsterEffect
 {
     public int MonsterId { get; init; }
     public int Count { get; init; }

@@ -46,7 +46,7 @@ public interface IEffect : IComparable<IEffect>
     /// Gets the data of the effect.
     /// </summary>
     /// <returns>The <see cref="EffectData"/> object containing the data of the effect.</returns>
-    EffectData? GetEffectData();
+    EffectData? GetData();
 
     /// <summary>
     /// Generates a human-readable description of the effect for the specified language.

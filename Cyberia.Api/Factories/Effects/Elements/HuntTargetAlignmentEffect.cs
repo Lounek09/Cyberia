@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Alignments;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record HuntTargetAlignmentEffect : Effect
+public sealed record HuntTargetAlignmentEffect : Effect, IAlignmentEffect
 {
     public int AlignmentId { get; init; }
 

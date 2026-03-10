@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Quests;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record QuestStartEffect : Effect
+public sealed record QuestStartEffect : Effect, IQuestEffect
 {
     public int QuestId { get; init; }
 

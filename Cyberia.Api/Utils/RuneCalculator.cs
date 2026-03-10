@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Runes;
 using Cyberia.Api.Enums;
-using Cyberia.Api.Factories.Effects.Templates;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 namespace Cyberia.Api.Utils;
 

@@ -1,7 +1,7 @@
 ﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
-using Cyberia.Api.Factories.Effects.Templates;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 

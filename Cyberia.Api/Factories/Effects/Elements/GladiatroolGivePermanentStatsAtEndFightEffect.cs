@@ -2,7 +2,7 @@
 using Cyberia.Api.Extensions;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
-using Cyberia.Api.Factories.Effects.Templates;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
@@ -27,7 +27,7 @@ public sealed record GladiatroolGivePermanentStatsAtEndFightEffect : Effect, ICh
 
     public Element? GetElement()
     {
-        return ElementExtensions.GetFromCharacteristicId(CharacteristicId);
+        return Element.FromCharacteristicId(CharacteristicId);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

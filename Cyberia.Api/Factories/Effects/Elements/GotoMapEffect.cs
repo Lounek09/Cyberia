@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Maps;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record GotoMapEffect : Effect
+public sealed record GotoMapEffect : Effect, IMapEffect
 {
     public int MapId { get; init; }
     public int Cell { get; init; }

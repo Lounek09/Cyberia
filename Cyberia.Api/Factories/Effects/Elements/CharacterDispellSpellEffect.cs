@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record CharacterDispellSpellEffect : Effect
+public sealed record CharacterDispellSpellEffect : Effect, ISpellEffect
 {
     public int SpellId { get; init; }
 

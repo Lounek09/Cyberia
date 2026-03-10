@@ -1,5 +1,7 @@
-﻿using Cyberia.Api.Factories.Criteria.Elements;
+﻿using Cyberia.Api.Data.Runes;
+using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
@@ -22,5 +24,10 @@ public sealed record HuntToolEffect : ParameterlessEffect, IRuneGeneratorEffect
     internal static HuntToolEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
         return new(effectId, duration, probability, criteria, dispellable, effectArea);
+    }
+
+    public RuneData? GetRuneData()
+    {
+        return DofusApi.Datacenter.RunesRepository.GetRuneDataById(RuneId);
     }
 }

@@ -38,7 +38,7 @@ public abstract record Effect : IEffect
         EffectArea = effectArea;
     }
 
-    public EffectData? GetEffectData()
+    public EffectData? GetData()
     {
         return DofusApi.Datacenter.EffectsRepository.GetEffectDataById(Id);
     }
@@ -88,7 +88,7 @@ public abstract record Effect : IEffect
     [OverloadResolutionPriority(1)]
     protected DescriptionString GetDescription(CultureInfo? culture, params string[] parameters)
     {
-        var effectData = GetEffectData();
+        var effectData = GetData();
         if (effectData is null)
         {
             if (this is not UntranslatedEffect)
@@ -134,8 +134,8 @@ public abstract record Effect : IEffect
             return 1;
         }
 
-        var effectData = GetEffectData();
-        var otherEffectData = other.GetEffectData();
+        var effectData = GetData();
+        var otherEffectData = other.GetData();
 
         if (effectData is null && otherEffectData is null)
         {

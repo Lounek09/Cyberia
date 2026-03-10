@@ -1,12 +1,13 @@
 ﻿using Cyberia.Api.Data.Emotes;
 using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.EffectAreas;
+using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record CharacterLearnEmoteEffect : Effect
+public sealed record CharacterLearnEmoteEffect : Effect, IEmoteEffect
 {
     public int EmoteId { get; init; }
 

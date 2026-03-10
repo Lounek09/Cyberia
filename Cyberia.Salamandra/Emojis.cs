@@ -6,7 +6,7 @@ using Cyberia.Api.Data.States;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Elements;
-using Cyberia.Api.Factories.Effects.Templates;
+using Cyberia.Api.Factories.Effects.Interfaces;
 using Cyberia.Salamandra.Services;
 
 using System.Globalization;
@@ -39,18 +39,18 @@ public static class Emojis
     {
         var emoji = effect switch
         {
-            CharacterLearnEmoteEffect characterLearnEmoteEffect => Emote(characterLearnEmoteEffect.GetEmoteData(), culture),
             RideDetailsEffect => RideDetail(culture),
             ICharacteristicEffect characteristicEffect => EmojisService.GetEmojiStringByName($"effect_{characteristicEffect.CharacteristicId}", ReadOnlySpan<char>.Empty),
+            IEmoteEffect emoteEffect => Emote(emoteEffect.GetEmoteData(), culture),
             IJobEffect jobEffect => Job(jobEffect.GetJobData(), culture),
-            IStateEffect stateEffect => State(stateEffect.GetStateData(), culture),
             ISpellEffect or ISpellLevelEffect => Spell(culture),
+            IStateEffect stateEffect => State(stateEffect.GetStateData(), culture),
             _ => null
         };
 
         if (emoji is null)
         {
-            var effectData = effect.GetEffectData();
+            var effectData = effect.GetData();
             if (effectData is null)
             {
                 return Empty(culture);
