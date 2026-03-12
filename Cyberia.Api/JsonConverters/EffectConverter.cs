@@ -7,15 +7,15 @@ using System.Text.Json.Serialization;
 namespace Cyberia.Api.JsonConverters;
 
 /// <summary>
-/// A specialized JSON converter for serializing and deserializing <see cref="IEffect"/> objects.
+/// A specialized JSON converter for serializing and deserializing <see cref="Effect"/> objects.
 /// </summary>
 /// <remarks>
-/// - Expects a JSON string containing a compressed <see cref="IEffect"/> representation.<br />
-/// - Parses this string into a structured <see cref="IEffect"/> using <see cref="EffectFactory.Create"/>.
+/// - Expects a JSON string containing a compressed <see cref="Effect"/> representation.<br />
+/// - Parses this string into a structured <see cref="Effect"/> using <see cref="EffectFactory.Create"/>.
 /// </remarks>
-public sealed class EffectConverter : JsonConverter<IEffect>
+public sealed class EffectConverter : JsonConverter<Effect>
 {
-    public override IEffect Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override Effect Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.String)
         {
@@ -25,7 +25,7 @@ public sealed class EffectConverter : JsonConverter<IEffect>
         return EffectFactory.Create(reader.GetString() ?? string.Empty);
     }
 
-    public override void Write(Utf8JsonWriter writer, IEffect values, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, Effect values, JsonSerializerOptions options)
     {
         throw new NotImplementedException();
     }

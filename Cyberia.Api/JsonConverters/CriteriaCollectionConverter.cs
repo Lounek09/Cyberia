@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Factories;
-using Cyberia.Api.Factories.Criteria.Elements;
+using Cyberia.Api.Factories.Criteria;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;

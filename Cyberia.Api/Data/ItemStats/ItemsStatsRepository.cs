@@ -48,7 +48,7 @@ public sealed class ItemsStatsRepository : DofusRepository, IDofusRepository
                 continue;
             }
 
-            List<IEffect> combinedEffects = new(itemStatsData.Effects.Count + itemStatsCustomData.Effects.Count);
+            List<Effect> combinedEffects = new(itemStatsData.Effects.Count + itemStatsCustomData.Effects.Count);
             combinedEffects.AddRange(itemStatsData.Effects);
             combinedEffects.AddRange(itemStatsCustomData.Effects);
 

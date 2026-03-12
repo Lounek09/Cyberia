@@ -1,4 +1,4 @@
-﻿using Cyberia.Api.Factories.Criteria.Elements;
+﻿using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Elements;
@@ -9,15 +9,15 @@ using System.Text.Json;
 namespace Cyberia.Api.Factories;
 
 /// <summary>
-/// Provides factory methods for creating <see cref="IEffect"/>.
+/// Provides factory methods for creating <see cref="Effect"/>.
 /// </summary>
 public static class EffectFactory
 {
     /// <summary>
     /// A dictionary mapping effect identifiers to their factory methods.
     /// </summary>
-    private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, bool, EffectArea, IEffect>> s_factories =
-        new Dictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, bool, EffectArea, IEffect>>()
+    private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, bool, EffectArea, Effect>> s_factories =
+        new Dictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, bool, EffectArea, Effect>>()
         {
             { 4, CharacterTeleportOnSameMapEffect.Create },
             { 5, CharacterPushEffect.Create },
@@ -454,7 +454,7 @@ public static class EffectFactory
         }.ToFrozenDictionary();
 
     /// <summary>
-    /// Creates an <see cref="IEffect"/>.
+    /// Creates an <see cref="Effect"/>.
     /// </summary>
     /// <param name="id">The unique identifier of the effect.</param>
     /// <param name="parameters">The parameters of the effect.</param>
@@ -463,8 +463,8 @@ public static class EffectFactory
     /// <param name="criteria">The criteria where the effect is applicable.</param>
     /// <param name="dispellable">Whether the effect is dispellable.</param>
     /// <param name="effectArea">The area of the effect.</param>
-    /// <returns>The created <see cref="IEffect"/> if the effect is known; otherwise, an <see cref="UntranslatedEffect"/> instance.</returns>
-    public static IEffect Create(int id, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    /// <returns>The created <see cref="Effect"/> if the effect is known; otherwise, an <see cref="UntranslatedEffect"/> instance.</returns>
+    public static Effect Create(int id, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
         if (!s_factories.TryGetValue(id, out var builder))
         {
@@ -477,11 +477,11 @@ public static class EffectFactory
     }
 
     /// <summary>
-    /// Creates an <see cref="IEffect"/> from a compressed string representation.
+    /// Creates an <see cref="Effect"/> from a compressed string representation.
     /// </summary>
     /// <param name="compressedEffect">The compressed string representation of the effect.</param>
-    /// <returns>The created <see cref="IEffect"/> if successful; otherwise, an <see cref="ErroredEffect"/> or <see cref="UntranslatedEffect"/> instance.</returns>
-    public static IEffect Create(ReadOnlySpan<char> compressedEffect)
+    /// <returns>The created <see cref="Effect"/> if successful; otherwise, an <see cref="ErroredEffect"/> or <see cref="UntranslatedEffect"/> instance.</returns>
+    public static Effect Create(ReadOnlySpan<char> compressedEffect)
     {
         const char separator = '#';
 
@@ -508,11 +508,11 @@ public static class EffectFactory
     }
 
     /// <summary>
-    /// Creates a list of <see cref="IEffect"/> from a compressed string representation.
+    /// Creates a list of <see cref="Effect"/> from a compressed string representation.
     /// </summary>
     /// <param name="compressedEffects">The compressed string representation of the effects.</param>
-    /// <returns>The list of created <see cref="IEffect"/>.</returns>
-    public static List<IEffect> CreateMany(ReadOnlySpan<char> compressedEffects)
+    /// <returns>The list of created <see cref="Effect"/>.</returns>
+    public static List<Effect> CreateMany(ReadOnlySpan<char> compressedEffects)
     {
         const char separator = ',';
 
@@ -534,7 +534,7 @@ public static class EffectFactory
             return [];
         }
 
-        List<IEffect> effects = new(effectCount);
+        List<Effect> effects = new(effectCount);
 
         for (var i = 0; i < effectCount; i++)
         {
@@ -546,12 +546,12 @@ public static class EffectFactory
     }
 
     /// <summary>
-    /// Creates an <see cref="IEffect"/> from a compressed json representation.
+    /// Creates an <see cref="Effect"/> from a compressed json representation.
     /// </summary>
     /// <param name="compressedEffect">The compressed json representation of the effect.</param>
     /// <param name="effectArea">The area of the effect.</param>
-    /// <returns>The created <see cref="IEffect"/>.</returns>
-    public static IEffect Create(JsonElement compressedEffect, EffectArea effectArea)
+    /// <returns>The created <see cref="Effect"/>.</returns>
+    public static Effect Create(JsonElement compressedEffect, EffectArea effectArea)
     {
         if (compressedEffect.ValueKind != JsonValueKind.Array)
         {
@@ -594,12 +594,12 @@ public static class EffectFactory
     }
 
     /// <summary>
-    /// Creates a list of <see cref="IEffect"/> from a compressed json representation.
+    /// Creates a list of <see cref="Effect"/> from a compressed json representation.
     /// </summary>
     /// <param name="compressedEffects">The compressed json representation of the effects.</param>
     /// <param name="effectAreas">The areas of the effects.</param>
-    /// <returns>The list of created <see cref="IEffect"/>.</returns>
-    public static List<IEffect> CreateMany(JsonElement compressedEffects, ReadOnlySpan<EffectArea> effectAreas)
+    /// <returns>The list of created <see cref="Effect"/>.</returns>
+    public static List<Effect> CreateMany(JsonElement compressedEffects, ReadOnlySpan<EffectArea> effectAreas)
     {
         if (compressedEffects.ValueKind == JsonValueKind.Null)
         {
@@ -616,7 +616,7 @@ public static class EffectFactory
 
         var effectCount = compressedEffects.GetArrayLength();
         var effectAreasCount = effectAreas.Length;
-        List<IEffect> effects = new(effectCount);
+        List<Effect> effects = new(effectCount);
 
         for (var i = 0; i < effectCount; i++)
         {

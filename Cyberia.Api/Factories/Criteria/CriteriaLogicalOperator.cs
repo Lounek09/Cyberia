@@ -2,7 +2,7 @@
 
 using System.Globalization;
 
-namespace Cyberia.Api.Factories.Criteria.Elements;
+namespace Cyberia.Api.Factories.Criteria;
 
 /// <summary>
 /// Represents a logical operator in a criteria.

@@ -2,7 +2,7 @@
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
-public interface IEffectEffect
+public interface EffectEffect
 {
     int EffectId { get; }
 

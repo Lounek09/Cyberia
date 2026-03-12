@@ -24,13 +24,13 @@ public sealed class IncarnationData : IDofusData<int>
 
     [JsonPropertyName("e")]
     [JsonConverter(typeof(EffectReadOnlyListConverter))]
-    public IReadOnlyList<IEffect> Effects { get; init; }
+    public IReadOnlyList<Effect> Effects { get; init; }
 
     [JsonConstructor]
     internal IncarnationData()
     {
         SpellsId = ReadOnlyCollection<int>.Empty;
-        Effects = ReadOnlyCollection<IEffect>.Empty;
+        Effects = ReadOnlyCollection<Effect>.Empty;
     }
 
     public async Task<string> GetBigImagePathAsync(CdnImageSize size)
@@ -75,7 +75,7 @@ public sealed class IncarnationData : IDofusData<int>
         }
     }
 
-    public IReadOnlyList<IEffect> GetRealEffects()
+    public IReadOnlyList<Effect> GetRealEffects()
     {
         var itemData = GetItemData();
         if (itemData is not null)

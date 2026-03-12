@@ -19,14 +19,14 @@ public sealed class ItemSetData : IDofusData<int>
     public IReadOnlyList<int> ItemsId { get; init; }
 
     [JsonIgnore]
-    public IReadOnlyList<IReadOnlyList<IEffect>> Effects { get; internal set; }
+    public IReadOnlyList<IReadOnlyList<Effect>> Effects { get; internal set; }
 
     [JsonConstructor]
     internal ItemSetData()
     {
         Name = LocalizedString.Empty;
         ItemsId = ReadOnlyCollection<int>.Empty;
-        Effects = ReadOnlyCollection<IReadOnlyList<IEffect>>.Empty;
+        Effects = ReadOnlyCollection<IReadOnlyList<Effect>>.Empty;
     }
 
     public IEnumerable<ItemData> GetItemsData()
@@ -52,7 +52,7 @@ public sealed class ItemSetData : IDofusData<int>
         return 1;
     }
 
-    public IReadOnlyList<IEffect> GetEffects(int nbItem)
+    public IReadOnlyList<Effect> GetEffects(int nbItem)
     {
         var index = nbItem - 1;
 

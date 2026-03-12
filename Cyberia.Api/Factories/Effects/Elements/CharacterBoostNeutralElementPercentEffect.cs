@@ -1,6 +1,6 @@
 ﻿using Cyberia.Api.Data.Runes;
 using Cyberia.Api.Enums;
-using Cyberia.Api.Factories.Criteria.Elements;
+using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects.Interfaces;
 using Cyberia.Api.Factories.Effects.Templates;

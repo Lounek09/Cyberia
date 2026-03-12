@@ -10,7 +10,7 @@ public sealed class AlignmentFeatParametersData
 
     public int Level { get; init; }
 
-    public IAlignmentFeatEffect? AlignmentFeatEffect { get; init; }
+    public AlignmentFeatEffect? AlignmentFeatEffect { get; init; }
 
     [JsonConstructor]
     internal AlignmentFeatParametersData() { }

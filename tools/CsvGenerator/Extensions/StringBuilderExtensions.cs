@@ -1,6 +1,5 @@
 ﻿using Cyberia.Api.Data.Crafts;
 using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.Effects;
 
 using System.Buffers;
@@ -44,7 +43,7 @@ public static class StringBuilderExtensions
             return builder.Append(value);
         }
 
-        public StringBuilder AppendEffects(IReadOnlyList<IEffect> effects)
+        public StringBuilder AppendEffects(IReadOnlyList<Effect> effects)
         {
             const string separator = " | ";
             const int separatorLength = 3;
@@ -88,7 +87,7 @@ public static class StringBuilderExtensions
                         criteriaBuilder.AppendCriteria(subCriteria);
                         criteriaBuilder.Append(')');
                         break;
-                    case ICriterion criterion:
+                    case Criterion criterion:
                         criteriaBuilder.Append(criterion.GetDescription());
                         break;
                 }

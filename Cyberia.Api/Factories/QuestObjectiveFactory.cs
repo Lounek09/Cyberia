@@ -7,15 +7,15 @@ using System.Collections.Frozen;
 namespace Cyberia.Api.Factories;
 
 /// <summary>
-/// Provides factory methods for creating <see cref="IQuestObjective"/>.
+/// Provides factory methods for creating <see cref="QuestObjective"/>.
 /// </summary>
 public static class QuestObjectiveFactory
 {
     /// <summary>
     /// A dictionary mapping quest objective type identifiers to their factory methods.
     /// </summary>
-    private static readonly FrozenDictionary<int, Func<QuestObjectiveData, IQuestObjective?>> s_factories =
-        new Dictionary<int, Func<QuestObjectiveData, IQuestObjective?>>()
+    private static readonly FrozenDictionary<int, Func<QuestObjectiveData, QuestObjective?>> s_factories =
+        new Dictionary<int, Func<QuestObjectiveData, QuestObjective?>>()
         {
             { 0, FreeFormQuestObjective.Create },
             { 1, GoToNpcQuestObjective.Create },
@@ -39,25 +39,25 @@ public static class QuestObjectiveFactory
         }.ToFrozenDictionary();
 
     /// <summary>
-    /// Creates a new <see cref="IQuestObjective"/> from the given <see cref="QuestObjectiveData"/>.
+    /// Creates a new <see cref="QuestObjective"/> from the given <see cref="QuestObjectiveData"/>.
     /// </summary>
-    /// <param name="questObjectiveData">The data of the quest objective to create.</param>
-    /// <returns>The created <see cref="IQuestObjective"/> if successful; otherwise, an <see cref="ErroredQuestObjective"/> or <see cref="UntranslatedQuestObjective"/> instance.</returns>
-    public static IQuestObjective Create(QuestObjectiveData questObjectiveData)
+    /// <param name="data">The data of the quest objective to create.</param>
+    /// <returns>The created <see cref="QuestObjective"/> if successful; otherwise, an <see cref="ErroredQuestObjective"/> or <see cref="UntranslatedQuestObjective"/> instance.</returns>
+    public static QuestObjective Create(QuestObjectiveData data)
     {
-        if (!s_factories.TryGetValue(questObjectiveData.QuestObjectiveTypeId, out var builder))
+        if (!s_factories.TryGetValue(data.QuestObjectiveTypeId, out var builder))
         {
-            Log.Warning("Unknown QuestObjectiveType from {@QuestObjectiveData}", questObjectiveData);
+            Log.Warning("Unknown QuestObjectiveType from {@QuestObjectiveData}", data);
 
-            return new UntranslatedQuestObjective(questObjectiveData);
+            return new UntranslatedQuestObjective(data);
         }
 
-        var questObjective = builder(questObjectiveData);
+        var questObjective = builder(data);
         if (questObjective is null)
         {
-            Log.Error("Failed to create QuestObjective from {@QuestObjectiveData}", questObjectiveData);
+            Log.Error("Failed to create QuestObjective from {@QuestObjectiveData}", data);
 
-            return new ErroredQuestObjective(questObjectiveData);
+            return new ErroredQuestObjective(data);
         }
 
         return questObjective;

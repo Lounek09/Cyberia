@@ -67,7 +67,7 @@ public sealed class SpellsRepository : DofusRepository, IDofusRepository
             {
                 return y.Effects.Any(z =>
                 {
-                    return z.Criteria.OfType<ICriterion>()
+                    return z.Criteria.OfType<Criterion>()
                         .Any(x => x.Id.Equals(criterionId));
                 });
             });

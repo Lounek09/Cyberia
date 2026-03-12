@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Data.Monsters;
-using Cyberia.Api.Factories.Criteria.Elements;
+using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.EffectAreas;
 
 using System.Globalization;

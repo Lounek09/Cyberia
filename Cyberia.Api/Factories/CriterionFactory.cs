@@ -13,15 +13,15 @@ using System.Collections.Frozen;
 namespace Cyberia.Api.Factories;
 
 /// <summary>
-/// Provides factory methods for creating <see cref="ICriterion"/> or <see cref="CriteriaReadOnlyCollection"/>.
+/// Provides factory methods for creating <see cref="Criterion"/> or <see cref="CriteriaReadOnlyCollection"/>.
 /// </summary>
 public static class CriterionFactory
 {
     /// <summary>
     /// A dictionary mapping criterion identifiers to their factory methods.
     /// </summary>
-    private static readonly FrozenDictionary<string, Func<string, char, ReadOnlySpan<string>, ICriterion?>> s_factories =
-        new Dictionary<string, Func<string, char, ReadOnlySpan<string>, ICriterion?>>()
+    private static readonly FrozenDictionary<string, Func<string, char, ReadOnlySpan<string>, Criterion?>> s_factories =
+        new Dictionary<string, Func<string, char, ReadOnlySpan<string>, Criterion?>>()
         {
             { "BI", UnusableItemCriterion.Create },
             { "CA", AgilityCriterion.Create },
@@ -108,13 +108,13 @@ public static class CriterionFactory
         }.ToFrozenDictionary();
 
     /// <summary>
-    /// Creates an <see cref="ICriterion"/> from the specified criterion id.
+    /// Creates an <see cref="Criterion"/> from the specified criterion id.
     /// </summary>
     /// <param name="id">The id of the criterion to create.</param>
     /// <param name="operator">The operator character indicating the type of comparison or operation.</param>
     /// <param name="parameters">The parameters of the criterion.</param>
-    /// <returns>The created <see cref="ICriterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
-    public static ICriterion Create(string id, char @operator, params ReadOnlySpan<string> parameters)
+    /// <returns>The created <see cref="Criterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
+    public static Criterion Create(string id, char @operator, params ReadOnlySpan<string> parameters)
     {
         string compressedCriterion;
         string[] arrayParameters;
@@ -142,11 +142,11 @@ public static class CriterionFactory
     }
 
     /// <summary>
-    /// Creates an <see cref="ICriterion"/> from a compressed string representation.
+    /// Creates an <see cref="Criterion"/> from a compressed string representation.
     /// </summary>
     /// <param name="compressedCriterion">The compressed string representation of the criterion.</param>
-    /// <returns>The created <see cref="ICriterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
-    public static ICriterion Create(ReadOnlySpan<char> compressedCriterion)
+    /// <returns>The created <see cref="Criterion"/> if successful; otherwise, an <see cref="ErroredCriterion"/> or <see cref="UntranslatedCriterion"/> instance.</returns>
+    public static Criterion Create(ReadOnlySpan<char> compressedCriterion)
     {
         const char separator = ',';
 

@@ -6,7 +6,7 @@ using Cyberia.Api.Data.ItemStats;
 using Cyberia.Api.Data.Npcs;
 using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Enums;
-using Cyberia.Api.Factories.Criteria.Elements;
+using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Primitives;

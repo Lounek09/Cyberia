@@ -215,7 +215,7 @@ public sealed class QuestsRepository : DofusRepository, IDofusRepository
     {
         foreach (var questStepData in QuestSteps.Values)
         {
-            List<IQuestObjective> questObjectives = [];
+            List<QuestObjective> questObjectives = [];
 
             foreach (var questObjectiveId in questStepData.QuestObjectivesId)
             {

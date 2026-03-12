@@ -115,7 +115,7 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
     {
         return Items.Values.Where(x =>
         {
-            return x.Criteria.OfType<ICriterion>()
+            return x.Criteria.OfType<Criterion>()
                 .Any(y => y.Id.Equals(criterionId));
         });
     }
@@ -168,10 +168,8 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
         foreach (var itemSuperTypeSlotData in ItemSuperTypeSlots)
         {
             var itemSuperTypeData = GetItemSuperTypeDataById(itemSuperTypeSlotData.Id);
-            if (itemSuperTypeData is not null)
-            {
-                itemSuperTypeData.SlotsId = itemSuperTypeSlotData.SlotsId;
-            }
+
+            itemSuperTypeData?.SlotsId = itemSuperTypeSlotData.SlotsId;
         }
     }
 }

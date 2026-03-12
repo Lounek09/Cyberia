@@ -35,7 +35,7 @@ public static class Emojis
     }
 
     // Effects
-    public static string Effect(IEffect effect, CultureInfo? culture)
+    public static string Effect(Effect effect, CultureInfo? culture)
     {
         var emoji = effect switch
         {

@@ -12,7 +12,7 @@ public sealed record ErroredQuestObjective : QuestObjective
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
         return new DescriptionString(Translation.Get<ApiTranslations>("QuestObjectiveType.Errored", culture),
-            QuestObjectiveData.QuestObjectiveTypeId.ToString(),
-            string.Join(", ", QuestObjectiveData.Parameters));
+            Data.QuestObjectiveTypeId.ToString(),
+            string.Join(", ", Data.Parameters));
     }
 }

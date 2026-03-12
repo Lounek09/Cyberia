@@ -11,6 +11,6 @@ public sealed record UntranslatedQuestObjective : QuestObjective
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        return GetDescription(culture, QuestObjectiveData.Parameters);
+        return GetDescription(culture, Data.Parameters);
     }
 }

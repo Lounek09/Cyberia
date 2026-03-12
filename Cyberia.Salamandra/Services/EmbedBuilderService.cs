@@ -5,7 +5,6 @@ using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Pets;
 using Cyberia.Api.Factories;
 using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Factories.Criteria.Elements;
 using Cyberia.Api.Factories.Effects;
 using Cyberia.Api.Factories.Effects.Elements;
 using Cyberia.Api.Factories.QuestObjectives;
@@ -61,7 +60,7 @@ public interface IEmbedBuilderService
     /// <param name="culture">The culture to use for the description.</param>
     /// <param name="inline">Whether to display the fields inline.</param>
     /// <returns>The updated embed builder.</returns>
-    DiscordEmbedBuilder AddEffectFields(DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, bool inline = false);
+    DiscordEmbedBuilder AddEffectFields(DiscordEmbedBuilder embed, string name, IEnumerable<Effect> effects, bool sort, CultureInfo? culture, bool inline = false);
 
     /// <summary>
     /// Adds criteria fields to the embed builder.
@@ -81,7 +80,7 @@ public interface IEmbedBuilderService
     /// <param name="culture">The culture to use for the description.</param>
     /// <param name="inline">Whether to display the fields inline.</param>
     /// <returns>The updated embed builder.</returns>
-    DiscordEmbedBuilder AddQuestObjectivesFields(DiscordEmbedBuilder embed, IEnumerable<IQuestObjective> questObjectives, CultureInfo? culture, bool inline = false);
+    DiscordEmbedBuilder AddQuestObjectivesFields(DiscordEmbedBuilder embed, IEnumerable<QuestObjective> questObjectives, CultureInfo? culture, bool inline = false);
 
     /// <summary>
     /// Sets the craft description for the embed builder.
@@ -198,7 +197,7 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
         return embed.WithDescription(descriptionBuilder.ToString());
     }
 
-    public DiscordEmbedBuilder AddEffectFields(DiscordEmbedBuilder embed, string name, IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, bool inline = false)
+    public DiscordEmbedBuilder AddEffectFields(DiscordEmbedBuilder embed, string name, IEnumerable<Effect> effects, bool sort, CultureInfo? culture, bool inline = false)
     {
         if (effects.Any())
         {
@@ -215,7 +214,7 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
         return embed.AddFields(Translation.Get<BotTranslations>("Embed.Field.Criteria.Title", culture), criteriaParse, inline);
     }
 
-    public DiscordEmbedBuilder AddQuestObjectivesFields(DiscordEmbedBuilder embed, IEnumerable<IQuestObjective> questObjectives, CultureInfo? culture, bool inline = false)
+    public DiscordEmbedBuilder AddQuestObjectivesFields(DiscordEmbedBuilder embed, IEnumerable<QuestObjective> questObjectives, CultureInfo? culture, bool inline = false)
     {
         List<string> questObjectivesParse = [];
 
@@ -448,7 +447,7 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
         return embed.AddField(Translation.Get<BotTranslations>("Embed.Field.Pet.Title", culture), builder.ToString(), inline);
     }
 
-    private static ReadOnlyCollection<string> GetEffectsDescription(IEnumerable<IEffect> effects, bool sort, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
+    private static ReadOnlyCollection<string> GetEffectsDescription(IEnumerable<Effect> effects, bool sort, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
     {
         List<string> effectsDescription = [];
         StringBuilder effectDescriptionBuilder = new();
@@ -529,7 +528,7 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
 
                     criteriaDescription.Add(string.Empty);
                     break;
-                case ICriterion criterion:
+                case Criterion criterion:
                     criteriaDescription[^1] += parametersDecorator is null
                         ? criterion.GetDescription(culture)
                         : criterion.GetDescription(culture).ToString(parametersDecorator);

@@ -13,7 +13,7 @@ public sealed class PetFoodsData : IDofusData
 {
     [JsonPropertyName("e")]
     [JsonConverter(typeof(EffectConverter))]
-    public IEffect Effect { get; init; }
+    public Effect Effect { get; init; }
 
     [JsonPropertyName("i")]
     public IReadOnlyList<int> ItemsId { get; init; }

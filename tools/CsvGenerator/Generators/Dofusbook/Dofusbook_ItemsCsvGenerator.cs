@@ -140,7 +140,7 @@ public sealed class Dofusbook_ItemsCsvGenerator : DofusCsvGenerator<ItemData>
         _builder.Append(c_csvSeparator);
 
         // effect
-        List<IEffect> effects = [];
+        List<Effect> effects = [];
         if (itemStatsData is not null)
         {
             effects.AddRange(itemStatsData.Effects);

@@ -13,8 +13,8 @@ public static class AlignmentFeatEffectFactory
     /// <summary>
     /// A dictionary mapping alignment feat effect identifiers to their factory methods.
     /// </summary>
-    private static readonly FrozenDictionary<int, Func<int, ReadOnlySpan<int>, IAlignmentFeatEffect?>> s_factories =
-       new Dictionary<int, Func<int, ReadOnlySpan<int>, IAlignmentFeatEffect?>>()
+    private static readonly FrozenDictionary<int, Func<int, ReadOnlySpan<int>, AlignmentFeatEffect?>> s_factories =
+       new Dictionary<int, Func<int, ReadOnlySpan<int>, AlignmentFeatEffect?>>()
        {
            { 1, CharacterBoostRangeAlignmentFeatEffect.Create },
            { 2, CharacterBoostInitiativeAlignmentFeatEffect.Create },
@@ -58,12 +58,12 @@ public static class AlignmentFeatEffectFactory
        }.ToFrozenDictionary();
 
     /// <summary>
-    /// Creates an <see cref="IAlignmentFeatEffect"/>.
+    /// Creates an <see cref="AlignmentFeatEffect"/>.
     /// </summary>
     /// <param name="id">The unique identifier of the alignment feat effect.</param>
     /// <param name="parameters">The parameters of the alignment feat effect.</param>
-    /// <returns>The created <see cref="IAlignmentFeatEffect"/> if successful; otherwise, an <see cref="ErroredAlignmentFeatEffect"/> or <see cref="UntranslatedAlignmentFeatEffect"/> instance.</returns>
-    public static IAlignmentFeatEffect Create(int id, params ReadOnlySpan<int> parameters)
+    /// <returns>The created <see cref="AlignmentFeatEffect"/> if successful; otherwise, an <see cref="ErroredAlignmentFeatEffect"/> or <see cref="UntranslatedAlignmentFeatEffect"/> instance.</returns>
+    public static AlignmentFeatEffect Create(int id, params ReadOnlySpan<int> parameters)
     {
         int[] arrayParameters;
 

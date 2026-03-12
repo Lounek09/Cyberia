@@ -1,5 +1,5 @@
 ﻿using Cyberia.Api.Data.Effects;
-using Cyberia.Api.Factories.Criteria.Elements;
+using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects.Templates;
 
@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
-public sealed record CharacterPunishmentEffect : Effect, IEffectEffect
+public sealed record CharacterPunishmentEffect : Effect, EffectEffect
 {
     public int EffectId { get; init; }
     public int MaxBoost { get; init; }

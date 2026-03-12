@@ -14,9 +14,9 @@ public sealed class SpellLevelData : IDofusData<int>
 {
     public int Id { get; init; }
 
-    public IReadOnlyList<IEffect> Effects { get; init; }
+    public IReadOnlyList<Effect> Effects { get; init; }
 
-    public IReadOnlyList<IEffect> CriticalEffects { get; init; }
+    public IReadOnlyList<Effect> CriticalEffects { get; init; }
 
     public int ActionPointCost { get; init; }
 
@@ -58,14 +58,14 @@ public sealed class SpellLevelData : IDofusData<int>
 
     internal SpellLevelData()
     {
-        Effects = ReadOnlyCollection<IEffect>.Empty;
-        CriticalEffects = ReadOnlyCollection<IEffect>.Empty;
+        Effects = ReadOnlyCollection<Effect>.Empty;
+        CriticalEffects = ReadOnlyCollection<Effect>.Empty;
         RequiredStatesId = ReadOnlyCollection<int>.Empty;
         ForbiddenStatesId = ReadOnlyCollection<int>.Empty;
         SpellData = new();
     }
 
-    public IReadOnlyList<IEffect> GetTrapEffects()
+    public IReadOnlyList<Effect> GetTrapEffects()
     {
         foreach (var effect in Effects)
         {
@@ -86,7 +86,7 @@ public sealed class SpellLevelData : IDofusData<int>
         return [];
     }
 
-    public IReadOnlyList<IEffect> GetGlyphEffects()
+    public IReadOnlyList<Effect> GetGlyphEffects()
     {
         foreach (var effect in Effects)
         {

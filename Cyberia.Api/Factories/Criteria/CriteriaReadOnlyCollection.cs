@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
-namespace Cyberia.Api.Factories.Criteria.Elements;
+namespace Cyberia.Api.Factories.Criteria;
 
 /// <summary>
 /// Represents a read-only collection of criteria.
@@ -15,7 +15,7 @@ public sealed record CriteriaReadOnlyCollection : ICriteriaElement, IReadOnlyLis
     /// <summary>
     /// Gets an empty <see cref="CriteriaReadOnlyCollection"/>.
     /// </summary>
-    public static CriteriaReadOnlyCollection Empty => new(Array.Empty<ICriteriaElement>());
+    public static readonly CriteriaReadOnlyCollection Empty = new(Array.Empty<ICriteriaElement>());
 
     /// <summary>
     /// Gets the items in the collection.
