@@ -26,8 +26,7 @@ public static class ServiceCollectionExtensions
         {
             SqlMapper.AddTypeHandler(new DateTimeHandler());
 
-            services.AddSingleton<IDbConnectionFactory<SQLiteConnection>, SQLiteDbConnectionFactory>(
-                _ => new SQLiteDbConnectionFactory(connectionString));
+            services.AddSingleton<IDbConnectionFactory<SQLiteConnection>, SQLiteDbConnectionFactory>(_ => new SQLiteDbConnectionFactory(connectionString));
             services.AddSingleton<IMigrationManager, MigrationManager>();
 
             services.AddSingleton<IDiscordCachedUserRepository, DiscordCachedUserRepository>();

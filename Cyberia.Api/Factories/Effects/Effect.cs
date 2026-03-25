@@ -2,17 +2,20 @@
 using Cyberia.Api.Factories.Criteria;
 using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects.Elements;
+using Cyberia.Api.JsonConverters;
 using Cyberia.Langzilla.Primitives;
 
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Factories.Effects;
 
 /// <summary>
 /// Represents an effect of an in game object (a spell, an item, etc).
 /// </summary>
+[JsonConverter(typeof(EffectConverter))]
 public abstract record Effect : IComparable<Effect>
 {
     /// <summary>

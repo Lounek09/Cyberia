@@ -91,7 +91,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
 
     public DateTime LastModified { get; private set; }
 
-    private readonly MonitoredFileRepository _monitoredFileRepository;
+    private readonly IMonitoredFileRepository _monitoredFileRepository;
     private readonly HttpClient _httpClient;
     private readonly HttpRetryPolicy _httpRetryPolicy;
 
@@ -100,7 +100,7 @@ public sealed class CytrusWatcher : ICytrusWatcher
     /// <summary>
     /// Initializes a new instance of the <see cref="CytrusWatcher"/> class.
     /// </summary>
-    public CytrusWatcher(MonitoredFileRepository monitoredFileRepository)
+    public CytrusWatcher(IMonitoredFileRepository monitoredFileRepository)
     {
         _monitoredFileRepository = monitoredFileRepository;
         _httpClient = new()

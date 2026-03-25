@@ -12,7 +12,6 @@ namespace Cyberia.Api.Data.Pets;
 public sealed class PetFoodsData : IDofusData
 {
     [JsonPropertyName("e")]
-    [JsonConverter(typeof(EffectConverter))]
     public Effect Effect { get; init; }
 
     [JsonPropertyName("i")]

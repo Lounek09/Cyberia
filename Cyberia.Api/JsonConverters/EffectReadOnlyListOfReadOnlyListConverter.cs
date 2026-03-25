@@ -11,8 +11,8 @@ namespace Cyberia.Api.JsonConverters;
 /// <see cref="IReadOnlyList{T}"/> of <see cref="IReadOnlyList{T}"/> containing <see cref="Effect"/> objects.
 /// </summary>
 /// <remarks>
-/// - Expects a JSON array of strings, where each string represents a compressed list of effects<br />
-/// - Uses <see cref="EffectFactory.CreateMany"/> to parse each string into a list of <see cref="Effect"/> objects<br />
+/// - Expects a JSON array of strings, where each string represents a compressed list of effects<br/>
+/// - Uses <see cref="EffectFactory.CreateMany"/> to parse each string into a list of <see cref="Effect"/> objects<br/>
 /// - Aggregates these lists into a read-only list of read-only lists.
 /// </remarks>
 public sealed class EffectReadOnlyListOfReadOnlyListConverter : JsonConverter<IReadOnlyList<IReadOnlyList<Effect>>>
