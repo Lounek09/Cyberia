@@ -168,7 +168,6 @@ public sealed class ItemsRepository : DofusRepository, IDofusRepository
         foreach (var itemSuperTypeSlotData in ItemSuperTypeSlots)
         {
             var itemSuperTypeData = GetItemSuperTypeDataById(itemSuperTypeSlotData.Id);
-
             itemSuperTypeData?.SlotsId = itemSuperTypeSlotData.SlotsId;
         }
     }

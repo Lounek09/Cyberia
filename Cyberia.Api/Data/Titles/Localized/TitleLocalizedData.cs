@@ -8,11 +8,15 @@ internal sealed class TitleLocalizedData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("t")]
-    public string Name { get; init; }
+    public string Description { get; init; }
+
+    [JsonPropertyName("tf")]
+    public string FemaleDescription { get; init; }
 
     [JsonConstructor]
     internal TitleLocalizedData()
     {
-        Name = string.Empty;
+        Description = string.Empty;
+        FemaleDescription = string.Empty;
     }
 }

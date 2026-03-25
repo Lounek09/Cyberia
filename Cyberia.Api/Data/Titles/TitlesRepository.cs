@@ -28,18 +28,29 @@ public sealed class TitlesRepository : DofusRepository, IDofusRepository
         return titleData;
     }
 
-    public string GetTitleNameById(int id, Language language)
+    public string GetTitleDescriptionById(int id, Language language)
     {
-        return GetTitleNameById(id, language.ToCulture());
+        return GetTitleDescriptionById(id, language.ToCulture());
     }
 
-    public string GetTitleNameById(int id, CultureInfo? culture = null)
+    public string GetTitleDescriptionById(int id, CultureInfo? culture = null)
     {
         var titleData = GetTitleDataById(id);
 
-        return titleData is null
-            ? Translation.UnknownData(id, culture)
-            : titleData.Name.ToString(culture);
+        if (titleData is null)
+        {
+            return Translation.UnknownData(id, culture);
+        }
+
+        var description = titleData.Description.ToString(culture);
+        var femaleDescription = titleData.FemaleDescription.ToString(culture);
+
+        if (string.IsNullOrEmpty(femaleDescription))
+        {
+            return description;
+        }
+
+        return $"{description} / {femaleDescription}";
     }
 
     protected override void LoadLocalizedData(LangsIdentifier identifier)
@@ -50,7 +61,11 @@ public sealed class TitlesRepository : DofusRepository, IDofusRepository
         foreach (var titleLocalizedData in localizedRepository.Titles)
         {
             var titleData = GetTitleDataById(titleLocalizedData.Id);
-            titleData?.Name.TryAdd(twoLetterISOLanguageName, titleLocalizedData.Name);
+            if (titleData is not null)
+            {
+                titleData.Description.TryAdd(twoLetterISOLanguageName, titleLocalizedData.Description);
+                titleData.FemaleDescription.TryAdd(twoLetterISOLanguageName, titleLocalizedData.FemaleDescription);
+            }
         }
     }
 }

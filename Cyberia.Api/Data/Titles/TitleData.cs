@@ -9,7 +9,10 @@ public sealed class TitleData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("t")]
-    public LocalizedString Name { get; init; }
+    public LocalizedString Description { get; init; }
+
+    [JsonPropertyName("tf")]
+    public LocalizedString FemaleDescription { get; init; }
 
     [JsonPropertyName("c")]
     [JsonConverter(typeof(JsonConverters.ColorConverter))]
@@ -21,6 +24,7 @@ public sealed class TitleData : IDofusData<int>
     [JsonConstructor]
     internal TitleData()
     {
-        Name = LocalizedString.Empty;
+        Description = LocalizedString.Empty;
+        FemaleDescription = LocalizedString.Empty;
     }
 }

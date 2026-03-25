@@ -29,7 +29,7 @@ public sealed record GainTitleEffect : Effect, ITitileEffect
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)
     {
-        var titleName = DofusApi.Datacenter.TitlesRepository.GetTitleNameById(TitleId, culture);
+        var titleName = DofusApi.Datacenter.TitlesRepository.GetTitleDescriptionById(TitleId, culture);
 
         return GetDescription(culture, string.Empty, string.Empty, titleName);
     }

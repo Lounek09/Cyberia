@@ -24,7 +24,7 @@ public sealed class Dofusbook_TitlesCsvGenerator : DofusCsvGenerator<TitleData>
     protected override void AppendItem(TitleData item)
     {
         // name
-        _builder.AppendCsvString(item.Name);
+        _builder.AppendCsvString(item.Description);
         _builder.Append(c_csvSeparator);
 
         // official
@@ -32,15 +32,15 @@ public sealed class Dofusbook_TitlesCsvGenerator : DofusCsvGenerator<TitleData>
         _builder.Append(c_csvSeparator);
 
         // name_fr
-        _builder.AppendCsvString(item.Name.ToString(Language.fr));
+        _builder.AppendCsvString(item.Description.ToString(Language.fr));
         _builder.Append(c_csvSeparator);
 
         // name_en
-        _builder.AppendCsvString(item.Name.ToString(Language.en));
+        _builder.AppendCsvString(item.Description.ToString(Language.en));
         _builder.Append(c_csvSeparator);
 
         // name_es
-        _builder.AppendCsvString(item.Name.ToString(Language.es));
+        _builder.AppendCsvString(item.Description.ToString(Language.es));
         _builder.AppendLine();
     }
 }
