@@ -10,16 +10,16 @@ public sealed record CharacterManaUseKillLifeFireEffect : Effect
     public int ActionPoints { get; init; }
     public int Damage { get; init; }
 
-    private CharacterManaUseKillLifeFireEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int actionPoints, int damage)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterManaUseKillLifeFireEffect(int id, int actionPoints, int damage)
+        : base(id)
     {
         ActionPoints = actionPoints;
         Damage = damage;
     }
 
-    internal static CharacterManaUseKillLifeFireEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterManaUseKillLifeFireEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

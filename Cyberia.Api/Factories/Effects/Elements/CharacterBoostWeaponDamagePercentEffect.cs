@@ -12,16 +12,16 @@ public sealed record CharacterBoostWeaponDamagePercentEffect : Effect, IItemType
     public int ItemTypeId { get; init; }
     public int PercentDamage { get; init; }
 
-    private CharacterBoostWeaponDamagePercentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int itemTypeId, int percentDamage)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterBoostWeaponDamagePercentEffect(int id, int itemTypeId, int percentDamage)
+        : base(id)
     {
         ItemTypeId = itemTypeId;
         PercentDamage = percentDamage;
     }
 
-    internal static CharacterBoostWeaponDamagePercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterBoostWeaponDamagePercentEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public ItemTypeData? GetItemTypeData()

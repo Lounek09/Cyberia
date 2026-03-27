@@ -9,15 +9,15 @@ public sealed record IncarnationEffect : Effect
 {
     public int Level { get; init; }
 
-    private IncarnationEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int level)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private IncarnationEffect(int id, int level)
+        : base(id)
     {
         Level = level;
     }
 
-    internal static IncarnationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static IncarnationEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

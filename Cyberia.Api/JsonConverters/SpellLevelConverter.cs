@@ -1,6 +1,7 @@
 ﻿using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Enums;
 using Cyberia.Api.Factories;
+using Cyberia.Api.Factories.EffectAreas;
 
 using System.Runtime.InteropServices;
 using System.Text.Json;
@@ -13,7 +14,7 @@ namespace Cyberia.Api.JsonConverters;
 /// </summary>
 /// <remarks>
 /// - Expects a JSON array with 21 elements representing the properties of <see cref="SpellLevelData"/>.<br />
-/// - Parses effects and critical effects using <see cref="EffectFactory.CreateMany"/> and effect areas using <see cref="EffectAreaFactory.CreateMany"/>.
+/// - Parses effects and critical effects using <see cref="EffectFactory.CreateMany(JsonElement, ReadOnlySpan{EffectArea})"/> and effect areas using <see cref="EffectAreaFactory.CreateMany(ReadOnlySpan{char})"/>.
 /// </remarks>
 public sealed class SpellLevelConverter : JsonConverter<SpellLevelData>
 {

@@ -13,7 +13,7 @@ using System.Collections.Frozen;
 namespace Cyberia.Api.Factories;
 
 /// <summary>
-/// Provides factory methods for creating <see cref="Criterion"/> or <see cref="CriteriaReadOnlyCollection"/>.
+/// Provides factory methods for creating <see cref="Criterion"/> or <see cref="CriterionReadOnlyCollection"/>.
 /// </summary>
 public static class CriterionFactory
 {
@@ -184,15 +184,15 @@ public static class CriterionFactory
     }
 
     /// <summary>
-    /// Creates a <see cref="CriteriaReadOnlyCollection"/> from a compressed string representation.
+    /// Creates a <see cref="CriterionReadOnlyCollection"/> from a compressed string representation.
     /// </summary>
     /// <param name="compressedCriteria">The compressed string representation of the criteria.</param>
-    /// <returns>The <see cref="CriteriaReadOnlyCollection"/> containing the parsed <see cref="ICriteriaElement"/>.</returns>
-    public static CriteriaReadOnlyCollection CreateMany(ReadOnlySpan<char> compressedCriteria)
+    /// <returns>The <see cref="CriterionReadOnlyCollection"/> containing the parsed <see cref="ICriteriaElement"/>.</returns>
+    public static CriterionReadOnlyCollection CreateMany(ReadOnlySpan<char> compressedCriteria)
     {
         if (compressedCriteria.IsEmpty)
         {
-            return CriteriaReadOnlyCollection.Empty;
+            return CriterionReadOnlyCollection.Empty;
         }
 
         List<ICriteriaElement> criteria = [];
@@ -232,7 +232,7 @@ public static class CriterionFactory
                         criteria.Add(Create(token));
                     }
 
-                    criteria.Add(new CriteriaLogicalOperator(currentChar));
+                    criteria.Add(new CriterionLogicalOperator(currentChar));
                     startTokenIndex = i + 1;
                     break;
                 default:
@@ -245,7 +245,7 @@ public static class CriterionFactory
             }
         }
 
-        return new CriteriaReadOnlyCollection(criteria);
+        return new CriterionReadOnlyCollection(criteria);
     }
 
     /// <summary>

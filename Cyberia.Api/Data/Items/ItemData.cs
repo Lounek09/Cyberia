@@ -64,7 +64,7 @@ public sealed class ItemData : IDofusData<int>
     public ItemWeaponData? WeaponData { get; init; }
 
     [JsonPropertyName("c")]
-    public CriteriaReadOnlyCollection Criteria { get; init; }
+    public CriterionReadOnlyCollection Criteria { get; init; }
 
     [JsonPropertyName("s")]
     public int ItemSetId { get; init; }
@@ -96,7 +96,7 @@ public sealed class ItemData : IDofusData<int>
         Name = LocalizedString.Empty;
         NormalizedName = LocalizedString.Empty;
         Description = LocalizedString.Empty;
-        Criteria = CriteriaReadOnlyCollection.Empty;
+        Criteria = CriterionReadOnlyCollection.Empty;
     }
 
     public async Task<string> GetImagePathAsync(CdnImageSize size)

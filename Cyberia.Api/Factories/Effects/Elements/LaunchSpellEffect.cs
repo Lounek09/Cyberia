@@ -12,16 +12,16 @@ public sealed record LaunchSpellEffect : Effect, ISpellEffect
     public int SpellId { get; init; }
     public int Rank { get; init; }
 
-    private LaunchSpellEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int spellId, int rank)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private LaunchSpellEffect(int id, int spellId, int rank)
+        : base(id)
     {
         SpellId = spellId;
         Rank = rank;
     }
 
-    internal static LaunchSpellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static LaunchSpellEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public SpellData? GetSpellData()

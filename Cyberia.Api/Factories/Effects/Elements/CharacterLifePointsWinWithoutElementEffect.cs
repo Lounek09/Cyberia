@@ -6,11 +6,11 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterLifePointsWinWithoutElementEffect : MinMaxEffect
 {
-    private CharacterLifePointsWinWithoutElementEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int min, int max)
-        : base(id, duration, probability, criteria, dispellable, effectArea, min, max) { }
+    private CharacterLifePointsWinWithoutElementEffect(int id, int min, int max)
+        : base(id, min, max) { }
 
-    internal static CharacterLifePointsWinWithoutElementEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterLifePointsWinWithoutElementEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 }

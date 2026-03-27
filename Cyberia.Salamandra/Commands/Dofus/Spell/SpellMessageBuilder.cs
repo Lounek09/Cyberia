@@ -149,24 +149,24 @@ public sealed class SpellMessageBuilder : ICustomMessageBuilder
             }
             else
             {
-                _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), _spellLevelData.Effects, false, _culture);
+                _embedBuilderService.AddFightEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.Effects.Title", _culture), _spellLevelData.Effects, _culture);
 
                 var trapEffects = _spellLevelData.GetTrapEffects();
                 if (trapEffects.Count > 0)
                 {
-                    _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.TrapEffects.Title", _culture), trapEffects, false, _culture);
+                    _embedBuilderService.AddFightEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.TrapEffects.Title", _culture), trapEffects, _culture);
                 }
 
                 var glyphEffects = _spellLevelData.GetGlyphEffects();
                 if (glyphEffects.Count > 0)
                 {
-                    _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.GlyphEffects.Title", _culture), glyphEffects, false, _culture);
+                    _embedBuilderService.AddFightEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.GlyphEffects.Title", _culture), glyphEffects, _culture);
                 }
 
                 var criticalEffects = _spellLevelData.CriticalEffects;
                 if (criticalEffects.Count > 0)
                 {
-                    _embedBuilderService.AddEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.CriticalEffects.Title", _culture), criticalEffects, false, _culture);
+                    _embedBuilderService.AddFightEffectFields(embed, Translation.Get<BotTranslations>("Embed.Field.CriticalEffects.Title", _culture), criticalEffects, _culture);
                 }
             }
 

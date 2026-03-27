@@ -11,15 +11,15 @@ public sealed record ItemDungeonKeyDateEffect : Effect, IItemEffect
 {
     public int ItemId { get; init; }
 
-    private ItemDungeonKeyDateEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int itemId)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private ItemDungeonKeyDateEffect(int id, int itemId)
+        : base(id)
     {
         ItemId = itemId;
     }
 
-    internal static ItemDungeonKeyDateEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static ItemDungeonKeyDateEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public ItemData? GetItemData()

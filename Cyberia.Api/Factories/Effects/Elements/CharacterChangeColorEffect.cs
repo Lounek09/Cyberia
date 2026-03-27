@@ -10,16 +10,16 @@ public sealed record CharacterChangeColorEffect : Effect
     public int Position { get; init; }
     public int Color { get; init; }
 
-    private CharacterChangeColorEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int position, int color)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterChangeColorEffect(int id, int position, int color)
+        : base(id)
     {
         Position = position;
         Color = color;
     }
 
-    internal static CharacterChangeColorEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterChangeColorEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

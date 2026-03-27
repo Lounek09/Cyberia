@@ -11,15 +11,15 @@ public sealed record CharacterInventoryRemoveItemEffect : Effect, IItemEffect
 {
     public int ItemId { get; init; }
 
-    private CharacterInventoryRemoveItemEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int itemId)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterInventoryRemoveItemEffect(int id, int itemId)
+        : base(id)
     {
         ItemId = itemId;
     }
 
-    internal static CharacterInventoryRemoveItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterInventoryRemoveItemEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1);
+        return new(effectId, (int)parameters.Param1);
     }
 
     public ItemData? GetItemData()

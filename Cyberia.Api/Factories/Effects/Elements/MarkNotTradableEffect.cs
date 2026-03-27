@@ -10,15 +10,15 @@ public sealed record MarkNotTradableEffect : Effect
 {
     public DateTime Until { get; init; }
 
-    private MarkNotTradableEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, DateTime until)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private MarkNotTradableEffect(int id, DateTime until)
+        : base(id)
     {
         Until = until;
     }
 
-    internal static MarkNotTradableEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static MarkNotTradableEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, GameDateFormatter.CreateDateTimeFromEffectParameters(parameters));
+        return new(effectId, GameDateFormatter.CreateDateTimeFromEffectParameters(parameters));
     }
 
     public bool IsInfinite()

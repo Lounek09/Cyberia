@@ -1,16 +1,14 @@
-﻿using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Factories.EffectAreas;
-using Cyberia.Api.Factories.Effects.Templates;
+﻿using Cyberia.Api.Factories.Effects.Templates;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterDivorceWifeOrHusbandEffect : ParameterlessEffect
 {
-    private CharacterDivorceWifeOrHusbandEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
-        : base(id, duration, probability, criteria, dispellable, effectArea) { }
+    private CharacterDivorceWifeOrHusbandEffect(int id)
+        : base(id) { }
 
-    internal static CharacterDivorceWifeOrHusbandEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterDivorceWifeOrHusbandEffect Create(int effectId, EffectParameters _)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea);
+        return new(effectId);
     }
 }

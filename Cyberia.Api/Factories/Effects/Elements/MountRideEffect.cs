@@ -6,11 +6,11 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record MountRideEffect : ParameterlessEffect
 {
-    private MountRideEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
-        : base(id, duration, probability, criteria, dispellable, effectArea) { }
+    private MountRideEffect(int id)
+        : base(id) { }
 
-    internal static MountRideEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static MountRideEffect Create(int effectId, EffectParameters _)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea);
+        return new(effectId);
     }
 }

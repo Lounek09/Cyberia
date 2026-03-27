@@ -7,7 +7,7 @@ namespace Cyberia.Api.Factories.Criteria;
 /// <summary>
 /// Represents a logical operator in a criteria.
 /// </summary>
-public sealed record CriteriaLogicalOperator : ICriteriaElement
+public sealed record CriterionLogicalOperator : ICriteriaElement
 {
     /// <summary>
     /// Gets the logical operator character.
@@ -15,10 +15,10 @@ public sealed record CriteriaLogicalOperator : ICriteriaElement
     public char Operator { get; init; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CriteriaLogicalOperator"/> record.
+    /// Initializes a new instance of the <see cref="CriterionLogicalOperator"/> record.
     /// </summary>
     /// <param name="operator">The logical operator character.</param>
-    internal CriteriaLogicalOperator(char @operator)
+    internal CriterionLogicalOperator(char @operator)
     {
         Operator = @operator;
     }

@@ -12,16 +12,16 @@ public sealed record CharacterInventoryAddItemEffect : Effect, IItemEffect
     public int ItemId { get; init; }
     public int Quantity { get; init; }
 
-    private CharacterInventoryAddItemEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int itemId, int quantity)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterInventoryAddItemEffect(int id, int itemId, int quantity)
+        : base(id)
     {
         ItemId = itemId;
         Quantity = quantity;
     }
 
-    internal static CharacterInventoryAddItemEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterInventoryAddItemEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param3, (int)parameters.Param2);
     }
 
     public ItemData? GetItemData()

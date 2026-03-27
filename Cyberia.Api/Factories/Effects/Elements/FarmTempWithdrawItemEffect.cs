@@ -6,11 +6,11 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record FarmTempWithdrawItemEffect : ParameterlessEffect
 {
-    private FarmTempWithdrawItemEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
-        : base(id, duration, probability, criteria, dispellable, effectArea) { }
+    private FarmTempWithdrawItemEffect(int id)
+        : base(id) { }
 
-    internal static FarmTempWithdrawItemEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static FarmTempWithdrawItemEffect Create(int effectId, EffectParameters _)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea);
+        return new(effectId);
     }
 }

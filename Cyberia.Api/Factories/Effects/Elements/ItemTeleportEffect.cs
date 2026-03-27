@@ -12,14 +12,14 @@ public sealed record ItemTeleportEffect : Effect, IMapEffect
     public int MapId { get; init; }
     public int Cell { get; init; }
 
-    private ItemTeleportEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int mapId, int cell)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private ItemTeleportEffect(int id, int mapId, int cell)
+        : base(id)
     {
         MapId = mapId;
         Cell = cell;
     }
 
-    internal static ItemTeleportEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static ItemTeleportEffect Create(int effectId, EffectParameters parameters)
     {
         var binary1 = Convert.ToString(parameters.Param1, 2);
         var binary2 = Convert.ToString(parameters.Param2, 2);
@@ -28,7 +28,7 @@ public sealed record ItemTeleportEffect : Effect, IMapEffect
         var mapId = Convert.ToInt32(binary1 + binary2.PadLeft(15, '0') + binary3[^2..], 2);
         var cell = Convert.ToInt32(binary3[..^2], 2);
 
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, mapId, cell);
+        return new(effectId, mapId, cell);
     }
 
     public MapData? GetMapData()

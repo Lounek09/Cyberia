@@ -11,15 +11,15 @@ public sealed record OpenGuildPropertiesUIEffect : Effect
 {
     public GuildProperty GuildProperty { get; init; }
 
-    private OpenGuildPropertiesUIEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, GuildProperty guildProperty)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private OpenGuildPropertiesUIEffect(int id, GuildProperty guildProperty)
+        : base(id)
     {
         GuildProperty = guildProperty;
     }
 
-    internal static OpenGuildPropertiesUIEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static OpenGuildPropertiesUIEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (GuildProperty)parameters.Param3);
+        return new(effectId, (GuildProperty)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

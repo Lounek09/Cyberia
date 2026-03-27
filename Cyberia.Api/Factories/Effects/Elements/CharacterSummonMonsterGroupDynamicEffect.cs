@@ -12,16 +12,16 @@ public sealed record CharacterSummonMonsterGroupDynamicEffect : Effect, IMonster
     public int MonsterId { get; init; }
     public int Grade { get; init; }
 
-    private CharacterSummonMonsterGroupDynamicEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int monsterId, int grade)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterSummonMonsterGroupDynamicEffect(int id, int monsterId, int grade)
+        : base(id)
     {
         MonsterId = monsterId;
         Grade = grade;
     }
 
-    internal static CharacterSummonMonsterGroupDynamicEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterSummonMonsterGroupDynamicEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3, (int)parameters.Param1);
+        return new(effectId, (int)parameters.Param3, (int)parameters.Param1);
     }
 
     public MonsterData? GetMonsterData()

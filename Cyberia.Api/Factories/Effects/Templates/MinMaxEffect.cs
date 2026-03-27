@@ -1,7 +1,4 @@
-﻿using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Factories.EffectAreas;
-
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Templates;
 
@@ -10,8 +7,8 @@ public abstract record MinMaxEffect : Effect
     public int Min { get; init; }
     public int Max { get; init; }
 
-    protected MinMaxEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int min, int max)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    protected MinMaxEffect(int id, int min, int max)
+        : base(id)
     {
         Min = min;
         Max = max;

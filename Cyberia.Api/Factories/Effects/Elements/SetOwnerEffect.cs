@@ -9,15 +9,15 @@ public sealed record SetOwnerEffect : Effect
 {
     public string Name { get; init; }
 
-    private SetOwnerEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, string name)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private SetOwnerEffect(int id, string name)
+        : base(id)
     {
         Name = name;
     }
 
-    internal static SetOwnerEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static SetOwnerEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, parameters.Param4);
+        return new(effectId, parameters.Param4);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

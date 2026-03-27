@@ -11,15 +11,15 @@ public sealed record QuestStartEffect : Effect, IQuestEffect
 {
     public int QuestId { get; init; }
 
-    private QuestStartEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int questId)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private QuestStartEffect(int id, int questId)
+        : base(id)
     {
         QuestId = questId;
     }
 
-    internal static QuestStartEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static QuestStartEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public QuestData? GetQuestData()

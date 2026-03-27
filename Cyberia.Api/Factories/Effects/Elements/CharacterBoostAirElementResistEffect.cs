@@ -11,12 +11,12 @@ public sealed record CharacterBoostAirElementResistEffect : MinMaxEffect, IRuneG
 {
     public Rune Rune => Rune.AirRe;
 
-    private CharacterBoostAirElementResistEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int min, int max)
-        : base(id, duration, probability, criteria, dispellable, effectArea, min, max) { }
+    private CharacterBoostAirElementResistEffect(int id, int min, int max)
+        : base(id, min, max) { }
 
-    internal static CharacterBoostAirElementResistEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterBoostAirElementResistEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public RuneData? GetRuneData()

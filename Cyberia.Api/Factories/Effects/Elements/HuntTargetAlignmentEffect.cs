@@ -11,15 +11,15 @@ public sealed record HuntTargetAlignmentEffect : Effect, IAlignmentEffect
 {
     public int AlignmentId { get; init; }
 
-    private HuntTargetAlignmentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int alignmentId)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private HuntTargetAlignmentEffect(int id, int alignmentId)
+        : base(id)
     {
         AlignmentId = alignmentId;
     }
 
-    internal static HuntTargetAlignmentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static HuntTargetAlignmentEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public AlignmentData? GetAlignmentData()

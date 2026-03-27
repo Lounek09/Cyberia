@@ -20,9 +20,7 @@ public readonly record struct DescriptionString
     /// <summary>
     /// Gets the parameters.
     /// </summary>
-    public ReadOnlyCollection<string> Parameters => _parameters.AsReadOnly();
-
-    private readonly string[] _parameters;
+    public IReadOnlyList<string> Parameters { get; init; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DescriptionString"/> struct.
@@ -30,7 +28,7 @@ public readonly record struct DescriptionString
     public DescriptionString()
     {
         Template = string.Empty;
-        _parameters = Array.Empty<string>();
+        Parameters = ReadOnlyCollection<string>.Empty;
     }
 
     /// <summary>
@@ -38,10 +36,10 @@ public readonly record struct DescriptionString
     /// </summary>
     /// <param name="template">The template.</param>
     /// <param name="parameters">The parameters.</param>
-    public DescriptionString(string template, params string[] parameters)
+    public DescriptionString(string template, params IReadOnlyList<string> parameters)
     {
         Template = template;
-        _parameters = parameters;
+        Parameters = parameters;
     }
 
     /// <summary>
@@ -50,28 +48,28 @@ public readonly record struct DescriptionString
     /// <returns>The formatted string.</returns>
     public override string ToString()
     {
-        if (_parameters.Length == 0)
+        if (Parameters.Count == 0)
         {
             return Template;
         }
 
-        return Translation.Format(Template, _parameters);
+        return Translation.Format(Template, Parameters);
     }
 
     /// <inheritdoc cref="ToString()"/>
     /// <param name="decorator">The decorator function to apply to each parameter.</param>
     public string ToString(Func<string, string> decorator)
     {
-        var length = _parameters.Length;
-        if (length == 0)
+        var count = Parameters.Count;
+        if (count == 0)
         {
             return Template;
         }
 
-        var formattedParameters = new string[length];
-        for (var i = 0; i < length; i++)
+        var formattedParameters = new string[count];
+        for (var i = 0; i < count; i++)
         {
-            var parameter = _parameters[i];
+            var parameter = Parameters[i];
             formattedParameters[i] = string.IsNullOrEmpty(parameter) ? parameter : decorator(parameter);
         }
 

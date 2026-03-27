@@ -11,15 +11,15 @@ public sealed record CharacterLearnEmoteEffect : Effect, IEmoteEffect
 {
     public int EmoteId { get; init; }
 
-    private CharacterLearnEmoteEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int emoteId)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterLearnEmoteEffect(int id, int emoteId)
+        : base(id)
     {
         EmoteId = emoteId;
     }
 
-    internal static CharacterLearnEmoteEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterLearnEmoteEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public EmoteData? GetEmoteData()

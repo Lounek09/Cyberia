@@ -1,6 +1,4 @@
 ﻿using Cyberia.Api.Data.Spells;
-using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Factories.EffectAreas;
 using Cyberia.Api.Factories.Effects.Interfaces;
 
 using System.Globalization;
@@ -12,8 +10,8 @@ public abstract record TrapEffect : Effect, ISpellEffect
     public int SpellId { get; init; }
     public int Level { get; init; }
 
-    protected TrapEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int spellId, int level)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    protected TrapEffect(int id, int spellId, int level)
+        : base(id)
     {
         SpellId = spellId;
         Level = level;

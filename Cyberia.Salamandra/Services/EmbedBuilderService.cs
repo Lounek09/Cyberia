@@ -51,7 +51,7 @@ public interface IEmbedBuilderService
     DiscordEmbedBuilder CreateErrorEmbedBuilder(string title, string description, Exception? exception);
 
     /// <summary>
-    /// Adds effect fields to the embed builder.
+    /// Adds an effect fields to the embed builder.
     /// </summary>
     /// <param name="embed">The embed builder to add the fields to.</param>
     /// <param name="name">The name of the field.</param>
@@ -63,17 +63,28 @@ public interface IEmbedBuilderService
     DiscordEmbedBuilder AddEffectFields(DiscordEmbedBuilder embed, string name, IEnumerable<Effect> effects, bool sort, CultureInfo? culture, bool inline = false);
 
     /// <summary>
-    /// Adds criteria fields to the embed builder.
+    /// Adds a fight effect fields to the embed builder.
+    /// </summary>
+    /// <param name="embed">The embed builder to add the fields to.</param>
+    /// <param name="name">The name of the field.</param>
+    /// <param name="fightEffects">The fight effects to display.</param>
+    /// <param name="culture">The culture to use for the description.</param>
+    /// <param name="inline">Whether to display the fields inline.</param>
+    /// <returns>The updated embed builder.</returns>
+    DiscordEmbedBuilder AddFightEffectFields(DiscordEmbedBuilder embed, string name, IEnumerable<FightEffect> fightEffects, CultureInfo? culture, bool inline = false);
+
+    /// <summary>
+    /// Adds a criteria fields to the embed builder.
     /// </summary>
     /// <param name="embed">The embed builder to add the fields to.</param>
     /// <param name="criteria">The criteria to display.</param>
     /// <param name="culture">The culture to use for the description.</param>
     /// <param name="inline">Whether to display the fields inline.</param>
     /// <returns>The updated embed builder.</returns>
-    DiscordEmbedBuilder AddCriteriaFields(DiscordEmbedBuilder embed, CriteriaReadOnlyCollection criteria, CultureInfo? culture, bool inline = false);
+    DiscordEmbedBuilder AddCriteriaFields(DiscordEmbedBuilder embed, CriterionReadOnlyCollection criteria, CultureInfo? culture, bool inline = false);
 
     /// <summary>
-    /// Adds quest objectives fields to the embed builder.
+    /// Adds a quest objectives fields to the embed builder.
     /// </summary>
     /// <param name="embed">The embed builder to add the fields to.</param>
     /// <param name="questObjectives">The quest objectives to display.</param>
@@ -208,7 +219,18 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
         return embed.AddField(name, Translation.Get<BotTranslations>("Embed.Field.Effects.Content.None", culture), inline);
     }
 
-    public DiscordEmbedBuilder AddCriteriaFields(DiscordEmbedBuilder embed, CriteriaReadOnlyCollection criteria, CultureInfo? culture, bool inline = false)
+    public DiscordEmbedBuilder AddFightEffectFields(DiscordEmbedBuilder embed, string name, IEnumerable<FightEffect> effects, CultureInfo? culture, bool inline = false)
+    {
+        if (effects.Any())
+        {
+            var effectsParse = GetFightEffectsDescription(effects, culture, x => Formatter.Bold(Formatter.Sanitize(x)));
+            return embed.AddFields(name, effectsParse, inline);
+        }
+
+        return embed.AddField(name, Translation.Get<BotTranslations>("Embed.Field.Effects.Content.None", culture), inline);
+    }
+
+    public DiscordEmbedBuilder AddCriteriaFields(DiscordEmbedBuilder embed, CriterionReadOnlyCollection criteria, CultureInfo? culture, bool inline = false)
     {
         var criteriaParse = GetCriteriaDescription(criteria, culture, x => Formatter.Bold(Formatter.Sanitize(x)));
         return embed.AddFields(Translation.Get<BotTranslations>("Embed.Field.Criteria.Title", culture), criteriaParse, inline);
@@ -478,22 +500,48 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
                 effectDescriptionBuilder.Append(effect.GetDescription(culture).ToString(parametersDecorator));
             }
 
-            if (!effect.Dispellable)
+            effectsDescription.Add(effectDescriptionBuilder.ToString());
+            effectDescriptionBuilder.Clear();
+        }
+
+        return effectsDescription.AsReadOnly();
+    }
+
+    private static ReadOnlyCollection<string> GetFightEffectsDescription(IEnumerable<FightEffect> fightEffects, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
+    {
+        List<string> effectsDescription = [];
+        StringBuilder effectDescriptionBuilder = new();
+
+        foreach (var fightEffect in fightEffects)
+        {
+            effectDescriptionBuilder.Append(Emojis.Effect(fightEffect.Effect, culture));
+            effectDescriptionBuilder.Append(' ');
+
+            if (parametersDecorator is null)
+            {
+                effectDescriptionBuilder.Append(fightEffect.GetDescription(culture));
+            }
+            else
+            {
+                effectDescriptionBuilder.Append(fightEffect.GetDescription(culture).ToString(parametersDecorator));
+            }
+
+            if (!fightEffect.Dispellable)
             {
                 effectDescriptionBuilder.Append(Emojis.Dispellable(culture));
             }
 
-            if (effect.EffectArea.Size != EffectAreaFactory.Default.Size)
+            if (fightEffect.EffectArea.Size != EffectAreaFactory.Default.Size)
             {
                 effectDescriptionBuilder.Append(" - ");
-                effectDescriptionBuilder.Append(Emojis.EffectArea(effect.EffectArea, culture));
+                effectDescriptionBuilder.Append(Emojis.EffectArea(fightEffect.EffectArea, culture));
                 effectDescriptionBuilder.Append(' ');
-                effectDescriptionBuilder.Append(effect.EffectArea.GetSize(culture));
+                effectDescriptionBuilder.Append(fightEffect.EffectArea.GetSize(culture));
             }
 
-            if (effect.Criteria.Count > 0)
+            if (fightEffect.Criteria.Count > 0)
             {
-                var criteriaParse = GetCriteriaDescription(effect.Criteria, culture: culture);
+                var criteriaParse = GetCriteriaDescription(fightEffect.Criteria, culture: culture);
                 effectDescriptionBuilder.Append(' ');
                 effectDescriptionBuilder.Append(Formatter.InlineCode(string.Join(' ', criteriaParse)));
             }
@@ -505,7 +553,7 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
         return effectsDescription.AsReadOnly();
     }
 
-    private static ReadOnlyCollection<string> GetCriteriaDescription(CriteriaReadOnlyCollection criteria, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
+    private static ReadOnlyCollection<string> GetCriteriaDescription(CriterionReadOnlyCollection criteria, CultureInfo? culture, Func<string, string>? parametersDecorator = null)
     {
         List<string> criteriaDescription = [string.Empty];
 
@@ -513,10 +561,10 @@ public sealed class EmbedBuilderService : IEmbedBuilderService
         {
             switch (element)
             {
-                case CriteriaLogicalOperator logicalOperator:
+                case CriterionLogicalOperator logicalOperator:
                     criteriaDescription[^1] += logicalOperator.GetDescription(culture) + ' ';
                     break;
-                case CriteriaReadOnlyCollection subCriteria:
+                case CriterionReadOnlyCollection subCriteria:
                     var subCriteriaParse = GetCriteriaDescription(subCriteria, culture, parametersDecorator);
 
                     criteriaDescription[^1] += '(' + subCriteriaParse[0];

@@ -1,7 +1,6 @@
 ﻿using Cyberia.Api.Data.Items;
 using Cyberia.Api.Data.Spells;
 using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.JsonConverters;
 using Cyberia.Api.Utils;
 using Cyberia.Langzilla.Primitives;
 
@@ -23,14 +22,13 @@ public sealed class IncarnationData : IDofusData<int>
     public IReadOnlyList<int> SpellsId { get; init; }
 
     [JsonPropertyName("e")]
-    [JsonConverter(typeof(EffectReadOnlyListConverter))]
-    public IReadOnlyList<Effect> Effects { get; init; }
+    public EffectReadOnlyCollection Effects { get; init; }
 
     [JsonConstructor]
     internal IncarnationData()
     {
         SpellsId = ReadOnlyCollection<int>.Empty;
-        Effects = ReadOnlyCollection<Effect>.Empty;
+        Effects = EffectReadOnlyCollection.Empty;
     }
 
     public async Task<string> GetBigImagePathAsync(CdnImageSize size)

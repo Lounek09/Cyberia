@@ -11,12 +11,12 @@ public sealed record CharacterBoostMagicFindEffect : MinMaxEffect, IRuneGenerato
 {
     public Rune Rune => Rune.Prospe;
 
-    private CharacterBoostMagicFindEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int min, int max)
-        : base(id, duration, probability, criteria, dispellable, effectArea, min, max) { }
+    private CharacterBoostMagicFindEffect(int id, int min, int max)
+        : base(id, min, max) { }
 
-    internal static CharacterBoostMagicFindEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterBoostMagicFindEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public RuneData? GetRuneData()

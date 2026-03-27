@@ -6,11 +6,11 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record ItemTeleportForceEffect : ParameterlessEffect
 {
-    private ItemTeleportForceEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
-        : base(id, duration, probability, criteria, dispellable, effectArea) { }
+    private ItemTeleportForceEffect(int id)
+        : base(id) { }
 
-    internal static ItemTeleportForceEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static ItemTeleportForceEffect Create(int effectId, EffectParameters _)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea);
+        return new(effectId);
     }
 }

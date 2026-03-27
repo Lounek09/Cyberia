@@ -6,11 +6,11 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record ItemCurrentSoulEaterEffect : ParameterlessEffect
 {
-    private ItemCurrentSoulEaterEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
-        : base(id, duration, probability, criteria, dispellable, effectArea) { }
+    private ItemCurrentSoulEaterEffect(int id)
+        : base(id) { }
 
-    internal static ItemCurrentSoulEaterEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static ItemCurrentSoulEaterEffect Create(int effectId, EffectParameters _)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea);
+        return new(effectId);
     }
 }

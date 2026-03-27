@@ -1,5 +1,4 @@
 ﻿using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.JsonConverters;
 
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
@@ -12,12 +11,11 @@ internal sealed class ItemSetCustomData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("e")]
-    [JsonConverter(typeof(EffectReadOnlyListOfReadOnlyListConverter))]
-    public IReadOnlyList<IReadOnlyList<Effect>> Effects { get; init; }
+    public IReadOnlyList<EffectReadOnlyCollection> Effects { get; init; }
 
     [JsonConstructor]
     internal ItemSetCustomData()
     {
-        Effects = ReadOnlyCollection<IReadOnlyList<Effect>>.Empty;
+        Effects = ReadOnlyCollection<EffectReadOnlyCollection>.Empty;
     }
 }

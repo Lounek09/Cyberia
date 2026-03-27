@@ -16,8 +16,8 @@ public static class EffectFactory
     /// <summary>
     /// A dictionary mapping effect identifiers to their factory methods.
     /// </summary>
-    private static readonly FrozenDictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, bool, EffectArea, Effect>> s_factories =
-        new Dictionary<int, Func<int, EffectParameters, int, int, CriteriaReadOnlyCollection, bool, EffectArea, Effect>>()
+    private static readonly FrozenDictionary<int, Func<int, EffectParameters, Effect>> s_factories =
+        new Dictionary<int, Func<int, EffectParameters, Effect>>()
         {
             { 4, CharacterTeleportOnSameMapEffect.Create },
             { 5, CharacterPushEffect.Create },
@@ -459,22 +459,17 @@ public static class EffectFactory
     /// </summary>
     /// <param name="id">The unique identifier of the effect.</param>
     /// <param name="parameters">The parameters of the effect.</param>
-    /// <param name="duration">The duration of the effect.</param>
-    /// <param name="probability">The probability (as a percentage) that the effect will occur.</param>
-    /// <param name="criteria">The criteria where the effect is applicable.</param>
-    /// <param name="dispellable">Whether the effect is dispellable.</param>
-    /// <param name="effectArea">The area of the effect.</param>
     /// <returns>The created <see cref="Effect"/> if the effect is known; otherwise, an <see cref="UntranslatedEffect"/> instance.</returns>
-    public static Effect Create(int id, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    public static Effect Create(int id, EffectParameters parameters)
     {
         if (!s_factories.TryGetValue(id, out var builder))
         {
             Log.Warning("Unknown Effect {EffectId} with {@EffectParameters}", id, parameters);
 
-            return new UntranslatedEffect(id, duration, probability, criteria, dispellable, effectArea, parameters);
+            return new UntranslatedEffect(id, parameters);
         }
 
-        return builder(id, parameters, duration, probability, criteria, dispellable, effectArea);
+        return builder(id, parameters);
     }
 
     /// <summary>
@@ -497,7 +492,7 @@ public static class EffectFactory
         compressedEffect.Split(ranges, separator);
 
         var id = compressedEffect[ranges[0]].ToNumberOrZeroFromHex<int>();
-        var effectParameters = new EffectParameters
+        var parameters = new EffectParameters
         {
             Param1 = compressedEffect[ranges[1]].ToNumberOrZeroFromHex<long>(),
             Param2 = compressedEffect[ranges[2]].ToNumberOrZeroFromHex<long>(),
@@ -505,15 +500,15 @@ public static class EffectFactory
             Param4 = compressedEffect[ranges[4]].ToString()
         };
 
-        return Create(id, effectParameters, 0, 0, CriteriaReadOnlyCollection.Empty, true, EffectAreaFactory.Default);
+        return Create(id, parameters);
     }
 
     /// <summary>
-    /// Creates a list of <see cref="Effect"/> from a compressed string representation.
+    /// Creates an <see cref="EffectCollection"/> from a compressed string representation.
     /// </summary>
     /// <param name="compressedEffects">The compressed string representation of the effects.</param>
     /// <returns>The list of created <see cref="Effect"/>.</returns>
-    public static List<Effect> CreateMany(ReadOnlySpan<char> compressedEffects)
+    public static EffectCollection CreateMany(ReadOnlySpan<char> compressedEffects)
     {
         const char separator = ',';
 
@@ -535,7 +530,7 @@ public static class EffectFactory
             return [];
         }
 
-        List<Effect> effects = new(effectCount);
+        EffectCollection effects = new(effectCount);
 
         for (var i = 0; i < effectCount; i++)
         {
@@ -547,86 +542,109 @@ public static class EffectFactory
     }
 
     /// <summary>
-    /// Creates an <see cref="Effect"/> from a compressed json representation.
+    /// Creates a <see cref="FightEffect"/>.
     /// </summary>
-    /// <param name="compressedEffect">The compressed json representation of the effect.</param>
+    /// <param name="id">The unique identifier of the effect.</param>
+    /// <param name="parameters">The parameters of the effect.</param>
+    /// <param name="duration">The duration of the effect.</param>
+    /// <param name="probability">The probability (as a percentage) that the effect will occur.</param>
+    /// <param name="criteria">The criteria where the effect is applicable.</param>
+    /// <param name="dispellable">Whether the effect is dispellable.</param>
     /// <param name="effectArea">The area of the effect.</param>
-    /// <returns>The created <see cref="Effect"/>.</returns>
-    public static Effect Create(JsonElement compressedEffect, EffectArea effectArea)
+    /// <returns>The created <see cref="FightEffect"/> if the effect is known; otherwise, a <see cref="FightEffect"/> with an internal <see cref="UntranslatedEffect"/> instance.</returns>
+    public static FightEffect Create(int id, EffectParameters parameters, int duration, int probability, CriterionReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
     {
-        if (compressedEffect.ValueKind != JsonValueKind.Array)
+        if (!s_factories.TryGetValue(id, out var builder))
         {
-            var compressedEffectString = compressedEffect.ToString();
-            Log.Error("Failed to create Effect from {CompressedEffect}", compressedEffectString);
+            Log.Warning("Unknown Effect {EffectId} with {@EffectParameters}", id, parameters);
 
-            return new ErroredEffect(compressedEffectString);
+            return new FightEffect(new UntranslatedEffect(id, parameters), duration, probability, criteria, dispellable, effectArea);
         }
 
-        var length = compressedEffect.GetArrayLength();
+        return new FightEffect(builder(id, parameters), duration, probability, criteria, dispellable, effectArea);
+    }
+
+    /// <summary>
+    /// Creates a <see cref="FightEffect"/> from a compressed json representation.
+    /// </summary>
+    /// <param name="compressedFightEffect">The compressed json representation of the effect.</param>
+    /// <param name="effectArea">The area of the effect.</param>
+    /// <returns>The created <see cref="FightEffect"/>.</returns>
+    public static FightEffect Create(JsonElement compressedFightEffect, EffectArea effectArea)
+    {
+        if (compressedFightEffect.ValueKind != JsonValueKind.Array)
+        {
+            var compressedEffectString = compressedFightEffect.ToString();
+            Log.Error("Failed to create Effect from {CompressedEffect}", compressedEffectString);
+
+            return new FightEffect(new ErroredEffect(compressedEffectString));
+        }
+
+        var length = compressedFightEffect.GetArrayLength();
         if (length < 8)
         {
-            var compressedEffectString = compressedEffect.ToString();
+            var compressedEffectString = compressedFightEffect.ToString();
             Log.Error("Failed to create Effect from {CompressedEffect}", compressedEffectString);
 
-            return new ErroredEffect(compressedEffectString);
+            return new FightEffect(new ErroredEffect(compressedEffectString));
         }
 
-        if (!compressedEffect[0].TryGetInt32(out var id))
+        if (!compressedFightEffect[0].TryGetInt32(out var id))
         {
-            var compressedEffectString = compressedEffect.ToString();
+            var compressedEffectString = compressedFightEffect.ToString();
             Log.Error("Failed to create Effect from {CompressedEffect}", compressedEffectString);
 
-            return new ErroredEffect(compressedEffectString);
+            return new FightEffect(new ErroredEffect(compressedEffectString));
         }
 
         var parameters = new EffectParameters
         {
-            Param1 = compressedEffect[1].GetInt64OrDefault(),
-            Param2 = compressedEffect[2].GetInt64OrDefault(),
-            Param3 = compressedEffect[3].GetInt64OrDefault(),
-            Param4 = length > 8 ? compressedEffect[8].GetStringOrEmpty() : string.Empty
+            Param1 = compressedFightEffect[1].GetInt64OrDefault(),
+            Param2 = compressedFightEffect[2].GetInt64OrDefault(),
+            Param3 = compressedFightEffect[3].GetInt64OrDefault(),
+            Param4 = length > 8 ? compressedFightEffect[8].GetStringOrEmpty() : string.Empty
         };
-        var duration = compressedEffect[4].GetInt32OrDefault();
-        var probability = compressedEffect[5].GetInt32OrDefault();
-        var criteria = CriterionFactory.CreateMany(compressedEffect[6].GetStringOrEmpty());
-        var dispellable = compressedEffect[7].GetBooleanOrDefault();
+        var duration = compressedFightEffect[4].GetInt32OrDefault();
+        var probability = compressedFightEffect[5].GetInt32OrDefault();
+        var criteria = CriterionFactory.CreateMany(compressedFightEffect[6].GetStringOrEmpty());
+        var dispellable = compressedFightEffect[7].GetBooleanOrDefault();
 
         return Create(id, parameters, duration, probability, criteria, dispellable, effectArea);
     }
 
     /// <summary>
-    /// Creates a list of <see cref="Effect"/> from a compressed json representation.
+    /// Creates a <see cref="FightEffectReadOnlyCollection"/> from a compressed json representation.
     /// </summary>
-    /// <param name="compressedEffects">The compressed json representation of the effects.</param>
+    /// <param name="compressedFightEffects">The compressed json representation of the effects.</param>
     /// <param name="effectAreas">The areas of the effects.</param>
-    /// <returns>The list of created <see cref="Effect"/>.</returns>
-    public static List<Effect> CreateMany(JsonElement compressedEffects, ReadOnlySpan<EffectArea> effectAreas)
+    /// <returns>The created <see cref="FightEffectReadOnlyCollection"/>.</returns>
+    public static FightEffectReadOnlyCollection CreateMany(JsonElement compressedFightEffects, ReadOnlySpan<EffectArea> effectAreas)
     {
-        if (compressedEffects.ValueKind == JsonValueKind.Null)
+        if (compressedFightEffects.ValueKind == JsonValueKind.Null)
         {
-            return [];
+            return FightEffectReadOnlyCollection.Empty;
         }
 
-        if (compressedEffects.ValueKind != JsonValueKind.Array)
+        if (compressedFightEffects.ValueKind != JsonValueKind.Array)
         {
-            var compressedEffectsString = compressedEffects.ToString();
+            var compressedEffectsString = compressedFightEffects.ToString();
             Log.Error("Failed to create Effects from {CompressedEffects}", compressedEffectsString);
 
-            return [];
+            return FightEffectReadOnlyCollection.Empty;
         }
 
-        var effectCount = compressedEffects.GetArrayLength();
+        var fightEffectCount = compressedFightEffects.GetArrayLength();
         var effectAreasCount = effectAreas.Length;
-        List<Effect> effects = new(effectCount);
+        List<FightEffect> fightEffects = new(fightEffectCount);
 
-        for (var i = 0; i < effectCount; i++)
+        for (var i = 0; i < fightEffectCount; i++)
         {
             var effectArea = effectAreasCount > i ? effectAreas[i] : EffectAreaFactory.Default;
-            var effect = Create(compressedEffects[i], effectArea);
+            var fightEffect = Create(compressedFightEffects[i], effectArea);
 
-            effects.Add(effect);
+            fightEffects.Add(fightEffect);
         }
 
-        return effects;
+        return new FightEffectReadOnlyCollection(fightEffects);
     }
 }

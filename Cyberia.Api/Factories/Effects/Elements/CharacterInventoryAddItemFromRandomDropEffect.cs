@@ -10,16 +10,16 @@ public sealed record CharacterInventoryAddItemFromRandomDropEffect : Effect
     public int Quantity { get; init; }
     public int BundleId { get; init; }
 
-    private CharacterInventoryAddItemFromRandomDropEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int quantity, int bundleId)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterInventoryAddItemFromRandomDropEffect(int id, int quantity, int bundleId)
+        : base(id)
     {
         Quantity = quantity;
         BundleId = bundleId;
     }
 
-    internal static CharacterInventoryAddItemFromRandomDropEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterInventoryAddItemFromRandomDropEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

@@ -52,7 +52,7 @@ public sealed class ItemsStatsRepository : DofusRepository, IDofusRepository
             combinedEffects.AddRange(itemStatsData.Effects);
             combinedEffects.AddRange(itemStatsCustomData.Effects);
 
-            itemStatsData.Effects = combinedEffects;
+            itemStatsData.Effects = new EffectReadOnlyCollection(combinedEffects);
         }
 
         ItemsStats = ItemsStatsCore.GroupBy(x => x.Id).ToFrozenDictionary(x => x.Key, x => x.First());

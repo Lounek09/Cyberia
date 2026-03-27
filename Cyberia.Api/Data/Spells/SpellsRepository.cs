@@ -53,8 +53,8 @@ public sealed class SpellsRepository : DofusRepository, IDofusRepository
         {
             return x.GetSpellLevelsData().Any(y =>
             {
-                return y.Effects.Any(z => z.Id == effectId) ||
-                    y.CriticalEffects.Any(z => z.Id == effectId);
+                return y.Effects.Any(z => z.Effect.Id == effectId) ||
+                    y.CriticalEffects.Any(z => z.Effect.Id == effectId);
             });
         });
     }

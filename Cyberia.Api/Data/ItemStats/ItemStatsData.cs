@@ -1,8 +1,6 @@
 ﻿using Cyberia.Api.Data.Items;
 using Cyberia.Api.Factories.Effects;
-using Cyberia.Api.JsonConverters;
 
-using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 namespace Cyberia.Api.Data.ItemStats;
@@ -13,14 +11,13 @@ public sealed class ItemStatsData : IDofusData<int>
     public int Id { get; init; }
 
     [JsonPropertyName("v")]
-    [JsonConverter(typeof(EffectReadOnlyListConverter))]
     [JsonInclude]
-    public IReadOnlyList<Effect> Effects { get; internal set; }
+    public EffectReadOnlyCollection Effects { get; internal set; }
 
     [JsonConstructor]
     internal ItemStatsData()
     {
-        Effects = ReadOnlyCollection<Effect>.Empty;
+        Effects = EffectReadOnlyCollection.Empty;
     }
 
     public ItemData? GetItemData()

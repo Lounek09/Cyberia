@@ -12,16 +12,16 @@ public sealed record SummonStaticCreatureEffect : Effect, IMonsterEffect
     public int MonsterId { get; init; }
     public int Grade { get; init; }
 
-    private SummonStaticCreatureEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int monsterId, int grade)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private SummonStaticCreatureEffect(int id, int monsterId, int grade)
+        : base(id)
     {
         MonsterId = monsterId;
         Grade = grade;
     }
 
-    internal static SummonStaticCreatureEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static SummonStaticCreatureEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public MonsterData? GetMonsterData()

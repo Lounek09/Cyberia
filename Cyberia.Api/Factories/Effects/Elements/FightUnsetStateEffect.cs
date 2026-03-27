@@ -11,15 +11,15 @@ public sealed record FightUnsetStateEffect : Effect, IStateEffect
 {
     public int StateId { get; init; }
 
-    private FightUnsetStateEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int stateId)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private FightUnsetStateEffect(int id, int stateId)
+        : base(id)
     {
         StateId = stateId;
     }
 
-    internal static FightUnsetStateEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static FightUnsetStateEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public StateData? GetStateData()

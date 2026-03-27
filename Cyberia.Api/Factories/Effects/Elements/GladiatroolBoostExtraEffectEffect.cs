@@ -6,11 +6,11 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record GladiatroolBoostExtraEffectEffect : ParameterlessEffect
 {
-    private GladiatroolBoostExtraEffectEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
-        : base(id, duration, probability, criteria, dispellable, effectArea) { }
+    private GladiatroolBoostExtraEffectEffect(int id)
+        : base(id) { }
 
-    internal static GladiatroolBoostExtraEffectEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static GladiatroolBoostExtraEffectEffect Create(int effectId, EffectParameters _)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea);
+        return new(effectId);
     }
 }

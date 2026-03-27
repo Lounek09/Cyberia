@@ -12,16 +12,16 @@ public sealed record GladiatroolIncreaseSpellLevelEffect : Effect, ISpellEffect
     public int SpellId { get; init; }
     public int LevelIncrease { get; init; }
 
-    private GladiatroolIncreaseSpellLevelEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int spellId, int levelIncrease)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private GladiatroolIncreaseSpellLevelEffect(int id, int spellId, int levelIncrease)
+        : base(id)
     {
         SpellId = spellId;
         LevelIncrease = levelIncrease;
     }
 
-    internal static GladiatroolIncreaseSpellLevelEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static GladiatroolIncreaseSpellLevelEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param3, (int)parameters.Param2);
     }
 
     public SpellData? GetSpellData()

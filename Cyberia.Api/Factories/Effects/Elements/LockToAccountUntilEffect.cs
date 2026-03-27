@@ -10,15 +10,15 @@ public sealed record LockToAccountUntilEffect : Effect
 {
     public DateTime Until { get; init; }
 
-    private LockToAccountUntilEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, DateTime until)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private LockToAccountUntilEffect(int id, DateTime until)
+        : base(id)
     {
         Until = until;
     }
 
-    internal static LockToAccountUntilEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static LockToAccountUntilEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, GameDateFormatter.CreateDateTimeFromEffectParameters(parameters));
+        return new(effectId, GameDateFormatter.CreateDateTimeFromEffectParameters(parameters));
     }
 
     public bool IsInfinite()

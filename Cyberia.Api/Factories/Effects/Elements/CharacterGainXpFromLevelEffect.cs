@@ -10,16 +10,16 @@ public sealed record CharacterGainXpFromLevelEffect : Effect
     public int Level { get; init; }
     public int RemainingPercent { get; init; }
 
-    private CharacterGainXpFromLevelEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int level, int remainingPercent)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterGainXpFromLevelEffect(int id, int level, int remainingPercent)
+        : base(id)
     {
         Level = level;
         RemainingPercent = remainingPercent;
     }
 
-    internal static CharacterGainXpFromLevelEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterGainXpFromLevelEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

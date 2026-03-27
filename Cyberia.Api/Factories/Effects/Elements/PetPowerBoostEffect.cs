@@ -9,15 +9,15 @@ public sealed record PetPowerBoostEffect : Effect
 {
     public int Power { get; init; }
 
-    private PetPowerBoostEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int power)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private PetPowerBoostEffect(int id, int power)
+        : base(id)
     {
         Power = power;
     }
 
-    internal static PetPowerBoostEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static PetPowerBoostEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

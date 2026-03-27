@@ -11,15 +11,15 @@ public sealed record FightChallengeAgainstMonsterEffect : Effect, IMonsterEffect
 {
     public int MonsterId { get; init; }
 
-    private FightChallengeAgainstMonsterEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int monsterId)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private FightChallengeAgainstMonsterEffect(int id, int monsterId)
+        : base(id)
     {
         MonsterId = monsterId;
     }
 
-    internal static FightChallengeAgainstMonsterEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static FightChallengeAgainstMonsterEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param2);
     }
 
     public MonsterData? GetMonsterData()

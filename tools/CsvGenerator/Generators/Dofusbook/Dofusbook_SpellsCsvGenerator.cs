@@ -69,7 +69,7 @@ public sealed class Dofusbook_SpellsCsvGenerator : DofusCsvGenerator<SpellData>
             _builder.Append(c_csvSeparator);
 
             // summon
-            var summon = spellLevelData.Effects.Any(x => x is SummonCreatureEffect or SummonStaticCreatureEffect);
+            var summon = spellLevelData.Effects.Any(x => x.Effect is SummonCreatureEffect or SummonStaticCreatureEffect);
             if (summon)
             {
                 _builder.Append('x');

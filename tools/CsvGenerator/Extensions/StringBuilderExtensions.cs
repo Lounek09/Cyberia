@@ -66,7 +66,7 @@ public static class StringBuilderExtensions
             return builder.AppendCsvString(effectsBuilder.ToString());
         }
 
-        public StringBuilder AppendCriteria(CriteriaReadOnlyCollection criteria)
+        public StringBuilder AppendCriteria(CriterionReadOnlyCollection criteria)
         {
             if (criteria.Count == 0)
             {
@@ -79,10 +79,10 @@ public static class StringBuilderExtensions
             {
                 switch (element)
                 {
-                    case CriteriaLogicalOperator criteriaOperator:
-                        criteriaBuilder.Append(criteriaOperator.GetDescription());
+                    case CriterionLogicalOperator logicalOperator:
+                        criteriaBuilder.Append(logicalOperator.GetDescription());
                         break;
-                    case CriteriaReadOnlyCollection subCriteria:
+                    case CriterionReadOnlyCollection subCriteria:
                         criteriaBuilder.Append('(');
                         criteriaBuilder.AppendCriteria(subCriteria);
                         criteriaBuilder.Append(')');

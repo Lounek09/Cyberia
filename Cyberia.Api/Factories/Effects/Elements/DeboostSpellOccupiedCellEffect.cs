@@ -6,11 +6,11 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record DeboostSpellOccupiedCellEffect : SpellModifierEffect
 {
-    private DeboostSpellOccupiedCellEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int spellId, int value)
-        : base(id, duration, probability, criteria, dispellable, effectArea, spellId, value) { }
+    private DeboostSpellOccupiedCellEffect(int id, int spellId, int value)
+        : base(id, spellId, value) { }
 
-    internal static DeboostSpellOccupiedCellEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static DeboostSpellOccupiedCellEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param3);
     }
 }

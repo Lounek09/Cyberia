@@ -1,7 +1,4 @@
-﻿using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Factories.EffectAreas;
-
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
@@ -9,15 +6,15 @@ public sealed record CharacterTeleportOnSameMapEffect : Effect
 {
     public int Distance { get; init; }
 
-    private CharacterTeleportOnSameMapEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int distance)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterTeleportOnSameMapEffect(int id, int distance)
+        : base(id)
     {
         Distance = distance;
     }
 
-    internal static CharacterTeleportOnSameMapEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterTeleportOnSameMapEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1);
+        return new(effectId, (int)parameters.Param1);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

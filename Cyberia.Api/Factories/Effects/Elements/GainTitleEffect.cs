@@ -11,15 +11,15 @@ public sealed record GainTitleEffect : Effect, ITitileEffect
 {
     public int TitleId { get; init; }
 
-    private GainTitleEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int titleId)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private GainTitleEffect(int id, int titleId)
+        : base(id)
     {
         TitleId = titleId;
     }
 
-    internal static GainTitleEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static GainTitleEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public TitleData? GetTitleData()

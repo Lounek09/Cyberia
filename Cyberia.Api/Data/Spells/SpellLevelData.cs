@@ -14,9 +14,9 @@ public sealed class SpellLevelData : IDofusData<int>
 {
     public int Id { get; init; }
 
-    public IReadOnlyList<Effect> Effects { get; init; }
+    public FightEffectReadOnlyCollection Effects { get; init; }
 
-    public IReadOnlyList<Effect> CriticalEffects { get; init; }
+    public FightEffectReadOnlyCollection CriticalEffects { get; init; }
 
     public int ActionPointCost { get; init; }
 
@@ -58,18 +58,18 @@ public sealed class SpellLevelData : IDofusData<int>
 
     internal SpellLevelData()
     {
-        Effects = ReadOnlyCollection<Effect>.Empty;
-        CriticalEffects = ReadOnlyCollection<Effect>.Empty;
+        Effects = FightEffectReadOnlyCollection.Empty;
+        CriticalEffects = FightEffectReadOnlyCollection.Empty;
         RequiredStatesId = ReadOnlyCollection<int>.Empty;
         ForbiddenStatesId = ReadOnlyCollection<int>.Empty;
         SpellData = new();
     }
 
-    public IReadOnlyList<Effect> GetTrapEffects()
+    public FightEffectReadOnlyCollection GetTrapEffects()
     {
         foreach (var effect in Effects)
         {
-            if (effect is TrapEffect trapEffect)
+            if (effect.Effect is TrapEffect trapEffect)
             {
                 var trapSpellData = trapEffect.GetSpellData();
                 if (trapSpellData is not null)
@@ -83,14 +83,14 @@ public sealed class SpellLevelData : IDofusData<int>
             }
         }
 
-        return [];
+        return FightEffectReadOnlyCollection.Empty;
     }
 
-    public IReadOnlyList<Effect> GetGlyphEffects()
+    public FightEffectReadOnlyCollection GetGlyphEffects()
     {
         foreach (var effect in Effects)
         {
-            if (effect is GlyphEffect glyphEffect)
+            if (effect.Effect is GlyphEffect glyphEffect)
             {
                 var glyphSpellData = glyphEffect.GetSpellData();
                 if (glyphSpellData is not null)
@@ -104,7 +104,7 @@ public sealed class SpellLevelData : IDofusData<int>
             }
         }
 
-        return [];
+        return FightEffectReadOnlyCollection.Empty;
     }
 
     public IEnumerable<StateData> GetRequiredStatesData()

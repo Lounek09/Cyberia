@@ -12,16 +12,16 @@ public sealed record TeleportCreatureOnSameMapEffect : Effect, IMonsterEffect
     public int MonsterId { get; init; }
     public int MaximumDistance { get; init; }
 
-    private TeleportCreatureOnSameMapEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int monsterId, int maximumDistance)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private TeleportCreatureOnSameMapEffect(int id, int monsterId, int maximumDistance)
+        : base(id)
     {
         MonsterId = monsterId;
         MaximumDistance = maximumDistance;
     }
 
-    internal static TeleportCreatureOnSameMapEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static TeleportCreatureOnSameMapEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3, (int)parameters.Param1);
+        return new(effectId, (int)parameters.Param3, (int)parameters.Param1);
     }
 
     public MonsterData? GetMonsterData()

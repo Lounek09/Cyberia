@@ -12,16 +12,16 @@ public sealed record GotoMapEffect : Effect, IMapEffect
     public int MapId { get; init; }
     public int Cell { get; init; }
 
-    private GotoMapEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int mapId, int cell)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private GotoMapEffect(int id, int mapId, int cell)
+        : base(id)
     {
         MapId = mapId;
         Cell = cell;
     }
 
-    internal static GotoMapEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static GotoMapEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param2, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param2, (int)parameters.Param3);
     }
 
     public MapData? GetMapData()

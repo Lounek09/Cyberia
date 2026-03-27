@@ -10,15 +10,15 @@ public sealed record ItemChangeDurationEffect : Effect
 {
     public DateTime DateTime { get; init; }
 
-    private ItemChangeDurationEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, DateTime dateTime)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private ItemChangeDurationEffect(int id, DateTime dateTime)
+        : base(id)
     {
         DateTime = dateTime;
     }
 
-    internal static ItemChangeDurationEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static ItemChangeDurationEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, GameDateFormatter.CreateDateTimeFromEffectParameters(parameters));
+        return new(effectId, GameDateFormatter.CreateDateTimeFromEffectParameters(parameters));
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

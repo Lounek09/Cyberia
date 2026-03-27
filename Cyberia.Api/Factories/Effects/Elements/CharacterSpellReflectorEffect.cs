@@ -9,15 +9,15 @@ public sealed record CharacterSpellReflectorEffect : Effect
 {
     public int Level { get; init; }
 
-    private CharacterSpellReflectorEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int level)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterSpellReflectorEffect(int id, int level)
+        : base(id)
     {
         Level = level;
     }
 
-    internal static CharacterSpellReflectorEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterSpellReflectorEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param2);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

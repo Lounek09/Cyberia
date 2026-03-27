@@ -11,12 +11,12 @@ public sealed record CharacterBoostTrapPercentEffect : MinMaxEffect, IRuneGenera
 {
     public Rune Rune => Rune.PiPer;
 
-    private CharacterBoostTrapPercentEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int min, int max)
-        : base(id, duration, probability, criteria, dispellable, effectArea, min, max) { }
+    private CharacterBoostTrapPercentEffect(int id, int min, int max)
+        : base(id, min, max) { }
 
-    internal static CharacterBoostTrapPercentEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterBoostTrapPercentEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public RuneData? GetRuneData()

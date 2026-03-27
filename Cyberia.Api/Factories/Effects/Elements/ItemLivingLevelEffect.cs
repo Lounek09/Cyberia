@@ -9,15 +9,15 @@ public sealed record ItemLivingLevelEffect : Effect
 {
     public int Experience { get; init; }
 
-    private ItemLivingLevelEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int experience)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private ItemLivingLevelEffect(int id, int experience)
+        : base(id)
     {
         Experience = experience;
     }
 
-    internal static ItemLivingLevelEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static ItemLivingLevelEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

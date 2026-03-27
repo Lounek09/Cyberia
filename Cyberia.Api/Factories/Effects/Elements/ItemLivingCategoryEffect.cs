@@ -11,15 +11,15 @@ public sealed record ItemLivingCategoryEffect : Effect, IItemTypeEffect
 {
     public int ItemTypeId { get; init; }
 
-    private ItemLivingCategoryEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int itemTypeId)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private ItemLivingCategoryEffect(int id, int itemTypeId)
+        : base(id)
     {
         ItemTypeId = itemTypeId;
     }
 
-    internal static ItemLivingCategoryEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static ItemLivingCategoryEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public ItemTypeData? GetItemTypeData()

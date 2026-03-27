@@ -9,15 +9,15 @@ public sealed record CharacterAlignmentRankSetEffect : Effect
 {
     public int Rank { get; init; }
 
-    private CharacterAlignmentRankSetEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int rank)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterAlignmentRankSetEffect(int id, int rank)
+        : base(id)
     {
         Rank = rank;
     }
 
-    internal static CharacterAlignmentRankSetEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterAlignmentRankSetEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1);
+        return new(effectId, (int)parameters.Param1);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

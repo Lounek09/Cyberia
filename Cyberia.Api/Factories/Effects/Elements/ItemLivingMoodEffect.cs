@@ -11,15 +11,15 @@ public sealed record ItemLivingMoodEffect : Effect
 {
     public Corpulence Corpulence { get; init; }
 
-    private ItemLivingMoodEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, Corpulence corpulence)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private ItemLivingMoodEffect(int id, Corpulence corpulence)
+        : base(id)
     {
         Corpulence = corpulence;
     }
 
-    internal static ItemLivingMoodEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static ItemLivingMoodEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (Corpulence)parameters.Param3);
+        return new(effectId, (Corpulence)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

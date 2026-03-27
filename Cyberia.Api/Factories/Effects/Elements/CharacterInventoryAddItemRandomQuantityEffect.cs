@@ -14,17 +14,17 @@ public sealed record CharacterInventoryAddItemRandomQuantityEffect : Effect, IIt
     public int MaxQuantity { get; init; }
 
 
-    private CharacterInventoryAddItemRandomQuantityEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int itemId, int minQuantity, int maxQuantity)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private CharacterInventoryAddItemRandomQuantityEffect(int id, int itemId, int minQuantity, int maxQuantity)
+        : base(id)
     {
         ItemId = itemId;
         MinQuantity = minQuantity;
         MaxQuantity = maxQuantity;
     }
 
-    internal static CharacterInventoryAddItemRandomQuantityEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterInventoryAddItemRandomQuantityEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param3, (int)parameters.Param1, (int)parameters.Param2);
     }
 
     public ItemData? GetItemData()

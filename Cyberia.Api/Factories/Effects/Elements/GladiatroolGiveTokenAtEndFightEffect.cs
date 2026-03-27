@@ -9,15 +9,15 @@ public sealed record GladiatroolGiveTokenAtEndFightEffect : Effect
 {
     public int Quantity { get; init; }
 
-    private GladiatroolGiveTokenAtEndFightEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int quantity)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    private GladiatroolGiveTokenAtEndFightEffect(int id, int quantity)
+        : base(id)
     {
         Quantity = quantity;
     }
 
-    internal static GladiatroolGiveTokenAtEndFightEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static GladiatroolGiveTokenAtEndFightEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param3);
+        return new(effectId, (int)parameters.Param3);
     }
 
     public override DescriptionString GetDescription(CultureInfo? culture = null)

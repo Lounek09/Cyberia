@@ -1,7 +1,4 @@
-﻿using Cyberia.Api.Factories.Criteria;
-using Cyberia.Api.Factories.EffectAreas;
-
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Cyberia.Api.Factories.Effects.Elements;
 
@@ -9,8 +6,8 @@ public sealed record UntranslatedEffect : Effect
 {
     public EffectParameters Parameters { get; init; }
 
-    internal UntranslatedEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, EffectParameters parameters)
-        : base(id, duration, probability, criteria, dispellable, effectArea)
+    internal UntranslatedEffect(int id, EffectParameters parameters)
+        : base(id)
     {
         Parameters = parameters;
     }

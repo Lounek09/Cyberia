@@ -11,17 +11,17 @@ public sealed record HuntToolEffect : ParameterlessEffect, IRuneGeneratorEffect
 {
     public Rune Rune => Rune.Hunt;
 
-    private HuntToolEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
-        : base(id, duration, probability, criteria, dispellable, effectArea) { }
+    private HuntToolEffect(int id)
+        : base(id) { }
 
     public int GetRandomValue()
     {
         return 1;
     }
 
-    internal static HuntToolEffect Create(int effectId, EffectParameters _, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static HuntToolEffect Create(int effectId, EffectParameters _)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea);
+        return new(effectId);
     }
 
     public RuneData? GetRuneData()

@@ -6,11 +6,11 @@ namespace Cyberia.Api.Factories.Effects.Elements;
 
 public sealed record CharacterBoostDealtDamagePercentMultiplierEffect : MinMaxEffect
 {
-    private CharacterBoostDealtDamagePercentMultiplierEffect(int id, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea, int min, int max)
-        : base(id, duration, probability, criteria, dispellable, effectArea, min, max) { }
+    private CharacterBoostDealtDamagePercentMultiplierEffect(int id, int min, int max)
+        : base(id, min, max) { }
 
-    internal static CharacterBoostDealtDamagePercentMultiplierEffect Create(int effectId, EffectParameters parameters, int duration, int probability, CriteriaReadOnlyCollection criteria, bool dispellable, EffectArea effectArea)
+    internal static CharacterBoostDealtDamagePercentMultiplierEffect Create(int effectId, EffectParameters parameters)
     {
-        return new(effectId, duration, probability, criteria, dispellable, effectArea, (int)parameters.Param1, (int)parameters.Param2);
+        return new(effectId, (int)parameters.Param1, (int)parameters.Param2);
     }
 }
