@@ -45,7 +45,7 @@ public sealed class TitlesRepository : DofusRepository, IDofusRepository
         var description = titleData.Description.ToString(culture);
         var femaleDescription = titleData.FemaleDescription.ToString(culture);
 
-        if (string.IsNullOrEmpty(femaleDescription))
+        if (description.Equals(femaleDescription))
         {
             return description;
         }
