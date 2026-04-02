@@ -451,6 +451,7 @@ public static class EffectFactory
             { 2183, CharacterDeboostResistPercent.Create },
             { 2184, ItemEvolutiveSkinEffect.Create },
             { 2185, CharacterReadWantedDocumentEffect.Create },
+            { 2186, CharacterGroupReferencementEffect.Create },
             { 2187, AccountGainTitleEffect.Create },
             { 2188, CharacterGainTitleEffect.Create },
             { 2189, SeasonalItemEffect.Create },

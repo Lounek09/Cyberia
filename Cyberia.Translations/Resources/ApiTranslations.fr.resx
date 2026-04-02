@@ -1230,4 +1230,31 @@
   <data name="SpellCategory.AlHowin" xml:space="preserve">
     <value>Halouine</value>
   </data>
+  <data name="JobGroup.All" xml:space="preserve">
+    <value>Tous</value>
+  </data>
+  <data name="JobGroup.MagicalOutfitter" xml:space="preserve">
+    <value>Parurier Magique</value>
+  </data>
+  <data name="JobGroup.Smithmagus" xml:space="preserve">
+    <value>Forgemage</value>
+  </data>
+  <data name="JobGroup.Carvmagus" xml:space="preserve">
+    <value>Sculptemage</value>
+  </data>
+  <data name="JobGroup.Harvester" xml:space="preserve">
+    <value>Récolteur</value>
+  </data>
+  <data name="JobGroup.Outfitter" xml:space="preserve">
+    <value>Parurier</value>
+  </data>
+  <data name="JobGroup.Crafter" xml:space="preserve">
+    <value>Artisan</value>
+  </data>
+  <data name="JobGroup.Smith" xml:space="preserve">
+    <value>Forgeur</value>
+  </data>
+  <data name="JobGroup.Carver" xml:space="preserve">
+    <value>Sculpteur</value>
+  </data>
 </root>

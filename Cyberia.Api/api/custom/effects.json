@@ -290,6 +290,10 @@
     {
       "id": 2151,
       "d": "Lié au personnage{~1 : }#1"
+    },
+    {
+      "id": 2186,
+      "d": "Lier ses métiers : #1"
     }
   ]
 }

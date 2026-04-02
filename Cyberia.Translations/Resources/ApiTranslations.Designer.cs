@@ -2896,6 +2896,87 @@ namespace Cyberia.Translations.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        internal static string JobGroup_All {
+            get {
+                return ResourceManager.GetString("JobGroup.All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carver.
+        /// </summary>
+        internal static string JobGroup_Carver {
+            get {
+                return ResourceManager.GetString("JobGroup.Carver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carvmagus.
+        /// </summary>
+        internal static string JobGroup_Carvmagus {
+            get {
+                return ResourceManager.GetString("JobGroup.Carvmagus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crafter.
+        /// </summary>
+        internal static string JobGroup_Crafter {
+            get {
+                return ResourceManager.GetString("JobGroup.Crafter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Harvester.
+        /// </summary>
+        internal static string JobGroup_Harvester {
+            get {
+                return ResourceManager.GetString("JobGroup.Harvester", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Magical outfitter.
+        /// </summary>
+        internal static string JobGroup_MagicalOutfitter {
+            get {
+                return ResourceManager.GetString("JobGroup.MagicalOutfitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outfitter.
+        /// </summary>
+        internal static string JobGroup_Outfitter {
+            get {
+                return ResourceManager.GetString("JobGroup.Outfitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smith.
+        /// </summary>
+        internal static string JobGroup_Smith {
+            get {
+                return ResourceManager.GetString("JobGroup.Smith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smithmagus.
+        /// </summary>
+        internal static string JobGroup_Smithmagus {
+            get {
+                return ResourceManager.GetString("JobGroup.Smithmagus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
         internal static string LastMeal_None {

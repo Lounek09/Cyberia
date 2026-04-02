@@ -1230,4 +1230,31 @@
   <data name="SpellCategory.AlHowin" xml:space="preserve">
     <value>Al Howin</value>
   </data>
+  <data name="JobGroup.All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="JobGroup.MagicalOutfitter" xml:space="preserve">
+    <value>Magical outfitter</value>
+  </data>
+  <data name="JobGroup.Smithmagus" xml:space="preserve">
+    <value>Smithmagus</value>
+  </data>
+  <data name="JobGroup.Carvmagus" xml:space="preserve">
+    <value>Carvmagus</value>
+  </data>
+  <data name="JobGroup.Harvester" xml:space="preserve">
+    <value>Harvester</value>
+  </data>
+  <data name="JobGroup.Outfitter" xml:space="preserve">
+    <value>Outfitter</value>
+  </data>
+  <data name="JobGroup.Crafter" xml:space="preserve">
+    <value>Crafter</value>
+  </data>
+  <data name="JobGroup.Smith" xml:space="preserve">
+    <value>Smith</value>
+  </data>
+  <data name="JobGroup.Carver" xml:space="preserve">
+    <value>Carver</value>
+  </data>
 </root>
