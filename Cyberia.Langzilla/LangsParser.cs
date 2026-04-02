@@ -38,6 +38,7 @@ public sealed class LangsParser : ILangsParser
     /// </summary>
     public static readonly ReadOnlySet<string> IgnoredLangs = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
     {
+        "achievements",
         "dungeons",
         "lang"
     }.AsReadOnly();
