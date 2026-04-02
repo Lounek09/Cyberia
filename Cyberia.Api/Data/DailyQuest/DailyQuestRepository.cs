@@ -14,7 +14,7 @@ public sealed class DailyQuestRepository : DofusRepository, IDofusRepository
     public FrozenDictionary<int, DailyQuestData> DailyQuests { get; init; }
 
     [JsonPropertyName("DQI")]
-    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, DailyQuestData>))]
+    [JsonConverter(typeof(DofusDataFrozenDictionaryConverter<int, DailyQuestIdData>))]
     public FrozenDictionary<int, DailyQuestIdData> DailyQuestIds { get; init; }
 
     [JsonConstructor]
