@@ -24,6 +24,9 @@ public sealed class ServerData : IDofusData<int>
     [JsonPropertyName("t")]
     public int Type { get; init; }
 
+    [JsonPropertyName("i")]
+    public int GfxId { get; init; }
+
     [JsonPropertyName("c")]
     [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public int ServerCommunityId { get; init; }
