@@ -19,7 +19,7 @@ public sealed class CytrusGameAutoCompleteProvider : IAutoCompleteProvider
     {
         var choices = _cytrusWatcher.Cytrus.Games.Select(x =>
         {
-            return new DiscordAutoCompleteChoice(x.Key.Capitalize(), x.Key);
+            return new DiscordAutoCompleteChoice(x.Key, x.Key);
         });
 
         return ValueTask.FromResult(choices);
