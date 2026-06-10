@@ -20,15 +20,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cyberia.Amphibian\Cyberia.Amphibian.csproj" />
-    <ProjectReference Include="..\Cyberia.Api\Cyberia.Api.csproj" />
-    <ProjectReference Include="..\Cyberia.Cytrusaurus\Cyberia.Cytrusaurus.csproj" />
-    <ProjectReference Include="..\Cyberia.Database\Cyberia.Database.csproj" />
-    <ProjectReference Include="..\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
-    <ProjectReference Include="..\Cyberia.Langzilla.Primitives\Cyberia.Langzilla.Primitives.csproj" />
-    <ProjectReference Include="..\Cyberia.Salamandra\Cyberia.Salamandra.csproj" />
-    <ProjectReference Include="..\Cyberia.Translations\Cyberia.Translations.csproj" />
-    <ProjectReference Include="..\Cyberia.Utils\Cyberia.Utils.csproj" />
+    <ProjectReference Include="..\Libs\Cyberia.Amphibian\Cyberia.Amphibian.csproj" />
+    <ProjectReference Include="..\Libs\Cyberia.Api\Cyberia.Api.csproj" />
+    <ProjectReference Include="..\Libs\Cyberia.Cytrusaurus\Cyberia.Cytrusaurus.csproj" />
+    <ProjectReference Include="..\Libs\Cyberia.Database\Cyberia.Database.csproj" />
+    <ProjectReference Include="..\Libs\Cyberia.Langzilla\Cyberia.Langzilla.csproj" />
+    <ProjectReference Include="..\Libs\Cyberia.Langzilla.Primitives\Cyberia.Langzilla.Primitives.csproj" />
+    <ProjectReference Include="..\Libs\Cyberia.Salamandra\Cyberia.Salamandra.csproj" />
+    <ProjectReference Include="..\Libs\Cyberia.Translations\Cyberia.Translations.csproj" />
+    <ProjectReference Include="..\Libs\Cyberia.Utils\Cyberia.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

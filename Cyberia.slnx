@@ -1,4 +1,15 @@
 <Solution>
+  <Folder Name="/Libs/">
+    <Project Path="Libs/Cyberia.Amphibian/Cyberia.Amphibian.csproj" />
+    <Project Path="Libs/Cyberia.Api/Cyberia.Api.csproj" />
+    <Project Path="Libs/Cyberia.Cytrusaurus/Cyberia.Cytrusaurus.csproj" />
+    <Project Path="Libs/Cyberia.Database/Cyberia.Database.csproj" />
+    <Project Path="Libs/Cyberia.Langzilla.Primitives/Cyberia.Langzilla.Primitives.csproj" />
+    <Project Path="Libs/Cyberia.Langzilla/Cyberia.Langzilla.csproj" />
+    <Project Path="Libs/Cyberia.Salamandra/Cyberia.Salamandra.csproj" />
+    <Project Path="Libs/Cyberia.Translations/Cyberia.Translations.csproj" />
+    <Project Path="Libs/Cyberia.Utils/Cyberia.Utils.csproj" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path=".git-blame-ignore-revs" />
@@ -15,14 +26,5 @@
   <Folder Name="/tools/">
     <Project Path="tools/CsvGenerator/CsvGenerator.csproj" />
   </Folder>
-  <Project Path="Cyberia.Amphibian/Cyberia.Amphibian.csproj" />
-  <Project Path="Cyberia.Api/Cyberia.Api.csproj" />
-  <Project Path="Cyberia.Cytrusaurus/Cyberia.Cytrusaurus.csproj" />
-  <Project Path="Cyberia.Database/Cyberia.Database.csproj" />
-  <Project Path="Cyberia.Langzilla.Primitives/Cyberia.Langzilla.Primitives.csproj" />
-  <Project Path="Cyberia.Langzilla/Cyberia.Langzilla.csproj" />
-  <Project Path="Cyberia.Salamandra/Cyberia.Salamandra.csproj" />
-  <Project Path="Cyberia.Translations/Cyberia.Translations.csproj" />
-  <Project Path="Cyberia.Utils/Cyberia.Utils.csproj" />
   <Project Path="Cyberia/Cyberia.csproj" />
 </Solution>
