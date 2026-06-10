@@ -2,8 +2,6 @@
 
 **Salamandra** a Discord Bot made with [DSharpPlus](https://dsharpplus.github.io/DSharpPlus/) and **Amphibian** a website made with [ASP.NET Core](https://learn.microsoft.com/fr-fr/aspnet/core/) and [htmx](https://htmx.org/) for the MMORPG [Dofus Retro](https://www.dofus-retro.com/).
 
-[![Build](https://github.com/Lounek09/Cyberia/actions/workflows/build-validation.yml/badge.svg)](https://github.com/Lounek09/Cyberia/actions/workflows/build-validation.yml)
-
 ![Logo salamandra](images/logo-salamandra.png) **Salamandra**: <https://discord.com/application-directory/687745374294638594>  
 ![Logo amphibian](images/logo-amphibian.png) **Amphibian**: <https://amphibian.fr>  
 ![Logo discord](images/logo-discord.png) **Discord**: <https://discord.gg/gfsPNqGXdD>  
@@ -30,7 +28,7 @@
 > From this point forward, I will assume that all steps from the Cyberia.Cdn setup have been completed.
 
 2. **Build the project:**  
-   You have two options for building the project: manually from the server or by setting up the publish action in your fork.
+   You have two options for deploying the project: building it directly on the server or using the provided deployment script from a development machine.
    
    - **Manual Build:**  
      ```bash
@@ -41,14 +39,16 @@
      chmod -R 755 /var/www/cyberia/App/flare
      ```
      
-   - **Setup the publish action in your fork:**  
-     You will need to configure four secrets in your GitHub repository settings.
-     - **SSH_HOST** - The IP of your server
-     - **SSH_KEY** - Your private SSH key configured in the user `authorized_keys`
-     - **SSH_PORT** - The port of your SSH
-     - **SSH_USER** - The user it will connect to
-     
-     After configuring these secrets, you can manually trigger the publish action by following [GitHub's guide on manually running a workflow](https://docs.github.com/en/actions/using-workflows/manually-running-a-workflow).
+   - **Deploy using the deployment script:**  
+     Alternatively, you can deploy the application from a development machine using the deployment script located at [`Scripts/Deploy.cs`](Scripts/Deploy.cs).
+
+     Before running the script, update the following values to match your environment:
+     - **RemoteUser** - The SSH user used for deployment
+     - **RemoteHost** - The hostname or IP address of your server
+     - **RemotePort** - The SSH port
+     - **RemotePath** - The destination directory on the server
+
+     Ensure that SSH key authentication is configured for the target server.
 
 3. **Configure Caddy:**  
    Edit the Caddy configuration file located at `/etc/caddy/Caddyfile` to include the following block. Replace *your-domain.com* with your actual domain:
@@ -162,7 +162,7 @@ Below are the detailed descriptions of each variable of the [configuration](/Cyb
 
 ## Support
 If you encounter any issues or have questions, please:
-- Open an issue on GitHub.
+- Open an issue.
 - Join my [Discord server](https://discord.gg/gfsPNqGXdD) for real-time support.
 
 ## License
