@@ -55,11 +55,10 @@
      - The `cyberia` systemd service has already been created and is working (see step 5).
      - SSH key authentication is configured for the deployment user.
 
-     The script stops and starts the `cyberia` service using `sudo`. Configure passwordless sudo for the deployment user by running `sudo visudo` and adding:
+     The script stops and starts the `cyberia` service using `sudo`. Configure passwordless sudo for the deployment user by running `sudo visudo` and adding. Replace *salamandra* with your user:
      ```text
      salamandra ALL=(root) NOPASSWD: /bin/systemctl stop cyberia, /bin/systemctl start cyberia, /bin/systemctl restart cyberia
      ```
-     Replace *salamandra* with your deployment user if necessary.
 
 3. **Configure Caddy:**  
    Edit the Caddy configuration file located at `/etc/caddy/Caddyfile` to include the following block. Replace *your-domain.com* with your actual domain:
