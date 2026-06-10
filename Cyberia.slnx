@@ -22,7 +22,6 @@
   <Project Path="Cyberia.Langzilla.Primitives/Cyberia.Langzilla.Primitives.csproj" />
   <Project Path="Cyberia.Langzilla/Cyberia.Langzilla.csproj" />
   <Project Path="Cyberia.Salamandra/Cyberia.Salamandra.csproj" />
-  <Project Path="Cyberia.Tests/Cyberia.Tests.csproj" />
   <Project Path="Cyberia.Translations/Cyberia.Translations.csproj" />
   <Project Path="Cyberia.Utils/Cyberia.Utils.csproj" />
   <Project Path="Cyberia/Cyberia.csproj" />

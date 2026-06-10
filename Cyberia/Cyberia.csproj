@@ -38,10 +38,4 @@
     <Using Include="Serilog" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="appsettings.sample.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
