@@ -10,6 +10,12 @@
     <Project Path="Libs/Cyberia.Translations/Cyberia.Translations.csproj" />
     <Project Path="Libs/Cyberia.Utils/Cyberia.Utils.csproj" />
   </Folder>
+  <Folder Name="/Scripts/">
+    <File Path="Scripts/Deploy.cs" />
+  </Folder>
+  <Folder Name="/Scripts/Shared/">
+    <File Path="Scripts/Shared/Command.cs" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path=".git-blame-ignore-revs" />
@@ -17,11 +23,6 @@
     <File Path=".gitignore" />
     <File Path="LICENSE" />
     <File Path="README.md" />
-  </Folder>
-  <Folder Name="/Solution Items/.github/" />
-  <Folder Name="/Solution Items/.github/workflows/">
-    <File Path=".github/workflows/build-validation.yml" />
-    <File Path=".github/workflows/publish.yml" />
   </Folder>
   <Folder Name="/tools/">
     <Project Path="tools/CsvGenerator/CsvGenerator.csproj" />
