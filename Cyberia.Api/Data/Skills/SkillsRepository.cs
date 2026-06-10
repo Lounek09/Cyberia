@@ -27,6 +27,11 @@ public sealed class SkillsRepository : DofusRepository, IDofusRepository
         return skillData;
     }
 
+    public IEnumerable<SkillData> GetSkillsDataByJobId(int jobId)
+    {
+        return Skills.Values.Where(x => x.JobId == jobId);
+    }
+
     protected override void LoadLocalizedData(LangsIdentifier identifier)
     {
         var twoLetterISOLanguageName = identifier.Language.ToStringFast();

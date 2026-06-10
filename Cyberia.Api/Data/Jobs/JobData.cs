@@ -1,4 +1,5 @@
-﻿using Cyberia.Api.Utils;
+﻿using Cyberia.Api.Data.Skills;
+using Cyberia.Api.Utils;
 
 using System.Text.Json.Serialization;
 
@@ -32,5 +33,10 @@ public sealed class JobData : IDofusData<int>
     public JobData? GetJobDataSpecialization()
     {
         return DofusApi.Datacenter.JobsRepository.GetJobDataById(JobSpecializationId);
+    }
+
+    public IEnumerable<SkillData> GetSkillsData()
+    {
+        return DofusApi.Datacenter.SkillsRepository.GetSkillsDataByJobId(Id);
     }
 }
