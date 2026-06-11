@@ -1,3 +1,5 @@
+# Migrated to Codeberg : https://codeberg.org/Lounek/Cyberia
+
 # Cyberia
 
 **Salamandra** a Discord Bot made with [DSharpPlus](https://dsharpplus.github.io/DSharpPlus/) and **Amphibian** a website made with [ASP.NET Core](https://learn.microsoft.com/fr-fr/aspnet/core/) and [htmx](https://htmx.org/) for the MMORPG [Dofus Retro](https://www.dofus-retro.com/).
